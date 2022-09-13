@@ -284,9 +284,9 @@
                                         <div class="lower-bus ">
                                             <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
                                             <table class="cabin fuselage" align="left">
-                                                <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; " style="width:100%">
+                                                <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
                                                     <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table align="left" style="width:100%">
+                                                        <table align="left" >
                                                             <tr>
                                                                 <td *ngFor="let seat of LD;">
                                                                     <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
@@ -318,7 +318,7 @@
                                                 <table class="cabin fuselage" align="left">
                                                     <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
                                                         <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
-                                                            <table align="left" style="width:100%">
+                                                            <table align="left">
                                                                 <tr>
                                                                     <td *ngFor="let seat of UD">
                                                                         <span *ngIf="seat && seat.length==0" class="seat noSeats" >&nbsp;</span>
@@ -355,7 +355,7 @@
                                             <table class="cabin fuselage" align="left">
                                                 <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
                                                     <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table align="left" style="width:100%">
+                                                        <table align="left">
                                                             <tr>
                                                                 <td *ngFor="let seat of LD">
                                                                     <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
@@ -392,7 +392,7 @@
                                                 <table class="cabin fuselage" align="left">
                                                     <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
                                                         <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
-                                                            <table align="left" style="width:100%" >
+                                                            <table align="left" >
                                                                 <tr>
                                                                 <td *ngFor="let seat of UD;">
                                                                     <span *ngIf="seat && seat.length==0" class="seat noSeats">&nbsp;</span>

@@ -98,7 +98,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         totalrtc: any = [];
         rtctotal = [];
         departureTimeArr: any = [];
-        
+          params: any = [];
         bus_Timingsitems = [
         { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.png' },
         { name: '6AM-12PM', active: false, value: '6 AM - 12 PM', image: '2.png' },
@@ -179,7 +179,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#endOfPage').trigger('click');
         }
       });
-      
+        this.params = this.activatedRoute.snapshot;
      if( this.tag){
         const dialogRef = this.dialog.open(ChromeExtBusDialog, {
         autoFocus: false,

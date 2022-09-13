@@ -449,17 +449,232 @@
                         <div class="tab-content clearfix">
                             <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
                                 <div class="mob-sf-sort">
-                                    <div class="mob-sf-sort-by">
-                                        <div class="mob-sf-sort-by-items" *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="flightSortingMobile(item.name)">
-                                         
+                                                                <div class="m_sort_flex_div">
+                                            <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-low-high'}">
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.png" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Price</p>
+                                            <p class="m_sort_text50">Low to High</p>
                                         </div>
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('price-low-high')" value="Price (Low to High)" >
+                                        <span class="checkmark-cust"></span>
+                                      </label>
                                     </div>
+
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-high-low'}" >
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.png" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Price</p>
+                                            <p class="m_sort_text50">High to Low</p>
+                                        </div>
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('price-high-low')" value="Price (High to Low)">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+                                    </div>
+
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'rating'}">
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/grade.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Rating</p>
+                                            <p class="m_sort_text50">Highest</p>
+                                        </div>
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('rating')" value="Price (Low to High)" >
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+                                    </div>
+
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'seats-availability'}">
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/seat_human.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Seats Availability</p>
+                                            <p class="m_sort_text50">Available</p>
+                                        </div>
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('seats-availability')" value="Seats Availability" >
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+                                    </div>
+
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'leave-early'}">
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Leave Early</p>
+                                            <p class="m_sort_text50">Earliest</p>
+                                        </div>
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('leave-early')" value="Leave Early">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+                                    </div>
+
+                                    <div class="">
+                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'leave-late'}">
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
+                                        <div class="label-filter text-left">
+                                            <p class="m_sort_text">Leave Late</p>
+                                            <p class="m_sort_text50">Latest</p>
+                                        </div>
+                                        <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('leave-late')" value="Leave Late">
+                                        <span class="checkmark-cust"></span>
+                                      </label>
+                                    </div>
+                                </div>
                                 </div>
                                 <div class="mob-sf-btns">
                                     <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
                                 </div>
                             </div>
                             <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
+                            
+                                <div class="filter-w-header w-100 float-left ">
+                                <span class="filter_heading float-left">Filters </span>
+                                <span class="float-right"><a href="javascript:;" (click)="resetAllFilters()"  class="filter_blue_link">Reset All</a></span>
+                                </div>
+                            
+                        <div class="m_filter_paddng">
+                                <div class="default-sidebar flight-sidebar" [hidden]="loader">
+                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                <div class="widget-title">
+                                <h6 class="">Departure Time</h6>
+                                <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content">
+                                <div class="flighttiming-content flight-departing">
+                                <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
+                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                <p [innerHTML]="timingsItems.value"></p>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                <div class="widget-title">
+                                <h6 class="">Arrival Time</h6>
+                                <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content">
+                                <div class="flighttiming-content flight-departing">
+                                <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
+                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                <p [innerHTML]="timingsItems.value"></p>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                <div class="sidebar-widget Price-widget">
+                                <div class="widget-title">
+                                <h6 class="">Price</h6>
+                                <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content mt-10 mb-30 price-widget-content">
+                                <div class="price-widget-content-flx">
+                                <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                <span class="ms-3 me-3">-</span>
+                                <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                </div>
+                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
+                                </div>
+                                </div>
+
+                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+                                <div class="widget-title">
+                                <h6 class="">Bus Type</h6>
+                                <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
+                                </div>
+                                <div class="widget-content">
+                                <div class="flighttiming-content flight-departing">
+                                <div  *ngFor="let classes of availableClasses ">
+                                <label class="checkbox"  >
+                                <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
+                                {{classes.type}} ({{classes.count}})
+                                <span class="checkmark"></span>
+                                </label>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                <hr>         
+
+                                <div class="m_filter_paddng">         
+                                <mat-accordion multi="true">
+
+                                <mat-expansion-panel >
+                                <mat-expansion-panel-header class="h_auto">
+                                Boarding Point
+                                </mat-expansion-panel-header>
+                                <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                <div class="filter_search_div">
+                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
+                                </div>
+
+                                <div class="float-left pt-24 filter-common">
+                                <label class="checkbox" *ngFor="let bp of boardingpoints " >
+                                <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
+                                {{bp.boardingPointName}} ({{bp.total}}) 
+                                <span class="checkmark"></span>
+                                </label>
+                                </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel >
+                                <mat-expansion-panel-header class="h_auto">
+                                Dropping Point
+                                </mat-expansion-panel-header>
+                                <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
+                                <div class="filter_search_div">
+                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
+                                </div>
+
+                                <div class="float-left pt-24 filter-common">
+                                <label class="checkbox" *ngFor="let bp of droppingpoints " >
+                                <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
+                                {{bp.boardingPointName}} ({{bp.total}}) 
+                                <span class="checkmark"></span>
+                                </label>
+                                </div>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel>
+                                <mat-expansion-panel-header class="h_auto">
+                                Operators
+                                </mat-expansion-panel-header>
+                                <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
+                                <div class="filter_search_div">
+                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
+                                </span>
+                                </div>
+
+                                <div class="float-left pt-24 filter-common">
+                                <label class="checkbox" *ngFor="let op of operators " >
+                                <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
+                                {{op.name}}({{op.total}})
+                                <span class="checkmark"></span>
+                                </label>
+                                </div>
+                                </mat-expansion-panel>
+                                <mat-expansion-panel *ngIf = "amenities.length > 0 " class="brdr_btm_0 pb-3">
+                                <mat-expansion-panel-header class="h_auto">
+                                Amenities
+                                </mat-expansion-panel-header>
+                                <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
+                                <div class="float-left pt-24 filter-common">
+                                <label class="checkbox" *ngFor="let am of amenities " >
+                                <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
+                                {{am.amenities}}({{am.total}}) 
+                                <span class="checkmark"></span>
+                                </label>
+                                </div> 
+                                </mat-expansion-panel>             
+                                </mat-accordion>      
+                                </div>
+                                </div>
+                            </div>
+                            
                      
                                        <div class="mob-sf-btns">
                                         <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
