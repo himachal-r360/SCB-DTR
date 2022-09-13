@@ -809,9 +809,7 @@ closeCookieConsent(value){
 
         }
 
-        if(event.url.includes('foryou')) {
-          this.menuActiveClass='foryou';
-        }
+     
 
     });
 

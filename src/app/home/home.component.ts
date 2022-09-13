@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
-      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal
+      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
