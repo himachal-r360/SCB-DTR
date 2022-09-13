@@ -166,7 +166,7 @@ export class BuslistComponent implements OnInit,OnDestroy {
  constructor(public rest:RestapiService,private busService: BusService, public dialog: MatDialog, private router: Router, private location: Location,  private activatedRoute: ActivatedRoute, private http: HttpClient, private changeDetector: ChangeDetectorRef, public commonHelper: CommonHelper, public busHelper: BusHelper, private sg: SimpleGlobal, private formBuilder: FormBuilder, private _bottomSheet: MatBottomSheet, private busfilter: BusfilterPipe, plocation: PlatformLocation, @Inject(APP_CONFIG) appConfig: any,private cookieService: CookieService,private titleService: Title,private appConfigService:AppConfigService,private _flightService: FlightService,public _styleManager: StyleManagerService, private EncrDecr: EncrDecrService) {
   this.serviceSettings=this.appConfigService.getConfig();
   
-  
+
     if(this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['BUS']!=1){
      this.router.navigate(['/**']);
    }
@@ -178,14 +178,14 @@ export class BuslistComponent implements OnInit,OnDestroy {
         this.appConfig = appConfig;
         this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
         this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
-        plocation.onPopState(() => {
-        if (this.seatSeletedView) {
-        this.seatSeletedView = false;
-        let body = document.getElementsByTagName('body')[0];
-        body.classList.remove("noscroll"); //remove the class
-        history.go(1);
-        }
-        });
+        // plocation.onPopState(() => {
+        // if (this.seatSeletedView) {
+        // this.seatSeletedView = true;
+        // let body = document.getElementsByTagName('body')[0];
+        // body.classList.remove("noscroll"); //remove the class
+        // history.go(1);
+        // }
+        // });
 
   
         if( this.tag){
