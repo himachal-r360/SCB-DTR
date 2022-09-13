@@ -114,7 +114,7 @@ selectedIndex:number=0;selectedIndexR:number=0;
         showRepeatBooking:number=0;
   constructor(public rest:RestapiService,private spinnerService: NgxSpinnerService,private dialog: MatDialog,private router: Router, private activatedRoute: ActivatedRoute,public irctcService: IrctcApiService,private sg: SimpleGlobal,public commonHelper: CommonHelper,private EncrDecr: EncrDecrService,private appConfigService:AppConfigService,private deviceService: DeviceDetectorService) {
    this.serviceSettings=this.appConfigService.getConfig();
-
+   
    this.listingPageCovidPopup = this.serviceSettings.listingPageCovidPopup;
    this.domainName = this.sg['domainName'];
    this.AppConfig=AppConfig;
@@ -377,7 +377,7 @@ openCovidHealthpopup(train,avlDay,avlClass){
   this.searchTrainKey = btoa(train.fromStnCode+train.toStnCode+avlDay.availablityDate+this.quota+avlClass+train.trainNumber+train.departureTime
     +train.arrivalTime+train.trainName);
 
-
+  
   if(this.listingPageCovidPopup == 1){
   let dialogRef = this.dialog.open(covidDialog, {
     disableClose: true,
@@ -490,11 +490,11 @@ bookNow(train,avlDay,avlClass){
       // this.openDialog2(train);
   }
   else{
-    console.log('====================================================am========================================');
+  
 	  let navigationExtras: NavigationExtras = {
 	  queryParams: { 'searchTrainKey': this.searchTrainKey }
 	};
-  this.router.navigate([this.sg['domainPath']+`trains/traveller`], navigationExtras)
+  this.router.navigate([this.sg['domainPath']+`train/checkout`], navigationExtras)
   }
   let trackUrlParams = new HttpParams()
 .set('current_url', window.location.href)

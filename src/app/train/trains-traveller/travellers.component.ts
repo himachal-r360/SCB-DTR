@@ -2794,11 +2794,14 @@ recivetotalFare($event){
 		
 		
                 for(let i=0;i<this.travellerlist.length;i++){
-                if(this.adulttravellerlist[i].age > 4)
-                this.saveTravellerId[this.adulttravellerlist[i].id]=-1
-                else
-                this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
-                }
+                    if(this.adulttravellerlist[i]){
+                        if(this.adulttravellerlist[i].age > 4)
+                        this.saveTravellerId[this.adulttravellerlist[i].id]=-1
+                        else
+                        this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
+                        }
+                    }
+                
 	                
                 this.checkPaxCount = this.adulttravellerlist.length;
                 }
