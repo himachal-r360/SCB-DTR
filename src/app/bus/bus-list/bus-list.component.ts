@@ -1039,8 +1039,10 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
    this.serverIssue=0;
      this.popularFilterBusData();
        this.loader = false;
-      //  this.loading = false;
+        this.loading = false;
      }else{
+      this.loader = false;
+      this.loading = false;
      this.serverIssue=1;
      }
    },
