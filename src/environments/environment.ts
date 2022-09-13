@@ -19,10 +19,6 @@ export const environment = {
 <<<<<<< HEAD
     'SMARTBUY': 'http://new.reward360.us/api/',
     //'SMARTBUY': 'http://new.reward360.us/api/',
-=======
-    //'SMARTBUY': 'http://offers.smartbuylocal.reward360.us/api/',
-    'SMARTBUY': 'http://new.reward360.us/api/',
->>>>>>> 6351be5e5c20ef25135ea1e88a4cc4deb939142c
     'DINERS': 'http://new.reward360.us/diners/api/',
     'INFINIA': 'http://new.reward360.us/infinia/api/',
     'REGALIA': 'http://new.reward360.us/regalia/api/',
