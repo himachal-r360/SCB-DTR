@@ -1210,6 +1210,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       filterDiv.style.display = 'none';
     }
+    this.popularFilterBusData();
   }
 }
 @Component({
