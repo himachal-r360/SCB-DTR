@@ -806,7 +806,10 @@ closeCookieConsent(value){
           this.activeMenu='compare-fly';
          else
            this.activeMenu='home';
+
         }
+
+     
 
     });
 
