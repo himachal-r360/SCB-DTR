@@ -1,6 +1,6 @@
 import { Component, HostListener, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { Subscription } from 'rxjs';
 import { Options } from 'ng5-slider';
@@ -152,7 +152,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     });
 
 
-  
+
   }
 
   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
@@ -443,6 +443,24 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.sub.unsubscribe();
   }
 
+
+  BookingSummery(hotelkey:string,hotel:any,selectedPartner:any)
+  {
+    let hotelDetailsArr: any = {
+      "docKey": this.docKey,
+      "hotelkey":hotelkey,
+      "hotel": hotel,
+      "PriceSummary": selectedPartner
+      };
+    let randomHotelDetailKey = btoa(this.docKey+hotelkey+selectedPartner.partnerName);
+    sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
+    let url = 'hotel-detail?searchHotelKey=' + randomHotelDetailKey;
+
+    setTimeout(() => {
+      this.router.navigateByUrl(url);
+    }, 10);
+
+  }
   backClicked(){
     this.location.back();
   }
