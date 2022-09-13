@@ -229,9 +229,32 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     });
     this.selectedTripData = this.searchData[0];
     this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
-
+    localStorage.setItem('isMulticitySearch','true');
+       this.flightSearchCallBack(urlParam);
+      let multicitySearchValue = JSON.stringify(flightSearchArr);
+      localStorage.setItem('multicityLastSearch',multicitySearchValue)
   }
-
+  continueSearchFlights: any = []
+    flightSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem('continueSearch');
+    if (continueSearch == null) {
+      this.continueSearchFlights = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchFlights = JSON.parse(continueSearch);
+      this.continueSearchFlights = this.continueSearchFlights.filter((item: any) => {
+        if (item.flightfrom != searchValueAllobj.flightfrom || item.flightto != searchValueAllobj.flightto) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchFlights.length > 3) {
+      this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
+    }
+    this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+  }
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
