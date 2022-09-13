@@ -632,6 +632,18 @@ updateTrainTypeFilter(appt) {
     }
   this.trains = this.trains.filter(g => {return true;});
   }
+  updateTosSelectedQuota(appt) {
+    // console.log('Quota===>',appt);
+  //   if(appt.selected) {
+  //    this.selectedQuota = appt.stationCode;
+  //   }
+  //   else {
+  //   let index = this.filterToStations.indexOf(appt.stationCode)
+  //     this.filterToStations.splice(index, 1);
+     
+  //   }
+  // this.trains = this.trains.filter(g => {return true;});
+  }
 
   searchboarding(search){
 
