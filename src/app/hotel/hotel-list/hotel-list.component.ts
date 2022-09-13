@@ -118,7 +118,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
             //  this.gotoTop();
         }
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute , private _flightService:FlightService ,private location: Location ) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute , private _flightService:FlightService ,private location: Location , private router:Router ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: [],
