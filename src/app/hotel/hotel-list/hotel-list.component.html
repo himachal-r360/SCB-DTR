@@ -518,36 +518,12 @@
                 <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
                     <div class="mob-sf-sort">
                         <div class="mob-sf-sort-by">
-                            <div class="mob-sf-sort-by-items active">
+                            <div class="mob-sf-sort-by-items " *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="hotelSortingMobile(item.name)">
                                 <p>
-                                    <img src="./assets/images/icons/price-l.png" alt="" />
-                                    <span><strong>Price</strong> <br> Low to High</span>
+                                    <img src="{{item.image}}" alt="" />
+                                    <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
                                 </p>
                             </div>
-                            <div class="mob-sf-sort-by-items">
-                                <p> 
-                                    <img src="./assets/images/icons/price-h.png" alt="" />
-                                    <span><strong>Price</strong> <br> High to Low</span>
-                                </p>
-                            </div>
-                            <div class="mob-sf-sort-by-items active">
-                                <p>
-                                    <img src="./assets/images/hotel/icon/Star-l.png" alt="" />
-                                    <span><strong>Star</strong> <br> Low to High</span>
-                                </p>
-                            </div>
-                            <div class="mob-sf-sort-by-items">
-                                <p> 
-                                    <img src="./assets/images/hotel/icon/Star-l.png" alt="" />
-                                    <span><strong>Star</strong> <br> High to Low</span>
-                                </p>
-                            </div>
-                            <div class="mob-sf-sort-by-items">
-                                <p> 
-                                    <img src="./assets/images/hotel/icon/Trending.png" alt="" />
-                                    <span><strong>Trending Hotels</strong></span>
-                                </p>
-                            </div> 
                         </div>
                     </div>
                     <div class="mob-sf-btns">
