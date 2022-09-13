@@ -130,13 +130,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
        validators: MustMatch('fromTravelCode', 'toTravelCode')
      });
       
-      
-      window.onresize = (e) =>
-      {
-          this.ngZone.run(() => {
-            this.isMobile = window.innerWidth < 991 ?  true : false;
-          });
-      }
+
       setTimeout(() => {
         this._styleManager.setScript('custom', `assets/js/custom.js`);
      }, 10);
@@ -156,14 +150,14 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 	  this.quotaList =AppConfig.IRCTC_List_Quota;
        this.travelFromOptions= this.defaultTravelOptions;
        this.travelToOptions= this.defaultTravelOptions;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
   public Error = (controlName: string, errorName: string) => {
     return this.searchTrainForm.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-         this.route.url.subscribe(url =>{
-   this._trainService.showHeader(true);
+    this._trainService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
     let continueSearchValLs:any= localStorage.getItem('continueSearchTrain');
     if(continueSearchValLs!=null){
@@ -176,7 +170,6 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
     this.toStateName=this.route.snapshot.queryParamMap.get('toTravelCode')+', '+this.toCityName;
     this.departureDate=this.route.snapshot.queryParamMap.get('departure');*/
 
-   });
   }
 
 

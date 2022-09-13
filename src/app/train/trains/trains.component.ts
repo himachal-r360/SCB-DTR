@@ -184,14 +184,11 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
  
    }
    
-      @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
-        this.isMobile = window.innerWidth < 991 ?  true : false;
-        }
+
   ngOnInit() {
      this.titleService.setTitle('Home | IRCTC');
        this.isMobile = window.innerWidth < 991 ?  true : false;
      this.activatedRoute.url.subscribe(url =>{
-     
         this.resetPopups();
         this.moveTop();
         this.loading = true;
@@ -199,6 +196,11 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
      this.selectedQuota = 'GN';
      this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
      const queryParams = this.activatedRoute.snapshot.queryParams;
+     
+      this.trainSearchCallBack(queryParams);
+      localStorage.setItem('trainLastSearchNew',JSON.stringify(queryParams));
+     
+     
      var datePipe = new DatePipe('en-US');
      var previousDay = new Date(this.journeyDate);
      var departureTimestamp = previousDay.setDate(previousDay.getDate() - 1);
@@ -268,6 +270,28 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       behavior: 'smooth'
 });
  }
+   continueSearchTrain:any=[]
+   trainSearchCallBack(param:any){
+      let searchValueAllobj=param;
+      let continueSearch:any=localStorage.getItem('continueSearchTrain');
+      if(continueSearch==null){
+        this.continueSearchTrain=[];
+      }
+      if(continueSearch!=null && continueSearch.length>0){
+        this.continueSearchTrain=JSON.parse(continueSearch);
+        this.continueSearchTrain=this.continueSearchTrain.filter((item:any)=>{
+          if(item.searchFrom!=searchValueAllobj.searchFrom || item.searchTo!=searchValueAllobj.searchTo)
+          {
+              return item;
+          }
+        })
+      }
+      if(this.continueSearchTrain.length>3){
+        this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
+      }
+      this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+      localStorage.setItem('continueSearchTrain',JSON.stringify(this.continueSearchTrain));
+  }
  
    headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
