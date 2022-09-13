@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostListener,  OnDestroy, OnInit, ViewChild,ViewContainerRef,TemplateRef } from '@angular/core';
+import { AfterViewInit,Inject, Component, ComponentFactoryResolver, ElementRef, HostListener,  OnDestroy, OnInit, ViewChild,ViewContainerRef,TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BusService } from 'src/app/shared/services/bus.service';
 import { Location, ViewportScroller } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Options } from '@angular-slider/ngx-slider';
 import { SELECT_ITEM_HEIGHT_EM } from '@angular/material/select/select';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -16,6 +17,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/
 import { Subscription,Subject } from 'rxjs';
 import { BusHelper } from 'src/app/shared/utils/bus-helper';
 import { BusfilterPipe } from 'src/app/shared/pipes/busfilter.pipe';
+import { FlightService } from 'src/app/common/flight.service';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 import * as moment from 'moment';
 export const MY_DATE_FORMATS = {
   parse: {
@@ -57,7 +60,9 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         currentRtc: string;
         queryBusData:any;
         searchData: any;
-        searchParam:any;
+        searchParam: any = [];
+        searchParamPreviousDay: any = [];
+        searchParamNextDay: any = [];
         busList: any = [];
         busResponse:any;
         newDate = Date();
@@ -93,7 +98,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         totalrtc: any = [];
         rtctotal = [];
         departureTimeArr: any = [];
-        
+          params: any = [];
         bus_Timingsitems = [
         { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.png' },
         { name: '6AM-12PM', active: false, value: '6 AM - 12 PM', image: '2.png' },
@@ -118,7 +123,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
          operators: any = [];
         alloperators: any = [];
         filterOperators: any = [];
-
+        tracksearchObj:any;
         @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
         pageIndex: number = 11;
@@ -163,8 +168,8 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         }
    serviceSettings:any;
-
-  constructor(private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _busService: BusService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller, public busHelper: BusHelper ,private busfilter: BusfilterPipe)  {
+  datePreviousStatus: boolean;
+  constructor(public dialog: MatDialog,public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _busService: BusService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller, public busHelper: BusHelper ,private busfilter: BusfilterPipe,private _flightService: FlightService,  private activatedRoute: ActivatedRoute)  {
      this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.serviceSettings=this.appConfigService.getConfig();
        this._styleManager.setScript('custom', `assets/js/custom.js`);
@@ -174,8 +179,8 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
           $('#endOfPage').trigger('click');
         }
       });
-      
-       /* if( this.tag){
+        this.params = this.activatedRoute.snapshot;
+     if( this.tag){
         const dialogRef = this.dialog.open(ChromeExtBusDialog, {
         autoFocus: false,
         panelClass: 'alert_covid',
@@ -183,16 +188,12 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         disableClose: true
         });
         this.sortBy='price-low-high';
-        }*/
-      
-      
+        }
       
        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
-@HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
-  this.isMobile = window.innerWidth < 991 ?  true : false;
-}
+
 
    ngOnInit(): void {
         this.isMobile = window.innerWidth < 991 ?  true : false;
@@ -200,9 +201,51 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         this.gotoTop();
         this.loader = true;
         this.getQueryParamData(null);
+         this.headerHideShow(null)
         this.busSearch();
         this.loading = true;
+        
+        const queryParams = this.activatedRoute.snapshot.queryParams;
+        var datePipe = new DatePipe('en-US');
+        var previousDay = new Date(this.departure);
+        var departureTimestamp = previousDay.setDate(previousDay.getDate() - 1);
+        this.departureStr = previousDay.setDate(previousDay.getDate() - 1);
+        var departureDateNumber = datePipe.transform(departureTimestamp, 'yyyyMMdd');
+        var todayDt = datePipe.transform(new Date(), 'yyyy-MM-dd');
+        var todayDateNumber = datePipe.transform(todayDt, 'yyyyMMdd'); 
+        if (parseInt(todayDateNumber) > parseInt(departureDateNumber)) { 
+        this.datePreviousStatus = false;
+        } else {
+        this.datePreviousStatus = true;
+        }
+
+        this.activatedRoute.queryParams
+        .subscribe(params => {
+        this.tracksearchObj = { ...params.keys, ...params };
+        }
+        );
+
+        let trackUrlParams = new HttpParams();
+        trackUrlParams.set('current_url', window.location.href)
+        trackUrlParams.set('category', 'RedBus')
+        trackUrlParams.set('event', 'Search listing1')
+        trackUrlParams.set('metadata',this.EncrDecr.set(JSON.stringify(this.tracksearchObj)));
+
+        const track_body: string = trackUrlParams.toString();
+        this.rest.trackEvents( track_body).subscribe(result => {});
+        
+        
     }
+
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
+    }
+  }
+
 
         getQueryParamData(paramObj: any) {
         const params = this.route.snapshot.queryParams;
@@ -253,13 +296,76 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         $(".modal-backdrop").remove();
         }
 
-        ngAfterViewInit(): void {
-        setTimeout(() => {
-        this.Initslider();
-        }, 200);
-        }
+  ngAfterViewInit(): void {
 
+  }
+        seatSeletedView = false;
+  seatSelected(appt) {
+  this.seatSeletedView = appt;
+ }
+ departureDate: any;departureStr: any;
+ previousDay() {
+  var datePipe = new DatePipe('en-US');
+  var previousDay = new Date(this.departure);
+  var departureTimestamp = previousDay.setDate(previousDay.getDate() - 1);
+  this.departureStr = previousDay.setDate(previousDay.getDate() - 1);
+  var departureDateNumber = datePipe.transform(departureTimestamp, 'yyyyMMdd');
+  var departureDateNumberFormat2 = datePipe.transform(departureTimestamp, 'yyyy-MM-dd');
+  var todayDt = datePipe.transform(new Date(), 'yyyy-MM-dd');
+  var todayDtStr = new Date(todayDt);
+  var todayTimestamp = todayDtStr.setDate(todayDtStr.getDate());
+  var todayDateNumber = datePipe.transform(todayDt, 'yyyyMMdd');
+  if (parseInt(todayDateNumber) >= parseInt(departureDateNumber)) {
+   this.datePreviousStatus = false;
+   this.departureDate = departureDateNumberFormat2;
+   this.searchParamPreviousDay = {
+    searchFrom: this.busfrom,
+    searchTo: this.busto,
+    fromTravelCode: this.fromBusCode,
+    toTravelCode: this.toBusCode,
+    departure: this.departureDate,
+       fromState:this.fromState,
+   toState:this.toState
+   };
+   this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
+    queryParams: this.searchParamPreviousDay
+   });
+  } else {
+   this.datePreviousStatus = true;
+   this.departureDate = departureDateNumberFormat2;
+   this.searchParamPreviousDay = {
+    searchFrom: this.busfrom,
+    searchTo: this.busto,
+    fromTravelCode: this.fromBusCode,
+    toTravelCode: this.toBusCode,
+    departure: this.departureDate
+   };
+   this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
+    queryParams: this.searchParamPreviousDay
+   });
+  }
+ }
 
+ nextDay() {
+  var myDate = new Date(this.departure);
+  var nextDay = new Date(myDate);
+  this.departureStr = nextDay.setDate(myDate.getDate() + 1);
+  var datePipe = new DatePipe('en-US');
+  this.departureDate = datePipe.transform(this.departureStr, 'yyyy-MM-dd');
+  this.searchParamNextDay = {
+   searchFrom: this.busfrom,
+   searchTo: this.busto,
+   fromTravelCode: this.fromBusCode,
+   toTravelCode: this.toBusCode,
+   departure: this.departureDate,
+   fromState:this.fromState,
+   toState:this.toState
+   
+  };
+  this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
+   queryParams: this.searchParamNextDay
+  });
+ }
 
   // Bus Timings Filter
   BusTimingsDepartureFilterBusData(timingsItems: any) {
@@ -1099,6 +1205,21 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
       filterDiv.style.display = 'none';
     }
   }
+}
+@Component({
+  templateUrl: 'chrome-popup.html',
+ styleUrls: ['./bus-list.component.scss'],
+})
+export class ChromeExtBusDialog {
+  domainName:any;
+  constructor(
+    public dialogRef: MatDialogRef<ChromeExtBusDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,private sg: SimpleGlobal) { 
+      this.domainName = this.sg['domainName']
+    }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
