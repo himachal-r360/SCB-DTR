@@ -676,15 +676,14 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   expandItems(formId) {
    
     this.expandid = formId;
-    this.isExpanded = true;
-    this.isExpandedStretch=true;
+    //this.isExpanded = true;
+    //this.isExpandedStretch=true;
   }
 
   expandItemsstretch(formId) {
-    this.expandid = formId;
-    this.isExpanded = false;
-    this.isExpandedStretch=false;
-
+    this.expandid = 'n'; //setting dummy value so that process will work without flaw.
+   // this.isExpanded = false;
+    //this.isExpandedStretch=false;
   }
 
 
