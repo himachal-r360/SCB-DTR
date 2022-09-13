@@ -54,7 +54,7 @@
             </div>
             <form [formGroup]="Formotp" (ngSubmit)="generateVoucherOtp()">
             <div class="col-md-12">
-              <p>Please note that you can pay maximum {{redemption_value}}% of the transaction amount through Points i.e,<br>
+              <p>Please note that you can pay maximum {{redemption_value}}% to 70% of the transaction amount through Points i.e,<br>
               &#8377; <span>{{(orderamount* (redemption_value/100)) |number}}</span> ({{redemption_value |number}}% of &#8377;<span>{{orderamount |number}}</span>) only. Balance amount should be paid by Card or Account. </p>
                <div class="form-check pt-10 mt-2">
                 <input class="form-check-input" [(ngModel)]="otpaccepted" type="checkbox" formControlName="termsconditionvoucher" name="termsconditionvoucher" id="termsconditionvoucher">
@@ -197,7 +197,7 @@
 </div>
 <div class="container payment_cnt" *ngIf="addcardDiv && hasError==false">
   <div class="row">
-    <div class="col-md-6 col-12"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.png" alt="Voucher"> Would you like use another card</div>
+    <div class="col-md-6 col-12"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.png" alt="Voucher"> Add a card to redeem points</div>
     <div class="col-md-6 col-12 text-sm-end text-start">
       <div (click)="addCardform()" *ngIf="!voucheraddform" class="voucher_apply">Add Card</div>
     </div>
@@ -290,7 +290,7 @@
         </div>
         <div class="col-md-10">
           <p class="green-font"><strong>Congratulations! </strong></p>
-          <p class="green-font">Points has been redeemed successfully!</p>
+          <p class="green-font">Points have been redeemed successfully!</p>
           <div class="brown-box">
             <p>Pay remaining amount by cash</p>
           </div>

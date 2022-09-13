@@ -893,7 +893,7 @@
             
                 </div>
               </div>
-              <div *ngIf="steps==1 && !isMobile">
+              <div *ngIf="steps==2 && !isMobile">
                 <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey"
                   [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                   [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
@@ -939,7 +939,7 @@
         <div class="apply_fare row">
           <!--  <p *ngIf="steps<5" class="w-75"></p> -->
           <div class="col-6 text-left">
-            <p *ngIf="steps==1"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+            <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
                 data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
           </div>
           <div class="col-6 text-right">
@@ -973,7 +973,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true" *ngIf="steps==1 && isMobile">
+    aria-hidden="true" *ngIf="steps==2 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

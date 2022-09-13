@@ -246,6 +246,8 @@
                                         <p class="train_title_label"> Boarding station </p>
                                         <div class="">
                                             <div class="boarding_point">
+                                                <p class="change_text">Change</p>
+                                                
                                                 <mat-form-field class="w-100" appearance="outline">
                                                     <mat-select placeholder="Select boarding station" formControlName="boardingStation" [(ngModel)]="defaultBoardingStation" (ngModelChange)="trainSchedlue(defaultBoardingStation)">
                                                         <mat-option *ngFor="let stationList of stationNames" [value]="stationList.stnNameCode">
@@ -281,7 +283,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 my-3">
                                                                 <div class="row">
-                                                                    <div class="col-md-6 col-12">
+                                                                    <div class="col-md-6 col-12 train_custom_input">
                                                                         <mat-form-field class="w-100" appearance="outline">
                                                                             <mat-label>IRCTC Authorised Partner User ID (Case Sensitive)</mat-label>
                                                                             <input matInput placeholder="" formControlName="userID" value="{{IRCTCUserId}}" [(ngModel)]="IRCTCUserId" autocomplete="off" (keypress)="AvoidSpace($event);">
@@ -1207,7 +1209,23 @@
                         </div>
                 </div>
 
-
+                    <div class="othertraveller" *ngIf="saveTravllerShow">
+                  <ul class="add-search-ul d-block">
+                    <li class="custom-check-box">
+                      <div class="custom-controls-stacked">
+                        <label class="custom-control material-checkbox">
+                          <input type="checkbox" class="material-control-input" formControlName="saveTraveller"
+                            name="saveGST" id="save_traveller" [checked]="checked" value="true">
+                          <span class="material-control-indicator"></span>
+                          <span class="description fs_12 text-black">Add these travellers to Travellers list.</span>
+                          <span class="description fs_12"><span class="save_consent">I give consent to Reward360 to
+                              store personal information. Please <a href="javascript:;" (click)="saveTravellerConsent()"
+                                class="link_text">click here</a> for more information.</span></span>
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
             </div>
             <div>
 
@@ -2276,9 +2294,10 @@
                                                 <div (click)="isCollapseShow('BaseFare')">
                                                     <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
 
-                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png" alt="" *ngIf="!isCollapseBasefare">
+                                                        <!-- <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png" alt="" *ngIf="!isCollapseBasefare">
 
-                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png" alt="" *ngIf="isCollapseBasefare"> Ticket Fare</div>
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png" alt="" *ngIf="isCollapseBasefare">  -->
+                                                    Ticket Fare</div>
 
                                                 </div>
                                             </div>
