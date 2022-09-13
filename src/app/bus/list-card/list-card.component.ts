@@ -200,18 +200,21 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  dropPointActive:boolean=false; 
  boardPointActive: boolean = true;
  changeTab(selectAfterAdding: boolean) {
+  
   if (selectAfterAdding) {
    this.selected = 1;
    this.dropPointActive = true;
    this.boardPointActive = false;
   } else {
    this.selected = 0;
-   
   }
+ }
+ pressBoardPoint(){
+  this.dropPointActive = false;
+  this.boardPointActive = true;
  }
  tabSelectionChanged(event) {
   this.selected = event;
-  this.dropPointActive = true;
  }
 
  moveTop() {

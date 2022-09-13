@@ -1107,7 +1107,7 @@
     <div class="mob-sf-tabs mt-5">
     <ul class="nav nav-tabs m-popup-tabs mt-5 ">
         <li>
-            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab" [ngClass]="{'active' : boardPointActive}">Boarding Points</a>
+            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab" [ngClass]="{'active' : boardPointActive}" (click)="pressBoardPoint()">Boarding Points</a>
         </li>
         <li class="nav-item">
             <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab" [ngClass]="{'active' : dropPointActive}">Dropping Points</a>
@@ -1131,7 +1131,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px" class="">({{boardingpoints.nextday | date:'dd LLL'}}) </span></td>
+                        <td><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 9px" class="">({{boardingpoints.nextday | date:'dd LLL'}}) </span></td>
                         <td><p class="b-place-two">{{boardingpoints.address}}<span *ngIf="boardingpoints.landmark !=boardingpoints.address"> ,{{boardingpoints.landmark}}</span></p></td></tr>
                 </table>
                 </div>
