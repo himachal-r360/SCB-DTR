@@ -386,13 +386,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     return str.join("&");
   }
 
+  serverIssue:number=0;
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
 
 
-
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
+     if(res && res.response && res.response.docKey){
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
@@ -412,13 +413,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
 
-
-
         this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
+        this.serverIssue=0;
+       }else{
+       this.serverIssue=1;this.loader = false;
+       } 
+        
 
-    }, (error) => { console.log(error) });
+    }, (error) => {  this.serverIssue=1; this.loader = false; });
   }
   GetMinAndMaxPriceForFilter() {
 

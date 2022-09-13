@@ -15,7 +15,20 @@
         </div>
     </div>
 </section>
-<section class="flight-area mt-10" *ngIf="!isMobile">
+<div class="text-center" *ngIf="!isMobile && serverIssue==1">
+<div class="no_flights_sec">
+<div>
+<p class="title">Yikes! No flight found</p>
+<img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+<p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+<div>
+<button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+</div>
+</div>
+</div>
+</div>
+
+<section class="flight-area mt-10" *ngIf="!isMobile && serverIssue==0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -951,7 +964,7 @@
                         </a>
                     </div>
                     <div class="mob-listing-header-center">
-                        <h6>{{fromCityName}} - {{toCityName}} <span *ngIf="queryFlightData.flightdefault=='R'"> | {{toCityName}} - {{fromCityName}}</span></h6>
+                        <h6>{{flightTimingfrom}} - {{flightTimingto}} <span *ngIf="queryFlightData.flightdefault=='R'"> | {{flightTimingto}} - {{flightTimingfrom}}</span></h6>
                         <p>{{departureDate | date:'EEE, dd MMM' }} <span *ngIf="queryFlightData.flightdefault=='R'"> | {{returnDate | date:'EEE, dd MMM' }}</span> | {{totalPassenger}} Travellers | <span *ngIf="flightClassVal == 'B'">Business</span>
                             <span *ngIf="flightClassVal == 'E'">Economy</span>
                             <span *ngIf="flightClassVal == 'F'">First</span>
@@ -965,7 +978,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 mt-70" *ngIf="!loader">
+            <div class="col-md-12 mt-70" *ngIf="!loader && serverIssue==0 ">
                 <div class="mob-listing-fiters">
                     <h6>{{flightList.length}} Flights Found</h6>
                     <a href="javascript:void(0)" (click)="openMobileFilterSection()">
@@ -977,7 +990,7 @@
 
 
 
-            <div class="col-md-12" *ngIf="!loader">
+            <div class="col-md-12" *ngIf="!loader && serverIssue==0">
                 <div class="mob-all-flight">
                     <ul>
                         <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems" value="{{Items.value}}">
@@ -988,6 +1001,9 @@
                     </ul>
                 </div>
             </div>
+            
+            
+
 
             <div class="col-md-12">
                 <ng-container #itemsContainer></ng-container>

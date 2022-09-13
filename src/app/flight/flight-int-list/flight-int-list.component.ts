@@ -1301,10 +1301,12 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   flightFromVal:any;
+    serverIssue:number=0;
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
   this._flightService.flightList(searchObj).subscribe((res: any) => {
+      if(res && res.response && res.response.docKey){
       this.loader = false;
       this.DocKey = res.response.docKey;
       
@@ -1319,8 +1321,12 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       }
       this.getAirlinelist();
       this.popularFilterFlightData();
+      this.serverIssue=0; 
+      }else{
+      this.serverIssue=1; this.loader = false;
+      }
 
-    }, (error) => { console.log(error) });
+    }, (error) => { this.serverIssue=1; this.loader = false; });
   }
   ascPriceSummaryFlighs(flightsData:any)
   {

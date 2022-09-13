@@ -16,8 +16,22 @@
         </div>
     </div>
   </section>
+  
+  <div class="text-center" *ngIf="!isMobile && serverIssue==1">
+<div class="no_flights_sec">
+<div>
+<p class="title">Yikes! No flight found</p>
+<img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+<p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+<div>
+<button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+</div>
+</div>
+</div>
+</div>
 
-    <section class="flight-listing-area mt-10" *ngIf="!isMobile">
+
+    <section class="flight-listing-area mt-10" *ngIf="!isMobile && serverIssue==0">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -663,7 +677,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 mt-70" *ngIf="!loader">
+                <div class="col-md-12 mt-70" *ngIf="!loader && serverIssue==0">
                     <div class="mob-listing-fiters">
                         <h6>{{flightList.length + ReturnflightList.length}} Flights Found</h6>
                         <a href="javascript:void(0)" class="showfilters" (click)="openMobileFilterSection()">
@@ -672,7 +686,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-md-12" *ngIf="!loader">
+                <div class="col-md-12" *ngIf="!loader && serverIssue==0">
                     <div class="mob-all-flight">
                         <ul>
                             <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems" value="{{Items.value}}" (click)="searchNonStop(Items)">
@@ -697,8 +711,19 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-12">
+                <div class="text-center" *ngIf="serverIssue==1">
+                <div class="no_flights_sec" >
+                <div>
+                <p class="title">Yikes! No flight found</p>
+                <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                <div>
+                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-12" *ngIf="serverIssue==0">
                     <div class="mob-list-area mob-fr-list-area">
                         <div class="row g-0">
                             <div class="col-6">
