@@ -70,7 +70,7 @@
                                         <h6 class="">Departure Time</h6>
                                         <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
                                     </div>
-                                    <div class="widget-content">
+                                    <div class="widget-content mt-20">
                                         <div class="flighttiming-content flight-departing">
                                             <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
                                                 <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
@@ -121,7 +121,7 @@
                                         <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
                                     </div>
                                     <div class="widget-content">
-                                        <div class="flighttiming-content flight-departing">
+                                        <div class=" flight-departing">
                                             <div  *ngFor="let classes of availableClasses ">
                                                 <label class="checkbox"  >
                                                 <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
@@ -142,7 +142,9 @@
                                 <mat-expansion-panel-header class="h_auto">
                                 Boarding Point
                                 </mat-expansion-panel-header>
-                                 <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                 <div class="reset_link">
+                                    <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                 </div>
                                 <div class="filter_search_div">
                                 <span><i class="fa fa-search" aria-hidden="true"></i>
                                 <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
@@ -161,7 +163,9 @@
                                 <mat-expansion-panel-header class="h_auto">
                                Dropping Point
                                 </mat-expansion-panel-header>
-                                  <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
+                                <div class="reset_link">
+                                    <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
+                                 </div>
                                 <div class="filter_search_div">
                                 <span><i class="fa fa-search" aria-hidden="true"></i>
                                 <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
@@ -179,7 +183,10 @@
                         <mat-expansion-panel-header class="h_auto">
                         Operators
                         </mat-expansion-panel-header>
-                          <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
+                        <div class="reset_link">
+                            <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
+                         </div>
+                          
                         <div class="filter_search_div">
                         <span><i class="fa fa-search" aria-hidden="true"></i>
                         <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
@@ -198,7 +205,9 @@
                         <mat-expansion-panel-header class="h_auto">
                         Amenities
                         </mat-expansion-panel-header>
-                         <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
+                        <div class="reset_link mb-15">
+                            <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
+                         </div>
                         <div class="float-left pt-24 filter-common">
                         <label class="checkbox" *ngFor="let am of amenities " >
                         <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
@@ -284,20 +293,22 @@
                         <ng-container *ngIf="totalrtc.length>0">
                         <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
                         <div  class="list-card list-bus-card w-100 float-left">
-                        <div class="row align-items-center bus_list_box">
-                        <div class="col-md-4">
-                        <div class="label-name">{{rtc[0].travels}} </div>
-                        <div class="label-gray"> {{rtc.length}} Buses</div>
-                        </div>
-                        <div class="col-md-4">
-                        <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
-                        <div class="label-gray">Onwards</div> 
-                        </div>
-                        <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
-                        <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
-                        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
-                        <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
-                        </div>
+                        <div class="w-100">
+                            <div class="row align-items-center bus_list_box">
+                                <div class="col-md-4">
+                                    <div class="label-name">{{rtc[0].travels}} </div>
+                                    <div class="label-gray"> {{rtc.length}} Buses</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
+                                    <div class="label-gray">Onwards</div> 
+                                </div>
+                                <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
+                                <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
+                                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
+                                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
+                                </div>
+                            </div>
                         </div>
                         </div> 
 
@@ -545,151 +556,245 @@
                             </div>
                             <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
                             
-                                <div class="filter-w-header w-100 float-left ">
-                                <span class="filter_heading float-left">Filters </span>
-                                <span class="float-right"><a href="javascript:;" (click)="resetAllFilters()"  class="filter_blue_link">Reset All</a></span>
-                                </div>
-                            
-                        <div class="m_filter_paddng">
-                                <div class="default-sidebar flight-sidebar" [hidden]="loader">
-                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
-                                <div class="widget-title">
-                                <h6 class="">Departure Time</h6>
-                                <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
-                                </div>
-                                <div class="widget-content">
-                                <div class="flighttiming-content flight-departing">
-                                <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
-                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
-                                <p [innerHTML]="timingsItems.value"></p>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
-                                <div class="widget-title">
-                                <h6 class="">Arrival Time</h6>
-                                <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
-                                </div>
-                                <div class="widget-content">
-                                <div class="flighttiming-content flight-departing">
-                                <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
-                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
-                                <p [innerHTML]="timingsItems.value"></p>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-                                <div class="sidebar-widget Price-widget">
-                                <div class="widget-title">
-                                <h6 class="">Price</h6>
-                                <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
-                                </div>
-                                <div class="widget-content mt-10 mb-30 price-widget-content">
-                                <div class="price-widget-content-flx">
-                                <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
-                                <span class="ms-3 me-3">-</span>
-                                <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
-                                </div>
-                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
-                                </div>
-                                </div>
+                               <!--  <div class="mf_filter">
+                                    <div class="filter-w-header w-100 float-left ">
+                                        <span class="filter_heading float-left">Filters </span>
+                                        <span class="float-right"><a href="javascript:;" (click)="resetAllFilters()"  class="filter_blue_link">Reset All</a></span>
+                                        </div>
+                                </div> -->
 
-                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
-                                <div class="widget-title">
-                                <h6 class="">Bus Type</h6>
-                                <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
-                                </div>
-                                <div class="widget-content">
-                                <div class="flighttiming-content flight-departing">
-                                <div  *ngFor="let classes of availableClasses ">
-                                <label class="checkbox"  >
-                                <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
-                                {{classes.type}} ({{classes.count}})
-                                <span class="checkmark"></span>
-                                </label>
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-                                <hr>         
+                                <div class="mob-sf-filters">
+                                    <div class="mob-sf-accordion">
+                                        <div class="accordion" id="accordionExample">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                  Depature Time
+                                              </button>
+                                                </h2>
+                                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                                                    <div class="accordion-body">
+                                                        <div class=" flighttimings-widget" id="Flight_Timings">
+                                                            <div class="widget-content">
+                                                            <div class="flighttiming-content flight-departing">
+                                                            <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
+                                                            <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                            <p [innerHTML]="timingsItems.value"></p>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mob-reset text-end">
+                                                            <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingeight">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseeight" aria-expanded="false" aria-controls="collapseeight">
+                                                        Arrival Time
+                                            </button>
+                                                </h2>
+                                                <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight">
+                                                    <div class="accordion-body">
+                                                        <div class="default-sidebar">
+                                                            <div class=" flighttimings-widget" id="Flight_Timings">
+                                                                
+                                                                <div class="widget-content">
+                                                                <div class="flighttiming-content flight-departing">
+                                                                <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
+                                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                                <p [innerHTML]="timingsItems.value"></p>
+                                                                </div>
+                                                                </div>
+                                                                </div>
+                                                                </div>
 
-                                <div class="m_filter_paddng">         
-                                <mat-accordion multi="true">
+                                                            <div class="mob-reset text-end">
+                                                                <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingTwo">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                        Bus Type
+                                              </button>
+                                                </h2>
+                                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                                    <div class="accordion-body">
+                                                        <div class=" flighttimings-widget" id="Flight_Timings">
+                                                           
+                                                            <div class="widget-content mt-20">
+                                                            <div class=" flight-departing">
+                                                            <div  *ngFor="let classes of availableClasses ">
+                                                            <label class="checkbox"  >
+                                                            <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
+                                                            {{classes.type}} ({{classes.count}})
+                                                            <span class="checkmark"></span>
+                                                            </label>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                            </div>
+                                                        <div class="mob-reset text-end">
+                                                            <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingThree">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                  Price
+                                              </button>
+                                                </h2>
+                                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree">
+                                                    <div class="accordion-body">
 
-                                <mat-expansion-panel >
-                                <mat-expansion-panel-header class="h_auto">
-                                Boarding Point
-                                </mat-expansion-panel-header>
-                                <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
-                                <div class="filter_search_div">
-                                <span><i class="fa fa-search" aria-hidden="true"></i>
-                                <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
-                                </div>
+                                                        <div class="Price-widget">
+                                                           
+                                                            <div class="widget-content mt-10 mb-30 price-widget-content">
+                                                            <div class="price-widget-content-flx">
+                                                            <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                                            <span class="ms-3 me-3">-</span>
+                                                            <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                                            </div>
+                                                            <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
+                                                            </div>
+                                                            </div>
 
-                                <div class="float-left pt-24 filter-common">
-                                <label class="checkbox" *ngFor="let bp of boardingpoints " >
-                                <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
-                                {{bp.boardingPointName}} ({{bp.total}}) 
-                                <span class="checkmark"></span>
-                                </label>
-                                </div>
-                                </mat-expansion-panel>
+                                                        <div class="mob-reset text-end">
+                                                            <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingfour">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                                                        Boarding Point
+                                              </button>
+                                                </h2>
+                                                <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingfour">
+                                                    <div class="accordion-body stops-widget">
+                                                        
+                                                        <div class="filter_search_div">
+                                                        <span><i class="fa fa-search" aria-hidden="true"></i>
+                                                        <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
+                                                        </div>
+            
+                                                        <div class="float-left pt-24 filter-common">
+                                                        <label class="checkbox" *ngFor="let bp of boardingpoints " >
+                                                        <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
+                                                        {{bp.boardingPointName}} ({{bp.total}}) 
+                                                        <span class="checkmark"></span>
+                                                        </label>
+                                                        </div>
+                                                        <div class="mob-reset text-end">
+                                                            <div class="">
+                                                                <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingfive">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                                                        Dropping Point
+                                              </button>
+                                                </h2>
+                                                <div id="collapsefive" class="accordion-collapse collapse" aria-labelledby="headingfive">
+                                                    <div class="accordion-body">
+                                                        <div class="default-sidebar">
+                                                            
+                                                            <div class="filter_search_div">
+                                                            <span><i class="fa fa-search" aria-hidden="true"></i>
+                                                            <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
+                                                            </div>
+                
+                                                            <div class="float-left pt-24 filter-common">
+                                                            <label class="checkbox" *ngFor="let bp of droppingpoints " >
+                                                            <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
+                                                            {{bp.boardingPointName}} ({{bp.total}}) 
+                                                            <span class="checkmark"></span>
+                                                            </label>
+                                                            </div>
 
-                                <mat-expansion-panel >
-                                <mat-expansion-panel-header class="h_auto">
-                                Dropping Point
-                                </mat-expansion-panel-header>
-                                <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
-                                <div class="filter_search_div">
-                                <span><i class="fa fa-search" aria-hidden="true"></i>
-                                <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
-                                </div>
+                                                            <div class="d-flex justify-content-between mt-2">
+                                                                <div class="">
+                                                                    <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingsix">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                                        Operator
+                                              </button>
+                                                </h2>
+                                                <div id="collapsesix" class="accordion-collapse collapse" aria-labelledby="headingsix">
+                                                    <div class="accordion-body">
+                                                        
+                                                        <div class="filter_search_div">
+                                                        <span><i class="fa fa-search" aria-hidden="true"></i>
+                                                        <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
+                                                        </span>
+                                                        </div>
+            
+                                                        <div class="float-left pt-24 filter-common">
+                                                        <label class="checkbox" *ngFor="let op of operators " >
+                                                        <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
+                                                        {{op.name}}({{op.total}})
+                                                        <span class="checkmark"></span>
+                                                        </label>
+                                                        </div>
+                                                        <div class="mob-reset text-end">
+                                                            <div class="">
+                                                                <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingseven">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
+                                                        Amenities
+                                              </button>
+                                                </h2>
+                                                <div id="collapseseven" class="accordion-collapse collapse" aria-labelledby="headingseven">
+                                                    <div class="accordion-body">
+                                                        <div class="default-sidebar">
+                                                           
+                                                            <div class="float-left pt-24 filter-common">
+                                                            <label class="checkbox" *ngFor="let am of amenities " >
+                                                            <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
+                                                            {{am.amenities}}({{am.total}}) 
+                                                            <span class="checkmark"></span>
+                                                            </label>
+                                                            </div> 
 
-                                <div class="float-left pt-24 filter-common">
-                                <label class="checkbox" *ngFor="let bp of droppingpoints " >
-                                <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
-                                {{bp.boardingPointName}} ({{bp.total}}) 
-                                <span class="checkmark"></span>
-                                </label>
-                                </div>
-                                </mat-expansion-panel>
-                                <mat-expansion-panel>
-                                <mat-expansion-panel-header class="h_auto">
-                                Operators
-                                </mat-expansion-panel-header>
-                                <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
-                                <div class="filter_search_div">
-                                <span><i class="fa fa-search" aria-hidden="true"></i>
-                                <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
-                                </span>
-                                </div>
+                                                            <div class="mob-reset text-end">
+                                                                <div class="">
+                                                                    <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <div class="float-left pt-24 filter-common">
-                                <label class="checkbox" *ngFor="let op of operators " >
-                                <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
-                                {{op.name}}({{op.total}})
-                                <span class="checkmark"></span>
-                                </label>
                                 </div>
-                                </mat-expansion-panel>
-                                <mat-expansion-panel *ngIf = "amenities.length > 0 " class="brdr_btm_0 pb-3">
-                                <mat-expansion-panel-header class="h_auto">
-                                Amenities
-                                </mat-expansion-panel-header>
-                                <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
-                                <div class="float-left pt-24 filter-common">
-                                <label class="checkbox" *ngFor="let am of amenities " >
-                                <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
-                                {{am.amenities}}({{am.total}}) 
-                                <span class="checkmark"></span>
-                                </label>
-                                </div> 
-                                </mat-expansion-panel>             
-                                </mat-accordion>      
-                                </div>
-                                </div>
-                            </div>
                             
                      
                                        <div class="mob-sf-btns">

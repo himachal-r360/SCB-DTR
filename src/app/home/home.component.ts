@@ -169,8 +169,11 @@ export class HomeComponent implements OnInit {
         case ('/'+this.sg['domainPath']+'bus'):
         this.navItemActive = 'bus';
         break;
-        case ('/'+this.sg['domainPath']+'train'):  case ('/'+this.sg['domainPath']+'train/pnr'):
+        case ('/'+this.sg['domainPath']+'train'): 
         this.navItemActive = 'train';
+        break;
+        case ('/'+this.sg['domainPath']+'train/pnr'):
+        this.navItemActive = 'pnr';
         break;
         default:
         this.navItemActive ='flight';
