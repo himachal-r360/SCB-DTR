@@ -351,7 +351,7 @@
                         <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you</a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays</a>
+                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays {{menuActiveClass}}</a>
                         <div class="dropdown-content-list list-travel" >
                             <div class="row">
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
@@ -1999,7 +1999,7 @@
                 <ul>
                     <li *ngIf="payzrestriction==false">
                         <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''">
-                            <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
+                            <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You </span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
                     </li>
                     <li>
