@@ -172,6 +172,7 @@ export class HeaderComponent implements OnInit {
         showcards:boolean=false;
         mainRedirect:any;
 	notificationball:boolean=true;
+  @Input() d_none :boolean = false;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
