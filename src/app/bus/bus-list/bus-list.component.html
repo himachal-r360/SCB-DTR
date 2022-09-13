@@ -54,7 +54,7 @@
                                         <h6 class="">Departure Time</h6>
                                         <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
                                     </div>
-                                    <div class="widget-content">
+                                    <div class="widget-content mt-20">
                                         <div class="flighttiming-content flight-departing">
                                             <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
                                                 <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
@@ -126,7 +126,9 @@
                                 <mat-expansion-panel-header class="h_auto">
                                 Boarding Point
                                 </mat-expansion-panel-header>
-                                 <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                 <div class="reset_link">
+                                    <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                 </div>
                                 <div class="filter_search_div">
                                 <span><i class="fa fa-search" aria-hidden="true"></i>
                                 <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
