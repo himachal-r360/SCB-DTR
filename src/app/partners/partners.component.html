@@ -20,9 +20,9 @@
                 <div class="row" [ngClass]="(first)?' ':'mt-3'">
                   <div class="col-md-4">
                     <h5 class="secondary_heading">{{partners.name}} Partners</h5>
-                    <p class="p_text">{{partners.description}} </p>
+                    <!-- <p class="p_text">{{partners.description}} </p> -->
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-8 mt-2 mt-md-0">
                     <div class="container-sm">
                       <div class="gx-sm-5 gy-3 gy-sm-3 row">
                         <div class="col-md-4 " *ngFor="let partner of partners.list; first as first" >
@@ -36,7 +36,7 @@
                               <div class="row">
                                 <div class="col-6 col-md-12">
                                   <div class="content_div_up">
-                                    <p class="card_p_text m-0 p-0">Upto <span class="font-weight-bold">{{serviceSettings.offer_construct[partner.offer_construct].reward}}X</span></p>
+                                    <p class="card_p_text m-0 p-0"><span class="font-weight-bold">{{serviceSettings.offer_construct[partner.offer_construct].reward}}X</span></p>
                                     <p class="card_p_text p-0 m-0">Reward points</p>
                                   </div>
                                 </div>
@@ -79,12 +79,14 @@
 
                         <div class="voucher_tab_section mb-5">
 
-                            <ul class="nav nav-tabs" id="" role="tablist">
+                            <ul class="nav nav-tabs scrolling_img_div" id="" role="tablist">
                             <ng-container *ngFor="let vouchercat of getVouchersList; first as first">
                                 <li class="nav-item" role="presentation" >
                                      <div class="nav-link "  [ngClass]="(first)?'active':''"  id="{{vouchercat.slug}}-tab" data-bs-toggle="tab" [attr.data-bs-target]="'#' + vouchercat.slug"  type="button" role="tab" aria-controls="{{vouchercat.slug}}" aria-selected="true">
                                         <div class="text-center">
-                                          <img src="{{cdnUrl}}images/smartbuy/partner/vouchers/{{vouchercat.image}}">
+                                          <!-- <span class="img_div"> -->
+                                            <img src="{{cdnUrl}}images/smartbuy/partner/vouchers/{{vouchercat.image}}" class="img_div">
+                                          <!-- </span> -->
                                             <p class="name_tab">{{vouchercat.voucher_name}}</p>
                                         </div>
                                     </div>
