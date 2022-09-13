@@ -255,6 +255,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
     localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
   }
+    serverIssue:number=0;
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
@@ -264,8 +265,9 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         element.style.gridTemplateColumns = 'repeat('+this.searchData.length+',1fr)';
       }
        this._flightService.multicityList(searchObj).subscribe((res: any) => {
-      if(res.response.journeys)
+      if(res && res.response && res.response.journeys)
       {
+       this.serverIssue=1; 
         this.WithoutFilterFlightList = res.response.journeys;
         this.flightList = this.ascPriceSummaryFlighs(res.response.journeys[0].sectors);
         this.flightList.forEach((z)=>{
@@ -282,15 +284,16 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         // console.log(this.flightList,"this.flightList");
          this.loader = false;
          this.popularFilterFlightData();
-
+         this.serverIssue=0; 
       }
       else{
         this.loader = false;
+        this.serverIssue=1; 
       }
 
     }, (error) => {
-      this.loader = false;
-      console.log(error) });
+    this.serverIssue=1; this.loader = false;
+     });
 
   }
   ascPriceSummaryFlighs(flightsData: any) {
