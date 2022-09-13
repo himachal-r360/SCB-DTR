@@ -8,7 +8,7 @@
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item"><a href="#">Travel &amp; Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><span>Acron Cadolim Regina</span></li>
+                      <li class="list-inline-item"><span>{{HotelDetail.hotelInfo.name}}</span></li>
                   </ul>
               </div>
           </div>
@@ -24,27 +24,27 @@
                   <div class="hotel-list-item">
                       <div class="hotel-list-left">
                           <div class="hotel-list-text">
-                              <h6 class="hotel-name">Acron Candolim Regina</h6>
-                              <p class="hotel-place">376, off Fort Aguada, Candolim, Bardez, Goa403507, India</p>
-                              <p class="hotel-star">
-                                  <i class="fas fa-star active"></i>
-                                  <i class="fas fa-star active"></i>
-                                  <i class="fas fa-star active"></i>
-                                  <i class="fas fa-star active"></i>
-                                  <i class="fas fa-star active"></i>
-                                  <span class="hotel-star-tag">5/5</span>
-                              </p>
+                              <h6 class="hotel-name">{{HotelDetail.hotelInfo.name}}</h6>
+                              <p class="hotel-place">{{HotelDetail.hotelInfo.address=='' ? HotelDetail.hotelInfo.city : HotelDetail.hotelInfo.address }}</p>
+                              <p class="hotel-star" *ngIf="HotelDetail.hotelInfo.starRating > 0">
+                                <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 1}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 2}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 3}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 4}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 5}"></i>
+                                <span class="hotel-star-tag">{{HotelDetail.hotelInfo.starRating}}/5</span>
+                            </p>
                           </div>
                       </div>
                       <div class="hotel-list-right">
                           <div class="hotel-list-info">
                               <div class="hotel-list-info-item">
                                   <div class="hotel-list-info-thume">
-                                      <img src="assets/images/flights/1.png" alt="">
+                                      <img src="{{cdnUrl}}/images/flight_partners/small-no/{{PriceSummery.partnerName}}.png" alt="">
                                   </div>
                                   <div class="hotel-list-info-price">
                                       <h6>
-                                          <strong>₹ 4,892 </strong>
+                                          <strong>₹{{PriceSummery.price | number}}</strong>
                                           <span class="information-icon">
                                               <img src="assets/images/icons/info.png" class="ms-2 " alt="">
                                               <div class="hover-popover">
@@ -54,16 +54,16 @@
                                                   <div class="hover-popover-content">
                                                       <div class="hover-popover-content-list">
                                                           <p>Base Fare</p>
-                                                          <p>₹4,892</p>
+                                                          <p>₹{{PriceSummery.price | number}}</p>
                                                       </div>
                                                       <div class="hover-popover-content-list">
-                                                          <p>Base Fare</p>
-                                                          <p>₹4,892</p>
+                                                          <p>tax</p>
+                                                          <p>₹0</p>
                                                       </div>
                                                       <hr class="m-0">
                                                       <div class="hover-popover-content-list popover-total">
                                                           <p>Total</p>
-                                                          <p>₹4,892</p>
+                                                          <p>₹{{PriceSummery.price | number}}</p>
                                                       </div>
                                                   </div>
                                                   <div class="hover-popover-footer">
@@ -89,7 +89,7 @@
               <div class="hd-gallery">
                   <div id="big" class="owl-carousel owl-theme">
                       <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
+                          <img src="{{HotelDetail.hotelInfo.image}}" class="img-fluid" alt="">
                       </div>
                       <!-- <div class="item">
                           <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
@@ -176,17 +176,17 @@
               <div class="hd-tabs-area">
                   <ul class="list-unstyled hd-tabs">
                       <li>
-                          <a href="javascript:void(0); " class="hd-tabs-active" data-bind="hdOverview">Overview</a>
+                          <a href="javascript:void(0); " (click)="selectedTab = 'Overview'" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}" data-bind="hdOverview">Overview</a>
                       </li>
                       <li>
-                          <a href="javascript:void(0);" data-bind="hdRooms"> Rooms</a>
+                          <a href="javascript:void(0);" (click)="selectedTab = 'Rooms'" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"  data-bind="hdRooms"> Rooms</a>
                       </li>
                       <li>
-                          <a href="javascript:void(0);" data-bind="hdAmenities"> Amenities</a>
+                          <a href="javascript:void(0);" (click)="selectedTab = 'Amenities'" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}" data-bind="hdAmenities"> Amenities</a>
                       </li>
                   </ul>
                   <div class="hd-tabs-details">
-                      <div id="hdOverview" class="hd-details-area hd-tabs-details-active">
+                      <div id="hdOverview" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Overview'}">
                           <div class="hd-details-body">
                               <div class="Overview-area">
                                   <div class="Overview-top">
@@ -213,71 +213,42 @@
                                       <div class="Overview-bottom-title mb-20">
                                           <h6>Facilities Offered</h6>
                                       </div>
-                                      <owl-carousel-o [options]="customOptions">
-                                      <div class="owl-slider grid-7 hd-Offered-slider" carouselSlide>
-                                          <div class="box-item">
+
+
+                                        <div class="owl-slider grid-7 hd-Offered-slider">
+                                          <owl-carousel-o [options]="customOptions">
+                                        <ng-container *ngFor="let item of Facilities; let i = index">
+                                          <ng-template carouselSlide>
+                                            <div class="box-item">
                                               <div class="hd-Offered-thumbe">
-                                                  <img src="assets/images/hotel/Offered/1.png" class="img-fluid" alt="">
+                                                  <img src="{{item.image}}" class="img-fluid" alt="">
                                               </div>
                                               <div class="hd-Offered-text">
-                                                  <h6>Room Service <br> (24 Hours)</h6>
+                                                  <h6>{{item.name}}</h6>
                                               </div>
                                           </div>
-                                          <div class="box-item">
-                                              <div class="hd-Offered-thumbe">
-                                                  <img src="assets/images/hotel/Offered/2.png" class="img-fluid" alt="">
-                                              </div>
-                                              <div class="hd-Offered-text">
-                                                  <h6>Gym</h6>
-                                              </div>
-                                          </div>
-                                          <div class="box-item">
-                                              <div class="hd-Offered-thumbe">
-                                                  <img src="assets/images/hotel/Offered/3.png" class="img-fluid" alt="">
-                                              </div>
-                                              <div class="hd-Offered-text">
-                                                  <h6>Pool</h6>
-                                              </div>
-                                          </div>
-                                          <div class="box-item">
-                                              <div class="hd-Offered-thumbe">
-                                                  <img src="assets/images/hotel/Offered/4.png" class="img-fluid" alt="">
-                                              </div>
-                                              <div class="hd-Offered-text">
-                                                  <h6>Bar</h6>
-                                              </div>
-                                          </div>
-                                          <div class="box-item">
-                                              <div class="hd-Offered-thumbe">
-                                                  <img src="assets/images/hotel/Offered/5.png" class="img-fluid" alt="">
-                                              </div>
-                                              <div class="hd-Offered-text">
-                                                  <h6>Doctor on call</h6>
-                                              </div>
-                                          </div>
-                                          <div class="box-item">
-                                              <div class="hd-Offered-thumbe">
-                                                  <img src="assets/images/hotel/Offered/6.png" class="img-fluid" alt="">
-                                              </div>
-                                              <div class="hd-Offered-text">
-                                                  <h6>Internet</h6>
-                                              </div>
-                                          </div>
-                                          <div class="box-item box-item-text">
-                                              <div class="hd-Offered-text">
-                                                  <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
-                                                      <p>21+</p>
-                                                      <span>More Amenities</span>
-                                                  </a>
-                                              </div>
+                                            </ng-template>
+                                         </ng-container>
+
+                                          <ng-template carouselSlide>
+                                         <div class="box-item box-item-text">
+                                          <div class="hd-Offered-text">
+                                              <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
+                                                  <p>21+</p>
+                                                  <span>More Amenities</span>
+                                              </a>
                                           </div>
                                       </div>
-                                    </owl-carousel-o>
+                                    </ng-template>
+                                        </owl-carousel-o>
+
+                                        </div>
+
                                   </div>
                               </div>
                           </div>
                       </div>
-                      <div id="hdRooms" class="hd-details-area">
+                      <div id="hdRooms" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Rooms'}">
                           <div class="hd-details-body">
                               <div class="hd-Rooms-area">
                                   <div class="hd-Rooms-top">
@@ -415,7 +386,7 @@
                               </div>
                           </div>
                       </div>
-                      <div id="hdAmenities" class="hd-details-area">
+                      <div id="hdAmenities" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Amenities'}">
                           <div class="hd-details-body">
                               <div class="Amenities-area">
                                   <div class="Amenities-top">
