@@ -1107,14 +1107,14 @@
     <div class="mob-sf-tabs mt-5">
     <ul class="nav nav-tabs m-popup-tabs mt-5 ">
         <li>
-            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab">Boarding Points</a>
+            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab" [ngClass]="{'active' : boardPointActive}">Boarding Points</a>
         </li>
         <li class="nav-item">
-            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab">Dropping Points</a>
+            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab" [ngClass]="{'active' : dropPointActive}">Dropping Points</a>
         </li>
     </ul>
     <div class="tab-content clearfix">
-        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab">
+        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab" [ngClass]="{'active' : boardPointActive}">
             <div class="m-bordng-drpng-div">
             <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
             
@@ -1123,7 +1123,7 @@
                 <table>
                     <tr> 
                       
-                        <td><input type="radio" name="mobile-boarding" id="{{boardingpoints.boardingPointId}}" class="hidden" #selectAfterAdding (click)="changeTab(selectAfterAdding.checked)"/>
+                        <td><input type="radio" name="mobile-boarding" id="{{boardingpoints.boardingPointId}}" class="hidden" #selectAfterAdding (click)="changeTab(selectAfterAdding.checked)"  />
                             <span class="label"></span> </td>
                     
                         <td><p class="b-time">{{boardingpoints.ctime}}</p></td>
@@ -1138,7 +1138,7 @@
             </label>
             </div>
         </div>
-        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab">
+        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab" [ngClass]="{'active show' : dropPointActive}">
         <div class="m-bordng-drpng-div">
                         <div class="info text-gary" *ngIf="showErrorDropping" [ngClass]="{'errorred':showErrorDropping}">Please select boarding & dropping points to continue</div>
 
