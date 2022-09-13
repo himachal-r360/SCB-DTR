@@ -56,7 +56,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
   toStateName:any='From city';
   departureDate:any = "";
   recentDepartureDate : any = "";
-  continueSearchBuss:any=[]
+  continueSearchBuss:any=[];
   submitted = false;
    searchBusForm: FormGroup;
         dateValidation: boolean = false;
