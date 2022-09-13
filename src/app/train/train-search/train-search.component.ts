@@ -169,7 +169,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-    this.setSearchFilterData()
+    this.setSearchFilterData();
    /* this.fromCityName=this.route.snapshot.queryParamMap.get('searchFrom').replace(/-/g, " ");
     this.fromStateName=this.route.snapshot.queryParamMap.get('fromTravelCode')+', '+this.fromCityName;
     this.toCityName=this.route.snapshot.queryParamMap.get('searchTo').replace(/-/g, " ");
