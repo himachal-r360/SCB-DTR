@@ -486,6 +486,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
   }
   fastestTrain;
  getTrains(){
+
   this.searchParam = {
       frmStn:this.frmStn,
       journeyDate:this.journeyDate,
@@ -514,6 +515,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         this.sortFilterhide = false;
         
     }else{
+
       if (typeof this.trainResponse.partnerResponse.trainBtwnStnsList !== 'undefined') 
       {
  	this.checkavlTrainslength = (this.trainResponse.partnerResponse.trainBtwnStnsList).length;
@@ -546,9 +548,17 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
               this.fastestTrain=this.trains[0].trainNumber;
               
           }else{
+           var errorMessage="No Trains Found";
+           if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
+              errorMessage=this.trainResponse.partnerResponse.errorMessage;
+            alert(errorMessage);
             this.selected_count=-1;
           }
       }else{
+            var errorMessage="No Trains Found";
+            if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
+              errorMessage=this.trainResponse.partnerResponse.errorMessage;
+            alert(errorMessage);
             this.selected_count=-1;
       }
     }
