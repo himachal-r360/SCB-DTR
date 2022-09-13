@@ -133,7 +133,22 @@
   </div> -->
 
   <mat-accordion>
-    <mat-expansion-panel [expanded]="true">
+  <!--   <mat-expansion-panel [expanded]="true" *ngIf="isMobile">
+      <mat-expansion-panel-header class="h_auto">
+       Quota
+      </mat-expansion-panel-header>
+     
+          <div>
+            <mat-radio-group [(ngModel)]="selectedQuota" class="quota_flex">
+            <mat-radio-button class="quota_btn" *ngFor = "let quota of avlQuota " [value]="quota.quotaCode">
+              {{quota.quotaName}}
+            </mat-radio-button>
+          </mat-radio-group>
+          </div>
+      
+
+    </mat-expansion-panel> -->
+    <mat-expansion-panel [expanded]="true" >
       <mat-expansion-panel-header class="h_auto">
        Train Timings
       </mat-expansion-panel-header>

@@ -169,12 +169,12 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-    //this.setSearchFilterData()
-    this.fromCityName=this.route.snapshot.queryParamMap.get('searchFrom').replace(/-/g, " ");
+    this.setSearchFilterData();
+   /* this.fromCityName=this.route.snapshot.queryParamMap.get('searchFrom').replace(/-/g, " ");
     this.fromStateName=this.route.snapshot.queryParamMap.get('fromTravelCode')+', '+this.fromCityName;
     this.toCityName=this.route.snapshot.queryParamMap.get('searchTo').replace(/-/g, " ");
     this.toStateName=this.route.snapshot.queryParamMap.get('toTravelCode')+', '+this.toCityName;
-    this.departureDate=this.route.snapshot.queryParamMap.get('departure');
+    this.departureDate=this.route.snapshot.queryParamMap.get('departure');*/
 
    });
   }
