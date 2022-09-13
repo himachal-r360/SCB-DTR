@@ -795,7 +795,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
