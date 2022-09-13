@@ -473,6 +473,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       }
     }else{
       this.quota = this.selectedQuota;
+
       if(this.quota == "SS"){
        var message =
         'What is LOWER BERTH/Sr. CITIZEN Quota??<br>'+
@@ -510,6 +511,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
   }
   fastestTrain;
  getTrains(){
+
   this.searchParam = {
       frmStn:this.frmStn,
       journeyDate:this.journeyDate,
@@ -538,6 +540,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         this.sortFilterhide = false;
         
     }else{
+
       if (typeof this.trainResponse.partnerResponse.trainBtwnStnsList !== 'undefined') 
       {
  	this.checkavlTrainslength = (this.trainResponse.partnerResponse.trainBtwnStnsList).length;
@@ -570,9 +573,17 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
               this.fastestTrain=this.trains[0].trainNumber;
               
           }else{
+           var errorMessage="No Trains Found";
+           if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
+              errorMessage=this.trainResponse.partnerResponse.errorMessage;
+            alert(errorMessage);
             this.selected_count=-1;
           }
       }else{
+            var errorMessage="No Trains Found";
+            if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
+              errorMessage=this.trainResponse.partnerResponse.errorMessage;
+            alert(errorMessage);
             this.selected_count=-1;
       }
     }
@@ -657,13 +668,14 @@ updateTrainTypeFilter(appt) {
   this.trains = this.trains.filter(g => {return true;});
   }
   updateTosSelectedQuota(appt) {
-    // console.log('Quota===>',appt);
+    this.selectedQuota = appt.quotaCode;
+    this.quotaSelect(appt.quotaCode,false);
   //   if(appt.selected) {
-  //    this.selectedQuota = appt.stationCode;
+  //    this.selectedQuota = appt.quotaCode;
   //   }
   //   else {
-  //   let index = this.filterToStations.indexOf(appt.stationCode)
-  //     this.filterToStations.splice(index, 1);
+  //   let index = this.selectedQuota.indexOf(appt.quotaCode)
+  //     this.selectedQuota.splice(index, 1);
      
   //   }
   // this.trains = this.trains.filter(g => {return true;});
@@ -695,13 +707,21 @@ updateTrainTypeFilter(appt) {
   selectedOptionNew: any = "Early Departure";
   selected:any="leave-early";
   
-   orderBy(option) {  
+   orderBy(option) {
+
     this.selectedOptionNew = option;
     if (option == 'leave-early') {
       this.selectedOption = 'Early Departure';
     } else if (option == 'leave-late') {
       this.selectedOption = 'Late Depature';
     }
+    if(this.isMobile){
+      var filterDiv = document.getElementById('sortMobileFilter');
+        if(filterDiv)
+        {
+          filterDiv.style.display = 'none';
+        }
+    } 
     this.sortBy=option;
     this.showSortbuy=false;
     this.Sortby = "Sorted By"; 
