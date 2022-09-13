@@ -119,7 +119,7 @@ public modeselectTrending= 'All';
   dateInputMask = createMask<Date>({
     alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
-    inputFormat: 'dd/MM/yyyy',
+    inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
       debugger;
       console.log(value);
