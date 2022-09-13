@@ -265,10 +265,9 @@
                        
                         <div class="flight-listing-area">
                    
-                       <ng-container *ngIf="totalrtc.length>0">
+                        <ng-container *ngIf="totalrtc.length>0">
                         <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
-                      
-                      <div  class="list-card list-bus-card w-100 float-left">
+                        <div  class="list-card list-bus-card w-100 float-left">
                         <div class="row align-items-center bus_list_box">
                         <div class="col-md-4">
                         <div class="label-name">{{rtc[0].travels}} </div>
@@ -280,20 +279,17 @@
                         </div>
                         <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
                         <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
-
                         <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
                         <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
                         </div>
                         </div>
                         </div> 
-                   
+
                         <list-component *ngFor="let bus of rtc | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
                         [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
                         </div>
                         </ng-container>
-                        
-                        
-                            <ng-container #itemsContainer></ng-container>
+                        <ng-container #itemsContainer></ng-container>
                         </div>
                         
                         <div class="text-center" *ngIf="!loader && busList.length < 1">
@@ -333,41 +329,42 @@
         <div class="row">
             <div class="col-md-12 p-0 fixed-top">
                 <div class="mob-listing-header">
-                    <div class="mob-listing-header-left">
-                        <a href="javascript:;" routerLink="/compare-fly">
-                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                        </a>
-                    </div>
-                    <div class="mob-listing-header-center">
-                        <h6>{{fromCityName}} - {{toCityName}}</h6>
-                        <p>{{departureDate | date:'EEE, dd MMM' }} | {{totalPassenger}} Travellers | <span *ngIf="flightClassVal == 'B'">Business</span>
-                            <span *ngIf="flightClassVal == 'E'">Economy</span>
-                            <span *ngIf="flightClassVal == 'F'">First</span>
-                            <span *ngIf="flightClassVal == 'P'">Premium</span>
-                        </p>
-                    </div>
-                    <div class="mob-listing-header-right">
-                        <a href="javascript:;" routerLink="/compare-fly">
-                            <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
-                        </a>
-                    </div>
+                   <div class="mob-listing-header-left">
+                      <a href="javascript:;" routerLink="/bus" >
+                          <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                      </a>
+                  </div>
+                  <div class="mob-listing-header-center">
+                      <h6>{{busfrom}} - {{busto}}</h6>
+                      <div class="d-flex align-items-center justify-content-center">
+                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <p>{{departure | date:'EEE, dd MMM' }}   </p>
+                            <div class="date_sm_round" (click)="nextDay()" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                      </div>
+                      
+                  </div>
+                  <div class="mob-listing-header-right">
+                      <a href="javascript:;" routerLink="/bus" >
+                          <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
+                      </a>
+                  </div>
                 </div>
             </div>
-            <div class="col-md-12 flight_found_sec" *ngIf="!loader">
-                <div class="mob-listing-fiters">
-                    <h6>{{busList.length}} Flights Found</h6>
-                    <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
-                        <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
-                        <span class="mx-2">Sort/Filters</span>
-                    </a>
-                </div>
+            <div class="col-md-12 mt-70 flight_found_sec" *ngIf="!loader">
+                        <div class="mob-listing-fiters">
+                  <h6>  <p *ngIf="busList">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p></h6>
+                  <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
+                      <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                      <span class="px-2">Sort/Filters</span>
+                  </a>
+              </div>
             </div>
 
 
 
     
             <div class="col-md-12">
-                <ng-container #itemsContainer></ng-container>
+               
                 <div *ngIf="loader">
                     <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                         <div class="filter-loader-content w-100">
@@ -395,15 +392,38 @@
                             </div>
                     </div>
                 </div>
-                <ng-template #item let-item="item">
-                    <div *ngFor="let list of item; let i = index">
-                        Mobile
-                    </div>
-                </ng-template>
+                <ng-container *ngIf="totalrtc.length>0">
+                <div *ngFor="let rtc of totalrtc; index as ind" class="d-block d-sm-none cust-pb-10 w-100 float-left">
+                <div  class="list-card list-bus-card w-100 float-left">
+                <div class="row align-items-center bus_list_box">
+                <div class="col-md-4">
+                <div class="label-name">{{rtc[0].travels}} </div>
+                <div class="label-gray"> {{rtc.length}} Buses</div>
+                </div>
+                <div class="col-md-4">
+                <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
+                <div class="label-gray">Onwards</div> 
+                </div>
+                <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
+                <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
+                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
+                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
+                </div>
+                </div>
+                </div> 
+
+                <list-component *ngFor="let bus of rtc | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
+                [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
+                </div>
+                </ng-container>
+                <ng-container #itemsContainer></ng-container>
+               <ng-template #item let-item="item">
+                            <div *ngFor="let bus of item; let i = index"> 
+                             <list-component [parentSubject]="parentSubject"  [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
+                            </div>    
+                        </ng-template>
                 <div id="endOfPage" (click)="loadData()"></div>
             </div>
-
-
 
             <!-- ------------------------------
             >>> mobile Sort Filters
