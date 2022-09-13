@@ -50,11 +50,11 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         filterboardingpoints = [];
         filterdroppingpoints = [];
         filteramenities = [];
-         sortBy: string = 'rating';
+        sortBy: string = 'rating';
 
-      busFilterlengthZero :boolean = false;
+        busFilterlengthZero :boolean = false;
         tag:any;
-                currentRtc: string;
+        currentRtc: string;
         queryBusData:any;
         searchData: any;
         searchParam:any;
@@ -67,7 +67,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         maxPrice: number = 10000;
         resetMinPrice: number = 0;
         resetMaxPrice: number = 10000;
-        
+
         math = Math;
         minDate = new Date();
         options: Options = {
@@ -86,13 +86,13 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         toState:string;
         cdnUrl: any;
         busListWithOutFilter: any = [];
-         busListFullData: any = [];
-         loading: boolean = true;
-         parentSubject: Subject < Boolean > = new Subject();
-          totalrtcseats: number = 0;
+        busListFullData: any = [];
+        loading: boolean = true;
+        parentSubject: Subject < Boolean > = new Subject();
+        totalrtcseats: number = 0;
         totalrtc: any = [];
         rtctotal = [];
-           departureTimeArr: any = [];
+        departureTimeArr: any = [];
         
         bus_Timingsitems = [
         { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.png' },
@@ -121,13 +121,11 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
 
         @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
-
         pageIndex: number = 11;
         ITEMS_RENDERED_AT_ONCE=10;
         nextIndex=0;
 
         private loadData() {
-            
              if (this.pageIndex >= this.busList.length) {
              return false;
               }else{
@@ -221,9 +219,33 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         this.toState=this.searchParam.toState;
         this.fromState=this.searchParam.fromState;
         this.toState=this.searchParam.toState;
-
+     this.busSearchCallBack(params);
+      localStorage.setItem('busLastSearchNew',JSON.stringify(params));
         }
         
+      continueSearch:any=[];  
+        continueSearchBuss:any=[]
+    busSearchCallBack(param:any){
+      let searchValueAllobj=param;
+      let continueSearch:any=localStorage.getItem('continueSearchBus');
+      if(continueSearch==null){
+        this.continueSearchBuss=[];
+      }
+      if(continueSearch!=null && continueSearch.length>0){
+        this.continueSearchBuss=JSON.parse(continueSearch);
+        this.continueSearchBuss=this.continueSearchBuss.filter((item:any)=>{
+          if(item.searchFrom!=searchValueAllobj.searchFrom || item.searchTo!=searchValueAllobj.searchTo)
+          {
+              return item;
+          }
+        })
+      }
+      if(this.continueSearchBuss.length>3){
+        this.continueSearchBuss=this.continueSearchBuss.slice(0,3);
+      }
+      this.continueSearchBuss.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+      localStorage.setItem('continueSearchBus',JSON.stringify(this.continueSearchBuss));
+  }      
         
         resetPopups(){
         $(".modal").hide();
@@ -409,11 +431,36 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.busList = updatedbusList;
      
-     
-     
      this.container.clear();
      this.intialData();
   }
+  
+   /* selected: any = "Rating"; */
+ selectedOption: any = "Rating";
+ selectedOptionNew: any = "rating";
+      showSortbuy: boolean = false;
+  option:string='';
+ orderBy(option) {
+        this.selectedOptionNew = option;
+        if (option == 'rating') {
+        this.selectedOption = 'Rating';
+        } else if (option == 'price-low-high') {
+        this.selectedOption = 'Price (Low to High)';
+        } else if (option == 'price-high-low') {
+        this.selectedOption = 'Price (High to Low)';
+        } else if (option == 'leave-early') {
+        this.selectedOption = 'Leave Early';
+        } else if (option == 'leave-late') {
+        this.selectedOption = 'Leave Late';
+        } else if (option == 'seats-availability') {
+        this.selectedOption = 'Seats Availability';
+        } else {
+        this.selectedOption = 'Rating';
+        }
+        this.option = option;
+        this.sortBy = option;
+     this.popularFilterBusData();
+ } 
   
         containsAny(source: any,target: any)
         {
@@ -578,11 +625,48 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
      this.resetBusDepartureTimingsFilter();
      this.resetBusArrivalTimingsFilter();
      this.resetPriceFilter();
+     this.resetBusTypeFilter();
+     this.resetBoardingFilter();
+     this.resetDroppingFilter();
+     this.resetOperFilter();
+     this.resetAmenitiesFilter();
   }
+  resetBoardingFilter(){
+    this.filterboardingpoints=[];
+    this.boardingpoints.forEach((item) => {        item.selected = false;        });
+    this.popularFilterBusData();
+  }
+  resetDroppingFilter(){
+    this.filterdroppingpoints=[];
+    this.droppingpoints.forEach((item) => {        item.selected = false;        });
+    this.popularFilterBusData();
+  
+  }
+  resetAmenitiesFilter(){
+     this.filteramenities=[];
+    this.amenities.forEach((item) => {        item.selected = false;        });
+    this.popularFilterBusData();
+  }
+  resetOperFilter(){
+    this.filterOperators=[];
+    this.operators.forEach((item) => {        item.selected = false;        });
+    this.popularFilterBusData();
+  }
+
+  
   resetBusDepartureTimingsFilter() {
     this.bus_Timingsitems.filter((item: any) => { item.active = false; return item; })
     this.popularFilterBusData();
   }
+  
+    resetBusTypeFilter() {
+        this.filterClasses = [];
+        this.availableClasses.forEach((item) => {
+        item.selected = false;
+        });
+     this.popularFilterBusData();
+  }
+  
 
   resetBusArrivalTimingsFilter() {
     this.bus_TimingsArrivalitems.filter((item: any) => { item.active = false; return item; })

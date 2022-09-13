@@ -102,7 +102,7 @@
                                                    <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                                     <div class="widget-title">
                                         <h6 class="">Bus Type</h6>
-                                        <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
+                                        <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
                                     </div>
                                     <div class="widget-content">
                                         <div class="flighttiming-content flight-departing">
@@ -126,6 +126,7 @@
                                 <mat-expansion-panel-header class="h_auto">
                                 Boarding Point
                                 </mat-expansion-panel-header>
+                                 <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
                                 <div class="filter_search_div">
                                 <span><i class="fa fa-search" aria-hidden="true"></i>
                                 <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
@@ -144,6 +145,7 @@
                                 <mat-expansion-panel-header class="h_auto">
                                Dropping Point
                                 </mat-expansion-panel-header>
+                                  <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
                                 <div class="filter_search_div">
                                 <span><i class="fa fa-search" aria-hidden="true"></i>
                                 <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
@@ -157,38 +159,38 @@
                                 </label>
                                 </div>
                                 </mat-expansion-panel>
-           <mat-expansion-panel>
-<mat-expansion-panel-header class="h_auto">
-Operators
-</mat-expansion-panel-header>
-<!-- <h6>OPERATORS</h6> -->
-<div class="filter_search_div">
-<span><i class="fa fa-search" aria-hidden="true"></i>
-<input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
-</span>
-</div>
+                     <mat-expansion-panel>
+                        <mat-expansion-panel-header class="h_auto">
+                        Operators
+                        </mat-expansion-panel-header>
+                          <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
+                        <div class="filter_search_div">
+                        <span><i class="fa fa-search" aria-hidden="true"></i>
+                        <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
+                        </span>
+                        </div>
 
-<div class="float-left pt-24 filter-common">
-<!-- <div class="col-xs-12 p0 search-hint">&nbsp;</div> -->
-<label class="checkbox" *ngFor="let op of operators " >
-<input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
-{{op.name}}({{op.total}})
-<span class="checkmark"></span>
-</label>
-</div>
-</mat-expansion-panel>
-<mat-expansion-panel *ngIf = "amenities.length > 0 " class="brdr_btm_0 pb-3">
-<mat-expansion-panel-header class="h_auto">
-Amenities
-</mat-expansion-panel-header>
-<div class="float-left pt-24 filter-common">
-<label class="checkbox" *ngFor="let am of amenities " >
-<input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
-{{am.amenities}}({{am.total}}) 
-<span class="checkmark"></span>
-</label>
-</div> 
-   </mat-expansion-panel>             
+                        <div class="float-left pt-24 filter-common">
+                        <label class="checkbox" *ngFor="let op of operators " >
+                        <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
+                        {{op.name}}({{op.total}})
+                        <span class="checkmark"></span>
+                        </label>
+                        </div>
+                        </mat-expansion-panel>
+                        <mat-expansion-panel *ngIf = "amenities.length > 0 " class="brdr_btm_0 pb-3">
+                        <mat-expansion-panel-header class="h_auto">
+                        Amenities
+                        </mat-expansion-panel-header>
+                         <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
+                        <div class="float-left pt-24 filter-common">
+                        <label class="checkbox" *ngFor="let am of amenities " >
+                        <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
+                        {{am.amenities}}({{am.total}}) 
+                        <span class="checkmark"></span>
+                        </label>
+                        </div> 
+                        </mat-expansion-panel>             
                         </mat-accordion>      
                           </div>
                                             
