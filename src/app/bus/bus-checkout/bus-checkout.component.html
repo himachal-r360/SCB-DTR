@@ -57,7 +57,9 @@
         <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==1" >
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
-                <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" >
+
+         <!-- <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" > -->
+                <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==2" > 
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
     </div>
@@ -344,7 +346,7 @@
 
                       </ng-container>
                         <!--expandid==i && isExpanded-->
-                          <div  [ngClass]="{'hidden': expandid!=i && !isExpanded || !isExpanded }" >
+                          <div   [ngClass]="expandid == i ? '' : 'hidden' " >
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
                               <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
                                 <label class="custom-control material-checkbox">
@@ -371,16 +373,17 @@
                         
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">
-                              <p class="view_more_btn">
-                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded" >
-                                 View More  &#x25BC;
-                                </a>
+                              <p class="view_more_btn expand_{{i}}" *ngIf=" expandid!=i">
+                                <a (click)="expandItems(i)"  > View More &#x25BC; </a> 
                                 
-                                <a (click)="expandItemsstretch(i)" *ngIf="expandid==i && isExpanded">
-                                View Less &#x25B2;
-                                </a>
+                              </p>
+
+                              <p class="view_more_btn cexpand_{{i}}" *ngIf="expandid==i">
+
+                                <a (click)="expandItemsstretch(i)" > View Less &#x25B2; </a> 
 
                               </p>
+
                             </div>
                           </div>
 
@@ -727,10 +730,10 @@
                 <div class="sidebar-widget fare-summary-widget">
                   <div class="widget-title">
                     <h4>Fare Summary</h4>
-                    <img *ngIf="selectedOnwardVendor"
-                      src="{{ cdnUrl }}images/flight_partners/{{ selectedOnwardVendor.partnerName }}.png"
-                      alt="{{ selectedOnwardVendor.partnerName }}">
-                      
+                    <img *ngIf="busData" 
+                      src="{{ cdnUrl }}images/smartbuy/partner/48/svg/redbus.svg"
+                      alt="redbus">
+
                   </div>
                   <div class="widget-content">
                     <ul class="widget-list clearfix">
@@ -951,10 +954,10 @@
           <div class="row">
             <div class="col-5">
               <div class="">
-                <h6 class="price">₹{{ fareData.totalFare|number }}</h6>
-                <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                  {{ calculateEMI(fareData.totalFare|number)|number: '.2' }}/month</p>
-
+                <h6 class="price">₹{{ totalFare |number }} </h6>
+                <p class="emi" *ngIf="totalFare > EMIAvailableLimit">EMI @
+                  {{ calculateEMI(totalFare|number)|number: '.2' }}/month</p>
+<p class="hidden">{{fareData | json}}</p>
               </div>
             </div>
             <div class="col-7">

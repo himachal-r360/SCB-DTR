@@ -41,11 +41,11 @@ const routes: Routes = [
   },
   {
 
-    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
+    path:"flight-int" ,component:FlightIntListComponent
 
   },
   {
-    path:"flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+    path:"flight-multicity" ,component:FlightMulticityComponent
 
   },
   {
@@ -60,11 +60,11 @@ const routes: Routes = [
   },
   {
 
-    path:"regalia_gold/flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
+    path:"regalia_gold/flight-int" ,component:FlightIntListComponent
 
   },
   {
-    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent
 
   },
     {

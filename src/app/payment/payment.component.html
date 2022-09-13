@@ -67,7 +67,7 @@
         <div class="card_partner_info">
             <div class="amount_sec">
                 <div>
-                    <p class="title">Balance Amount </p>
+                    <p class="title">Paying </p>
                 </div>
                 <div class="text-end">
                     <p class="title_sub">Amount </p>
@@ -136,7 +136,7 @@
                        
                                     <li class="nav-item" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
                                         <a id="tab-flexipay" href="#pane-flexipay" class="nav-link" data-bs-toggle="tab" role="tab">
-                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexipay</span>
                                         </a>
                                       </li>
                        
@@ -627,7 +627,7 @@
                                                                                                 <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
                                                                                             </div>
                                                                                             <div>
-                                                                                                <p class="title">Interest Charged by Bank	</p>
+                                                                                                <p class="title">Interest Charged by Bank   </p>
                                                                                                 <p class="value">₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }}</p>
                                                                                             </div>
                                                                                             <div>
@@ -720,7 +720,7 @@
                                                                                                     <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
                                                                                                 </div>
                                                                                                 <div>
-                                                                                                    <p class="title">Interest Charged by Bank	</p>
+                                                                                                    <p class="title">Interest Charged by Bank   </p>
                                                                                                     <p class="value">₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }}</p>
                                                                                                 </div>
                                                                                                 <div>
@@ -735,10 +735,11 @@
                                                                                     <div>
                                                                                         <h6 class="payTitle">Enter only the <b>digits</b> of your PAN</h6>
                                                                                         <div class="col-md-6 col-12">
-                                                                                            <mat-form-field>
-                                                                                                <input matInput placeholder="XXXX"  formControlName="panNo" name="panNo" id="panNo" maxlength="4" autocomplete="off">
+                                                                                            <mat-form-field appearance="outline">
+                                                                                                <mat-label>PAN No</mat-label>
+                                                                                                <input matInput formControlName="panNo" placeholder="" name="panNo" id="panNo" maxlength="4" autocomplete="off">
                                                                                             </mat-form-field>
-                                                                                            <div *ngIf="submittedDebitEMIFrom && Debit2EMIFrom.controls.panNo.errors" class="error">
+                                                                                            <div *ngIf="submittedDebitEMIFrom && Debit2EMIFrom.controls.panNo.errors" class="error dcemi_error">
                                                                                                 <small *ngIf="Debit2EMIFrom.controls.panNo.errors.required">PAN Number is required</small>
                                                                                                 <span *ngIf="Debit2EMIFrom.get('panNo').dirty || submittedDebitEMIFrom">
                                                                                                 </span>
@@ -751,16 +752,19 @@
                                                                                         <span style="font-size: 12px;font-style: normal;">A fee of Rs 199 + GST will be charged by HDFC Bank on your Debit card for providing the EMI service.</span>
                                                                                     </div>
                                                                                     <div class="my-2 xs-center">
-                                                                                        <p class="my-2"> 
-                                                                                            <label class="checkbox xs-check-font">
-                                                                                                I understand and agree to the rules and restrictions of this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by SmartBuy.
-                                                                                                <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span>
+                                                                                       
+                                                                                        <div class="my-2">
+                                                                                        <div class="form-check">
+                                                                                            <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
+                                                                                            <label class="form-check-label xs-check-font" for="termscondition" >
+                                                                                               I understand and agree to the rules and restrictions of this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by SmartBuy.
                                                                                             </label>
-                                                                                        </p>
+                                                                                        </div>
+                                                                                    </div>
                                                                                         <div *ngIf="submittedDebitEMIFrom && Debit2EMIFrom.controls.termscondition.errors" class="error">
                                                                                             <div *ngIf="Debit2EMIFrom.controls.termscondition.errors.required || Debit2EMIFrom.controls.termscondition.errors.pattern">Please accept Terms and Conditions</div>
                                                                                         </div>
-                                                                                            <button class="btn-c btn-primary" (click)="validateDebitEmi_new()">Continue</button>
+                                                                                            <button class="btn btn-paynow" (click)="validateDebitEmi_new()">Continue</button>
                                                                                     </div>
                                                                                 </div>
                                                                             </form>
@@ -781,7 +785,7 @@
                                                                                                         <p class="value">₹{{emi.value | number:'1.2-2' }}</p>
                                                                                                     </div>
                                                                                                     <div>
-                                                                                                        <p class="title">Interest Charged by Bank	</p>
+                                                                                                        <p class="title">Interest Charged by Bank   </p>
                                                                                                         <p class="value">₹{{(emi.value*emi.key-payTotalFare)| number:'1.2-2' }}</p>
                                                                                                     </div>
                                                                                                     <div>
@@ -844,32 +848,36 @@
                                                                                      <p class="py-2">One time password has been sent to your mobile number registered with HDFC Bank</p>
                                                                                      <h6 class="payTitle">Enter OTP</h6>
                                                                                      <div class="row py-3">
-                                                                                         <div class="col-6 col-md-3">
+                                                                                         <div class="col-8">
                                                                                               <mat-form-field class="w-100" appearance="outline">
                                                                                                 <mat-label>OTP</mat-label>
                                                                                                  <input matInput placeholder=""  (keypress)="numberInput($event)" formControlName="otpnumber" name="otpnumber" id="otpnumber" maxlength="6" autocomplete="off">
                                                                                              </mat-form-field>
 
-                                                                                             <div *ngIf="submittedDebitEMIOTPFrom && Debit2EMIOTPFrom.controls.otpnumber.errors" class="error">
+                                                                                             <div *ngIf="submittedDebitEMIOTPFrom && Debit2EMIOTPFrom.controls.otpnumber.errors" class="error dcemi_error">
                                                                                                  <div *ngIf="Debit2EMIOTPFrom.controls.otpnumber.errors.required || Debit2EMIOTPFrom.controls.otpnumber.errors.pattern">Enter Valid OTP</div>
                                                                                              </div>
                                                                                              <div class="error" *ngIf="submittedDebitEMIOTPFrom && DCEMIError !=''">{{DCEMIError}}</div>
                                                                                          </div>
                                                                                          <div class="col-12">
-                                                                                             <p class=""> 
-                                                                                                 <label class="checkbox xs-check-font pt-6">
-                                                                                                    I accept to the <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Personal/Borrow/Popular%20Loans%20Landing%20Page/EasyEMI/EasyEMI%20on%20Consumer%20Durables/Merhant-Sanction-Letter-DCEMI.pdf" target="_blank"> EasyEMI Loan Sanction Letter </a>, 
-                                                                                                     <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Personal/Borrow/Popular%20Loans%20Landing%20Page/EasyEMI/TERMS%20AND%20CONDITIONS%20FOR%20CONSUMER%20DURABLE%20AND%20LIFESTYLE%20PRODUCT%20LOAN.pdf" target="_blank">Terms and Conditions</a> and 
-                                                                                                      <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Personal/Borrow/Popular%20Loans%20Landing%20Page/EasyEMI/Schedule%20of%20charges.pdf" target="_blank">Schedule Of Charges of HDFC Bank </a>.
-                                                                                                     <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
-                                                                                             </p>
+                                                                                            
+                                                                                            <div class="my-2">
+                                                                                                <div class="form-check">
+                                                                                                    <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition">
+                                                                                                    <label class="form-check-label xs-check-font" for="termscondition" >
+                                                                                                        I accept to the <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Personal/Borrow/Popular%20Loans%20Landing%20Page/EasyEMI/EasyEMI%20on%20Consumer%20Durables/Merhant-Sanction-Letter-DCEMI.pdf" target="_blank"> EasyEMI Loan Sanction Letter </a>, 
+                                                                                                         <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Personal/Borrow/Popular%20Loans%20Landing%20Page/EasyEMI/TERMS%20AND%20CONDITIONS%20FOR%20CONSUMER%20DURABLE%20AND%20LIFESTYLE%20PRODUCT%20LOAN.pdf" target="_blank">Terms and Conditions</a> and 
+                                                                                                          <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Personal/Borrow/Popular%20Loans%20Landing%20Page/EasyEMI/Schedule%20of%20charges.pdf" target="_blank">Schedule Of Charges of HDFC Bank </a>.
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            </div>
                                                                                              <div *ngIf="submittedDebitEMIOTPFrom && Debit2EMIOTPFrom.controls.termscondition.errors" class="error">
                                                                                                  <small *ngIf="Debit2EMIOTPFrom.controls.termscondition.errors.required || Debit2EMIOTPFrom.controls.termscondition.errors.pattern">Please accept Terms and Conditions and Loan Sanction Letter</small>
                                                                                              </div>
                                                                                              
                                                                                          </div>
                                                                                          <div class="col-6 col-md-3">
-                                                                                                 <button class="btn-c btn-primary mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
+                                                                                                 <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
                                                                                          </div>
                                                                                      </div>
                                                                                  </form>
@@ -1193,7 +1201,7 @@
                                     <div class="panel-heading">
                                         <div class="" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
                                             <a id="tab-flexipay" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-flexipay" aria-expanded="false" aria-controls="collapse-flexipay">
-                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexi Pay</span>
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexipay</span>
                                                 
                                             </a>
                                         </div>
@@ -1245,21 +1253,27 @@
                                                                         </div>
                             
                                                                         <!--Flexipay guset screen starts-->
-                                                                        <div>
-                                                                            <div class="sign-section col-md-8" *ngIf="fpGuestsession && !showflexipaydefaultsection">
+                                                                        <div class="row">
+                                                                            <div class=" col-md-11 mt-15" *ngIf="fpGuestsession && !showflexipaydefaultsection">
                                                                                 <!-- <button type="button" class="dc_close close" (click)="close()" >&times;</button> -->
                                                                                 <form [formGroup]="flexipayguestForm" name="flexipayguestForm" class="ps-2 pt-1 p-sm-1" (ngSubmit)="fpGuestmobile()">
                                                                                     <!-- <p class="my-3">Enter mobile number linked with your HDFC Bank Debit Card</p> -->
-                                                                                    <mat-form-field class="d-none d-sm-block" appearance="outline" >
+                                                                                    <div class="d-none d-sm-block">
+                                                                                        <mat-form-field  appearance="outline" class="w-100" >
                                                                                         <mat-label>Enter your Mobile Number linked to your HDFC Bank Debit Card</mat-label>
                                                                                         <input matInput placeholder="" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber"
                                                                                             maxlength="10" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off">
                                                                                     </mat-form-field>
-                                                                                    <mat-form-field class="d-block d-sm-none" appearance="outline" >
+                                                                                    </div>
+                                                                                    <div class="d-block d-sm-none">
+                                                                                         <mat-form-field  appearance="outline" class="w-100" >
                                                                                         <mat-label>Enter Mobile Number linked to account</mat-label>
                                                                                         <input matInput placeholder="" (keypress)="numberInput($event);AvoidSpace($event)" (ngModelChange)="checkInputchanges()" value="{{REWARD_MOBILE}}" [(ngModel)]="REWARD_MOBILE" formControlName="mobileNumber" maxlength="10"
                                                                                             onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false" autocomplete="off">
                                                                                     </mat-form-field>
+                                                                                    </div>
+                                                                                    
+                                                                                   
                             
                                                                                    
                             
@@ -1436,11 +1450,12 @@
                                                                     <div class="otp-section" *ngIf="showFlexiOTP" #flexipanelsection>
                                                                         <form [formGroup]="flexipayOTPForm" (ngSubmit)="validateFlexipayOTP()">
                                                                             <!-- <p class="py-2">One time password has been sent to your mobile number registered with HDFC Bank</p> -->
-                                                                            <h6 class="payTitle"><b>Enter OTP</b></h6>
+                                                                            <!-- <h6 class="payTitle"><b>Enter OTP</b></h6> -->
                                                                             <div class="row py-3">
-                                                                                <div class="col-6 col-md-3">
-                                                                                    <mat-form-field>
-                                                                                        <input #target (keypress)="numberInput($event)" (ngModelChange)="checkInputchanges()" matInput formControlName="otpNumber" placeholder="OTP" name="otpnumber" id="" maxlength="6" autocomplete="off">
+                                                                                <div class="col-4 col-md-4">
+                                                                                    <mat-form-field class="w-100" appearance="outline">
+                                                                                        <mat-label>OTP</mat-label>
+                                                                                        <input #target (keypress)="numberInput($event)" (ngModelChange)="checkInputchanges()" matInput formControlName="otpNumber" placeholder="" name="otpnumber" id="" maxlength="6" autocomplete="off">
                                                                                     </mat-form-field>
                                                                                     <div *ngIf="flexiOTPsubmitted && flexipayOTPForm.get('otpNumber').invalid" class="flexi_Error">
                                                                                         <span *ngIf="flexipayOTPForm.get('otpNumber').errors.required">Please enter your OTP.</span>
@@ -1452,7 +1467,7 @@
                                                                                     </div>
                             
                                                                                 </div>
-                                                                                <div class="col-6 col-md-3">
+                                                                                <div class="col-12 col-md-12">
                                                                                     <button type="submit" class="btn btn-paynow mt-2 m-btn-c" [disabled]="!flexiOtpButtonActive">VERIFY</button>
                                                                                 </div>
                                                                             </div>

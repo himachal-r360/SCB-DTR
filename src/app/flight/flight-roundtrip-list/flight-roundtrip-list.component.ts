@@ -13,6 +13,8 @@ import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { formatNumber } from '@angular/common';
+import * as moment from 'moment';
+
 declare var $: any;
 declare var bootstrap:any;
 @Component({
@@ -165,11 +167,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
   @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
-  pageIndex: number = 101;
-  ITEMS_RENDERED_AT_ONCE=100;
+  pageIndex: number = 26;
+  ITEMS_RENDERED_AT_ONCE=25;
   nextIndex=0;
 
-    pageIndexR: number = 101;
+    pageIndexR: number = 26;
   nextIndexR=0;
 
   constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
@@ -183,21 +185,17 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
    }
 
-   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-  }
+
   ngOnInit(): void {
 
-     //  this.route.url.subscribe(url =>{
         this.resetPopups();
         this.gotoTop();
-    this.loader = true;
-    this.getQueryParamData(null);
-    this.headerHideShow(null)
-    this.getAirpotsList();
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.headerHideShow(null)
+        this.getAirpotsList();
         this.getCoupons();
-    this.flightSearch();
-   //  });
+        this.flightSearch();
   }
         resetPopups(){
         $('#flightChange').modal('hide');
@@ -304,6 +302,28 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     this.router.navigate(['/compare-fly']);
   }
 
+  continueSearchFlights: any = []
+    flightSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem('continueSearch');
+    if (continueSearch == null) {
+      this.continueSearchFlights = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchFlights = JSON.parse(continueSearch);
+      this.continueSearchFlights = this.continueSearchFlights.filter((item: any) => {
+        if (item.flightfrom != searchValueAllobj.flightfrom || item.flightto != searchValueAllobj.flightto) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchFlights.length > 3) {
+      this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
+    }
+    this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+  }
+  
 
     getQueryParamData(paramObj: any) {
         const params = this.route.snapshot.queryParams;
@@ -325,7 +345,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.flightTimingfrom = this.queryFlightData.flightfrom
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
-
+        this.flightSearchCallBack(params);
+        localStorage.setItem('flightLastSearchNew',JSON.stringify(params));
   }
 
 flightCoupons=[];
@@ -365,13 +386,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     return str.join("&");
   }
 
+  serverIssue:number=0;
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
 
 
-
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
+     if(res && res.response && res.response.docKey){
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
@@ -391,13 +413,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
 
-
-
         this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
+        this.serverIssue=0;
+       }else{
+       this.serverIssue=1;this.loader = false;
+       } 
+        
 
-    }, (error) => { console.log(error) });
+    }, (error) => {  this.serverIssue=1; this.loader = false; });
   }
   GetMinAndMaxPriceForFilter() {
 
@@ -475,9 +500,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
+   /* setTimeout(() => {
       this.Initslider();
-    }, 200);
+    }, 200);*/
   }
 
   airlineFilterFlights(flightList: any) {
@@ -1101,16 +1126,17 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       let updatedflightList: any = [];
       let isfilterMorningDepartures: any = false;
       let isfilterFlightTiming = false;
-      var current_date = new Date(this.departureDate),
-        current_year = current_date.getFullYear(),
-        current_mnth = current_date.getMonth(),
-        current_day = current_date.getDate();
 
-      var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
-      var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-      var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-      var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-      var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+        var datePipe =new DatePipe('en-US');
+        var zero_time=moment.duration('00:00').asMinutes();
+        var six_time=moment.duration('06:00').asMinutes();
+        var six_time1=moment.duration('06:01').asMinutes();
+        var twelve_time=moment.duration('12:00').asMinutes();
+        var twelve_time1=moment.duration('12:01').asMinutes();
+        var eighteen_time=moment.duration('18:00').asMinutes();
+        var eighteen_time1=moment.duration('18:01').asMinutes();
+        var endTime=moment.duration('23:59').asMinutes();
+
 
       this.flight_PopularItems.filter((item) => {
         if (item.name == "Morning_Departures" && item.active == true) {
@@ -1133,18 +1159,18 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             let singleFlightTiming = [];
             singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
               if (indx == 0) {
-                if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
-                  return e;
-                }
-                else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
-                  return e;
-                }
-                else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
-                  return e;
-                }
-                else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
-                  return e;
-                }
+              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=six_time) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=six_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=twelve_time) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=twelve_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=eighteen_time) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0)&& moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=eighteen_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=endTime) {
+                return e;
+              }
               }
             });
             if (singleFlightTiming.length > 0) {

@@ -16,10 +16,37 @@
   </div>
 </section>
 
-<section class="travel-area mt-10 d-lg-block d-none">
+<section class="d-block" [ngClass]="isMobile?'mob-Hotel-listing' : 'travel-area , mt-10'">
   <div class="container">
       <div class="row">
-          <div class="col-md-12">
+        <div class="col-md-12 p-0" *ngIf="isMobile">
+            <div class="mob-listing-header">
+                <div class="mob-listing-header-left">
+                    <a (click)="backClicked()" >
+                        <img src="./assets/images/icons/left.png" alt="" />
+                    </a>
+                </div>
+                <div class="mob-listing-header-center">
+                    <h6 class="text-capitalize">{{hotelSearchForm.value.city}}, {{hotelSearchForm.value.countryName}}</h6>
+                    <p>{{hotelSearchForm.value.checkIn | date:"EEE, MMM dd"}} - {{hotelSearchForm.value.checkOut | date:"EEE, MMM dd"}}  |  {{hotelSearchForm.value.totalGuest}} Guests</p>
+                </div>
+                <div class="mob-listing-header-right">
+                    <a (click)="backClicked()" >
+                        <img src="./assets/images/icons/edit.png" alt="" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="isMobile">
+            <div class="mob-listing-fiters">
+                <h6 *ngIf="hotelList">{{hotelList.length}} Hotels Found</h6>
+                <a href="javaScript:void(0);" class="showfilters" (click)="showHideFilterMobile('show')">
+                    <img src="./assets/images/icons/filter.png" alt="">
+                    <span>Sort/Filters</span>
+                </a>
+            </div>
+        </div>  
+          <div class="col-md-12" *ngIf="!isMobile">
               <div class="travel-box">
                   <div class="travel-select-data-area">
                     <app-hotel-search></app-hotel-search>
@@ -27,7 +54,7 @@
               </div>
           </div>
 
-          <div class="col-md-12">
+          <div class="col-md-12" *ngIf="!isMobile">
               <div class="flight-partners">
                   <p>Compare &amp; Fly with our flight partners</p>
                   <ul class="list-inline ms-3">
@@ -43,7 +70,7 @@
 
           <div class="col-lg-12">
               <div class="layout-box">
-                  <div class="layout-left">
+                  <div class="layout-left" *ngIf="!isMobile">
                       <div class="">
                           <div class="Filterslayout d-flex justify-content-between align-items-center">
                               <h6 class="fs_16">Filters</h6>
@@ -80,7 +107,7 @@
                               <div class="sidebar-widget search-widget">
                                   <div class="widget-title">
                                       <h6 class="">Populat Filters</h6>
-                                      <a href="">Reset</a>
+                                      <a href="javaScript:void(0);">Reset</a>
                                   </div>
                                   <div class="widget-content">
                                       <ul class="category-list clearfix mt-2">
@@ -193,7 +220,7 @@
                               <div class="sidebar-widget SpecialOffers-widget">
                                   <div class="widget-title">
                                       <h6 class="">Special Offers</h6>
-                                      <a href="">Reset</a>
+                                      <a href="javaScript:void(0);">Reset</a>
                                   </div>
                                   <div class="widget-content">
                                       <ul class="category-list clearfix mt-2">
@@ -231,7 +258,7 @@
                               <div class="sidebar-widget HouseRules-widget">
                                   <div class="widget-title">
                                       <h6 class="">House Rules</h6>
-                                      <a href="">Reset</a>
+                                      <a href="javaScript:void(0);">Reset</a>
                                   </div>
                                   <div class="widget-content">
                                       <ul class="category-list clearfix mt-2">
@@ -287,7 +314,7 @@
                               <div class="sidebar-widget Preferences-widget">
                                   <div class="widget-title">
                                       <h6 class="">Booking Preferences</h6>
-                                      <a href="">Reset</a>
+                                      <a href="javaScript:void(0);">Reset</a>
                                   </div>
                                   <div class="widget-content">
                                       <ul class="category-list clearfix mt-2">
@@ -344,7 +371,7 @@
 
                   </div>
                   <div class="layout-right">
-                      <div class="hotel-search-data">
+                      <div class="hotel-search-data" *ngIf="!isMobile">
                           <div class="hotel-search-left">
                               <div class="hotel-search-fill-icon">
                                   <img src="./assets/images/hotel/icon/ri_hotel-fill.png" alt="">
@@ -374,14 +401,14 @@
                           </div>
                       </div>
 
-                      <div class="hotel-list-box">
+                      <div class="hotel-list-box" [ngClass]="isMobile ? 'mobilehotel-list' : ''">
                         <ng-container #itemsContainer></ng-container>
                       </div>
                         <div class="text-center" *ngIf="hotelList && hotelList.length < 1">No hotel found</div>
 
 
                         <ng-template #item let-item="item">
-                          <div class="hotel-list-item" *ngFor="let list of item; let i = index">
+                          <div class="hotel-list-item" *ngFor="let list of item; let i = index" >
                             <div class="hotel-list-left">
                                 <div class="hotel-list-thumbe">
                                     <img src="{{list.hotelInfo.image}}" alt="">
@@ -452,7 +479,7 @@
                                             <p class="p-rn">Per Room/Night</p>
                                         </div>
                                         <div class="hotel-list-info-Book">
-                                            <a href="#" class="button-style">Book</a>
+                                            <a href="javascript:;" (click)="BookingSummery(list.hotelKey,list,item)" class="button-style">Book</a>
                                         </div>
                                     </div>
                                 </div>
@@ -467,3 +494,279 @@
       </div>
   </div>
 </section>
+
+<!-- Mobile Filters -->
+
+<div class="mob-sf-area" #showFilter>
+    <div class="mob-sf-box"> 
+        <div class="mob-title">
+            <h3>Sort & Filters</h3>
+            <a href="javaScript:void(0);" class="mob-close mob-ff-from-close" (click)="showHideFilterMobile('hide')">
+                <img src="./assets/images/icons/close.png" alt="">
+            </a>
+        </div> 
+        <div class="mob-sf-tabs">
+            <ul class="nav nav-tabs">
+                <li>
+                    <a class="active" href="#Sort" role="tab" aria-controls="Sort" data-bs-toggle="tab">Sort by</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
+                </li> 
+            </ul>
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
+                    <div class="mob-sf-sort">
+                        <div class="mob-sf-sort-by">
+                            <div class="mob-sf-sort-by-items " *ngFor="let item of priceSortingFilteritems" [ngClass]="{'active': item.active == true}" (click)="hotelSortingMobile(item.name)">
+                                <p>
+                                    <img src="{{item.image}}" alt="" />
+                                    <span><strong>{{item.sortValue}}</strong> <br> {{item.value}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mob-sf-btns">
+                        <a href="javaScript:void(0);">Apply</a>
+                    </div>
+                </div>
+                <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
+                    <div class="mob-sf-filters">
+                        <div class="mob-sf-accordion">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                            aria-expanded="true" aria-controls="collapseOne">
+                                            Star 
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <ul class="category-list clearfix mt-2">
+                                                <li class="custom-check-box" *ngFor="let item of starFiltersList">
+                                                    <div class="custom-controls-stacked">
+                                                        <label class="custom-control material-checkbox">
+                                                            <input type="checkbox" [checked]="item.active" (change)="StarFilter(item)" class="material-control-input" />
+                                                            <span class="material-control-indicator"></span>
+                                                            <span class="description">
+                                                                <i class="fas fa-star" [ngClass]="{'active' : item.value >= 1}"></i>
+                                                                <i class="fas fa-star" [ngClass]="{'active' : item.value >= 2}"></i>
+                                                                <i class="fas fa-star" [ngClass]="{'active' : item.value >= 3}"></i>
+                                                                <i class="fas fa-star" [ngClass]="{'active' : item.value >= 4}"></i>
+                                                                <i class="fas fa-star" [ngClass]="{'active' : item.value >= 5}"></i>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="mob-reset text-end">
+                                                <a href="javaScript:void(0);" (click)="ResetStarFilter()">Reset</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Populat Filters
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="default-sidebar">
+                                                <ul class="category-list clearfix mt-2">
+                                                    <li class="custom-check-box" *ngFor="let item of populateFilter">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" class="material-control-input"  [checked]="item.active">
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{item.name}}</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                               
+                                                </ul>
+                                                <div class="mob-reset text-end">
+                                                    <a href="javaScript:void(0);">Reset</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Price
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="widget-content mt-10 mb-30 price-widget-content">
+                                                <div style="margin:0 0 20px 0">
+                                                  <input type="number" min="0" [(ngModel)]="minPrice" [min]="resetMinPrice" id="min_price" class="price-range-field" />
+                                                  <span class="ms-3 me-3">-</span>
+                                                  <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                                </div>
+                                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
+                                            </div>
+
+                                            <div class="mob-reset text-end">
+                                                <a href="javaScript:void(0);" (click)="ResetPriceFilter()">Reset</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingfour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                                            Amenities
+                                        </button>
+                                    </h2>
+                                    <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingfour"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body stops-widget">
+                                            <div class="default-sidebar">
+                                                <ul class="category-list clearfix mt-2">
+                                                    <li class="custom-check-box" *ngFor="let item of amenityList | slice:0:5">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" [checked]="item.active" class="material-control-input" (change)="amenityFilter(item)" />
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{item.name}}</span>
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                    <ng-container *ngIf="showMoreAmenity">
+                                                        <li class="custom-check-box" *ngFor="let item of amenityList | slice:5">
+                                                          <div class="custom-controls-stacked">
+                                                              <label class="custom-control material-checkbox">
+                                                                  <input type="checkbox" [checked]="item.active" class="material-control-input" (change)="amenityFilter(item)"/>
+                                                                  <span class="material-control-indicator"></span>
+                                                                  <span class="description">{{item.name}}</span>
+                                                              </label>
+                                                          </div>
+                                                      </li>
+                                                      </ng-container>
+                                                    </ul>
+                                                  <a href="javascript:;" *ngIf="!showMoreAmenity && amenityList.length>5" (click)="showMoreAmenity = true" class="widget-content-more ml-20">+11 more</a>
+                                                <div class="mob-reset text-end">
+                                                    <a href="javaScript:void(0);" (click)="ResetAmenityFilter()">Reset</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingfive">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                                            Special Offers
+                                        </button>
+                                    </h2>
+                                    <div id="collapsefive" class="accordion-collapse collapse" aria-labelledby="headingfive"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="default-sidebar">
+                                                <ul class="category-list clearfix mt-2">
+                                                    <li class="custom-check-box" *ngFor="let item of specialOffers">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" class="material-control-input"  [checked]="item.active">
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{item.name}}</span>
+                                                            </label> 
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <a href="#" class="widget-content-more ml-20">+2 more</a>
+                                                    <a href="#" class="widget-content-more">Reset</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingsix">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                            House Rules
+                                        </button>
+                                    </h2>
+                                    <div id="collapsesix" class="accordion-collapse collapse" aria-labelledby="headingsix"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="default-sidebar">
+                                                <ul class="category-list clearfix mt-2">
+                                                    <li class="custom-check-box" *ngFor="let item of houseRules">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" class="material-control-input"  [checked]="item.active">
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{item.name}}</span>
+                                                            </label> 
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <a href="javaScript:void(0)" class="widget-content-more ml-20">+2 more</a>
+                                                    <a href="javaScript:void(0)" class="widget-content-more">Reset</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingseven">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseseven" aria-expanded="false" aria-controls="collapseseven">
+                                            Booking Preferences
+                                        </button>
+                                    </h2>
+                                    <div id="collapseseven" class="accordion-collapse collapse" aria-labelledby="headingseven"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="default-sidebar">
+                                                <ul class="category-list clearfix mt-2">
+                                                    <li class="custom-check-box"  *ngFor="let item of houseRules">
+                                                        <div class="custom-controls-stacked">
+                                                            <label class="custom-control material-checkbox">
+                                                                <input type="checkbox" class="material-control-input"  [checked]="item.active">
+                                                                <span class="material-control-indicator"></span>
+                                                                <span class="description">{{item.name}}</span>
+                                                            </label> 
+                                                        </div>
+                                                    </li>  
+                                                </ul>
+
+                                                <div class="d-flex justify-content-between mt-2">
+                                                    <a href="javaScript:void(0);" class="widget-content-more ml-20">+2 more</a>
+                                                    <a href="javaScript:void(0);" class="widget-content-more">Reset</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="mob-sf-btns">
+                            <a href="javaScript:void(0);">Apply</a>
+                        </div>
+                    </div>                            
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+

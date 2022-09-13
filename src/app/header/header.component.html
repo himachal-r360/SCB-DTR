@@ -132,9 +132,9 @@
                     <div class="col-md-3">
 
                         <div class="after_log">
-                            <div class="inner_child" *ngIf=" serviceSettings.notifications==1">
+                            <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                                 <div>
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseleave)="disablePushBtn()" (mouseenter)="enablePushClick()">
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
                                     <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                                 </div>
                                 <!--  Notification Box Starts -->
@@ -184,8 +184,8 @@
                                 </div>
                                 <!-- Notification Box Ends -->
                             </div>
-                            <div class="inner_child" *ngIf="showCart && showcartIcon">
-                                <div *ngIf="showCart " (mouseleave)="disableCartBtn()" (mouseenter)="enableCartClick()">
+                            <div class="inner_child" *ngIf="showCart && showcartIcon" (mouseleave)="disableCartBtn()">
+                                <div *ngIf="showCart " (mouseenter)="enableCartClick()">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-cart.svg" alt="profile" class="cart_icon">
                                     <span class="cart_count_pla" *ngIf="Qty>0"><span>{{Qty}}</span></span>
                                     <!-- Cart Box Starts -->
@@ -352,7 +352,7 @@
                     </li>
                     <li class="dropdown">
                         <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays</a>
-                        <div class="dropdown-content-list list-travel">
+                        <div class="dropdown-content-list list-travel" >
                             <div class="row">
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                     <div>
@@ -714,9 +714,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="inner_child" *ngIf=" serviceSettings.notifications==1">
+                        <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                             <div>
-                                <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseleave)="disablePushBtn()" (mouseenter)="enablePushClick()">
+                                <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
                                 <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                             </div>
                             <!--Notification Box Starts-->
@@ -766,8 +766,8 @@
                             </div>
                             <!--Notification Box Ends-->
                         </div>
-                        <div class="inner_child" *ngIf="showCart && showcartIcon">
-                            <div *ngIf="showCart " (mouseleave)="disableCartBtn()" (mouseenter)="enableCartClick()">
+                        <div class="inner_child" *ngIf="showCart && showcartIcon" (mouseleave)="disableCartBtn()">
+                            <div *ngIf="showCart " (mouseenter)="enableCartClick()">
                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-cart.svg" alt="profile" class="cart_icon">
                                 <span class="cart_count_pla" *ngIf="Qty>0"><span>{{Qty}}</span></span>
                                 <!--Cart Box Starts-->
@@ -1834,8 +1834,8 @@
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
             </div>
         </div>
-        <div class="inner_m_item" *ngIf=" serviceSettings.notifications==1">
-            <div class="icn" *ngIf="showCart " (mouseleave)="disablePushBtn()" (mouseenter)="enableCartClick()">
+        <div class="inner_m_item" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
+            <div class="icn" *ngIf="showCart " (mouseenter)="enableCartClick()">
                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-cart.svg" alt="profile" class="cart_icon">
                 <span class="cart_count_pla" *ngIf="Qty>0"><span>{{Qty}}</span></span>
             </div>
@@ -1999,7 +1999,7 @@
                 <ul>
                     <li *ngIf="payzrestriction==false">
                         <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''">
-                            <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
+                            <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You </span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
                     </li>
                     <li>
@@ -2475,8 +2475,8 @@
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
             </div>
         </div>
-        <div class="inner_m_item" *ngIf=" serviceSettings.notifications==1">
-            <div class="icn reg_gold_icn " *ngIf="showCart " (mouseleave)="disablePushBtn()" (mouseenter)="enableCartClick()">
+        <div class="inner_m_item" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
+            <div class="icn reg_gold_icn " *ngIf="showCart " (mouseenter)="enableCartClick()">
                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-cart.svg" alt="profile" class="cart_icon">
                 <span class="cart_count_pla" *ngIf="Qty>0"><span>{{Qty}}</span></span>
             </div>

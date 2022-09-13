@@ -8,14 +8,18 @@ import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { HotelDetailComponent } from './hotel-detail/hotel-detail.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 const routes: Routes = [
-  {path:"hotel-list",component:HotelListComponent}
+  {path:"hotel-list",component:HotelListComponent},
+  {path:"hotel-detail",component:HotelDetailComponent}
 ]
 
 @NgModule({
   declarations: [
-    HotelListComponent
+    HotelListComponent,
+    HotelDetailComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +33,8 @@ const routes: Routes = [
       anchorScrolling: 'enabled',
       onSameUrlNavigation: 'reload'
     }),
-    NgxSliderModule
+    NgxSliderModule,
+    CarouselModule
 
   ],
   exports: [RouterModule],

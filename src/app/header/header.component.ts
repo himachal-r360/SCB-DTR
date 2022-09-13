@@ -172,6 +172,7 @@ export class HeaderComponent implements OnInit {
         showcards:boolean=false;
         mainRedirect:any;
 	notificationball:boolean=true;
+  @Input() d_none :boolean = false;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
@@ -794,7 +795,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
@@ -807,6 +808,9 @@ closeCookieConsent(value){
            this.activeMenu='home';
 
         }
+
+     
+
     });
 
     this.router.events.subscribe((event: any) => {
@@ -1295,6 +1299,7 @@ closeCookieConsent(value){
      }
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
+     $('.sb_head  .list-travel').addClass("hideDrop");
     }
     
     

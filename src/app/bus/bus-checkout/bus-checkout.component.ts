@@ -163,6 +163,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
     this.serviceSettings = this.appConfigService.getConfig();
 
+    
+
     if (this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['BUS'] != 1) {
       this.router.navigate(['/**']);
     }
@@ -178,9 +180,9 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     this.partnerToken = 'Redbus';
     this.passengerArray = [];
     this.passengerFormCount = 1;
-    plocation.onPopState(() => {
-      history.go(1);
-    });
+    // plocation.onPopState(() => {
+    //   history.go(1);
+    // });
     alertify.set('notifier', 'position', 'bottom-center');
 
 
@@ -672,16 +674,16 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   }
   @ViewChild("contentGST") modalGST: TemplateRef<any>;
   expandItems(formId) {
+   
     this.expandid = formId;
-    this.isExpanded = true;
-    this.isExpandedStretch=false;
+    //this.isExpanded = true;
+    //this.isExpandedStretch=true;
   }
 
   expandItemsstretch(formId) {
-    this.expandid = formId;
-    this.isExpanded = false;
-    this.isExpandedStretch=true;
-
+    this.expandid = 'n'; //setting dummy value so that process will work without flaw.
+   // this.isExpanded = false;
+    //this.isExpandedStretch=false;
   }
 
 
