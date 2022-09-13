@@ -285,8 +285,6 @@ ngOnInit(): void {
          private intialData() {
             for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
             
-            console.log(this.busResultsOrg[n]);
-            
               if(this.busResultsOrg[n] != undefined)
               {
                 const context = {
@@ -451,7 +449,6 @@ ngOnInit(): void {
      this.actualmaxValue = this.maxValue;
      this.selected_count = true;
      this.loading = false;
-     //this.intialData();
     } else {
      this.selected_count = false;
      this.loading = false;

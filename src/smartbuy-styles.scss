@@ -929,6 +929,15 @@ a {
         }
     }
 }
+.train_custom_input{
+    .mat-form-field-appearance-outline{
+        .mat-form-field-label {
+            top:1.9em;
+            margin-top:0px;
+            font-size:13px;
+        }
+    } 
+}
 
 .bus_sort_btn {
     .mat-form-field {
@@ -3866,6 +3875,11 @@ table.table-bordered.table-content {
 
 .tabs-depart-right .Cabin {
     width: 40%;
+}
+.cabin{
+    td{
+        padding: 3px;
+    }
 }
 
 .tabs-depart-right h5 {
@@ -8510,6 +8524,7 @@ img {
     width: 40px;
     height: 40px;
     transform: rotate(-90deg);
+    cursor: pointer;
 }
 
 .s-availableLadiesSeat {
@@ -8524,6 +8539,7 @@ img {
     width: 40px;
     height: 40px;
     transform: rotate(-90deg);
+    cursor:not-allowed;
 }
 
 .s-availableSeat_x {
@@ -8531,6 +8547,7 @@ img {
     width: 40px;
     height: 40px;
     transform: rotate(-90deg);
+    cursor:not-allowed;
 }
 
 .s-bookedLadiesSeat {
@@ -8538,6 +8555,7 @@ img {
     width: 40px;
     height: 40px;
     transform: rotate(-90deg);
+    cursor:not-allowed;
 }
 
 .s-bookedSeat {
@@ -8545,6 +8563,7 @@ img {
     width: 40px;
     height: 40px;
     transform: rotate(-90deg);
+    cursor:not-allowed;
 }
 
 .s-bookedSeat_x {
@@ -8552,6 +8571,7 @@ img {
     width: 40px;
     height: 40px;
     transform: rotate(-90deg);
+    cursor:not-allowed;
 }
 
 .s-selectedSeat {
@@ -8613,59 +8633,59 @@ img {
 /********Sleeper****/
 
 .s-availableSleeper {
-    background: #fff url(../src/assets/images/icons/bus/availableSleeper.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/availableSleeper.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: pointer;
 }
 
 .s-availableLadiesSleeper {
-    background: #fff url(../src/assets/images/icons/bus/availableLadiesSleeper.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/availableLadiesSleeper.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: pointer;
 }
 
 .s-availableLadiesSleeper_x {
-    background: #fff url(../src/assets/images/icons/bus/availableLadiesSleeper_x.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/availableLadiesSleeper_x.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: not-allowed;
 }
 
 .s-availableSleeper_x {
-    background: #fff url(../src/assets/images/icons/bus/availableSleeper_x.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/availableSleeper_x.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: not-allowed;
 }
 
 .s-bookedLadiesSleeper {
-    background: #fff url(../src/assets/images/icons/bus/bookedLadiesSleeper.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/bookedLadiesSleeper.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: not-allowed;
 }
 
 .s-bookedSleeper {
-    background: #fff url(../src/assets/images/icons/bus/bookedSleeper.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/bookedSleeper.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: not-allowed;
 }
 
 .s-bookedSleeper_x {
-    background: #fff url(../src/assets/images/icons/bus/bookedSleeper_x.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/bookedSleeper_x.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: not-allowed;
 }
 
 .s-selectedSleeper {
-    background: #fff url(../src/assets/images/icons/bus/selectedSleeper.svg) no-repeat right bottom;
+    background: #fff url(../src/assets/images/icons/bus/web/selectedSleeper.svg) no-repeat right bottom;
     width: 60px;
-    height: 60px;
-    transform: rotate(-90deg);
+    height: 30px;
+    cursor: pointer;
 }
 
 .ms-availableSleeper {
@@ -9237,6 +9257,114 @@ img {
 
 
 /* Responsive start */
+@media only screen and (max-width: 991px){
+  .hotel-search {
+      display: flex;
+      gap: 15px;
+      flex-direction: column;
+  }
+  .hotel-search > div {
+      width: 100% !important;
+  }
+  .hotel-search .hotel-room {
+      min-height: 75px;
+  }
+  .hotel-search .hotel-search-btns .hotel-search-btn {
+      width: 100%;
+      height: 55px;
+  }
+  .hotel-from-ul-li {
+      padding: 6px 0;
+  }
+  .hotel-from-data-search, .Add-room {
+      padding: 0 15px 5px 15px;
+      position: relative;
+      background: #fff;
+  }
+  .hotel-from-data-search input {
+      border: 1px solid #D9D9D9;
+      border-radius: 5px;
+      padding-top: 16px;
+  }
+  .hotel-from-data-ul .hotel-from-name img{
+      display: none;
+  }
+  .hotel-from-data-ul .hotel-from-name p{
+      display: block;
+  }
+  .hotel-from-data-ul .hotel-from-name {
+      align-items: flex-start;
+      gap: 0;
+      flex-direction: column;
+  }
+  .hotel-from-data-search span {
+      display: block;
+  }
+
+  .hotel-search-list{
+      position: fixed;
+      bottom: 0;
+      top: inherit;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      height: calc(100vh - 0px);
+      border-radius: 0;
+      width: 100%;
+      z-index: 99;
+      padding-top: 56%;
+      background: #b3b3b3;
+      box-shadow: none;
+      border-bottom: none;
+  }
+  .hotel-from-data-ul {
+      height: 77%;
+      background: #fff;
+  }
+  .hotel-room-select .hotel-from-data-ul {
+      background: #fff;
+  }
+
+  .hotel-room-select .hotel-from-data-ul {
+      height: 209px;
+      background: #fff;
+  }
+  .hotel-room-select {
+      position: fixed;
+      bottom: 0;
+      top: inherit;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      height: calc(100vh - 0px);
+      border-radius: 0;
+      width: 100%;
+      z-index: 99;
+      padding-top: 100% !important;
+      padding-top: 108% !important;
+      padding-bottom: 0 !important;
+      background: #b3b3b3;
+      box-shadow: none;
+      border-bottom: none;
+  }
+.amenities-modal .modal-dialog-centered { 
+    align-items: flex-end;
+    min-height: calc(100% - 0rem);
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.amenities-modal .modal-content { 
+    border: none;
+    border-radius: 20px 30px 0 0;
+}
+.amenitiesmodal-ul { 
+    grid-template-columns: repeat(2, 1fr);
+}
+.amenities-modal .modal-body {
+    padding: 15px !important;
+}
+}
+/* Responsive end */
 
 @media only screen and (max-width: 991px) {
     .hotel-search {

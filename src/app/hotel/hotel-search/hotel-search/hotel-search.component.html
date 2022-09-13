@@ -4,7 +4,7 @@
             <div class="hotel-area">
                 <div class="hotel-area-item" (click)="showCity('show')">
                     <span class="small-text">CITY, Hotel or Area</span>
-                    <h5 class="large-text">{{cityName}}</h5>
+                    <h5 class="large-text text-capitalize">{{cityName}}</h5>
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
                 </div>
                 <div class="hotel-search-list" #hideShowCity>
@@ -21,26 +21,30 @@
                         <input type="hidden" class="w-100" formControlName="countryName" >
                     </div>
                     <ul class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
-                    <ng-container *ngFor="let item of queryText">
-                        <li class="hotel-from-ul-li"  >
-                            <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
-                                <div class="hotel-from-name">
-                                    <img src="assets/images/hotel/icon/hotel.png" alt="">
-                                    <h6>{{item._source.full_content}}</h6>
-                                    <p>528 Hotels</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ng-container>
-                    
+                        <ng-container *ngFor="let item of queryText">
+                            <li class="hotel-from-ul-li"  >
+                                <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
+                                    <div class="hotel-from-name">
+                                        <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                        <h6>{{item._source.full_content}}</h6>
+                                        <p>528 Hotels</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ng-container>
+                        
                     </ul>
+                </div>
+                <div class="error_msg w-35" *ngIf="submitted && Error('city', 'required')">
+                    <small class="validate-msg">Please select city</small>
                 </div>
             </div>
             <div class="hotel-in-out">
                 <div class="hotel-in" (click)="picker.open()" #checkIn>
                     <span class="small-text">CHECK-IN</span>
-                    <h5 class="large-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
+                    <h5 class="large-text"  [ngClass]="!hotelSearchForm.value.checkIn?'py-3':''">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
+                    
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                             <input matInput [min]="latestDate" [matDatepicker]="picker" formControlName="checkIn"  (dateChange)="checkInDate($event)" >
@@ -50,11 +54,14 @@
                         </mat-form-field>
                         <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
                     </div>
+
+                    <div class="error_msg w-35" *ngIf="submitted && Error('checkIn', 'required')">
+                        <small class="validate-msg">Please select CheckIn date</small>
+                    </div>
                 </div>
                 <div class="hotel-out" (click)="picker2.open()" #checkOut>
                     <span class="small-text">CHECK-OUT</span>
-                    <!-- <h5 class="large-text">Aug 11</h5> -->
-                    <h5 class="large-text" *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
+                    <h5 class="large-text" [ngClass]="!hotelSearchForm.value.checkOut?'py-3':''">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text"  *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
@@ -65,7 +72,11 @@
                         </mat-form-field>
                         <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
                     </div>
+                    <div class="error_msg w-35" *ngIf="submitted && Error('checkOut', 'required')">
+                        <small class="validate-msg">Please select CheckOut date</small>
+                    </div>
                 </div>
+                
             </div>
             <div class="hotel-room">
                 <div class="hotel-room-item" (click)="showGuest('show')">
@@ -110,7 +121,7 @@
                                             <div class="Travellers-qty">
                                                 <div class="quantity buttons_added">
                                                     <input type="button" value="-" class="qty-buttons minus" (click)="decreaseCount(i,item,'child')" [disabled]="item.value.numberOfChildren < 1 ? true:false">
-                                                    <input type="number" step="1" min="1" max="5" name="quantity"
+                                                    <input type="number" step="1" min="0" max="5" name="quantity"
                                                         value="0" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4" value="{{item.value.numberOfChildren}}"
                                                         pattern="" inputmode="" formControlName="numberOfChildren">
@@ -133,6 +144,7 @@
                 <a href="javaScript:void(0)"  data-bs-toggle="modal" data-bs-target="#itinerary" class="hotel-search-btn"
                     (click)="searchHotel()">Search</a>
             </div>
+         
         </div>
     </form>
     <div class="add-search-area">

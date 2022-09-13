@@ -250,7 +250,7 @@
                                 <div class="flight-search-filters-right train_sort_btn">
                                 
                                 <mat-form-field>
-                                    <mat-select placeholder="Selected Quota" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
+                                    <mat-select placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
                                         <mat-option  *ngIf = "avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
                                         <mat-option  *ngIf = "avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
                                     </mat-select>
@@ -323,7 +323,7 @@
                       <p>{{journeyDate | date:'EEE, dd MMM' }}   </p>
                   </div>
                   <div class="mob-listing-header-right">
-                      <a href="javascript:;" routerLink="/bus" >
+                      <a href="javascript:;" routerLink="/train" >
                           <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                       </a>
                   </div>
@@ -385,7 +385,7 @@
 
                   </div>
               <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length > 0" >  
-                                 <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "quota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
+                                 <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "selectedQuota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
                                 </span>
                               
           </div>
