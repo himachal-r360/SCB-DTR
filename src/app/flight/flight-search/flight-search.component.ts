@@ -201,7 +201,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
-   // this.route.url.subscribe(url => {
         if(this.router.url){
         switch (this.router.url) {
         case ('/'+this.sg['domainPath']+'multicity'):
@@ -230,7 +229,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.continueSearchVal = JSON.parse(continueSearchValLs);
       }
       this.setSearchFilterData()
-   // });
 
 
   }
@@ -274,18 +272,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   }
   currentPeriodArrivalClicked(datePicker: any) {
-    /*let date = datePicker.target.value
-    if(date && this.navItemActive == "Round Trip"){
-      setTimeout(() => {
-        if(this.isMobile == false) {
-          let openTravellers = document.getElementById('openTravellers')
-          openTravellers?.click();
-        }
-        else if(this.isMobile)  {
-          this.openTravellerBlock();
-        }
-      }, 50);
-    }*/
+
   }
 
   fromCitySelect(i:number){
@@ -696,7 +683,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     else {
       this.sameCityValidation = true;
     }
-
     if (this.flightData.value.arrival != "" && this.flightData.value.arrival != undefined) {
       this.flightData.value.arrival = this.flightData.value.arrival.getFullYear() + '-' + (this.flightData.value.arrival.getMonth() + 1) + '-' + this.flightData.value.arrival.getDate();
       this.flightData.get('flightdefault').setValue('R');
@@ -709,7 +695,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     } else {
       this.flightData.get('travel').setValue('INT');
     }
-
 
     if (this.flightData.invalid || this.dateValidation == true) {
       return
@@ -770,8 +755,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-
     this._styleManager.removeScript('custom');
   }
 
