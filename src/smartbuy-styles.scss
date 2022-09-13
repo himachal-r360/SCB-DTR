@@ -2288,6 +2288,10 @@ html .ui-button.ui-state-disabled:active {
     cursor: pointer;
     display: flex;
     align-items: center;
+    @media only screen and (max-width:600px) {
+        justify-content: center;
+        gap: 10px;
+    }
 }
 
 .flighttiming-list.active {
@@ -7039,8 +7043,10 @@ button.accordion-button .xlsheats {
 }
 
 .mob-sf-filters {
-    height: 430px;
-    overflow: auto;
+    height: 370px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px 15px;
 }
 
 .mob-reset {
@@ -9851,6 +9857,14 @@ img {
 }
 .amenities-modal .modal-body {
     padding: 15px !important;
+}
+
+.layout-box { 
+    width: 100%;
+    flex-direction: column;
+}
+.layout-right { 
+    width: 100%;
 }
 }
 /* Responsive end */
@@ -13521,4 +13535,7 @@ img {
 .ng5-slider .ng5-slider-pointer:after,
 .ng5-slider .ng5-slider-pointer .ng5-slider-active:after {
     background: #0db9f0 !important;
+}
+.hideDrop{
+display:none !important;
 }

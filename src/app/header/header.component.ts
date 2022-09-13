@@ -808,6 +808,11 @@ closeCookieConsent(value){
            this.activeMenu='home';
 
         }
+
+        if(event.url.includes('foryou')) {
+          this.menuActiveClass='foryou';
+        }
+
     });
 
     this.router.events.subscribe((event: any) => {
@@ -1296,6 +1301,7 @@ closeCookieConsent(value){
      }
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
+     $('.sb_head  .list-travel').addClass("hideDrop");
     }
     
     
