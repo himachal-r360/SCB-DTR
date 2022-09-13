@@ -25,7 +25,7 @@ export class TrainsFilterComponent implements OnInit {
    @Output()trainTypesEvent = new EventEmitter();
    @Output()searchboard = new EventEmitter();
    @Output() applyFilter = new EventEmitter();
-   @Output() selectedQuota = new EventEmitter();
+   @Output() selectedQuotaEvent = new EventEmitter();
     cdnUrl: any;
     isMobile:boolean= true;
       constructor(private sg: SimpleGlobal) { this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; }
@@ -57,7 +57,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
       this.toStationsEvent.emit(appt);
     }
     updateTosSelectedQuota(appt){
-      this.selectedQuota.emit(appt);
+      this.selectedQuotaEvent.emit(appt);
     }
 
     searchboarding(type,input:any){
