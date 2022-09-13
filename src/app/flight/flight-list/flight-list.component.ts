@@ -1381,6 +1381,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   headerHideShow(event:any) {
+    debugger;
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
      this._flightService.showHeader(false);
