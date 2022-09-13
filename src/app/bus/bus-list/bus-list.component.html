@@ -16,9 +16,23 @@
   </div>
 </section>
 
+ <div class="text-center w-100" *ngIf="!isMobile && serverIssue==1 ">
+    <div class="no_flights_sec" >
+                   <div class="row">
+        <div class=" text-center">
+            <div class="empty_list_hdr">Yikes! No buses found.</div>
+            <div>
+                <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-md-12 mt-5 text-center">
+            <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
+        </div>
+    </div>
+    </div>
+</div>
 
-
-<section class="flight-area mt-10" *ngIf="!isMobile">
+<section class="flight-area mt-10" *ngIf="!isMobile && serverIssue==0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -29,22 +43,7 @@
 
             <div class="col-lg-12">
                 <div class="layout-box">
-                              <div class="text-center w-100" *ngIf="!loader && serverIssue==1">
-                            <div class="no_flights_sec" >
-                                           <div class="row">
-                                <div class=" text-center">
-                                    <div class="empty_list_hdr">Yikes! No buses found.</div>
-                                    <div>
-                                        <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-5 text-center">
-                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    <div class="layout-left"  *ngIf="serverIssue==0">
+                         <div class="layout-left"  *ngIf="serverIssue==0">
                         <div class="filter-loaders animation-loader" *ngIf="loader">
                             <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content ">
@@ -290,7 +289,7 @@
                        
                         <div class="flight-listing-area">
                    
-                        <ng-container *ngIf="totalrtc.length>0">
+                        <ng-container *ngIf="totalrtc.length>0 && busList.length >0 ">
                         <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
                         <div  class="list-card list-bus-card w-100 float-left">
                         <div class="w-100">
@@ -419,7 +418,7 @@
                             </div>
                     </div>
                 </div>
-                <ng-container *ngIf="totalrtc.length>0">
+                <ng-container *ngIf="totalrtc.length>0 && busList.length >0 ">
                 <div *ngFor="let rtc of totalrtc; index as ind" class="d-block d-sm-none cust-pb-10 w-100 float-left">
                 <div  class="list-card list-bus-card w-100 float-left">
                 <div class="row align-items-center bus_list_box">
