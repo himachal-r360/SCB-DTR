@@ -951,10 +951,10 @@
           <div class="row">
             <div class="col-5">
               <div class="">
-                <h6 class="price">₹{{ fareData.totalFare|number }}</h6>
-                <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                  {{ calculateEMI(fareData.totalFare|number)|number: '.2' }}/month</p>
-
+                <h6 class="price">₹{{ totalFare |number }} </h6>
+                <p class="emi" *ngIf="totalFare > EMIAvailableLimit">EMI @
+                  {{ calculateEMI(totalFare|number)|number: '.2' }}/month</p>
+<p class="hidden">{{fareData | json}}</p>
               </div>
             </div>
             <div class="col-7">

@@ -1063,9 +1063,9 @@
                 <a (click)="showBoardDrop=false" class="m_fheader_link">
                     <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                 </a>
-                <p class="m_fheader_text">11 Aug</p>
+                <p class="m_fheader_text">{{ departure  | date:'EEE, dd MMM' }}</p>
                 <h6 class="m_fheader_title">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
-                <p class="m_fheader_text">A/C Sleeper (2+1)</p>
+                <p class="m_fheader_text">{{bus.busType}}</p>
             </div>
         </div>
         <!-- end of mobile boarding static data -->
@@ -1159,12 +1159,12 @@
                         </span>
                     </label>
         </div>
-            <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+            <!-- <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
             <ng-template #noPartial>
                 <p class="cancel-text mt-2 mb-2">
                     <b>Partial cancellation not allowed</b>
                 </p>
-            </ng-template>
+            </ng-template> -->
 
         </div>
     </div>
