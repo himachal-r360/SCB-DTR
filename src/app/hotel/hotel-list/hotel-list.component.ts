@@ -94,7 +94,13 @@ export class HotelListComponent implements OnInit,OnDestroy {
     {name:'Resorts',active:false},
   ]
 
-  priceSortingFilteritems = []
+  priceSortingFilteritems = [
+    { name: 'P_L_H', active: false, value: 'Low to High' ,image: './assets/images/icons/price-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' ,image: './assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
+    { name: 'S_L_H', active: false, value: 'Low to High' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
+    { name: 'S_H_L', active: false, value: 'High to Low' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
+    { name: 'Trending', active: false, value: 'Trending Hotels' ,image: './assets/hotel/icon/Trending.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:''},
+  ]
 
   showMoreAmenity:boolean = false;
   SearchText:string = '';
@@ -351,9 +357,12 @@ export class HotelListComponent implements OnInit,OnDestroy {
         this.hotelList = AmenityFiltered;
       }
 
+      
+
     }
 
     //Amenity Filter End
+
 
     //Search Text Filter Start
       if(this.SearchText !='')
@@ -365,6 +374,23 @@ export class HotelListComponent implements OnInit,OnDestroy {
           this.hotelList = data;
         }
       }
+      // shortings
+      this.priceSortingFilteritems.filter((item: any) => {
+        if (item.name == 'P_L_H' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
+        }
+        else if (item.name == 'P_H_L' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => b.priceSummary[0].price - a.priceSummary[0].price);
+        }
+        else if (item.name == 'S_L_H' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => a.hotelInfo.starRating - b.hotelInfo.starRating);
+        }
+        else if (item.name == 'S_H_L' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => b.hotelInfo.starRating - a.hotelInfo.starRating);
+        }
+      })
+
+
     //Search Text Filter End
     if(this.container)
     {
@@ -372,6 +398,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
    this.intialData();
   }
+ 
 
 
   StarFilter(item:any)
@@ -499,13 +526,44 @@ export class HotelListComponent implements OnInit,OnDestroy {
   }
 
   showHideFilterMobile(val:string){
-    if(val == 'show'){
-     this.showFilter.nativeElement.style.display = 'block';
+    if (val == 'show') {
+      this.showFilter.nativeElement.style.display = 'block';
     }
     else {
       this.showFilter.nativeElement.style.display = 'none';
     }
   
+  }
+
+  hotelSortingMobile(val){
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+  this.AllFilteredData();
+  }
+
+  shortings(){
+    this.priceSortingFilteritems.filter((item: any) => {
+      if (item.name == 'P_L_H' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
+      }
+      else if (item.name == 'P_H_L' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => b.priceSummary[0].price - a.priceSummary[0].price);
+      }
+      else if (item.name == 'S_L_H' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => a.hotelInfo.starRating - b.hotelInfo.starRating);
+      }
+      else if (item.name == 'S_H_L' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => b.hotelInfo.starRating - a.hotelInfo.starRating);
+      }
+    })
+
+    
   }
 
 }
