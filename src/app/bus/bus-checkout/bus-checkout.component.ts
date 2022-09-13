@@ -675,7 +675,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   @ViewChild("contentGST") modalGST: TemplateRef<any>;
   expandItems(formId) {
    
-    this.expandid = 'c'+formId;
+    this.expandid = formId;
     this.isExpanded = true;
     this.isExpandedStretch=true;
   }
