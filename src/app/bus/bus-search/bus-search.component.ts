@@ -132,7 +132,6 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
     return this.searchBusForm.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-    //     this.route.url.subscribe(url =>{
    this._busService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
     let continueSearchValLs:any= localStorage.getItem('continueSearchBus');
@@ -140,7 +139,6 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
     this.setSearchFilterData()
-  // });
   }
 
 
