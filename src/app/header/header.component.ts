@@ -808,6 +808,11 @@ closeCookieConsent(value){
            this.activeMenu='home';
 
         }
+
+        if(event.url.includes('foryou')) {
+          this.menuActiveClass='foryou';
+        }
+
     });
 
     this.router.events.subscribe((event: any) => {
