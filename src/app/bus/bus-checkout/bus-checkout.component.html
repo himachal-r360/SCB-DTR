@@ -57,7 +57,9 @@
         <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==1" >
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
-                <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" >
+
+         <!-- <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" > -->
+                <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==2" > 
             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
         </a>
     </div>
@@ -371,16 +373,17 @@
                         
                           <div class="modal-footer d-block p-0">
                             <div *ngIf="travellerlist.length > 3">
-                              <p class="view_more_btn">
-                                <a (click)="expandItems(i)" *ngIf="expandid!=i && !isExpanded" >
-                                 View More  &#x25BC;
-                                </a>
+                              <p class="view_more_btn expand_{{i}}" *ngIf=" !isExpanded && !isExpandedStretch">
+                                <a (click)="expandItems(i)"  > View More  &#x25BC; </a> 
                                 
-                                <a (click)="expandItemsstretch(i)" *ngIf="expandid==i && isExpanded">
-                                View Less &#x25B2;
-                                </a>
+                              </p>
+
+                              <p class="view_more_btn cexpand_{{i}}" *ngIf="isExpanded && isExpandedStretch">
+
+                                <a (click)="expandItemsstretch(i)" > View Less &#x25B2; </a> 
 
                               </p>
+
                             </div>
                           </div>
 
