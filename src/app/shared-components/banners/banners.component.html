@@ -70,17 +70,13 @@
                                 <div>
                                   <p class="text-left pb-10" > <span class="text_eg me-2">e.g.</span> <span class="text_card">Regalia Credit Card xx1234</span> <span class="material-icons down_arrow">expand_more</span></p>
                                         <div class="points_sec row">
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <p class="value">{{current_available_points}}</p>
                                                 <p class="name">Current Available Points</p>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <p class="value">{{customeravailablepoints}}</p>
-                                                <p class="name">Available Reward Points</p>
-                                            </div>
-                                            <div class="col-4">
-                                                <p class="value">{{last_stmt_points}}</p>
-                                                <p class="name">Last Statement points</p>
+                                                <p class="name">Redeemable Reward Points</p>
                                             </div>
                                         </div>
                                     </div>
@@ -165,7 +161,7 @@
 
 <!-- Recent Search Gold -->
 
-<div class="recent_search">
+<div class="recent_search" *ngIf="recentsearchData.length > 0">
     <div class=" container_hftab " *ngIf="isLogged">
         <div class="row">
             <div class="col-sm-2 p-0">
@@ -176,31 +172,22 @@
             <div class="col-sm-10 p-0">
                 <div>
                     <div class="recent_search_sec">
-                        <div class="flex_item">
-                            <a href="#">
-                                <div class="content_item">
+                        <div class="flex_item" *ngFor="let rsearchval of recentsearchData">
+                            <a href="javascript:;" (click)="onGoToPage(rsearchval.Redirecturl)">
+                                <div class="content_item"  *ngIf="rsearchval.type =='flight' || rsearchval.type == 'hotel'">
                                     <div>
-                                        <img src="{{cdnUrl}}images/icons/icn-flight-re.svg" alt="icn">
+                                        <img src="{{cdnUrl}}images/icons/icn-{{rsearchval.type}}-re.svg" alt="icn">
                                     </div>
                                     <div>
-                                        <p class="city_name"><span>New Delhi</span><span class="mx-2">---</span><span>Kolkata</span></p>
-                                        <p class="date">Wed, 5 Jul</p>
-                                    </div>
-                                    <div>
-                                        <img src="{{cdnUrl}}images/icons/icn-arrow-right.svg" alt="icn" class="clk-icn">
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="flex_item">
-                            <a href="#">
-                                <div class="content_item">
-                                    <div>
-                                        <img src="{{cdnUrl}}images/icons/icn-hotel-re.svg" alt="icn">
-                                    </div>
-                                    <div>
-                                        <p class="city_name"><span>JW Marriot</span></p>
-                                        <p class="hotel_place">Vittal Mallya Rd, Bangalore</p>
+					<ng-container *ngIf="rsearchval.type =='flight'">
+                                        <p class="city_name" >
+					<span >{{rsearchval.searchFrom | uppercase | slice:0:11 }}<span class="mx-2">---</span>{{rsearchval.searchTo | uppercase | slice:0:10 }}{{rsearchval.searchTo.length > 10 ? '...' : ''}}</span></p> 
+					</ng-container>
+					<ng-container *ngIf="rsearchval.type =='hotel'">
+                                        <p class="city_name" >
+					<span >{{rsearchval.searchFrom | uppercase | slice:0:28 }}{{rsearchval.searchFrom.length > 28 ? '...' : ''}}</span></p> 
+					</ng-container>
+					 <p class="date">{{rsearchval.showdate}}</p>
                                     </div>
                                     <div>
                                         <img src="{{cdnUrl}}images/icons/icn-arrow-right.svg" alt="icn" class="clk-icn">
