@@ -22,6 +22,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   submitted:boolean = false;
   latestDate = new Date();
   cityName = 'New Delhi';
+  continueSearchHotel;
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   @ViewChild('citySearchRef') citySearchRef: ElementRef;
@@ -117,10 +118,13 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   //Increase Child and adult value
   increaseCount(i, item, title) {
     let totalCount;
+    let childTotalCount;
     let adultBtn: any = document.getElementById('adultBtn_' + i);
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren + 1;
+    
+     
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults + 1;
@@ -128,6 +132,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
     totalCount > 4 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
+
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
@@ -265,6 +270,27 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     return str.join("&");
   }
 
+  hotelSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem('continueSearchForHotel');
+    if (continueSearch == null) {
+      this.continueSearchHotel = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchHotel = JSON.parse(continueSearch);
+      this.continueSearchHotel = this.continueSearchHotel.filter((item: any) => {
+        if (item.city != searchValueAllobj.city) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchHotel.length > 3) {
+      this.continueSearchHotel = this.continueSearchHotel.slice(0, 3);
+    }
+    this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem('continueSearchForHotel', JSON.stringify(this.continueSearchHotel));
+  }
+
   searchHotel() {
     debugger;
       this.submitted = true;
@@ -278,6 +304,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
       localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
+      this. hotelSearchCallBack(this.hotelSearchForm.value)
       this.router.navigateByUrl(url);
     }
 
