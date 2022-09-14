@@ -448,7 +448,7 @@ export class HeaderComponent implements OnInit {
          });
 
     }
-  enablePushClick(){
+  enablePushClick(type){
 	
     if (!this.cookieService.get("push_enable")) { 
       this.cookieService.set('push_enable','1', null, '/', null, null, null);
@@ -457,12 +457,13 @@ export class HeaderComponent implements OnInit {
        this.enableQuesBoxNew=false;
         this.enablePushContentBox=true;
        this.getNotification();
-    // }
       this.enablePushBox=true;
       this.enablePushTitle = true;
       this.notifyOpacity = true;
-      $('.myaccount-drop').removeClass('show');
-	$("#pushNotiEnable").modal('show');
+      if(type==1){
+       $('.myaccount-drop').removeClass('show');
+       $("#pushNotiEnable").modal('show');
+      }	
   }
   enableMoreClick() {
     
