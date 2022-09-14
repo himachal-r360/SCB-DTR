@@ -450,16 +450,16 @@ export class HeaderComponent implements OnInit {
     }
   enablePushClick(type){
 	
-    if (!this.cookieService.get("push_enable")) { 
-      this.cookieService.set('push_enable','1', null, '/', null, null, null);
-    }
-       this.enableQuesBox=false;
-       this.enableQuesBoxNew=false;
+        if (!this.cookieService.get("push_enable")) { 
+        this.cookieService.set('push_enable','1', null, '/', null, null, null);
+        }
+        this.enableQuesBox=false;
+        this.enableQuesBoxNew=false;
         this.enablePushContentBox=true;
-       this.getNotification();
-      this.enablePushBox=true;
-      this.enablePushTitle = true;
-      this.notifyOpacity = true;
+        this.getNotification();
+        this.enablePushBox=true;
+        this.enablePushTitle = true;
+        this.notifyOpacity = true;
       if(type==1){
        $('.myaccount-drop').removeClass('show');
        $("#pushNotiEnable").modal('show');
@@ -575,62 +575,7 @@ closeCookieConsent(value){
 
   }
   getNotification(){
-    this.rest.getNotification().subscribe(result => {
-      this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
-      this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-      this.pushcount = result.result.length;
 
-        
-        const unreadId = [];
-        const readId = [];
-        var blue_dott=""; var classs="";
-        result.result.forEach((v, k) =>  {    
-              if((unreadId.indexOf(unreadId) === -1)){
-                unreadId.push(v['id']);         
-              } 
-             var idcondition = document.getElementById("offers-tab-content_" + v['id']);
-		if(idcondition){
-              var condition = document.getElementsByClassName("clicked_" + v['id']).length>0;
-              if(condition && (readId.indexOf(readId) === -1)) {
-                readId.push(v['id']);
-              }
-		}
-                  this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
-
-        });
-				
-          if(this.cookieService.get('push_status') != undefined)
-          {	
-		
-		if(this.cookieService.get('read_notify') == '1')this.notificationball = false;   
-
-              if((readId.length === unreadId.length) ) {
-		
-		//if(filtered){
-                  this.cookieService.set('read_notify','1', null, '/', null, null, null);
-                  $('#notify-boll').removeClass('img-number');        
-                  $('#notify-boll').removeClass('number'); 
-		this.notificationball = false;                           
-              } else {    
-                              
-                 /* this.cookieService.set('read_notify','0', null, '/', null, null, null);
-                  $('#notify-boll').addClass('img-number');     
-                  $('#notify-boll').addClass('number'); */
-		//this.notificationball = true;   
-              }
-
-          } else {
-              this.cookieService.set('read_notify','0', null, '/', null, null, null);
-                $('#notify-boll').addClass('img-number');    
-                $('#notify-boll').addClass('number'); 
-              // readId = [];
-              // unreadId = [];
-          }
-		
-
-            //console.log(unreadId+"   ---    "+readId);  
-      
-    });
   }
 
     analyticsLogEvent(event,id,url){
