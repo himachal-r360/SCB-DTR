@@ -465,7 +465,7 @@ export class HeaderComponent implements OnInit {
        $('.myaccount-drop').removeClass('show');
        $("#pushNotiEnable").modal('show');
       }	
-         }, 500);
+         }, 200);
   }
   enableMoreClick() {
     
