@@ -889,9 +889,12 @@
                                     <label>
                                         <span>From</span>
                                          <input type="text" class="inputField  busFromPop" value="{{busFromDisp}}" readonly    (click)="hideShowForms('web', 'busFrom','bus')" >
-                                       
+                                         <p class="truncate" title="{{busFromStateDisp}}">
+                                            <span  title="" class=" airPortName ">{{busFromStateDisp}}</span>
+                                        </p>
+                                        <input type="hidden" formControlName="fromState" name="fromState" id="fromState" >
                                         <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
-                                        <input type="hidden"  formControlName="fromState">
+                                        
                                         <p class="truncate" title="{{busFromText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busFromText}}</span> -->
                                         </p>
@@ -927,7 +930,7 @@
                                                 <a class="flight-from-ul-li-a" (click)="onFromClick(fromBusOptions,'bus','web')">
 
                                                     <div class="hotel-from-name">
-                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{fromBusOptions._source.name}}</h6>
+                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{fromBusOptions._source.name}} , {{ fromBusOptions._source.state}}</h6>
                                                         <p></p>
                                                     </div>
                                                     <div class="flight-from-shortname">
@@ -948,8 +951,12 @@
                                     <label>
                                         <span>To</span>
                                          <input type="text" class="inputField  busToPop" value="{{busToDisp}}" readonly    (click)="hideShowForms('web', 'busTo','bus')" >
+                                         <p class="truncate" title="{{busToStateDisp}}">
+                                            <span  title="" class=" airPortName ">{{busToStateDisp}}</span>
+                                        </p>
+                                        <input type="hidden" formControlName="toState" name="toState" id="toState" >
                                         <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
-                                          <input type="hidden"  formControlName="fromState">
+                                          
                                         <p class="truncate" title="{{busToText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
                                         </p>
@@ -980,7 +987,7 @@
                                             <li class="flight-from-ul-li" *ngFor="let toBusOptions of busToOptions;let ind=index;">
                                                 <a class="flight-from-ul-li-a" (click)="onToClick(toBusOptions,'bus','web')">
                                                     <div class="hotel-from-name">
-                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{toBusOptions._source.name}}</h6>
+                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{toBusOptions._source.name}} , {{toBusOptions._source.state}} </h6>
                                                         <p></p>
                                                     </div>
                                                     <div class="flight-from-shortname">
