@@ -2200,22 +2200,23 @@
 
             </div>
             <div class="booking-process-content traveller_review">
-                <!-- <div class="booking-title-box mb-0">
+
+                 <div class="booking-title-box mb-0">
     
     
                 <h4 class="heading_text">Traveller Details
                     <p class="sub_head_text ps-3"><span class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
                           src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
 
-                </h4> <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
-                      Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span> <span
-                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> </p>
+                </h4> <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
+                      Adults</span><span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span> <!-- <span
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> --> </p>
                
               </div>
               <div class="booking-inner-box from-to-box">
                 <div class="p-2">
-                  <div>
-                    <h6>{{travelerDetails.adults}} Adults</h6>
+                  <div *ngIf="travellerListArray.length > 0">
+                    <h6>{{travellerListArray.length}} Adults</h6>
                     <table class="table  traveller_table">
                       <thead>
                         <tr>
@@ -2226,20 +2227,20 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <ng-container *ngFor="let adult of paxInfo;let i = index">
-                          <tr *ngIf="adult.type=='ADT'">
-                            <td>Amit Kumar</td>
-                            <td>21</td>
-                            <td>Male</td>
-                            <td>Window side</td>
+                        <ng-container *ngFor="let adult of travellerListArray;let i = index">
+                          <tr>
+                            <td>{{adult.passengerName}}</td>
+                            <td>{{adult.passengerAge}}</td>
+                            <td>{{adult.passengerGender}}</td>
+                            <td>{{(adult.passengerBerthChoice !='') ? adult.passengerBerthChoice : '-' }}</td>
                           </tr>
                         </ng-container>
                       </tbody>
                     </table>
                   </div>
     
-                  <div *ngIf="travelerDetails.infants > 0">
-                    <h6>{{travelerDetails.infants}} Infant</h6>
+                  <div *ngIf="infantListArray.length > 0">
+                    <h6>{{infantListArray.length}} Infant</h6>
                     <table class="table  traveller_table">
                       <thead>
                         <tr>
@@ -2249,18 +2250,18 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <ng-container *ngFor="let adult of paxInfo;let i = index">
-                          <tr *ngIf="adult.type=='ADT'">
-                            <td>Amit Kumar</td>
-                            <td>6 months</td>
-                            <td>Male</td>
-                          </tr>
+                        <ng-container *ngFor="let infant of infantListArray;let i = index">
+                          <tr>
+                            <td>{{infant.name}}</td>
+                            <td>{{infant.age}}</td>
+                            <td>{{infant.gender}}</td>
+                         </tr>
                         </ng-container>
                       </tbody>
                     </table>
                   </div>
                 </div>
-              </div>-->
+              </div>
 
             </div>
         </div>
@@ -2494,7 +2495,7 @@
         </div>
         </div>
     </section>
-
+ 
 
 
     <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
