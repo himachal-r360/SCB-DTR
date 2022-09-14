@@ -122,6 +122,27 @@
                 }
               ],
               "outputHashing": "all"
+             },
+             "uat": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "10mb",
+                                "maximumError": "10MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                    "maximumWarning": "10mb",
+                                "maximumError": "10MB"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.uat.ts"
+                }
+              ],
+              "outputHashing": "all"
             },
             "development": {
               "buildOptimizer": false,

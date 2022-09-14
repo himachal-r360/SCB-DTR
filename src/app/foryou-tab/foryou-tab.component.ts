@@ -970,7 +970,8 @@ console.log("hotel "+ JSON.stringify( get_value));
       this.redirectPopupTriggerTimestamp = current.getTime();
       this.redirectPopupTrigger = 1;
       this.redirectPopup = 2;
-      this.redirectPopupUrl = this.domainRedirect + url;
+     // this.redirectPopupUrl = this.domainRedirect + url;
+     this.redirectPopupUrl = environment.DEAL_SITE_URL + url;
     }
   }
 
