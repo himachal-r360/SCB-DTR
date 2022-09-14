@@ -448,21 +448,24 @@ export class HeaderComponent implements OnInit {
          });
 
     }
-  enablePushClick(){
-	
-    if (!this.cookieService.get("push_enable")) { 
-      this.cookieService.set('push_enable','1', null, '/', null, null, null);
-    }
-       this.enableQuesBox=false;
-       this.enableQuesBoxNew=false;
+  enablePushClick(type){
+	         setTimeout(()=>{  
+
+        if (!this.cookieService.get("push_enable")) { 
+        this.cookieService.set('push_enable','1', null, '/', null, null, null);
+        }
+        this.enableQuesBox=false;
+        this.enableQuesBoxNew=false;
         this.enablePushContentBox=true;
-       this.getNotification();
-    // }
-      this.enablePushBox=true;
-      this.enablePushTitle = true;
-      this.notifyOpacity = true;
-      $('.myaccount-drop').removeClass('show');
-	$("#pushNotiEnable").modal('show');
+        this.getNotification();
+        this.enablePushBox=true;
+        this.enablePushTitle = true;
+        this.notifyOpacity = true;
+      if(type==1){
+       $('.myaccount-drop').removeClass('show');
+       $("#pushNotiEnable").modal('show');
+      }	
+         }, 500);
   }
   enableMoreClick() {
     
@@ -574,12 +577,11 @@ closeCookieConsent(value){
 
   }
   getNotification(){
+                            
     this.rest.getNotification().subscribe(result => {
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
       this.pushcount = result.result.length;
-
-        
         const unreadId = [];
         const readId = [];
         var blue_dott=""; var classs="";
@@ -601,35 +603,24 @@ closeCookieConsent(value){
           if(this.cookieService.get('push_status') != undefined)
           {	
 		
-		if(this.cookieService.get('read_notify') == '1')this.notificationball = false;   
+	   if(this.cookieService.get('read_notify') == '1')this.notificationball = false;   
 
               if((readId.length === unreadId.length) ) {
 		
-		//if(filtered){
                   this.cookieService.set('read_notify','1', null, '/', null, null, null);
                   $('#notify-boll').removeClass('img-number');        
                   $('#notify-boll').removeClass('number'); 
 		this.notificationball = false;                           
-              } else {    
-                              
-                 /* this.cookieService.set('read_notify','0', null, '/', null, null, null);
-                  $('#notify-boll').addClass('img-number');     
-                  $('#notify-boll').addClass('number'); */
-		//this.notificationball = true;   
-              }
+              } 
 
           } else {
               this.cookieService.set('read_notify','0', null, '/', null, null, null);
                 $('#notify-boll').addClass('img-number');    
                 $('#notify-boll').addClass('number'); 
-              // readId = [];
-              // unreadId = [];
           }
-		
-
-            //console.log(unreadId+"   ---    "+readId);  
       
     });
+
   }
 
     analyticsLogEvent(event,id,url){
@@ -755,11 +746,11 @@ closeCookieConsent(value){
           if(this.deviceService.isMobile()){
                setTimeout(()=>{                          
                 this.OpenDisclaimerMobile();
-                }, 3000);
+                },3000);
            
           }else{
            setTimeout(function() {
-           $('#sb_dis_popup').trigger('click');   }, 3000);
+           $('#sb_dis_popup').trigger('click');   },3000);
           }
         }  
         }
@@ -795,7 +786,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
@@ -808,6 +799,9 @@ closeCookieConsent(value){
            this.activeMenu='home';
 
         }
+
+     
+
     });
 
     this.router.events.subscribe((event: any) => {
@@ -1296,6 +1290,7 @@ closeCookieConsent(value){
      }
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
+     $('.sb_head  .list-travel').addClass("hideDrop");
     }
     
     

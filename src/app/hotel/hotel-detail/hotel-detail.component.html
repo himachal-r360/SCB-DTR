@@ -8,7 +8,7 @@
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item"><a href="#">Travel &amp; Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><span>{{HotelDetail.hotelInfo.name}}</span></li>
+                      <li class="list-inline-item" *ngIf="HotelDetail"><span>{{HotelDetail.hotelName}}</span></li>
                   </ul>
               </div>
           </div>
@@ -16,7 +16,7 @@
   </div>
 </section>
 
-<section class="travel-area mt-10 d-lg-block d-none">
+<section class="travel-area mt-10 d-lg-block d-none" *ngIf="HotelDetail">
   <div class="container">
       <div class="row">
           <div class="col-md-12">
@@ -24,15 +24,15 @@
                   <div class="hotel-list-item">
                       <div class="hotel-list-left">
                           <div class="hotel-list-text">
-                              <h6 class="hotel-name">{{HotelDetail.hotelInfo.name}}</h6>
-                              <p class="hotel-place">{{HotelDetail.hotelInfo.address=='' ? HotelDetail.hotelInfo.city : HotelDetail.hotelInfo.address }}</p>
-                              <p class="hotel-star" *ngIf="HotelDetail.hotelInfo.starRating > 0">
-                                <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 1}"></i>
-                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 2}"></i>
-                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 3}"></i>
-                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 4}"></i>
-                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelInfo.starRating >= 5}"></i>
-                                <span class="hotel-star-tag">{{HotelDetail.hotelInfo.starRating}}/5</span>
+                              <h6 class="hotel-name">{{HotelDetail.hotelName}}</h6>
+                              <p class="hotel-place">{{HotelDetail.address=='' ? HotelDetail.city : HotelDetail.address }}</p>
+                              <p class="hotel-star" *ngIf="HotelDetail.hotelRatings[0].rating > 0">
+                                <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 1}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 2}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 3}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 4}"></i>
+                                <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 5}"></i>
+                                <span class="hotel-star-tag">{{HotelDetail.hotelRatings[0].rating}}/5</span>
                             </p>
                           </div>
                       </div>
@@ -88,81 +88,27 @@
           <div class="col-md-9">
               <div class="hd-gallery">
                   <div id="big" class="owl-carousel owl-theme">
-                      <div class="item">
-                          <img src="{{HotelDetail.hotelInfo.image}}" class="img-fluid" alt="">
-                      </div>
-                      <!-- <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/1.png" class="img-fluid" alt="">
-                      </div> -->
+                    <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                      <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                        <ng-template carouselSlide  [id]="'Id_'+i">
+                          <div class="item">
+                            <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="">
+                        </div>
+                          </ng-template>
+                       </ng-container>
+                    </owl-carousel-o>
                   </div>
-                  <!-- <div id="thumbs" class="owl-carousel owl-theme mt-10">
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/1.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/2.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/3.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/4.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/5.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/6.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/7.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/8.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/9.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/2.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/2.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/3.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/4.png" class="img-fluid" alt="">
-                      </div>
-                      <div class="item">
-                          <img src="assets/images/hotel/details/thumbe/5.png" class="img-fluid" alt="">
-                      </div>
-                  </div> -->
+                  <div id="thumbs" class="owl-carousel owl-theme mt-10">
+                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl>
+                      <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                        <ng-template carouselSlide >
+                          <div class="item" (click)="onImageClick(i)">
+                            <img src="{{image.thumbnailImageUrl}}" class="img-fluid" alt="">
+                        </div>
+                          </ng-template>
+                       </ng-container>
+                    </owl-carousel-o>
+                  </div>
               </div>
           </div>
           <div class="col-md-3">
@@ -176,26 +122,26 @@
               <div class="hd-tabs-area">
                   <ul class="list-unstyled hd-tabs">
                       <li>
-                          <a href="javascript:void(0); " (click)="selectedTab = 'Overview'" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}" data-bind="hdOverview">Overview</a>
+                          <a href="javascript:void(0)" (click)="onSectionChange('hdOverview','Overview')" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}" data-bind="hdOverview">Overview</a>
                       </li>
                       <li>
-                          <a href="javascript:void(0);" (click)="selectedTab = 'Rooms'" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"  data-bind="hdRooms"> Rooms</a>
+                          <a href="javascript:void(0)" (click)="onSectionChange('hdRooms','Rooms')" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"  data-bind="hdRooms"> Rooms</a>
                       </li>
                       <li>
-                          <a href="javascript:void(0);" (click)="selectedTab = 'Amenities'" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}" data-bind="hdAmenities"> Amenities</a>
+                          <a href="javascript:void(0)" (click)="onSectionChange('hdAmenities','Amenities')" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}" data-bind="hdAmenities"> Amenities</a>
                       </li>
                   </ul>
                   <div class="hd-tabs-details">
-                      <div id="hdOverview" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Overview'}">
+                      <div id="hdOverview" class="hd-details-area hd-tabs-details-active">
                           <div class="hd-details-body">
                               <div class="Overview-area">
                                   <div class="Overview-top">
                                       <div class="Overview-title">
                                           <h6>About</h6>
-                                          <p>CHECK-IN 2PM | CHECK-OUT 11AM</p>
+                                          <p>CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
                                       </div>
-                                      <div class="Overview-details">
-                                          <ul>
+                                      <div class="Overview-details" innerHtml="{{HotelDetail.description}}">
+                                          <!-- <ul>
                                               <li><p><strong>Services</strong>: 24x7 power back up, 24 Hour Power Supply, Lift, Wheelchair accessible elevator, Waiting area, Room Service (24 Hours Available), Special occasion arrangement, Hot water available, Dry cleaning, Room/Rooms reserved for special need guests, Wheelchair accessible ramp, Wake up service/Alarm clock, Ironing Service, Hot water available 24x7, Luggage storage, Concierge, Babysitting or child care, Business center, Wheelchair, Separate Smoking Area, Laundry facilities.</p></li>
                                               <li><p><strong>Languages Spoken by Hotel Staff</strong>: English, Hindi</p></li>
                                               <li><p><strong>Payments Modes Accepted</strong>: Cash, Debit Card, Credit Card, Net-Banking, Visa, American Express, Security deposit, Mastercard</p></li>
@@ -206,7 +152,7 @@
                                               <li><p><strong>Media & Entertainment</strong>: Flat-screen TV</p></li>
                                               <li><p><strong>Not Allowed</strong>: Pets</p></li>
                                               <li><p><strong>Suitable For</strong>: Large Groups, Family, Families with Children, Couples,</p></li>
-                                          </ul>
+                                          </ul> -->
                                       </div>
                                   </div>
                                   <div class="Overview-bottom mt-10">
@@ -217,24 +163,24 @@
 
                                         <div class="owl-slider grid-7 hd-Offered-slider">
                                           <owl-carousel-o [options]="customOptions">
-                                        <ng-container *ngFor="let item of Facilities; let i = index">
+                                        <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
                                           <ng-template carouselSlide>
                                             <div class="box-item">
                                               <div class="hd-Offered-thumbe">
-                                                  <img src="{{item.image}}" class="img-fluid" alt="">
+                                                  <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
                                               </div>
                                               <div class="hd-Offered-text">
-                                                  <h6>{{item.name}}</h6>
+                                                  <h6>{{Facilities[item].name}}</h6>
                                               </div>
                                           </div>
                                             </ng-template>
                                          </ng-container>
 
-                                          <ng-template carouselSlide>
+                                          <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
                                          <div class="box-item box-item-text">
                                           <div class="hd-Offered-text">
                                               <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
-                                                  <p>21+</p>
+                                                  <p>{{hotelAmenity.length - 6}}+</p>
                                                   <span>More Amenities</span>
                                               </a>
                                           </div>
@@ -248,7 +194,7 @@
                               </div>
                           </div>
                       </div>
-                      <div id="hdRooms" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Rooms'}">
+                      <div id="hdRooms" class="hd-details-area  hd-tabs-details-active">
                           <div class="hd-details-body">
                               <div class="hd-Rooms-area">
                                   <div class="hd-Rooms-top">
@@ -258,46 +204,26 @@
                                       </div>
                                       <div class="hd-Rooms-details">
                                           <div class="hd-rd-area">
-                                              <div class="hd-rd-list">
+                                              <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates">
                                                   <div class="hd-rd-left">
                                                       <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
                                                           <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
+                                                              <img src="{{item.imageInfo.wideAngleImageurl}}" alt="">
                                                           </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-
                                                       </div>
                                                       <div id="hd-rd-thumbs" class="owl-carousel owl-theme room-thumbs hd-rd-thumbs-right">
                                                           <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/2.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/3.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/4.png" alt="">
+                                                              <img src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
                                                           </div>
                                                       </div>
                                                   </div>
                                                   <div class="hd-rd-right">
                                                       <div class="hd-rdetails-left">
-                                                          <h6 class="hd-rd-title">Deluxe Room King Bed with Balcony</h6>
+                                                          <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
                                                           <ul class="hd-rd-Facilities">
-                                                              <li><p>Free Breakfast and Lunch/Dinner</p></li>
-                                                              <li><p>Buffet Breakfast</p></li>
-                                                              <li><p>Free Valet Parking</p></li>
-                                                              <li><p>Free Parking</p></li>
+                                                              <li *ngFor="let list of item.roomAmenities">
+                                                                <p>{{list}}</p>
+                                                              </li>
                                                           </ul>
                                                           <span class="information-icon hd-cc-Policy">
                                                               Check Cancellation Policy
@@ -307,74 +233,13 @@
                                                                   </a>
                                                                   <div class="hover-popover-title">
                                                                       <h6>Cancellation Policy</h6>
-                                                                      <p>Fully refundable for cancellations done before 11:41 AM, 02 August (local time at the property). Charges for cancellations done after the above-mentioned time -100% of the booking amount.</p>
+                                                                      <p>{{item.cancellationPolicy}}</p>
                                                                   </div>
                                                               </div>
                                                           </span>
                                                       </div>
                                                       <div class="hd-rdetails-right">
-                                                          <h6>₹4,892</h6>
-                                                          <p>Inclusive of taxes</p>
-                                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book Now</a>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                              <div class="hd-rd-list">
-                                                  <div class="hd-rd-left">
-                                                      <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/1.png" alt="">
-                                                          </div>
-
-                                                      </div>
-                                                      <div id="hd-rd-thumbs" class="owl-carousel owl-theme room-thumbs hd-rd-thumbs-right">
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/1.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/2.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/3.png" alt="">
-                                                          </div>
-                                                          <div class="item">
-                                                              <img src="assets/images/hotel/room/thumbe/4.png" alt="">
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                                  <div class="hd-rd-right">
-                                                      <div class="hd-rdetails-left">
-                                                          <h6 class="hd-rd-title">Luxury Room, 1 King Bed</h6>
-                                                          <ul class="hd-rd-Facilities">
-                                                              <li><p>Free Breakfast and Lunch/Dinner</p></li>
-                                                              <li><p>Buffet Breakfast</p></li>
-                                                              <li><p>Free Valet Parking</p></li>
-                                                              <li><p>Free Parking</p></li>
-                                                          </ul>
-                                                          <span class="information-icon hd-cc-Policy">
-                                                              Check Cancellation Policy
-                                                              <div class="hover-popover">
-                                                                  <a href="" class="popover-close">
-                                                                      <img src="./assets/images/icons/close.png" alt="">
-                                                                  </a>
-                                                                  <div class="hover-popover-title">
-                                                                      <h6>Cancellation Policy</h6>
-                                                                      <p>Fully refundable for cancellations done before 11:41 AM, 02 August (local time at the property). Charges for cancellations done after the above-mentioned time -100% of the booking amount.</p>
-                                                                  </div>
-                                                              </div>
-                                                          </span>
-                                                      </div>
-                                                      <div class="hd-rdetails-right">
-                                                          <h6>₹4,892</h6>
+                                                          <h6>₹{{item.rateBreakdown.total | number}}</h6>
                                                           <p>Inclusive of taxes</p>
                                                           <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book Now</a>
                                                       </div>
@@ -386,7 +251,7 @@
                               </div>
                           </div>
                       </div>
-                      <div id="hdAmenities" class="hd-details-area" [ngClass]="{'hd-tabs-details-active':selectedTab == 'Amenities'}">
+                      <div id="hdAmenities" class="hd-details-area  hd-tabs-details-active">
                           <div class="hd-details-body">
                               <div class="Amenities-area">
                                   <div class="Amenities-top">
@@ -395,12 +260,9 @@
                                       </div>
                                       <div class="Amenities-details">
                                           <ul>
-                                              <li><p><strong>Near Candolim BeachLocation</strong>: When you stay at Acron Candolim Regina in Candolim, you'll be near the beach, within a 5-minute drive of Candolim Beach and Sinquerim Beach. This 4.5-star hotel is 1.4 mi (2.3 km) from Fort Aguada and 2 mi (3.2 km) from St. Anthony's Chapel.</p></li>
-                                              <li><p><strong>Rooms</strong>: Make yourself at home in one of the 102 guestrooms featuring minibars and LCD televisions. Rooms have private balconies. Wireless Internet access (surcharge) keeps you connected, and satellite programming is available for your entertainment. Private bathrooms with showers feature complimentary toiletries and hair dryers.</p></li>
-                                              <li>
-                                                  <p><strong>Attractions</strong>: Distances are displayed to the nearest 0.1 mile and kilometer.</p>
-                                                  <p>Candolim Beach - 0.8 km / 0.5 mi, Sinquerim Beach - 1.9 km / 1.2 mi, Fort Aguada - 2.3 km / 1.4 mi, Aguada Lighthouse - 2.9 km / 1.8 mi, St. Anthony's Chapel - 3.2 km / 2 mi, Nerul River - 3.3 km / 2 mi, Calangute Beach - 3.5 km / 2.2 mi, Poriat Football Ground - 4.1 km / 2.5 mi, Kegdole Beach - 4.2 km / 2.6 mi, Mandovi River - 4.2 km / 2.6 mi, Calangute Market - 4.6 km / 2.9 mi, Casino Palms - 5 km / 3.1 mi, Reis Magos Fort - 5.7 km / 3.6 mi, Baga Beach - 6 km / 3.7 mi, Titos Lane - 6.3 km / 3.9 mi, The preferred airport for Acron Candolim Regina is Dabolim Airport (GOI) - 35.9 km / 22.3 mi</p>
-                                              </li>
+                                              <li *ngFor="let Amenity of HotelDetail.hotelAmenities">
+                                                <p><strong>{{Amenity.category}}</strong>: {{Amenity.amenity.toString()}}</p></li>
+
                                           </ul>
                                       </div>
                                   </div>
@@ -413,3 +275,29 @@
       </div>
   </div>
 </section>
+
+
+   <!-- ------------------------------
+            >>> Modal More Amenities
+        ---------------------------------->
+        <div class="modal amenities-modal" id="moreAmenities">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-body" style="padding: 25px;">
+                      <div class="amenitiesmodal-items">
+                          <div class="amenitiesmodal-title">
+                              <h6>Amenities</h6>
+                              <a href="javascript:;" class="modal-close">
+                                  <img src="./assets/images/icons/close.png" alt="">
+                              </a>
+                          </div>
+                          <div class="amenitiesmodal-content">
+                              <ul class="amenitiesmodal-ul">
+                                  <li *ngFor="let item of hotelAmenity"><p>{{Facilities[item].name}}</p></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>

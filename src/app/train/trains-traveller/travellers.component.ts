@@ -347,6 +347,10 @@ export class TrainsTravellerComponent implements OnInit {
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
+            if(!this.seacthResult){
+         this.router.navigate(['/train']);
+        }
 
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
@@ -892,6 +896,8 @@ saveGSTConsent(){
     }
 
     boardingStations() {
+    
+    
        
         this.traindate = this.seacthResult.searchHistory.journeyDate;
         this.fromstn = this.seacthResult.selectedTrain.fromStnCode;

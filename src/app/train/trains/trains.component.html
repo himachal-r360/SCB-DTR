@@ -270,7 +270,7 @@
                                     <img src="{{cdnUrl}}/images/empty_list_train.svg">
                                 </div>
                             </div>
-                            <div class="col-md-12 mt-3 text-center">
+                            <div class="col-md-12 mt-3 text-center"  (click)="goback()">
                                 <p class="empty_list_text">Try another route or date</p>
                                 <button class="empty_list_btn">Go back to search page</button>
                             </div>
@@ -278,7 +278,7 @@
                         <!-- end of no train found new design web -->
                      
                         <!-- Listing -->
-                        <div class="flight-listing-area bg-white p-3" *ngIf="loading" >
+                        <div class="flight-listing-area p-3" *ngIf="loading" >
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
                                 <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
@@ -329,7 +329,7 @@
                   </div>
               </div>
           </div>
-          <div class="col-md-12 mt-70" *ngIf="!loading">
+          <div class="col-md-12 mt-70"  *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >= 1">
             <div class="row">
                 <div class="col-6">
                     <div class="mob-listing-fiters">
@@ -376,7 +376,7 @@
                                 <img src="{{cdnUrl}}/images/empty_list_train.svg" width="200px">
                             </div>
                         </div>
-                        <div class="col-md-12 mt-3 text-center">
+                        <div class="col-md-12 mt-3 text-center" (click)="goback()">
                             <p class="empty_list_text">Try another route or date</p>
                             <button class="empty_list_btn">Go back to search page</button>
                         </div>
@@ -429,7 +429,7 @@
                                         <label class="checkbox-cust" >
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
-                                                <p class="m_sort_text">Leave Early</p>
+                                                 <p class="m_sort_text" >Leave Early</p>
                                                 <p class="m_sort_text50">Earliest</p>
                                             </div>
                                             <input checked="checked" type="radio" (click)="orderBy('leave-early')" value="leave-early">
@@ -444,7 +444,7 @@
                                                 <p class="m_sort_text">Leave Late</p>
                                                 <p class="m_sort_text50">Laest</p>
                                             </div>
-                                            <input checked="checked" type="radio" value="leave-late">
+                                            <input  type="radio" (click)="orderBy('leave-late')" value="leave-late">
                                             <span class="checkmark-cust"></span>
                                         </label>
                                     </div>
@@ -469,7 +469,7 @@
                 [toStations] = "toStations" (toStationsEvent) = "updateToStationFilter($event)"
                 (removeallfilters) = "clearSelectionAll()"
                 (searchboard) = "searchboarding($event)"
-                (applyFilter) = "onFilter()"  [avlQuota] = "avlQuota" (selectedQuota) = "updateTosSelectedQuota($event)">
+                (applyFilter) = "onFilter()"  [avlQuota] = "avlQuota" (selectedQuotaEvent) = "updateTosSelectedQuota($event)">
                 </app-trains-filter>
                         </ng-container>
                                 

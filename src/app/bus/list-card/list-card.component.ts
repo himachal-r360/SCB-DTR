@@ -539,15 +539,16 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.onSubmitSeats(tripid, busdetails, rowvalue, mobile);
    }
    if (!this.seatdetails.length) {
-    var messageSelectSeat = 'Please select seat(s)';
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
+   /*  var messageSelectSeat = 'Please select seat(s)'; */
+    this.mlite_seatError = true;
+    /* const dialogRef = this.dialog.open(ConfirmationDialog, {
      id: 'messageforMliteDialog',
      data: {
       messageData: messageSelectSeat,
       redirectUrl: 0
      }
-    });
-    return true;
+    });*/
+    return true; 
    }
    this.showBoardDrop = !this.showBoardDrop;
    this.showDetails = false;

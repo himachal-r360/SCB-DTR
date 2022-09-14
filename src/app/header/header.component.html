@@ -134,7 +134,7 @@
                         <div class="after_log">
                             <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                                 <div>
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick(1)">
                                     <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                                 </div>
                                 <!--  Notification Box Starts -->
@@ -303,7 +303,7 @@
                                                                 <!-- <p class="line_sub">XXXX 9827</p>-->
                                                             </div>
                                                         </div>
-                                                        <div class="col-5 text-right">
+                                                        <div class="col-5 text-right p-0">
                                                             <p class="value">{{customeravailablepoints}}</p>
                                                         </div>
                                                     </div>
@@ -348,10 +348,11 @@
             <nav class="nav menu_list">
                 <ul>
                     <li>
-                        <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you</a>
+                        <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou' || menuActiveClass==''  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you</a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays</a>
+
+                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays </a>
                         <div class="dropdown-content-list list-travel" >
                             <div class="row">
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
@@ -716,7 +717,7 @@
                         </div>
                         <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                             <div>
-                                <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
+                                <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick(1)">
                                 <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                             </div>
                             <!--Notification Box Starts-->
@@ -885,7 +886,7 @@
                                                             <p class="line_sub">XXXX 9827</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-5 text-right">
+                                                    <div class="col-5 text-right p-0">
                                                         <p class="value">{{customeravailablepoints}}</p>
                                                     </div>
                                                 </div>
@@ -1828,7 +1829,7 @@
         <div class="inner_m_item">
             <div class="icn" *ngIf="serviceSettings.notifications==1">
                 <!-- <span [ngClass]="(pushcount)>0  ? 'm-number_count' : ''"></span> -->
-                <p class="mb-0 pt-1 push_icon" (click)="enablePushClick()">
+                <p class="mb-0 pt-1 push_icon" (click)="enablePushClick(2)">
                     <span [ngClass]="(pushcount)>0 && notificationball ? 'm-number_count' : ''"></span>
                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification m_bell">
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
@@ -1862,7 +1863,7 @@
                                                 <!--<p class="line_sub">XXXX 9827</p>-->
                                             </div>
                                         </div>
-                                        <div class="col-5 text-right">
+                                        <div class="col-5 text-right p-0">
                                             <p class="value">{{customeravailablepoints}}</p>
                                         </div>
                                     </div>
@@ -1999,7 +2000,7 @@
                 <ul>
                     <li *ngIf="payzrestriction==false">
                         <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''">
-                            <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
+                            <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You </span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
                     </li>
                     <li>
@@ -2469,7 +2470,7 @@
         <div class="inner_m_item">
             <div class="icn reg_gold_icn" *ngIf="serviceSettings.notifications==1">
                 <!-- <span [ngClass]="(pushcount)>0  ? 'm-number_count' : ''"></span> -->
-                <p class="mb-0 pt-1 push_icon" data-bs-toggle="modal" data-bs-target="#pushNotiEnable" (click)="enablePushClick()">
+                <p class="mb-0 pt-1 push_icon" data-bs-toggle="modal" data-bs-target="#pushNotiEnable" (click)="enablePushClick(2)">
                     <span [ngClass]="(pushcount)>0  && notificationball ? 'm-number_count' : ''"></span>
                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification m_bell">
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
@@ -2505,7 +2506,7 @@
                                                 <!--<p class="line_sub">XXXX 9827</p>-->
                                             </div>
                                         </div>
-                                        <div class="col-5 text-right">
+                                        <div class="col-5 text-right p-0">
                                             <p class="value">{{customeravailablepoints}}</p>
                                         </div>
                                     </div>

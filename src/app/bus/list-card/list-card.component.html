@@ -1063,13 +1063,30 @@
 <!-- Mobile Boarding & Dropping -->
 
 <div class="mobile-boarding-dropping" *ngIf="showBoardDrop">
-    <div class="boarding-back-title-smartbuy" *ngIf="domainName=='SMARTBUY'">
+    <div class="boarding-back-title-smartbuy p-0" *ngIf="domainName=='SMARTBUY'">
         <!-- <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
         <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div> -->
 
-
+        <div class="mob-listing-header">
+            <div class="mob-listing-header-left">
+                <a (click)="showBoardDrop=false" class="">
+                    <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                </a>
+            </div>
+            <div class="mob-listing-header-center">
+                <div class="">
+                       <!--  <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
+                        <h6>{{ onward.travels }} </h6>
+                        <p class="">{{ onward.busType }}</p> -->
+                        <p class="">{{ departure  | date:'EEE, dd MMM' }}</p>
+                        <h6 class="">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
+                        <p class="">{{bus.busType}}</p>
+                </div>
+            </div>
+            <div> </div>
+        </div>
         <!-- mobile boarding and dropping static data-->
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 text-center">
                 <a (click)="showBoardDrop=false" class="m_fheader_link">
                     <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
@@ -1078,7 +1095,7 @@
                 <h6 class="m_fheader_title">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
                 <p class="m_fheader_text">{{bus.busType}}</p>
             </div>
-        </div>
+        </div> -->
         <!-- end of mobile boarding static data -->
 
 

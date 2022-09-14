@@ -973,6 +973,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
   this.gotoTop();
  }
 
+  serverIssue:number=0;
  
   busSearch() {
     this.loader = true;
@@ -1035,13 +1036,18 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterrtc(); 
     
     
-  
+   this.serverIssue=0;
      this.popularFilterBusData();
        this.loader = false;
-      //  this.loading = false;
+        this.loading = false;
+     }else{
+      this.loader = false;
+      this.loading = false;
+     this.serverIssue=1;
      }
    },
    (err: HttpErrorResponse) => {
+    this.serverIssue=1;
       this.loader = false;
        this.loading = false;
    });
@@ -1204,6 +1210,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
     {
       filterDiv.style.display = 'none';
     }
+    this.popularFilterBusData();
   }
 }
 @Component({

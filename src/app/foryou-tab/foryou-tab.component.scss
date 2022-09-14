@@ -1212,7 +1212,7 @@ margin-top:-7px;
     font-weight: 600;
     -webkit-appearance: none;
     position: relative;
-    -webkit-appearance: menulist;
+   /*  -webkit-appearance: menulist; */
     @media screen and (max-width: 320px) {
         font-size: 12px;
     }
@@ -2716,3 +2716,14 @@ margin-top:-7px;
         font-weight: 600;
     }
 }
+
+
+/* Only Safari Browser Support Code */
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+    .top_emi_sec { 
+        display: grid;
+        grid-template: auto / repeat(4,1fr);
+        gap: 20px;
+    }
+}}

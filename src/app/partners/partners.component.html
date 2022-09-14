@@ -1,28 +1,28 @@
 <section class="partners_section">
     <div class="container">
         <div class="">
-          <div class="row">
-            <div class="col-md-12">
-              <h5 class="primary_heading">Our Partners</h5>
-              <p class="p_text mb-0">Get accelerated Reward points on HDFC Bank Infinia or Diners Card or Credit Card or Cashback on other HDFC Bank Credit Cards and all HDFC Bank Debit Card on transacting through Smartbuy as per the structure below.</p>
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="primary_heading">Our Partners</h5>
+                    <p class="p_text mb-0 pt-20">Get accelerated Reward points on HDFC Bank Infinia or Diners Card or Credit Card or Cashback on other HDFC Bank Credit Cards and all HDFC Bank Debit Card on transacting through Smartbuy as per the structure below.</p>
+                </div>
             </div>
-          </div>
-          <div class="row mlite_first_seperator">
-            <div class="col-12 mt-1 mb-1">
-              <hr class="div_seperator">
+            <div class="row mlite_first_seperator">
+                <div class="col-12 mt-1 mb-1">
+                    <hr class="div_seperator">
+                </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="card_view">
-               
-             <span  *ngFor="let partners of partner_lists; first as first" >
+            <div class="row">
+                <div class="card_view">
+
+                    <span *ngFor="let partners of partner_lists; first as first">
                 <div class="row" [ngClass]="(first)?' ':'mt-3'">
                   <div class="col-md-4">
                     <h5 class="secondary_heading">{{partners.name}} Partners</h5>
-                    <p class="p_text">{{partners.description}} </p>
+                    <!-- <p class="p_text">{{partners.description}} </p> -->
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-8 mt-2 mt-md-0">
                     <div class="container-sm">
                       <div class="gx-sm-5 gy-3 gy-sm-3 row">
                         <div class="col-md-4 " *ngFor="let partner of partners.list; first as first" >
@@ -36,87 +36,85 @@
                               <div class="row">
                                 <div class="col-6 col-md-12">
                                   <div class="content_div_up">
-                                    <p class="card_p_text m-0 p-0">Upto <span class="font-weight-bold">{{serviceSettings.offer_construct[partner.offer_construct].reward}}X</span></p>
-                                    <p class="card_p_text p-0 m-0">Reward points</p>
-                                  </div>
-                                </div>
-                                <div class="col-6 col-md-12">
-                                  <div class="content_div_low">
-                                    <p class="card_p_text font-weight-bold m-0 p-0">{{serviceSettings.offer_construct[partner.offer_construct].cashback}}%</p>
-                                    <p class="card_p_text m-0 p-0">Cashback</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 mt-1 mb-1">
-                    <hr class="div_seperator">
-                  </div>
+                                    <p class="card_p_text m-0 p-0"> <span class="font-weight-bold">{{serviceSettings.offer_construct[partner.offer_construct].reward}}X</span></p>
+                    <p class="card_p_text p-0 m-0">Reward points</p>
                 </div>
-              </span>
-    
-              </div>
-          </div>
-          <!-- end of partners card view display -->
-      
-          <!-- Tabs -->
-          <section class="category_tabs">
-            <div class="row mt-3">
-                <div class="text-center col-12 mb-4">
-                 <h5 class="secondary_heading">Instant Voucher Partners</h5>
-                  <h6 class="tertiary_heading"><span class="text_bold">{{serviceSettings.offer_construct.instant_voucher.reward}}X </span>Reward points <span class="text_bold">| {{serviceSettings.offer_construct.instant_voucher.cashback}}% </span>Cashback</h6>
-                  <p class="voucher_sub_text">{{getVouchersList[0]['description']}}</p>
+            </div>
+            <div class="col-6 col-md-12">
+                <div class="content_div_low">
+                    <p class="card_p_text font-weight-bold m-0 p-0">{{serviceSettings.offer_construct[partner.offer_construct].cashback}}%</p>
+                    <p class="card_p_text m-0 p-0">Cashback</p>
                 </div>
-              </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-12 mt-1 mb-1">
+        <hr class="div_seperator">
+    </div>
+    </div>
+    </span>
 
-              <div class="container">
-                  <div class="row">
-                      <div class="col-xs-12 ">
+    </div>
+    </div>
+    <!-- end of partners card view display -->
 
-                        <div class="voucher_tab_section mb-5">
+    <!-- Tabs -->
+    <section class="category_tabs">
+        <div class="row mt-3">
+            <div class="text-center col-12 mb-4">
+                <h5 class="secondary_heading">Instant Voucher Partners</h5>
+                <h6 class="tertiary_heading"><span class="text_bold">{{serviceSettings.offer_construct.instant_voucher.reward}}X </span>Reward points <span class="text_bold">| {{serviceSettings.offer_construct.instant_voucher.cashback}}% </span>Cashback</h6>
+                <p class="voucher_sub_text">{{getVouchersList[0]['description']}}</p>
+            </div>
+        </div>
 
-                            <ul class="nav nav-tabs" id="" role="tablist">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 ">
+
+                    <div class="voucher_tab_section mb-5">
+
+                        <ul class="nav nav-tabs" id="" role="tablist">
                             <ng-container *ngFor="let vouchercat of getVouchersList; first as first">
-                                <li class="nav-item" role="presentation" >
-                                     <div class="nav-link "  [ngClass]="(first)?'active':''"  id="{{vouchercat.slug}}-tab" data-bs-toggle="tab" [attr.data-bs-target]="'#' + vouchercat.slug"  type="button" role="tab" aria-controls="{{vouchercat.slug}}" aria-selected="true">
+                                <li class="nav-item" role="presentation">
+                                    <div class="nav-link " [ngClass]="(first)?'active':''" id="{{vouchercat.slug}}-tab" data-bs-toggle="tab" [attr.data-bs-target]="'#' + vouchercat.slug" type="button" role="tab" aria-controls="{{vouchercat.slug}}" aria-selected="true">
                                         <div class="text-center">
-                                          <img src="{{cdnUrl}}images/smartbuy/partner/vouchers/{{vouchercat.image}}">
-                                            <p class="name_tab">{{vouchercat.voucher_name}}</p>
+                                            <img src="{{cdnUrl}}images/smartbuy/partner/vouchers/{{vouchercat.image}}">
+                                            <p class="name_tab pt-10">{{vouchercat.voucher_name}}</p>
                                         </div>
                                     </div>
                                 </li>
-                               </ng-container>
-                              </ul>
-                              <div class="tab-content mt-4" id="myTabContent">
-                                <div *ngFor="let vouchercat of getVouchersList; first as first" class="tab-pane fade " [ngClass]="(first)?'show active':''" id="{{vouchercat.slug}}" role="tabpanel" aria-labelledby="{{vouchercat.slug}}-tab">
-                                    <div class="row g-3">
-                                    
-                                    
-                                        <div class="col-4 col-md-2 " *ngFor="let vouchercatval of vouchercat.voucher_value">
-                                           <div class="brand_div d-flex align-items-center justify-content-center">
-                                              <div class="brand_img_div">
-                                                 <img src="{{cdnUrl}}images/smartbuy/partner/brand/{{vouchercatval.image}}" class="brand_img">
-                                              </div>
-                                           </div>
+                            </ng-container>
+                        </ul>
+                        <div class="tab-content mt-4" id="myTabContent">
+                            <div *ngFor="let vouchercat of getVouchersList; first as first" class="tab-pane fade " [ngClass]="(first)?'show active':''" id="{{vouchercat.slug}}" role="tabpanel" aria-labelledby="{{vouchercat.slug}}-tab">
+                                <div class="row g-3">
+
+
+                                    <div class="col-4 col-md-2 " *ngFor="let vouchercatval of vouchercat.voucher_value">
+                                        <div class="brand_div d-flex align-items-center justify-content-center">
+                                            <div class="brand_img_div">
+                                                <img src="{{cdnUrl}}images/smartbuy/partner/brand/{{vouchercatval.image}}" class="brand_img">
+                                            </div>
                                         </div>
-
                                     </div>
-                                </div>
-                              </div>
 
+                                </div>
+                            </div>
                         </div>
 
-                      </div>
-                  </div>
-              </div>
-          </section>
-          <!-- ./Tabs -->
+                    </div>
+
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+    <!-- ./Tabs -->
+    </div>
+    </div>
 </section>
-
-
