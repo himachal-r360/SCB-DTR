@@ -337,11 +337,11 @@ public modeselectTrending= 'All';
         
         var allCookies_key = [];
         if (localStorage.getItem(environment.flightLastSearch) !== null) allCookies_key.push(environment.flightLastSearch);
-        if (localStorage.getItem('HotelRecentSearchNew') !== null) allCookies_key.push('HotelRecentSearchNew');
-        if (localStorage.getItem('busLastSearchNew') !== null) allCookies_key.push('busLastSearchNew');
-        if (localStorage.getItem('trainLastSearchNew') !== null) allCookies_key.push('trainLastSearchNew');
+        if (localStorage.getItem(environment.hotelLastSearch) !== null) allCookies_key.push(environment.hotelLastSearch);
+        if (localStorage.getItem(environment.busLastSearch) !== null) allCookies_key.push(environment.busLastSearch);
+        if (localStorage.getItem(environment.trainLastSearch) !== null) allCookies_key.push(environment.trainLastSearch);
 
-        if (localStorage.getItem(environment.flightLastSearch) !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearchNew') !== null || localStorage.getItem('trainLastSearchNew') !== null) {
+        if (localStorage.getItem(environment.flightLastSearch) !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem(environment.busLastSearch) !== null || localStorage.getItem(environment.trainLastSearch) !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
@@ -400,7 +400,7 @@ console.log("hotel "+ JSON.stringify( get_value));
             } else {
               
               var get_value = JSON.parse(item);
-              if (data == 'busLastSearchNew' && localStorage.getItem('busLastSearchNew') !== null) {
+              if (data == environment.busLastSearch && localStorage.getItem(environment.busLastSearch) !== null) {
 
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
@@ -420,7 +420,7 @@ console.log("hotel "+ JSON.stringify( get_value));
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;
               }
-              else if (data == 'trainLastSearchNew' && localStorage.getItem('trainLastSearchNew') !== null) {
+              else if (data == environment.trainLastSearch && localStorage.getItem(environment.trainLastSearch) !== null) {
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');

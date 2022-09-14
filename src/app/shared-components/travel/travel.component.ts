@@ -1128,7 +1128,7 @@ lastFlightSearch=localStorage.getItem(environment.flightLastSearch);
 
 
   //Bus
-  lastBusSearch=localStorage.getItem('busLastSearchNew');
+  lastBusSearch=localStorage.getItem(environment.busLastSearch);
  const lastBusSearchValue=JSON.parse(lastBusSearch);
   if(lastBusSearchValue){
    this.busFromText=lastBusSearchValue.searchFrom;
@@ -1178,7 +1178,7 @@ lastFlightSearch=localStorage.getItem(environment.flightLastSearch);
           
   }
   //Train
-   lastTrainSearch=localStorage.getItem('trainLastSearchNew');
+   lastTrainSearch=localStorage.getItem(environment.trainLastSearch);
   const lastTrainSearchValue=JSON.parse(lastTrainSearch);
   if(lastTrainSearchValue){
 
@@ -1696,7 +1696,7 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-  localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
+  localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1778,7 +1778,7 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-  localStorage.setItem('trainLastSearchNew', JSON.stringify(this.searchArray));
+  localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){

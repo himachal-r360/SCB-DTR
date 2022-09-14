@@ -134,7 +134,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
   ngOnInit(): void {
    this._busService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    let continueSearchValLs:any= localStorage.getItem('continueSearchBus');
+    let continueSearchValLs:any= localStorage.getItem(environment.continueSearchBus);
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
@@ -252,7 +252,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('busLastSearchNew');
+   let lastSearch:any=localStorage.getItem(environment.busLastSearch);
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
@@ -324,7 +324,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
   busSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchBus');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchBus);
       if(continueSearch==null){
         this.continueSearchBuss=[];
       }
@@ -341,7 +341,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
         this.continueSearchBuss=this.continueSearchBuss.slice(0,3);
       }
       this.continueSearchBuss.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchBus',JSON.stringify(this.continueSearchBuss));
+      localStorage.setItem(environment.continueSearchBus,JSON.stringify(this.continueSearchBuss));
   }
 
 
@@ -361,7 +361,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
      } else {
       let searchValue = this.searchBusForm.value;
       this.busSearchCallBack(searchValue);
-      localStorage.setItem('busLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.busLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
       url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));

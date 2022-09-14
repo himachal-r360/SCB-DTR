@@ -134,7 +134,12 @@ export const environment = {
   },
   "flightLastSearch":"flightLastSearches",
   "continueFlightSearch":"continueFlightSearch",
-  
+  "continueSearchBus":"continueSearchBuses",
+  "busLastSearch":"busLastSearches",
+  "continueSearchTrain":"continueSearchTrains",
+  "trainLastSearch":"trainLastSearches",
+  "continueSearchHotel":"continueSearchHotels",
+  "hotelLastSearch":"hotelLastSearches",
 
 
 };

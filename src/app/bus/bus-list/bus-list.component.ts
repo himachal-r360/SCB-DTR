@@ -263,14 +263,14 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         this.fromState=this.searchParam.fromState;
         this.toState=this.searchParam.toState;
      this.busSearchCallBack(params);
-      localStorage.setItem('busLastSearchNew',JSON.stringify(params));
+      localStorage.setItem(environment.busLastSearch,JSON.stringify(params));
         }
         
       continueSearch:any=[];  
         continueSearchBuss:any=[]
     busSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchBus');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchBus);
       if(continueSearch==null){
         this.continueSearchBuss=[];
       }
@@ -287,7 +287,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         this.continueSearchBuss=this.continueSearchBuss.slice(0,3);
       }
       this.continueSearchBuss.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchBus',JSON.stringify(this.continueSearchBuss));
+      localStorage.setItem(environment.continueSearchBus,JSON.stringify(this.continueSearchBuss));
   }      
         
         resetPopups(){
