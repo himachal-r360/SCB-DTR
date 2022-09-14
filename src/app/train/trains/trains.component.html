@@ -194,7 +194,7 @@
 
             <div class="col-lg-12">
                 <div class="layout-box">
-                  <div class="layout-left">
+                  <div class="layout-left" *ngIf="notrain==false">
                     <div class="filter-loaders animation-loader" *ngIf="loading">
                       <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                           <div class="filter-loader-content ">
@@ -208,7 +208,7 @@
 
                         <div [hidden]="loading">
                         <ng-container *ngIf="trains">
-                 <app-trains-filter [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
+                 <app-trains-filter  [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
                 [arrivalTimeFilter] = "arrivalTimeFilter" (arriveEvent)="updateArrival($event)"
                 [availableClasses] = "availableClasses"  (availableClassesEvent) = "updateAvailableClassFilter($event)"
                 [trainTypes] = "trainTypes" (trainTypesEvent) = "updateTrainTypeFilter($event)"
@@ -224,7 +224,7 @@
                 </div>
 
                     <div class="layout-right">
-                        <div class="train-found" [hidden]="loading">
+                        <div class="train-found" [hidden]="loading" *ngIf="notrain==false">
                             <div class="flight-tosearch">
                                  <div class="flight-search-filters-left" >
 
@@ -444,7 +444,7 @@
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                 <p class="m_sort_text">Leave Late</p>
-                                                <p class="m_sort_text50">Laest</p>
+                                                <p class="m_sort_text50">Latest</p>
                                             </div>
                                             <input  type="radio" (click)="orderBy('leave-late')" value="leave-late">
                                             <span class="checkmark-cust"></span>

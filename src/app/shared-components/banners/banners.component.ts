@@ -10,6 +10,9 @@ import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { createMask } from '@ngneat/input-mask';
+import * as moment from 'moment';
+import { formatDate } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-banners',
   templateUrl: './banners.component.html',
@@ -17,7 +20,7 @@ import { createMask } from '@ngneat/input-mask';
 })
 export class BannersComponent implements OnInit {
 
-  constructor(private spinnerService: NgxSpinnerService,public rest: RestapiService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private router: Router,private EncrDecr: EncrDecrService,private fb: FormBuilder) {
+  constructor(private spinnerService: NgxSpinnerService,public rest: RestapiService, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private router: Router,private EncrDecr: EncrDecrService,private fb: FormBuilder,private cookieService: CookieService) {
 
    this.serviceSettings = this.appConfigService.getConfig();
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -25,6 +28,9 @@ export class BannersComponent implements OnInit {
    this.siteUrl = environment.MAIN_SITE_URL;
    this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
    this.createForm();
+    this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'];
+    this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
+    this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
  }
   public mask = {
     guide: true,
@@ -62,6 +68,23 @@ export class BannersComponent implements OnInit {
   last_stmt_points: any;
   isLogged: Boolean;
   XSRFTOKEN: string;
+ recentSearch = [];
+  recentSearchFlag = false;
+  recentData: any = [];
+  allCookies: any = [];
+  recentsearchData: any = [];
+  recentsearchDataAll: any = [];
+  cookie_all: any = [];
+  cookie_redirectUrl: boolean = false;
+  cookie_redirectNavigation: boolean = false;
+ domainRedirect: string;
+busUrl: any;
+topBanner: any = [];
+  topBannerSbRecommands: any = [];
+  topBannerSub: any = [];
+  topBannerRecentSearch: any = [];
+  circle_box: Boolean = true;
+
   ngOnInit(): void {
     
       if(this.sg['customerInfo']){
@@ -99,6 +122,209 @@ export class BannersComponent implements OnInit {
          }
         //this.initiateCards();
            }
+
+	/* For Recent Search */
+     //Top Banner
+    var getBannerParam = { postData: this.EncrDecr.set(JSON.stringify({ programName: this.sg['domainName'], type: 'foryou-top' })) };
+    this.rest.getBanner(JSON.stringify(getBannerParam)).subscribe(result => {
+      if (result.status == 'success') {
+        if (typeof result.result[0].foryouMain != 'undefined' && result.result[0].foryouMain.length > 0) {
+          this.topBanner = (result.result[0].foryouMain);
+          this.circle_box = true;
+        } else {
+          this.topBanner = [{
+            "image": this.cdnUrl + "images/banners/mobile/default_foryou_full.jpg",
+            "full_image": this.cdnUrl + "images/banners/desktop/default_foryou_full.jpg",
+            "brand": this.cdnUrl + "images/banners/hdfc.svg",
+            "title": "hdfc",
+            "redriect_url": "",
+            "bg_color_code": "#012748"
+          }];
+          this.circle_box = false;
+        }
+        if (typeof result.result[0].foryouSbrecommand != 'undefined' && result.result[0].foryouSbrecommand.length > 0) {
+          this.topBannerSbRecommands = (result.result[0].foryouSbrecommand);
+        }
+        
+        var allCookies_key = [];
+        if (localStorage.getItem(environment.flightLastSearch) !== null) allCookies_key.push(environment.flightLastSearch);
+        if (localStorage.getItem(environment.hotelLastSearch) !== null) allCookies_key.push(environment.hotelLastSearch);
+        if (localStorage.getItem(environment.busLastSearch) !== null) allCookies_key.push(environment.busLastSearch);
+        if (localStorage.getItem(environment.trainLastSearch) !== null) allCookies_key.push(environment.trainLastSearch);
+
+        if (localStorage.getItem(environment.flightLastSearch) !== null || localStorage.getItem(environment.hotelLastSearch) !== null || localStorage.getItem(environment.busLastSearch) !== null || localStorage.getItem(environment.trainLastSearch) !== null) {
+
+          Object.values(allCookies_key).forEach(data => {
+
+            let item = localStorage.getItem(data);
+           
+            var url;
+            if (data == environment.flightLastSearch || data == environment.hotelLastSearch) {
+
+              if (data == environment.flightLastSearch && localStorage.getItem(environment.flightLastSearch) !== null) {
+               
+               var searchValue = JSON.parse(item);
+               
+                var type = 'flight';
+                var searchFrom = searchValue.fromCity;
+                var searchTo = searchValue.toCity;
+                
+                var dateformat = searchValue.departure;
+                var strdate = new Date(dateformat);
+                var date = moment(strdate).format('ddd, MMM Do');
+                
+               if(searchValue.fromContry=='IN' && searchValue.toContry=='IN' ){    
+                if(searchValue.arrival == "" || searchValue.arrival == undefined || searchValue.arrival == null ){
+                 url="/flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
+                }
+                else {
+                 url="/flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(searchValue));
+                }
+               }else{
+                url="/flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+             }
+
+              }
+              else if (data == environment.hotelLastSearch && localStorage.getItem(environment.hotelLastSearch) !== null) {
+                var get_valueall = atob(item);
+                var get_value = JSON.parse(get_valueall).slice(-1)[0];
+console.log("hotel "+ JSON.stringify( get_value));
+                var dateformat = get_value.checkin;
+                var strdate = new Date(dateformat);
+                var date = moment(strdate).format('ddd, MMM Do');
+
+                var type = 'hotel';
+                var searchFrom = get_value.cityname;
+                var searchTo = get_value.city_id;
+
+                let diff = new Date().getTime() - strdate.getTime();
+
+                if (diff > 0) {
+                   url = '/compare-stay';
+                } else {
+
+                   url = this.domainRedirect + 'Hotels_lists?cityname=' + get_value.cityname + '&city_id=' + get_value.city_id + '&country=' + get_value.country + '&hotel_name=' + get_value.hotel_name + '&lattitude=' + get_value.lattitude + '&longitude=' + get_value.longitude + '&hotel_id=' + get_value.hotel_id + '&area=' + get_value.area + '&label_name=' + get_value.label_name + '&checkin=' + get_value.checkin + '&checkout=' + get_value.checkout + '&num_rooms=' + get_value.num_rooms + '&numberOfAdults1=' + get_value.numberOfAdults1 + '&numberOfChildren1=' + get_value.numberOfChildren1 + '&t=ZWFybg%3D%3D&hotel_search_done=' + get_value.hotel_search_done + '&hotel_modify=' + get_value.hotel_modify + '';
+                }
+
+              }
+              
+            } else {
+              
+              var get_value = JSON.parse(item);
+              if (data == environment.busLastSearch && localStorage.getItem(environment.busLastSearch) !== null) {
+
+                var dateformat = get_value.departure;
+                var strdate = new Date(dateformat);
+                var date = moment(strdate).format('ddd, MMM Do');
+
+                var type = 'bus';
+
+                let diff = new Date().getTime() - strdate.getTime();
+
+                if (diff > 0) {
+
+                   url = '/bus'; 
+                } else {
+
+                   url = '/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+                }
+                var searchFrom = get_value.searchFrom;
+                var searchTo = get_value.searchTo;
+              }
+              else if (data == environment.trainLastSearch && localStorage.getItem(environment.trainLastSearch) !== null) {
+                var dateformat = get_value.departure;
+                var strdate = new Date(dateformat);
+                var date = moment(strdate).format('ddd, MMM Do');
+
+                var type = 'train';
+
+                let diff = new Date().getTime() - strdate.getTime();
+
+                if (diff > 0) {
+
+                   url = '/train';
+                } else {
+
+                   url = '/train/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+
+                }
+                var searchFrom = get_value.searchFrom;
+                var searchTo = get_value.searchTo;
+
+              }
+
+            }
+
+            
+            if (date == undefined) { var dates = new Date(); var date = moment(dates).format('ddd, MMM Do'); }
+          
+        //  if(searchFrom!=undefined){
+          var from =   searchFrom.split('(');  
+          if(type=='hotel') { var from =   searchFrom; var searfrom = from; } else { var from =   searchFrom.split('(');  var searfrom = from[0]; }
+
+          if(type=='hotel') { var to =   searchTo; var searto = to; } else { var to =   searchTo.split('(');  var searto = to[0]; }
+          
+            this.cookie_all.push({
+              type: type,
+              date: dateformat,
+              showdate: date,
+              searchFrom: searfrom,
+              searchTo: searto,
+              Redirecturl: url
+            });
+          });
+          this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); 
+          this.recentsearchData = this.cookie_all.slice(0, 2);
+          this.recentsearchDataAll = this.cookie_all.slice(0, 4);
+
+         // }
+        }
+        
+        if (typeof this.recentsearchData != undefined || this.recentsearchData.length == 0 || typeof result.result[0].foryouRecentSearch != undefined) {
+          this.topBannerRecentSearch = result.result[0].foryouRecentSearch;
+	console.log(this.topBannerRecentSearch);
+        }
+
+        //RecentSearch
+        if (this.serviceSettings.COOKIE_CONSENT_ENABLED) {
+
+          var cookieName = 'busSearchN';
+
+          const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
+          if (cookieExistsConsent) {
+            var coval = this.cookieService.get(this.serviceSettings.cookieName);
+            if (coval == '1') {
+              const cookieExists: boolean = this.cookieService.check(cookieName);
+              if (cookieExists) {
+                const cookieValue: any = JSON.parse(this.cookieService.get(cookieName));
+                this.recentSearchFlag = true;
+                this.recentData = cookieValue.reverse();
+              } else {
+                this.recentSearchFlag = false;
+              }
+            } else {
+              this.recentSearchFlag = false;
+            }
+
+          }
+        } else {
+          const cookieExists: boolean = this.cookieService.check(cookieName);
+          if (cookieExists) {
+            const cookieValue: any = JSON.parse(this.cookieService.get(cookieName));
+            this.recentSearchFlag = true;
+            this.recentData = cookieValue.reverse();
+          } else {
+            this.recentSearchFlag = false;
+          }
+        }
+
+
+      } 
+
+
+    }); 
+	/* For Recent Search ends here */
+
 
         }else{
             this.customerInfo =[];
@@ -242,5 +468,19 @@ onSubmit(){
           }    
 
        }); 
+  }
+
+ConvertObjToQueryString(obj:any)
+  {
+
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
+  }
+onGoToPage(url){
+  this.router.navigateByUrl(url);
   }
 }

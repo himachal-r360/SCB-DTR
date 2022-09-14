@@ -140,6 +140,7 @@ API_URL:{
   "continueSearchHotel":"continueSearchHotels",
   "hotelLastSearch":"hotelLastSearches",
 
+  GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
   
 };
 
