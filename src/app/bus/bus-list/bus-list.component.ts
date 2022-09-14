@@ -237,6 +237,11 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         
     }
 
+    /* Go home btn */
+goback() {
+  this.router.navigate([this.sg['domainPath']+'/bus']);
+ }
+
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
@@ -366,6 +371,8 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
    queryParams: this.searchParamNextDay
   });
  }
+
+
 
   // Bus Timings Filter
   BusTimingsDepartureFilterBusData(timingsItems: any) {
@@ -542,8 +549,8 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
    /* selected: any = "Rating"; */
- selectedOption: any = "Rating";
- selectedOptionNew: any = "rating";
+ selectedOption: any = "Price (Low to High)";
+ selectedOptionNew: any = "price-low-high";
       showSortbuy: boolean = false;
   option:string='';
  orderBy(option) {
@@ -561,7 +568,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (option == 'seats-availability') {
         this.selectedOption = 'Seats Availability';
         } else {
-        this.selectedOption = 'Rating';
+        this.selectedOption = 'Price (Low to High)';
         }
         this.option = option;
         this.sortBy = option;
@@ -1230,3 +1237,5 @@ export class ChromeExtBusDialog {
   }
 
 }
+
+
