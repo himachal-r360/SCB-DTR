@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Options } from 'ng5-slider';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
+import { FlightService } from 'src/app/common/flight.service';
+import { Location } from '@angular/common';
 declare var $: any;
 @Component({
   selector: 'app-hotel-list',
@@ -26,6 +28,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
   maxPrice: number = 1000;
   resetMinPrice: number = 0;
   resetMaxPrice: number = 1000;
+  isMobile:boolean= true;
+  
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -33,7 +37,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       return '';
     }
   };
-
+  totalGuest = 0;
   starFiltersList:any = [
     { active: false, value: '5'},
     { active: false, value: '4'},
@@ -61,6 +65,43 @@ export class HotelListComponent implements OnInit,OnDestroy {
     {name:'Restaurant',value:'restaurant',active:false}
   ]
 
+  specialOffers = [
+    {name:'Offers 1',active:false},
+    {name:'Offers 2',active:false},
+    {name:'Offers 3',active:true},
+  ]
+
+  houseRules = [
+    {name:'Entire Property' , active:false},
+    {name:'Star Host' , active:false},
+    {name:'Caretaker' , active:false},
+    {name:'Homestays' , active:true},
+  ]
+
+  bookingPreferences = [
+    {name:'Entire Property' , active:false},
+    {name:'Caretaker' , active:false},
+    {name:'Instant Book' , active:true},
+    {name:'Homestays' , active:false},
+  ]
+
+  populateFilter = [
+    {name:'Apartment',active:false},
+    {name:'ApartHotel',active:false},
+    {name:'Holiday Home',active:false},
+    {name:'Camping',active:false},
+    {name:'Villas',active:false},
+    {name:'Resorts',active:false},
+  ]
+
+  priceSortingFilteritems = [
+    { name: 'P_L_H', active: false, value: 'Low to High' ,image: './assets/images/icons/price-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' ,image: './assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
+    { name: 'S_L_H', active: false, value: 'Low to High' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
+    { name: 'S_H_L', active: false, value: 'High to Low' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
+    { name: 'Trending', active: false, value: 'Trending Hotels' ,image: './assets/hotel/icon/Trending.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:''},
+  ]
+
   showMoreAmenity:boolean = false;
   SearchText:string = '';
   searchData:any;
@@ -69,6 +110,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+  @ViewChild('showFilter')showFilter:ElementRef;
 
   pageIndex: number = 26;
         ITEMS_RENDERED_AT_ONCE=25;
@@ -115,7 +157,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
             //  this.gotoTop();
         }
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal, public route: ActivatedRoute, private router: Router) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute , private _flightService:FlightService ,private location: Location , private router:Router ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: [],
@@ -138,7 +180,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
       pageNumber: [0],
       limit: [0],
       numberOfRooms: [1],
-      countryName : ['India']
+      countryName : ['India'],
+      totalGuest:[]
     });
 
     $(window).scroll(function(this) {
@@ -151,10 +194,16 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
   }
 
+  @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+  }
+
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
     this.sub = this.route.url.subscribe(url =>{
     this.getSearchData();
+    this.headerHideShow(null);
     this.searchHotel();
     });
   }
@@ -179,6 +228,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.hotelSearchForm.get('numberOfRooms').setValue(this.searchData.numberOfRooms);
     this.hotelSearchForm.get('countryName').setValue(this.searchData.countryName);
     this.hotelSearchForm.get('noOfRooms').setValue(this.searchData.noOfRooms);
+    this.hotelSearchForm.get('totalGuest').setValue(this.searchData.totalGuest);
     this.getQueryParamData();
   }
 
@@ -205,13 +255,19 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
     this.hotelSearchData = hotelSearchArr;
     this.hotelSearchForm.value.rooms = this.hotelSearchData;
-    // this.searchData.forEach((z)=>{
-    //   z.isSelected = false;
-    //   z.selectedFlight = null
-    // });
-    // this.selectedTripData = this.searchData[0];
+
+  // this.selectedTripData = this.searchData[0];
     // this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
 
+  }
+
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
+    }
   }
 
 
@@ -301,9 +357,12 @@ export class HotelListComponent implements OnInit,OnDestroy {
         this.hotelList = AmenityFiltered;
       }
 
+      
+
     }
 
     //Amenity Filter End
+
 
     //Search Text Filter Start
       if(this.SearchText !='')
@@ -315,6 +374,23 @@ export class HotelListComponent implements OnInit,OnDestroy {
           this.hotelList = data;
         }
       }
+      // shortings
+      this.priceSortingFilteritems.filter((item: any) => {
+        if (item.name == 'P_L_H' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
+        }
+        else if (item.name == 'P_H_L' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => b.priceSummary[0].price - a.priceSummary[0].price);
+        }
+        else if (item.name == 'S_L_H' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => a.hotelInfo.starRating - b.hotelInfo.starRating);
+        }
+        else if (item.name == 'S_H_L' && item.active == true) {
+          this.hotelList.sort((a: any, b: any) => b.hotelInfo.starRating - a.hotelInfo.starRating);
+        }
+      })
+
+
     //Search Text Filter End
     if(this.container)
     {
@@ -322,6 +398,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
    this.intialData();
   }
+ 
 
 
   StarFilter(item:any)
@@ -444,4 +521,49 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }, 10);
 
   }
+  backClicked(){
+    this.location.back();
+  }
+
+  showHideFilterMobile(val:string){
+    if (val == 'show') {
+      this.showFilter.nativeElement.style.display = 'block';
+    }
+    else {
+      this.showFilter.nativeElement.style.display = 'none';
+    }
+  
+  }
+
+  hotelSortingMobile(val){
+    let selectedVal = val;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+  this.AllFilteredData();
+  }
+
+  shortings(){
+    this.priceSortingFilteritems.filter((item: any) => {
+      if (item.name == 'P_L_H' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
+      }
+      else if (item.name == 'P_H_L' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => b.priceSummary[0].price - a.priceSummary[0].price);
+      }
+      else if (item.name == 'S_L_H' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => a.hotelInfo.starRating - b.hotelInfo.starRating);
+      }
+      else if (item.name == 'S_H_L' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => b.hotelInfo.starRating - a.hotelInfo.starRating);
+      }
+    })
+
+    
+  }
+
 }
