@@ -131,7 +131,8 @@ export const environment = {
     "REGALIA": "regalia/bus",
     "CORPORATE": "corporate/bus",
     "BUSINESS": "business/bus"
-  }
+  },
+  GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 
 
 };
