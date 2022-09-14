@@ -159,7 +159,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   ngOnInit(): void {
     this._trainService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    let continueSearchValLs:any= localStorage.getItem('continueSearchTrain');
+    let continueSearchValLs:any= localStorage.getItem(environment.continueSearchTrain);
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
@@ -171,7 +171,19 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
     this.departureDate=this.route.snapshot.queryParamMap.get('departure');*/
 
   }
-
+  focusInput(type){
+    setTimeout(() => {
+      if(type=='from'){
+      // $('.searchFromTrain').select();
+        $('.searchFromTrain').focus();
+      }else {   
+      //$('.searchToTrain').select();
+       $('.searchToTrain').focus();
+      
+      }
+  
+    }, 10);
+  }
 
    searchAutoComplete($event,field,device) {
        let keycode = $event.which;
@@ -378,7 +390,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('trainLastSearchNew');
+   let lastSearch:any=localStorage.getItem(environment.trainLastSearch);
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
       console.log(lastSearch);
@@ -442,7 +454,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
   trainSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchTrain');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchTrain);
       if(continueSearch==null){
         this.continueSearchTrain=[];
       }
@@ -459,7 +471,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
       }
       this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchTrain',JSON.stringify(this.continueSearchTrain));
+      localStorage.setItem(environment.continueSearchTrain,JSON.stringify(this.continueSearchTrain));
   }
 
 
@@ -479,7 +491,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
      } else {
       let searchValue = this.searchTrainForm.value;
       this.trainSearchCallBack(searchValue);
-      localStorage.setItem('trainLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.trainLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
       url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
