@@ -325,6 +325,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
     {
       filterDiv.style.display = 'none';
     }
+    this.orderBy('');
   }
   openAvailability()
   {
@@ -706,7 +707,7 @@ updateTrainTypeFilter(appt) {
   selectedOption: any = "Early Departure";
   selectedOptionNew: any = "Early Departure";
   selected:any="leave-early";
-  
+  option: string = '';
    orderBy(option) {
 
     this.selectedOptionNew = option;
@@ -715,19 +716,23 @@ updateTrainTypeFilter(appt) {
     } else if (option == 'leave-late') {
       this.selectedOption = 'Late Depature';
     }
-    if(this.isMobile){
-      var filterDiv = document.getElementById('sortMobileFilter');
-        if(filterDiv)
-        {
-          filterDiv.style.display = 'none';
-        }
-    } 
+    this.option = option;
     this.sortBy=option;
     this.showSortbuy=false;
     this.Sortby = "Sorted By"; 
     this.trains = this.trains.filter(g => {
       return true;
     });
+  }
+    applySortingMobile() {
+
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("noscroll");
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
   }
 
   clearSelectionAll(){

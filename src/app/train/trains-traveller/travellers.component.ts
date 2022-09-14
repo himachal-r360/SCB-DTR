@@ -788,10 +788,12 @@ saveGSTConsent(){
   }
 
     submitBookingInfo() {
-       
+
+       this.submittedUserInfoForm = true;
          if (this.idForm.invalid ) {
          return;
          }else{
+            this.submittedUserInfoForm = false;
         var IRCTCUserId = this.idForm.controls['userID']['value'];
         this.spinnerService.show();
         if (IRCTCUserId != "" && IRCTCUserId != undefined && IRCTCUserId != null) {
@@ -1667,12 +1669,16 @@ gstReset(){
 
         if (this.passengerForm.invalid || this.error == 1) {
          this.passengerForm.markAllAsTouched();
-        let target;
-        target = this.el.nativeElement.querySelector('.ng-invalid')
+           let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
         if (target) {
-        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
-        target.focus();
-        }  
+        if( target.id =='agree_terms'){
+        $(document).scrollTop($(document).height());
+        }else{
+        target.scrollIntoView();
+        (target as HTMLElement).focus();
+        }
+        }
          return;  
         } else {
          this.generateTrainItinerary();
@@ -1680,7 +1686,7 @@ gstReset(){
         }
 
     }
-    
+
 
     
         continueReviewBooking(){
