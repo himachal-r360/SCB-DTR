@@ -964,7 +964,7 @@ console.log("hotel "+ JSON.stringify( get_value));
 
   redirectDisUrl(url) {
     if (environment.IS_MAIN == 1) {
-      this.document.location.href = environment.MAIN_SITE_URL + url;
+      this.document.location.href = environment.DEAL_SITE_URL + url;
     } else {
       const current = new Date();
       this.redirectPopupTriggerTimestamp = current.getTime();

@@ -26,6 +26,7 @@ export const environment = {
     'BUSINESS': 'http://new.reward360.us/business/api/',
   },
   MAIN_SITE_URL: 'http://new.reward360.us/',
+    DEAL_SITE_URL:'https://smartbuyuat.reward360.in/',
   SUB_SITE_URL: 'http://new.reward360.us/',
   ANGULAR_SITE_URL: 'http://new.reward360.us/lite/',
   enableEncryptionRequestResponse: false,
