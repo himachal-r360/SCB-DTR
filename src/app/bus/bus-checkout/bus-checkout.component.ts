@@ -503,6 +503,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
       // this.searchBusKey = this.activatedRoute.snapshot.params['searchBusKey'];
       this.searchBusKey = this.activatedRoute.snapshot.queryParamMap.get('searchBusKey');
+     
       this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchBusKey));
       var lengthofboarding = this.seacthResult.busdetails.boardingTimes.length;
       var lengthofDropping = this.seacthResult.busdetails.droppingTimes.length;
@@ -1353,6 +1354,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       };
 
       //this.spinnerService.show();
+      
       this.busSubscription = this.busService.blockbusSeats(JSON.stringify(itineraryParam)).subscribe(data => {
 
         let dData = JSON.parse(this.EncrDecr.get(data.result));
