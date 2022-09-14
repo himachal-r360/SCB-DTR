@@ -424,6 +424,13 @@
         <mat-tab-group class="p-0 train_mat_tabGroup" animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
             <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
 
+               
+                <!-- <div class="col-md-12 text-center layout-w" >
+                    <div class="mt-10 d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                        </div>
+                    </div>
+                </div> -->
                 <div class="tier" *ngFor="let dayList of avlDayList ;">
                     <div class="TrainSeatsInfo">
                         <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> </p>
