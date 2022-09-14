@@ -351,8 +351,8 @@ export class TrainsTravellerComponent implements OnInit {
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
 
-        this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");;
-        this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");;
+        this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");
+        this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");
             if(!this.seacthResult){
          this.router.navigate(['/train']);
         }
