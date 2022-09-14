@@ -558,7 +558,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
       }
 
-
+console.log(this.seacthResult.seatdetails);
       if (this.seacthResult != null) {
         this.onward = this.seacthResult.busdetails;
         var fares = this.seacthResult.seatdetails;

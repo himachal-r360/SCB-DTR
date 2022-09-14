@@ -233,12 +233,12 @@
                                                 <!-- radio buttons male/female-->
                                                 <div class="col-12">
                                                   <div class="trip_select">
-                                                      <div class="buttonTrip">
-                                                          <input type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
+                                                      <div class="buttonTrip" *ngIf = "!item.ladiesSeat">
+                                                          <input *ngIf = "!item.ladiesSeat" type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
                                                           <label class="btn btn-default" for="male{{ i }}">Male</label>
                                                       </div>
                                                       <div class="buttonTrip">
-                                                          <input type="radio" id="female{{ i }}" formControlName="passengerGender{{ i }}"  value="Female" />
+                                                          <input [value]="true" [(ngModel)]="item.ladiesSeat" type="radio" id="female{{ i }}" formControlName="passengerGender{{ i }}"  value="Female" />
                                                           <label class="btn btn-default" for="female{{ i }}">Female</label>
                                                       </div>
 
@@ -320,10 +320,10 @@
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
                       <ng-container *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index ">
 
-                        <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}">
-                          <div class="custom-controls-stacked " >
+                        <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}" [ngClass]="item.ladiesSeat && passenger.gender != 'Female' ? 'hidden' : '' " >
+                          <div class="custom-controls-stacked "  >
                             <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input pass_checkBox  pass_checkBox1_{{ passenger.id}} pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
+                              <input type="checkbox"  class="material-control-input pass_checkBox  pass_checkBox1_{{ passenger.id}} pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
                                  name="travellerlist"
                                 (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
@@ -348,7 +348,7 @@
                         <!--expandid==i && isExpanded-->
                           <div   [ngClass]="expandid == i ? '' : 'hidden' " >
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
-                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
+                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}"  [ngClass]="item.ladiesSeat && passenger.gender != 'Female' ? 'hidden' : '' " >
                                 <label class="custom-control material-checkbox">
                                   <input type="checkbox" class="material-control-input pass_checkBox1_{{ expandedItem.id}} pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
                                     name="travellerlist"
