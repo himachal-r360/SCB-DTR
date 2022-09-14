@@ -1,34 +1,34 @@
 <section class="bradcome-area mt-110 mb-10">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="bradcome-list">
-                  <ul class="list-inline">
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/bus">Home</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><span>Bus Search</span></li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
-
- <div class="text-center w-100" *ngIf="!isMobile && serverIssue==1 ">
-    <div class="no_flights_sec" >
-                   <div class="row">
-        <div class=" text-center">
-            <div class="empty_list_hdr">Yikes! No buses found.</div>
-            <div>
-                <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/bus">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Bus Search</span></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="col-md-12 mt-5 text-center">
-            <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
-        </div>
     </div>
+</section>
+
+<div class="text-center w-100" *ngIf="!isMobile && serverIssue==1 ">
+    <div class="no_flights_sec">
+        <div class="row">
+            <div class=" text-center">
+                <div class="empty_list_hdr">Yikes! No buses found.</div>
+                <div>
+                    <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-12 mt-5 text-center">
+                <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -43,7 +43,7 @@
 
             <div class="col-lg-12">
                 <div class="layout-box">
-                         <div class="layout-left"  *ngIf="serverIssue==0">
+                    <div class="layout-left" *ngIf="serverIssue==0">
                         <div class="filter-loaders animation-loader" *ngIf="loader">
                             <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content ">
@@ -54,7 +54,7 @@
                             </div>
 
                         </div>
-                        
+
 
                         <div [hidden]="loader">
                             <div class="Filterslayout d-flex justify-content-between align-items-center">
@@ -63,8 +63,8 @@
                             </div>
                             <hr>
                             <div class="default-sidebar flight-sidebar" [hidden]="loader">
-                                
-                                 <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+
+                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                                     <div class="widget-title">
                                         <h6 class="">Departure Time</h6>
                                         <a href="javascript:void(0)" (click)="resetBusDepartureTimingsFilter()">Reset</a>
@@ -80,8 +80,8 @@
                                     </div>
                                 </div>
                                 <hr>
-                                
-                                 <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+
+                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                                     <div class="widget-title">
                                         <h6 class="">Arrival Time</h6>
                                         <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
@@ -97,7 +97,7 @@
                                     </div>
                                 </div>
                                 <hr>
-                            <div class="sidebar-widget Price-widget">
+                                <div class="sidebar-widget Price-widget">
                                     <div class="widget-title">
                                         <h6 class="">Price</h6>
                                         <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
@@ -113,16 +113,16 @@
                                     </div>
                                 </div>
                                 <hr>
-                                
-                                                   <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
+
+                                <div class="sidebar-widget flighttimings-widget" id="Flight_Timings">
                                     <div class="widget-title">
                                         <h6 class="">Bus Type</h6>
                                         <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
                                     </div>
                                     <div class="widget-content">
                                         <div class=" flight-departing">
-                                            <div  *ngFor="let classes of availableClasses ">
-                                                <label class="checkbox"  >
+                                            <div *ngFor="let classes of availableClasses ">
+                                                <label class="checkbox">
                                                 <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
                                                 {{classes.type}} ({{classes.count}})
                                                 <span class="checkmark"></span>
@@ -132,53 +132,54 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr>         
-                                
-                        <div class="m_filter_paddng">         
-                        <mat-accordion multi="true">
-                        
-                                <mat-expansion-panel >
-                                <mat-expansion-panel-header class="h_auto">
-                                Boarding Point
-                                </mat-expansion-panel-header>
-                                 <div class="reset_link">
-                                    <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
-                                 </div>
-                                <div class="filter_search_div">
-                                <span><i class="fa fa-search" aria-hidden="true"></i>
-                                <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
-                                </div>
+                                <hr>
 
-                                <div class="float-left pt-24 filter-common">
-                                <label class="checkbox" *ngFor="let bp of boardingpoints " >
+                                <div class="m_filter_paddng">
+                                    <mat-accordion multi="true">
+
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="h_auto">
+                                                Boarding Point
+                                            </mat-expansion-panel-header>
+                                            <div class="reset_link">
+                                                <a href="javascript:void(0)" (click)="resetBoardingFilter()">Reset</a>
+                                            </div>
+                                            <div class="filter_search_div">
+                                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
+                                            </div>
+
+                                            <div class="float-left pt-24 filter-common">
+                                                <label class="checkbox" *ngFor="let bp of boardingpoints ">
                                 <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
                                 {{bp.boardingPointName}} ({{bp.total}}) 
                                 <span class="checkmark"></span>
                                 </label>
-                                </div>
-                                </mat-expansion-panel>
-                                
-                              <mat-expansion-panel >
-                                <mat-expansion-panel-header class="h_auto">
-                               Dropping Point
-                                </mat-expansion-panel-header>
-                                <div class="reset_link">
-                                    <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
-                                 </div>
-                                <div class="filter_search_div">
-                                <span><i class="fa fa-search" aria-hidden="true"></i>
-                                <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
-                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
 
-                                <div class="float-left pt-24 filter-common">
-                                <label class="checkbox" *ngFor="let bp of droppingpoints " >
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header class="h_auto">
+                                                Dropping Point
+                                            </mat-expansion-panel-header>
+                                            <div class="reset_link">
+                                                <a href="javascript:void(0)" (click)="resetDroppingFilter()">Reset</a>
+                                            </div>
+                                            <div class="filter_search_div">
+                                                <span><i class="fa fa-search" aria-hidden="true"></i>
+                                <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
+                                            </div>
+
+                                            <div class="float-left pt-24 filter-common">
+                                                <label class="checkbox" *ngFor="let bp of droppingpoints ">
                                 <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
                                 {{bp.boardingPointName}} ({{bp.total}}) 
                                 <span class="checkmark"></span>
                                 </label>
+
                                 </div>
                                 </mat-expansion-panel>
-                     <mat-expansion-panel>
+                     <mat-expansion-panel [ngClass]="{'brdr_btm_0' : amenities.length < 0 }">
                         <mat-expansion-panel-header class="h_auto">
                         Operators
                         </mat-expansion-panel-header>
@@ -188,86 +189,101 @@
                           
                         <div class="filter_search_div">
                         <span><i class="fa fa-search" aria-hidden="true"></i>
+
                         <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
                         </span>
-                        </div>
+                                            </div>
 
-                        <div class="float-left pt-24 filter-common">
-                        <label class="checkbox" *ngFor="let op of operators " >
+                                            <div class="float-left pt-24 filter-common">
+                                                <label class="checkbox" *ngFor="let op of operators ">
                         <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
                         {{op.name}}({{op.total}})
                         <span class="checkmark"></span>
                         </label>
-                        </div>
-                        </mat-expansion-panel>
-                        <mat-expansion-panel *ngIf = "amenities.length > 0 " class="brdr_btm_0 pb-3">
-                        <mat-expansion-panel-header class="h_auto">
-                        Amenities
-                        </mat-expansion-panel-header>
-                        <div class="reset_link mb-15">
-                            <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
-                         </div>
-                        <div class="float-left pt-24 filter-common">
-                        <label class="checkbox" *ngFor="let am of amenities " >
+                                            </div>
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel *ngIf="amenities.length > 0 " class="brdr_btm_0 pb-3">
+                                            <mat-expansion-panel-header class="h_auto">
+                                                Amenities
+                                            </mat-expansion-panel-header>
+                                            <div class="reset_link mb-15">
+                                                <a href="javascript:void(0)" (click)="resetAmenitiesFilter()">Reset</a>
+                                            </div>
+                                            <div class="float-left pt-24 filter-common">
+                                                <label class="checkbox" *ngFor="let am of amenities ">
                         <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
                         {{am.amenities}}({{am.total}}) 
                         <span class="checkmark"></span>
                         </label>
-                        </div> 
-                        </mat-expansion-panel>             
-                        </mat-accordion>      
-                          </div>
-                                            
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+
                             </div>
                         </div>
 
 
                     </div>
 
-                    <div class="layout-right" *ngIf="serverIssue==0" >
+                    <div class="layout-right" *ngIf="serverIssue==0">
                         <div class="flightsfound" [hidden]="loader">
-                                 <div class="flight-tosearch">
+                            <div class="flight-tosearch">
                                 <h6>
-                                   <i class="fa fa-bus"></i>
-                                    {{busfrom}} to {{busto}}
+                                    <i class="fa fa-bus"></i> {{busfrom}} to {{busto}}
                                     <small>{{departure | date:"EEE ,dd MMM"}}</small>
                                 </h6>
 
                                 <div class="flight-search-filters-right bus_sort_btn">
-                                <mat-form-field class="select_mat">
-                                    <mat-select panelClass="select_mat" [(value)]="selectedOption" placeholder="" [ngClass]="{showSortbuy: showSortbuy}">
-                                        <mat-option value="Rating"  (click)="orderBy('rating')">Rating</mat-option>
-                                        <mat-option value="Price (Low to High)" (click)="orderBy('price-low-high')">Price (Low to High)</mat-option>
-                                        <mat-option value="Price (High to Low)" (click)="orderBy('price-high-low')">Price (High to Low)</mat-option>
-                                        <mat-option value="Leave Early" (click)="orderBy('leave-early')">Leave Early</mat-option>
-                                        <mat-option value="Leave Late" (click)="orderBy('leave-late')">Leave Late</mat-option>
-                                        <mat-option value="Seats Availability" (click)="orderBy('seats-availability')">Seats Availability</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                                    <mat-form-field class="select_mat">
+                                        <mat-select panelClass="select_mat" [(value)]="selectedOption" placeholder="" [ngClass]="{showSortbuy: showSortbuy}">
+                                            <mat-option value="Rating" (click)="orderBy('rating')">Rating</mat-option>
+                                            <mat-option value="Price (Low to High)" (click)="orderBy('price-low-high')">Price (Low to High)</mat-option>
+                                            <mat-option value="Price (High to Low)" (click)="orderBy('price-high-low')">Price (High to Low)</mat-option>
+                                            <mat-option value="Leave Early" (click)="orderBy('leave-early')">Leave Early</mat-option>
+                                            <mat-option value="Leave Late" (click)="orderBy('leave-late')">Leave Late</mat-option>
+                                            <mat-option value="Seats Availability" (click)="orderBy('seats-availability')">Seats Availability</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
                                 </div>
                             </div>
-                                      <div class="flight-search-filters">
+                            <div class="flight-search-filters">
                                 <div class="flight-search-filters-left">
                                     <p *ngIf="busList">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p>
                                 </div>
                             </div>
                         </div>
-                            <div class="tabletitle-area" [hidden]="loading" *ngIf="!loading && busList.length > 0">
+                        <div class="tabletitle-area" [hidden]="loading" *ngIf="!loading && busList.length > 0">
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="tabletitle-content">
                                         <p>Travels</p>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="tabletitle-content tabletitle-departure">
-                                        
-                                        
+
+
                                         <div class="row">
-                                            <div class="col-md-3"><p>Departure</p></div>
-                                            <div class="col-md-3"><p>Duration</p></div>
-                                            <div class="col-md-3"><p>Arrival</p></div>
-                                            <div class="col-md-3"><p>Fare</p></div>
+                                            <div class="col-md-4">
+                                                <p>Departure</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p>Duration</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p>Arrival</p>
+                                            </div>
+                                            <!-- <div class="col-md-3">
+                                                <p>Fare</p>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 tabletitle-content">
+                                    <div class="row">
+                                        <div class="col-md-10 offset-md-2">
+                                            <p>Fare</p>
                                         </div>
                                     </div>
                                 </div>
@@ -286,58 +302,58 @@
                                 </div>
                             </div>
                         </div>
-                       
-                        <div class="flight-listing-area">
-                   
-                        <ng-container *ngIf="totalrtc.length>0 && busList.length >0 ">
-                        <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
-                        <div  class="list-card list-bus-card w-100 float-left">
-                        <div class="w-100">
-                            <div class="row align-items-center bus_list_box">
-                                <div class="col-md-4">
-                                    <div class="label-name">{{rtc[0].travels}} </div>
-                                    <div class="label-gray"> {{rtc.length}} Buses</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
-                                    <div class="label-gray">Onwards</div> 
-                                </div>
-                                <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
-                                <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
-                                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
-                                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
-                                </div>
-                            </div>
-                        </div>
-                        </div> 
 
-                        <list-component *ngFor="let bus of rtc | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                        [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
+                        <div class="flight-listing-area">
+
+                            <ng-container *ngIf="totalrtc.length>0 && busList.length >0 ">
+                                <div *ngFor="let rtc of totalrtc; index as ind" class="d-none d-sm-block cust-pb-20 w-100 float-left">
+                                    <div class="list-card list-bus-card w-100 float-left">
+                                        <div class="w-100">
+                                            <div class="row align-items-center bus_list_box">
+                                                <div class="col-md-4">
+                                                    <div class="label-name">{{rtc[0].travels}} </div>
+                                                    <div class="label-gray"> {{rtc.length}} Buses</div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
+                                                    <div class="label-gray">Onwards</div>
+                                                </div>
+                                                <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
+                                                <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
+                                                    <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase">keyboard_arrow_down</i>
+                                                    <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase">keyboard_arrow_right</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <list-component *ngFor="let bus of rtc | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;" [parentSubject]="parentSubject" [bus]="bus"
+                                        [departure]="departure" [params]="params" [rowvalue]="busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)"></list-component>
+                                </div>
+                            </ng-container>
+                            <ng-container #itemsContainer></ng-container>
                         </div>
-                        </ng-container>
-                        <ng-container #itemsContainer></ng-container>
-                        </div>
-                        
+
                         <div class="text-center" *ngIf="!loader && busList.length < 1">
-                            <div class="no_flights_sec" >
-                                           <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <div class="empty_list_hdr">Yikes! No buses found.</div>
-                                    <div>
-                                        <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                            <div class="no_flights_sec">
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div class="empty_list_hdr">Yikes! No buses found.</div>
+                                        <div>
+                                            <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-5 text-center">
+                                        <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mt-5 text-center">
-                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
-                                </div>
-                            </div>
                             </div>
                         </div>
-                        
+
                         <ng-template #item let-item="item">
-                            <div *ngFor="let bus of item; let i = index"> 
-                             <list-component [parentSubject]="parentSubject"  [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
-                            </div>    
+                            <div *ngFor="let bus of item; let i = index">
+                                <list-component [parentSubject]="parentSubject" [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue]="busrow" [isrtc]="isrtc" (seatSelected)="seatSelected($event)"></list-component>
+                            </div>
                         </ng-template>
                         <div id="endOfPage" (click)="loadData()"></div>
 
@@ -355,42 +371,44 @@
         <div class="row">
             <div class="col-md-12 p-0 fixed-top">
                 <div class="mob-listing-header">
-                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" routerLink="/bus" >
-                          <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                      </a>
-                  </div>
-                  <div class="mob-listing-header-center">
-                      <h6>{{busfrom}} - {{busto}}</h6>
-                      <div class="d-flex align-items-center justify-content-center">
-                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
-                            <p>{{departure | date:'EEE, dd MMM' }}   </p>
-                            <div class="date_sm_round" (click)="nextDay()" ><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
-                      </div>
-                      
-                  </div>
-                  <div class="mob-listing-header-right">
-                      <a href="javascript:;" routerLink="/bus" >
-                          <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
-                      </a>
-                  </div>
+                    <div class="mob-listing-header-left">
+                        <a href="javascript:;" routerLink="/bus">
+                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                        </a>
+                    </div>
+                    <div class="mob-listing-header-center">
+                        <h6>{{busfrom}} - {{busto}}</h6>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <p>{{departure | date:'EEE, dd MMM' }} </p>
+                            <div class="date_sm_round" (click)="nextDay()"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                        </div>
+
+                    </div>
+                    <div class="mob-listing-header-right">
+                        <a href="javascript:;" routerLink="/bus">
+                            <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-12 mt-70 flight_found_sec" *ngIf="!loader && serverIssue==0">
-                        <div class="mob-listing-fiters">
-                  <h6>  <p *ngIf="busList">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p></h6>
-                  <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
-                      <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
-                      <span class="px-2">Sort/Filters</span>
-                  </a>
-              </div>
+                <div class="mob-listing-fiters">
+                    <h6>
+                        <p *ngIf="busList">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p>
+                    </h6>
+                    <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
+                        <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                        <span class="px-2">Sort/Filters</span>
+                    </a>
+                </div>
             </div>
 
 
 
-    
+
             <div class="col-md-12">
-               
+
                 <div *ngIf="loader">
                     <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                         <div class="filter-loader-content w-100">
@@ -404,50 +422,50 @@
                     </div>
                 </div>
                 <div class="text-center" *ngIf="!loader && busList.length < 1">
-                    <div class="no_flights_sec" >
-                                  <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <div class="empty_list_hdr">Yikes! No buses found.</div>
-                                    <div>
-                                        <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-5 text-center">
-                                    <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
+                    <div class="no_flights_sec">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="empty_list_hdr">Yikes! No buses found.</div>
+                                <div>
+                                    <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
                                 </div>
                             </div>
+                            <div class="col-md-12 mt-5 text-center">
+                                <button class="empty_list_btn" (click)="goback()">Go back to search page</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <ng-container *ngIf="totalrtc.length>0 && busList.length >0 ">
-                <div *ngFor="let rtc of totalrtc; index as ind" class="d-block d-sm-none cust-pb-10 w-100 float-left">
-                <div  class="list-card list-bus-card w-100 float-left">
-                <div class="row align-items-center bus_list_box">
-                <div class="col-md-4">
-                <div class="label-name">{{rtc[0].travels}} </div>
-                <div class="label-gray"> {{rtc.length}} Buses</div>
-                </div>
-                <div class="col-md-4">
-                <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
-                <div class="label-gray">Onwards</div> 
-                </div>
-                <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
-                <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
-                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase" >keyboard_arrow_down</i>
-                <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase" >keyboard_arrow_right</i>
-                </div>
-                </div>
-                </div> 
+                    <div *ngFor="let rtc of totalrtc; index as ind" class="d-block d-sm-none cust-pb-10 w-100 float-left">
+                        <div class="list-card list-bus-card w-100 float-left">
+                            <div class="row align-items-center bus_list_box">
+                                <div class="col-md-4">
+                                    <div class="label-name">{{rtc[0].travels}} </div>
+                                    <div class="label-gray"> {{rtc.length}} Buses</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="label-name">{{departureTimeArr[ind].minTime | date:'HH:mm'}}</div>
+                                    <div class="label-gray">Onwards</div>
+                                </div>
+                                <div class="col-md-3 label-gray align-self-flex-end">{{rtc[0].totalavail}} seats available </div>
+                                <div class="next-button" (click)="rtccall(rtc[0].lowercase)">
+                                    <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc==rtc[0].lowercase">keyboard_arrow_down</i>
+                                    <i class="material-icons right-arrow" [ngClass]="{'clicked': isClicked}" *ngIf="currentRtc !=rtc[0].lowercase">keyboard_arrow_right</i>
+                                </div>
+                            </div>
+                        </div>
 
-                <list-component *ngFor="let bus of rtc | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;"
-                [parentSubject]="parentSubject" [bus]="bus" [departure]="departure" [params]="params" [rowvalue] = "busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)" ></list-component> 
-                </div>
+                        <list-component *ngFor="let bus of rtc | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy ; let busrow = index;" [parentSubject]="parentSubject" [bus]="bus"
+                            [departure]="departure" [params]="params" [rowvalue]="busrow" [isrtc]="rtctotal[rtc[0].lowercase]" (seatSelected)="seatSelected($event)"></list-component>
+                    </div>
                 </ng-container>
                 <ng-container #itemsContainer></ng-container>
-               <ng-template #item let-item="item">
-                            <div *ngFor="let bus of item; let i = index"> 
-                             <list-component [parentSubject]="parentSubject"  [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue] = "busrow" [isrtc]="isrtc"  (seatSelected)="seatSelected($event)"></list-component>
-                            </div>    
-                        </ng-template>
+                <ng-template #item let-item="item">
+                    <div *ngFor="let bus of item; let i = index">
+                        <list-component [parentSubject]="parentSubject" [departure]="departure" [bus]="bus" [tag]="tag" [params]="params" [rowvalue]="busrow" [isrtc]="isrtc" (seatSelected)="seatSelected($event)"></list-component>
+                    </div>
+                </ng-template>
                 <div id="endOfPage" (click)="loadData()"></div>
             </div>
 
@@ -475,9 +493,9 @@
                         <div class="tab-content clearfix">
                             <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
                                 <div class="mob-sf-sort">
-                                                                <div class="m_sort_flex_div">
-                                            <div class="">
-                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-low-high'}">
+                                    <div class="m_sort_flex_div">
+                                        <div class="">
+                                            <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-low-high'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
@@ -486,10 +504,10 @@
                                         <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('price-low-high')" value="Price (Low to High)" >
                                         <span class="checkmark-cust"></span>
                                       </label>
-                                    </div>
+                                        </div>
 
-                                    <div class="">
-                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-high-low'}" >
+                                        <div class="">
+                                            <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-high-low'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.png" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
@@ -498,10 +516,10 @@
                                         <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('price-high-low')" value="Price (High to Low)">
                                         <span class="checkmark-cust"></span>
                                       </label>
-                                    </div>
+                                        </div>
 
-                                    <div class="">
-                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'rating'}">
+                                        <div class="">
+                                            <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'rating'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/grade.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Rating</p>
@@ -510,10 +528,10 @@
                                         <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('rating')" value="Price (Low to High)" >
                                         <span class="checkmark-cust"></span>
                                       </label>
-                                    </div>
+                                        </div>
 
-                                    <div class="">
-                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'seats-availability'}">
+                                        <div class="">
+                                            <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'seats-availability'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/seat_human.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Seats Availability</p>
@@ -522,10 +540,10 @@
                                         <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('seats-availability')" value="Seats Availability" >
                                         <span class="checkmark-cust"></span>
                                       </label>
-                                    </div>
+                                        </div>
 
-                                    <div class="">
-                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'leave-early'}">
+                                        <div class="">
+                                            <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'leave-early'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Early</p>
@@ -534,10 +552,10 @@
                                         <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('leave-early')" value="Leave Early">
                                         <span class="checkmark-cust"></span>
                                       </label>
-                                    </div>
+                                        </div>
 
-                                    <div class="">
-                                      <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'leave-late'}">
+                                        <div class="">
+                                            <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'leave-late'}">
                                         <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/bus_time.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Leave Late</p>
@@ -546,16 +564,16 @@
                                         <input checked="checked" type="radio" name="mlite_sort" (click)="orderBy('leave-late')" value="Leave Late">
                                         <span class="checkmark-cust"></span>
                                       </label>
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                                 <div class="mob-sf-btns">
                                     <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
                                 </div>
                             </div>
                             <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
-                            
-                               <!--  <div class="mf_filter">
+
+                                <!--  <div class="mf_filter">
                                     <div class="filter-w-header w-100 float-left ">
                                         <span class="filter_heading float-left">Filters </span>
                                         <span class="float-right"><a href="javascript:;" (click)="resetAllFilters()"  class="filter_blue_link">Reset All</a></span>
@@ -575,12 +593,12 @@
                                                     <div class="accordion-body">
                                                         <div class=" flighttimings-widget" id="Flight_Timings">
                                                             <div class="widget-content">
-                                                            <div class="flighttiming-content flight-departing">
-                                                            <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
-                                                            <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
-                                                            <p [innerHTML]="timingsItems.value"></p>
-                                                            </div>
-                                                            </div>
+                                                                <div class="flighttiming-content flight-departing">
+                                                                    <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
+                                                                        <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                                        <p [innerHTML]="timingsItems.value"></p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="mob-reset text-end">
@@ -599,16 +617,16 @@
                                                     <div class="accordion-body">
                                                         <div class="default-sidebar">
                                                             <div class=" flighttimings-widget" id="Flight_Timings">
-                                                                
+
                                                                 <div class="widget-content">
-                                                                <div class="flighttiming-content flight-departing">
-                                                                <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
-                                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
-                                                                <p [innerHTML]="timingsItems.value"></p>
+                                                                    <div class="flighttiming-content flight-departing">
+                                                                        <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
+                                                                            <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                                            <p [innerHTML]="timingsItems.value"></p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                </div>
-                                                                </div>
-                                                                </div>
+                                                            </div>
 
                                                             <div class="mob-reset text-end">
                                                                 <a href="javascript:void(0)" (click)="resetBusArrivalTimingsFilter()">Reset</a>
@@ -626,19 +644,19 @@
                                                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
                                                     <div class="accordion-body">
                                                         <div class=" flighttimings-widget" id="Flight_Timings">
-                                                           
+
                                                             <div class="widget-content mt-20">
-                                                            <div class=" flight-departing">
-                                                            <div  *ngFor="let classes of availableClasses ">
-                                                            <label class="checkbox"  >
+                                                                <div class=" flight-departing">
+                                                                    <div *ngFor="let classes of availableClasses ">
+                                                                        <label class="checkbox">
                                                             <input (change)="updateClassesFilter(classes)"  id="classes" type="checkbox"   class="magic-checkbox" [(ngModel)]="classes.selected"   value="{{classes.type}}"  [checked]="classes.selected" /> 
                                                             {{classes.type}} ({{classes.count}})
                                                             <span class="checkmark"></span>
                                                             </label>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            </div>
-                                                            </div>
-                                                            </div>
+                                                        </div>
                                                         <div class="mob-reset text-end">
                                                             <a href="javascript:void(0)" (click)="resetBusTypeFilter()">Reset</a>
                                                         </div>
@@ -655,16 +673,16 @@
                                                     <div class="accordion-body">
 
                                                         <div class="Price-widget">
-                                                           
+
                                                             <div class="widget-content mt-10 mb-30 price-widget-content">
-                                                            <div class="price-widget-content-flx">
-                                                            <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
-                                                            <span class="ms-3 me-3">-</span>
-                                                            <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                                                <div class="price-widget-content-flx">
+                                                                    <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                                                    <span class="ms-3 me-3">-</span>
+                                                                    <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                                                </div>
+                                                                <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
                                                             </div>
-                                                            <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
-                                                            </div>
-                                                            </div>
+                                                        </div>
 
                                                         <div class="mob-reset text-end">
                                                             <a href="javascript:void(0)" (click)="resetPriceFilter()">Reset</a>
@@ -680,14 +698,14 @@
                                                 </h2>
                                                 <div id="collapsefour" class="accordion-collapse collapse" aria-labelledby="headingfour">
                                                     <div class="accordion-body stops-widget">
-                                                        
+
                                                         <div class="filter_search_div">
-                                                        <span><i class="fa fa-search" aria-hidden="true"></i>
+                                                            <span><i class="fa fa-search" aria-hidden="true"></i>
                                                         <input #inputstring class="search-sub-filter " (keyup)="searchboarding('boarding',inputstring.value)" type="text" placeholder="Boarding Point"></span>
                                                         </div>
-            
+
                                                         <div class="float-left pt-24 filter-common">
-                                                        <label class="checkbox" *ngFor="let bp of boardingpoints " >
+                                                            <label class="checkbox" *ngFor="let bp of boardingpoints ">
                                                         <input (change)="updateBoardingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
                                                         {{bp.boardingPointName}} ({{bp.total}}) 
                                                         <span class="checkmark"></span>
@@ -710,14 +728,14 @@
                                                 <div id="collapsefive" class="accordion-collapse collapse" aria-labelledby="headingfive">
                                                     <div class="accordion-body">
                                                         <div class="default-sidebar">
-                                                            
+
                                                             <div class="filter_search_div">
-                                                            <span><i class="fa fa-search" aria-hidden="true"></i>
+                                                                <span><i class="fa fa-search" aria-hidden="true"></i>
                                                             <input #dropstring class="search-sub-filter " (keyup)="searchboarding('dropping',dropstring.value)" type="text" placeholder="Dropping Point"></span>
                                                             </div>
-                
+
                                                             <div class="float-left pt-24 filter-common">
-                                                            <label class="checkbox" *ngFor="let bp of droppingpoints " >
+                                                                <label class="checkbox" *ngFor="let bp of droppingpoints ">
                                                             <input (change)="updateDroppingFilter(bp)"  id="bp{{bp.boardingPointId}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="bp.selected"   value="{{bp.boardingPointId}}"   [checked]="bp.selected"  /> 
                                                             {{bp.boardingPointName}} ({{bp.total}}) 
                                                             <span class="checkmark"></span>
@@ -741,15 +759,15 @@
                                                 </h2>
                                                 <div id="collapsesix" class="accordion-collapse collapse" aria-labelledby="headingsix">
                                                     <div class="accordion-body">
-                                                        
+
                                                         <div class="filter_search_div">
-                                                        <span><i class="fa fa-search" aria-hidden="true"></i>
+                                                            <span><i class="fa fa-search" aria-hidden="true"></i>
                                                         <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
                                                         </span>
                                                         </div>
-            
+
                                                         <div class="float-left pt-24 filter-common">
-                                                        <label class="checkbox" *ngFor="let op of operators " >
+                                                            <label class="checkbox" *ngFor="let op of operators ">
                                                         <input (change)="updateOperatorsFilter(op)"  id="op{{op.operator}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="op.selected"   value="{{op.operator}}"   [checked]="op.selected"  />
                                                         {{op.name}}({{op.total}})
                                                         <span class="checkmark"></span>
@@ -772,14 +790,14 @@
                                                 <div id="collapseseven" class="accordion-collapse collapse" aria-labelledby="headingseven">
                                                     <div class="accordion-body">
                                                         <div class="default-sidebar">
-                                                           
+
                                                             <div class="float-left pt-24 filter-common">
-                                                            <label class="checkbox" *ngFor="let am of amenities " >
+                                                                <label class="checkbox" *ngFor="let am of amenities ">
                                                             <input (change)="updateamenitiesFilter(am)"   [checked]="am.selected"  id="am{{am.amenities}}" type="checkbox"   class="magic-checkbox" [(ngModel)]="am.selected"   value="{{am.amenities }}"  /> 
                                                             {{am.amenities}}({{am.total}}) 
                                                             <span class="checkmark"></span>
                                                             </label>
-                                                            </div> 
+                                                            </div>
 
                                                             <div class="mob-reset text-end">
                                                                 <div class="">
@@ -794,11 +812,11 @@
                                     </div>
 
                                 </div>
-                            
-                     
-                                       <div class="mob-sf-btns">
-                                        <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
-                                    </div>
+
+
+                                <div class="mob-sf-btns">
+                                    <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -815,5 +833,3 @@
     <i class="far fa-dot-circle"></i>
     <span>Top</span>
 </a>
-
-

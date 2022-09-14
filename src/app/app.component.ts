@@ -319,7 +319,9 @@ export class AppComponent implements OnInit {
                      case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':
                 this.menuActiveClass='flight';
                 break;
-                
+                          case '/compare-stay' :  
+                this.menuActiveClass='hotel';
+                break;
                 
                   case '/train':  case '/train/pnr':
                 this.menuActiveClass='flight';

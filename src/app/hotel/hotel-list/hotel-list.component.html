@@ -45,7 +45,7 @@
                     <span>Sort/Filters</span>
                 </a>
             </div>
-        </div>  
+        </div>
           <div class="col-md-12" *ngIf="!isMobile">
               <div class="travel-box">
                   <div class="travel-select-data-area">
@@ -103,7 +103,7 @@
                                       </ul>
                                   </div>
                               </div>
-                              <hr>
+                              <!-- <hr>
                               <div class="sidebar-widget search-widget">
                                   <div class="widget-title">
                                       <h6 class="">Populat Filters</h6>
@@ -168,7 +168,7 @@
                                       </ul>
                                       <a href="#" class="widget-content-more ml-20">+2 more</a>
                                   </div>
-                              </div>
+                              </div> -->
                               <hr>
                               <div class="sidebar-widget Price-widget">
                                   <div class="widget-title">
@@ -216,7 +216,7 @@
                                       <a href="javascript:;" *ngIf="!showMoreAmenity && amenityList.length>5" (click)="showMoreAmenity = true" class="widget-content-more ml-20">{{amenityList.length - 5}} more</a>
                                   </div>
                               </div>
-                              <hr>
+                              <!-- <hr>
                               <div class="sidebar-widget SpecialOffers-widget">
                                   <div class="widget-title">
                                       <h6 class="">Special Offers</h6>
@@ -365,7 +365,7 @@
                                           </li>
                                       </ul>
                                   </div>
-                              </div>
+                              </div> -->
                           </div>
                       </div>
 
@@ -425,15 +425,15 @@
                                         <span class="hotel-star-tag">{{list.hotelInfo.starRating}}/5</span>
                                     </p>
                                     <ul class="hotel-amenities">
-                                        <li>
+                                        <li *ngIf="list.hotelInfo.amenity.gym == '1'">
                                             <img src="./assets/images/hotel/icon/gym.png" alt="">
                                             <span>Gym</span>
                                         </li>
-                                        <li>
+                                        <li *ngIf="list.hotelInfo.amenity.swimming == '1'">
                                             <img src="./assets/images/hotel/icon/pool.png" alt="">
                                             <span>Pool</span>
                                         </li>
-                                        <li>
+                                        <li *ngIf="list.hotelInfo.amenity.bar == '1'">
                                             <img src="./assets/images/hotel/icon/bar.png" alt="">
                                             <span>Bar</span>
                                         </li>
@@ -498,13 +498,13 @@
 <!-- Mobile Filters -->
 
 <div class="mob-sf-area" #showFilter>
-    <div class="mob-sf-box"> 
+    <div class="mob-sf-box">
         <div class="mob-title">
             <h3>Sort & Filters</h3>
             <a href="javaScript:void(0);" class="mob-close mob-ff-from-close" (click)="showHideFilterMobile('hide')">
                 <img src="./assets/images/icons/close.png" alt="">
             </a>
-        </div> 
+        </div>
         <div class="mob-sf-tabs">
             <ul class="nav nav-tabs">
                 <li>
@@ -512,7 +512,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
-                </li> 
+                </li>
             </ul>
             <div class="tab-content clearfix">
                 <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
@@ -538,7 +538,7 @@
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
                                             aria-expanded="true" aria-controls="collapseOne">
-                                            Star 
+                                            Star
                                         </button>
                                     </h2>
                                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -588,7 +588,7 @@
                                                             </label>
                                                         </div>
                                                     </li>
-                                               
+
                                                 </ul>
                                                 <div class="mob-reset text-end">
                                                     <a href="javaScript:void(0);">Reset</a>
@@ -682,7 +682,7 @@
                                                                 <input type="checkbox" class="material-control-input"  [checked]="item.active">
                                                                 <span class="material-control-indicator"></span>
                                                                 <span class="description">{{item.name}}</span>
-                                                            </label> 
+                                                            </label>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -713,7 +713,7 @@
                                                                 <input type="checkbox" class="material-control-input"  [checked]="item.active">
                                                                 <span class="material-control-indicator"></span>
                                                                 <span class="description">{{item.name}}</span>
-                                                            </label> 
+                                                            </label>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -744,9 +744,9 @@
                                                                 <input type="checkbox" class="material-control-input"  [checked]="item.active">
                                                                 <span class="material-control-indicator"></span>
                                                                 <span class="description">{{item.name}}</span>
-                                                            </label> 
+                                                            </label>
                                                         </div>
-                                                    </li>  
+                                                    </li>
                                                 </ul>
 
                                                 <div class="d-flex justify-content-between mt-2">
@@ -763,10 +763,10 @@
                         <div class="mob-sf-btns">
                             <a href="javaScript:void(0);">Apply</a>
                         </div>
-                    </div>                            
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>
 

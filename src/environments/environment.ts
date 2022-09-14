@@ -26,6 +26,7 @@ export const environment = {
     'BUSINESS': 'http://new.reward360.us/business/api/',
   },
   MAIN_SITE_URL: 'http://new.reward360.us/',
+    DEAL_SITE_URL:'https://smartbuyuat.reward360.in/',
   SUB_SITE_URL: 'http://new.reward360.us/',
   ANGULAR_SITE_URL: 'http://new.reward360.us/lite/',
   enableEncryptionRequestResponse: false,
@@ -131,7 +132,15 @@ export const environment = {
     "REGALIA": "regalia/bus",
     "CORPORATE": "corporate/bus",
     "BUSINESS": "business/bus"
-  }
+  },
+  "flightLastSearch":"flightLastSearches",
+  "continueFlightSearch":"continueFlightSearch",
+  "continueSearchBus":"continueSearchBuses",
+  "busLastSearch":"busLastSearches",
+  "continueSearchTrain":"continueSearchTrains",
+  "trainLastSearch":"trainLastSearches",
+  "continueSearchHotel":"continueSearchHotels",
+  "hotelLastSearch":"hotelLastSearches",
 
 
 };

@@ -241,7 +241,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
                 this.flightSearchCallBack(params);
-      localStorage.setItem('flightLastSearchNew',JSON.stringify(params));
+      localStorage.setItem(environment.flightLastSearch,JSON.stringify(params));
         }
         
         
@@ -249,7 +249,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
   continueSearchFlights: any = []
     flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearch');
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
     if (continueSearch == null) {
       this.continueSearchFlights = [];
     }
@@ -265,7 +265,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
       this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
     }
     this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
   }
   
         

@@ -224,7 +224,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
       this.isMobile = window.innerWidth < 991 ? true : false;
-      let continueSearchValLs: any = localStorage.getItem('continueSearch');
+      let continueSearchValLs: any = localStorage.getItem(environment.continueFlightSearch);
       if (continueSearchValLs != null) {
         this.continueSearchVal = JSON.parse(continueSearchValLs);
       }
@@ -491,6 +491,51 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   }
+  
+  focusInput(i,type){
+    setTimeout(() => {
+   if (!this.isMobile) {
+   if(i==-1){
+      if(type=='from'){
+      // $('#fromCitySearch').select();
+        $('#fromCitySearch').focus();
+      }else {   
+      //$('#toCityMob').select();
+       $('#toCityMob').focus();
+      
+      }
+     }else{
+     if(type=='from'){
+      // $('.fromCitySearch'+i).select();
+        $('.fromCitySearch'+i).focus();
+      }else {   
+      //$('.toCitySearch'+i).select();
+       $('.toCitySearch'+i).focus();
+      
+      }
+     }
+    }else{
+       if(i==-1){
+      if(type=='from'){
+       //$('#fromCitySearch').select();
+        $('#fromCitySearch').focus();
+      }else {  
+      //$('#toCitySearch').select();
+      $('#toCitySearch').focus();
+      }
+     }else{
+       if(type=='from'){
+       //$('.fromCitySearch'+i).select();
+        $('.fromCitySearch'+i).focus();
+      }else {  
+      //$('.toCity'+i').select();
+      $('.toCity'+i).focus();
+      }
+     }
+    
+    } 
+    }, 10);
+  }
 
 
   adultsVal: any=1;
@@ -498,7 +543,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   infantsVal:  any=0;
   flightFromInput: any;
   setSearchFilterData() {
-    let lastSearch: any = localStorage.getItem('flightLastSearchNew');
+    let lastSearch: any = localStorage.getItem(environment.flightLastSearch);
       var multicity = localStorage.getItem('multicityLastSearch');
       var isMulticity =   localStorage.getItem('isMulticitySearch');
       if(multicity != null && multicity != ''  )
@@ -586,7 +631,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         this.departureDate = new Date(lastSearch.departure);
-        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
+        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null && lastSearch.arrival !='null') {
           this.arrivalDate = new Date(lastSearch.arrival);
         }
         if(this.departureDate < (new Date()).setHours(0,0,0,0))
@@ -647,7 +692,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearch');
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
     if (continueSearch == null) {
       this.continueSearchFlights = [];
     }
@@ -663,7 +708,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
     }
     this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
   }
 
 
@@ -705,7 +750,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
       this.flightSearchCallBack(searchValue);
 
-      localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
       if (searchValue.arrival)

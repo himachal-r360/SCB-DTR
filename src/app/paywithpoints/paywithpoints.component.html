@@ -54,7 +54,7 @@
             </div>
             <form [formGroup]="Formotp" (ngSubmit)="generateVoucherOtp()">
             <div class="col-md-12">
-              <p>Please note that you can pay maximum {{redemption_value}}% to 70% of the transaction amount through Points i.e,<br>
+              <p>Please note that you can pay maximum {{redemption_value}}% of the transaction amount through Points i.e,<br>
               &#8377; <span>{{(orderamount* (redemption_value/100)) |number}}</span> ({{redemption_value |number}}% of &#8377;<span>{{orderamount |number}}</span>) only. Balance amount should be paid by Card or Account. </p>
                <div class="form-check pt-10 mt-2">
                 <input class="form-check-input" [(ngModel)]="otpaccepted" type="checkbox" formControlName="termsconditionvoucher" name="termsconditionvoucher" id="termsconditionvoucher">
