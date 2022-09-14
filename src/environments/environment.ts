@@ -131,7 +131,15 @@ export const environment = {
     "REGALIA": "regalia/bus",
     "CORPORATE": "corporate/bus",
     "BUSINESS": "business/bus"
-  }
+  },
+  "flightLastSearch":"flightLastSearches",
+  "continueFlightSearch":"continueFlightSearch",
+  "continueSearchBus":"continueSearchBuses",
+  "busLastSearch":"busLastSearches",
+  "continueSearchTrain":"continueSearchTrains",
+  "trainLastSearch":"trainLastSearches",
+  "continueSearchHotel":"continueSearchHotels",
+  "hotelLastSearch":"hotelLastSearches",
 
 
 };

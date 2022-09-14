@@ -199,7 +199,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
      const queryParams = this.activatedRoute.snapshot.queryParams;
      
       this.trainSearchCallBack(queryParams);
-      localStorage.setItem('trainLastSearchNew',JSON.stringify(queryParams));
+      localStorage.setItem(environment.trainLastSearch,JSON.stringify(queryParams));
      
      
      var datePipe = new DatePipe('en-US');
@@ -274,7 +274,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
    continueSearchTrain:any=[]
    trainSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchTrain');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchTrain);
       if(continueSearch==null){
         this.continueSearchTrain=[];
       }
@@ -291,7 +291,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
       }
       this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchTrain',JSON.stringify(this.continueSearchTrain));
+      localStorage.setItem(environment.continueSearchTrain,JSON.stringify(this.continueSearchTrain));
   }
  
    headerHideShow(event:any) {
