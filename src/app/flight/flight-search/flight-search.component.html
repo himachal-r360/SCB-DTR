@@ -355,10 +355,10 @@
                                             {{arrivalDate | date:'dd MMM' }}</h5>
 
                                         <span class="select-roottitle d-block w-100" style="font-size:15px ;"
-                                            *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
+                                            *ngIf="(arrivalDate!='' && arrivalDate!='null') || arrivalDate==undefined || navItemActive == 'One Way'">
                                             </span>
                                         <span class="select-roottitle"
-                                            *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
+                                            *ngIf="(arrivalDate!='' && arrivalDate!='null') ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                             | date:'EEEE' }}</span>
 
                                     </div>

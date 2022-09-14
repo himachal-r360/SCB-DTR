@@ -12,7 +12,7 @@ export class HotelService {
   header = new HttpHeaders({'Content-Type': 'application/json' })
   headerHideShow = new BehaviorSubject<Boolean>(true);
   currentHeader = this.headerHideShow.asObservable();
-
+  hotelDetail = environment.url + "api/hotelDetails";
   constructor(private http: HttpClient) { }
 
 
@@ -24,11 +24,15 @@ export class HotelService {
   getHotelCityList(queryText:any){
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
   }
-  
+
   showHeader(value: boolean) {
     this.headerHideShow.next(value);
   }
 
 
+  getHotelDetail(param :any):Observable<any>{
+    let body:any = JSON.stringify(param);
+    return this.http.post(this.hotelDetail, body, { headers: this.header });
+  }
 
 }

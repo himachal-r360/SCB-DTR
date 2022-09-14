@@ -380,9 +380,12 @@ openCovidHealthpopup(train,avlDay,avlClass){
   
   if(this.listingPageCovidPopup == 1){
   let dialogRef = this.dialog.open(covidDialog, {
+    
     disableClose: true,
     width: '800px',
-    autoFocus: false
+    autoFocus: false,
+    hasBackdrop: false
+    
   });
 
   
