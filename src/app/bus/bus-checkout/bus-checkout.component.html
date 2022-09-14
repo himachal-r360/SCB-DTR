@@ -188,7 +188,7 @@
 
           </div>
 
-          <form [formGroup]="passengerForm" name="passengerForm" *ngIf="passengerForm && seacthResult.seatdetails.length">
+          <form [formGroup]="passengerForm" id="passengerForm" name="passengerForm" *ngIf="passengerForm && seacthResult.seatdetails.length">
             <div class="">
               <div class="booking-inner-box mb-20">
                 <!-- redbus saved traveller & GST pop up  -->
@@ -680,9 +680,9 @@
                     </div>
                   </li>
                 </ul>
-                <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error error_msg">
+                <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error error_msg ng-invalid">
                   <small
-                    *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls.passengerAgree.errors.pattern">Please
+                    *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls.passengerAgree.errors.pattern" class="ng-invalid">Please
                     accept Terms and Conditions</small>
                 </div>
               </div>

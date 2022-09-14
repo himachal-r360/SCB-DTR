@@ -237,8 +237,8 @@
                                 </mat-tab>
                                </mat-tab-group>-->
                                 <div class="train_sort_btn">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
+                                    <mat-form-field class="select_mat">
+                                        <mat-select panelClass="select_mat" placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
                                             <mat-option *ngFor = "let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -249,8 +249,8 @@
 
                                 <div class="flight-search-filters-right train_sort_btn">
                                 
-                                <mat-form-field>
-                                    <mat-select placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
+                                <mat-form-field class="select_mat">
+                                    <mat-select panelClass="select_mat" placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
                                         <mat-option  *ngIf = "avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
                                         <mat-option  *ngIf = "avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
                                     </mat-select>
@@ -316,7 +316,7 @@
           <div class="col-md-12 p-0 fixed-top"  >
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" routerLink="/compare-fly" >
+                      <a href="javascript:;" (click)="goback()" >
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
@@ -428,7 +428,7 @@
                               <div class="container filter-container">
                                 <div class="row m_sort_flex_div">
                                     <div class="col-6">
-                                        <label class="checkbox-cust" >
+                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                  <p class="m_sort_text" >Leave Early</p>
@@ -440,7 +440,7 @@
                                     </div>
     
                                     <div class="col-6">
-                                        <label class="checkbox-cust" >
+                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}" >
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                 <p class="m_sort_text">Leave Late</p>

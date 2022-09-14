@@ -1127,7 +1127,7 @@ check_traveller_count(type) {
 
 
         //Bus
-        lastBusSearch=localStorage.getItem('busLastSearchNew');
+        lastBusSearch=localStorage.getItem(environment.busLastSearch);
        const lastBusSearchValue=JSON.parse(lastBusSearch);
         if(lastBusSearchValue){
          this.busFromText=lastBusSearchValue.searchFrom;
@@ -1181,7 +1181,7 @@ check_traveller_count(type) {
                 
         }
         //Train
-         lastTrainSearch=localStorage.getItem('trainLastSearchNew');
+         lastTrainSearch=localStorage.getItem(environment.trainLastSearch);
         const lastTrainSearchValue=JSON.parse(lastTrainSearch);
         if(lastTrainSearchValue){
 
@@ -1714,8 +1714,7 @@ check_traveller_count(type) {
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-
-        localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
+        localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1799,7 +1798,7 @@ check_traveller_count(type) {
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('trainLastSearchNew', JSON.stringify(this.searchArray));
+        localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){

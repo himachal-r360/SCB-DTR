@@ -483,6 +483,7 @@
                                                 <!-- <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
                                                     <small *ngIf="searchHotelForm['controls']['hotelCheckin']['errors']['required']" class="validate-msg">Check in date required</small>
                                                 </div> -->
+
                                             </div>
                                         </div>
 
@@ -502,12 +503,12 @@
                                                         <label>
                                                             <span>Check-Out</span>
 
-                                                            <input  (click)="hotelToPicker.open()" class="inputField p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite"
-                                                            [(ngModel)]="hotelCheckout"   autocomplete="off"  readonly formControlName="hotelCheckout"  id="hotelCheckout" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultTMlite" >
+                                                            <input (click)="hotelToPicker.open()" class="inputField p-0" matInput [matDatepicker]="hotelToPicker" [min]="minDateHotelToMlite" [max]="hotelpickermaxDateMlite" 
+                                                                [(ngModel)]="hotelCheckout" autocomplete="off" readonly formControlName="hotelCheckout" id="hotelCheckout" placeholder="DD/MM/YYYY" [value]="hotelpickerDefaultTMlite">
 
                                                             <!-- <input  (click)="hotelToPicker.open()" class="inputField p-0" matInput [matDatepicker]="hotelToPicker"   [min]="minDateHotelToMlite"  [max]="hotelpickermaxDateMlite" 
                                                             [(ngModel)]="hotelCheckout"   autocomplete="off"  readonly formControlName="hotelCheckout"  id="hotelCheckout" placeholder="DD/MM/YYYY"  [value]="hotelpickerDefaultTMlite" > -->
-                                                            <mat-datepicker  #hotelToPicker></mat-datepicker> 
+                                                            <mat-datepicker #hotelToPicker></mat-datepicker>
             
                                                             <p class="truncate" title="">
                                                                 <span  title="" class=" airPortName ">Friday</span>
@@ -519,6 +520,7 @@
                                                         <!-- <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
                                                             <small *ngIf="searchHotelForm['controls']['hotelCheckout']['errors']['required']" class="validate-msg">Check out date required</small>
                                                         </div> -->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
