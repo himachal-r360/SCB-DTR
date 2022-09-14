@@ -30,8 +30,8 @@ API_URL:{
     MILESTONE_SITE_URL:'https://smartbuydev.reward360.in/milestone/',
    enableEncryptionRequestResponse:false,
   'IS_MAIN':0,
-  
-  
+
+
   API_URL_IRCTC:{
  'SMARTBUY': '//smartbuydev.reward360.in/api/',
  'DINERS': '//smartbuydev.reward360.in/diners/api/',
@@ -42,7 +42,7 @@ API_URL:{
  'CORPORATE': '//smartbuydev.reward360.in/corporate/api/',
  'BUSINESS': '//smartbuydev.reward360.in/business/api/',
   },
-  
+
   BUS_SITE_URL:{
  'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',
  'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',
@@ -61,7 +61,7 @@ API_URL:{
   'BUSINESS': 'https://smartbuydev.reward360.in/lite/business/train/',
 'REGALIA_GOLD': 'https://smartbuydev.reward360.in/lite/regalia_gold/train',
   },
-  
+
   FRESHMENU_SITE_URL  :{
  'SMARTBUY': 'https://smartbuydev.reward360.in/lite/freshmenu/',
  'DINERS': 'https://smartbuydev.reward360.in/lite/diners/freshmenu/',
@@ -70,7 +70,7 @@ API_URL:{
  'CORPORATE': 'https://smartbuydev.reward360.in/lite/corporate/freshmenu/',
   'BUSINESS': 'https://smartbuydev.reward360.in/lite/business/freshmenu/',
   },
- 
+
   GOLF_SITE_URL:{
     'SMARTBUY': 'https://smartbuydev.reward360.in/lite/',
     'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',
@@ -98,7 +98,7 @@ API_URL:{
     'DINERS': 'https://smartbuydev.reward360.in/diners/api/natgeo/',
     'INFINIA'  : 'https://smartbuydev.reward360.in/infinia/api/natgeo/',
   },
-  
+
     RD_SITE_URL:{
     'SMARTBUY': '//smartbuyuat.reward360.us/ecommerce/rdstore/',
     'DINERS': '//smartbuyuat.reward360.us/diners/ecommerce/rdstore/',
@@ -107,7 +107,7 @@ API_URL:{
     'CORPORATE': '//smartbuyuat.reward360.us/corporate/ecommerce/rdstore/',
     'BUSINESS': '//smartbuyuat.reward360.us/business/ecommerce/rdstore/',
   },
-  
+
   SHOPTIMIZE_SITE_URL:{
     'SMARTBUY': '//smartbuyuat.reward360.us/ecommerce/shoptimize/',
     'DINERS': '//smartbuyuat.reward360.us/diners/ecommerce/shoptimize/',
@@ -121,7 +121,7 @@ API_URL:{
     'DINERS': 'https://smartbuydev.reward360.in/lite/diners/',
     'INFINIA' : 'https://smartbuydev.reward360.in/lite/infinia/',
     'REGALIA': 'https://smartbuydev.reward360.in/lite/regalia/',
-  } , 
+  } ,
   "ENTRY_POINT":{
     "SMARTBUY":"bus",
     "DINERS":"diners/checknatgeo",
@@ -140,7 +140,7 @@ API_URL:{
   "continueSearchHotel":"continueSearchHotels",
   "hotelLastSearch":"hotelLastSearches",
 
-  
+  GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 };
 
 /*
