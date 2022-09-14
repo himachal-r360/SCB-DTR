@@ -116,6 +116,61 @@
             </div>
         </div>
     </section>
+
+    <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='hotel' && continueSearchVal && continueSearchVal.length>0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-ContinueSearch-text">
+                        <h4>Continue Your Search</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- continue search website view  -->
+                <ng-container *ngIf="isMobile == false">
+                    <div class="col-md-3" *ngFor="let continue of continueSearchValHotel; let i = index">
+                        <a href="javascript:void(0)" *ngIf="i<4" (click)="continueSearchHotel(continue)">
+                            <div class="Continuesearch-items ">
+                                <div class="Continuesearch-items-text">
+                                    <div class="Continuesearch-name">
+                                        <h6 class="text-capitalize">{{continue.city}}</h6>
+                                        <p>{{continue.checkIn|date:"EEE, dd MMM YY"}} - {{continue.checkOut|date:"EEE, dd MMM YY"}} </p>
+                                    </div>
+                                </div>
+                                <div class="Continuesearch-items-actions">
+                                    <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ng-container>
+                <!-- continue search mobile view  -->
+                <div class="box-item" *ngIf="isMobile == true">
+                    <owl-carousel-o [options]="customOptions">
+                        <ng-container *ngFor="let continue of continueSearchValHotel; let i = index">
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                                <a href="javascript:void(0)" (click)="continueSearchHotel(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                                <h6 class="text-capitalize">{{continue.city}}</h6>
+                                                <p>{{continue.checkIn|date:"EEE, dd MMM YY"}} - {{continue.checkOut|date:"EEE, dd MMM YY"}} </p>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.png" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+    </section>
     
         <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='bus' && continueSearchValBus && continueSearchValBus.length>0">
         <div class="container">
