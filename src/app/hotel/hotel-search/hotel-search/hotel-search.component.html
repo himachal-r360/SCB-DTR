@@ -129,7 +129,38 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <br>
+                                       <div class="d-flex align-items-center">
+                                        <div *ngIf="item.value.numberOfChildren > 0">
+                                            <div class="Travellers-name">
+                                                <h6>Child 1</h6>
+                                            </div>
+                                            <select [(ngModel)]="childrenAge" name="childrenAge" (change)="onSelectAge($event,item, i)">
+                                                <option selected>Age</option>
+                                                <option value="{{age.value}}" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="item.value.numberOfChildren > 1" class="ms-2">
+                                            <div class="Travellers-name">
+                                                <h6>Child 2</h6>
+                                            </div>
+                                            <select  [(ngModel)]="childrenAge" name="childrenAge" (change)="onSelectAge($event,item , i)">
+                                                <option selected>Age</option>
+                                                <option value="{{age.value}}" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="item.value.numberOfChildren > 2" class="ms-2">
+                                            <div class="Travellers-name">
+                                                <h6>Child 3</h6>
+                                            </div>
+                                            <select [(ngModel)]="childrenAge" name="childrenAge" (change)="onSelectAge($event,item,i)">
+                                                <option selected>Age</option>
+                                                <option value="{{age.value}}" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                            </select>
+                                        </div>
                                     </div>
+                                </div> 
+                                      
                                     <hr>
                                 </ng-container>
                             </ng-container>
