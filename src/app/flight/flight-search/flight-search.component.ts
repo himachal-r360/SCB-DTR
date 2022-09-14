@@ -586,7 +586,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         this.departureDate = new Date(lastSearch.departure);
-        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
+        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null && lastSearch.arrival !='null') {
           this.arrivalDate = new Date(lastSearch.arrival);
         }
         if(this.departureDate < (new Date()).setHours(0,0,0,0))
