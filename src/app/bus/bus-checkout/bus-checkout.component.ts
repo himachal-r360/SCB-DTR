@@ -1120,6 +1120,9 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   }
 
   buttonSubmitted: boolean = false;
+  
+  
+
   createBusItinerary() {
     this.submitted = true;
     this.buttonSubmitted = true;
@@ -1163,13 +1166,15 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
     if (this.passengerForm.invalid || this.passengerFormerror == 1) {
       this.buttonSubmitted = false;
-              let target;
-
-        target = this.el.nativeElement.querySelector('.ng-invalid')
-
+        let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
         if (target) {
-        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
-        target.focus();
+        if( target.id =='agree_terms'){
+        $(document).scrollTop($(document).height());
+        }else{
+        target.scrollIntoView();
+        (target as HTMLElement).focus();
+        }
         }
       return;
     } else {

@@ -129,8 +129,16 @@ API_URL:{
     "CORPORATE":"corporate/bus",
     "BUSINESS":"business/bus"  ,
     "REGALIA_GOLD":"regalia/bus",     
-  }
-  
+  },
+    "flightLastSearch":"flightLastSearches",
+  "continueFlightSearch":"continueFlightSearch",
+  "continueSearchBus":"continueSearchBuses",
+  "busLastSearch":"busLastSearches",
+  "continueSearchTrain":"continueSearchTrains",
+  "trainLastSearch":"trainLastSearches",
+  "continueSearchHotel":"continueSearchHotels",
+  "hotelLastSearch":"hotelLastSearches",
+
   
 };
 
