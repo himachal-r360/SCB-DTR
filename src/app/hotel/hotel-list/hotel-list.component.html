@@ -425,15 +425,15 @@
                                         <span class="hotel-star-tag">{{list.hotelInfo.starRating}}/5</span>
                                     </p>
                                     <ul class="hotel-amenities">
-                                        <li>
+                                        <li *ngIf="list.hotelInfo.amenity.gym == '1'">
                                             <img src="./assets/images/hotel/icon/gym.png" alt="">
                                             <span>Gym</span>
                                         </li>
-                                        <li>
+                                        <li *ngIf="list.hotelInfo.amenity.swimming == '1'">
                                             <img src="./assets/images/hotel/icon/pool.png" alt="">
                                             <span>Pool</span>
                                         </li>
-                                        <li>
+                                        <li *ngIf="list.hotelInfo.amenity.bar == '1'">
                                             <img src="./assets/images/hotel/icon/bar.png" alt="">
                                             <span>Bar</span>
                                         </li>
