@@ -5,7 +5,7 @@
                 <div class="col-md-12 p-0">
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
-                            <a href="javascript:;" (click)="triggerBack()">
+                            <a href="javascript:;" (click)="goback()">
                                 <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                             </a>
                         </div>
@@ -38,7 +38,7 @@
 
                 <div class="row ">
                     <div class="col-1 pr-0 text-center">
-                        <a href="javascript:;" routerLink="/compare-fly">
+                        <a href="javascript:;" (click)="goback()">
                             <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                         </a>
                     </div>
@@ -2011,7 +2011,11 @@
         <!--Step2 Ends-->
         <!--Step3 Starts-->
         <div class="col-md-8" *ngIf="steps==3">
-            <div>
+            <div class="">
+                <h4 class="heading_text train_main_hdr">{{travalfrom}} to {{travalto}}
+                    <p class="sub_head_text ps-3"><span class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(1)"><img
+                      src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                </h4>
                 <div class="booking-process-content">
                     <div class="booking-inner-box from-to-box">
 
@@ -2035,9 +2039,9 @@
                                     </p>
                                 </div>
                                 <div class="col-sm-8">
-                                    <div class="trainTimeInfo">
+                                    <!-- <div class="trainTimeInfo">
                                         <div class="">
-                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}} check</span></p>
                                             <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
                                             <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
                                         </div>
@@ -2048,6 +2052,24 @@
                                             </div>
                                         </div>
                                         <div>
+                                            <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                                            <p class="place">{{tostnDesc}}</p>
+                                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
+                                        </div>
+                                    </div> -->
+                                    <div class="trainTimeInfo">
+                                        <div class="trainTimeInfo_div">
+                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}} check</span></p>
+                                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
+                                        </div>
+                                        <div class="trainTimeInfo_div align_center">
+                                            <div class="duration_train">
+                                                <p class="dur_time">{{travelDuration}}</p>
+                                                <div class="range m_range"></div>
+                                            </div>
+                                        </div>
+                                        <div class="trainTimeInfo_div">
                                             <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
                                             <p class="place">{{tostnDesc}}</p>
                                             <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
@@ -2111,6 +2133,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                         </div>
                     <div class="row mt-1 gy-4">
 
@@ -2143,6 +2166,7 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <!--Show bording stations-->
+                                        <p class="train_title_label"> Boarding Station </p>
                                             <div class="">
                                                 <mat-form-field class="w-100" appearance="outline" disabled>
                                                 <mat-label>Boarding Station</mat-label>

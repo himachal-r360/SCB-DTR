@@ -316,7 +316,7 @@
           <div class="col-md-12 p-0 fixed-top"  >
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" routerLink="/compare-fly" >
+                      <a href="javascript:;" (click)="goback()" >
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
@@ -428,7 +428,7 @@
                               <div class="container filter-container">
                                 <div class="row m_sort_flex_div">
                                     <div class="col-6">
-                                        <label class="checkbox-cust" >
+                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                  <p class="m_sort_text" >Leave Early</p>
@@ -440,7 +440,7 @@
                                     </div>
     
                                     <div class="col-6">
-                                        <label class="checkbox-cust" >
+                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}" >
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                 <p class="m_sort_text">Leave Late</p>

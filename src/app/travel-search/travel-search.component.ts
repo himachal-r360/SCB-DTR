@@ -81,6 +81,8 @@ export class TravelSearchComponent implements OnInit {
         fromBusCode:any;
         toBusCode:any;
           busFromDisp:any;
+          busFromStateDisp:any;
+          busToStateDisp:any;
         busToDisp:any;
 
         trainFrom:any;
@@ -1125,7 +1127,7 @@ check_traveller_count(type) {
 
 
         //Bus
-        lastBusSearch=localStorage.getItem('busLastSearchNew');
+        lastBusSearch=localStorage.getItem(environment.busLastSearch);
        const lastBusSearchValue=JSON.parse(lastBusSearch);
         if(lastBusSearchValue){
          this.busFromText=lastBusSearchValue.searchFrom;
@@ -1136,6 +1138,8 @@ check_traveller_count(type) {
         this.busToDisp=lastBusSearchValue.searchTo;
         this.fromBusCode=lastBusSearchValue.fromTravelCode;
         this.toBusCode=lastBusSearchValue.toTravelCode;
+        this.busFromStateDisp = lastBusSearchValue.fromState;
+        this.busToStateDisp = lastBusSearchValue.toState;
          
         this.searchBusForm['controls']['busFrom'].setValue(lastBusSearchValue.searchFrom);
         this.searchBusForm['controls']['busTo'].setValue(lastBusSearchValue.searchTo);
@@ -1161,6 +1165,8 @@ check_traveller_count(type) {
         this.busTo='Mumbai';
          this.busFromDisp='Delhi';
         this.busToDisp='Mumbai';
+        this.busFromStateDisp = 'New Delhi';
+        this.busToStateDisp = 'Maharashtra' ;
         this.fromBusCode=1492;
         this.toBusCode=649;
          
@@ -1175,7 +1181,7 @@ check_traveller_count(type) {
                 
         }
         //Train
-         lastTrainSearch=localStorage.getItem('trainLastSearchNew');
+         lastTrainSearch=localStorage.getItem(environment.trainLastSearch);
         const lastTrainSearchValue=JSON.parse(lastTrainSearch);
         if(lastTrainSearchValue){
 
@@ -1348,6 +1354,10 @@ check_traveller_count(type) {
 	
 	this.busFromDisp= tempSearchToDisp;
 	this.busToDisp= tempSearchFromDisp;
+
+  this.busFromStateDisp = tempfromState;
+  this.busToStateDisp = temptoState ;
+
   }
 
 
@@ -1689,6 +1699,9 @@ check_traveller_count(type) {
         departure:xss(uDate),
         cdeparture:xss(cDate),
         };
+
+       
+
         this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
         var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
         const cookieExists: boolean = this.cookieService.check('busSearchN');
@@ -1701,7 +1714,7 @@ check_traveller_count(type) {
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
+        localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -1723,12 +1736,12 @@ check_traveller_count(type) {
         this.redirectPopupTriggerTimestamp=current.getTime();
         this.redirectPopupTrigger=1;
         this.redirectPopup=2;
-        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure']+'&fromState='+this.searchArray['fromState']+'&toState='+this.searchArray['toState'];
         return;
         }
        /*  this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];*/
          
-       let url='bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+       let url='bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure']+'&fromState='+this.searchArray['fromState']+'&toState='+this.searchArray['toState'];
         
           this.router.navigateByUrl(url);
         break;
@@ -1785,7 +1798,7 @@ check_traveller_count(type) {
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-        localStorage.setItem('trainLastSearchNew', JSON.stringify(this.searchArray));
+        localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
 
         this.cookieService.delete('irctcSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
@@ -2065,6 +2078,8 @@ switch(service) {
         this.busFromText=values.name;
         this.busFromDisp=values.name;
         this.busFromOptions= this.defaultBusOptions;
+        this.busFromStateDisp = values.state;
+      
          this.closeSearchBox();
         $("#busTo").select();
         $("#busTo").focus();
@@ -2134,6 +2149,7 @@ switch(service) {
          this.searchBusForm['controls']['toState'].setValue(values.state);
         this.busToText=values.name;
          this.busToDisp=values.name;
+         this.busToStateDisp = values.state;
         this.busToOptions= this.defaultBusOptions;
         this.closeSearchBox();
 

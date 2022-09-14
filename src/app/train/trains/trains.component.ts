@@ -199,7 +199,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
      const queryParams = this.activatedRoute.snapshot.queryParams;
      
       this.trainSearchCallBack(queryParams);
-      localStorage.setItem('trainLastSearchNew',JSON.stringify(queryParams));
+      localStorage.setItem(environment.trainLastSearch,JSON.stringify(queryParams));
      
      
      var datePipe = new DatePipe('en-US');
@@ -274,7 +274,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
    continueSearchTrain:any=[]
    trainSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchTrain');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchTrain);
       if(continueSearch==null){
         this.continueSearchTrain=[];
       }
@@ -291,7 +291,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
       }
       this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchTrain',JSON.stringify(this.continueSearchTrain));
+      localStorage.setItem(environment.continueSearchTrain,JSON.stringify(this.continueSearchTrain));
   }
  
    headerHideShow(event:any) {
@@ -326,6 +326,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
     {
       filterDiv.style.display = 'none';
     }
+    this.orderBy('');
   }
   openAvailability()
   {
@@ -710,7 +711,7 @@ updateTrainTypeFilter(appt) {
   selectedOption: any = "Early Departure";
   selectedOptionNew: any = "Early Departure";
   selected:any="leave-early";
-  
+  option: string = '';
    orderBy(option) {
 
     this.selectedOptionNew = option;
@@ -719,19 +720,23 @@ updateTrainTypeFilter(appt) {
     } else if (option == 'leave-late') {
       this.selectedOption = 'Late Depature';
     }
-    if(this.isMobile){
-      var filterDiv = document.getElementById('sortMobileFilter');
-        if(filterDiv)
-        {
-          filterDiv.style.display = 'none';
-        }
-    } 
+    this.option = option;
     this.sortBy=option;
     this.showSortbuy=false;
     this.Sortby = "Sorted By"; 
     this.trains = this.trains.filter(g => {
       return true;
     });
+  }
+    applySortingMobile() {
+
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("noscroll");
+    let sortingBtn = document.getElementById('sortMobileFilter');
+    if(sortingBtn)
+    {
+      sortingBtn.style.display = 'none';
+    }
   }
 
   clearSelectionAll(){
