@@ -37,6 +37,9 @@ declare var $ :any;
     styleUrls: ['./travellers.component.scss']
 })
 export class TrainsTravellerComponent implements OnInit {
+
+    travalfrom : string;
+    travalto: string;
     steps:number=1;
       completedSteps = 1;
     childBerthMandatory:any;
@@ -347,7 +350,9 @@ export class TrainsTravellerComponent implements OnInit {
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
-        
+
+        this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");
+        this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");
             if(!this.seacthResult){
          this.router.navigate(['/train']);
         }
