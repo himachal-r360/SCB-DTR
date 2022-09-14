@@ -501,8 +501,11 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
       //this.savedCards=[{"id":7730,"card_display_name":"4059 xxx 8794 HDFC","type":"VISA","card_id":"zJOyDltPQZcfMjLqOlDjHQJ966czxP1srxQFTUrZi6TNvxgY4l\/wPchjhQ\/MCPuN"},{"id":7731,"card_display_name":"4059 xxx 9999 HDFC","type":"VISA","card_id":"ddddd"}];
 
-      // this.searchBusKey = this.activatedRoute.snapshot.params['searchBusKey'];
       this.searchBusKey = this.activatedRoute.snapshot.queryParamMap.get('searchBusKey');
+                  if(!this.seacthResult){
+         this.router.navigate(['/bus']);
+        }
+      
       this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchBusKey));
       var lengthofboarding = this.seacthResult.busdetails.boardingTimes.length;
       var lengthofDropping = this.seacthResult.busdetails.droppingTimes.length;
