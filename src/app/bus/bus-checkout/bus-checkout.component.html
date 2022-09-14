@@ -234,7 +234,7 @@
                                                 <div class="col-12">
                                                   <div class="trip_select">
                                                       <div class="buttonTrip" *ngIf = "!item.ladiesSeat">
-                                                          <input *ngIf = "!item.ladiesSeat" type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
+                                                          <input  type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
                                                           <label class="btn btn-default" for="male{{ i }}">Male</label>
                                                       </div>
                                                       <div class="buttonTrip">
@@ -348,7 +348,7 @@
                         <!--expandid==i && isExpanded-->
                           <div   [ngClass]="expandid == i ? '' : 'hidden' " >
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
-                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}"  [ngClass]="item.ladiesSeat && passenger.gender != 'Female' ? 'hidden' : '' " >
+                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}"  [ngClass]="item.ladiesSeat && expandedItem.gender != 'Female' ? 'hidden' : '' " >
                                 <label class="custom-control material-checkbox">
                                   <input type="checkbox" class="material-control-input pass_checkBox1_{{ expandedItem.id}} pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
                                     name="travellerlist"
