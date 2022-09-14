@@ -234,23 +234,44 @@
 .voucher_tab_section {
     ul {
         display: flex;
-        justify-content: space-around;
+        justify-content: start;
         align-items: center;
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;
         white-space: nowrap;
         flex-wrap: nowrap;
+        height: 92px;
+       /*  display: inline-flex;
+        gap: 30px;
+        justify-content: start;
+        align-items: center;
+        padding: 20px;
+        background-color: #f7faff;
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        white-space: nowrap;
+        flex-wrap: nowrap; */
         @media only screen and (max-width: 600px) {
             justify-content: space-between;
             
         }
+        .nav-item{
+            display: flex;
+            cursor: pointer;
+        }
         .nav-link {
            /*  margin-bottom: -8px; */
             transition: none;
+            width: 130px;
+            text-align: center;
             &:hover,
             &:focus {
-                border-color: transparent;
+                /* border-color: transparent; */
+                border: none;
+                border-bottom: 1px solid transparent;
+                /* border: none; */
             }
             img{
                 width: 45px;
