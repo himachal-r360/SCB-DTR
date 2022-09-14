@@ -197,7 +197,7 @@ export class HomeComponent implements OnInit {
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
     
-    let continueSearchValLs:any= localStorage.getItem('continueSearch');
+    let continueSearchValLs:any= localStorage.getItem(environment.continueFlightSearch);
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }

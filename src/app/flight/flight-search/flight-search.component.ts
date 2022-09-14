@@ -224,7 +224,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
       this.isMobile = window.innerWidth < 991 ? true : false;
-      let continueSearchValLs: any = localStorage.getItem('continueSearch');
+      let continueSearchValLs: any = localStorage.getItem(environment.continueFlightSearch);
       if (continueSearchValLs != null) {
         this.continueSearchVal = JSON.parse(continueSearchValLs);
       }
@@ -543,7 +543,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   infantsVal:  any=0;
   flightFromInput: any;
   setSearchFilterData() {
-    let lastSearch: any = localStorage.getItem('flightLastSearchNew');
+    let lastSearch: any = localStorage.getItem(environment.flightLastSearch);
       var multicity = localStorage.getItem('multicityLastSearch');
       var isMulticity =   localStorage.getItem('isMulticitySearch');
       if(multicity != null && multicity != ''  )
@@ -692,7 +692,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearch');
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
     if (continueSearch == null) {
       this.continueSearchFlights = [];
     }
@@ -708,7 +708,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
     }
     this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
   }
 
 
@@ -750,7 +750,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
       this.flightSearchCallBack(searchValue);
 
-      localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
       if (searchValue.arrival)

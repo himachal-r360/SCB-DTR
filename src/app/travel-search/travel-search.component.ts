@@ -955,7 +955,7 @@ check_traveller_count(type) {
 
 
           //Flights
-      lastFlightSearch=localStorage.getItem('flightLastSearchNew');
+      lastFlightSearch=localStorage.getItem(environment.flightLastSearch);
        const lastFlightSearchValue=JSON.parse(lastFlightSearch);
        
         if(lastFlightSearchValue){
@@ -1436,7 +1436,7 @@ check_traveller_count(type) {
   }
   flightSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearch');
+      let continueSearch:any=localStorage.getItem(environment.continueFlightSearch);
       if(continueSearch==null){
         this.continueSearchFlights=[];
       }
@@ -1453,7 +1453,7 @@ check_traveller_count(type) {
         this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
       }
       this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearch',JSON.stringify(this.continueSearchFlights));
+      localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
   }
   sameCityValidation = false;
   onSubmit(service,type) {
@@ -1507,7 +1507,7 @@ check_traveller_count(type) {
 
         this.flightSearchCallBack(searchValue);
 
-        localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
+        localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
         localStorage.setItem('isMulticitySearch','false');
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
