@@ -1478,10 +1478,11 @@ check_traveller_count(type) {
 
         }
 
-        if(this.searchFlightForm.value.arrival!="" && this.searchFlightForm.value.arrival!=undefined ){
+        if(this.searchFlightForm.value.arrival!="" && this.searchFlightForm.value.arrival!=undefined  && this.searchFlightForm.value.arrival!=null  && this.searchFlightForm.value.arrival!='null' ){
        // this.searchFlightForm.value.arrival=this.searchFlightForm.value.arrival.getFullYear()+'-' +(this.searchFlightForm.value.arrival.getMonth()+ 1)+'-' +this.searchFlightForm.value.arrival.getDate();
         this.searchFlightForm.get('flightdefault').setValue('R');
         }else{
+        this.searchFlightForm.get('arrival').setValue('');
         this.searchFlightForm.get('flightdefault').setValue('O');
         }
 
