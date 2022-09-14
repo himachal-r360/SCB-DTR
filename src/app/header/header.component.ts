@@ -449,7 +449,8 @@ export class HeaderComponent implements OnInit {
 
     }
   enablePushClick(type){
-	
+	         setTimeout(()=>{  
+
         if (!this.cookieService.get("push_enable")) { 
         this.cookieService.set('push_enable','1', null, '/', null, null, null);
         }
@@ -464,6 +465,7 @@ export class HeaderComponent implements OnInit {
        $('.myaccount-drop').removeClass('show');
        $("#pushNotiEnable").modal('show');
       }	
+         }, 500);
   }
   enableMoreClick() {
     
@@ -575,6 +577,49 @@ closeCookieConsent(value){
 
   }
   getNotification(){
+                            
+    this.rest.getNotification().subscribe(result => {
+      this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
+      this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
+      this.pushcount = result.result.length;
+        const unreadId = [];
+        const readId = [];
+        var blue_dott=""; var classs="";
+        result.result.forEach((v, k) =>  {    
+              if((unreadId.indexOf(unreadId) === -1)){
+                unreadId.push(v['id']);         
+              } 
+             var idcondition = document.getElementById("offers-tab-content_" + v['id']);
+		if(idcondition){
+              var condition = document.getElementsByClassName("clicked_" + v['id']).length>0;
+              if(condition && (readId.indexOf(readId) === -1)) {
+                readId.push(v['id']);
+              }
+		}
+                  this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
+
+        });
+				
+          if(this.cookieService.get('push_status') != undefined)
+          {	
+		
+	   if(this.cookieService.get('read_notify') == '1')this.notificationball = false;   
+
+              if((readId.length === unreadId.length) ) {
+		
+                  this.cookieService.set('read_notify','1', null, '/', null, null, null);
+                  $('#notify-boll').removeClass('img-number');        
+                  $('#notify-boll').removeClass('number'); 
+		this.notificationball = false;                           
+              } 
+
+          } else {
+              this.cookieService.set('read_notify','0', null, '/', null, null, null);
+                $('#notify-boll').addClass('img-number');    
+                $('#notify-boll').addClass('number'); 
+          }
+      
+    });
 
   }
 
@@ -701,11 +746,11 @@ closeCookieConsent(value){
           if(this.deviceService.isMobile()){
                setTimeout(()=>{                          
                 this.OpenDisclaimerMobile();
-                }, 3000);
+                },3000);
            
           }else{
            setTimeout(function() {
-           $('#sb_dis_popup').trigger('click');   }, 3000);
+           $('#sb_dis_popup').trigger('click');   },3000);
           }
         }  
         }
