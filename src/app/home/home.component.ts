@@ -163,7 +163,7 @@ export class HomeComponent implements OnInit {
         case ('/'+this.sg['domainPath']+'compare-fly'):
         this.navItemActive = 'flight';
         break;
-        case ('/'+this.sg['domainPath']+'hotel'):
+        case ('/'+this.sg['domainPath']+'compare-stay'):
         this.navItemActive = 'hotel';
         break;
         case ('/'+this.sg['domainPath']+'bus'):
