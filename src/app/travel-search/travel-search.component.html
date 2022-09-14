@@ -1924,6 +1924,10 @@
                                     <label>
                                     <span>From</span>
                                     <input type="text" [(ngModel)]="busFrom" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField"  formControlName="busFrom" id="busFrom" placeholder="From" name="busFrom" (focus)="hideShowForms('mobile', 'busFrom','bus')" (keyup)="searchAutoComplete($event,'bus','busFrom' ,'mobile');" (keypress)="charInput($event)"  autocomplete="off" >
+                                    <p class="truncate" title="{{busFromStateDisp}}">
+                                        <span  title="" class=" airPortName ">{{busFromStateDisp}}</span>
+                                    </p>
+
                                     <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
                                     <input type="hidden"  formControlName="fromState">
                                     <p class="truncate" title="{{busFromText}}">
@@ -1944,8 +1948,11 @@
                                     <label class="pl-20">
                                         <span>To</span>
                                         <input type="text" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField" formControlName="busTo" id="busTo" placeholder="To" name="busTo" (focus)="hideShowForms('mobile', 'busTo','bus')" (keyup)="searchAutoComplete($event,'bus','busTo' ,'mobile')" (keypress)="charInput($event)" autocomplete="off">
+                                        <p class="truncate" title="{{busToStateDisp}}">
+                                            <span  title="" class=" airPortName ">{{busToStateDisp}}</span>
+                                        </p>
                                         <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
-                                          <input type="hidden"  formControlName="fromState">
+                                          <input type="hidden"  formControlName="toState">
                                         <p class="truncate" title="{{busToText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
                                         </p>
@@ -2051,7 +2058,7 @@
                                 <div class="list_item" *ngIf="enableEs && fromBusOptions['_source']">
                                     <div class="icon_fl"><i class="fa fa-bus"></i></div>
                                     <div class="flight_city_select">
-                                        <p class="city_name">{{fromBusOptions['_source']['name']}}</p>
+                                        <p class="city_name">{{fromBusOptions['_source']['name']}} , {{fromBusOptions['_source']['state']}}</p>
                                     </div>
                                     <div class="airport_code">{{fromBusOptions['_source']['code']}}</div>
                                 </div>
@@ -2081,7 +2088,7 @@
                                 <div class="list_item" *ngIf="enableEs && toBusOptions['_source']">
                                     <div class="icon_fl"><i class="fa fa-bus"></i></div>
                                     <div class="flight_city_select">
-                                        <p class="city_name">{{toBusOptions['_source']['name']}}</p>
+                                        <p class="city_name">{{toBusOptions['_source']['name']}} ,  {{toBusOptions['_source']['state']}}</p>
                                     </div>
                                     <div class="airport_code">{{toBusOptions['_source']['code']}}</div>
                                 </div>
