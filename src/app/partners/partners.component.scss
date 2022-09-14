@@ -243,19 +243,26 @@
         flex-wrap: nowrap;
         @media only screen and (max-width: 600px) {
             justify-content: space-between;
+            
         }
         .nav-link {
-            margin-bottom: -8px;
+           /*  margin-bottom: -8px; */
             transition: none;
             &:hover,
             &:focus {
                 border-color: transparent;
+            }
+            img{
+                width: 45px;
+                height: 45px;
+                object-fit: fill;
             }
         }
         .nav-link.active {
             border: none;
             background-color: transparent;
             border-bottom: 3px solid green;
+            font-weight: bold;
             &:hover {
                 border: none;
                 border-bottom: 3px solid green;
@@ -270,28 +277,11 @@
             }
         }
     }
-}
-.scrolling_img_div{
-    height:75px;
-    @media screen and (max-width:600px){
-        height:100px;
-
+    @media only screen and (max-width: 600px) {
+        .nav-tabs::-webkit-scrollbar{
+            height: 0px !important;
+        }
+        
     }
-}
-// .img_div{
-//     width:50px;
-//     height:50px;
-//     border-radius:50%;
-//     img{
-//         width:50px;
-//     height:50px;
-//     object-fit: cover;
-//     border-radius:50%;
-//     }
-// }
-.img_div{
-    width:35px;
-        height:35px;
-        object-fit: cover;
-        border-radius:50%;
+    
 }

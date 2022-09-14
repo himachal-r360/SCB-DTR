@@ -5297,11 +5297,15 @@ marquee {
                     font-weight: 400;
                     font-size: 16px;
                     position: relative;
+                    /* -webkit-transition: all 250ms ease-in-out;
+                    transition: all 250ms ease-in-out; */
+                    transition: font-weight .1s;
+                    -webkit-transition: font-weight .1s;
                 }
                 &:hover a.nav_link_item {
                     border-bottom: 3px solid #C7C7C7;
                     opacity: 1;
-                    font-weight: bold;
+                    font-weight: 700;
                     padding-bottom: 3px;
                 }
                 a.active {
@@ -5500,6 +5504,7 @@ marquee {
     }
     .privi-list {
         left: -100px;
+        width: 20vw;
     }
     .list-deals {
         width: 20vw;
@@ -5518,17 +5523,23 @@ marquee {
     .list-travel,
     .list-shop {
         left: auto;
+        
         @media only screen and (min-width: 1200px) and (max-width: 1440.59px) {
             width: 90vw;
             min-width: fit-content;
+            min-width: -webkit-fit-content;
+            -webkit-left: -160px;
+            
         }
         @media only screen and (min-width: 1441px) and (max-width: 1920px) {
             width: 87vw;
             min-width: fit-content;
+            min-width: -webkit-fit-content;
         }
         @media only screen and (min-width: 1921px) and (max-width: 2560px) {
             width: 65vw;
             min-width: fit-content;
+            min-width: -webkit-fit-content;
         }
         ul.list_group {
             li {
@@ -5548,6 +5559,19 @@ marquee {
             }
         }
     }
+        /* Only Safari Browser Support Code */
+        @media not all and (min-resolution:.001dpcm)
+        { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+            .list-travel { 
+                left: -85px;
+            }
+            .list-shop{
+                left: -246px;
+            }
+            .list-voucher{
+                left: -326px;
+            }
+        }}
     .privi-list {
         .privilege_list {
             li {
