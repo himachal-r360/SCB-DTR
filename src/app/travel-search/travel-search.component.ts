@@ -81,6 +81,8 @@ export class TravelSearchComponent implements OnInit {
         fromBusCode:any;
         toBusCode:any;
           busFromDisp:any;
+          busFromStateDisp:any;
+          busToStateDisp:any;
         busToDisp:any;
 
         trainFrom:any;
@@ -1161,6 +1163,8 @@ check_traveller_count(type) {
         this.busTo='Mumbai';
          this.busFromDisp='Delhi';
         this.busToDisp='Mumbai';
+        this.busFromStateDisp = 'New Delhi';
+        this.busToStateDisp = 'Maharashtra' ;
         this.fromBusCode=1492;
         this.toBusCode=649;
          
@@ -1348,6 +1352,10 @@ check_traveller_count(type) {
 	
 	this.busFromDisp= tempSearchToDisp;
 	this.busToDisp= tempSearchFromDisp;
+
+  this.busFromStateDisp = tempfromState;
+  this.busToStateDisp = temptoState ;
+
   }
 
 
@@ -1688,6 +1696,9 @@ check_traveller_count(type) {
         departure:xss(uDate),
         cdeparture:xss(cDate),
         };
+
+        console.log("searchArray "+(JSON.stringify(this.searchArray)));
+
         this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
         var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
         const cookieExists: boolean = this.cookieService.check('busSearchN');
@@ -2064,6 +2075,8 @@ switch(service) {
         this.busFromText=values.name;
         this.busFromDisp=values.name;
         this.busFromOptions= this.defaultBusOptions;
+        this.busFromStateDisp = values.state;
+      
          this.closeSearchBox();
         $("#busTo").select();
         $("#busTo").focus();
@@ -2133,6 +2146,7 @@ switch(service) {
          this.searchBusForm['controls']['toState'].setValue(values.state);
         this.busToText=values.name;
          this.busToDisp=values.name;
+         this.busToStateDisp = values.state;
         this.busToOptions= this.defaultBusOptions;
         this.closeSearchBox();
 

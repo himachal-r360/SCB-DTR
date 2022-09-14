@@ -1684,6 +1684,7 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
   departure:xss(uDate),
   cdeparture:xss(cDate),
   };
+  
   this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
   var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
   const cookieExists: boolean = this.cookieService.check('busSearchN');
