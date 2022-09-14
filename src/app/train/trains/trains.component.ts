@@ -60,6 +60,7 @@ export class TrainsComponent implements OnInit {
         journeyDate: string;
         noOfPassenger: number;
         selected_count:number = 0;
+        notrain:boolean = false;
         quotaList:any = [];
         avlQuota:any = [];
         availableClasses:any = [];
@@ -511,7 +512,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
   }
   fastestTrain;
  getTrains(){
-
+  this.notrain=false;
   this.searchParam = {
       frmStn:this.frmStn,
       journeyDate:this.journeyDate,
@@ -538,6 +539,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
     if(this.trainResponse.errorcode==1  ) {
         this.selected_count=-1;
         this.sortFilterhide = false;
+        this.notrain=true;
         
     }else{
 
@@ -576,15 +578,17 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
            var errorMessage="No Trains Found";
            if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
               errorMessage=this.trainResponse.partnerResponse.errorMessage;
-            alert(errorMessage);
+            //alert(errorMessage);
             this.selected_count=-1;
+            this.notrain=true;
           }
       }else{
             var errorMessage="No Trains Found";
             if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
               errorMessage=this.trainResponse.partnerResponse.errorMessage;
-            alert(errorMessage);
+          //  alert(errorMessage);
             this.selected_count=-1;
+            this.notrain=true;
       }
     }
 	},
