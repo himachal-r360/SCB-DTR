@@ -786,7 +786,7 @@ console.log(this.seacthResult.seatdetails);
   
   
   
-  fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex) {
+  fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex, ladiesSeat) {
 
     const sum = travellerformid + 1;
 
@@ -796,20 +796,48 @@ console.log(this.seacthResult.seatdetails);
       
       this.passengerSelectedArray[travellerformid]=1;
       
-      
-      
-      
-      
 
       this.passengerForm.controls['passengerid' + travellerformid].setValue(data.id);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue(data.firstName);
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue(data.lastName);
       this.passengerForm.controls['passengerAge' + travellerformid].setValue(data.age);
-      if(data.gender){
+      
+      if(data.gender && !ladiesSeat){
+      
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
+
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+        $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+        
+    }else if(data.gender && ladiesSeat){
+     
+      
+      if(data.gender=='Female'){
+       
+      this.passengerForm.controls['passengerGender' + travellerformid].setValue('Female');
+
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+
+      }
+      else {
+        
+       alertify.error('Please Select Female Passenger', '').delay(3);
+      this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
+      this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerLastName' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+      $(".pass_checkBox1_"+data.id).prop('checked', false);
+
+      }
+
       }else{
-       var gender='Male';
-        switch (data.gender) {
+
+       var gender='';
+     
+        switch (data.title) {
         case 'Mr':
         gender='Male';
         break;
@@ -825,13 +853,51 @@ console.log(this.seacthResult.seatdetails);
         case 'Mstr':
         gender='Male';
         break;
+        default:
+        gender='Male';
+
         }
+
        this.passengerForm.controls['passengerGender' + travellerformid].setValue(gender);
+
+       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+       // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
+         $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+
+         if(ladiesSeat){
+   
+       
+      
+          if(gender=='Female'){
+         
+          this.passengerForm.controls['passengerGender' + travellerformid].setValue('Female');
+    
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+    
+          }
+          else {
+           
+           alertify.error('Please Select Female Passenger', '').delay(3);
+          this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
+          this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerLastName' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+          $(".pass_checkBox1_"+data.id).prop('checked', false);
+
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", false);
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", false);
+    
+          }
+    
+          } 
+     
+
       }
       
-      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
-     // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
-       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+     
        
        
       
