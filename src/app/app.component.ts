@@ -316,7 +316,7 @@ export class AppComponent implements OnInit {
                 this.menuActiveClass='bus';
                 break;
                 
-                       case '/' :  case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':
+                     case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':
                 this.menuActiveClass='flight';
                 break;
                 
@@ -324,7 +324,12 @@ export class AppComponent implements OnInit {
                   case '/train':  case '/train/pnr':
                 this.menuActiveClass='flight';
                 break;
-          }     
+                default:
+                  this.menuActiveClass='foryou';
+                break;
+
+          }   
+  
         }else{
 
         

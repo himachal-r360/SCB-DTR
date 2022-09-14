@@ -284,9 +284,9 @@
                                         <div class="lower-bus ">
                                             <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
                                             <table class="cabin fuselage" align="left">
-                                                <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; " style="width:100%">
+                                                <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
                                                     <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table align="left" style="width:100%">
+                                                        <table align="left" >
                                                             <tr>
                                                                 <td *ngFor="let seat of LD;">
                                                                     <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
@@ -318,7 +318,7 @@
                                                 <table class="cabin fuselage" align="left">
                                                     <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
                                                         <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
-                                                            <table align="left" style="width:100%">
+                                                            <table align="left">
                                                                 <tr>
                                                                     <td *ngFor="let seat of UD">
                                                                         <span *ngIf="seat && seat.length==0" class="seat noSeats" >&nbsp;</span>
@@ -355,7 +355,7 @@
                                             <table class="cabin fuselage" align="left">
                                                 <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
                                                     <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table align="left" style="width:100%">
+                                                        <table align="left">
                                                             <tr>
                                                                 <td *ngFor="let seat of LD">
                                                                     <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
@@ -392,7 +392,7 @@
                                                 <table class="cabin fuselage" align="left">
                                                     <tr  class="row-no" *ngFor="let UD of Upperdecks;let index=index; " >
                                                         <td *ngIf="UD && UD.length > 0"   [attr.align]="(index==2 || UD.length > 10 ) ? 'right' : 'left'" > 
-                                                            <table align="left" style="width:100%" >
+                                                            <table align="left" >
                                                                 <tr>
                                                                 <td *ngFor="let seat of UD;">
                                                                     <span *ngIf="seat && seat.length==0" class="seat noSeats">&nbsp;</span>
@@ -1063,22 +1063,39 @@
 <!-- Mobile Boarding & Dropping -->
 
 <div class="mobile-boarding-dropping" *ngIf="showBoardDrop">
-    <div class="boarding-back-title-smartbuy" *ngIf="domainName=='SMARTBUY'">
+    <div class="boarding-back-title-smartbuy p-0" *ngIf="domainName=='SMARTBUY'">
         <!-- <span class="boarding-back" (click)="showBoardDrop=false"><i class="material-icons">arrow_back</i></span>
         <div>{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</div> -->
 
-
+        <div class="mob-listing-header">
+            <div class="mob-listing-header-left">
+                <a (click)="showBoardDrop=false" class="">
+                    <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                </a>
+            </div>
+            <div class="mob-listing-header-center">
+                <div class="">
+                       <!--  <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
+                        <h6>{{ onward.travels }} </h6>
+                        <p class="">{{ onward.busType }}</p> -->
+                        <p class="">{{ departure  | date:'EEE, dd MMM' }}</p>
+                        <h6 class="">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
+                        <p class="">{{bus.busType}}</p>
+                </div>
+            </div>
+            <div> </div>
+        </div>
         <!-- mobile boarding and dropping static data-->
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12 text-center">
                 <a (click)="showBoardDrop=false" class="m_fheader_link">
                     <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                 </a>
-                <p class="m_fheader_text">11 Aug</p>
+                <p class="m_fheader_text">{{ departure  | date:'EEE, dd MMM' }}</p>
                 <h6 class="m_fheader_title">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
-                <p class="m_fheader_text">A/C Sleeper (2+1)</p>
+                <p class="m_fheader_text">{{bus.busType}}</p>
             </div>
-        </div>
+        </div> -->
         <!-- end of mobile boarding static data -->
 
 
@@ -1107,14 +1124,14 @@
     <div class="mob-sf-tabs mt-5">
     <ul class="nav nav-tabs m-popup-tabs mt-5 ">
         <li>
-            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab">Boarding Points</a>
+            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab" [ngClass]="{'active' : boardPointActive}" (click)="pressBoardPoint()">Boarding Points</a>
         </li>
         <li class="nav-item">
-            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab">Dropping Points</a>
+            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab" [ngClass]="{'active' : dropPointActive}">Dropping Points</a>
         </li>
     </ul>
     <div class="tab-content clearfix">
-        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab">
+        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab" [ngClass]="{'active' : boardPointActive}">
             <div class="m-bordng-drpng-div">
             <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
             
@@ -1123,7 +1140,7 @@
                 <table>
                     <tr> 
                       
-                        <td><input type="radio" name="mobile-boarding" id="{{boardingpoints.boardingPointId}}" class="hidden" #selectAfterAdding (click)="changeTab(selectAfterAdding.checked)"/>
+                        <td><input type="radio" name="mobile-boarding" id="{{boardingpoints.boardingPointId}}" class="hidden" #selectAfterAdding (click)="changeTab(selectAfterAdding.checked)"  />
                             <span class="label"></span> </td>
                     
                         <td><p class="b-time">{{boardingpoints.ctime}}</p></td>
@@ -1131,14 +1148,14 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px" class="">({{boardingpoints.nextday | date:'dd LLL'}}) </span></td>
+                        <td><span *ngIf="boardingpoints.nextday" style="color:red;font-size:9px" class="">({{boardingpoints.nextday | date:'dd LLL'}}) </span></td>
                         <td><p class="b-place-two">{{boardingpoints.address}}<span *ngIf="boardingpoints.landmark !=boardingpoints.address"> ,{{boardingpoints.landmark}}</span></p></td></tr>
                 </table>
                 </div>
             </label>
             </div>
         </div>
-        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab">
+        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab" [ngClass]="{'active show' : dropPointActive}">
         <div class="m-bordng-drpng-div">
                         <div class="info text-gary" *ngIf="showErrorDropping" [ngClass]="{'errorred':showErrorDropping}">Please select boarding & dropping points to continue</div>
 
@@ -1153,7 +1170,7 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><span *ngIf="droppingtimes.nextday" style="color:red;font-size:10px" class="">({{droppingtimes.nextday | date:'dd LLL'}}) </span></td>
+                                <td><span *ngIf="droppingtimes.nextday" style="color:red;font-size:9px" class="">({{droppingtimes.nextday | date:'dd LLL'}}) </span></td>
                                 <td><p class="b-place-two">{{droppingtimes.address}}<span *ngIf="droppingtimes.landmark !=droppingtimes.address"> ,{{droppingtimes.landmark}}</span></p></td></tr>
                         </table>
                         </div>
@@ -1170,12 +1187,14 @@
                         </span>
                     </label>
         </div>
-            <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+
+            <!-- <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+
             <ng-template #noPartial>
                 <p class="cancel-text mt-2 mb-2">
                     <b>Partial cancellation not allowed</b>
                 </p>
-            </ng-template>
+            </ng-template> -->
 
         </div>
     </div>

@@ -346,6 +346,10 @@ export class TrainsTravellerComponent implements OnInit {
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
+            if(!this.seacthResult){
+         this.router.navigate(['/train']);
+        }
 
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
@@ -891,6 +895,8 @@ saveGSTConsent(){
     }
 
     boardingStations() {
+    
+    
        
         this.traindate = this.seacthResult.searchHistory.journeyDate;
         this.fromstn = this.seacthResult.selectedTrain.fromStnCode;
@@ -2794,11 +2800,14 @@ recivetotalFare($event){
 		
 		
                 for(let i=0;i<this.travellerlist.length;i++){
-                if(this.adulttravellerlist[i].age > 4)
-                this.saveTravellerId[this.adulttravellerlist[i].id]=-1
-                else
-                this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
-                }
+                    if(this.adulttravellerlist[i]){
+                        if(this.adulttravellerlist[i].age > 4)
+                        this.saveTravellerId[this.adulttravellerlist[i].id]=-1
+                        else
+                        this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
+                        }
+                    }
+                
 	                
                 this.checkPaxCount = this.adulttravellerlist.length;
                 }

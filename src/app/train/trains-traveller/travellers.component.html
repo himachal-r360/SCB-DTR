@@ -1572,7 +1572,7 @@
 
                     <div class="row" *ngIf="gstSelected">
                         
-                        <div class="col-lg-5 col-md-5 col-5">
+                        <div class="col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Business Address</mat-label>
                                 <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress" id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
@@ -1581,7 +1581,7 @@
                                 <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstAddress')">Please enter valid address.No special characters allowed except / - ,</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-5 col-md-5 col-5">
+                        <div class="col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Pincode</mat-label>
                                 <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
@@ -1593,7 +1593,7 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="gstSelected">
-                        <div class="col-lg-5 col-md-5 col-5">
+                        <div class="col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>City / Town</mat-label>
                                 <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity" autocomplete="nope">
@@ -1603,7 +1603,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="col-lg-5 col-md-5 col-5">
+                        <div class="col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>State</mat-label>
                                 <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value={{state}}>
@@ -1615,7 +1615,7 @@
                         </div>
                     </div>
                     <div class="row">
-                         <div class="othertraveller1 col-7" *ngIf="gstSelected && customerInfo['guestLogin']==false">
+                         <div class="othertraveller1 col-md-7" *ngIf="gstSelected && customerInfo['guestLogin']==false">
                             <ul class="add-search-ul d-block">
                                 <li class="custom-check-box">
                                     <div class="custom-controls-stacked">
@@ -1631,7 +1631,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="text-lg-end1 col-5" *ngIf="gstSelected">
+                        <div class="text-lg-end1  col-md-5 " *ngIf="gstSelected">
                             <ng-container *ngIf="getGSTShow">
                                 <div class="add-traveller-btn">
                                     <a href="javascript:void(0);" class="Addnew-Adult-btn" class="Addnew-Adult-btn" (click)="openmodal(content)">Select from Saved GST</a>
@@ -2083,68 +2083,81 @@
                                 </div>
                             </div>
                             <div class="trainTimeInfo d-block">
-                                <div class="row my-2">
-                                    <div class="col-3 pr-0">
-                                        <div>
-                                            <p><span class="time">06:05, Sat</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="duration_train">
-                                            <p class="dur_time">13 hrs 35 mins</p>
-                                            <div class="range m_range"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 text-right pl-0">
-                                        <div>
-                                            <p><span class="time">20:30, Sun</span> </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="trainTimeInfo d-block">
-                                <div class="row pb-4 border-bottom">
-                                    <div class="col-6">
-                                        <p class="place">Lokmantatilak (LTT) </p>
-                                        <p class="date">Jul 17, 2022</p>
-                                    </div>
-                                    <div class="col-6 text-right">
-                                        <p class="place">Secunderabad Jn (SC)</p>
-                                        <p class="date">Jul 17, 2022</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-1 gy-4">
-
-                            <div class="col-sm-4">
-                                <p class="train_title_label"> Availability Status </p>
-                                <div class="common_box">
-                                    <div>
-                                        <p class="ava_status"><span class="coach">SL</span> <span class="list">PQWL106/WL81</span></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-sm-8">
-                                <!--Show bording stations-->
-                                <p class="train_title_label"> Boarding station </p>
-                                <div class="">
-                                    <div class="boarding_point">
-                                        <div class="common_box">
-                                            <div>
-                                                <p class="ava_status"> <span class="list">Lokmanyatilak t (lTT) - 1:20 PM (11 Aug)</span></p>
+                                        <div class="row my-2">
+                                            <div class="col-3 pr-0">
+                                                <div>
+                                                    <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="duration_train">
+                                                    <p class="dur_time">{{travelDuration}}</p>
+                                                    <div class="range m_range"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 text-right pl-0">
+                                                <div>
+                                                    <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="train-schedule-time">
-                                        <span>Scheduled time: <span>{{scheduletime}}</span> </span>
+                                    <div class="trainTimeInfo d-block">
+                                        <div class="row border-bottom pb-4">
+                                            <div class="col-6">
+                                                <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                                                <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                <p class="place">{{tostnDesc}}</p>
+                                                <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                    <div class="row mt-1 gy-4">
+
+                                    <div class="col-sm-4">
+                                        <p class="train_title_label"> Availability Status </p>
+                                        <div class="common_box">
+                                            <div>
+                                                <p class="ava_status"> 
+                                                    <span class="coach">{{enqClass}}</span> 
+                                                    <!-- <span class="list">
+                                                    {{seacthResult.selectedAvailablityFare.availablityStatus}}
+                                                   </span> -->
+                                                   <span class="label-green" *ngIf="seacthResult.selectedAvailablityFare.availablityType!=0 && seacthResult.selectedAvailablityFare.availablityType!=4 && seacthResult.selectedAvailablityFare.availablityType!=5 && seacthResult.selectedAvailablityFare.availablityType!=8224 && seacthResult.selectedAvailablityFare.availablityType!=3">
+                                                    {{seacthResult.selectedAvailablityFare.availablityStatus}}
+                                                   </span>
+                                                   <span class="label-red" *ngIf="seacthResult.selectedAvailablityFare.availablityType==0 || 
+                                                    seacthResult.selectedAvailablityFare.availablityType==4 || seacthResult.selectedAvailablityFare.availablityType==5 || seacthResult.selectedAvailablityFare.availablityType==8224">
+                                                    {{seacthResult.selectedAvailablityFare.availablityStatus}}
+                                                   </span>
+                                                   <span class="label-orange" *ngIf="seacthResult.selectedAvailablityFare.availablityType==3">
+                                                    {{seacthResult.selectedAvailablityFare.availablityStatus}}
+                                                   </span>
+
+                                                   
+
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <!--Show bording stations-->
+                                            <div class="">
+                                                <mat-form-field class="w-100" appearance="outline" disabled>
+                                                <mat-label>Boarding Station</mat-label>
+                                                <input matInput placeholder=""  value="{{defaultBoardingStation}}">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="train-schedule-time">
+                                                <span>Scheduled time: <span>{{scheduletime}}</span> </span>
+                                            </div>
                                     </div>
 
                                 </div>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
 
@@ -2190,15 +2203,17 @@
 
             </div>
             <div class="booking-process-content traveller_review">
-                <!--<div class="booking-title-box mb-0">
+               <!-- <div class="booking-title-box mb-0">
     
     
-                <h4 class="heading_text">Traveller Details <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
+                <h4 class="heading_text">Traveller Details
+                    <p class="sub_head_text ps-3"><span class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
+                          src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+
+                </h4> <p class="sub_head_text ps-3"><span>{{travelerDetails.adults}}
                       Adults</span><span *ngIf="travelerDetails.child > 0">, {{travelerDetails.child}} Child,</span> <span
-                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> <span class="ps-1">
-                      <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}/images/icons/edit.png"
-                          alt=""></a></span></p>
-                </h4>
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> </p>
+               
               </div>
               <div class="booking-inner-box from-to-box">
                 <div class="p-2">

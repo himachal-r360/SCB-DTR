@@ -197,12 +197,21 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 
  ngOnDestroy() {}
  selected: any = 0;
+ dropPointActive:boolean=false; 
+ boardPointActive: boolean = true;
  changeTab(selectAfterAdding: boolean) {
+  
   if (selectAfterAdding) {
    this.selected = 1;
+   this.dropPointActive = true;
+   this.boardPointActive = false;
   } else {
    this.selected = 0;
   }
+ }
+ pressBoardPoint(){
+  this.dropPointActive = false;
+  this.boardPointActive = true;
  }
  tabSelectionChanged(event) {
   this.selected = event;
@@ -530,15 +539,16 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.onSubmitSeats(tripid, busdetails, rowvalue, mobile);
    }
    if (!this.seatdetails.length) {
-    var messageSelectSeat = 'Please select seat(s)';
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
+   /*  var messageSelectSeat = 'Please select seat(s)'; */
+    this.mlite_seatError = true;
+    /* const dialogRef = this.dialog.open(ConfirmationDialog, {
      id: 'messageforMliteDialog',
      data: {
       messageData: messageSelectSeat,
       redirectUrl: 0
      }
-    });
-    return true;
+    });*/
+    return true; 
    }
    this.showBoardDrop = !this.showBoardDrop;
    this.showDetails = false;
@@ -676,6 +686,7 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
   if (type == 'boarding') {
    this.selectedboarding = id;
    this.searchParam.bpId = id;
+   
   }
   if (type == 'dropping') {
    this.selecteddropping = id;
@@ -684,6 +695,7 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
 
   
   }
+  
   this.showError = false;
  }
  onSeatInfo() {
