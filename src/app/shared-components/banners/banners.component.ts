@@ -147,21 +147,21 @@ topBanner: any = [];
         }
         
         var allCookies_key = [];
-        if (localStorage.getItem('flightLastSearchNew') !== null) allCookies_key.push('flightLastSearchNew');
-        if (localStorage.getItem('HotelRecentSearchNew') !== null) allCookies_key.push('HotelRecentSearchNew');
-        if (localStorage.getItem('busLastSearchNew') !== null) allCookies_key.push('busLastSearchNew');
-        if (localStorage.getItem('trainLastSearchNew') !== null) allCookies_key.push('trainLastSearchNew');
+        if (localStorage.getItem(environment.flightLastSearch) !== null) allCookies_key.push(environment.flightLastSearch);
+        if (localStorage.getItem(environment.hotelLastSearch) !== null) allCookies_key.push(environment.hotelLastSearch);
+        if (localStorage.getItem(environment.busLastSearch) !== null) allCookies_key.push(environment.busLastSearch);
+        if (localStorage.getItem(environment.trainLastSearch) !== null) allCookies_key.push(environment.trainLastSearch);
 
-        if (localStorage.getItem('flightLastSearchNew') !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem('busLastSearchNew') !== null || localStorage.getItem('trainLastSearchNew') !== null) {
+        if (localStorage.getItem(environment.flightLastSearch) !== null || localStorage.getItem(environment.hotelLastSearch) !== null || localStorage.getItem(environment.busLastSearch) !== null || localStorage.getItem(environment.trainLastSearch) !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
             let item = localStorage.getItem(data);
            
             var url;
-            if (data == 'flightLastSearchNew' || data == 'HotelRecentSearch') {
+            if (data == environment.flightLastSearch || data == environment.hotelLastSearch) {
 
-              if (data == 'flightLastSearchNew' && localStorage.getItem('flightLastSearchNew') !== null) {
+              if (data == environment.flightLastSearch && localStorage.getItem(environment.flightLastSearch) !== null) {
                
                var searchValue = JSON.parse(item);
                
@@ -185,7 +185,7 @@ topBanner: any = [];
              }
 
               }
-              else if (data == 'HotelRecentSearch' && localStorage.getItem('HotelRecentSearch') !== null) {
+              else if (data == environment.hotelLastSearch && localStorage.getItem(environment.hotelLastSearch) !== null) {
                 var get_valueall = atob(item);
                 var get_value = JSON.parse(get_valueall).slice(-1)[0];
 console.log("hotel "+ JSON.stringify( get_value));
@@ -211,7 +211,7 @@ console.log("hotel "+ JSON.stringify( get_value));
             } else {
               
               var get_value = JSON.parse(item);
-              if (data == 'busLastSearchNew' && localStorage.getItem('busLastSearchNew') !== null) {
+              if (data == environment.busLastSearch && localStorage.getItem(environment.busLastSearch) !== null) {
 
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
@@ -231,7 +231,7 @@ console.log("hotel "+ JSON.stringify( get_value));
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;
               }
-              else if (data == 'trainLastSearchNew' && localStorage.getItem('trainLastSearchNew') !== null) {
+              else if (data == environment.trainLastSearch && localStorage.getItem(environment.trainLastSearch) !== null) {
                 var dateformat = get_value.departure;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
