@@ -786,7 +786,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("hotel/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
@@ -1283,7 +1283,7 @@ closeCookieConsent(value){
         this.redirectPopup=2;
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
      }else{
-     if(path !='foryou' && path !='compare-fly' && path !='bus' && path !='train'  && path !='train/pnr')
+     if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')
       this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
      else
      this.router.navigate([this.sg['domainPath']+path]);

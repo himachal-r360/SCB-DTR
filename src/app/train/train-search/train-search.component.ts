@@ -171,7 +171,19 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
     this.departureDate=this.route.snapshot.queryParamMap.get('departure');*/
 
   }
-
+  focusInput(type){
+    setTimeout(() => {
+      if(type=='from'){
+      // $('.searchFromTrain').select();
+        $('.searchFromTrain').focus();
+      }else {   
+      //$('.searchToTrain').select();
+       $('.searchToTrain').focus();
+      
+      }
+  
+    }, 10);
+  }
 
    searchAutoComplete($event,field,device) {
        let keycode = $event.which;

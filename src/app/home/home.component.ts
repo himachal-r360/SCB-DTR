@@ -163,7 +163,7 @@ export class HomeComponent implements OnInit {
         case ('/'+this.sg['domainPath']+'compare-fly'):
         this.navItemActive = 'flight';
         break;
-        case ('/'+this.sg['domainPath']+'hotel'):
+        case ('/'+this.sg['domainPath']+'compare-stay'):
         this.navItemActive = 'hotel';
         break;
         case ('/'+this.sg['domainPath']+'bus'):
@@ -197,7 +197,7 @@ export class HomeComponent implements OnInit {
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
     
-    let continueSearchValLs:any= localStorage.getItem('continueSearch');
+    let continueSearchValLs:any= localStorage.getItem(environment.continueFlightSearch);
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
@@ -208,6 +208,12 @@ export class HomeComponent implements OnInit {
            let continueSearchValTrainParse:any= localStorage.getItem('continueSearchTrain');
         if(continueSearchValTrainParse!=null){
         this.continueSearchValTrain =JSON.parse(continueSearchValTrainParse);
+
+        }
+        let continueSearchValHotelParse:any= localStorage.getItem('continueSearchForHotel');
+        if(continueSearchValHotelParse!=null){
+        this.continueSearchValHotel =JSON.parse(continueSearchValHotelParse);
+        
         }    
     
     
@@ -248,6 +254,11 @@ export class HomeComponent implements OnInit {
 
   }
 
+  continueSearchHotel(param:any){
+    let  url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryStringForHotel((param)));
+    this.router.navigateByUrl(url);
+ }
+
   continueSearchBus(param:any){
      let  url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
       this.router.navigateByUrl(url);
@@ -257,5 +268,28 @@ export class HomeComponent implements OnInit {
     let  url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
       this.router.navigateByUrl(url);
 
+  }
+
+
+  ConvertObjToQueryStringForHotel(obj: any) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+    }
+    return str.join("&");
   }
 }

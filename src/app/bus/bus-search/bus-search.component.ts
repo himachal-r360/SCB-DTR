@@ -195,7 +195,19 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
       }
     }
 
-
+  focusInput(type){
+    setTimeout(() => {
+      if(type=='from'){
+      // $('.searchFromBus').select();
+        $('.searchFromBus').focus();
+      }else {   
+      //$('.searchToBus').select();
+       $('.searchToBus').focus();
+      
+      }
+  
+    }, 10);
+  }
   onFromClick(values,device) {
         values=values['_source'];
         this.searchBusForm['controls']['searchFrom'].setValue(values.name);
