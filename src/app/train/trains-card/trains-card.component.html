@@ -424,7 +424,9 @@
         <mat-tab-group class="p-0 train_mat_tabGroup" animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
             <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
 
-                <div class="tier" *ngFor="let dayList of avlDayList ;">
+               
+
+                <!-- <div class="tier" *ngFor="let dayList of avlDayList ;">
                     <div class="TrainSeatsInfo">
                         <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> </p>
                         <div class="status">
@@ -436,10 +438,18 @@
                         <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                     </div>
 
-                </div>
+                </div> -->
 
                 <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
-                    <app-loader></app-loader>
+                    <!-- <app-loader></app-loader> -->
+                     <!-- *ngIf="loading; else listngMlite" -->
+                    <div class="col-md-12 text-center layout-w" >
+                        <div class="mt-10 d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div *ngIf="fareDataIssue">

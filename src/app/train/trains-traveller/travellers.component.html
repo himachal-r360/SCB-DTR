@@ -121,7 +121,7 @@
 
                                         <div class="col-sm-4">
                                             <p class="train_name">
-                                                {{trainName}}({{trainnumber}})
+                                                {{trainName}}<span class="train_numb">({{trainnumber}})</span>
                                             </p>
                                             <p class="daily_chart">
                                                 <span class="text-small-gray" style="color:#000000;">Runs on:</span>
@@ -162,7 +162,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <p class="train_name">
-                                                {{trainName}}({{trainnumber}})
+                                                {{trainName}}<span class="train_numb">({{trainnumber}})</span>
                                             </p>
                                         </div>
                                         <div class="col-6 text-right">
@@ -570,9 +570,9 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <p *ngIf="optChildBerthStatusArr[saveTravellerId[passenger.id]]"> <label class="checkbox">Opt Child Berth
+                                                            <p *ngIf="optChildBerthStatusArr[saveTravellerId[passenger.id]]"> <label class="checkbox child_berth_chckbox">
                                     <input type="checkbox" (click)="optChildBerth($event)" [checked]="ladiesQuotaTrue"
-                                    formControlName="optChildBerth{{saveTravellerId[passenger.id]}}" id="optChildBerth{{saveTravellerId[passenger.id]}}" >
+                                    formControlName="optChildBerth{{saveTravellerId[passenger.id]}}" id="optChildBerth{{saveTravellerId[passenger.id]}}" class="ps-1"> Opt Child Berth
                                     <span class="checkmark"></span>
                                     </label>
                                                             </p>
@@ -2025,7 +2025,7 @@
 
                                 <div class="col-sm-4">
                                     <p class="train_name">
-                                        {{trainName}}({{trainnumber}})
+                                        {{trainName}}<span class="train_numb">({{trainnumber}})</span>
                                     </p>
                                     <p class="daily_chart">
                                         <span class="text-small-gray" style="color:#000000;">Runs on:</span>
@@ -2084,7 +2084,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <p class="train_name">
-                                        {{trainName}}({{trainnumber}})
+                                        {{trainName}}<span class="train_numb">({{trainnumber}})</span>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
@@ -2167,12 +2167,13 @@
                                     <div class="col-sm-8">
                                         <!--Show bording stations-->
                                         <p class="train_title_label"> Boarding Station </p>
-                                            <div class="">
-                                                <mat-form-field class="w-100" appearance="outline" disabled>
-                                                <mat-label>Boarding Station</mat-label>
-                                                <input matInput placeholder=""  value="{{defaultBoardingStation}}">
-                                                </mat-form-field>
+                                        <div class="common_box">
+                                            <div>
+                                                <p class="ava_status"> 
+                                                    <span class="coach">{{defaultBoardingStation}}</span> 
+                                                </p>
                                             </div>
+                                        </div>
                                             <div class="train-schedule-time">
                                                 <span>Scheduled time: <span>{{scheduletime}}</span> </span>
                                             </div>
