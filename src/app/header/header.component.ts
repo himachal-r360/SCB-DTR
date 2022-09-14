@@ -461,7 +461,7 @@ export class HeaderComponent implements OnInit {
         this.enablePushBox=true;
         this.enablePushTitle = true;
         this.notifyOpacity = true;
-      if(type==1){
+      if(type==2){
        $('.myaccount-drop').removeClass('show');
        $("#pushNotiEnable").modal('show');
       }	
