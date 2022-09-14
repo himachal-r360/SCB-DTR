@@ -491,6 +491,51 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   }
+  
+  focusInput(i,type){
+    setTimeout(() => {
+   if (!this.isMobile) {
+   if(i==-1){
+      if(type=='from'){
+      // $('#fromCitySearch').select();
+        $('#fromCitySearch').focus();
+      }else {   
+      //$('#toCityMob').select();
+       $('#toCityMob').focus();
+      
+      }
+     }else{
+     if(type=='from'){
+      // $('.fromCitySearch'+i).select();
+        $('.fromCitySearch'+i).focus();
+      }else {   
+      //$('.toCitySearch'+i).select();
+       $('.toCitySearch'+i).focus();
+      
+      }
+     }
+    }else{
+       if(i==-1){
+      if(type=='from'){
+       //$('#fromCitySearch').select();
+        $('#fromCitySearch').focus();
+      }else {  
+      //$('#toCitySearch').select();
+      $('#toCitySearch').focus();
+      }
+     }else{
+       if(type=='from'){
+       //$('.fromCitySearch'+i).select();
+        $('.fromCitySearch'+i).focus();
+      }else {  
+      //$('.toCity'+i').select();
+      $('.toCity'+i).focus();
+      }
+     }
+    
+    } 
+    }, 10);
+  }
 
 
   adultsVal: any=1;

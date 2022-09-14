@@ -4,7 +4,7 @@
                                     <div class="row g-2">
                                         <div class="col-lg-8">
                                             <div class="select-root-area m_height_from_to">
-                                                <div class="select-root-left h_lft_div" appDropdown>
+                                                <div class="select-root-left h_lft_div" appDropdown (click)='focusInput("from")'>
                                                     <span class="select-roottitle">FROM</span>
                                                     <h5 class="fw_6"><span class="city_align">{{fromCityName}} <span class="d-none d-md-block pe-1">, </span> <span class="gray_txt_highlight">{{fromStateName}}</span></span></h5>
                                         <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('fromTravelCode', 'required')">
@@ -43,14 +43,14 @@
                                                                 <div class="col-md-12">
                                                                     <div class="mob-search-list">
                                                                         <label for="">From</label>
-                                                                        <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
+                                                                        <input type="text" autocomplete="off" class="w-100 searchFromBus" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
                                                                         <input type="hidden"  formControlName="fromTravelCode">
                                                                         <input type="hidden"  formControlName="fromState">
                                                                         
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
-                                                                <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');">
+                                                                <input type="text"  autocomplete="off" class="w-100 searchToBus" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');">
                                                                 <input type="hidden"  formControlName="toTravelCode">
                                                                 <input type="hidden"  formControlName="toState">
                                                                     </div>
@@ -59,7 +59,7 @@
                                                         </div>
                                                         <div class="flight-from-data-search" *ngIf="!isMobile">
 
-                                                        <input type="text" autocomplete="off" class="w-100"
+                                                        <input type="text" autocomplete="off" class="w-100 searchFromBus"
                                                         id="searchFrom" placeholder="Search City"
                                                         (keyup)="searchAutoComplete($event,'searchFrom' ,'web');"
                                                        autofocus #fromCityInput
@@ -103,7 +103,7 @@
                                                 <div class="select-root-icons bus_seperater" (click)="swap()">
                                                     <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                                 </div>
-                                                <div class="select-root-right h_rgt_div" appDropdown #toCityDiv id="toCityDiv">
+                                                <div class="select-root-right h_rgt_div" appDropdown #toCityDiv id="toCityDiv" (click)='focusInput("to")'> 
                                                     <span class="select-roottitle">TO</span>
                                                     <h5 class="fw_6 "><span class="city_align">{{toCityName}} <span class="d-none d-md-block pe-1">, </span><span class="gray_txt_highlight">{{toStateName}}</span></span></h5>
                                                                                                      <div class="error_msg w-50"  *ngIf="!isMobile && submitted && Error('toTravelCode', 'required')" >
@@ -131,14 +131,14 @@
                                                                 <div class="col-md-12">
                                                                     <div class="mob-search-list">
                                                                         <label for="">From</label>
-                                                                        <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
+                                                                        <input type="text" autocomplete="off" class="w-100 searchFromBus" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
                                                                         <input type="hidden"  formControlName="fromTravelCode">
                                                                         <input type="hidden"  formControlName="fromState">
 
                                                                     </div>
                                                                     <div class="mob-search-list">
                                                                         <label for="">To</label>
-                                                                <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
+                                                                <input type="text"  autocomplete="off" class="w-100 searchToBus" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
                                                                 <input type="hidden"  formControlName="toTravelCode">
                                                                 <input type="hidden"  formControlName="toState">
                                                                     </div>
@@ -146,7 +146,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="flight-from-data-search" *ngIf="!isMobile">
-                                                            <input type="text" autocomplete="off" class="w-100"
+                                                            <input type="text" autocomplete="off" class="w-100 searchToBus"
                                                                 id="searchTo" placeholder="Search City"
                                                                 (keyup)="searchAutoComplete($event,'searchTo' ,'web');"
                                                                  #toCityInput autofocus
