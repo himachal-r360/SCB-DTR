@@ -141,6 +141,7 @@ export const environment = {
   "trainLastSearch":"trainLastSearches",
   "continueSearchHotel":"continueSearchHotels",
   "hotelLastSearch":"hotelLastSearches",
+  GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 
 
 };

@@ -29,7 +29,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   resetMinPrice: number = 0;
   resetMaxPrice: number = 1000;
   isMobile:boolean= true;
-  
+
   options: Options = {
     floor: 0,
     ceil: 1000,
@@ -357,7 +357,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
         this.hotelList = AmenityFiltered;
       }
 
-      
+
 
     }
 
@@ -398,7 +398,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
    this.intialData();
   }
- 
+
 
 
   StarFilter(item:any)
@@ -510,7 +510,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
       "docKey": this.docKey,
       "hotelkey":hotelkey,
       "hotel": hotel,
-      "PriceSummary": selectedPartner
+      "PriceSummary": selectedPartner,
+      "QueryData":this.searchData
       };
     let randomHotelDetailKey = btoa(this.docKey+hotelkey+selectedPartner.partnerName);
     sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
@@ -532,7 +533,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     else {
       this.showFilter.nativeElement.style.display = 'none';
     }
-  
+
   }
 
   hotelSortingMobile(val){
@@ -563,7 +564,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       }
     })
 
-    
+
   }
 
 }

@@ -744,8 +744,9 @@
     <p class="points_note">Who said good things take time?</p>
     <div>
         <div class="partners_container_emi top_emi_sec">
-            <div class="emi_content_cate" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
-            <a href="javascript:;" (click)="clickUrl('compare-fly')"  >
+            <div class="emi_content_cate" *ngIf="DOMAIN_SETTINGS.FLIGHT==1" >
+                <a (click)="onGoToPage('/compare-fly')" >
+           <!--  <a href="javascript:;" (click)="clickUrl('compare-fly')"  > -->
                     <img src="{{cdnUrl}}images/smartbuy/emi_flight.png" alt="Flights" class="">
                     <div class="emi_text">
                         <p class="cate_name">Flights</p>
@@ -754,7 +755,7 @@
                 </a>
             </div>
             <div class="emi_content_cate"   *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-            <a href="javascript:;" (click)="clickUrl('compare-stay')">
+            <a (click)="onGoToPage('/compare-stay')">
                     <img src="{{cdnUrl}}images/smartbuy/emi_stays.png" alt="Holiday packages" class="">
                     <div class="emi_text">
                         <p class="cate_name">Holiday packages</p>
@@ -763,7 +764,7 @@
                 </a>
             </div>
             <div class="emi_content_cate"  *ngIf="DOMAIN_SETTINGS.BUS==1">
-            <a (click)="goTo('bus')">
+            <a (click)="onGoToPage('/bus')">
                     <img src="{{cdnUrl}}images/smartbuy/emi_bus.png" alt="Buses" class="">
                     <div class="emi_text">
                         <p class="cate_name">Buses</p>
