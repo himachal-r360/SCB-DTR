@@ -2039,9 +2039,9 @@
                                     </p>
                                 </div>
                                 <div class="col-sm-8">
-                                    <div class="trainTimeInfo">
+                                    <!-- <div class="trainTimeInfo">
                                         <div class="">
-                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
+                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}} check</span></p>
                                             <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
                                             <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
                                         </div>
@@ -2052,6 +2052,24 @@
                                             </div>
                                         </div>
                                         <div>
+                                            <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                                            <p class="place">{{tostnDesc}}</p>
+                                            <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
+                                        </div>
+                                    </div> -->
+                                    <div class="trainTimeInfo">
+                                        <div class="trainTimeInfo_div">
+                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}} check</span></p>
+                                            <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                                            <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
+                                        </div>
+                                        <div class="trainTimeInfo_div align_center">
+                                            <div class="duration_train">
+                                                <p class="dur_time">{{travelDuration}}</p>
+                                                <div class="range m_range"></div>
+                                            </div>
+                                        </div>
+                                        <div class="trainTimeInfo_div">
                                             <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
                                             <p class="place">{{tostnDesc}}</p>
                                             <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
@@ -2115,6 +2133,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                         </div>
                     <div class="row mt-1 gy-4">
 
@@ -2147,6 +2166,7 @@
                                     </div>
                                     <div class="col-sm-8">
                                         <!--Show bording stations-->
+                                        <p class="train_title_label"> Boarding Station </p>
                                             <div class="">
                                                 <mat-form-field class="w-100" appearance="outline" disabled>
                                                 <mat-label>Boarding Station</mat-label>
