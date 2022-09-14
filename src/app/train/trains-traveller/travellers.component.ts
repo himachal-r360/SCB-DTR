@@ -172,6 +172,7 @@ export class TrainsTravellerComponent implements OnInit {
     osType: any;
     wsUserLogin: string;
     travellerListArray: any[] = [];
+    infantListArray: any[] = [];
     travelDocCardNoArr: any[] = [];
     travelDocArr: any[] = [];
     optChildBerthArr: any[] = [];
@@ -2231,6 +2232,7 @@ whatsAppCheck:boolean=false;
                 ii++;
             }
         }
+        this.infantListArray = infantList;
         this.trainDateStr = this.traindate.replace(/-/g, "");
 
         //VIKALP
