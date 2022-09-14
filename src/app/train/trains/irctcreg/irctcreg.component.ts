@@ -72,6 +72,7 @@ export class IrctcregComponent implements OnInit {
   maxDate:any;
   dialog1:boolean;
   dialog2:boolean;
+  thankSection: boolean = false;
 
 
 

@@ -8,7 +8,7 @@
 
 
 <!-- Forgot User ID IRCTC   -->
-  <div class="col-md-12 IE-mat-width" *ngIf="data.forgotUserIdDialog">
+  <div class="col-sm-12 col-12 IE-mat-width" *ngIf="data.forgotUserIdDialog">
       <mat-dialog-content >
       <div *ngIf="step4">
         <form [formGroup]="Form1Submit" name="Form1Submit" (ngSubmit)="forgotDetailsFormSubmit()">
@@ -17,7 +17,7 @@
               <p class="sub_title-for">Please enter your details</p>
             </div>
             <div class="row">
-              <div class="col-6">
+              <div class="col-sm-6 col-12">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Registered Email ID</mat-label>
                     <input matInput placeholder="" formControlName="email">
@@ -27,7 +27,7 @@
                     <small *ngIf="Form1Submit.controls.email.errors.pattern">Please enter a valid email id.</small>
                   </div>
               </div>
-              <div class="col-6">
+              <div class="col-sm-6 col-12">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Date of Birth</mat-label>
                       <input matInput [matDatepicker]="picker" [max]="checkDate" placeholder="" readonly="true" formControlName="dob">
