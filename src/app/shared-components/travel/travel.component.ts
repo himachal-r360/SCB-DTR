@@ -1697,7 +1697,7 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
         }else{
          cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
         }
-  localStorage.setItem('busLastSearchNew', JSON.stringify(this.searchArray));
+  localStorage.setItem('busLastSearchNew2', JSON.stringify(this.searchArray));
 
         this.cookieService.delete('busSearchN');
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
