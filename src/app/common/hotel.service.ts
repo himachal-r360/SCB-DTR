@@ -10,7 +10,7 @@ export class HotelService {
   hotel = environment.url + "api/hotelSearch";
   city = environment.url + "elastic/esearch?searchDisplayForm=hotels";
   header = new HttpHeaders({'Content-Type': 'application/json' })
-
+  hotelDetail = environment.url + "api/hotelDetails";
   constructor(private http: HttpClient) { }
 
 
@@ -23,5 +23,9 @@ export class HotelService {
     return this.http.post(`${this.city}&queryText=${queryText}`, null)
   }
 
+  getHotelDetail(param :any):Observable<any>{
+    let body:any = JSON.stringify(param);
+    return this.http.post(this.hotelDetail, body, { headers: this.header });
+  }
 
 }
