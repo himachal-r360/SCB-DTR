@@ -142,13 +142,15 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults + 1;
     }
+    childTotalCount = parseInt(item.value.numberOfChildren);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
-    totalCount > 4 ? childBtn.disabled = true : childBtn.disabled = false;
+    // childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
+    totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
-    // item.value.childrenAge="";
+    
   }
 
   //Decrease child and adult value
