@@ -377,7 +377,7 @@
                                                 <div class="form-check check_pass">
                                                     <input class="form-check-input pass_checkBox" id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                     <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
-                                {{passenger.title}}.{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
+                                {{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
                                 <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg" ></a> -->
                                 </label>
                                                 </div>
@@ -572,7 +572,7 @@
                                                             </div>
                                                             <p *ngIf="optChildBerthStatusArr[saveTravellerId[passenger.id]]"> <label class="checkbox child_berth_chckbox">
                                     <input type="checkbox" (click)="optChildBerth($event)" [checked]="ladiesQuotaTrue"
-                                    formControlName="optChildBerth{{saveTravellerId[passenger.id]}}" id="optChildBerth{{saveTravellerId[passenger.id]}}" class="ps-1"> Opt Child Berth
+                                    formControlName="optChildBerth{{saveTravellerId[passenger.id]}}" id="optChildBerth{{saveTravellerId[passenger.id]}}" class="ps-1"> Opt Child Berth check
                                     <span class="checkmark"></span>
                                     </label>
                                                             </p>
@@ -594,7 +594,7 @@
                           <div class="form-check check_pass">
                                 <input class="form-check-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)" >
                                 <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
-                                {{passenger.title}}.{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
+                                {{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
                                   <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg"></a> -->
                                 </label>
                             </div>
@@ -1470,7 +1470,7 @@
                     <div class="form-check mt-3">
                         <input class="form-check-input checkbox p-0" type="checkbox" formControlName="travelInsurence" name="travelInsurence" id="travelInsurence" [checked]="travelInsuranceOpted" />
                         <label class="form-check-label" for="travelInsurence">
-                  Include travel Insurance (₹ 0.49/person)
+                  Include travel Insurance
                 </label>
                     </div>
                 </div>
@@ -2230,14 +2230,19 @@
 
 
                     <h4 class="heading_text">Traveller Details
-                        <p class="sub_head_text ps-3"><span class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
-                          src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                        <p class="sub_head_text">
+                            <span class="sub_head_text">{{travellerListArray.length}}
+                                Adults<span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span>
+                            </span>
+                            <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}/images/icons/edit.png" class="ps-3" alt=""></a>
+
+                        </p>
 
                     </h4>
-                    <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
+                    <!-- <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
                       Adults</span><span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span>
-                        <!-- <span
-                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> --></p>
+                         <span
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> </p> -->
 
                 </div>
                 <div class="booking-inner-box from-to-box">
@@ -2583,10 +2588,10 @@
     <div class="d-block d-sm-none">
         <div class="footer-sticky-mlite">
             <div>
-                <div class="apply_fare row">
+                <div class="apply_fare row" *ngIf="steps==3">
                     <!--  <p *ngIf="steps<5" class="w-75"></p> -->
                     <div class="col-6 text-left">
-                        <p *ngIf="steps==3"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+                        <p ><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
                     </div>
                     <div class="col-6 text-right">
                         <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>

@@ -156,6 +156,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   saveInfantTravellerId = [];
   passengerArray = [];
   passengerFormCount: number = 1;
+  isAdultExpanded:boolean = false;
+    isInfantExpanded:boolean = false;
 
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
@@ -1014,6 +1016,9 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
     })
   }
   fillupGSTDetailOnCheck($event, data, GSTIndex) {
+    for(let i=0;i<this.GSTListLength;i++){
+      this.isCheckedGST[i]=false;
+    }
     if ($event.target.checked) {
       this.isCheckedGST[GSTIndex] = true;
       this.selectedGST.push(GSTIndex);
@@ -1165,12 +1170,12 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     this.passengerForm['controls']['saveGST'].setValue('');
   }
   
-  
+  gstmodalcheckedvalue:any = false;
     openmodal(content) {
-    this.modalService.open(content, { centered: true });
+      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
-    gstmodalcheckedvalue: any = false;
 
   passengerFormerror: number = 0;
   ageValidError: any;
