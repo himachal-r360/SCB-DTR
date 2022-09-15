@@ -814,7 +814,9 @@ closeCookieConsent(value){
     }
     });
 
-
+$(".sb_head .dropdown").hover(function(){
+ $('.sb_head  .list-travel').removeClass("hideDrop");
+});
 
       let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
     	if(queryParamMap.keys[0])
