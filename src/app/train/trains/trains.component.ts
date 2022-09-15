@@ -60,6 +60,7 @@ export class TrainsComponent implements OnInit {
         journeyDate: string;
         noOfPassenger: number;
         selected_count:number = 0;
+        notrain:boolean = false;
         quotaList:any = [];
         avlQuota:any = [];
         availableClasses:any = [];
@@ -94,27 +95,27 @@ export class TrainsComponent implements OnInit {
         XSRFTOKEN: string;
             response1:any=[];
   tracksearchObj:any;
-	states: string[] = [
-	'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-	'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-	'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-	'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-	'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-	'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-	'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-	];
-	searchDisplayForm: string = 'irctc';
+  states: string[] = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
+  'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
+  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
+  'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
+  'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
+  'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
+  'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+  ];
+  searchDisplayForm: string = 'irctc';
   sortBy:string='leave-early';
 
-	departureTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM','selected':false},
-	{'filterCode':'6AM-12PM' ,'filterValue':'6AM - 12PM','selected':false},
-	{'filterCode':'12PM-6PM' ,'filterValue':'12AM - 6PM','selected':false},
-	{'filterCode':'AFTER-6PM' ,'filterValue':'After 6PM','selected':false}];
+  departureTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM','selected':false},
+  {'filterCode':'6AM-12PM' ,'filterValue':'6AM - 12PM','selected':false},
+  {'filterCode':'12PM-6PM' ,'filterValue':'12AM - 6PM','selected':false},
+  {'filterCode':'AFTER-6PM' ,'filterValue':'After 6PM','selected':false}];
 
 arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM','selected':false},
-	{'filterCode':'6AM-12PM' ,'filterValue':'6AM - 12PM','selected':false},
-	{'filterCode':'12AM-6PM' ,'filterValue':'12AM - 6PM','selected':false},
-	{'filterCode':'AFTER-6PM' ,'filterValue':'After 6PM','selected':false}];
+  {'filterCode':'6AM-12PM' ,'filterValue':'6AM - 12PM','selected':false},
+  {'filterCode':'12AM-6PM' ,'filterValue':'12AM - 6PM','selected':false},
+  {'filterCode':'AFTER-6PM' ,'filterValue':'After 6PM','selected':false}];
 
         filterDeparture:any=[];
         filterArrival:any=[];
@@ -198,7 +199,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
      const queryParams = this.activatedRoute.snapshot.queryParams;
      
       this.trainSearchCallBack(queryParams);
-      localStorage.setItem('trainLastSearchNew',JSON.stringify(queryParams));
+      localStorage.setItem(environment.trainLastSearch,JSON.stringify(queryParams));
      
      
      var datePipe = new DatePipe('en-US');
@@ -273,7 +274,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
    continueSearchTrain:any=[]
    trainSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchTrain');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchTrain);
       if(continueSearch==null){
         this.continueSearchTrain=[];
       }
@@ -290,7 +291,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
         this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
       }
       this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchTrain',JSON.stringify(this.continueSearchTrain));
+      localStorage.setItem(environment.continueSearchTrain,JSON.stringify(this.continueSearchTrain));
   }
  
    headerHideShow(event:any) {
@@ -352,16 +353,16 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       filterDiv.style.display = 'none';
     }
   }
-  	getCardDetails(){ 
-		const urlParams = new HttpParams()
-		.set('postData', 'XXXXX')
-		const body: string = urlParams.toString();
-		this.rest.getupdateCardDetails().subscribe(response => {
-			if (response.hasOwnProperty('customercards')){
-				let customercards = response.customercards;
-				this.customercards=customercards;
-				if(customercards.length>0){
-					this.custCardsAvailable=true;
+    getCardDetails(){ 
+    const urlParams = new HttpParams()
+    .set('postData', 'XXXXX')
+    const body: string = urlParams.toString();
+    this.rest.getupdateCardDetails().subscribe(response => {
+      if (response.hasOwnProperty('customercards')){
+        let customercards = response.customercards;
+        this.customercards=customercards;
+        if(customercards.length>0){
+          this.custCardsAvailable=true;
                                         //get primary card detail
                                         for(let i=0; i<customercards.length; i++){
                                         if(customercards[i].is_primary==1){
@@ -370,19 +371,19 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
                                         //console.log(customercards[i]);
                                         }
                                         }
-				}else{
-					this.custCardsAvailable=false;
-				}
-			}else{
-				this.custCardsAvailable=false;
-			}
+        }else{
+          this.custCardsAvailable=false;
+        }
+      }else{
+        this.custCardsAvailable=false;
+      }
 
 
-		}), (err: HttpErrorResponse) => {
-			var message = 'Something went wrong';
-			console.log(message);
-		};
-	}
+    }), (err: HttpErrorResponse) => {
+      var message = 'Something went wrong';
+      console.log(message);
+    };
+  }
 
      
     goTo(path){
@@ -512,7 +513,7 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
   }
   fastestTrain;
  getTrains(){
-
+  this.notrain=false;
   this.searchParam = {
       frmStn:this.frmStn,
       journeyDate:this.journeyDate,
@@ -520,18 +521,18 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       searchFrom: this.travalfrom,
       searchTo: this.travalto,
   };
-	var datePipe = new DatePipe('en-US');
+  var datePipe = new DatePipe('en-US');
   this.searchParam['journeyDate'] = datePipe.transform(this.searchParam['journeyDate'], 'yyyyMMdd');
 
-	let urlParams = new HttpParams()
-	.set('frmStn', this.searchParam['frmStn'])
-	.set('journeyDate',this.searchParam['journeyDate'])
-	.set('searchFrom',this.searchParam['searchFrom'])
-	.set('searchTo',this.searchParam['searchTo'])
-	.set('toStn', this.searchParam['toStn'] );
+  let urlParams = new HttpParams()
+  .set('frmStn', this.searchParam['frmStn'])
+  .set('journeyDate',this.searchParam['journeyDate'])
+  .set('searchFrom',this.searchParam['searchFrom'])
+  .set('searchTo',this.searchParam['searchTo'])
+  .set('toStn', this.searchParam['toStn'] );
   
-	const body: string = urlParams.toString();
-	this.irctcService.getTrains( body).subscribe(data => {
+  const body: string = urlParams.toString();
+  this.irctcService.getTrains( body).subscribe(data => {
 
   this.trainResponse = <trainResponse>data;
   
@@ -539,19 +540,20 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
     if(this.trainResponse.errorcode==1  ) {
         this.selected_count=-1;
         this.sortFilterhide = false;
+        this.notrain=true;
         
     }else{
 
       if (typeof this.trainResponse.partnerResponse.trainBtwnStnsList !== 'undefined') 
       {
- 	this.checkavlTrainslength = (this.trainResponse.partnerResponse.trainBtwnStnsList).length;
-  	if( Array.isArray(this.trainResponse.partnerResponse.trainBtwnStnsList) ){
-	this.trainResponse.partnerResponse.trainBtwnStnsList=this.trainResponse.partnerResponse.trainBtwnStnsList;
-	}else{
-	var tmp=[];
-	tmp.push(this.trainResponse.partnerResponse.trainBtwnStnsList);
-	this.trainResponse.partnerResponse.trainBtwnStnsList=tmp;
-	}
+  this.checkavlTrainslength = (this.trainResponse.partnerResponse.trainBtwnStnsList).length;
+    if( Array.isArray(this.trainResponse.partnerResponse.trainBtwnStnsList) ){
+  this.trainResponse.partnerResponse.trainBtwnStnsList=this.trainResponse.partnerResponse.trainBtwnStnsList;
+  }else{
+  var tmp=[];
+  tmp.push(this.trainResponse.partnerResponse.trainBtwnStnsList);
+  this.trainResponse.partnerResponse.trainBtwnStnsList=tmp;
+  }
 
   
           if (this.trainResponse && this.trainResponse.partnerResponse.trainBtwnStnsList.length > 0 && this.trainResponse.errorcode==0 &&   this.trainResponse.partnerResponse.errorMessage !='') 
@@ -577,18 +579,20 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
            var errorMessage="No Trains Found";
            if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
               errorMessage=this.trainResponse.partnerResponse.errorMessage;
-            alert(errorMessage);
+            //alert(errorMessage);
             this.selected_count=-1;
+            this.notrain=true;
           }
       }else{
             var errorMessage="No Trains Found";
             if(typeof this.trainResponse.partnerResponse.errorMessage !== undefined)
               errorMessage=this.trainResponse.partnerResponse.errorMessage;
-            alert(errorMessage);
+          //  alert(errorMessage);
             this.selected_count=-1;
+            this.notrain=true;
       }
     }
-	},
+  },
       (err: HttpErrorResponse) => {
           this.selected_count=-1;
           this.loading = false;
@@ -605,9 +609,9 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       this.filterDeparture.splice(index, 1);
      
     }
-		this.trains = this.trains.filter(g => {return true;});
-	}
-	
+    this.trains = this.trains.filter(g => {return true;});
+  }
+  
   updateArrival(appt) {
     
     if(appt.selected) {
@@ -618,8 +622,8 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
       this.filterArrival.splice(index, 1);
       
     }
-		this.trains = this.trains.filter(g => {return true;});
-	}
+    this.trains = this.trains.filter(g => {return true;});
+  }
 
 updateAvailableClassFilter(appt) {
     if(appt.selected) {
