@@ -2230,14 +2230,19 @@
 
 
                     <h4 class="heading_text">Traveller Details
-                        <p class="sub_head_text ps-3"><span class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
-                          src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                        <p class="sub_head_text">
+                            <span class="sub_head_text">{{travellerListArray.length}}
+                                Adults<span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span>
+                            </span>
+                            <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}/images/icons/edit.png" class="ps-3" alt=""></a>
+
+                        </p>
 
                     </h4>
-                    <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
+                    <!-- <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
                       Adults</span><span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span>
-                        <!-- <span
-                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> --></p>
+                         <span
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> </p> -->
 
                 </div>
                 <div class="booking-inner-box from-to-box">
@@ -2512,7 +2517,7 @@
                     </div>
                     <div *ngIf="steps==3 && !isMobile">
                         <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
-                            passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                            passServiceToken="Train" passPartnerToken="IRCTC" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                         </app-coupons>
                     </div>
                 </div>
@@ -2625,7 +2630,7 @@
                 </div>
                 <div class="modal-body">
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
-                        passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                        passServiceToken="Train" passPartnerToken="IRCTC" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                     </app-coupons>
                 </div>
                 <!-- <div class="modal-footer">
