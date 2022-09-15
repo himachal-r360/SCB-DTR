@@ -211,6 +211,7 @@ this.showRepeatBooking=0;
   }
 limitSeats:string='';
 checkFare(train,avlClass,type){ 
+   this.spinnerService.show();
   var time = new Date();
     var hour = time.getHours().toString();
     var min = time.getMinutes().toString();
@@ -249,7 +250,7 @@ this.showAvailable = false;
 	.set('toStn', this.searchFareParam['toStn']);
   let body: string = urlParams.toString();
   
-  this.spinnerService.show();
+ 
          this.irctcService.getTrainFare( body).subscribe(response => {
           this.spinnerService.hide();
          let data=JSON.parse(this.EncrDecr.get(response.result ));

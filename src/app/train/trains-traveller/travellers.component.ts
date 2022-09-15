@@ -350,6 +350,10 @@ export class TrainsTravellerComponent implements OnInit {
         this.searchTrainKey = this.activatedRoute.snapshot.queryParamMap.get('searchTrainKey');
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
+        
+        if(this.seacthResult== null){
+            this.router.navigateByUrl('/');
+        }
 
         this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");
         this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");
@@ -2798,8 +2802,9 @@ recivetotalFare($event){
             var postsavedTravellers = {
             postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
             };
-
+this.spinnerService.show();
             this.rest.getCustomertravellerInfo(postsavedTravellers).subscribe(response =>{
+                this.spinnerService.hide();
                 // let respData = JSON.parse(this.EncrDecr.get(response.result ));
                 let resp = response['errorcode']; 
                 if(response['errorcode'] == 0){
@@ -2999,7 +3004,9 @@ recivetotalFare($event){
             if(this.isMobile){
                  // this._form.patchValue({port_list: 'Sushi'}));
                  var passname = 'passengerName' + (i+1);
-                  this.passengerForm.patchValue({passname: ''});
+                 var passgender = 'passengerGender' + (i+1);
+                 var passage = 'passengerAge' + (i+1);
+                  this.passengerForm.patchValue({passname: '',passgender: '',passage: ''});
             }
             // console.log('form==>',this.passengerForm);
             
@@ -3155,6 +3162,13 @@ recivetotalFare($event){
             this.passengerForm.controls['childGender' + i].updateValueAndValidity();
             this.passengerForm.controls['childAge' + i].updateValueAndValidity();
             this.childCount++;
+            if(this.isMobile){
+                 // this._form.patchValue({port_list: 'Sushi'}));
+                 var passname = 'childName' + (i+1);
+                 var passgender = 'childGender' + (i+1);
+                 var passage = 'childAge' + (i+1);
+                  this.passengerForm.patchValue({passname: '',passgender:'',passage:''});
+            }
               if(checkboxIndex !=-1){
            $('#passengerBox_'+checkboxIndex).removeClass('hidden');
            $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
@@ -3285,7 +3299,9 @@ recivetotalFare($event){
         var requestParamsEncrpt = {
             postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
         };
+        this.spinnerService.show();
         this.rest.getCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
+            this.spinnerService.hide();
             // let respData = JSON.parse(this.EncrDecr.get(response.result ));
             if(response['errorcode'] == 0){
             
@@ -3635,7 +3651,9 @@ export class ConfirmationDialog {
                 "otpType": "M"           //otpType (B – Verify OTP for both mobile and email, E – Verify OTP only for mail, M – Verify OTP for mobile)
             }
             var paramStep1Str = JSON.stringify(this.paramStep1);
+          
             this._irctc.forgotPassword(paramStep1Str).subscribe(data => {
+                
                 this.response = data;
                 if (this.response.partnerResponse.status) {
                     this.step1 = false;
@@ -3674,7 +3692,9 @@ export class ConfirmationDialog {
                 "userLoginId": userID
             }
             var paramStep2Str = JSON.stringify(this.paramStep2);
+           
             this._irctc.verifyOTP(paramStep2Str).subscribe(data => {
+               
                 //console.log(data);
                 this.response = data;
                 if (this.response.partnerResponse.status) {
@@ -3835,6 +3855,7 @@ export class newUserValidate {
 
 
             this._irctc.getOTP(requestOTP).subscribe(data => {
+                
                 this.response = data;
                 if (this.response.partnerResponse.status) {
                     this.step1 = false;
@@ -3883,6 +3904,7 @@ export class newUserValidate {
             };
 
             this._irctc.verifyOTP(paramStep2Str).subscribe(data => {
+
                 this.response = data;
                 if (this.response.partnerResponse.status) {
                     this.step2 = false;

@@ -201,6 +201,7 @@
                   </div>
 
                         <div [hidden]="loading">
+                           
                         <ng-container *ngIf="trains">
                  <app-trains-filter  [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
                 [arrivalTimeFilter] = "arrivalTimeFilter" (arriveEvent)="updateArrival($event)"
@@ -310,7 +311,7 @@
           <div class="col-md-12 p-0 fixed-top"  >
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" (click)="goback()" >
+                      <a href="javascript:;" routerLink="/train">
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>

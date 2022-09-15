@@ -70,6 +70,9 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.applyFil();
     }
     onlyClearSelectionAll(){
+      $('#seniorcitizen').trigger('click');
+      $('.quotas').prop('checked', false);
+      this.updateTosSelectedQuota('');
       this.removeallfilters.emit();
     }
 
