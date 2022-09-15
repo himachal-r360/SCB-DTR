@@ -745,7 +745,9 @@ saveGSTConsent(){
             width: '600px',
             // data: { messageData: message, }
         });
+         this.spinnerService.show();
         passportdialog.afterClosed().subscribe(result => {
+            this.spinnerService.hide();
             if(result == 0){
                 this.resetPassword();
             }else if(result == 1){
@@ -815,7 +817,7 @@ saveGSTConsent(){
             };
 
             var userIdParamStr = JSON.stringify(userIdParamPost);
-
+this.spinnerService.show();
             this._irctc.isIRCTCUser(userIdParamStr).subscribe(data => {
                 this.response = data;
                 this.spinnerService.hide();
@@ -838,6 +840,7 @@ saveGSTConsent(){
                     .set('metadata',JSON.stringify(this.EncrDecr.set(JSON.stringify(this.response.partnerResponse.userId))));
 
                     const track_body: string = trackUrlParams.toString();
+
                     this.rest.trackEvents( track_body).subscribe(result => {});
 
                     } else if (indexofsearchValue == -1) {//**NOT VERIFIED USER */
@@ -935,7 +938,7 @@ saveGSTConsent(){
          this.spinnerService.show();
         var stationParamStr = JSON.stringify(this.stationParam);
         this._irctc.getBoardingStations(stationParamStr).subscribe(resp => {
-            
+            this.spinnerService.hide();
 	if( Array.isArray(resp.partnerResponse.boardingStationList) ){
 	this.stationNames = resp.partnerResponse.boardingStationList;
 	}else{
@@ -972,8 +975,9 @@ saveGSTConsent(){
                 "trainNo": this.trainnumber
             };
             var scheduleParamStr = JSON.stringify(this.scheduleParam);
+            this.spinnerService.show();
             this._irctc.trainSchedlueDto(scheduleParamStr).subscribe(resp => {
-               
+               this.spinnerService.hide();
                 let reqjson = (resp);
                 this.reqData = reqjson.partnerResponse.stationList;
                 for (let appViewState of this.reqData) {
@@ -1101,8 +1105,9 @@ saveGSTConsent(){
             this.showgst = false;
         }
         var fareEnquiryStr = JSON.stringify(this.fareEnquiryArr);
-
+this.spinnerService.show();
         this._irctc.fareEnquiry(fareEnquiryStr).subscribe(response => {
+            this.spinnerService.hide();
             let dData = JSON.parse(this.EncrDecr.get(response.result));
             this.fareEnqResponse = dData;
             if (!this.fareEnqResponse['partnerResponse']['errorMessage']) {
@@ -1842,8 +1847,9 @@ whatsAppCheck:boolean=false;
 
              
                 
-
+this.spinnerService.show();
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
+                this.spinnerService.hide();
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
                 this.fareEnqueryMultiplePassengers = <fareEnqueryMultiplePassengers>dData;
                 var partnerResponse = (this.fareEnqueryMultiplePassengers.partnerResponse);
