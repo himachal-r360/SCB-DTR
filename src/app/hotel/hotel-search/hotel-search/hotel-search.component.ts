@@ -144,7 +144,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     }
     childTotalCount = parseInt(item.value.numberOfChildren);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
-    // childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
@@ -160,6 +159,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren - 1;
+      item.value.childrenAge.pop()
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
