@@ -173,7 +173,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       area: [''],
       hotelId: [''],
       rooms: this._fb.array([
-        { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
+        { room: 1, numberOfAdults: '1', numberOfChildren: '0' , childrenAge:[]}
       ]),
       channel: ['Web'],
       programName: ['SMARTBUY'],

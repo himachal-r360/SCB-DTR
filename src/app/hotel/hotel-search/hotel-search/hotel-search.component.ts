@@ -23,7 +23,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   latestDate = new Date();
   cityName = 'New Delhi';
   continueSearchHotel;
-  selectedAge = [];
   childAgeArr = [
     { value: 2 },
     { value: 3 },
@@ -41,6 +40,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   @ViewChild('citySearchRef') citySearchRef: ElementRef;
   @ViewChild('checkIn') checkIn: ElementRef;
   @ViewChild('checkOut') checkOut: ElementRef;
+
+  
 
  
   
@@ -62,7 +63,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       countryName:['India'],
       rooms: this._fb.array(
         [
-          { room: 1, numberOfAdults: '1', numberOfChildren: '0', childrenAge:[this.selectedAge]  }
+          { room: 1, numberOfAdults: '1', numberOfChildren: '0', childrenAge:[]  }
         ]
 
       ),
@@ -123,6 +124,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       });
       roomArr.forEach((x) => {
         this.hotelSearchForm.value.rooms = ""
+        console.log(x , "x");
         this.roomsDetails.push(this.modifyDetails(x));
       });
       this.showTotalCountOfAdult();
@@ -144,8 +146,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
     totalCount > 4 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
-    console.log(this.hotelSearchForm.value,"form value");
-    
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
@@ -220,7 +220,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   addDetails() {
     this.roomsDetails.push(this.personDetails());
-    console.log(this.hotelSearchForm.value);
     this.showTotalCountOfAdult();
   }
 
@@ -241,25 +240,36 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   checkInDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
-    console.log(this.hotelSearchForm.value.checkIn);
     this.checkOut.nativeElement.click();
   }
 
   checkOutDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
-    console.log(this.hotelSearchForm.value.checkOut);
-    
     this.showHideGuest.nativeElement.style.display = "block";
   }
 
   onSelectAge(event ,item , i){
-    item.value.childrenAge = event.target.value;
-    console.log(event.target.value, "event");
+    let ageArr:any = [];
+    let selectAge1:any = document.getElementById('selectAge1_' + i);
+    let selectAge2:any = document.getElementById('selectAge2_' + i);
+    let selectAge3:any = document.getElementById('selectAge3_' + i);
+    if(selectAge1 != null){
+      ageArr = [selectAge1.value]
+    }
+    if(selectAge1 != null && selectAge2 != null){
+      ageArr = [selectAge1.value,selectAge2.value]
+    }
+    if(selectAge1 != null && selectAge2 != null && selectAge3 != null){
+      ageArr = [selectAge1.value,selectAge2.value,selectAge3.value]
+    }
+    item.value.childrenAge = ageArr;
+    console.log(ageArr , "ageArr");
     console.log(this.hotelSearchForm.value, "form");
-    console.log(i);
     
   }
+
+
 
  
 

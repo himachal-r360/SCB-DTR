@@ -135,7 +135,7 @@
                                             <div class="Travellers-name">
                                                 <h6>Child 1</h6>
                                             </div>
-                                            <select [(ngModel)]="childrenAge" name="childrenAge" (change)="onSelectAge($event,item, i)">
+                                            <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}">
                                                 <option selected>Age</option>
                                                 <option value="{{age.value}}" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
@@ -144,7 +144,7 @@
                                             <div class="Travellers-name">
                                                 <h6>Child 2</h6>
                                             </div>
-                                            <select  [(ngModel)]="childrenAge" name="childrenAge" (change)="onSelectAge($event,item , i)">
+                                            <select  (change)="onSelectAge($event,item , i)" id="selectAge2_{{i}}">
                                                 <option selected>Age</option>
                                                 <option value="{{age.value}}" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
@@ -153,7 +153,7 @@
                                             <div class="Travellers-name">
                                                 <h6>Child 3</h6>
                                             </div>
-                                            <select [(ngModel)]="childrenAge" name="childrenAge" (change)="onSelectAge($event,item,i)">
+                                            <select (change)="onSelectAge($event,item,i)" id="selectAge3_{{i}}">
                                                 <option selected>Age</option>
                                                 <option value="{{age.value}}" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
