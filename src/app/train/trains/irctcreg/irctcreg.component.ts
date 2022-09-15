@@ -28,6 +28,10 @@ import { AppConfigService } from '../../../app-config.service';
   styleUrls: ['./irctcreg.component.scss']
 })
 export class IrctcregComponent implements OnInit {
+  AccountActive:boolean=true; 
+  PersonalActive:boolean=false; 
+  ResidentialActive:boolean=false;   
+  OfficeActive:boolean=false;   
   siteKey:any;
   accountDetailsForm: FormGroup;
   personalDetailsForm: FormGroup;
@@ -63,10 +67,15 @@ export class IrctcregComponent implements OnInit {
   CheckCopyResidence:Boolean;
   
   tab_1:boolean=true;tab_2:boolean=false;tab_3:boolean=false;tab_4:boolean=false;
+  tab_1_disabled:boolean=true;
   tab_2_disabled:boolean=true;tab_3_disabled:boolean=true;tab_4_disabled:boolean=true;
   maxDate:any;
   dialog1:boolean;
   dialog2:boolean;
+  thankSection: boolean = false;
+
+
+
   //defaultISD:string;
    serviceSettings:any;
   
@@ -177,21 +186,37 @@ export class IrctcregComponent implements OnInit {
       this.tab_2=false;
       this.tab_3=false;
       this.tab_4=false;
+      this.AccountActive=true;
+      this.PersonalActive=false;
+      this.ResidentialActive=false;
+      this.OfficeActive=false;
     }else if(x==2){
       this.tab_1=false;
       this.tab_2=true;
       this.tab_3=false;
       this.tab_4=false;
+      this.AccountActive=false;
+      this.PersonalActive=true;
+      this.ResidentialActive=false;
+      this.OfficeActive=false;
     }else if(x==3){
       this.tab_1=false;
       this.tab_2=false;
       this.tab_3=true;
       this.tab_4=false;
+      this.AccountActive=false;
+      this.PersonalActive=false;
+      this.ResidentialActive=true;
+      this.OfficeActive=false;
     }else if(x==4){
       this.tab_1=false;
       this.tab_2=false;
       this.tab_3=false;
       this.tab_4=true;
+      this.AccountActive=false;
+      this.PersonalActive=false;
+      this.ResidentialActive=false;
+      this.OfficeActive=true;
     }  
   }
   errorInvalid:number=1;
@@ -258,12 +283,19 @@ export class IrctcregComponent implements OnInit {
       this.Form1 = false;
       return;
     }else{ 
+      this.tab_1_disabled=true;
       this.tab_2_disabled=false;
+      this.tab_3_disabled=true;
+      this.tab_4_disabled=true;
       this.Form1 = true;
       this.errorInvalid = 0;
       this.tab_1=false;
       this.tab_2=true;
       this.tab_3=false;
+      this.AccountActive=false;
+      this.PersonalActive=true;
+      this.ResidentialActive=false;
+      this.OfficeActive=false;
     }
   }
   checkmaxDate(dd, mm, yyyy){
@@ -276,12 +308,18 @@ export class IrctcregComponent implements OnInit {
       return;
     }else{ 
       // this.errorInvalid = 0;
+        this.tab_1_disabled=true;
+        this.tab_2_disabled=true;
         this.tab_3_disabled=false;
-        this.tab_4_disabled=false;
+        this.tab_4_disabled=true;
         this.Form2 = true;
         this.tab_1=false;
         this.tab_2=false;
         this.tab_3=true;
+        this.AccountActive=false;
+        this.PersonalActive=false;
+        this.ResidentialActive=true;
+        this.OfficeActive=false;
     }
   }
   registerIRCTCUser(){
@@ -734,14 +772,21 @@ export class IrctcregComponent implements OnInit {
         this.Form3 = false;
         return;
       }else{ 
+
         // this.errorInvalid = 0;
-          this.tab_3_disabled=false;
+          this.tab_1_disabled=true;
+          this.tab_2_disabled=true;
+          this.tab_3_disabled=true;
           this.tab_4_disabled=false;
           this.Form3 = true;
           this.tab_1=false;
           this.tab_2=false;
           this.tab_3=false;
           this.tab_4=true;
+          this.AccountActive=false;
+          this.PersonalActive=false;
+          this.ResidentialActive=true;
+          this.OfficeActive=true;
       }
   }
   FlagCountry:boolean=true;

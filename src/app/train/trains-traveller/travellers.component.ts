@@ -28,6 +28,8 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { type } from 'os';
 import alertify from 'alertifyjs';
 import { FlightService } from 'src/app/common/flight.service';
+declare var $ :any;
+/* import * as moment from 'moment'; */
 
 @Component({
     selector: 'app-travellerstrain',
@@ -35,6 +37,9 @@ import { FlightService } from 'src/app/common/flight.service';
     styleUrls: ['./travellers.component.scss']
 })
 export class TrainsTravellerComponent implements OnInit {
+
+    travalfrom : string;
+    travalto: string;
     steps:number=1;
       completedSteps = 1;
     childBerthMandatory:any;
@@ -103,6 +108,7 @@ export class TrainsTravellerComponent implements OnInit {
     idForm: FormGroup;
     submitted = false;
     submittedUserInfoForm = false;
+    irctcRegister : boolean = false;
     passengerData: any = [];
    // patternName = /^[A-z]*$|^[A-z]+\s[A-z]*$/
     patternName = /^(?:(?!.*[ ]{2})(?!(?:.*[']){2})(?!(?:.*[-]){2})(?:[a-zA-Z0-9 \p{L}'-]{3,48}$))$/;
@@ -117,7 +123,6 @@ export class TrainsTravellerComponent implements OnInit {
     
     travellersArrayM = []; 
     childrenArrayM = [];
-    
     travellersFilledArray = [];    infanttravellersFilledArray = [];
     
     seniorCitizenStatus: boolean = false;
@@ -170,6 +175,7 @@ export class TrainsTravellerComponent implements OnInit {
     osType: any;
     wsUserLogin: string;
     travellerListArray: any[] = [];
+    infantListArray: any[] = [];
     travelDocCardNoArr: any[] = [];
     travelDocArr: any[] = [];
     optChildBerthArr: any[] = [];
@@ -295,12 +301,16 @@ export class TrainsTravellerComponent implements OnInit {
     isInfantExpanded:boolean = false;
     isGstExpanded:boolean = false;
      enablesavedTraveller:number=0;
+     infanttraveller:number=1;
+     adulttraveller:number=1;
      customerInfo:any;
        isMobile:boolean= true;
-       
+       mlitetravellerformsubmit = false;
+       mlitechildformsubmit = false;
          isCollapseBasefare: boolean = false;
   isCollapseDiscount: boolean = false;
   isCollapse: boolean = false;
+    trainDetails: boolean = true;
        
     constructor(private el: ElementRef,private _flightService: FlightService,private modalService:NgbModal,private spinnerService: NgxSpinnerService, private _decimalPipe: DecimalPipe, public _irctc: IrctcApiService, private EncrDecr: EncrDecrService, public rest: RestapiService, private cookieService: CookieService, private dialog: MatDialog, _formBuilder: FormBuilder, private deviceService: DeviceDetectorService, private _bottomSheet: MatBottomSheet, private location: Location, @Inject(DOCUMENT) private document: any, private sg: SimpleGlobal, private activatedRoute: ActivatedRoute, private router: Router, public commonHelper: CommonHelper,private titleService: Title,private appConfigService:AppConfigService) {
         this.serviceSettings=this.appConfigService.getConfig();
@@ -341,7 +351,16 @@ export class TrainsTravellerComponent implements OnInit {
         
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
         
-        console.log(this.seacthResult);
+        if(this.seacthResult== null){
+            this.router.navigateByUrl('/');
+        }
+
+        this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");
+        this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");
+            if(!this.seacthResult){
+         this.router.navigate(['/train']);
+        }
+
         
         let jdate=this.seacthResult.selectedAvailablityFare.availablityDate.split("-").reverse().join("-");
      
@@ -619,7 +638,45 @@ export class TrainsTravellerComponent implements OnInit {
         }
 
     }
+isPaynowClicked:boolean=false;
+continuePayment(){
+//console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
+switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+        case 'tab-savedCards':
+        $('.btn-pay-saved-card').trigger('click');
+        break;
+        case 'tab-testPg':
+        $('.btn-pay-test').trigger('click');
+        break;   
+        case 'tab-payzapp':
+        $('.btn-pay-payz').trigger('click');
+        break;  
+        case 'tab-netBanking':
+        $('.btn-pay-netbanking').trigger('click');
+        break;  
+        case 'tab-ccdcCards':
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-card').trigger('click');
 
+        if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-rupay').trigger('click');
+
+        break;  
+
+        case 'tab-emi': 
+        if($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-emi-cc').trigger('click');
+         
+         
+        break;  
+          
+          
+         case 'tab-testPg': 
+        $('.btn-pay-test').trigger('click');
+        break;  
+      }
+
+}
    headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
@@ -692,7 +749,9 @@ saveGSTConsent(){
             width: '600px',
             // data: { messageData: message, }
         });
+         this.spinnerService.show();
         passportdialog.afterClosed().subscribe(result => {
+            this.spinnerService.hide();
             if(result == 0){
                 this.resetPassword();
             }else if(result == 1){
@@ -741,10 +800,12 @@ saveGSTConsent(){
   }
 
     submitBookingInfo() {
-       
+
+       this.submittedUserInfoForm = true;
          if (this.idForm.invalid ) {
          return;
          }else{
+            this.submittedUserInfoForm = false;
         var IRCTCUserId = this.idForm.controls['userID']['value'];
         this.spinnerService.show();
         if (IRCTCUserId != "" && IRCTCUserId != undefined && IRCTCUserId != null) {
@@ -760,7 +821,7 @@ saveGSTConsent(){
             };
 
             var userIdParamStr = JSON.stringify(userIdParamPost);
-
+this.spinnerService.show();
             this._irctc.isIRCTCUser(userIdParamStr).subscribe(data => {
                 this.response = data;
                 this.spinnerService.hide();
@@ -783,6 +844,7 @@ saveGSTConsent(){
                     .set('metadata',JSON.stringify(this.EncrDecr.set(JSON.stringify(this.response.partnerResponse.userId))));
 
                     const track_body: string = trackUrlParams.toString();
+
                     this.rest.trackEvents( track_body).subscribe(result => {});
 
                     } else if (indexofsearchValue == -1) {//**NOT VERIFIED USER */
@@ -848,6 +910,8 @@ saveGSTConsent(){
     }
 
     boardingStations() {
+    
+    
        
         this.traindate = this.seacthResult.searchHistory.journeyDate;
         this.fromstn = this.seacthResult.selectedTrain.fromStnCode;
@@ -878,7 +942,7 @@ saveGSTConsent(){
          this.spinnerService.show();
         var stationParamStr = JSON.stringify(this.stationParam);
         this._irctc.getBoardingStations(stationParamStr).subscribe(resp => {
-            
+            this.spinnerService.hide();
 	if( Array.isArray(resp.partnerResponse.boardingStationList) ){
 	this.stationNames = resp.partnerResponse.boardingStationList;
 	}else{
@@ -915,8 +979,9 @@ saveGSTConsent(){
                 "trainNo": this.trainnumber
             };
             var scheduleParamStr = JSON.stringify(this.scheduleParam);
+            this.spinnerService.show();
             this._irctc.trainSchedlueDto(scheduleParamStr).subscribe(resp => {
-               
+               this.spinnerService.hide();
                 let reqjson = (resp);
                 this.reqData = reqjson.partnerResponse.stationList;
                 for (let appViewState of this.reqData) {
@@ -1044,8 +1109,9 @@ saveGSTConsent(){
             this.showgst = false;
         }
         var fareEnquiryStr = JSON.stringify(this.fareEnquiryArr);
-
+this.spinnerService.show();
         this._irctc.fareEnquiry(fareEnquiryStr).subscribe(response => {
+            this.spinnerService.hide();
             let dData = JSON.parse(this.EncrDecr.get(response.result));
             this.fareEnqResponse = dData;
             if (!this.fareEnqResponse['partnerResponse']['errorMessage']) {
@@ -1618,12 +1684,16 @@ gstReset(){
 
         if (this.passengerForm.invalid || this.error == 1) {
          this.passengerForm.markAllAsTouched();
-        let target;
-        target = this.el.nativeElement.querySelector('.ng-invalid')
+           let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
         if (target) {
-        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
-        target.focus();
-        }  
+        if( target.id =='agree_terms'){
+        $(document).scrollTop($(document).height());
+        }else{
+        target.scrollIntoView();
+        (target as HTMLElement).focus();
+        }
+        }
          return;  
         } else {
          this.generateTrainItinerary();
@@ -1631,7 +1701,7 @@ gstReset(){
         }
 
     }
-    
+
 
     
         continueReviewBooking(){
@@ -1774,15 +1844,15 @@ whatsAppCheck:boolean=false;
         this.error = 0;
         this.generateTrainItinerary();
         this.spinnerService.show();
-
         var irctcPassData = {
         postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
         };
 
              
                 
-
+this.spinnerService.show();
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
+                this.spinnerService.hide();
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
                 this.fareEnqueryMultiplePassengers = <fareEnqueryMultiplePassengers>dData;
                 var partnerResponse = (this.fareEnqueryMultiplePassengers.partnerResponse);
@@ -1917,6 +1987,9 @@ whatsAppCheck:boolean=false;
     
     
     }
+    backClicked() {
+    this.location.back();
+  }
     setPassengerConcession(gender, age) {
         var temp;
         switch (gender) {
@@ -2159,7 +2232,7 @@ whatsAppCheck:boolean=false;
                     "passengerNationality": this.passengerForm.controls['passengerNationality' + i]['value'],
                     "passengerSerialNumber": ii,
                     "saveTraveller":checksaveTraveller,
-                    "DOB":this.foreignPassDOBArr[i]
+                    "DOB": moment(this.foreignPassDOBArr[i]).format("DD/MM/YYYY")
 
                 }
                 travellerList.push(traveller);
@@ -2185,6 +2258,7 @@ whatsAppCheck:boolean=false;
                 ii++;
             }
         }
+        this.infantListArray = infantList;
         this.trainDateStr = this.traindate.replace(/-/g, "");
 
         //VIKALP
@@ -2314,7 +2388,7 @@ whatsAppCheck:boolean=false;
 
     openmodal(content) {
         this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-        this.modalService.open(content, { centered: true });
+        this.modalService.open(content, { centered: true,size: 'lg' });
       }
 
 
@@ -2628,6 +2702,8 @@ recivetotalFare($event){
             this.openDialog();
         } else {
             this.router.navigate(['/train/registration']);
+           /* this.trainDetails = false;
+            this.irctcRegister = true ; */
         }
     }
     forgotUserId() {
@@ -2725,8 +2801,9 @@ recivetotalFare($event){
             var postsavedTravellers = {
             postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
             };
-
+this.spinnerService.show();
             this.rest.getCustomertravellerInfo(postsavedTravellers).subscribe(response =>{
+                this.spinnerService.hide();
                 // let respData = JSON.parse(this.EncrDecr.get(response.result ));
                 let resp = response['errorcode']; 
                 if(response['errorcode'] == 0){
@@ -2746,11 +2823,14 @@ recivetotalFare($event){
 		
 		
                 for(let i=0;i<this.travellerlist.length;i++){
-                if(this.adulttravellerlist[i].age > 4)
-                this.saveTravellerId[this.adulttravellerlist[i].id]=-1
-                else
-                this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
-                }
+                    if(this.adulttravellerlist[i]){
+                        if(this.adulttravellerlist[i].age > 4)
+                        this.saveTravellerId[this.adulttravellerlist[i].id]=-1
+                        else
+                        this.saveChildTravellerId[this.adulttravellerlist[i].id]=-1
+                        }
+                    }
+                
 	                
                 this.checkPaxCount = this.adulttravellerlist.length;
                 }
@@ -2792,15 +2872,46 @@ recivetotalFare($event){
     }
     
        manualAddTraveller(type){
-        if(type==1)
-        this.addTraveller(-1,-1);
-        else
-        this.addChild(-1,-1);
+        if(type==1){
+            if(this.isMobile){
+            $('#adultname').val('');
+            $('#adultage').val('');
+            $('#addTraveller_mlite').modal('show');
+            this.mlitetravellerformsubmit = false;
+        }
+            this.addTraveller(-1,-1);
+        }else{
+            if(this.isMobile){
+                $('#childname').val('');
+                $('#childage').val(0).change();;
+                $('#addInfant_mlite').modal('show');
+                this.mlitechildformsubmit=false;
+            }
+            this.addChild(-1,-1);
+        }
+        
        }
+
+       /* manualMobileAdultTraveller(type) {
+        if(type==1){
+            this.addTraveller(-1,-1);
+            $('#addTraveller_mlite').modal('show'); 
+        }
+      }
+
+      manualMobileInfantTraveller(type) {
+        if(type==1){
+            this.addChild(-1, -1);
+            $('#infantTraveller_mlite').modal('show');
+        }
+        
+      } */
     
     
     addTraveller(passenger,checkboxIndex) {
+        
            if ((this.travellersArray.length ) < (this.maxPassengers)) {
+            this.adulttraveller = this.travellersArray.length+1;
             this.travellers.push(this.travellersArray.length);
             this.travellersArray.push(this.passengerFormCount);
             
@@ -2851,7 +2962,7 @@ recivetotalFare($event){
             this.passengerForm.controls['passengerEmail'].updateValueAndValidity();
             this.passengerForm.controls['passengerAgree'].updateValueAndValidity();
             this.passengerForm.addControl('passengerBerthChoice' + i, new FormControl(''));
-           
+            
            
            
         if (this.foodChoiceEnabled)
@@ -2889,11 +3000,21 @@ recivetotalFare($event){
             this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
             this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
             this.passengerFormCount++;
+            if(this.isMobile){
+                 // this._form.patchValue({port_list: 'Sushi'}));
+                 var passname = 'passengerName' + (i+1);
+                 var passgender = 'passengerGender' + (i+1);
+                 var passage = 'passengerAge' + (i+1);
+                  this.passengerForm.patchValue({passname: '',passgender: '',passage: ''});
+            }
+            // console.log('form==>',this.passengerForm);
             
              if(checkboxIndex !=-1){
                $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
              $('#passengerBox_'+checkboxIndex).removeClass('hidden');
              }
+
+       
         } else {
          if(checkboxIndex !=-1){
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
@@ -2912,6 +3033,8 @@ recivetotalFare($event){
         }
 
     }
+
+    
     
     
     
@@ -2924,6 +3047,7 @@ recivetotalFare($event){
      $('#passengerBox_'+checkboxIndex).addClass('hidden');
         if (index > -1) {
             this.travellersArray.splice(index, 1);
+            this.adulttraveller = this.travellersArray.length+1;
         }
         
         
@@ -2967,10 +3091,11 @@ recivetotalFare($event){
         this.passengerForm.removeControl('optChildBerth' + val);
         this.passengerForm.removeControl('optBedRoll' + val);
         this.passengerForm.removeControl('foreignPassengerDOB'+val);
+
         this.passengerForm.clearValidators();
         this.passengerForm.updateValueAndValidity();
 
-        
+        this.passengerFormCount--;
         this.travellers.splice(val, 1);
         
 
@@ -2997,10 +3122,10 @@ recivetotalFare($event){
     }
     childCount: number = 1;
     addChild(passenger,checkboxIndex) {
-    
+
     
         if ((this.childrenArray.length + 1) <= (this.maxInfants)) {
-        
+            this.infanttraveller = this.childrenArray.length+1;
             if(checkboxIndex ==-1)
             this.childrenArrayM.push(this.childCount);
         
@@ -3036,13 +3161,23 @@ recivetotalFare($event){
             this.passengerForm.controls['childGender' + i].updateValueAndValidity();
             this.passengerForm.controls['childAge' + i].updateValueAndValidity();
             this.childCount++;
+            if(this.isMobile){
+                 // this._form.patchValue({port_list: 'Sushi'}));
+                 var passname = 'childName' + (i+1);
+                 var passgender = 'childGender' + (i+1);
+                 var passage = 'childAge' + (i+1);
+                  this.passengerForm.patchValue({passname: '',passgender:'',passage:''});
+            }
               if(checkboxIndex !=-1){
            $('#passengerBox_'+checkboxIndex).removeClass('hidden');
            $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
            }
             
+            
         } else {
+            $('#addInfant_mlite').modal('hide');
           if(checkboxIndex !=-1){
+
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
           }
@@ -3058,9 +3193,40 @@ recivetotalFare($event){
             });
             //this.childCount = Number(this.maxInfants)+1;
         }
+
     }
     
-    
+      validateMliteForm(type, traveller) {
+    this.passengerForm.markAllAsTouched();
+
+    if (type == 'adult') {
+        if(this.isMobile){
+            this.mlitetravellerformsubmit = true;
+        }
+      if (this.passengerForm.controls['passengerGender' + traveller]['status'] == 'VALID' && this.passengerForm.controls['passengerName' + traveller]['status'] == 'VALID' && this.passengerForm.controls['passengerAge' + traveller]['status'] == 'VALID' && this.passengerForm.controls['passengerBerthChoice' + traveller]['status'] == 'VALID'&& this.passengerForm.controls['passengerNationality' + traveller]['status'] == 'VALID') {
+        $('#addTraveller_mlite').modal('hide');
+      }
+    }
+
+    if (type == 'infant') {
+        if(this.isMobile){
+            this.mlitechildformsubmit=true;
+        }
+      if (this.passengerForm.controls['childGender' + traveller]['status'] == 'VALID' && this.passengerForm.controls['childName' + traveller]['status'] == 'VALID'  && this.passengerForm.controls['childAge' + traveller]['status'] == 'VALID') {
+        $('#addInfant_mlite').modal('hide');
+      }
+    }
+
+
+  }
+    removeMobileInfant(val, checkboxIndex) {
+    this.removeChild(val, checkboxIndex);
+    $('#addInfant_mlite').modal('hide');
+  }
+    removeMobileAdult(val, checkboxIndex) {
+    this.removeTraveller(val, checkboxIndex);
+    $('#addTraveller_mlite').modal('hide');
+  }
     removeChild(val,checkboxIndex) {
         var passengerName = this.passengerForm.controls['childName' + val]['value'];
          if(checkboxIndex !=-1)
@@ -3109,6 +3275,8 @@ recivetotalFare($event){
 
     }
 
+    
+
     arrayRemove(arr, value) {
         return arr.filter(item => item !== item); 
     }
@@ -3130,7 +3298,9 @@ recivetotalFare($event){
         var requestParamsEncrpt = {
             postData:this.EncrDecr.set(JSON.stringify(requestParams)) 
         };
+        this.spinnerService.show();
         this.rest.getCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
+            this.spinnerService.hide();
             // let respData = JSON.parse(this.EncrDecr.get(response.result ));
             if(response['errorcode'] == 0){
             
@@ -3158,6 +3328,9 @@ recivetotalFare($event){
         }
     }
     fillupGSTDetailOnCheck($event,data,GSTIndex){ 
+        for(let i=0;i<this.GSTListLength;i++){
+                this.isCheckedGST[i]=false;
+        }
         if($event.target.checked){
             this.selectedGST.push(GSTIndex);
             this.checkedGST.push({ 
@@ -3477,7 +3650,9 @@ export class ConfirmationDialog {
                 "otpType": "M"           //otpType (B – Verify OTP for both mobile and email, E – Verify OTP only for mail, M – Verify OTP for mobile)
             }
             var paramStep1Str = JSON.stringify(this.paramStep1);
+          
             this._irctc.forgotPassword(paramStep1Str).subscribe(data => {
+                
                 this.response = data;
                 if (this.response.partnerResponse.status) {
                     this.step1 = false;
@@ -3516,7 +3691,9 @@ export class ConfirmationDialog {
                 "userLoginId": userID
             }
             var paramStep2Str = JSON.stringify(this.paramStep2);
+           
             this._irctc.verifyOTP(paramStep2Str).subscribe(data => {
+               
                 //console.log(data);
                 this.response = data;
                 if (this.response.partnerResponse.status) {
@@ -3677,6 +3854,7 @@ export class newUserValidate {
 
 
             this._irctc.getOTP(requestOTP).subscribe(data => {
+                
                 this.response = data;
                 if (this.response.partnerResponse.status) {
                     this.step1 = false;
@@ -3725,6 +3903,7 @@ export class newUserValidate {
             };
 
             this._irctc.verifyOTP(paramStep2Str).subscribe(data => {
+
                 this.response = data;
                 if (this.response.partnerResponse.status) {
                     this.step2 = false;

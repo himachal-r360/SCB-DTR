@@ -121,8 +121,30 @@
         font-size: 12px;
     }
 }
-
 .error {
+        background-color: #ffe0e0;
+        color: red;
+        position: absolute;
+        border-radius: 5px;
+        z-index: 2;
+        text-align: center;
+        font-size: 10px;
+        padding: 0px 5px 0px 5px;
+    &::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 5px solid #67606000;
+        border-right: 5px solid transparent;
+        border-bottom: 10px solid #ffe0e0;
+        z-index: 3;
+        position: absolute;
+        left: 5px;
+        top: -5px;
+    }
+}
+
+.error1 {
     color: red;
     font-size: 10px;
     margin-top: 5px;
@@ -587,6 +609,23 @@ p{
     align-items:center;
     padding:5px 10px;
 }
+.card_drpdwn_btn{
+    width:65%;
+    @media screen and (max-width:600px){
+    width:100%
+    }
+}
+.card_drpdwn_ul{
+    width:65%;
+        @media screen and (max-width:600px){
+    width:100%
+    }
+}
+.blue_link{
+    color:#1d86ff;
+}
+
+
     .card_imag{
      width:60px !important;
      height:37px !important;
@@ -620,11 +659,17 @@ p{
     right: 3%;
     color: #1d86ff;
    }
+   @media screen and (max-width:600px){
+        width:100%;
+   }
    }
 
    .voucher_apply{
     color: #1d86ff;
     cursor:pointer;
+    @media screen and (max-width:600px){
+margin-top:1rem;
+   }
    }
    .green-font{
     color:#008000;
@@ -651,6 +696,63 @@ p{
    .voucherImg{
     padding:15px 0 0 15px;
    }
+
+   .primary_hdr{
+   font-weight:600;
+   font-size:20px
+   }
+   .hdr_pdng{
+   padding-top:2rem;
+    font-size:15px;
+   @media screen and (max-width:600px){
+padding-top:1rem;
+   }
+   }
+
+   .points{
+   font-size:18px;
+      @media screen and (max-width:600px){
+  font-size:15px;
+  padding-top:10px;
+   }
+   }
+   .point_msg{
+   
+      @media screen and (max-width:600px){
+        text-align: center!important;
+   }
+   }
+
+   .coupon_mlite_popup {
+    animation-name: slideInUp;
+    animation-duration: 200ms;
+    animation-timing-function: ease-in-out;
+    .modal-dialog {
+        margin: 0;
+        display: flex;
+        align-items: flex-end;
+        min-height: calc(100% - 0px);
+        .modal-content {
+            border-radius: 15px 15px 0px 0px;
+            .modal-content-paywithpts {
+                padding:20px;
+                }
+            .modal-header {
+                border-bottom: 0px;
+                .modal-title {
+                    font-family: 'opensans-bold';
+                    font-size: 18px;
+                }
+
+            }
+        }
+    }
+}
+
+.ng5-slider .ng5-slider-pointer:after {
+    background: #0db9f0 !important;
+}
+
 
 
 

@@ -13,12 +13,14 @@ import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { formatNumber } from '@angular/common';
+import * as moment from 'moment';
+
 declare var $: any;
 declare var bootstrap:any;
 @Component({
   selector: 'app-flight-roundtrip-list',
   templateUrl: './flight-roundtrip-list.component.html',
-  styleUrls: ['./flight-roundtrip-list.component.css'],
+  styleUrls: ['./flight-roundtrip-list.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
@@ -131,14 +133,14 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
   priceSortingFilteritems = [
-    { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
-    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_htl.png',sortValue:'Price' },
-    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
-    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
+    { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.svg',activeImage:'./assets/images/icons/active_lth.svg', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.svg',activeImage:'./assets/images/icons/active_htl.svg',sortValue:'Price' },
+    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
+    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
   ]
 
   priceSortingReturnFilteritems = [
@@ -146,8 +148,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
     { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_htl.png',sortValue:'Price' },
     { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
     { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:'./assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
     { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
     { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
   ]
@@ -165,11 +167,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
   @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
-  pageIndex: number = 101;
-  ITEMS_RENDERED_AT_ONCE=100;
+  pageIndex: number = 26;
+  ITEMS_RENDERED_AT_ONCE=25;
   nextIndex=0;
 
-    pageIndexR: number = 101;
+    pageIndexR: number = 26;
   nextIndexR=0;
 
   constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {
@@ -180,23 +182,20 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       $('#endOfReturnPage').trigger('click');
       }
       });
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
    }
 
-   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-  }
+
   ngOnInit(): void {
 
-       this.route.url.subscribe(url =>{
         this.resetPopups();
         this.gotoTop();
-    this.loader = true;
-    this.getQueryParamData(null);
-    this.headerHideShow(null)
-    this.getAirpotsList();
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.headerHideShow(null)
+        this.getAirpotsList();
         this.getCoupons();
-    this.flightSearch();
-     });
+        this.flightSearch();
   }
         resetPopups(){
         $('#flightChange').modal('hide');
@@ -299,6 +298,32 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   }
 
 
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
+  }
+
+  continueSearchFlights: any = []
+    flightSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
+    if (continueSearch == null) {
+      this.continueSearchFlights = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchFlights = JSON.parse(continueSearch);
+      this.continueSearchFlights = this.continueSearchFlights.filter((item: any) => {
+        if (item.flightfrom != searchValueAllobj.flightfrom || item.flightto != searchValueAllobj.flightto) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchFlights.length > 3) {
+      this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
+    }
+    this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
+  }
+  
 
     getQueryParamData(paramObj: any) {
         const params = this.route.snapshot.queryParams;
@@ -306,7 +331,6 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
             this.searchData = params;
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
-
 
         this.fromCityName = this.queryFlightData.fromCity;
         this.toCityName = this.queryFlightData.toCity;
@@ -321,7 +345,8 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         this.flightTimingfrom = this.queryFlightData.flightfrom
         this.flightTimingto = this.queryFlightData.flightto
         this.totalPassenger =   parseInt(this.adultsVal) +     parseInt(this.childVal) +   parseInt(this.infantsVal);
-
+        this.flightSearchCallBack(params);
+        localStorage.setItem(environment.flightLastSearch,JSON.stringify(params));
   }
 
 flightCoupons=[];
@@ -361,13 +386,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     return str.join("&");
   }
 
+  serverIssue:number=0;
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
 
 
-
     this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
+     if(res && res.response && res.response.docKey){
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.ReturnflightList = this.ascPriceSummaryFlighs(res.response.returnFlights);
@@ -387,13 +413,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.sliderRange(this, this.minPrice, this.maxPrice);
         }
 
-
-
         this.loader = false;
         this.getAirlinelist();
         this.popularFilterFlightData()
+        this.serverIssue=0;
+       }else{
+       this.serverIssue=1;this.loader = false;
+       } 
+        
 
-    }, (error) => { console.log(error) });
+    }, (error) => {  this.serverIssue=1; this.loader = false; });
   }
   GetMinAndMaxPriceForFilter() {
 
@@ -471,9 +500,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
+   /* setTimeout(() => {
       this.Initslider();
-    }, 200);
+    }, 200);*/
   }
 
   airlineFilterFlights(flightList: any) {
@@ -694,40 +723,57 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
           }
           else if (item.name == 'D_Short' && item.active == true) {
-            var dshort = [];
-          this.flightList.forEach((e: any) => {
-            var flights = e.flights;
-            var totalOnwardDuration = 0;
-            for (let i = 0; i < flights.length; i++) {
-              totalOnwardDuration += flights[i].duration;
-              if (flights[i + 1] != null && flights[i + 1] != undefined) {
-              let obj2Date = new Date(flights[i + 1].departureDateTime);
-              let obj1Date = new Date(flights[i ].arrivalDateTime);
-              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
-              }
-            }
-            e.totalOnwardDuration = totalOnwardDuration
-             dshort.push(e);
-          });
-         this.flightList = dshort.sort((a: any, b: any) => a.totalOnwardDuration - b.totalOnwardDuration);
+          
+                  this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDuration>totalOnwardDurationB? 1: -1;  
+       
+        });
           }
           else if (item.name == 'D_Long' && item.active == true) {
-            var dlong = [];
-          this.flightList.forEach((e: any) => {
-            var flights = e.flights;
-            var totalOnwardDuration = 0;
-            for (let i = 0; i < flights.length; i++) {
-              totalOnwardDuration += flights[i].duration;
-              if (flights[i + 1] != null && flights[i + 1] != undefined) {
-              let obj2Date = new Date(flights[i + 1].departureDateTime);
-              let obj1Date = new Date(flights[i ].arrivalDateTime);
-              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
-              }
-            }
-            e.totalOnwardDuration = totalOnwardDuration
-            dlong.push(e);
-          });
-         this.flightList = dlong.sort((a: any, b: any) => b.totalOnwardDuration - a.totalOnwardDuration);
+          
+                  this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDurationB>totalOnwardDuration? 1: -1;  
+       
+        });
+          
           }
           else if (item.name == 'D_E' && item.active == true) {
             this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
@@ -752,41 +798,59 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             this.ReturnflightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
           }
           else if (item.name == 'D_Short' && item.active == true) {
-            var dshort = [];
-            this.flightList.forEach((e: any) => {
-              var flights = e.flights;
-              var totalOnwardDuration = 0;
-              for (let i = 0; i < flights.length; i++) {
-                totalOnwardDuration += flights[i].duration;
-                if (flights[i + 1] != null && flights[i + 1] != undefined) {
-                let obj2Date = new Date(flights[i + 1].departureDateTime);
-                let obj1Date = new Date(flights[i ].arrivalDateTime);
-                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+          
+           this.ReturnflightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
                 }
-              }
-              e.totalOnwardDuration = totalOnwardDuration
-               dshort.push(e);
-            });
-            this.ReturnflightList =dshort.sort((a: any, b: any) => a.totalOnwardDuration - b.totalOnwardDuration);
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDuration>totalOnwardDurationB? 1: -1;  
+       
+        });
+          
           }
           else if (item.name == 'D_Long' && item.active == true) {
-            var dlong = [];
-            this.flightList.forEach((e: any) => {
-              var flights = e.flights;
-              var totalOnwardDuration = 0;
-              for (let i = 0; i < flights.length; i++) {
-                totalOnwardDuration += flights[i].duration;
-                if (flights[i + 1] != null && flights[i + 1] != undefined) {
-                let obj2Date = new Date(flights[i + 1].departureDateTime);
-                let obj1Date = new Date(flights[i ].arrivalDateTime);
-                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
+          
+                     this.ReturnflightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
                 }
-              }
-              e.totalOnwardDuration = totalOnwardDuration
-              dlong.push(e);
-            });
-           this.ReturnflightList = dlong.sort((a: any, b: any) => b.totalOnwardDuration - a.totalOnwardDuration);
-
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDurationB>totalOnwardDuration? 1: -1;  
+       
+        });
+          
+           
           }
           else if (item.name == 'D_E' && item.active == true) {
             this.ReturnflightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
@@ -813,6 +877,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       if (this.flightList.length > 0) {
         var start = this.minStopOver;
         var end = this.maxStopOver;
+          if(end >0){
         var filteredStopOver: any[] = [];
         this.flightList.forEach((e: any) => {
           var flights = e.flights;
@@ -830,13 +895,24 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         this.flightList = filteredStopOver;
+                   }else{
+       var filteredStopsArr: any[] = [];
+        this.flightList.filter((d: any) => {
+         if (d.flights.length==1 &&  d.flights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+        });
+        this.flightList = filteredStopsArr;
+
       }
-      /*
+      }
+ 
       //StopOverFilter return
       if (this.ReturnflightList.length > 0) {
         var start = this.minStopOver;
         var end = this.maxStopOver;
         var filteredStopOver: any[] = [];
+          if(end >0){
         this.ReturnflightList.forEach((e: any) => {
           var flights = e.flights;
         var totalOnwardDuration = 0;
@@ -853,6 +929,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
         });
         this.ReturnflightList = filteredStopOver;
+                   }else{
+       var filteredStopsArr: any[] = [];
+        this.ReturnflightList.filter((d: any) => {
+         if (d.flights.length==1 &&  d.flights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+        });
+        this.ReturnflightList = filteredStopsArr;
+
+      }
       }
 
       //PriceFilter
@@ -892,7 +978,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       // Layover Filter Flights
       this.flightList = this.layoverFilterFlights(this.flightList);
       this.ReturnflightList = this.layoverFilterFlights(this.ReturnflightList);
-*/
+
       this.container.clear();
       this.returnContainer.clear();
       if(this.flightList.length > 0)
@@ -1040,16 +1126,17 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       let updatedflightList: any = [];
       let isfilterMorningDepartures: any = false;
       let isfilterFlightTiming = false;
-      var current_date = new Date(this.departureDate),
-        current_year = current_date.getFullYear(),
-        current_mnth = current_date.getMonth(),
-        current_day = current_date.getDate();
 
-      var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
-      var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-      var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-      var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-      var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+        var datePipe =new DatePipe('en-US');
+        var zero_time=moment.duration('00:00').asMinutes();
+        var six_time=moment.duration('06:00').asMinutes();
+        var six_time1=moment.duration('06:01').asMinutes();
+        var twelve_time=moment.duration('12:00').asMinutes();
+        var twelve_time1=moment.duration('12:01').asMinutes();
+        var eighteen_time=moment.duration('18:00').asMinutes();
+        var eighteen_time1=moment.duration('18:01').asMinutes();
+        var endTime=moment.duration('23:59').asMinutes();
+
 
       this.flight_PopularItems.filter((item) => {
         if (item.name == "Morning_Departures" && item.active == true) {
@@ -1072,18 +1159,18 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
             let singleFlightTiming = [];
             singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
               if (indx == 0) {
-                if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "0_6") { return item; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
-                  return e;
-                }
-                else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "6_12") { return item; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
-                  return e;
-                }
-                else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "12_18") { return item; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
-                  return e;
-                }
-                else if ((isTimingFilterItems.filter((item: any) => { if (item.active == true && item.name == "18_0") { return item; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
-                  return e;
-                }
+              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=six_time) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=six_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=twelve_time) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=twelve_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=eighteen_time) {
+                return e;
+              }
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0)&& moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=eighteen_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=endTime) {
+                return e;
+              }
               }
             });
             if (singleFlightTiming.length > 0) {

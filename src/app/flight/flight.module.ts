@@ -9,6 +9,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MinuteSecondPipe } from '../pipes/minute-second.pipe';
 import { FlightCheckoutComponent } from './flight-checkout/flight-checkout.component';
+import { FlightBookingRetryComponent } from './flight-booking-retry/flight-booking-retry.component';
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
@@ -23,6 +24,8 @@ import { CountdownModule } from 'ngx-countdown';
 import { DirectiveModule } from '../directives/directive.module';
 import { TotalDurationTimePipe } from '../pipes/total-duration-time.pipe';
 import { SafeHtmlPipe } from 'src/app/shared/pipes/safeHtml.pipe';
+import { AirlinesPipe } from '../pipes/airlines.pipe';
+import { MultiAirlinesPipe } from '../pipes/multi_airlines.pipe';
 
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
 
@@ -39,11 +42,11 @@ const routes: Routes = [
   },
   {
 
-    path:"flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
+    path:"flight-int" ,component:FlightIntListComponent
 
   },
   {
-    path:"flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+    path:"flight-multicity" ,component:FlightMulticityComponent
 
   },
   {
@@ -58,18 +61,18 @@ const routes: Routes = [
   },
   {
 
-    path:"regalia_gold/flight-int" ,component:FlightIntListComponent,data: {  shouldReuse: true, }
+    path:"regalia_gold/flight-int" ,component:FlightIntListComponent
 
   },
   {
-    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent,data:{shouldReuse: true,}
+    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent
 
   },
-  
-  {
-    path:"flight-checkout/retry" ,component:FlightCheckoutComponent,
+    {
+    path:"flight-booking/retry" ,component:FlightBookingRetryComponent,
 
   }
+
 
 
 ];
@@ -78,9 +81,9 @@ const routes: Routes = [
   declarations: [
     FlightListComponent,
     DurationTimePipe,
-    FlightCheckoutComponent,
+    FlightCheckoutComponent,FlightBookingRetryComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe,TotalDurationTimePipe,SafeHtmlPipe
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe,TotalDurationTimePipe,SafeHtmlPipe,AirlinesPipe,MultiAirlinesPipe
 
   ],
   imports: [

@@ -156,22 +156,23 @@ export class HeaderComponent implements OnInit {
         cookieMessage;cookieAgree;cookieMessageType;cookieConsent:boolean=false;cookieExpiredDate: any = new Date();
         disclimerConsent:boolean=false;
         is_main:number=0;
-          voiceActiveSectionDisabled: boolean = true;
-	voiceActiveSectionError: boolean = false;
-	voiceActiveSectionSuccess: boolean = false;
-	voiceActiveSectionListening: boolean = false;
-	voiceText: any;
-  parsed_date:any;
-  relative_to:any;
-  push_ids:any;
-  cdnnotifyUrl:any;
-    isMobile:boolean= false;
-  delta:any;
+        voiceActiveSectionDisabled: boolean = true;
+        voiceActiveSectionError: boolean = false;
+        voiceActiveSectionSuccess: boolean = false;
+        voiceActiveSectionListening: boolean = false;
+        voiceText: any;
+        parsed_date:any;
+        relative_to:any;
+        push_ids:any;
+        cdnnotifyUrl:any;
+        isMobile:boolean= false;
+        delta:any;
         payzrestriction:boolean=false;
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
-
+	notificationball:boolean=true;
+  @Input() d_none :boolean = false;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
   constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
@@ -299,7 +300,7 @@ export class HeaderComponent implements OnInit {
     this.domainPath=this.sg['domainPath'];
     this.assetPath=this.sg['assetPath'];
     this.domainName=this.sg['domainName'];
-    console.log(this.domainName=this.sg['domainName']);
+  //  console.log(this.domainName=this.sg['domainName']);
 
     this.enablePrivileges=this.serviceSettings.enablePrivileges;
     
@@ -333,39 +334,11 @@ export class HeaderComponent implements OnInit {
     //FCM Analytics
     */
    }
-   if (this.cookieService.get("push_enable")) { 
-     this.enablePushTitle = true;
-     this.rest.getNotificationPopup().subscribe(result => {
-        // this.pushPopup=this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-        this.pushcount = result.count;
-
-        this.pushid = result.pushid;
-        var htmltoast='';
-        for (var index in this.pushid) {
-          this.read= this.cookieService.get("read_push");
-          if(this.read){
-            this.pushids = JSON.parse(this.read);
-            if(!this.pushids.includes(this.pushid[index]['id'])){
-              this.pushids.push(this.pushid[index]['id']);
-
-              htmltoast = this.toast(this.pushid[index],index);
-              break;
-            }
-
-          }else{
-            
-            htmltoast = this.toast(this.pushid[index],index);
-            this.pushids.push(this.pushid[index]['private _flightService:FlightServiceid']);
-            break;
-          }
-        }
-        this.pushPopup = this.htmlSanitizer.bypassSecurityTrustHtml(htmltoast);
-
-        this.cookieService.set('read_push',JSON.stringify(this.pushids), null, '/', null, null, null);
-        
-
-      });
-   }
+    if (this.cookieService.get("push_enable")!='undefined') { 
+        this.enablePushTitle = true;
+        this.getNotification();
+       
+    }
     Window["myComponent"] = this;
  
   }
@@ -475,19 +448,24 @@ export class HeaderComponent implements OnInit {
          });
 
     }
-  enablePushClick(){
-    if (!this.cookieService.get("push_enable")) { 
-      this.cookieService.set('push_enable','1', null, '/', null, null, null);
-    }
-       this.enableQuesBox=false;
-       this.enableQuesBoxNew=false;
+  enablePushClick(type){
+	         setTimeout(()=>{  
+
+        if (!this.cookieService.get("push_enable")) { 
+        this.cookieService.set('push_enable','1', null, '/', null, null, null);
+        }
+        this.enableQuesBox=false;
+        this.enableQuesBoxNew=false;
         this.enablePushContentBox=true;
-       this.getNotification();
-    // }
-      this.enablePushBox=true;
-      this.enablePushTitle = true;
-      this.notifyOpacity = true;
-      $('.myaccount-drop').removeClass('show');
+        this.getNotification();
+        this.enablePushBox=true;
+        this.enablePushTitle = true;
+        this.notifyOpacity = true;
+      if(type==2){
+       $('.myaccount-drop').removeClass('show');
+       $("#pushNotiEnable").modal('show');
+      }	
+         }, 200);
   }
   enableMoreClick() {
     
@@ -534,6 +512,12 @@ export class HeaderComponent implements OnInit {
 	 this.rest.trackEvents( track_body).subscribe(result => {});
    this.analyticsLogEvent('notification_click',id,toastUrls);
   }
+
+  onImgError(event) {
+    event.target.src = this.cdnUrl + 'notification/services/default.png';
+
+  }
+  
 closeCookieConsent(value){
   if(value==1){
     this.Cookies.GA=true;
@@ -593,23 +577,55 @@ closeCookieConsent(value){
 
   }
   getNotification(){
+                            
     this.rest.getNotification().subscribe(result => {
       this.filterHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.filterhtml);
       this.contentHtml = this.htmlSanitizer.bypassSecurityTrustHtml(result.html);
-      this.pushcountavail = result.count;
+      this.pushcount = result.result.length;
+        const unreadId = [];
+        const readId = [];
+        var blue_dott=""; var classs="";
+        result.result.forEach((v, k) =>  {    
+              if((unreadId.indexOf(unreadId) === -1)){
+                unreadId.push(v['id']);         
+              } 
+             var idcondition = document.getElementById("offers-tab-content_" + v['id']);
+		if(idcondition){
+              var condition = document.getElementsByClassName("clicked_" + v['id']).length>0;
+              if(condition && (readId.indexOf(readId) === -1)) {
+                readId.push(v['id']);
+              }
+		}
+                  this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
 
-      //pushcountavail
-      // $.each( result.result, function(k, v) {
-        result.result.forEach((v, k) =>  {
-                this.analyticsLogEvent('notification_received',v['id'],v['redirect_url']);
         });
+				
+          if(this.cookieService.get('push_status') != undefined)
+          {	
+		
+	   if(this.cookieService.get('read_notify') == '1')this.notificationball = false;   
+
+              if((readId.length === unreadId.length) ) {
+		
+                  this.cookieService.set('read_notify','1', null, '/', null, null, null);
+                  $('#notify-boll').removeClass('img-number');        
+                  $('#notify-boll').removeClass('number'); 
+		this.notificationball = false;                           
+              } 
+
+          } else {
+              this.cookieService.set('read_notify','0', null, '/', null, null, null);
+                $('#notify-boll').addClass('img-number');    
+                $('#notify-boll').addClass('number'); 
+          }
       
     });
+
   }
 
     analyticsLogEvent(event,id,url){
     var customerid ='';
-    if(this.customerInfo.hasOwnProperty('id')){
+    if(this.customerInfo != undefined && this.customerInfo.hasOwnProperty('id')){
       customerid=this.customerInfo['id']
     }
     
@@ -730,11 +746,11 @@ closeCookieConsent(value){
           if(this.deviceService.isMobile()){
                setTimeout(()=>{                          
                 this.OpenDisclaimerMobile();
-                }, 3000);
+                },3000);
            
           }else{
            setTimeout(function() {
-           $('#sb_dis_popup').trigger('click');   }, 3000);
+           $('#sb_dis_popup').trigger('click');   },3000);
           }
         }  
         }
@@ -770,7 +786,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train-traveller") || event.url.includes("bus/booking") ||  event.url.includes("freshmenu/review-order") ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("hotel/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
@@ -783,6 +799,9 @@ closeCookieConsent(value){
            this.activeMenu='home';
 
         }
+
+     
+
     });
 
     this.router.events.subscribe((event: any) => {
@@ -795,7 +814,9 @@ closeCookieConsent(value){
     }
     });
 
-
+$(".sb_head .dropdown").hover(function(){
+ $('.sb_head  .list-travel').removeClass("hideDrop");
+});
 
       let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
     	if(queryParamMap.keys[0])
@@ -1264,13 +1285,14 @@ closeCookieConsent(value){
         this.redirectPopup=2;
         this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
      }else{
-     if(path !='foryou' && path !='compare-fly' && path !='bus' && path !='train'  && path !='train/pnr')
+     if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')
       this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
      else
      this.router.navigate([this.sg['domainPath']+path]);
      }
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
+     $('.sb_head  .list-travel').addClass("hideDrop");
     }
     
     

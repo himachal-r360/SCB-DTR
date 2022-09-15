@@ -21,18 +21,18 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    .city{
-        font-size: 18px;
-        font-weight: 800;
-        color: #000000;
-        padding-bottom: 15px;
-    }
-    .time{
-        font-size: 12px;
-        font-weight: 600;
-        color: #00000060;
-        line-height: 20px;
-    }
+}
+.city{
+    font-size: 18px;
+    font-weight: 800;
+    color: #000000;
+    padding-bottom: 15px;
+}
+.time{
+    font-size: 12px;
+    font-weight: 600;
+    color: #00000060;
+    line-height: 20px;
 }
 
 .seat_cnf_number{
@@ -83,7 +83,7 @@
 }
 .seat-num{
     color: #00000080;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
 }
 .ladies_seat{
@@ -299,5 +299,270 @@ mat-error {
     }
 
  }
+ .error_msg{
+    color:red;
+ }
+ .traveller_details_ul_sort{
+    display:flex;
+    margin-bottom:2rem;
+    margin-top:1.5rem;
+    li{
+        a{
+            font-family: 'opensans-regular';
+            font-weight:600;
+            color:#00000050;
+            font-size:14px;
+            border-radius: 100px;
+            padding:8px 30px;
+            margin-right:10px;
+            background: #FFFFFF;
+            border: 1px solid #E6E6E6;
+        }
+        a.active{
+            color:#000;
+            background: rgba(29, 134, 255, 0.1);
+            border: 1px solid #1D86FF;
+        }
+    }
+ }
+ .blue_link{
+    font-weight:600;
+    font-size:14px;
+    color:#1d86ff;
+ }
+ .brdr_top{
+    border-top:1px solid #f0f0f0;
+ }
+ .travel_checkbox{
+    opacity:0.5;
+  }
+  .travel_checkbox:checked{
+    opacity:1;
+  }
+  .travellers_list{
+    border-top:1px solid #f0f0f0;
+    padding:12px 0px 12px 0px;
+  }
+  .add-search-ul {
+    display:block;
+  }
 
+  .traveller-adults-ul {
+    margin:0px -20px;
+	.custom-check-box {
+        padding:20px;
+        border-bottom:none;
+        border-top:1px solid #f0f0f0;
+		&:last-child {
+			border-bottom: none;
+            padding-bottom:18px;
+		}
+        .description {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 16px;
+            color: rgba(0, 0, 0, 0.7);
+        }
+	}
+}
 
+// mlite checkout page extra css
+@media screen and (max-width:600px){
+    .booking-inner-box {
+        padding:12px;
+    }
+    .traveller-details{
+        padding:18px;
+        .travel-num, .seat-num{
+            font-size:14px;
+        }
+        .primary_pass, .primary_pass_select{
+            font-size:12px;
+        }
+        .traveller_details_ul_sort{
+            li{
+                a{
+                    padding:5px 20px;
+                    font-size:12px;
+                }
+            }
+        }
+    }
+    .booking-title-box{
+        margin-bottom:0px;
+        h4 {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 0px;
+            color: #000000;
+            padding-top:15px;
+            span{
+                color: #888888;
+                font-size: 14px;
+                font-weight: 600;
+                padding-left: 15px;
+            }
+        }
+    } 
+    
+    .fixed-top{
+        z-index:5;
+    }
+
+}
+
+// end of mlite checkout page extra css
+
+.trip_select {
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    margin-top:0.5rem;
+    margin-bottom:1rem;
+}
+.buttonTrip {
+    float: left;
+    margin: 0 8px 0 0;
+    width: 18%;
+    height: 34px;
+    position: relative;
+    @media screen and (max-width:600px){
+        width:115px;
+    }
+}
+
+.buttonTrip label,
+.buttonTrip input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.buttonTrip input[type="radio"] {
+    opacity: 0.011;
+    z-index: 100;
+}
+
+.buttonTrip input[type="radio"]:checked+label {
+    // background: #2C0E00;
+    // border-radius: 5px;
+    // border: 0px solid #CF8D56;
+    // font-family: 'opensans-medium';
+    // color: #ffffff;
+
+    font-family: 'opensans-regular';
+            font-weight:600;
+            font-size:14px;
+            border-radius: 100px;
+            padding:5px 25px;
+            margin-right:10px;
+            color:#000;
+            background: rgba(29, 134, 255, 0.1);
+            border: 1px solid #1D86FF;
+            cursor:pointer;
+            @media screen and (max-width:600px){
+                padding:5px 20px;
+            }
+}
+
+.buttonTrip label {
+    cursor: pointer;
+    font-family: 'opensans-regular';
+            font-weight:600;
+            color:#00000050;
+            font-size:14px;
+            border-radius: 100px;
+            padding:5px 25px;
+            margin-right:10px;
+            background: #FFFFFF;
+            border: 1px solid #E6E6E6;
+            @media screen and (max-width:600px){
+                padding:5px 20px;
+            }
+}
+
+.buttonTrip>label.btn-default:before,
+.buttonTrip>label.btn-default:after {
+    display: none;
+}
+
+.flight-details-area{
+    margin-top:10px;
+    @media screen and (max-width:600px){
+        margin-top:7rem;
+    }
+}
+.bus_checkout_modal_cities{
+    display:flex;
+    justify-content: space-between;
+}
+.bus_checkout_maodal_p{
+    font-family: 'opensans-regular';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 13px;
+    text-align: center;
+    color: #00000070;
+}
+
+.close_btn{
+    cursor: pointer;
+    position: absolute;
+    right: 2%;
+    top: 4%;
+}
+.gstTitle {
+    color: #1C1C1C;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+.gst_btn{
+    width: 150px;
+    cursor: pointer;
+    @media only screen and (max-width:600px){
+        width: 110px;
+    }
+}
+
+.savedGst_sec {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    -ms-grid-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+    @media only screen and (max-width:600px){
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .travel-card-details {
+        border: 1px solid #ededed;
+        padding: 15px;
+        border-radius: 8px;
+        width: 100%;
+    }
+    .active {
+        border-color: #1b73f9 !important;
+    }
+    .gstHeading {
+        color: #000000;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .gstName {
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .gstAddress {
+        color: #828282;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    
+}

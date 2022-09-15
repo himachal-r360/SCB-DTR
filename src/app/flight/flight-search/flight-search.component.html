@@ -107,7 +107,7 @@
             <div class="row g-2">
                 <div class="col-lg-6">
                     <div class="select-root-area" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
-                        <div class="select-root-left" appDropdown>
+                        <div class="select-root-left" appDropdown  (click)='focusInput(-1,"from")'>
                             <span class="select-roottitle">FROM</span>
                             <!-- <h5 class="fw_6 ">{{fromCityName}}<span *ngIf="!isMobile">, {{fromCountryName}}</span></h5> -->
                             <h5 class="fw_6 text-dotted" *ngIf="!isMobile">{{(fromCityName | slice:0:10) + ","}} {{( fromCountryName.length > 8)? (fromCountryName | slice:0:10)+'..':(fromCountryName)}}</h5>
@@ -223,7 +223,7 @@
                         <div class="select-root-icons" (click)="swap()">
                             <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                         </div>
-                        <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" >
+                        <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv"  (click)='focusInput(-1,"to")'>
                             <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
                             <!-- <h5 class="fw_6 ">{{toCityName}}<span *ngIf="!isMobile">, {{toCountryName}}</span></h5> -->
                             <h5 class="fw_6 text-dotted" *ngIf="!isMobile">{{(toCityName | slice:0:10) + ","}} {{(toCountryName.length > 8)? (toCountryName | slice:0:10)+'..':(toCountryName)}}</h5>
@@ -324,7 +324,7 @@
                                         <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
 
                                         <span class="select-roottitle d-block w-100 " style="font-size: 15px;"
-                                            *ngIf="departureDate=='' ||departureDate==undefined">Select Departure</span>
+                                            *ngIf="departureDate=='' ||departureDate==undefined"></span>
                                         <span class="select-roottitle"
                                             *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                             }}</span>
@@ -355,10 +355,10 @@
                                             {{arrivalDate | date:'dd MMM' }}</h5>
 
                                         <span class="select-roottitle d-block w-100" style="font-size:15px ;"
-                                            *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
-                                            Select Return</span>
+                                            *ngIf="(arrivalDate!='' && arrivalDate!='null') || arrivalDate==undefined || navItemActive == 'One Way'">
+                                            </span>
                                         <span class="select-roottitle"
-                                            *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
+                                            *ngIf="(arrivalDate!='' && arrivalDate!='null') ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                             | date:'EEEE' }}</span>
 
                                     </div>
@@ -901,7 +901,7 @@
                     <ng-container  [formGroupName]="i">
                         <div class="col-lg-6">
                             <div class="select-root-area">
-                                <div class="select-root-left" appDropdown>
+                                <div class="select-root-left" appDropdown  (click)='focusInput(i,"from")' >
                                     <span class="select-roottitle">FROM</span>
                                     <!-- <h5 class="fw_6 ">{{item.value.fromCity}}<span *ngIf="!isMobile && item.value.fromCountryFullName != ''">, {{item.value.fromCountryFullName}}</span> -->
                                     <h5 class="fw_6 text-dotted" *ngIf="item.value.fromCity">{{(item.value.fromCity|slice:0:10) + "," }} {{(item.value.fromCountryFullName.length > 8)? (item.value.fromCountryFullName | slice:0:10)+'..':(item.value.fromCountryFullName)}}</h5>
@@ -919,7 +919,7 @@
                                                                                  
 
                                         <div class="flight-from-data-search" *ngIf="!isMobile">
-                                            <input type="text" autocomplete="off" class="w-100" id="fromCitySearch"
+                                            <input type="text" autocomplete="off" class="w-100 fromCitySearch{{i}}" id="fromCitySearch"
                                                 placeholder="Search City"
                                                 (keyup)="searchAutoComplete($event,'fromCity','web',item);"
                                                 autofocus #fromCityInput>
@@ -960,7 +960,7 @@
                                 <div class="select-root-icons" (click)="swapMulticity(i)">
                                     <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                 </div>
-                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}">
+                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}" (click)='focusInput(i,"to")'>
                                     <span class="select-roottitle">TO</span>
                                     <h5 class="fw_6 text-dotted" *ngIf="item.value.toCountryFullName">{{(item.value.toCity|slice:0:10) + ","}} {{(item.value.toCountryFullName.length > 8)? (item.value.toCountryFullName | slice:0:10)+'..':(item.value.toCountryFullName)}}</h5>
                                     <span class="select-roottitle text-dotted" *ngIf="item.value.flightto != ''" >{{item.value.flightto + "," }} {{( item.value.toAirportName.length > 20)? (item.value.toAirportName | slice:0:25)+'..':(item.value.toAirportName)}} </span>
@@ -973,7 +973,7 @@
                                     <div class="flight-to-data flight-from-hide dropdown" #removeClassToCity>
                                                        
                                         <div class="flight-from-data-search" *ngIf="!isMobile">
-                                            <input type="text" autocomplete="off" class="w-100" id="toCitySearch"
+                                            <input type="text" autocomplete="off" class="w-100 toCitySearch{{i}}" id="toCitySearch"
                                                 placeholder="Search City"
                                                 (keyup)="searchAutoComplete($event,'toCity' ,'web');" #toCityInput
                                                 autofocus id="toCityMob">
@@ -1013,9 +1013,7 @@
 
                                 </div>
                             </div>
-                            <div class="home-error d-flex">
-
-                            </div>
+              
                         </div>
 
                         <div class="col-lg-6">
@@ -1030,11 +1028,17 @@
                                                 <h5 class=" ">{{item.value.departure | date:'dd MMM' }}</h5>
 
                                                 <span class="select-roottitle d-block w-100"
-                                                    *ngIf="item.value.departure=='' ||item.value.departure==undefined">Select
-                                                    Departure</span>
+                                                    *ngIf="item.value.departure=='' ||item.value.departure==undefined"></span>
                                                 <span class="select-roottitle"
                                                     *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                                                     }}</span>
+                                                    
+                                                                  <div class="mt-30" *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')">
+                        <small class="validate-msg">Please select departure date.</small>
+                        </div> 
+                                        
+                                                    
+              
 
                                                 </div>
 
@@ -1053,9 +1057,11 @@
 
 
                                             </div>
+                                            
                                         </div>
 
                                     </div>
+                                    
                                 </div>
 
                                 <!--Web Date Picker-->
@@ -1071,21 +1077,21 @@
                                     </div>
 
                                 </div>
-
-
+           
 
                         </div>
+                
                     </ng-container>
                     </ng-container>
 
                     <div class="add-city-search-box ">
                         <div class="add-city-search-left" *ngIf="multicityFormArr">
                             <a href="javascript:void(0);" class="button-style" (click)="addNewCitySearchInput()"
-                                [ngClass]="multicityFormArr.length > 4 ? 'd-none':''">+ Add another
+                                [ngClass]="multicityFormArr.length > (multiCityAddCount-1) ? 'd-none':''">+ Add another
                                 city</a>
                         </div>
                         <div class="add-city-search-right fs_102">
-                            <p>You can add upto 5 cities in multi-city trip</p>
+                            <p>You can add upto {{multiCityAddCount}} cities in multi-city trip</p>
                         </div>
                     </div>
                 </div>
@@ -1099,12 +1105,15 @@
                 <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                   <ng-container  [formGroupName]="i">
                 <div class="multi-city-list" >
-                    <div class="multi-city-list-item" appDropdown>
+                    <div class="multi-city-list-item" appDropdown  (click)='focusInput(i,"from")'>
                         <p class="multi-city-list-form-text">From</p>
                         <h5 class="multi-city-list-name multi-from">{{item.value.flightfrom}}</h5>
                         <p class="multi-city-list-fullname text-dotted">{{item.value.fromCity}}</p>
-                        <mat-error *ngIf="submitted && item.get('flightfrom').errors  && item.get('flightfrom').hasError('required')"><small
-                          class="validate-msg"> Please select from city.</small></mat-error>
+                   
+
+                        <div class="mt-30" *ngIf="submitted && item.get('flightfrom').errors && item.get('flightfrom').hasError('required')">
+                        <small class="validate-msg">Please select from city.</small>
+                        </div> 
 
                         <div class="flight-from-hide ff-form-data dropdown " id="showFlightFrom_{{i}}">
                             <div class="flight-from-data">
@@ -1119,7 +1128,7 @@
                                   <div class="col-md-12">
                                       <div class="mob-search-list">
                                           <label for="">From</label>
-                                          <input type="text" autocomplete="off" class="w-100"
+                                          <input type="text" autocomplete="off" class="fromCitySearch{{i}} w-100"
                                               placeholder="Search City" name="fromCity"
                                               formControlName="fromCity"
                                               (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');"
@@ -1131,7 +1140,7 @@
                                       </div>
                                       <div class="mob-search-list">
                                           <label for="">To</label>
-                                          <input type="text" autocomplete="off" class="w-100"
+                                          <input type="text" autocomplete="off" class="w-100  toCitySearch{{i}}"
                                               placeholder="Search City" name="toCity"
                                               formControlName="toCity"
                                               (keyup)="searchAutoComplete($event,'toCity' ,'mobile');">
@@ -1166,14 +1175,22 @@
                             </div>
                         </div>
                     </div>
-                    <div class="multi-city-list-item" appDropdown #toCityDiv id="toCityDiv_{{i}}">
+                    <div class="multi-city-list-item" appDropdown #toCityDiv id="toCityDiv_{{i}}"  (click)='focusInput(i,"to")'>
                         <p class="multi-city-list-form-text">To</p>
                         <h5 class="multi-city-list-name multi-from">{{item.value.flightto}}</h5>
                         <p class="multi-city-list-fullname text-dotted">{{item.value.toCity}}</p>
-                        <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')"><small
-                          class="validate-msg"> Please select to city.</small></mat-error>
-                          <mat-error *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('MustMatch')"><small
-                              class="validate-msg"> From and To cannot be same.</small></mat-error>
+                        
+                        
+                        <div class="mt-30" *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('required')">
+                        <small class="validate-msg">Please select to city.</small>
+                        </div> 
+                        
+                            <div class="mt-30" *ngIf="submitted && item.get('flightto').errors && item.get('flightto').hasError('MustMatch')">
+                        <small class="validate-msg">From and To cannot be same.</small>
+                        </div> 
+                        
+                   
+                       
 
                         <div class="flight-from-hide ff-form-data dropdown from-flight-open_{{i}}">
                             <div class="flight-from-data">
@@ -1188,7 +1205,7 @@
                                       <div class="col-md-12">
                                           <div class="mob-search-list">
                                               <label for="">From</label>
-                                              <input type="text" autocomplete="off" class="w-100"
+                                              <input type="text" autocomplete="off" class="w-100 fromCity{{i}}"
                                                   placeholder="Search City" name="fromCity"
                                                   formControlName="fromCity"
                                                   (keyup)="searchAutoComplete($event,'fromCity' ,'mobile');" (click)="fromCitySelect(i)">
@@ -1199,7 +1216,7 @@
                                           </div>
                                           <div class="mob-search-list">
                                               <label for="">To</label>
-                                              <input type="text" autocomplete="off" class="w-100"
+                                              <input type="text" autocomplete="off" class="w-100 toCity{{i}}"
                                                   placeholder="Search City" name="toCity"
                                                   formControlName="toCity"
                                                   (keyup)="searchAutoComplete($event,'toCity' ,'mobile');"
@@ -1242,10 +1259,12 @@
                         <p class="multi-city-list-fullname">{{item.value.departure | date:'EEEE' }}</p>
                         <i class="far fa-calendar-alt single-datepicker me-3 fs_22" style="position: absolute;right: 0;top: 30px;"></i>
                         <span class="select-roottitle d-block w-100"
-                        *ngIf="item.value.departure=='' ||item.value.departure==undefined">Select
-                        Departure</span>
-                        <mat-error *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')"><small
-                          class="validate-msg"> Please select departure date.</small></mat-error>
+                        *ngIf="item.value.departure=='' ||item.value.departure==undefined">Departure</span>
+           
+                            <div class="mt-30" *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')">
+                                                <small class="validate-msg">Please select departure date.</small>
+                                            </div>  
+                          
                         <a href="javascript:void(0)" class="mult-mobile-close" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
                           <img src="{{cdnUrl}}/images/icons/close_01.png" alt="">
                       </a>
@@ -1297,9 +1316,9 @@
                 </ng-container>
                 <div class="multicity-add-area mb-3" *ngIf="multicityFormArr">
                     <div class="add-trip-text text-center">
-                        <p>You can add upto 5 cities in multi-city trip</p>
+                        <p>You can add upto {{multiCityAddCount}} cities in multi-city trip</p>
                     </div>
-                    <div (click)="addNewCitySearchInput()" [ngClass]="multicityFormArr.length > 4 ? 'd-none':''" class="button-style w-100">
+                    <div (click)="addNewCitySearchInput()" [ngClass]="multicityFormArr.length > (multiCityAddCount-1) ? 'd-none':''" class="button-style w-100">
                       + Add another
                       city</div>
                 </div>

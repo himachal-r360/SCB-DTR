@@ -20,16 +20,21 @@ export class TrainsFilterComponent implements OnInit {
    @Output() removeallfilters = new EventEmitter();
    @Input() departureTimeFilter:any[];
    @Input() arrivalTimeFilter:any[];
+   @Input() avlQuota:any[];
    @Input() trainTypes:any[];
    @Output()trainTypesEvent = new EventEmitter();
    @Output()searchboard = new EventEmitter();
    @Output() applyFilter = new EventEmitter();
+   @Output() selectedQuotaEvent = new EventEmitter();
     cdnUrl: any;
+    isMobile:boolean= true;
       constructor(private sg: SimpleGlobal) { this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; }
     
   ngOnInit() {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
 this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   }
+
 
   updateDepartureTimeFilter(appt) { 
     //  console.log(appt);
@@ -51,6 +56,9 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     updateToStationFilter(appt){
       this.toStationsEvent.emit(appt);
     }
+    updateTosSelectedQuota(appt){
+      this.selectedQuotaEvent.emit(appt);
+    }
 
     searchboarding(type,input:any){
       var emitter = {'type':type, 'input':input}
@@ -62,6 +70,12 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.applyFil();
     }
     onlyClearSelectionAll(){
+      if(this.isMobile){
+        $('#seniorcitizen').trigger('click');
+        $('.quotas').prop('checked', false);
+      this.updateTosSelectedQuota('');
+      }
+      
       this.removeallfilters.emit();
     }
 

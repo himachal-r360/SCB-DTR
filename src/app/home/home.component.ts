@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
-      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal
+      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -163,14 +163,17 @@ export class HomeComponent implements OnInit {
         case ('/'+this.sg['domainPath']+'compare-fly'):
         this.navItemActive = 'flight';
         break;
-        case ('/'+this.sg['domainPath']+'hotel'):
+        case ('/'+this.sg['domainPath']+'compare-stay'):
         this.navItemActive = 'hotel';
         break;
         case ('/'+this.sg['domainPath']+'bus'):
         this.navItemActive = 'bus';
         break;
-        case ('/'+this.sg['domainPath']+'train'):  case ('/'+this.sg['domainPath']+'train/pnr'):
+        case ('/'+this.sg['domainPath']+'train'): 
         this.navItemActive = 'train';
+        break;
+        case ('/'+this.sg['domainPath']+'train/pnr'):
+        this.navItemActive = 'pnr';
         break;
         default:
         this.navItemActive ='flight';
@@ -194,15 +197,15 @@ export class HomeComponent implements OnInit {
 
     this.isMobile = window.innerWidth < 991 ?  true : false;
     
-    let continueSearchValLs:any= localStorage.getItem('continueSearch');
+    let continueSearchValLs:any= localStorage.getItem(environment.continueFlightSearch);
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-        let continueSearchValBusParse:any= localStorage.getItem('continueSearchBus');
+        let continueSearchValBusParse:any= localStorage.getItem(environment.continueSearchBus);
         if(continueSearchValBusParse!=null){
         this.continueSearchValBus =JSON.parse(continueSearchValBusParse);
         }
-           let continueSearchValTrainParse:any= localStorage.getItem('continueSearchTrain');
+           let continueSearchValTrainParse:any= localStorage.getItem(environment.continueSearchTrain);
         if(continueSearchValTrainParse!=null){
         this.continueSearchValTrain =JSON.parse(continueSearchValTrainParse);
 

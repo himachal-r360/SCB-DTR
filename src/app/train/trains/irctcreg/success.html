@@ -15,9 +15,10 @@
                     <!-- {{OTPmessage}}  -->
                 </div>
                 <div class="row">
-                        <div class="col-md-6">
-                            <mat-form-field>
-                                <input matInput placeholder="IRCTC Authorised Partner User ID" maxlength="35" autocomplete="off" (keypress)="AvoidSpace($event)" formControlName="userID">
+                        <div class="col-md-10">
+                             <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>IRCTC Authorised Partner User ID</mat-label>
+                                <input matInput placeholder="" maxlength="35" autocomplete="off" (keypress)="AvoidSpace($event)" formControlName="userID">
                             </mat-form-field>
                             <div *ngIf="submittedForm3 && Form2Submit.controls['userID']['errors']" class="error">
                                 <small *ngIf="Form2Submit.controls['userID']['errors']['required']">Please enter user id.</small>
@@ -28,8 +29,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <mat-form-field>
-                            <input matInput placeholder="SMS OTP" (keypress)="numberInput($event)" formControlName="smsOTP">
+                       <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>SMS OTP</mat-label>
+                            <input matInput placeholder="" (keypress)="numberInput($event)" formControlName="smsOTP">
                         </mat-form-field>
                         <!-- <div class="resend-otp"><a href="#">Resend OTP</a></div> -->
                         <div *ngIf="submittedForm3 && Form2Submit.controls['smsOTP']['errors']" class="error">
@@ -38,8 +40,9 @@
                             </div>
                     </div>
                     <div class="col-md-6">
-                        <mat-form-field>
-                            <input matInput placeholder="Email OTP" (keypress)="numberInput($event)" formControlName="emailOTP">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Email OTP </mat-label>
+                            <input matInput placeholder="" (keypress)="numberInput($event)" formControlName="emailOTP">
                         </mat-form-field>
                         <!-- <div class="resend-otp"><a href="#">Resend OTP</a></div> -->
                         <div *ngIf="submittedForm3 && Form2Submit.controls['emailOTP']['errors']" class="error">
@@ -51,8 +54,8 @@
                 <div class="my-3">
                     <div class="row">
                         <div class="xs-center ">
-                            <button class="btn-c btn-primary" style="width: 145px;" (click)="verifyOTP()">Verify OTP</button>
-                            <a class="btn-b btn" (click)="goback()">Go Back</a>
+                            <button class="btn btn-primary cm_btn"  (click)="verifyOTP()">Verify OTP</button>
+                            <a class="btn-primary-outline btn cm_btn" (click)="goback()">Go Back</a>
                             </div>
                     </div>
                 </div>
@@ -72,7 +75,7 @@
                 <div class="row">
                     <div class="xs-center col-12 text-center">
                         <!-- <button class="btn-c btn-primary" style="width: 145px;" (click)="goBackToBookingPage()"></button> -->
-                        <a class="btn-b btn" (click)="goBackToBookingPage()">Go Back</a>
+                        <a class="btn-primary-outline btn cm_btn" (click)="goBackToBookingPage()">Go Back</a>
                         </div>
                 </div>
             </div>
@@ -90,7 +93,7 @@
                 <div class="row">
                     <div class="xs-center col-12 text-center">
                         <!-- <button class="btn-c btn-primary" style="width: 145px;" (click)="goBackToBookingPage()"></button> -->
-                        <a class="btn-b btn" (click)="goBackToBookingPage()">Go Back</a>
+                        <a class="btn-primary-outline btn cm_btn" (click)="goBackToBookingPage()">Go Back</a>
                         </div>
                 </div>
             </div>

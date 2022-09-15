@@ -61,6 +61,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   show = false;
   newDate = new Date();
   cityList: any;
+  multiCityAddCount:number=3;
   flightList: any;
   fromFlightList = false;
   toFlightList = false;
@@ -155,6 +156,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
        this.serviceSettings=this.appConfigService.getConfig();
         this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
+        this.multiCityAddCount= this.serviceSettings.multiCityMaxCount;
       window.onresize = (e) =>
       {
           //ngZone.run will help to run change detection
@@ -182,7 +184,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       multicityFormArr: this._fb.array([this.multiCityArrAddItems()])
     });
 
-    return;
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
   }
  ngAfterContentChecked() {
@@ -199,13 +201,21 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   
-    this.route.url.subscribe(url => {
-    
-    
         if(this.router.url){
         switch (this.router.url) {
         case ('/'+this.sg['domainPath']+'multicity'):
          this.navItemActive = 'Multicity';
+        localStorage.setItem('isMulticitySearch','true');
+        var multicity = localStorage.getItem('multicityLastSearch');
+        if(multicity != null && multicity != ''  )
+        {
+        this.callMutlicityFunc = false;
+        }
+        if (this.callMutlicityFunc == true) {
+        this.addMuticitySerchVal()
+        }
+        this.callMutlicityFunc = false;
+         
         break;
        
         }  
@@ -214,12 +224,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
       this.isMobile = window.innerWidth < 991 ? true : false;
-      let continueSearchValLs: any = localStorage.getItem('continueSearch');
+      let continueSearchValLs: any = localStorage.getItem(environment.continueFlightSearch);
       if (continueSearchValLs != null) {
         this.continueSearchVal = JSON.parse(continueSearchValLs);
       }
       this.setSearchFilterData()
-    });
 
 
   }
@@ -263,18 +272,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   }
   currentPeriodArrivalClicked(datePicker: any) {
-    /*let date = datePicker.target.value
-    if(date && this.navItemActive == "Round Trip"){
-      setTimeout(() => {
-        if(this.isMobile == false) {
-          let openTravellers = document.getElementById('openTravellers')
-          openTravellers?.click();
-        }
-        else if(this.isMobile)  {
-          this.openTravellerBlock();
-        }
-      }, 50);
-    }*/
+
   }
 
   fromCitySelect(i:number){
@@ -293,7 +291,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   searchAutoComplete($event, field, device, index: any) {
-   debugger
+  // debugger
     let keycode = $event.which;
     if ($event.keyCode != 40 && $event.keyCode != 38) {
       if (true) {
@@ -493,6 +491,51 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   }
+  
+  focusInput(i,type){
+    setTimeout(() => {
+   if (!this.isMobile) {
+   if(i==-1){
+      if(type=='from'){
+      // $('#fromCitySearch').select();
+        $('#fromCitySearch').focus();
+      }else {   
+      //$('#toCityMob').select();
+       $('#toCityMob').focus();
+      
+      }
+     }else{
+     if(type=='from'){
+      // $('.fromCitySearch'+i).select();
+        $('.fromCitySearch'+i).focus();
+      }else {   
+      //$('.toCitySearch'+i).select();
+       $('.toCitySearch'+i).focus();
+      
+      }
+     }
+    }else{
+       if(i==-1){
+      if(type=='from'){
+       //$('#fromCitySearch').select();
+        $('#fromCitySearch').focus();
+      }else {  
+      //$('#toCitySearch').select();
+      $('#toCitySearch').focus();
+      }
+     }else{
+       if(type=='from'){
+       //$('.fromCitySearch'+i).select();
+        $('.fromCitySearch'+i).focus();
+      }else {  
+      //$('.toCity'+i').select();
+      $('.toCity'+i).focus();
+      }
+     }
+    
+    } 
+    }, 10);
+  }
 
 
   adultsVal: any=1;
@@ -500,7 +543,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   infantsVal:  any=0;
   flightFromInput: any;
   setSearchFilterData() {
-    let lastSearch: any = localStorage.getItem('flightLastSearchNew');
+    let lastSearch: any = localStorage.getItem(environment.flightLastSearch);
       var multicity = localStorage.getItem('multicityLastSearch');
       var isMulticity =   localStorage.getItem('isMulticitySearch');
       if(multicity != null && multicity != ''  )
@@ -588,7 +631,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         this.departureDate = new Date(lastSearch.departure);
-        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null) {
+        if (lastSearch.arrival != '' && lastSearch.arrival != undefined && lastSearch.arrival != null && lastSearch.arrival !='null') {
           this.arrivalDate = new Date(lastSearch.arrival);
         }
         if(this.departureDate < (new Date()).setHours(0,0,0,0))
@@ -649,7 +692,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearch');
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
     if (continueSearch == null) {
       this.continueSearchFlights = [];
     }
@@ -665,12 +708,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
     }
     this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
   }
 
 
   sameCityValidation = false;
   flightSearch() {
+   // debugger;
     this.submitted = true;
     if (this.flightData.value.departure != "" && this.flightData.value.departure != undefined) {
       this.dateValidation = false;
@@ -684,7 +728,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     else {
       this.sameCityValidation = true;
     }
-
     if (this.flightData.value.arrival != "" && this.flightData.value.arrival != undefined) {
       this.flightData.value.arrival = this.flightData.value.arrival.getFullYear() + '-' + (this.flightData.value.arrival.getMonth() + 1) + '-' + this.flightData.value.arrival.getDate();
       this.flightData.get('flightdefault').setValue('R');
@@ -698,7 +741,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightData.get('travel').setValue('INT');
     }
 
-
     if (this.flightData.invalid || this.dateValidation == true) {
       return
     }
@@ -708,7 +750,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
       this.flightSearchCallBack(searchValue);
 
-      localStorage.setItem('flightLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
 
       if (searchValue.arrival)
@@ -758,8 +800,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
-
     this._styleManager.removeScript('custom');
   }
 

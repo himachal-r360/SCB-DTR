@@ -1,6 +1,5 @@
 @import '../../../assets/sharedscss/color';
 @import '../../../assets/sharedscss/spacing';
-
 h6 {
     font-size: $size-small;
     font-weight: 600;
@@ -9,53 +8,47 @@ h6 {
     color: $color-dark-gray;
 }
 
-.filter-container{
-    .filter-header{
+.filter-container {
+    .filter-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid #88888820;
         padding-bottom: 15px;
-        .header-left{
+        .header-left {
             color: #555555;
             font-size: 16px;
             font-weight: 700;
         }
-        .header-right{
-            a{
+        .header-right {
+            a {
                 color: #1D86FF;
-                font-size: 12px;
+                font-size: 14px;
                 font-weight: 600;
             }
         }
     }
 }
 
-.w-filter{
-    .mat-accordion{
-        .mat-expansion-panel{
+.w-filter {
+    .mat-accordion {
+        .mat-expansion-panel {
             box-shadow: none;
             border-bottom: 1px solid #eee;
             border-radius: 0;
-            .mat-expansion-panel-header{
+            .mat-expansion-panel-header {
                 padding: 0 2px 0 0;
             }
-            .mat-expansion-panel-content{
-                
-            }
-            
+            .mat-expansion-panel-content {}
         }
     }
-
-
-    .train_timeTitle{
+    .train_timeTitle {
         font-size: 12px;
         color: #555555;
         font-weight: 400;
         margin: 15px 0px;
         text-align: left;
     }
-
     /* .departure_check, .arrival_check{
         display: flex;
         align-items: center;
@@ -90,7 +83,7 @@ h6 {
 .search-sub-filter {
     border: 0;
     border-bottom: 1px solid #88888820;
-    font-size: $size-small;
+    font-size: 14px;
     line-height: 1.87;
     text-align: left;
     color: $color-dark-gray;
@@ -98,30 +91,24 @@ h6 {
     padding-bottom: 8px;
     margin-bottom: 10px;
     width: 100%;
-
     &:focus {
         outline: none;
     }
-
-    ::-webkit-input-placeholder {
+     ::-webkit-input-placeholder {
         color: $color-dark-gray;
     }
-
-    ::-moz-placeholder {
+     ::-moz-placeholder {
         color: $color-dark-gray;
     }
-
-    :-ms-input-placeholder {
+     :-ms-input-placeholder {
         color: $color-dark-gray;
     }
-
-    :-moz-placeholder {
+     :-moz-placeholder {
         color: $color-dark-gray;
     }
 }
 
-
-.icn_search{
+.icn_search {
     font-size: 15px;
     position: absolute;
     top: 4px;
@@ -129,16 +116,14 @@ h6 {
     width: 4px;
 }
 
-.filter-common{
+.filter-common {
     max-height: 500px;
     overflow-y: auto;
     width: 100%;
 }
 
 
-
 /*cust-checkbox*/
-    
 
 .checkbox-cust input {
     position: absolute;
@@ -154,10 +139,10 @@ h6 {
     left: 5px;
     width: 85%;
     height: 16px;
+    display: none;
 }
 
-
-.checkbox-cust  input:checked + .checkbox-cust  {
+.checkbox-cust input:checked+.checkbox-cust {
     background-color: #000000;
 }
 
@@ -173,73 +158,82 @@ h6 {
     grid-template-columns: 1em auto;
     grid-gap: 0.5em;
     gap: 0.5em; */
-    input[type="checkbox"]{
-
+    input[type="checkbox"] {
         position: relative;
         top: 2px;
         margin-right: 6px;
     }
 }
 
-.active_bg{
+.active_bg {
     border: 1px solid #1d86ff !important;
     background-color: rgba(29, 135, 255, 0.151) !important;
     color: #1d86ff !important;
 }
-.brdr_btm_0{
-    border-bottom:none;
+
+.brdr_btm_0 {
+    border-bottom: none;
 }
 
 .mat-accordion {
-	.mat-expansion-panel {
-		&:last-child {
-			border-bottom: none !important; 
-		}
-	}
+    .mat-expansion-panel {
+        &:last-child {
+            border-bottom: none !important;
+        }
+    }
 }
 
-
-.flex-items{
+.flex-items {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
-
-    .checkbox-cust{
-        display:flex;
-        align-items:center;
+    .checkbox-cust {
+        display: flex;
+        align-items: center;
         justify-content: center;
-        padding:5px;
-        // background: #FFFFFF;
+        padding: 5px;
+        background: #FFFFFF;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        font-size:11px;
-        color:#000;
-        width:100%;
-        background: rgba(29, 134, 255, 0.03);
-        border: 1px solid rgba(29, 134, 255, 0.07);
-        border:1px solid #00000010;
-        .icons-filter{
+        border-radius: 2px;
+        font-size: 11px;
+        color: #000;
+        width: 100%;
+        // background: rgba(29, 134, 255, 0.03);
+        // border: 1px solid rgba(29, 134, 255, 0.07);
+        .icons-filter {
             padding-right: 1rem!important;
         }
-        .filter_category_icons{
-            img{
-                width:15px;
-                height:15px;
+        .filter_category_icons {
+            img {
+                width: 15px;
+                height: 15px;
             }
         }
-        input{
-            visibility:hidden;
+        input {
+            visibility: hidden;
         }
-        &:hover{
-            background-color:none;
+        &:hover {
+            background-color: none;
         }
     }
-    .checkbox-cust.active{
+    .checkbox-cust.active {
         background: rgba(29, 134, 255, 0.2);
-        border: 1px solid rgba(29, 134, 255, 0.25); 
+        border: 1px solid rgba(29, 134, 255, 0.25);
     }
 }
-.h_auto{
-    height:auto !important;
-    padding:18px 5px 18px 0px !important;
+
+.h_auto {
+    height: auto !important;
+    padding: 18px 5px 18px 0px !important;
+}
+
+.quota_flex {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+}
+
+.quota_btn {
+    margin: 5px;
 }

@@ -130,13 +130,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
        validators: MustMatch('fromTravelCode', 'toTravelCode')
      });
       
-      
-      window.onresize = (e) =>
-      {
-          this.ngZone.run(() => {
-            this.isMobile = window.innerWidth < 991 ?  true : false;
-          });
-      }
+
       setTimeout(() => {
         this._styleManager.setScript('custom', `assets/js/custom.js`);
      }, 10);
@@ -156,23 +150,40 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 	  this.quotaList =AppConfig.IRCTC_List_Quota;
        this.travelFromOptions= this.defaultTravelOptions;
        this.travelToOptions= this.defaultTravelOptions;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
   public Error = (controlName: string, errorName: string) => {
     return this.searchTrainForm.controls[controlName].hasError(errorName);
   };
   ngOnInit(): void {
-         this.route.url.subscribe(url =>{
-   this._trainService.showHeader(true);
+    this._trainService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    let continueSearchValLs:any= localStorage.getItem('continueSearchTrain');
+    let continueSearchValLs:any= localStorage.getItem(environment.continueSearchTrain);
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
-    this.setSearchFilterData()
-   });
-  }
+    this.setSearchFilterData();
+   /* this.fromCityName=this.route.snapshot.queryParamMap.get('searchFrom').replace(/-/g, " ");
+    this.fromStateName=this.route.snapshot.queryParamMap.get('fromTravelCode')+', '+this.fromCityName;
+    this.toCityName=this.route.snapshot.queryParamMap.get('searchTo').replace(/-/g, " ");
+    this.toStateName=this.route.snapshot.queryParamMap.get('toTravelCode')+', '+this.toCityName;
+    this.departureDate=this.route.snapshot.queryParamMap.get('departure');*/
 
+  }
+  focusInput(type){
+    setTimeout(() => {
+      if(type=='from'){
+      // $('.searchFromTrain').select();
+        $('.searchFromTrain').focus();
+      }else {   
+      //$('.searchToTrain').select();
+       $('.searchToTrain').focus();
+      
+      }
+  
+    }, 10);
+  }
 
    searchAutoComplete($event,field,device) {
        let keycode = $event.which;
@@ -379,7 +390,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('trainLastSearchNew');
+   let lastSearch:any=localStorage.getItem(environment.trainLastSearch);
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
       console.log(lastSearch);
@@ -412,6 +423,11 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
   
   
   swap() {
+        // this.searchTrainForm['controls']['searchFrom'].setValue(values.station_name);
+        // this.searchTrainForm['controls']['fromTravelCode'].setValue(values.station_code);
+        // this.fromCityName=values.station_name;
+        // this.fromStateName=values.station_code+', '+values.station_name;
+        // this.travelFromOptions= this.defaultTravelOptions;
       
         var FromData = {
         searchFrom: this.searchTrainForm.value.searchFrom,
@@ -421,23 +437,24 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
         this.searchTrainForm.get('searchFrom').setValue(this.searchTrainForm.value.searchTo );
         this.searchTrainForm.get('fromTravelCode').setValue(this.searchTrainForm.value.toTravelCode );
+        
        // this.searchTrainForm.get('fromState').setValue(this.searchTrainForm.value.toState );
        
         this.fromCityName = this.searchTrainForm.value.searchTo;
-       // this.fromStateName = this.searchTrainForm.value.toState;
+       this.fromStateName = this.searchTrainForm.value.toTravelCode+', '+this.searchTrainForm.value.searchTo;
 
         this.searchTrainForm.get('searchTo').setValue(FromData.searchFrom );
         this.searchTrainForm.get('toTravelCode').setValue(FromData.fromTravelCode );
       //  this.searchTrainForm.get('toState').setValue(FromData.fromState );
      
         this.toCityName =  FromData.searchFrom;
-       // this.toStateName = FromData.fromState;
+       this.toStateName = FromData.fromTravelCode+', '+FromData.searchFrom;
 
   }
 
   trainSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem('continueSearchTrain');
+      let continueSearch:any=localStorage.getItem(environment.continueSearchTrain);
       if(continueSearch==null){
         this.continueSearchTrain=[];
       }
@@ -454,14 +471,13 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
         this.continueSearchTrain=this.continueSearchTrain.slice(0,3);
       }
       this.continueSearchTrain.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem('continueSearchTrain',JSON.stringify(this.continueSearchTrain));
+      localStorage.setItem(environment.continueSearchTrain,JSON.stringify(this.continueSearchTrain));
   }
 
 
   sameCityValidation = false;
   trainSearch() {
       this.submitted = true;
-
 
         if(this.searchTrainForm.value.fromTravelCode!= this.searchTrainForm.value.toTravelCode){
         this.sameCityValidation = false
@@ -475,7 +491,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
      } else {
       let searchValue = this.searchTrainForm.value;
       this.trainSearchCallBack(searchValue);
-      localStorage.setItem('trainLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.trainLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
       url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));

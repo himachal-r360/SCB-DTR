@@ -1,25 +1,21 @@
-
-
 $break-mob-3: 320px;
 $break-mob-2: 375px;
 $break-mob-1: 425px;
 $break-md-tab: 768px;
-
-
-.head_title{
+.head_title {
     color: #000000;
     font-family: 'opensans-light';
     font-size: 40px;
     margin: 20px 0;
 }
 
-.travel_section{
+.travel_section {
     position: relative;
     border-radius: 20px;
     height: 420px;
     /* box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15); */
     margin-bottom: 3em;
-    .heading_sec{
+    .heading_sec {
         border-radius: 20px;
         padding: 25px;
         position: absolute;
@@ -28,12 +24,12 @@ $break-md-tab: 768px;
         background-position: 100% 100%;
         background-repeat: no-repeat;
         background-size: cover;
-        h5{
+        h5 {
             color: #ffffff;
             font-family: 'opensans-medium';
             font-size: 28px;
         }
-        &::after{
+        &::after {
             content: '';
             background-image: url(./../../../assets/images/smartbuy/icons/path-w.svg);
             width: 90px;
@@ -45,23 +41,23 @@ $break-md-tab: 768px;
             transition: transform .2s ease-in-out;
         }
     }
-    .flight_bg{
+    .flight_bg {
         background-image: url('./../../../assets/regalia_gold/images/banners/flight_bg.png');
     }
-    .hotel_bg{
+    .hotel_bg {
         background-image: url('./../../../assets/regalia_gold/images/banners/stay_bg.png');
     }
-    .selection_sec{
+    .selection_sec {
         border-radius: 0px 0px 20px 20px;
         padding: 25px;
         background-color: #ffffff;
         width: 100%;
-        height:100px;
+        height: 100px;
         box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
         top: 110px;
         position: absolute;
         z-index: 2;
-        &::after{
+        &::after {
             content: '';
             background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
             width: 90px;
@@ -72,30 +68,28 @@ $break-md-tab: 768px;
             background-repeat: no-repeat;
             transition: transform .2s ease-in-out;
         }
-        .class_sel{
+        .class_sel {
             position: relative;
-            
-            .select_process{
+            .select_process {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 gap: 15px;
-                margin-top: 15px;
+                /*margin-top: 15px;*/
             }
         }
-        
     }
-    .city_select_sec{
+    .city_select_sec {
         border-radius: 0px 0px 20px 20px;
         padding: 25px;
         background-color: #ffffff;
         width: 100%;
-        height:130px;
+        height: 130px;
         top: 194px;
         position: absolute;
         z-index: 1;
         box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
-        &::after{
+        &::after {
             content: '';
             background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
             width: 90px;
@@ -107,18 +101,17 @@ $break-md-tab: 768px;
             transition: transform .2s ease-in-out;
         }
     }
-    .date_select_sec{
+    .date_select_sec {
         border-radius: 0px 0px 20px 20px;
         padding: 25px;
         background-color: #ffffff;
         width: 100%;
-        height:130px;
+        height: 130px;
         top: 310px;
         position: absolute;
         z-index: 0;
         box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
-
-        &::after{
+        &::after {
             content: '';
             background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
             width: 90px;
@@ -129,19 +122,15 @@ $break-md-tab: 768px;
             background-repeat: no-repeat;
             transition: transform .2s ease-in-out;
         }
-
     }
 }
-
-
-
 
 .sub_text {
     color: #ffffff;
     font-size: 12px;
     span {
         margin-right: 10px;
-        img{
+        img {
             filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(137deg) brightness(144%) contrast(103%);
         }
     }
@@ -149,27 +138,32 @@ $break-md-tab: 768px;
         margin-right: 15px;
     }
 }
+
 .tag_desc {
     font-size: 12px;
     font-weight: 600;
     color: #ffffff;
     i {
         transform: rotate(75deg);
-        margin-right: 4px; 
+        margin-right: 4px;
     }
 }
-.switch-sec{
-    img{
+
+.switch-sec {
+    img {
         background-color: #fff;
         padding: 15px;
         margin-top: 15px;
         box-shadow: 0px 0px 13px rgb(0 0 0 / 25%);
         border-radius: 50%;
         cursor: pointer;
+        @media screen and (max-width: 600px) {
+            padding: 10px;
+        }
     }
 }
 
-.btn-icn-search{
+.btn-icn-search {
     background: radial-gradient(100.63% 100.63% at 91.14% 124.68%, #CF8D56 26.04%, #2C0E00 74.48%);
     box-shadow: 0px 6px 18px rgba(44, 14, 0, 0.32);
     padding: 15px;
@@ -178,7 +172,7 @@ $break-md-tab: 768px;
     width: 50px;
 }
 
-.trip_select{
+.trip_select {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,9 +224,13 @@ $break-md-tab: 768px;
     height: 30px;
     padding: 6px;
     border: none;
+    @media screen and(max-width: 600px) {
+        font-size: 12px;
+    }
 }
-.buttonTrip  > label.btn-default:before, .buttonTrip  > label.btn-default:after
-{
+
+.buttonTrip>label.btn-default:before,
+.buttonTrip>label.btn-default:after {
     display: none;
 }
 
@@ -266,7 +264,7 @@ $break-md-tab: 768px;
             top: 1px;
             right: 0px;
         }
-        .hotel_room_select{
+        .hotel_room_select {
             position: absolute;
             top: 30px;
         }
@@ -312,7 +310,8 @@ $break-md-tab: 768px;
     }
 }
 
-.select_city, .select_date {
+.select_city,
+.select_date {
     display: -ms-flexbox;
     display: flex;
     justify-content: space-between;
@@ -331,13 +330,13 @@ $break-md-tab: 768px;
             cursor: pointer;
         }
     }
-    .input_box, .date_box {
+    .input_box,
+    .date_box {
         width: 100%;
         /* height: 90px;
         border-radius: 8px;
         border: solid 1px #b7d6fa;
         background-color: #f0f7ff; */
-        
         label {
             padding: 10px 10px;
             display: flex;
@@ -357,8 +356,8 @@ $break-md-tab: 768px;
                 font-family: 'opensans-bold';
                 position: relative;
                 color: #C3832C;
-                @media only screen and (max-width:600px) {
-                        font-size: 16px;
+                @media only screen and (max-width: 600px) {
+                    font-size: 16px;
                 }
             }
             .truncate {
@@ -503,12 +502,11 @@ $break-md-tab: 768px;
             }
         }
     }
-    
 }
 
-.select_date{
-    .date_box{
-        &::before{
+.select_date {
+    .date_box {
+        &::before {
             content: '';
             background-image: url(./../../../assets/regalia_gold/images/icons/icn-calendar.svg);
             width: 20px;
@@ -522,9 +520,9 @@ $break-md-tab: 768px;
     }
 }
 
-.select_city{
-    .input_box{
-        &::before{
+.select_city {
+    .input_box {
+        &::before {
             content: '';
             background-image: url(./../../../assets/regalia_gold/images/icons/icn-location.svg);
             width: 20px;
@@ -536,17 +534,13 @@ $break-md-tab: 768px;
             transition: transform .2s ease-in-out;
         }
     }
-    .flight_from.input_box, .flight_to.input_box{
-            &::before{
-                bottom: 38px;
-            }
+    .flight_from.input_box,
+    .flight_to.input_box {
+        &::before {
+            bottom: 38px;
+        }
     }
-    
 }
-
-
-
-
 
 .custom-dropdown .dropdown-menu {
     right: 15px;
@@ -803,19 +797,21 @@ li {
     text-align: right;
 }
 
-/* Mlite Css */
-@media only screen and (max-width:600px) {
 
-    .mlite-tab-travel{
-        .nav-pills-travel{
+/* Mlite Css */
+
+@media only screen and (max-width:600px) {
+    .mlite-tab-travel {
+        .nav-pills-travel {
             display: flex;
             flex-wrap: nowrap;
-            a.nav-link{
+            a.nav-link {
                 color: #00000050;
                 font-size: 16px;
                 font-family: 'opensans-medium';
             }
-            a.nav-link.active, .nav-pills .show>.nav-link{
+            a.nav-link.active,
+            .nav-pills .show>.nav-link {
                 background-color: transparent;
                 color: #C3832C !important;
                 border-bottom: 3px solid #C3832C;
@@ -823,18 +819,16 @@ li {
             }
         }
     }
-
-
-    .travel_section{
+    .travel_section {
         position: relative;
         border-radius: 20px;
         height: 530px;
         /* box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15); */
         margin-bottom: 3em;
-        .from-city-pop{
+        .from-city-pop {
             z-index: 4;
         }
-        .heading_sec{
+        .heading_sec {
             border-radius: 20px;
             padding: 15px 25px;
             position: absolute;
@@ -843,12 +837,12 @@ li {
             background-position: 100% 100%;
             background-repeat: no-repeat;
             background-size: cover;
-            h5{
+            h5 {
                 color: #ffffff;
                 font-family: 'opensans-medium';
                 font-size: 28px;
             }
-            &::after{
+            &::after {
                 content: '';
                 background-image: url(./../../../assets/images/smartbuy/icons/path-w.svg);
                 width: 90px;
@@ -860,23 +854,25 @@ li {
                 transition: transform .2s ease-in-out;
             }
         }
-        .flight_bg{
+        .flight_bg {
             background-image: url('./../../../assets/regalia_gold/images/banners/flight_bg.png');
+            border-radius: 0px 0px 10px 10px;
         }
-        .hotel_bg{
+        .hotel_bg {
             background-image: url('./../../../assets/regalia_gold/images/banners/stay_bg.png');
+            border-radius: 0px 0px 10px 10px;
         }
-        .selection_sec{
+        .selection_sec {
             border-radius: 0px 0px 20px 20px;
             padding: 25px;
             background-color: #ffffff;
             width: 100%;
-            height:120px;
+            height: 120px;
             box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
             top: 100px;
             position: absolute;
             z-index: 3;
-            &::after{
+            &::after {
                 content: '';
                 background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
                 width: 90px;
@@ -887,10 +883,9 @@ li {
                 background-repeat: no-repeat;
                 transition: transform .2s ease-in-out;
             }
-            .class_sel{
+            .class_sel {
                 position: relative;
-                
-                .select_process{
+                .select_process {
                     display: flex;
                     justify-content: space-evenly;
                     align-items: center;
@@ -899,19 +894,22 @@ li {
                     height: 30px;
                 }
             }
-            
+            @media screen and(max-width:600px) {
+                border-radius: 0px 0px 10px 10px;
+            }
         }
-        .city_select_sec{
-            border-radius: 0px 0px 20px 20px;
+        .city_select_sec {
+            /*border-radius: 0px 0px 20px 20px;*/
+            border-radius: 0px 0px 5px 5px;
             padding: 25px;
             background-color: #ffffff;
             width: 100%;
-            height:130px;
+            height: 130px;
             top: 200px;
             position: absolute;
             z-index: 2;
             box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
-            &::after{
+            &::after {
                 content: '';
                 background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
                 width: 90px;
@@ -923,18 +921,17 @@ li {
                 transition: transform .2s ease-in-out;
             }
         }
-        .date_select_sec{
+        .date_select_sec {
             border-radius: 0px 0px 20px 20px;
             padding: 25px;
             background-color: #ffffff;
             width: 100%;
-            height:130px;
+            height: 130px;
             top: 310px;
             position: absolute;
             z-index: 1;
             box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
-    
-            &::after{
+            &::after {
                 content: '';
                 background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
                 width: 90px;
@@ -945,20 +942,18 @@ li {
                 background-repeat: no-repeat;
                 transition: transform .2s ease-in-out;
             }
-    
         }
-        .search_sec{
+        .search_sec {
             border-radius: 0px 0px 20px 20px;
             padding: 25px;
             background-color: #ffffff;
             width: 100%;
-            height:110px;
+            height: 110px;
             top: 410px;
             position: absolute;
             z-index: 0;
             box-shadow: 0px 13px 44px rgba(0, 0, 0, 0.15);
-    
-            &::after{
+            &::after {
                 content: '';
                 background-image: url(./../../../assets/images/smartbuy/icons/path.svg);
                 width: 90px;
@@ -969,9 +964,6 @@ li {
                 background-repeat: no-repeat;
                 transition: transform .2s ease-in-out;
             }
-
-            
-    
         }
         .city-popup ul li {
             border-bottom: 1px solid #cccccc91;
@@ -980,11 +972,9 @@ li {
                 border-bottom: 0px;
             }
         }
-        
     }
     .list_item {
         display: flex;
         align-items: center;
     }
 }
-

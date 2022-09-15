@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MaterialModule} from '../material.module';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule.forChild(ForyouTabRoutes),
     ReactiveFormsModule,
     TextMaskModule,
+    InputMaskModule
   ],
   declarations: [ForyouTabComponent, TravelSheetBottomComponent],
    exports: [ForyouTabComponent],

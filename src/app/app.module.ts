@@ -32,7 +32,6 @@ import { BusSearchModule } from './bus/bus-search/bus-search.module';
 import { TrainSearchModule } from './train/train-search/train-search.module';
 import { BusModule } from './bus/bus.module';
 import { ListModule } from './bus/list-card/list-card.module';
-import { FilterModule } from './bus/filter/filter.module';
 import { TrainModule } from './train/train.module';
 import { TrainsTravellerModule } from './train/trains-traveller/travellers.module';
 import { IrctcregModule } from './train/trains/irctcreg/irctcreg.module';
@@ -40,6 +39,7 @@ import { HotelModule } from './hotel/hotel.module';
 import { HotelSearchModule } from './hotel/hotel-search/hotel-search.module';
 //import { DatadogService } from './shared/services/datadog.service';
 import {  LOCALE_ID } from '@angular/core';
+import "@angular/common/locales/global/en-IN";
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -56,7 +56,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
  BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    FlightModule,BusModule,ListModule,FilterModule,BusSearchModule,TrainSearchModule,
+    FlightModule,BusModule,ListModule,BusSearchModule,TrainSearchModule,
     TrainModule,TrainsTravellerModule,IrctcregModule,HotelModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -77,7 +77,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
   ],
   exports:[],
    providers: [
-   { provide: LOCALE_ID, useValue: 'en-nz' },
+   { provide: LOCALE_ID, useValue: 'en-IN' },
    StyleManagerService,
    AppConfigService,
     {

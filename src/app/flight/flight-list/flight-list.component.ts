@@ -14,6 +14,9 @@ import {EncrDecrService} from 'src/app/shared/services/encr-decr.service';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { RestapiService} from 'src/app/shared/services/restapi.service';
 import { formatNumber } from '@angular/common';
+import {Subject} from 'rxjs';
+import * as moment from 'moment';
+
 export const MY_DATE_FORMATS = {
   parse: {
     dateInput: 'YYYY-MM-DD',
@@ -31,7 +34,7 @@ declare var $: any;
 @Component({
   selector: 'app-flight-list',
   templateUrl: './flight-list.component.html',
-  styleUrls: ['./flight-list.component.css'],
+  styleUrls: ['./flight-list.component.scss'],
   providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
@@ -49,7 +52,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   childVal: any;
   infantsVal: any;
 
-  sub?: Subscription;
   show = false;
   SearchCityName: any;
   cityList: any;
@@ -153,20 +155,20 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
   priceSortingFilteritems = [
-    { name: 'P_L_H', active: false, value: 'Low to High' ,image: './assets/images/icons/price-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
-    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_htl.png',sortValue:'Price' },
-    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_E', active: false, value: 'Earliest' , image:'/assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'D_L', active: false, value: 'Latest' ,image:'/assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
-    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
+    { name: 'P_L_H', active: false, value: 'Low to High' ,image: './assets/images/icons/price-l.svg',activeImage:'./assets/images/icons/active_lth.svg', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.svg',activeImage:'./assets/images/icons/active_htl.svg',sortValue:'Price' },
+    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
+    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
   ]
 
-  cdnUrl: any;
+        cdnUrl: any;
 
-          @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
-          @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
+        @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+        @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
         pageIndex: number = 26;
         ITEMS_RENDERED_AT_ONCE=25;
@@ -193,7 +195,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
            }
 
-           //$('.scrollToTop').trigger('click');
         }
 
 
@@ -209,44 +210,61 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
               }
 
             }
-            //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
-            //  this.gotoTop();
         }
    serviceSettings:any;
   enableFlightServices:any;
-
+ 
   constructor(public rest:RestapiService,private EncrDecr: EncrDecrService, private appConfigService:AppConfigService, public _styleManager: StyleManagerService,private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller)  {
-     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
-      this.serviceSettings=this.appConfigService.getConfig();
-      this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
-       this._styleManager.setScript('custom', `assets/js/custom.js`);
-
-      $(window).scroll(function(this) {
+        this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+        this.serviceSettings=this.appConfigService.getConfig();
+        this.enableFlightServices= this.serviceSettings.poweredByPartners['flights'];
+        this._styleManager.setScript('custom', `assets/js/custom.js`);
+        $(window).scroll(function(this) {
         if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-          $('#endOfPage').trigger('click');
+        $('#endOfPage').trigger('click');
         }
-      });
+        });
+
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
-@HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
-  this.isMobile = window.innerWidth < 991 ?  true : false;
-}
 
-ngOnInit(): void {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-       this.route.url.subscribe(url =>{
-       this.resetPopups();
+
+        ngOnInit(): void {
+        this.isMobile = window.innerWidth < 991 ?  true : false;
+        this.resetPopups();
         this.gotoTop();
-    this.loader = true;
-    this.getQueryParamData(null);
-    this.headerHideShow(null);
-    this.getAirpotsNameList();
-    this.getAirlinesIconList();
-    this.getCoupons();
-    this.flightSearch();
- });
-
+        this.loader = true;
+        this.getQueryParamData(null);
+        this.headerHideShow(null);
+        this.getAirpotsNameList();
+        this.getAirlinesIconList();
+        this.getCoupons();
+        this.flightSearch();
+        }
+  
+  continueSearchFlights: any = []
+    flightSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
+    if (continueSearch == null) {
+      this.continueSearchFlights = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchFlights = JSON.parse(continueSearch);
+      this.continueSearchFlights = this.continueSearchFlights.filter((item: any) => {
+        if (item.flightfrom != searchValueAllobj.flightfrom || item.flightto != searchValueAllobj.flightto) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchFlights.length > 3) {
+      this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
+    }
+    this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
   }
+  
 
   getQueryParamData(paramObj: any) {
     const params = this.route.snapshot.queryParams;
@@ -266,6 +284,9 @@ ngOnInit(): void {
     this.flightTimingfrom = this.queryFlightData.flightfrom
     this.flightTimingto = this.queryFlightData.flightto
     this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+        this.flightSearchCallBack(params);
+      localStorage.setItem(environment.flightLastSearch,JSON.stringify(params));
+    
   }
         resetPopups(){
         $('#flightChange').modal('hide');
@@ -281,9 +302,6 @@ ngOnInit(): void {
     $("#CompareToFly_" + indx + " a[value=" + value + "]").addClass("flight-extra-tabs-active");
   }
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.Initslider();
-    }, 200);
   }
 
     // get airline list
@@ -569,40 +587,57 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
           this.flightList.sort((a: any, b: any) => b.priceSummary[0].totalFare - a.priceSummary[0].totalFare);
         }
         else if (item.name == 'D_Short' && item.active == true) {
-          var dshort = [];
-          this.flightList.forEach((e: any) => {
-            var flights = e.flights;
-            var totalOnwardDuration = 0;
-            for (let i = 0; i < flights.length; i++) {
-              totalOnwardDuration += flights[i].duration;
-              if (flights[i + 1] != null && flights[i + 1] != undefined) {
-              let obj2Date = new Date(flights[i + 1].departureDateTime);
-              let obj1Date = new Date(flights[i ].arrivalDateTime);
-              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
-              }
-            }
-            e.totalOnwardDuration = totalOnwardDuration
-             dshort.push(e);
-          });
-         this.flightList = dshort.sort((a: any, b: any) => a.totalOnwardDuration - b.totalOnwardDuration);
+        
+        this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDuration>totalOnwardDurationB? 1: -1;  
+       
+        });
+        
+        
         }
         else if (item.name == 'D_Long' && item.active == true) {
-          var dlong = [];
-          this.flightList.forEach((e: any) => {
-            var flights = e.flights;
-            var totalOnwardDuration = 0;
-            for (let i = 0; i < flights.length; i++) {
-              totalOnwardDuration += flights[i].duration;
-              if (flights[i + 1] != null && flights[i + 1] != undefined) {
-              let obj2Date = new Date(flights[i + 1].departureDateTime);
-              let obj1Date = new Date(flights[i ].arrivalDateTime);
-              totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;
-              }
-            }
-            e.totalOnwardDuration = totalOnwardDuration
-            dlong.push(e);
-          });
-          this.flightList = dlong.sort((a: any, b: any) => b.totalOnwardDuration - a.totalOnwardDuration);
+                this.flightList.sort(function(a, b){
+                var totalOnwardDuration=0;
+                var totalOnwardDurationB=0;
+                for (let i = 0; i < a.flights.length; i++) {
+                totalOnwardDuration += a.flights[i].duration;
+                if (a.flights[i + 1] != null && a.flights[i + 1] != undefined) {
+                let obj2Date = new Date(a.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(a.flights[i ].arrivalDateTime);
+                totalOnwardDuration+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+                
+               for (let i = 0; i < b.flights.length; i++) {
+                totalOnwardDurationB += b.flights[i].duration;
+                if (b.flights[i + 1] != null && b.flights[i + 1] != undefined) {
+                let obj2Date = new Date(b.flights[i + 1].departureDateTime);
+                let obj1Date = new Date(b.flights[i ].arrivalDateTime);
+                totalOnwardDurationB+= (obj2Date.valueOf() - obj1Date.valueOf()) / 1000;   
+                }
+                }
+              return totalOnwardDurationB>totalOnwardDuration? 1: -1;  
+       
+        });
         }
         else if (item.name == 'D_E' && item.active == true) {
           this.flightList.sort((a: any, b: any) => new Date(a.flights[0].departureDateTime).getTime() - new Date(b.flights[0].departureDateTime).getTime());
@@ -629,6 +664,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     if (this.flightList.length > 0) {
       var start = this.minStopOver;
       var end = this.maxStopOver;
+      if(end >0){
       var filteredStopOver: any[] = [];
       this.flightList.forEach((e: any) => {
         var flights = e.flights;
@@ -646,6 +682,16 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         }
       });
       this.flightList = filteredStopOver;
+           }else{
+       var filteredStopsArr: any[] = [];
+        this.flightList.filter((d: any) => {
+         if (d.flights.length==1 &&  d.flights[0].stops == 0) {
+               filteredStopsArr.push(d);
+         }
+        });
+        this.flightList = filteredStopsArr;
+
+      }
     }
 
     //PriceFilter
@@ -736,20 +782,22 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
   //Timing Filter Flights
   timingFilterFlights(flightList: any) {
+
     this.flightList = flightList;
     let updatedflightList: any = [];
     let isfilterMorningDepartures: any = false;
     let isfilterFlightTiming = false;
-    var current_date = new Date(this.departureDate),
-    current_year = current_date.getFullYear(),
-    current_mnth = current_date.getMonth(),
-    current_day = current_date.getDate();
 
-    var date1 = new Date(current_year, current_mnth, current_day, 0, 1); // 0:01 AM
-    var date2 = new Date(current_year, current_mnth, current_day, 6, 1); // 6:01 AM
-    var date3 = new Date(current_year, current_mnth, current_day, 12, 1); // 12:01 PM
-    var date4 = new Date(current_year, current_mnth, current_day, 18, 1); // 18:01 PM
-    var date5 = new Date(current_year, current_mnth, current_day, 23, 59); // 23:59 PM
+        var datePipe =new DatePipe('en-US');
+        var zero_time=moment.duration('00:00').asMinutes();
+        var six_time=moment.duration('06:00').asMinutes();
+        var six_time1=moment.duration('06:01').asMinutes();
+        var twelve_time=moment.duration('12:00').asMinutes();
+        var twelve_time1=moment.duration('12:01').asMinutes();
+        var eighteen_time=moment.duration('18:00').asMinutes();
+        var eighteen_time1=moment.duration('18:01').asMinutes();
+        var endTime=moment.duration('23:59').asMinutes();
+
 
     this.flight_PopularItems.filter((item) => {
       if (item.name == "Morning_Departures" && item.active == true) {
@@ -775,16 +823,17 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
         //  console.log(d.flights,"d.flights");
           singleFlightTiming = d.flights.filter(function (e: any, indx: number) {
             if (indx == 0) {
-              if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && new Date(e.departureDateTime) > date1 && new Date(e.departureDateTime) < date2) {
+                       
+                 if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "0_6") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=zero_time &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=six_time) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && new Date(e.departureDateTime) > date2 && new Date(e.departureDateTime) < date3) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "6_12") { return items; } }).length > 0) && moment.duration(datePipe.transform(d.departureTime, 'HH:mm')).asMinutes() >=six_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=twelve_time) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && new Date(e.departureDateTime) > date3 && new Date(e.departureDateTime) < date4) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "12_18") { return items; } }).length > 0) && moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=twelve_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=eighteen_time) {
                 return e;
               }
-              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0) && new Date(e.departureDateTime) > date4 && new Date(e.departureDateTime) < date5) {
+              else if ((isTimingFilterItems.filter((items: any) => { if (items.active == true && items.name == "18_0") { return items; } }).length > 0)&& moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() >=eighteen_time1 &&  moment.duration(datePipe.transform(e.departureDateTime, 'HH:mm')).asMinutes() <=endTime) {
                 return e;
               }
             }
@@ -1045,33 +1094,35 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
  flightFromVal:any;
+ 
+  serverIssue:number=0;
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
-    this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
+     this._flightService.flightList(searchObj).subscribe((res: any) => {
+     if(res && res.response && res.response.docKey){
       this.loader = false;
-     // console.log(this.flightCoupons);
       this.DocKey = res.response.docKey;
-      // this.flightList = res.response.onwardFlights;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);
       this.oneWayDate = res.responseDateTime;
       this._flightService.flightListData = this.flightList;
       this.flightListWithOutFilter = this.flightList;
-     // console.log(this.flightList);
       this.flightListFullData =   res.response.onwardFlights;
       //It is used for getting min and max price.
       if (this.flightList.length > 0) {
        this.GetMinAndMaxPriceForFilter();
-       // this.minPrice = this.flightList[0].priceSummary[0].totalFare;
-       // this.maxPrice = this.flightList[this.flightList.length - 1].priceSummary[0].totalFare;
         this.sliderRange(this, this.minPrice, this.maxPrice);
       }
-     // console.log(this.flightList,"this.flightList");
       this.getAirlinelist();
       this.popularFilterFlightData();
+       this.serverIssue=0;
+      }else{
+       this.serverIssue=1;
+        this.loader = false;
+      }
 
-    }, (error) => { console.log(error) });
-
+    }, (error) => { this.serverIssue=1; this.loader = false; });
+    
   }
 
   ascPriceSummaryFlighs(flightsData:any)
@@ -1087,7 +1138,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     return flightsData;
   }
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
         this._styleManager.removeScript('custom');
   }
   HideShowCompareToFly(i: number, fromCall: string, j: number) {
@@ -1147,6 +1197,9 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
 
 
+  goSearch(){
+    this.router.navigate(['/compare-fly']);
+  }
 
   Initslider() {
     var $that = this;
@@ -1335,7 +1388,6 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
 
   headerHideShow(event:any) {
-    debugger;
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
      this._flightService.showHeader(false);

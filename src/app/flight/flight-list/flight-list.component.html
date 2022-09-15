@@ -1,21 +1,35 @@
 <section class="bradcome-area mt-110 mb-10">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="bradcome-list">
-                  <ul class="list-inline">
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Home</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="javascript:;">Travel & Stays</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><span>Flight Search</span></li>
-                  </ul>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Flight Search</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-<section class="flight-area mt-10" *ngIf="!isMobile">
+<div class="text-center" *ngIf="!isMobile && serverIssue==1">
+<div class="no_flights_sec">
+<div>
+<p class="title">Yikes! No flight found</p>
+<img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+<p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+<div>
+<button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+</div>
+</div>
+</div>
+</div>
+
+
+<section class="flight-area mt-10" *ngIf="!isMobile && serverIssue==0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -29,7 +43,7 @@
                         <p>Compare &amp; Fly with our flight partners</p>
                         <ul class="list-inline ms-3">
                             <li class="list-inline-item" *ngFor="let service of enableFlightServices">
-                                <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.png" alt="{{service.name}}">
+                                <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.svg" alt="{{service.name}}">
                             </li>
 
                         </ul>
@@ -71,7 +85,7 @@
                                                     <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                    <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}}</span>
                                                     <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
                                                 </label>
                                                 </div>
@@ -173,7 +187,7 @@
                                                     <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                    <span class="description">{{airlineItem.airlineName}} </span>
                                                 </label>
                                                     <p>&#8377;{{airlineItem.price}}</p>
                                                 </div>
@@ -184,7 +198,7 @@
                                                         <label class="custom-control material-checkbox">
                                                     <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active" (change)="flightAirlineFilterFlightData(airlineItem)"/>
                                                     <span class="material-control-indicator"></span>
-                                                    <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                    <span class="description">{{airlineItem.airlineName}}</span>
                                                 </label>
                                                         <p>&#8377;{{airlineItem.price}}</p>
                                                     </div>
@@ -346,7 +360,19 @@
                         <div class="flight-listing-area">
                             <ng-container #itemsContainer></ng-container>
                         </div>
-                        <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
+
+                        <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                            <div class="no_flights_sec">
+                                <div>
+                                    <p class="title">Yikes! No flight found</p>
+                                    <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                    <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                                    <div>
+                                        <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <ng-template #item let-item="item">
                             <div *ngFor="let list of item; let i = index">
                                 <div class="flight-listing" *ngIf="list && list.flights.length > 0" id="flight_list_{{list.flightKey}}">
@@ -355,7 +381,8 @@
                                             <div class="col-md-2">
                                                 <div class="flight-radio">
                                                     <div class="flight-radio-image" *ngIf="list.flights.length > 0">
-                                                        <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}" class="flight-image">
+
+                                                        <i class="free-flow air-logo intAirLogo size-28 x{{list.flights|airlines}}"></i>
                                                     </div>
                                                     <div class="flight-radio-time" *ngIf="list.flights.length > 0">
                                                         <h6>{{list.flights[0].airlineName}}</h6>
@@ -382,9 +409,9 @@
                                                     </div>
                                                     <div class="flight-listing-time" *ngIf="list.flights.length > 0">
                                                         <h6>{{ list.flights | durationTotalTime }}</h6>
-                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
-                                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
-                                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
+                                                        <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                        <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                        <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
                                                     </div>
                                                 </div>
 
@@ -561,7 +588,7 @@
                                                                     <div class="extra-tabs-details-bottom">
                                                                         <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                             <div class="tabs-depart-one">
-                                                                                <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" class="flight-image me-2" alt="">IndiGo {{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
+                                                                                <p class="depart-one-image"><i class="me-2 free-flow air-logo intAirLogo size-28 x{{details.airline}}"></i> {{details.airline}} {{details.flightNumber}}</p>
                                                                                 <div class="tabs-depart-left float-none justify-content-between w-100">
                                                                                     <div class="tabs-depart-times">
                                                                                         <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
@@ -840,24 +867,24 @@
                     </div>
                     <div class="mob-listing-header-right">
                         <a href="javascript:;" routerLink="/compare-fly">
-                            <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
+                            <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 mt-70" *ngIf="!loader">
+            <div class="col-md-12 flight_found_sec" *ngIf="!loader && serverIssue==0">
                 <div class="mob-listing-fiters">
                     <h6>{{flightList.length}} Flights Found</h6>
-                    <a href="javascript:void(0)" (click)="openMobileFilterSection()">
-                        <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                        <span>Sort/Filters</span>
+                    <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
+                        <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                        <span class="mx-2">Sort/Filters</span>
                     </a>
                 </div>
             </div>
 
 
 
-            <div class="col-md-12" *ngIf="!loader">
+            <div class="col-md-12" *ngIf="!loader &&  serverIssue==0">
                 <div class="mob-all-flight">
                     <ul>
                         <li id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems" value="{{Items.value}}">
@@ -884,7 +911,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center" *ngIf="!loader && flightList.length < 1">No flights found</div>
+                <div class="text-center" *ngIf="!loader && flightList.length < 1">
+                    <div class="no_flights_sec">
+                        <div>
+                            <p class="title">Yikes! No flight found</p>
+                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                            <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                            <div>
+                                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <ng-template #item let-item="item">
                     <div *ngFor="let list of item; let i = index">
                         <div class="mob-list-area" *ngIf="list.flightKey" (click)="OpenPartner(list.flightKey)" id="flight_list_{{list.flightKey}}">
@@ -892,7 +930,7 @@
                                 <div class="mob-list-items-name">
                                     <div class="mob-list-items-name-top">
                                         <div class="mob-list-items-image">
-                                            <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="{{list.flights[0].airline}}" class="flight-image">
+                                            <i class="free-flow air-logo intAirLogo size-28 x{{list.flights |airlines}}"></i>
                                             <div class="mob-list-flight-name" *ngIf="list.flights.length > 0">
                                                 <h6>{{list.flights[0].airlineName}}</h6>
                                                 <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}}</p>
@@ -913,10 +951,10 @@
                                             </div>
                                             <div class="name-bottom-top-center">
                                                 <p>{{ list.flights | durationTotalTime }}</p>
-                                                <img src="/{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                 <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
-                                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
-                                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
+                                                <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
+                                                <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
                                             </div>
                                             <div class="name-bottom-top-right">
                                                 <h6>{{list.flights[list.flights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -924,7 +962,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="name-bottom-bottom" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
+                                        <div class="name-bottom-bottom border-top" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
                                             <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
                                         </div>
                                     </div>
@@ -1008,7 +1046,8 @@
                                                             <div class="extra-tabs-details-bottom ">
                                                                 <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                     <div class="tabs-depart-one">
-                                                                        <p class="depart-one-image"><img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" class="flight-image me-2" alt="">{{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                        <p class="depart-one-image">
+                                                                            <i class="me-2 free-flow air-logo intAirLogo size-28 x{{list.flights[i].airline}}"></i> {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                         <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                         <div class="tabs-depart-left float-none justify-content-between w-100">
                                                                             <div class="tabs-depart-times">
@@ -1131,7 +1170,7 @@
                                                             <div class="rules-flight" >
                                                                 <div class="rules-flight-items" *ngFor="let flightItem of list.flights">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
+                                                                       <i class="free-flow air-logo intAirLogo size-28 x{{list.flights[0].airline}}"></i>
                                                                     </div>
                                                                     <div class="rules-flight-content" >
                                                                         <h6 >
@@ -1143,7 +1182,7 @@
                                                                 </div>
                                                                 <!-- <div class="rules-flight-items opacity_05">
                                                                     <div class="rules-flight-thumbe">
-                                                                        <img  src="{{cdnUrl}}/images/airlines/{{list.flights[0].airline}}.gif" alt="">
+                                                                       <i class="free-flow air-logo intAirLogo size-28 x{{list.flights[0].airline}}"></i>
                                                                     </div>
                                                                     <div class="rules-flight-content">
                                                                         <h6>
@@ -1354,7 +1393,7 @@
                                                                     <label class="custom-control material-checkbox">
                                                                   <input type="checkbox" class="material-control-input" value="{{popularItems.value}}" [checked]="popularItems.active" (change)="FlightPopularFilterFlightData(popularItems)">
                                                                   <span class="material-control-indicator"></span>
-                                                                  <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}} ({{popularItems.count}})</span>
+                                                                  <span class="description" *ngIf="popularItems.name!='Meals_Included'">{{popularItems.value}}</span>
                                                                   <span class="description" *ngIf="popularItems.name=='Meals_Included'">{{popularItems.value}}</span>
                                                               </label>
                                                                 </div>
@@ -1489,7 +1528,7 @@
                                                                       <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
                                                                       (change)="flightAirlineFilterFlightData(airlineItem)">
                                                                       <span class="material-control-indicator"></span>
-                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                      <span class="description">{{airlineItem.airlineName}}</span>
                                                                   </label>
                                                                         <p>₹{{airlineItem.price}}</p>
                                                                     </div>
@@ -1502,7 +1541,7 @@
                                                                       <input type="checkbox" class="material-control-input" value="{{airlineItem.airlineName}}" [checked]="airlineItem.active"
                                                                       (change)="flightAirlineFilterFlightData(airlineItem)">
                                                                       <span class="material-control-indicator"></span>
-                                                                      <span class="description">{{airlineItem.airlineName}} ({{airlineItem.flighCount}})</span>
+                                                                      <span class="description">{{airlineItem.airlineName}}</span>
                                                                   </label>
                                                                             <p>₹{{airlineItem.price}}</p>
                                                                         </div>
@@ -1590,9 +1629,9 @@
                                     </div>
 
                                 </div>
-                                       <div class="mob-sf-btns">
-                                        <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
-                                    </div>
+                                <div class="mob-sf-btns">
+                                    <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
+                                </div>
                             </div>
                         </div>
                     </div>

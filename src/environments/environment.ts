@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   LOCALLOGIN: 'true',
   COOKIE_DOMAIN: null,
-  LOCALJSON: 'false',
+  LOCALJSON: 'true',
   localInstance: 1,
    url:"https://smartbuydev.reward360.in/",
   //url:"https://smartbuyadminuat.reward360.in/",
@@ -16,7 +16,7 @@ export const environment = {
   cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',
   API_URL: {
-    'SMARTBUY': 'http://new.reward360.us/api/',
+    'SMARTBUY': 'http://offers.smartbuylocal.reward360.us/api/',
     //'SMARTBUY': 'http://new.reward360.us/api/',
     'DINERS': 'http://new.reward360.us/diners/api/',
     'INFINIA': 'http://new.reward360.us/infinia/api/',
@@ -26,6 +26,7 @@ export const environment = {
     'BUSINESS': 'http://new.reward360.us/business/api/',
   },
   MAIN_SITE_URL: 'http://new.reward360.us/',
+    DEAL_SITE_URL:'https://smartbuyuat.reward360.in/',
   SUB_SITE_URL: 'http://new.reward360.us/',
   ANGULAR_SITE_URL: 'http://new.reward360.us/lite/',
   enableEncryptionRequestResponse: false,
@@ -132,6 +133,14 @@ export const environment = {
     "CORPORATE": "corporate/bus",
     "BUSINESS": "business/bus"
   },
+  "flightLastSearch":"flightLastSearches",
+  "continueFlightSearch":"continueFlightSearch",
+  "continueSearchBus":"continueSearchBuses",
+  "busLastSearch":"busLastSearches",
+  "continueSearchTrain":"continueSearchTrains",
+  "trainLastSearch":"trainLastSearches",
+  "continueSearchHotel":"continueSearchHotels",
+  "hotelLastSearch":"hotelLastSearches",
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 
 

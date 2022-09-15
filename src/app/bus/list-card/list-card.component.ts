@@ -61,6 +61,10 @@ export class ListComponent implements OnInit,AfterViewInit {
   @Input('tag') tag; 
  showrow: boolean = false;
  @Input('rowvalue') rowvalue: number;
+ @Input('departure') departure;
+  totalFareBus: boolean = false;
+  mlite_passengerError: boolean = false;
+  mlite_seatError: boolean = false;
  @Input() set isrtc(p: boolean) {
   this.busId=this.bus.id;
   if (this.bus.rtc == false) {
@@ -142,6 +146,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
  strokeWidth: 2;
  ngOnInit() {
+ 
+ 
   if(moment(this.bus.doj).format("YYYY-MM-DD") != moment(this.bus.departureTime).format("YYYY-MM-DD")){
     this.nextDayFlag = true;
   }
@@ -191,12 +197,21 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
 
  ngOnDestroy() {}
  selected: any = 0;
+ dropPointActive:boolean=false; 
+ boardPointActive: boolean = true;
  changeTab(selectAfterAdding: boolean) {
+  
   if (selectAfterAdding) {
    this.selected = 1;
+   this.dropPointActive = true;
+   this.boardPointActive = false;
   } else {
    this.selected = 0;
   }
+ }
+ pressBoardPoint(){
+  this.dropPointActive = false;
+  this.boardPointActive = true;
  }
  tabSelectionChanged(event) {
   this.selected = event;
@@ -456,6 +471,10 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   }
  }
  onCloseDetail(){
+           let body = document.getElementsByTagName('body')[0];
+        body.classList.remove("noscroll"); //remove the class
+        
+        
    $('.mlist-header').addClass('fixed-top');
   this.showDetails = false;
     this.showAmenities = false;
@@ -520,15 +539,16 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.onSubmitSeats(tripid, busdetails, rowvalue, mobile);
    }
    if (!this.seatdetails.length) {
-    var messageSelectSeat = 'Please select seat(s)';
-    const dialogRef = this.dialog.open(ConfirmationDialog, {
+   /*  var messageSelectSeat = 'Please select seat(s)'; */
+    this.mlite_seatError = true;
+    /* const dialogRef = this.dialog.open(ConfirmationDialog, {
      id: 'messageforMliteDialog',
      data: {
       messageData: messageSelectSeat,
       redirectUrl: 0
      }
-    });
-    return true;
+    });*/
+    return true; 
    }
    this.showBoardDrop = !this.showBoardDrop;
    this.showDetails = false;
@@ -536,6 +556,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   } else {
    //this.showError = true;
    var messageSelectSeat = 'Please select seat(s)';
+   this.mlite_seatError = true;
+   /* var messageSelectSeat = 'Please select seat(s)';
    const dialogRef = this.dialog.open(ConfirmationDialog, {
     id: 'messageforMliteDialog',
     data: {
@@ -543,7 +565,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
      redirectUrl: 0
     }
    });
-   return true;
+   return true; */
   }
  
  }
@@ -554,6 +576,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  selectseat(seat: any, tripId: any, maxseats: number, mobile) {
   this.maxSeatMessage = "";
   this.seatstatus = !this.seatstatus;
+  this.totalFareBus = true;
   if (this.tripIdcheck == 0 || this.tripIdcheck != tripId) {
    this.selectedseats = [];
    this.tripIdcheck = tripId;
@@ -566,27 +589,31 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    this.maxSeatMessageStatus = false;
   } else {
    if (this.selectedseats.length == maxseats) {
-    this.maxSeatMessage = 'You can book up to ' + maxseats + ' passengers on a single ticket1';
+    this.maxSeatMessage = 'You have finished the booking limit. you can add only ' + maxseats + ' travellers';
     this.maxSeatMessageStatus = true;
     if (mobile == true) {
-     let body = document.getElementsByTagName('body')[0];
+      this.mlite_passengerError = true ;
+     /* let body = document.getElementsByTagName('body')[0];
      body.classList.remove("noscroll"); //remove the class
      var messageMaxSeat = 'You can book up to ' + maxseats + ' passengers on a single ticket2';
      const dialogRef = this.dialog.open(ConfirmationDialog, {
       id: 'messageforMliteDialog',
-      //panelClass: 'messageforMlitePanel',
-      // backdropClass: 'messageforMliteBackdrop',
+      panelClass: 'messageforMlitePanel',
+       backdropClass: 'messageforMliteBackdrop',
       data: {
        messageData: messageMaxSeat,
        redirectUrl: 0
       }
-     });
+     }); */
     }
     return true;
    } else {
     this.maxSeatMessageStatus = false;
+    this.mlite_seatError = false;
+
    }
    this.maxSeatMessage = "";
+  
    this.selectedseats.push(seat); //REmove If Seat Selected Else Push inside array
   }
   var seatdetailss = this.busHelper.seatdetails(this.selectedseats);
@@ -635,19 +662,22 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
   } else {
    this.BoardingPoint = false;
   }
-
-  let trackUrlParams = new HttpParams()
+  this.mlite_passengerError = false;
+  /*let trackUrlParams = new HttpParams()
 	.set('current_url', window.location.href)
 	.set('category', 'RedBus')
 	.set('event', 'Block Seat')
 	.set('metadata','{"seat_name":"'+JSON.stringify(this.selectedseats)+'","total_seats":"'+this.selectedseats.length+'","total_fare":"'+totalfare+'"}');
   
 	 const track_body: string = trackUrlParams.toString();
-	 this.rest.trackEvents( track_body).subscribe(result => {});
+	 this.rest.trackEvents( track_body).subscribe(result => {});*/
+
+  this.showError = false;
  }
 
  Boardingdroping(type, id, tripid: string) {
   var oldsearchparam = this.searchParam;
+
   if (oldsearchparam.tripId == tripid) {
    if ((type == 'boarding' && oldsearchparam.bpId != id) || (type == 'dropping' && oldsearchparam.dpId != id)) {
     this.rtcseatcall = false;
@@ -656,12 +686,17 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
   if (type == 'boarding') {
    this.selectedboarding = id;
    this.searchParam.bpId = id;
+   
   }
   if (type == 'dropping') {
    this.selecteddropping = id;
    this.searchParam.dpId = id;
    this.bookButtonDisable = false;
+
+  
   }
+  
+  this.showError = false;
  }
  onSeatInfo() {
   this.seatinfo = true;
@@ -701,7 +736,9 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
      fromTravelCode: xss(this.params.queryParamMap.get('fromTravelCode')),
      toTravelCode: xss(this.params.queryParamMap.get('toTravelCode')),
      searchFrom: xss(this.params.queryParamMap.get('searchFrom')),
-     searchTo: xss(this.params.queryParamMap.get('searchTo')),
+     searchTo: xss(this.params.queryParamMap.get('searchTo')),  
+     fromState: xss(this.params.queryParamMap.get('fromState')),
+     toState: xss(this.params.queryParamMap.get('toState')),
      departure: xss(this.params.queryParamMap.get('departure')),
      busdetails: busdetails,
      seatResponse:this.seatResponse

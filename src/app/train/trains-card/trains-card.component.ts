@@ -114,6 +114,7 @@ selectedIndex:number=0;selectedIndexR:number=0;
         showRepeatBooking:number=0;
   constructor(public rest:RestapiService,private spinnerService: NgxSpinnerService,private dialog: MatDialog,private router: Router, private activatedRoute: ActivatedRoute,public irctcService: IrctcApiService,private sg: SimpleGlobal,public commonHelper: CommonHelper,private EncrDecr: EncrDecrService,private appConfigService:AppConfigService,private deviceService: DeviceDetectorService) {
    this.serviceSettings=this.appConfigService.getConfig();
+   
    this.listingPageCovidPopup = this.serviceSettings.listingPageCovidPopup;
    this.domainName = this.sg['domainName'];
    this.AppConfig=AppConfig;
@@ -210,6 +211,7 @@ this.showRepeatBooking=0;
   }
 limitSeats:string='';
 checkFare(train,avlClass,type){ 
+   this.spinnerService.show();
   var time = new Date();
     var hour = time.getHours().toString();
     var min = time.getMinutes().toString();
@@ -247,7 +249,8 @@ this.showAvailable = false;
 	.set('trainNo',this.searchFareParam['trainNo'])
 	.set('toStn', this.searchFareParam['toStn']);
   let body: string = urlParams.toString();
-  this.spinnerService.show();
+  
+ 
          this.irctcService.getTrainFare( body).subscribe(response => {
           this.spinnerService.hide();
          let data=JSON.parse(this.EncrDecr.get(response.result ));
@@ -375,12 +378,17 @@ openCovidHealthpopup(train,avlDay,avlClass){
   this.searchTrainKey = btoa(train.fromStnCode+train.toStnCode+avlDay.availablityDate+this.quota+avlClass+train.trainNumber+train.departureTime
     +train.arrivalTime+train.trainName);
 
+  
   if(this.listingPageCovidPopup == 1){
   let dialogRef = this.dialog.open(covidDialog, {
+    
     disableClose: true,
     width: '800px',
-    autoFocus: false
+    autoFocus: false,
+    hasBackdrop: true
+    
   });
+
   
   
   dialogRef.afterClosed().subscribe(result => {
@@ -490,7 +498,7 @@ bookNow(train,avlDay,avlClass){
 	  let navigationExtras: NavigationExtras = {
 	  queryParams: { 'searchTrainKey': this.searchTrainKey }
 	};
-  this.router.navigate([this.sg['domainPath']+`trains/traveller`], navigationExtras)
+  this.router.navigate([this.sg['domainPath']+`train/checkout`], navigationExtras)
   }
   let trackUrlParams = new HttpParams()
 .set('current_url', window.location.href)

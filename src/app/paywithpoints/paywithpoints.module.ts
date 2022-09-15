@@ -9,8 +9,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { FormsModule,ReactiveFormsModule }  from '@angular/forms';
 import { CountdownModule } from 'ngx-countdown';
-
-
+import { NgxSpinnerModule } from "ngx-spinner";
+import { TextMaskModule } from 'angular2-text-mask';
 @NgModule({
   declarations: [PaywithpointsComponent,ConfirmationDialog],
   imports: [
@@ -21,7 +21,8 @@ import { CountdownModule } from 'ngx-countdown';
     MatFormFieldModule,
     MatDatepickerModule, 
     MatNativeDateModule,
-    CountdownModule    
+    CountdownModule,NgxSpinnerModule,
+    TextMaskModule    
   ],
   entryComponents: [ConfirmationDialog],
   exports: [MatInputModule,

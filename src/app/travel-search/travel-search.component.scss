@@ -1,6 +1,5 @@
 @import '../../assets/sharedscss/color';
 @import '../../assets/sharedscss/spacing';
-
 $break-mob-3: 320px;
 $break-mob-2: 375px;
 $break-mob-1: 425px;
@@ -21,6 +20,7 @@ $break-md-tab: 768px;
     position: absolute;
     right: 10px;
     bottom: 8px;
+    cursor: pointer;
 }
 
 .d-flex {
@@ -43,6 +43,10 @@ $break-md-tab: 768px;
     }
 }
 
+.for-control-border {
+    border: transparent !important;
+}
+
 .control_input {
     border-radius: 0px;
     transition: 0.4s;
@@ -56,6 +60,7 @@ $break-md-tab: 768px;
         cursor: pointer;
     }
 }
+
 .control_input::placeholder {
     font-family: $regular;
     color: $black-color;
@@ -64,9 +69,13 @@ $break-md-tab: 768px;
 .sub_text {
     color: $sub-text-color;
     font-size: 12px;
-    span {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* span {
         margin-right: 10px;
-    }
+    } */
     .part_logo {
         margin-right: 15px;
     }
@@ -119,13 +128,13 @@ $break-md-tab: 768px;
             width: 180px;
             height: 28px;
             border: none;
-            border-bottom: 1px solid #0000006b; 
+            border-bottom: 1px solid #0000006b;
             border-radius: 0;
             background-color: transparent;
-            font-size: 18px;
+            font-size: 16px;
             padding: 0px;
             color: $black-color;
-            @media only screen and (max-width:1024px) {
+            @media only screen and (max-width: 1024px) {
                 width: 110px;
             }
         }
@@ -287,9 +296,11 @@ $break-md-tab: 768px;
         color: yellow;
     }
 }
-.w-48{
+
+.w-48 {
     width: 48% !important;
 }
+
 .select_city {
     display: -ms-flexbox;
     display: flex;
@@ -476,7 +487,6 @@ $break-md-tab: 768px;
             }
         }
     }
-
 }
 
 .pop-city {
@@ -796,8 +806,9 @@ li {
     height: 30px;
     padding: 6px;
 }
-.buttonTrip  > label.btn-default:before, .buttonTrip  > label.btn-default:after
-{
+
+.buttonTrip>label.btn-default:before,
+.buttonTrip>label.btn-default:after {
     display: none;
 }
 
@@ -929,7 +940,7 @@ infinite-calendar {
         margin: 0 auto;
         margin-bottom: 10px;
     }
-    p{
+    p {
         margin-bottom: 1rem;
     }
     .main_text {
@@ -986,7 +997,6 @@ infinite-calendar {
         font-family: $medium;
         border: none;
     }
-
     .date_input_box {
         .control_input {
             font-size: 15px;
@@ -1797,10 +1807,15 @@ infinite-calendar {
     right: 0;
     bottom: 5px;
 }
-.mat-input-element:disabled{
-  background-color: #e9ecef;
+
+.mat-input-element:disabled {
+    background-color: #e9ecef;
 }
-
-
-
-
+.mat-select-trigger{
+    .mat-select-value{
+        .mat-select-value-text{
+            font-size:16px;
+            color:#000000;
+        }
+    }
+}

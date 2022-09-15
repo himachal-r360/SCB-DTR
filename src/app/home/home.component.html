@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="travel-box">
-                        <div class="travel-select-area">
+                    <div class="travel-box train_mlite_srch_div">
+                        <div class="travel-select-area train_mlite_tabs">
                             <div class="travel-select-box">
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
@@ -22,7 +22,7 @@
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a"   (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/bus.svg" alt="">
-                                            Bus
+                                            Buses
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
@@ -37,7 +37,7 @@
                         <app-flight-search isViewPartner="true" *ngIf="navItemActive=='flight'" ></app-flight-search>
                         <app-hotel-search isViewPartner="true" *ngIf="navItemActive=='hotel'" ></app-hotel-search>
                         <app-bus-search isViewPartner="true" *ngIf="navItemActive=='bus'" ></app-bus-search>
-                        <app-train-search isViewPartner="true" *ngIf="navItemActive=='train'" ></app-train-search>
+                        <app-train-search isViewPartner="true" *ngIf="navItemActive=='train' || navItemActive=='pnr' " ></app-train-search>
                     </div>
                 </div>
             </div>
@@ -316,7 +316,7 @@
         </div>
     </section>
     <!-- Trending Routes -->
-    <section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
+    <!--<section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -384,11 +384,11 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
    
 
     <!-- Popular Domestic Flight Routes -->
-    <section class="popular-Domestic-area mb-50" *ngIf="navItemActive=='flight'">
+   <!-- <section class="popular-Domestic-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -461,10 +461,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
     <!-- Popular International  Flight Routes -->
-    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
+   <!-- <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -537,13 +537,13 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
 
 
     <!-- popular bus routes -->
         <!-- Popular International  Flight Routes -->
-        <section class="popular-International-area mb-50" *ngIf="navItemActive=='bus'">
+       <!-- <section class="popular-International-area mb-50" *ngIf="navItemActive=='bus'">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -616,14 +616,14 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
 
     <!-- end of popular bus routes -->
 
 
 
     <!-- Popular International  Flight Routes -->
-    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
+   <!-- <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -664,6 +664,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
 
 </main>
