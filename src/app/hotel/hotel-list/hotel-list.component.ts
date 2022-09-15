@@ -179,7 +179,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       area: [''],
       hotelId: [''],
       rooms: this._fb.array([
-        { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
+        { room: 1, numberOfAdults: '1', numberOfChildren: '0' , childrenAge:[]}
       ]),
       channel: ['Web'],
       programName: ['SMARTBUY'],
@@ -303,8 +303,6 @@ export class HotelListComponent implements OnInit,OnDestroy {
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
       this.hotelWithoutFilterList = res.response.hotels;
-      console.log(res)
-      console.log(this.hotelList)
       this.GetMinAndMaxPriceForFilter();
       this.GetPartners();
       this.AllFilteredData();
@@ -335,7 +333,6 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
       }
     });
-    console.log(StarFiltereddata);
     if(StarFiltereddata.length > 0)
     {
       this.hotelList = StarFiltereddata;
