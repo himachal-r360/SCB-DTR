@@ -23,7 +23,7 @@ API_URL:{
 'REGALIA_GOLD': 'https://offers-dev.reward360.in/regalia_gold/api/',
   },
     MAIN_SITE_URL:'https://offers-dev.reward360.in/',
-    DEAL_SITE_URL:'https://smartbuyuat.reward360.in/',
+    DEAL_SITE_URL:'https://offers-uat.reward360.in/',
  SUB_SITE_URL:'https://offers-dev.reward360.in/',
     ANGULAR_SITE_URL:'https://offers-dev.reward360.in/lite/',
     ANGULAR_SITE_URL1:'https://offers-dev.reward360.in/v1/',
