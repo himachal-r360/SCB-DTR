@@ -4872,8 +4872,18 @@
                       <div class="booking-inner-title-left flight_review_count" *ngIf="searchDatad">
                         <div class="head_info">
                           <div class="float-start">
-                           <i *ngIf="onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
-                           <i *ngIf="!onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x{{ flightOnwardDetails[searchi]['flights'][0]['airline'] }}"></i>
+                          
+                        <ng-container *ngIf="(flightOnwardDetails[searchi]['flights'] | multiairlines).length==1" >
+                        <i class="free-flow air-logo intAirLogo size-28  x{{flightOnwardDetails[searchi]['flights'] | multiairlines}}"></i>
+                        </ng-container>
+
+                        <ng-container *ngIf="(flightOnwardDetails[searchi]['flights'] | multiairlines).length > 1" >
+                        <span class="multiairline mr-10" >
+                        <span *ngFor="let air of (flightOnwardDetails[searchi]['flights'] | multiairlines); let i = index" class="arln-logo logo{{i+1}}" >
+                        <i class="free-flow air-logo intAirLogo size-18 x{{air}}"></i>
+                        </span>
+                        </span>
+                        </ng-container>
                           
                           </div>
                           <h6>
@@ -5046,8 +5056,19 @@
                     <div class="booking-inner-title-left" *ngIf="searchData">
                       <div class="head_info">
                         <div class="float-start">
-                              <i *ngIf="onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x"></i>
-                              <i  *ngIf="!onward_airline_unique" class="mx-2 free-flow air-logo intAirLogo size-28  x{{flightOnwardDetails[0]['airline'] }}"></i>
+                              
+                                <ng-container *ngIf="(flightOnwardDetails | multiairlines).length==1" >
+                                <i class="free-flow air-logo intAirLogo size-28  x{{flightOnwardDetails | multiairlines}}"></i>
+                                </ng-container>
+
+                                <ng-container *ngIf="(flightOnwardDetails | multiairlines).length > 1" >
+                                <span class="multiairline mr-10" >
+                                <span *ngFor="let air of (flightOnwardDetails | multiairlines); let i = index" class="arln-logo logo{{i+1}}" >
+                                <i class="free-flow air-logo intAirLogo size-18 x{{air}}"></i>
+                                </span>
+                                </span>
+                                </ng-container>
+                              
                         </div>
                         <h6>
                           <span class="city_text">{{ searchData.fromCity }}</span>

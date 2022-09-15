@@ -1419,7 +1419,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
   }
   onApplyFilter(){
       let body = document.getElementsByTagName('body')[0];
-  body.classList.remove("noscroll");
+      body.classList.remove("noscroll");
     var filterDiv = document.getElementById('sortMobileFilter');
     if(filterDiv)
     {

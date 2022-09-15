@@ -8,11 +8,12 @@ import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
+import xss from 'xss';
 declare var $: any;
 @Component({
   selector: 'app-hotel-list',
   templateUrl: './hotel-list.component.html',
-  styleUrls: ['./hotel-list.component.sass']
+  styleUrls: ['./hotel-list.component.sass','./hotel-list.component.css']
 })
 export class HotelListComponent implements OnInit,OnDestroy {
   hotelSearchForm: any;
@@ -29,6 +30,10 @@ export class HotelListComponent implements OnInit,OnDestroy {
   resetMinPrice: number = 0;
   resetMaxPrice: number = 1000;
   isMobile:boolean= true;
+  partnerArr:any = [];
+  loader:boolean = false;
+  loaderValue = 10;
+  dummyForLoader = Array(10).fill(0).map((x,i)=>i);
 
   options: Options = {
     floor: 0,
@@ -202,6 +207,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.sub = this.route.url.subscribe(url =>{
+    this.loader = true;
     this.getSearchData();
     this.headerHideShow(null);
     this.searchHotel();
@@ -273,16 +279,20 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
 
   searchHotel() {
+    this.loader = true;
     this.CheckInDate = this.hotelSearchForm.value.checkIn;
     this.CheckoutDate = this.hotelSearchForm.value.checkOut;
     this.City =  this.hotelSearchForm.value.city;
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
+      this.loader = false;
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
       this.hotelWithoutFilterList = res.response.hotels;
+      console.log(res)
       console.log(this.hotelList)
       this.GetMinAndMaxPriceForFilter();
+      this.GetPartners();
       this.AllFilteredData();
     }, (error) => { console.log(error) });
 
@@ -392,6 +402,9 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
 
     //Search Text Filter End
+    //partner Filter start
+    this.filteredPartner();
+    //partner Filter end
     if(this.container)
     {
       this.container.clear();
@@ -404,7 +417,10 @@ export class HotelListComponent implements OnInit,OnDestroy {
   StarFilter(item:any)
   {
       item.active = !item.active;
-      this.AllFilteredData();
+      if(!this.isMobile)
+      {
+        this.AllFilteredData();
+      }
   }
 
   ResetStarFilter()
@@ -416,14 +432,20 @@ export class HotelListComponent implements OnInit,OnDestroy {
   onMinValueChange(event: any) {
     this.minPrice = event;
     if (this.minPrice != null) {
-      this.AllFilteredData();
+      if(!this.isMobile)
+      {
+        this.AllFilteredData();
+      }
     }
 
   }
   onMaxValueChange(event: any) {
     this.maxPrice = event;
     if (this.maxPrice != null) {
-      this.AllFilteredData();
+      if(!this.isMobile)
+      {
+        this.AllFilteredData();
+      }
     }
   }
 
@@ -478,7 +500,10 @@ export class HotelListComponent implements OnInit,OnDestroy {
   amenityFilter(item:any)
   {
     item.active = !item.active;
-    this.AllFilteredData();
+    if(!this.isMobile)
+    {
+      this.AllFilteredData();
+    }
   }
   ResetAmenityFilter()
   {
@@ -491,7 +516,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.ResetStarFilter();
     this.ResetPriceFilter();
     this.ResetAmenityFilter();
-
+    this.ResetPartnerFilter();
   }
 
   onSearchInput()
@@ -545,7 +570,22 @@ export class HotelListComponent implements OnInit,OnDestroy {
       }
       return item;
     });
-  this.AllFilteredData();
+    if(!this.isMobile)
+    {
+      this.AllFilteredData();
+    }
+  }
+  hotelSorting(event:any)
+  {
+    let selectedVal = event.target.value;
+    this.priceSortingFilteritems.filter((item: any) => {
+      item.active = false;
+      if (item.name == selectedVal) {
+        item.active = true;
+      }
+      return item;
+    });
+    this.AllFilteredData();
   }
 
   shortings(){
@@ -567,4 +607,68 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
   }
 
+  GetPartners()
+  {
+    this.hotelList.forEach(z=>{
+      z.priceSummary.map((a:any)=>{
+        if(!this.partnerArr.find(b=>b.partnerName == a.partnerName))
+        {
+          this.partnerArr.push({partnerName:a.partnerName,active:false});
+        }
+      });
+    });
+    console.log(this.partnerArr)
+  }
+
+  partnerFilter(item:any)
+  {
+    item.active = !item.active;
+    if(!this.isMobile)
+    {
+      this.AllFilteredData();
+    }
+
+  }
+
+  filteredPartner()
+  {
+    let FilteredArray = [];
+    var isFilter =  false;
+    if(this.partnerArr.filter(z=>z.active == true).length > 0)
+    {
+      isFilter = true;
+    }
+        this.hotelList.forEach(z=>{
+         let FilterPartner = [];
+          z.priceSummary.map((b:any)=>{
+            if(this.partnerArr.find(a=>a.partnerName == b.partnerName).active)
+            {
+              FilterPartner.push(b);
+
+            }
+        });
+        if(FilterPartner.length > 0 && isFilter)
+        {
+          FilteredArray.push(z);
+          z.priceSummary = FilterPartner;
+        }
+
+      });
+    if(isFilter)
+    {
+      this.hotelList = FilteredArray;
+    }
+
+  }
+
+  ResetPartnerFilter()
+  {
+    this.partnerArr.filter((item: any) => { item.active = false; return item; })
+    this.AllFilteredData();
+  }
+  ApplyFilter()
+  {
+    this.showHideFilterMobile('hide');
+    this.AllFilteredData();
+  }
 }
