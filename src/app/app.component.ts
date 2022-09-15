@@ -306,12 +306,13 @@ export class AppComponent implements OnInit {
         var pageUrl=event.urlAfterRedirects.split('?')[0];
         if(isDesktopDevice){
          this.mobileClassName='';
+         /* console.log(pageUrl); */
                 switch (pageUrl) {
                
                 case '/foryou' :
                 this.menuActiveClass='foryou';
                 break;
-                
+                case '/bus/search': case '/bus/checkout' :
                        case '/bus' :  
                 this.menuActiveClass='bus';
                 break;
@@ -323,8 +324,8 @@ export class AppComponent implements OnInit {
                 this.menuActiveClass='hotel';
                 break;
                 
-                  case '/train':  case '/train/pnr':
-                this.menuActiveClass='flight';
+                  case '/train':  case '/train/pnr': case '/train/search' : case '/train/checkout' :
+                this.menuActiveClass='train';
                 break;
                 default:
                   this.menuActiveClass='foryou';
