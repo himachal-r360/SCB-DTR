@@ -71,7 +71,17 @@
           <div class="col-lg-12">
               <div class="layout-box">
                   <div class="layout-left" *ngIf="!isMobile">
-                      <div class="">
+                    <div class="filter-loaders animation-loader" *ngIf="loader">
+                      <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                          <div class="filter-loader-content ">
+                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px', width:'25%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px', width:'50%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '25px', width:'100%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                          </div>
+                      </div>
+
+                  </div>
+                      <div class="" [hidden]="loader">
                           <div class="Filterslayout d-flex justify-content-between align-items-center">
                               <h6 class="fs_16">Filters</h6>
                               <a href="javascript:;" (click)="ResetAllFilter()" class="fs_13 text-color">Reset all</a>
@@ -214,6 +224,26 @@
                                           </ng-container>
                                       </ul>
                                       <a href="javascript:;" *ngIf="!showMoreAmenity && amenityList.length>5" (click)="showMoreAmenity = true" class="widget-content-more ml-20">{{amenityList.length - 5}} more</a>
+                                  </div>
+                              </div>
+                              <hr>
+                              <div class="sidebar-widget Amenities-widget">
+                                  <div class="widget-title">
+                                      <h6 class="">Partners</h6>
+                                      <a href="javascript:;" (click)="ResetPartnerFilter()">Reset</a>
+                                  </div>
+                                  <div class="widget-content">
+                                      <ul class="category-list clearfix mt-2">
+                                          <li class="custom-check-box" *ngFor="let item of partnerArr">
+                                              <div class="custom-controls-stacked">
+                                                  <label class="custom-control material-checkbox">
+                                                      <input type="checkbox" [checked]="item.active" class="material-control-input" (change)="partnerFilter(item)" />
+                                                      <span class="material-control-indicator"></span>
+                                                      <span class="description">{{item.partnerName}}</span>
+                                                  </label>
+                                              </div>
+                                          </li>
+                                      </ul>
                                   </div>
                               </div>
                               <!-- <hr>
@@ -371,7 +401,7 @@
 
                   </div>
                   <div class="layout-right">
-                      <div class="hotel-search-data" *ngIf="!isMobile">
+                      <div class="hotel-search-data" *ngIf="!isMobile" [hidden]="loader">
                           <div class="hotel-search-left">
                               <div class="hotel-search-fill-icon">
                                   <img src="./assets/images/hotel/icon/ri_hotel-fill.png" alt="">
@@ -393,14 +423,37 @@
                                   </form>
                               </div>
                               <div class="ms-2 hotel-Trending-selection">
-                                  <select name="" class="liothers selectpicker" aria-label="Trending Hotels">
-                                      <option selected="selected">Trending Hotels</option>
-                                      <option>Trending Hotels</option>
+                                  <select name="" class="liothers selectpicker" aria-label="Trending Hotels" (change)="hotelSorting($event)">
+                                    <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
                                   </select>
                               </div>
                           </div>
                       </div>
+                      <div class="hotel-list-box" *ngIf="loader && !isMobile">
+                        <div class=" hotel-list-item listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
+                            <div class="filter-loader-content w-100">
+                                <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
+                                <span class="float-right" style="width:85%;">
+                            <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                            <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                            <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '30px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                            </span>
+                            </div>
+                        </div>
 
+                    </div>
+                    <div *ngIf="loader  && isMobile">
+                      <div class="hotel-list-item filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                          <div class="filter-loader-content w-100">
+                              <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                              <span class="w-75 float-right">
+                               <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                  <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                  <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
+                                 </span>
+                          </div>
+                      </div>
+                  </div>
                       <div class="hotel-list-box" [ngClass]="isMobile ? 'mobilehotel-list' : ''">
                         <ng-container #itemsContainer></ng-container>
                       </div>
@@ -416,7 +469,7 @@
                                 <div class="hotel-list-text">
                                     <h6 class="hotel-name"><a href="javascript:;">{{list.hotelInfo.name}}</a></h6>
                                     <p class="hotel-place">{{list.hotelInfo.address == '' ? list.hotelInfo.city : list.hotelInfo.address}}</p>
-                                    <p class="hotel-star" *ngIf="list.hotelInfo.starRating > 0">
+                                    <p class="hotel-star">
                                         <i class="fas fa-star " [ngClass]="{'active' : list.hotelInfo.starRating >= 1}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 2}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 3}"></i>
@@ -527,7 +580,7 @@
                         </div>
                     </div>
                     <div class="mob-sf-btns">
-                        <a href="javaScript:void(0);">Apply</a>
+                        <a href="javaScript:void(0);" (click)="ApplyFilter()">Apply</a>
                     </div>
                 </div>
                 <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
@@ -663,7 +716,32 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header" id="headingPartner">
+                                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                          data-bs-target="#collapsePartner" aria-expanded="false" aria-controls="collapsePartner">
+                                          Partners
+                                      </button>
+                                  </h2>
+                                  <div id="collapsePartner" class="accordion-collapse collapse" aria-labelledby="headingPartner"
+                                      data-bs-parent="#accordionExample">
+                                      <div class="accordion-body stops-widget">
+                                          <div class="default-sidebar">
+                                              <ul class="category-list clearfix mt-2">
+                                                  <li class="custom-check-box" *ngFor="let item of partnerArr">
+                                                      <div class="custom-controls-stacked">
+                                                          <label class="custom-control material-checkbox">
+                                                              <input type="checkbox" [checked]="item.active" class="material-control-input" (change)="partnerFilter(item)" />
+                                                              <span class="material-control-indicator"></span>
+                                                              <span class="description">{{item.partnerName}}</span>
+                                                          </label>
+                                                      </div>
+                                                  </li>
+                                                  </ul>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingfive">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -761,7 +839,7 @@
                             </div>
                         </div>
                         <div class="mob-sf-btns">
-                            <a href="javaScript:void(0);">Apply</a>
+                            <a href="javaScript:void(0);" (click)="ApplyFilter()">Apply</a>
                         </div>
                     </div>
                 </div>
