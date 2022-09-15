@@ -29,6 +29,7 @@ export class HotelDetailComponent implements OnInit {
   hotelAmenity:any=[];
   currentLink :string;
   SelectedQueryParam:any;
+  loaderValue:number;
   Facilities:any =
     {
     'roomService':{name:'Room Service',value:'roomService',image:'assets/images/hotel/Offered/hotelDetail_roomService.svg'},
@@ -195,6 +196,8 @@ export class HotelDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.url.subscribe(url => {
+
+
       console.log(url)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
@@ -217,9 +220,19 @@ export class HotelDetailComponent implements OnInit {
   }
 
   GetHotelDetails() {
+    $("#bookingprocess").modal('show')
+    this.loaderValue = 10;
+  const myInterval3 = setInterval(() => {
+    this.loaderValue = this.loaderValue + 10;
+
+    if (this.loaderValue == 110) {
+      this.loaderValue = 10;
+    }
+  }, 300);
     var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
      console.log(res);
+
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
@@ -228,6 +241,8 @@ export class HotelDetailComponent implements OnInit {
 
     var url = 'https://www.google.com/maps/embed/v1/place?key='+this.GoogleAPI_Key+'&q='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18'
      this.GOOGLE_MAP_URL = this._sanitizer.bypassSecurityTrustResourceUrl(url)
+     $("#bookingprocess").modal('hide')
+     clearInterval(myInterval3);
     }, (error) => { console.log(error) });
 
   }
