@@ -20,7 +20,7 @@
                         <div class="row g-2">
                             <div class="col-lg-8">
                                 <div class="select-root-area">
-                                    <div class="select-root-left" appDropdown>
+                                    <div class="select-root-left" appDropdown  (click)='focusInput("from")'  >
                                         <span class="select-roottitle">FROM</span>
                                         <h5 class="fw_6 ">{{fromCityName}}</h5>
                                         <span class="select-roottitle">{{fromStateName}}</span>
@@ -60,7 +60,7 @@
                                                     <div class="col-md-12">
                                                         <div class="mob-search-list">
                                                             <label for="">From</label>
-                                                            <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
+                                                            <input type="text" autocomplete="off" class="w-100 searchFromTrain" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  id="searchFrom" >
                                                             <input type="hidden"  formControlName="fromTravelCode">
                                                             <!--<input type="hidden"  formControlName="fromState">-->
                                                         </div>
@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="flight-from-data-search" *ngIf="!isMobile">
 
-                                            <input type="text" autocomplete="off" class="w-100"
+                                            <input type="text" autocomplete="off" class="w-100 searchFromTrain"
                                             id="searchFrom" placeholder="Search City"
                                             (keyup)="searchAutoComplete($event,'searchFrom' ,'web');"
                                            autofocus #fromCityInput
@@ -116,10 +116,10 @@
 
                                     </div>
 
-                                    <div class="select-root-icons select-train-icons" (click)="swap()">
+                                    <div class="select-root-icons search_middle_icon" (click)="swap()">
                                         <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                     </div>
-                                    <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv">
+                                    <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" (click)='focusInput("to")'>
                                         <span class="select-roottitle">TO</span>
                                         <h5 class="fw_6 ">{{toCityName}}</h5>
                                         <span class="select-roottitle">{{toStateName}}</span>
@@ -148,14 +148,14 @@
                                                     <div class="col-md-12">
                                                         <div class="mob-search-list">
                                                             <label for="">From</label>
-                                                            <input type="text" autocomplete="off" class="w-100" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
+                                                            <input type="text" autocomplete="off" class="w-100 searchToTrain" placeholder="Search City"  name="searchFrom" formControlName="searchFrom"  (keyup)="searchAutoComplete($event,'searchFrom' ,'mobile');"  >
                                                             <input type="hidden"  formControlName="fromTravelCode">
                                                            <!-- <input type="hidden"  formControlName="fromState">-->
 
                                                         </div>
                                                         <div class="mob-search-list">
                                                             <label for="">To</label>
-                                                    <input type="text"  autocomplete="off" class="w-100" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
+                                                    <input type="text"  autocomplete="off" class="w-100 searchToTrain" placeholder="Search City" name="searchTo"  formControlName="searchTo"  (keyup)="searchAutoComplete($event,'searchTo' ,'mobile');"   id="searchTo"  id="toCitySearch"  #toCityInput>
                                                     <input type="hidden"  formControlName="toTravelCode">
                                                     <!--<input type="hidden"  formControlName="toState">-->
                                                         </div>
@@ -163,7 +163,7 @@
                                                 </div>
                                             </div>
                                             <div class="flight-from-data-search" *ngIf="!isMobile">
-                                                <input type="text" autocomplete="off" class="w-100"
+                                                <input type="text" autocomplete="off" class="w-100 searchToTrain"
                                                     id="searchTo" placeholder="Search City"
                                                     (keyup)="searchAutoComplete($event,'searchTo' ,'web');"
                                                      #toCityInput autofocus
@@ -353,7 +353,7 @@
                                 <div class="col-lg-2">
                                     <div class="root-date">
                                         <div class="root-search">
-                                            <button type="button" (click)="onSubmit()"  class="searchbn">Search</button>
+                                            <button type="button" (click)="onSubmit()"  class="searchbn">Check Status</button>
                                         </div>
                                     </div>
                                 

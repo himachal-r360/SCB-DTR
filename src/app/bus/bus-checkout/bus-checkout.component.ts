@@ -156,6 +156,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   saveInfantTravellerId = [];
   passengerArray = [];
   passengerFormCount: number = 1;
+  isAdultExpanded:boolean = false;
+    isInfantExpanded:boolean = false;
 
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
@@ -501,9 +503,12 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
       //this.savedCards=[{"id":7730,"card_display_name":"4059 xxx 8794 HDFC","type":"VISA","card_id":"zJOyDltPQZcfMjLqOlDjHQJ966czxP1srxQFTUrZi6TNvxgY4l\/wPchjhQ\/MCPuN"},{"id":7731,"card_display_name":"4059 xxx 9999 HDFC","type":"VISA","card_id":"ddddd"}];
 
-      // this.searchBusKey = this.activatedRoute.snapshot.params['searchBusKey'];
       this.searchBusKey = this.activatedRoute.snapshot.queryParamMap.get('searchBusKey');
+     
       this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchBusKey));
+                        if(!this.seacthResult){
+         this.router.navigate(['/bus']);
+        }
       var lengthofboarding = this.seacthResult.busdetails.boardingTimes.length;
       var lengthofDropping = this.seacthResult.busdetails.droppingTimes.length;
 
@@ -555,7 +560,7 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
       }
 
-
+console.log(this.seacthResult.seatdetails);
       if (this.seacthResult != null) {
         this.onward = this.seacthResult.busdetails;
         var fares = this.seacthResult.seatdetails;
@@ -642,6 +647,16 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
 
     });
+    
+if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
+    for (let i = 0; i < this.seacthResult.seatdetails.length; i++) {
+      if(this.seacthResult.seatdetails[i].ladiesSeat){
+        this.passengerForm.controls['passengerGender' + i].setValue('Female');
+      }
+    }
+  }
+ 
+    
   }
 
 
@@ -783,7 +798,10 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   
   
   
-  fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex) {
+  fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex, ladiesSeat) {
+
+    alertify.set('notifier', 'position', 'top-center');
+    alertify.dismissAll();
 
     const sum = travellerformid + 1;
 
@@ -793,20 +811,49 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
       
       this.passengerSelectedArray[travellerformid]=1;
       
-      
-      
-      
-      
 
       this.passengerForm.controls['passengerid' + travellerformid].setValue(data.id);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue(data.firstName);
       this.passengerForm.controls['passengerLastName' + travellerformid].setValue(data.lastName);
       this.passengerForm.controls['passengerAge' + travellerformid].setValue(data.age);
-      if(data.gender){
+      
+      if(data.gender && !ladiesSeat){
+      
       this.passengerForm.controls['passengerGender' + travellerformid].setValue(data.gender);
+
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+        $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+        
+    }else if(data.gender && ladiesSeat){
+     
+      
+      if(data.gender=='Female'){
+       
+      this.passengerForm.controls['passengerGender' + travellerformid].setValue('Female');
+
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+
+      }
+      else {
+        
+       alertify.error('Please select female passenger', '').delay(3);
+       
+      this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
+      this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerLastName' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
+      this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+      $(".pass_checkBox1_"+data.id).prop('checked', false);
+
+      }
+
       }else{
-       var gender='Male';
-        switch (data.gender) {
+
+       var gender='';
+     
+        switch (data.title) {
         case 'Mr':
         gender='Male';
         break;
@@ -822,13 +869,51 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
         case 'Mstr':
         gender='Male';
         break;
+        default:
+        gender='Male';
+
         }
+
        this.passengerForm.controls['passengerGender' + travellerformid].setValue(gender);
+
+       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+       // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
+         $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+
+         if(ladiesSeat){
+   
+       
+      
+          if(gender=='Female'){
+         
+          this.passengerForm.controls['passengerGender' + travellerformid].setValue('Female');
+    
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+    
+          }
+          else {
+           
+           alertify.error('Please select female passenger', '').delay(3);
+          this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
+          this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerLastName' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerAge' + travellerformid].setValue('');
+          this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
+          $(".pass_checkBox1_"+data.id).prop('checked', false);
+
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", false);
+          $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", false);
+    
+          }
+    
+          } 
+     
+
       }
       
-      $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
-     // $('.adult-choose-box'+travellerid+':not(.adult-choose-box_'+travellerid+travellerformid+')').addClass('travllerDisabled');
-       $(".pass_checkBox_"+travellerformid+":not(:checked)").prop("disabled", true);
+     
        
        
       
@@ -931,6 +1016,9 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
     })
   }
   fillupGSTDetailOnCheck($event, data, GSTIndex) {
+    for(let i=0;i<this.GSTListLength;i++){
+      this.isCheckedGST[i]=false;
+    }
     if ($event.target.checked) {
       this.isCheckedGST[GSTIndex] = true;
       this.selectedGST.push(GSTIndex);
@@ -1082,12 +1170,12 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     this.passengerForm['controls']['saveGST'].setValue('');
   }
   
-  
+  gstmodalcheckedvalue:any = false;
     openmodal(content) {
-    this.modalService.open(content, { centered: true });
+      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
-    gstmodalcheckedvalue: any = false;
 
   passengerFormerror: number = 0;
   ageValidError: any;
@@ -1120,6 +1208,9 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   }
 
   buttonSubmitted: boolean = false;
+  
+  
+
   createBusItinerary() {
     this.submitted = true;
     this.buttonSubmitted = true;
@@ -1163,13 +1254,15 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
     if (this.passengerForm.invalid || this.passengerFormerror == 1) {
       this.buttonSubmitted = false;
-              let target;
-
-        target = this.el.nativeElement.querySelector('.ng-invalid')
-
+        let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
         if (target) {
-        $('html,body').animate({ scrollTop: $(target).offset().top }, 'slow');
-        target.focus();
+        if( target.id =='agree_terms'){
+        $(document).scrollTop($(document).height());
+        }else{
+        target.scrollIntoView();
+        (target as HTMLElement).focus();
+        }
         }
       return;
     } else {
@@ -1348,6 +1441,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       };
 
       //this.spinnerService.show();
+      
       this.busSubscription = this.busService.blockbusSeats(JSON.stringify(itineraryParam)).subscribe(data => {
 
         let dData = JSON.parse(this.EncrDecr.get(data.result));

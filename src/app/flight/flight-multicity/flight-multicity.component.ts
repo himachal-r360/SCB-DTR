@@ -94,14 +94,14 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
   priceSortingFilteritems = [
-    { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
-    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_htl.png',sortValue:'Price' },
-    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.png',activeImage:'./assets/images/icons/active_duration.png',sortValue:'Duration'},
-    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'D_L', active: false, value: 'Latest' ,image:'./assets/images/icons/Departure.png',activeImage:'./assets/images/icons/active_departure.png',sortValue:'Departure'},
-    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
-    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.png',activeImage:'./assets/images/icons/active_arrival.png', sortValue:'Arrival'},
+    { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.svg',activeImage:'./assets/images/icons/active_lth.svg', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.svg',activeImage:'./assets/images/icons/active_htl.svg',sortValue:'Price' },
+    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
+    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
   ]
   RefundableFaresCount: number = 0;
   nonStopCount: number = 0;
@@ -237,7 +237,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   continueSearchFlights: any = []
     flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearch');
+    let continueSearch: any = localStorage.getItem(environment.continueFlightSearch);
     if (continueSearch == null) {
       this.continueSearchFlights = [];
     }
@@ -253,7 +253,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       this.continueSearchFlights = this.continueSearchFlights.slice(0, 3);
     }
     this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearch', JSON.stringify(this.continueSearchFlights));
+    localStorage.setItem(environment.continueFlightSearch, JSON.stringify(this.continueSearchFlights));
   }
     serverIssue:number=0;
   flightSearch() {

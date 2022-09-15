@@ -134,7 +134,7 @@
                         <div class="after_log">
                             <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                                 <div>
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick(1)">
                                     <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                                 </div>
                                 <!--  Notification Box Starts -->
@@ -303,7 +303,7 @@
                                                                 <!-- <p class="line_sub">XXXX 9827</p>-->
                                                             </div>
                                                         </div>
-                                                        <div class="col-5 text-right">
+                                                        <div class="col-5 text-right p-0">
                                                             <p class="value">{{customeravailablepoints}}</p>
                                                         </div>
                                                     </div>
@@ -348,10 +348,11 @@
             <nav class="nav menu_list">
                 <ul>
                     <li>
-                        <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you</a>
+                        <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you </a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays</a>
+
+                        <a class="nav_link_item" href="javascript:;" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight' ? 'active' : ''">Travel & Stays </a>
                         <div class="dropdown-content-list list-travel" >
                             <div class="row">
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
@@ -388,7 +389,7 @@
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                     <div>
                                         <div>
-                                            <p><a href="javascript:;" (click)="clickUrl('compare-stay')" class="list-travel-font">Compare & Stay</a></p>
+                                            <p><a href="javascript:;" (click)="goTo('compare-stay')" class="list-travel-font">Compare & Stay</a></p>
                                             <p class="points">{{serviceSettings.offer_construct.hotel.reward}}X Reward Points | {{serviceSettings.offer_construct.hotel.cashback}}% Cashback</p>
 
                                         </div>
@@ -716,7 +717,7 @@
                         </div>
                         <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
                             <div>
-                                <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick()">
+                                <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification" (mouseenter)="enablePushClick(1)">
                                 <span [ngClass]="(pushcount)>0 && notificationball  ? 'cart_count_pla' : ''"><span></span></span>
                             </div>
                             <!--Notification Box Starts-->
@@ -885,7 +886,7 @@
                                                             <p class="line_sub">XXXX 9827</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-5 text-right">
+                                                    <div class="col-5 text-right p-0">
                                                         <p class="value">{{customeravailablepoints}}</p>
                                                     </div>
                                                 </div>
@@ -1015,7 +1016,7 @@
                             <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                 <div>
                                     <div>
-                                        <p><a href="javascript:;" (click)="clickUrl('compare-stay')" class="list-travel-font">Compare & Stay</a></p>
+                                        <p><a href="javascript:;" (click)="goTo('compare-stay')" class="list-travel-font">Compare & Stay</a></p>
                                         <p class="points">{{serviceSettings.offer_construct.hotel.reward}}X Reward Points | {{serviceSettings.offer_construct.hotel.cashback}}% Cashback</p>
 
                                     </div>
@@ -1098,7 +1099,7 @@
 
                             <div class="col-sm-6" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                 <div class="hdr_travel">
-                                    <a href="javascript:;" (click)="clickUrl('compare-stay')">
+                                    <a href="javascript:;" (click)="goTo('compare-stay')">
                                         <div class="row cntnt_center">
                                             <div class="col-sm-2">
                                                 <div class="circular_div">
@@ -1106,7 +1107,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-9 pl-1 mr-0 pr-0">
-                                                <a href="javascript:;" (click)="clickUrl('compare-stay')" class="travel_highlight"><span class="travel_highlight">Stay</span></a>
+                                                <a href="javascript:;" (click)="goTo('compare-stay')" class="travel_highlight"><span class="travel_highlight">Stay</span></a>
                                                 <p class="travel_text">{{serviceSettings.offer_construct.hotel.reward}}X Reward Points | {{serviceSettings.offer_construct.hotel.cashback}}% Cashback</p>
                                             </div>
                                             <div class="col-sm-1 pl-0 text-left">
@@ -1526,9 +1527,9 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6"  *ngIf="DOMAIN_SETTINGS.INSTANT_VOUCHER==1">
                                 <div class="hdr_travel">
-                                    <a href="javascript:;">
+                                    <a href="javascript:;" (click)="redirectUrlpopup('instavouchers',0,'instavouchers')">
                                         <div class="row cntnt_center">
                                             <div class="col-sm-2">
                                                 <div class="circular_div">
@@ -1537,7 +1538,7 @@
                                             </div>
                                             <div class="col-sm-8 pdng_lft_0 mrg_lft_5">
                                                 <p class="travel_highlight">Instant Voucher</p>
-                                                <p class="travel_text">3X Reward Points | 1% Cashback</p>
+                                                <p class="travel_text">{{serviceSettings.offer_construct.instant_voucher.reward}}X Reward Points | {{serviceSettings.offer_construct.instant_voucher.cashback}}% Cashback</p>
                                             </div>
                                             <div class="col-sm-2 text-left">
                                                 <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
@@ -1828,7 +1829,7 @@
         <div class="inner_m_item">
             <div class="icn" *ngIf="serviceSettings.notifications==1">
                 <!-- <span [ngClass]="(pushcount)>0  ? 'm-number_count' : ''"></span> -->
-                <p class="mb-0 pt-1 push_icon" (click)="enablePushClick()">
+                <p class="mb-0 pt-1 push_icon" (click)="enablePushClick(2)">
                     <span [ngClass]="(pushcount)>0 && notificationball ? 'm-number_count' : ''"></span>
                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification m_bell">
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
@@ -1862,7 +1863,7 @@
                                                 <!--<p class="line_sub">XXXX 9827</p>-->
                                             </div>
                                         </div>
-                                        <div class="col-5 text-right">
+                                        <div class="col-5 text-right p-0">
                                             <p class="value">{{customeravailablepoints}}</p>
                                         </div>
                                     </div>
@@ -1998,7 +1999,7 @@
             <div>
                 <ul>
                     <li *ngIf="payzrestriction==false">
-                        <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''">
+                        <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou' || menuActiveClass==''  ? 'active' : ''">
                             <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You </span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                         </a>
                     </li>
@@ -2135,7 +2136,7 @@
                                         </div>
                                         <div class="col-9 p-0">
                                             <h6>Hotel Stays</h6>
-                                            <a href="javascript:;" (click)="clickUrl('compare-stay')"><span>Compare & Stay</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
+                                            <a href="javascript:;" (click)="goTo('compare-stay')"><span>Compare & Stay</span><span class="float-right"><span class="material-icons">chevron_right</span></span></a>
                                         </div>
                                     </div>
                                 </li>
@@ -2469,7 +2470,7 @@
         <div class="inner_m_item">
             <div class="icn reg_gold_icn" *ngIf="serviceSettings.notifications==1">
                 <!-- <span [ngClass]="(pushcount)>0  ? 'm-number_count' : ''"></span> -->
-                <p class="mb-0 pt-1 push_icon" data-bs-toggle="modal" data-bs-target="#pushNotiEnable" (click)="enablePushClick()">
+                <p class="mb-0 pt-1 push_icon" data-bs-toggle="modal" data-bs-target="#pushNotiEnable" (click)="enablePushClick(2)">
                     <span [ngClass]="(pushcount)>0  && notificationball ? 'm-number_count' : ''"></span>
                     <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification m_bell">
                     <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
@@ -2505,7 +2506,7 @@
                                                 <!--<p class="line_sub">XXXX 9827</p>-->
                                             </div>
                                         </div>
-                                        <div class="col-5 text-right">
+                                        <div class="col-5 text-right p-0">
                                             <p class="value">{{customeravailablepoints}}</p>
                                         </div>
                                     </div>
@@ -2728,7 +2729,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:;" class="m_sidebar_link">
+                        <a href="javascript:;" class="m_sidebar_link" (click)="menuMobile('deals_offers')">
                             <div class="row">
                                 <div class="col-10">
                                     <p class="m_sidebar_link">Deals Offers</p>
@@ -3072,13 +3073,46 @@
                 </div>
                 <!-- end of rewards sidebar -->
             </div>
+		<!-- Deals -->
+		 <div *ngIf="showName=='deals_offers'" class="tab-content">
+                <!-- Rewards sidebar -->
+                <div class="m_sidebar_header reg-rewards-show reg-rewards-block hide">
+                    <div class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Deals Offers</span></div>
+
+                    <div class="row mt-4">
+                        <div class="col-12"  *ngFor="let category of dealsoffers" (click)="redirectDisUrl(category.categoryname)">
+                            <div class="hdr_travel">
+                                <a href="javascript:;">
+                                    <div class="row cntnt_center">
+                                       <!-- <div class="col-2">
+                                            <div class="circular_div">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/hdr_trophy_icn.svg" class="circular_div_img card_img">
+                                            </div>
+                                        </div> -->
+                                        <div class="col-8">
+                                            <p class="travel_highlight">{{category.categoryname}}</p>
+                                        </div>
+                                        <div class="col-2 text-left">
+                                            <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                       
+
+                    </div>
+                </div>
+                <!-- end of rewards sidebar -->
+            </div>
+		<!-- Deals Ends -->
             <div *ngIf="showName=='gold_shopping'" class="tab-content">
                 <!-- shopping sidebar -->
                 <div class="m_sidebar_header reg-shop-show reg-shop-block hide">
                     <div class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Shopping</span></div>
 
                     <div class="row mt-4">
-                        <div class="col-12">
+                        <div class="col-12" *ngIf="DOMAIN_SETTINGS.FLIPKART==1">
                             <div class="hdr_travel">
                                 <a href="javascript:;" (click)="redirectUrlpopup('flipkart',0,'flipkart')">
                                     <div class="row cntnt_center">
@@ -3089,7 +3123,7 @@
                                         </div>
                                         <div class="col-8">
                                             <p class="travel_highlight">Flipkart</p>
-                                            <p class="travel_text">5X Reward Points | 5% Cashback</p>
+                                            <p class="travel_text">{{serviceSettings.offer_construct.flipkart.reward}}X Reward Points | {{serviceSettings.offer_construct.flipkart.cashback}}% Cashback</p>
                                         </div>
                                         <div class="col-2 text-left pl-0">
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
@@ -3098,7 +3132,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" *ngIf="DOMAIN_SETTINGS.IGP==1">
                             <div class="hdr_travel">
                                 <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')">
                                     <div class="row cntnt_center">
@@ -3109,7 +3143,7 @@
                                         </div>
                                         <div class="col-8">
                                             <p class="travel_highlight">IGP</p>
-                                            <p class="travel_text">3X Reward Points | 2% Cashback</p>
+                                            <p class="travel_text">{{serviceSettings.offer_construct.igp.reward}}X Reward Points | {{serviceSettings.offer_construct.igp.cashback}}% Cashback</p>
                                         </div>
                                         <div class="col-2 text-left">
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
@@ -3118,7 +3152,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" *ngIf="DOMAIN_SETTINGS.IMAGINE==1">
                             <div class="hdr_travel">
                                 <a href="javascript:;" (click)="redirectUrlpopup('imagine',0,'imagine')">
                                     <div class="row cntnt_center">
@@ -3129,7 +3163,7 @@
                                         </div>
                                         <div class="col-8">
                                             <p class="travel_highlight">Imagine | Tresor</p>
-                                            <p class="travel_text">10X Reward Points | 10% Cashback</p>
+                                            <p class="travel_text">{{serviceSettings.offer_construct.imagine.reward}}X Reward Points | {{serviceSettings.offer_construct.imagine.cashback}}% Cashback</p>
                                         </div>
                                         <div class="col-2 text-left">
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
@@ -3138,7 +3172,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" *ngIf="DOMAIN_SETTINGS.INSTANT_VOUCHER==1">
                             <div class="hdr_travel">
                                 <a href="javascript:;" (click)="redirectUrlpopup('instavouchers',0,'instavouchers')">
                                     <div class="row cntnt_center">
@@ -3149,7 +3183,7 @@
                                         </div>
                                         <div class="col-8">
                                             <p class="travel_highlight">Instant Voucher</p>
-                                            <p class="travel_text">3X Reward Points | 1% Cashback</p>
+                                            <p class="travel_text">{{serviceSettings.offer_construct.instant_voucher.reward}}X Reward Points | {{serviceSettings.offer_construct.instant_voucher.cashback}}% Cashback</p>
                                         </div>
                                         <div class="col-2 text-left">
                                             <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>

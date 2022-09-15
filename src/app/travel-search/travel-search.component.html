@@ -889,9 +889,12 @@
                                     <label>
                                         <span>From</span>
                                          <input type="text" class="inputField  busFromPop" value="{{busFromDisp}}" readonly    (click)="hideShowForms('web', 'busFrom','bus')" >
-                                       
+                                         <p class="truncate" title="{{busFromStateDisp}}">
+                                            <span  title="" class=" airPortName ">{{busFromStateDisp}}</span>
+                                        </p>
+                                        <input type="hidden" formControlName="fromState" name="fromState" id="fromState" >
                                         <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
-                                        <input type="hidden"  formControlName="fromState">
+                                        
                                         <p class="truncate" title="{{busFromText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busFromText}}</span> -->
                                         </p>
@@ -927,7 +930,7 @@
                                                 <a class="flight-from-ul-li-a" (click)="onFromClick(fromBusOptions,'bus','web')">
 
                                                     <div class="hotel-from-name">
-                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{fromBusOptions._source.name}}</h6>
+                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{fromBusOptions._source.name}} , {{ fromBusOptions._source.state}}</h6>
                                                         <p></p>
                                                     </div>
                                                     <div class="flight-from-shortname">
@@ -948,8 +951,12 @@
                                     <label>
                                         <span>To</span>
                                          <input type="text" class="inputField  busToPop" value="{{busToDisp}}" readonly    (click)="hideShowForms('web', 'busTo','bus')" >
+                                         <p class="truncate" title="{{busToStateDisp}}">
+                                            <span  title="" class=" airPortName ">{{busToStateDisp}}</span>
+                                        </p>
+                                        <input type="hidden" formControlName="toState" name="toState" id="toState" >
                                         <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
-                                          <input type="hidden"  formControlName="fromState">
+                                          
                                         <p class="truncate" title="{{busToText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
                                         </p>
@@ -980,7 +987,7 @@
                                             <li class="flight-from-ul-li" *ngFor="let toBusOptions of busToOptions;let ind=index;">
                                                 <a class="flight-from-ul-li-a" (click)="onToClick(toBusOptions,'bus','web')">
                                                     <div class="hotel-from-name">
-                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{toBusOptions._source.name}}</h6>
+                                                        <h6><i class="fa fa-bus"></i> &nbsp;{{toBusOptions._source.name}} , {{toBusOptions._source.state}} </h6>
                                                         <p></p>
                                                     </div>
                                                     <div class="flight-from-shortname">
@@ -1917,6 +1924,10 @@
                                     <label>
                                     <span>From</span>
                                     <input type="text" [(ngModel)]="busFrom" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField"  formControlName="busFrom" id="busFrom" placeholder="From" name="busFrom" (focus)="hideShowForms('mobile', 'busFrom','bus')" (keyup)="searchAutoComplete($event,'bus','busFrom' ,'mobile');" (keypress)="charInput($event)"  autocomplete="off" >
+                                    <p class="truncate" title="{{busFromStateDisp}}">
+                                        <span  title="" class=" airPortName ">{{busFromStateDisp}}</span>
+                                    </p>
+
                                     <input type="hidden" formControlName="fromBusCode" name="fromBusCode" id="fromBusCode" >
                                     <input type="hidden"  formControlName="fromState">
                                     <p class="truncate" title="{{busFromText}}">
@@ -1937,8 +1948,11 @@
                                     <label class="pl-20">
                                         <span>To</span>
                                         <input type="text" [(ngModel)]="busTo" (ngModelChange)="selectCheck(busFrom,busTo,'bus')" class="inputField" formControlName="busTo" id="busTo" placeholder="To" name="busTo" (focus)="hideShowForms('mobile', 'busTo','bus')" (keyup)="searchAutoComplete($event,'bus','busTo' ,'mobile')" (keypress)="charInput($event)" autocomplete="off">
+                                        <p class="truncate" title="{{busToStateDisp}}">
+                                            <span  title="" class=" airPortName ">{{busToStateDisp}}</span>
+                                        </p>
                                         <input type="hidden" formControlName="toBusCode" name="toBusCode" id="toBusCode" >
-                                          <input type="hidden"  formControlName="fromState">
+                                          <input type="hidden"  formControlName="toState">
                                         <p class="truncate" title="{{busToText}}">
                                             <!-- <span  title="" class=" airPortName ">{{busToText}}</span> -->
                                         </p>
@@ -1994,7 +2008,7 @@
                                                 </div>
                                                 <div class="modal-footer">
 
-                                                    <div class="select_city d-block mb-15 flex-fill">
+                                                    <!--<div class="select_city d-block mb-15 flex-fill">
                                                         <div class="row">
 
                                                             <div class="col-6 ">
@@ -2012,7 +2026,7 @@
 
 
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                     <button type="button" class="w-100 btn btn-primary" data-bs-dismiss="modal"> Done</button>
                                                 </div>
                                             </div>
@@ -2044,7 +2058,7 @@
                                 <div class="list_item" *ngIf="enableEs && fromBusOptions['_source']">
                                     <div class="icon_fl"><i class="fa fa-bus"></i></div>
                                     <div class="flight_city_select">
-                                        <p class="city_name">{{fromBusOptions['_source']['name']}}</p>
+                                        <p class="city_name">{{fromBusOptions['_source']['name']}} , {{fromBusOptions['_source']['state']}}</p>
                                     </div>
                                     <div class="airport_code">{{fromBusOptions['_source']['code']}}</div>
                                 </div>
@@ -2074,7 +2088,7 @@
                                 <div class="list_item" *ngIf="enableEs && toBusOptions['_source']">
                                     <div class="icon_fl"><i class="fa fa-bus"></i></div>
                                     <div class="flight_city_select">
-                                        <p class="city_name">{{toBusOptions['_source']['name']}}</p>
+                                        <p class="city_name">{{toBusOptions['_source']['name']}} ,  {{toBusOptions['_source']['state']}}</p>
                                     </div>
                                     <div class="airport_code">{{toBusOptions['_source']['code']}}</div>
                                 </div>
@@ -2184,7 +2198,7 @@
                                                 </div>
                                                 <div class="modal-footer">
 
-                                                    <div class="select_city d-block mb-15 flex-fill">
+                                                    <!--<div class="select_city d-block mb-15 flex-fill">
                                                         <div class="row">
 
                                                             <div class="col-6 ">
@@ -2202,7 +2216,7 @@
 
 
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                     <button type="button" class="w-100 btn btn-primary" data-bs-dismiss="modal"> Done</button>
                                                 </div>
                                             </div>
@@ -2216,7 +2230,7 @@
                     </div>
 
 
-                    <div class="travel_select_m mb-15">
+                    <!--<div class="travel_select_m mb-15">
                         <div class="opt_box">
                             <label class="d-block">
                                         <span>Quota</span>
@@ -2228,7 +2242,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                    </div>
+                    </div>-->
 
 
                     <div class="city-popup from-city-pop" *ngIf="showMliteTrainFromForm">

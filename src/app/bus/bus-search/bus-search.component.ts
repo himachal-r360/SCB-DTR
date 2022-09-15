@@ -195,7 +195,19 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
       }
     }
 
-
+  focusInput(type){
+    setTimeout(() => {
+      if(type=='from'){
+      // $('.searchFromBus').select();
+        $('.searchFromBus').focus();
+      }else {   
+      //$('.searchToBus').select();
+       $('.searchToBus').focus();
+      
+      }
+  
+    }, 10);
+  }
   onFromClick(values,device) {
         values=values['_source'];
         this.searchBusForm['controls']['searchFrom'].setValue(values.name);
@@ -240,7 +252,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
 
   setSearchFilterData() {
-   let lastSearch:any=localStorage.getItem('busLastSearchNew');
+   let lastSearch:any=localStorage.getItem(environment.busLastSearch);
     if(lastSearch != null || lastSearch != undefined){
       lastSearch= JSON.parse(lastSearch);
         this.fromCityName=lastSearch.searchFrom;
@@ -349,7 +361,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
      } else {
       let searchValue = this.searchBusForm.value;
       this.busSearchCallBack(searchValue);
-      localStorage.setItem('busLastSearchNew',JSON.stringify(searchValue));
+      localStorage.setItem(environment.busLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
       url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));

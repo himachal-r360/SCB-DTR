@@ -1,88 +1,93 @@
 <div class="list-row" *ngIf="showrow && bus.availableSeats > 0" id="bus-{{busId}}">
     <div class="card_details_row card_brdr_btm">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="float-left label-name">
-                {{bus.travels}}
+        <div class="row">
+            <div class="col-md-3">
+                <div class="float-left label-name">
+                    {{bus.travels}}
+                </div>
+                <div class="label-gray float-left">{{bus.busType}}</div>
             </div>
-            <div class="label-gray float-left">{{bus.busType}}</div>
-        </div>
-        <div class="col-md-6 p0-cut">
-            <div class="row">
-                <div class="float-left col-md-3 w-15-r">
-                    <div class="label-name">{{bus.departureTime | date:'HH:mm'}}</div>
+            <div class="col-md-5 p0-cut">
+                <div class="row">
+                    <div class="float-left col-md-4 w-15-r">
+                        <div class="label-name">{{bus.departureTime | date:'HH:mm'}}</div>
 
-                    <div class="label-gray hide-m">{{busHelper.getBoarding(bus.boardingTimes,bus.departureTime| date:'HH:mm')}}</div>
-                    <div class="text-left" *ngIf="nextDayFlag">
-                        <span class="next_flag">Next Day</span>
+                        <div class="label-gray hide-m">{{busHelper.getBoarding(bus.boardingTimes,bus.departureTime| date:'HH:mm')}}</div>
+                        <div class="text-left" *ngIf="nextDayFlag">
+                            <span class="next_flag">Next Day</span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4 text-center px-0 durations position-relative">
+                        <div class="range"></div>
+                        <div class="label-gray label-pos">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</div>
+                    </div>
+                    <div class="float-left col-md-3 offset-md-1  w-15-r ">
+                        <div class="label-name">{{bus.arrivalTime | date:'HH:mm'}}</div>
+                        <div class="label-gray hide-m">{{busHelper.getDropping(bus.droppingTimes,bus.arrivalTime| date:'HH:mm')}}</div>
                     </div>
 
                 </div>
-                <div class="col-md-3 text-center px-0 durations position-relative">
-                    <div class="range"></div>
-                    <div class="label-gray label-pos">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</div>
-                </div>
-                <div class="float-left col-md-3 w-15-r">
-                    <div class="label-name">{{bus.arrivalTime | date:'HH:mm'}}</div>
-                    <div class="label-gray hide-m">{{busHelper.getDropping(bus.droppingTimes,bus.arrivalTime| date:'HH:mm')}}</div>
-                </div>
-                <div class="col-md-3 float-right w-33">
-                    <div class="float-left">
-                        <div class="label-gray">From</div>
-                        <div class="label-name"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
-                    </div>
-                </div>
             </div>
-        </div>
 
-        <div class="float-left col-md-3 text-right hide-m show_seats_btndiv">
-            <span *ngIf="bus.availableSeats > 0; else soldout">
+            <div class="float-left col-md-4  hide-m show_seats_btndiv">
+                <div class="row">
+                    <div class="col-md-4 offset-md-2  float-right w-33">
+                        <div class="float-left">
+                            <div class="label-gray">From</div>
+                            <div class="label-name"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <span *ngIf="bus.availableSeats > 0; else soldout">
                 
                 <div><button class="btn-primary w-80 showBtn" *ngIf="!showSeatLayout" (click)="onSeats(bus.id,rowvalue,bus,mobile=false);">Show Seats</button></div>
                 <div><button class="btn-primary w-80 hideBtn" *ngIf="showSeatLayout" (click)="HideSeats(bus.id,rowvalue,bus,mobile=false);">Hide Seats</button></div>
                 <div class="label-black-small text-right pb5">{{bus.availableSeats}} available <ng-container *ngIf="bus.avlWindowSeats > 0"> ({{bus.avlWindowSeats}} Window) </ng-container> </div>
                 </span>
-            <ng-template #soldout><button class="btn-primary w-80 bkred">Sold Out</button></ng-template>
-        </div>
-    </div>
-    </div>
-    <div class="card_details_row max_h_65">
-    <div class="row">
-        <div class="float-left col-md-9 amenities">
-            <div>
-                <span *ngIf="bus.rating > 0">
-                    <span class="rating " [ngClass]="bus.rating >= 4 ? 'rating-green' : (bus.rating >= 3 ? 'rating-orange' : 'rating-red')"><i class="material-icons">star_rate</i>
-                        <span class="rate-value">{{bus.rating}}</span>
-                </span>
-                </span>
-                <div class="float-left pl-6">
-                    <!-- <span class="re-schedule"> 
-                            <span class="rat-im g"><img src="{{cdnUrl}}images/icons/Reschedulable.svg" ></span>
-                            <span class="rat-title">Reschedulable</span>
-                        </span> -->
-                    <span class="w-rate-count px-2" *ngIf="bus.total_rating_count > 0">{{bus.total_rating_count | number}} Ratings</span>
-                    <span class="live-tracking" *ngIf="bus.liveTrackingAvailable"> 
-                            <span class="rat-img"><img src="{{cdnUrl}}images/icons/live track.svg" ></span>
-                    <span class="rat-title">Live Tracking</span>
-                    </span>
-                    <span class="live-tracking" *ngIf="bus.mTicketEnabled"> 
-                            <span class="rat-img"><img src="{{cdnUrl}}images/icons/mTicketEnabled.svg" ></span>
-                    <span class="rat-title">M-ticket Supported</span>
-                    </span>
-
+                        <ng-template #soldout><button class="btn-primary w-80 bkred">Sold Out</button></ng-template>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 text-right">
-            <a class="collapse_exp_btn" (click)="showBusDetails(bus.amenities,bus.id,mobile=false)" >
-                <span class="mx-3">Bus Details</span>
-              </a>
-        </div>
     </div>
+    <div class="card_details_row max_h_65">
+        <div class="row">
+            <div class="float-left col-md-9 amenities">
+                <div>
+                    <span *ngIf="bus.rating > 0">
+                    <span class="rating " [ngClass]="bus.rating >= 4 ? 'rating-green' : (bus.rating >= 3 ? 'rating-orange' : 'rating-red')"><i class="material-icons">star_rate</i>
+                        <span class="rate-value">{{bus.rating}}</span>
+                    </span>
+                    </span>
+                    <div class="float-left pl-6">
+                        <!-- <span class="re-schedule"> 
+                            <span class="rat-im g"><img src="{{cdnUrl}}images/icons/Reschedulable.svg" ></span>
+                            <span class="rat-title">Reschedulable</span>
+                        </span> -->
+                        <span class="w-rate-count px-2" *ngIf="bus.total_rating_count > 0">{{bus.total_rating_count | number}} Ratings</span>
+                        <span class="live-tracking" *ngIf="bus.liveTrackingAvailable"> 
+                            <span class="rat-img"><img src="{{cdnUrl}}images/icons/live track.svg" ></span>
+                        <span class="rat-title">Live Tracking</span>
+                        </span>
+                        <span class="live-tracking" *ngIf="bus.mTicketEnabled"> 
+                            <span class="rat-img"><img src="{{cdnUrl}}images/icons/mTicketEnabled.svg" ></span>
+                        <span class="rat-title">M-ticket Supported</span>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-right">
+                <a class="collapse_exp_btn" (click)="showBusDetails(bus.amenities,bus.id,mobile=false)">
+                    <span class="mx-3">Bus Details</span>
+                </a>
+            </div>
+        </div>
     </div>
     <div class="collapse details_collpase" id="collapseExample_{{busId}}">
         <div class="">
-          
+
             <ul class="more-details w-33 bus_collapse_ul" id="mat-accordion-tab-details">
 
                 <li id="onAmenities_{{busId}}" (click)="onAmenities(bus.amenities,bus.id,mobile=false)" [ngClass]="{'active': showAmenities}">Amenities</li>
@@ -99,11 +104,11 @@
                     <li *ngFor="let amen of busamenities">
                         <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg" class="px-2"></i>{{amen}}</li>
                 </ul>
-            
+
             </div>
             <div class="row amenities-list" *ngIf="showDropping">
                 <ul class="amenities-container">
-            
+
                     <table class="table table-borderless">
                         <thead>
                             <tr class="can-header">
@@ -133,7 +138,7 @@
                                         <span class="bor-place"><b>{{droppingtim.location}}</b> <br>
                                             <span class="bor-text">{{droppingtim.address}}</span></span>
                                     </tr>
-            
+
                                     <tr *ngIf="droppingtimes==0">
                                         <span><i class="material-icons time-circle">panorama_fish_eye</i>
                                                 </span><span class="bor-time"> </span>
@@ -142,11 +147,11 @@
                                 </table>
                             </td>
                             <!-- </tr> -->
-            
+
                         </tbody>
                     </table>
                 </ul>
-            
+
             </div>
             <div class="row amenities-list" *ngIf="showCancellation">
                 <ul class="amenities-container">
@@ -189,82 +194,80 @@
                 </ul>
             </div>
         </div>
-      </div>
+    </div>
 
-      <!-- Web Bus Layout -->
-      <ng-container>
+    <!-- Web Bus Layout -->
+    <ng-container>
         <div class="seat-layout " [ngClass]="rowvalue==seatlayout ? 'active' : 'hide'" id="seat-layout{{bus.id}}" *ngIf="showSeatLayout">
-            
+
             <div class="row">
                 <div id="tab-seats-new">
                     <div class="bus_seat_details">
-                    <div class="w-100">
-                        <div class="black_text_medium">{{bus.availableSeats}} Seats Available</div>
-                        <div class="gray_text_small">Click on seat to select/ deselect</div>
-                    </div>
-                    <!-- static filter button -->
-                    <div class="row ">
-                        <div class="col-md-12">
-                           <ul class="bus_details_filter nav nav-tabs" role="tablist">
-                                <li><button class="bus_details_filter_btn active"  data-bs-target="#seat-{{bus.id}}-0" aria-controls="seat" (click)="showSeatsFilter(bus.id,0)" role="tab" data-bs-toggle="tab" aria-expanded="true">All ({{bus.availableSeats | number }})</button></li>
-                                <ng-container *ngIf="pricesplit.length > 1">
-                                <li *ngFor="let price of pricesplit;let index=index;"><button class="bus_details_filter_btn" (click)="showSeatsFilter(bus.id,price.actfare)"  attr.data-bs-target="#seat-{{bus.id}}-{{index}}" aria-controls="seat-{{bus.id}}-{{price.actfare}}" role="tab" data-bs-toggle="tab" >₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
-                                </ng-container>
-                            </ul>
+                        <div class="w-100">
+                            <div class="black_text_medium">{{bus.availableSeats}} Seats Available</div>
+                            <div class="gray_text_small">Click on seat to select/ deselect</div>
                         </div>
-                    </div>
-                    <!-- end of static filter button -->
-                    <div class="row mt-3">
-                        <div class="col text-center">
-                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
-                            <div class="check_status_txt">Available
+                        <!-- static filter button -->
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <ul class="bus_details_filter nav nav-tabs" role="tablist">
+                                    <li><button class="bus_details_filter_btn active" data-bs-target="#seat-{{bus.id}}-0" aria-controls="seat" (click)="showSeatsFilter(bus.id,0)" role="tab" data-bs-toggle="tab" aria-expanded="true">All ({{bus.availableSeats | number }})</button></li>
+                                    <ng-container *ngIf="pricesplit.length > 1">
+                                        <li *ngFor="let price of pricesplit;let index=index;"><button class="bus_details_filter_btn" (click)="showSeatsFilter(bus.id,price.actfare)" attr.data-bs-target="#seat-{{bus.id}}-{{index}}" aria-controls="seat-{{bus.id}}-{{price.actfare}}" role="tab" data-bs-toggle="tab">₹{{price.actfare | number }} ({{price.seattotal}}) </button></li>
+                                    </ng-container>
+                                </ul>
                             </div>
                         </div>
-                        <div class="col text-center">
-                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_seats.svg" class="check_status_img"></div>
-                            <div class="check_status_txt">Sleeper
+                        <!-- end of static filter button -->
+                        <div class="row mt-3">
+                            <div class="col text-center">
+                                <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
+                                <div class="check_status_txt">Available
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_seats.svg" class="check_status_img"></div>
+                                <div class="check_status_txt">Sleeper
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
+                                <div class="check_status_txt">Booked By Others
+                                </div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
+                                <div class="check_status_txt"> Selected By You</div>
+                            </div>
+                            <div class="col text-center">
+                                <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats.svg" class="check_status_img"></div>
+                                <div class="check_status_txt"> Available only for female passenger</div>
+                            </div>
+
+                            <div class="col text-center">
+                                <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img"></div>
+                                <div class="check_status_txt">Available for male passenger
+                                </div>
                             </div>
                         </div>
-                        <div class="col text-center">
-                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
-                            <div class="check_status_txt">Booked By Others
-                            </div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
-                            <div class="check_status_txt"> Selected By You</div>
-                        </div>
-                        <div class="col text-center">
-                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats.svg" class="check_status_img"></div>
-                            <div class="check_status_txt"> Available only for 
-                                female passenger</div>
-                        </div>
-    
-                        <div class="col text-center">
-                            <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img"></div>
-                            <div class="check_status_txt">Available for male 
-                                passenger
-                            </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
-    
+
             <div class="row mt-15">
                 <div class="col-md-8">
 
                     <div class=" layout-w" *ngIf="loading; else listng">
                         <div class="mt-150 d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                         </div>
                     </div>
-    
+
                     <ng-template #listng>
                         <div class=" layout-w" *ngIf="searchParam.tripId == bus.id" [ngClass]="{'active': showDetails}">
-    
+
                             <!-- <div class="seatLayout_structure">
                                 <div class="layout">
                                    new layout
@@ -274,23 +277,23 @@
                                 </div>
                             </div> -->
                             <!-- <ng-container *ngIf="show_dialog"> -->
-                              <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane-seat-{{bus.id}} tab-pane fade active show" id="seat-{{bus.id}}-0">
-                                        <!-- <div class="errorMessage">{{maxSeatMessage}}</div> -->
-                                        <!-- <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p> -->
-                                        <span *ngIf="totalUpperDeck">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane-seat-{{bus.id}} tab-pane fade active show" id="seat-{{bus.id}}-0">
+                                    <!-- <div class="errorMessage">{{maxSeatMessage}}</div> -->
+                                    <!-- <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p> -->
+                                    <span *ngIf="totalUpperDeck">
                                             <div class="label-small">Lower Berth</div>
                                         </span>
-                                        <div class="lower-bus ">
-                                            <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
-                                            <table class="cabin fuselage" align="left">
-                                                <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
-                                                    <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table align="left" >
-                                                            <tr>
-                                                                <td *ngFor="let seat of LD;">
-                                                                    <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
-                                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
+                                    <div class="lower-bus ">
+                                        <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
+                                        <table class="cabin fuselage" align="left">
+                                            <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
+                                                <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
+                                                    <table align="left">
+                                                        <tr>
+                                                            <td *ngFor="let seat of LD;">
+                                                                <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
+                                                                <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
                                                                         <span>
                                                                             <label class="seat_label"  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)"   >
                                                                                 <!--<img  src="{{cdnUrl}}images/icons/bus/{{seat.newseattype}}.svg" class="{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content" >-->
@@ -300,18 +303,18 @@
                                                                                  <div class="s-{{seat.seattype}}"></div>
                                                                                 </ng-template>
                                                                             </label>
-                                                                        </span> 
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        
-                                        <div class="clearfix"></div>
-                                        <span *ngIf="totalUpperDeck;">
+                                                                        </span>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+                                    <span *ngIf="totalUpperDeck;">
                                             <div class="label-small">Upper Berth</div>
                                             <div class="upper-bus">
                                               <label class="seat-driver">&nbsp;</label>
@@ -322,7 +325,7 @@
                                                                 <tr>
                                                                     <td *ngFor="let seat of UD">
                                                                         <span *ngIf="seat && seat.length==0" class="seat noSeats" >&nbsp;</span>
-                                                                        <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
+                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
                                                                             <span >
                                                                                 <label class="seat_label"  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)"   >
                                                                                 <div class="s-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
@@ -330,36 +333,36 @@
                                                                                 <div class="s-{{seat.seattype}}"></div>
                                                                                 </ng-template>
                                                                                 </label>
-                                                                            </span> 
-                                                                        </span>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                            <!-- <span class="pos-rear">REAR</span> -->
-                                        </span>
+                                                                            </span>
+                                    </span>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    </td>
+                                    </tr>
+                                    </table>
                                 </div>
-    
-                                <ng-container *ngIf="pricesplit.length > 1">
-                                
-                                         <div role="tabpanel" *ngFor="let price of pricesplit;let index=index;" class="tab-pane-seat-{{bus.id}}  tab-pane fade " id="seat-{{bus.id}}-{{index}}">
-                                                <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
-                                        <span  *ngIf="totalUpperDeck">
+                                <!-- <span class="pos-rear">REAR</span> -->
+                                </span>
+                            </div>
+
+                            <ng-container *ngIf="pricesplit.length > 1">
+
+                                <div role="tabpanel" *ngFor="let price of pricesplit;let index=index;" class="tab-pane-seat-{{bus.id}}  tab-pane fade " id="seat-{{bus.id}}-{{index}}">
+                                    <p class="errorMessage" *ngIf="maxSeatMessageStatus"> <img src="{{cdnUrl}}images/vector/warning.png" alt="Error">{{maxSeatMessage}} </p>
+                                    <span *ngIf="totalUpperDeck">
                                                         <div class="label-small">Lower Berth</div>
                                         </span>
-                                        <div class="lower-bus">
-                                            <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
-                                            <table class="cabin fuselage" align="left">
-                                                <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
-                                                    <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
-                                                        <table align="left">
-                                                            <tr>
-                                                                <td *ngFor="let seat of LD">
-                                                                    <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
-                                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
+                                    <div class="lower-bus">
+                                        <label class="seat-driver"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
+                                        <table class="cabin fuselage" align="left">
+                                            <tr class="row-no" *ngFor="let LD of Lowerdecks;let index=index; ">
+                                                <td *ngIf="LD && LD.length > 0" [attr.align]="(index==2 || LD.length > 10 ) ? 'right' : 'left'">
+                                                    <table align="left">
+                                                        <tr>
+                                                            <td *ngFor="let seat of LD">
+                                                                <span *ngIf="seat && seat.length==0 " class="seat noSeats">&nbsp;</span>
+                                                                <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}"> 
                                                                     <span *ngIf="price.actfare == seat.baseFare; else blurseat">
                                                                         <label class="seat_label" (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)"   >
 
@@ -369,23 +372,23 @@
                                                                         </ng-template>
                                                                         </label>
                                                                     </span>
-                                                                    <ng-template #blurseat>
-                                                                        <span>
+                                                                <ng-template #blurseat>
+                                                                    <span>
                                                                             <label  class="seat_label" >
                                                                             <div class="s-{{seat.seattype}}_x"  ></div>
                                                                             </label>
                                                                         </span>
-                                                                    </ng-template>
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <span *ngIf="totalUpperDeck">
+                                                                </ng-template>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <span *ngIf="totalUpperDeck">
                                             <div class="label-small">Upper Berth</div>
                                             <div class="upper-bus">
                                             <label class="seat-driver">&nbsp;</label>
@@ -396,7 +399,7 @@
                                                                 <tr>
                                                                 <td *ngFor="let seat of UD;">
                                                                     <span *ngIf="seat && seat.length==0" class="seat noSeats">&nbsp;</span>
-                                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}">
+                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}">
                                                                         <span *ngIf="price.actfare == seat.baseFare; else blurseat">
                                                                             <label class="seat_label"
                                                                                 (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=false)">
@@ -407,105 +410,105 @@
                                                                                 
                                                                                 
                                                                                 <span> </span>
-                                                                            </label>
-                                                                        </span>
-                                                                        <ng-template #blurseat>
-                                                                            <span>
+                                    </label>
+                                    </span>
+                                    <ng-template #blurseat>
+                                        <span>
                                                                                 <label class="seat_label">
                                                                                     <div class="s-{{seat.seattype}}_x"></div>
                                                                                 </label>
                                                                             </span>
-                                                                        </ng-template>
-                                                                    </span>
-                                                                </td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-    
-                                            </div>
-                        
-                                            <!-- <span class="pos-rear">REAR</span> -->
-                                        </span>
-                                        </div>
-                                </ng-container>
-            
-                               </div>
-                            <!-- </ng-container> -->
+                                    </ng-template>
+                                    </span>
+                                    </td>
+                                    </tr>
+                                    </table>
+                                    </td>
+                                    </tr>
+                                    </table>
+
+                                </div>
+
+                                <!-- <span class="pos-rear">REAR</span> -->
+                                </span>
                         </div>
-                    </ng-template>
+                        </ng-container>
+
                 </div>
-    
-                <div class="col-md-4 ">
-                    <div class="float-left layout-w brd_drop" *ngIf="bus.rtc==true && rtcseatcall == false">Please select boarding & dropping points to continue for seat selection</div>
-                    <div class="bus_details_view_form">
-                    <div class="gray_text_small" [ngClass]="{'errorred':showError}">Please select seat(s), boarding & dropping points to continue</div>
-                    <mat-form-field class="w-100 bus_details_form">
-                        <mat-select placeholder="Boarding point"  [ngClass]="'check'">
-                            <mat-option *ngFor="let boardingpoints of boardingtimes" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)" [value]="boardingpoints.boardingPointId"><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px">({{boardingpoints.nextday | date:'dd LLL'}}) </span>{{boardingpoints.ctime}} : {{boardingpoints.location}} ({{boardingpoints.address}})</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="w-100 bus_details_form">
-                        <mat-select placeholder="Dropping point">
-                            <mat-option *ngFor="let droppingTimes of droppingtimes" (click)="Boardingdroping('dropping',droppingTimes.boardingPointId,bus.id)" [value]="droppingTimes.boardingPointId"><span *ngIf="droppingTimes.nextday" style="color:red;font-size: 10px">({{droppingTimes.nextday | date:'dd LLL'}}) </span> {{droppingTimes.ctime}} : {{droppingTimes.location}} ({{droppingTimes.address}})</mat-option>
-                            <mat-option *ngIf="droppingtimes.length==0" (click)="Boardingdroping('dropping','NA',bus.id)" [value]="params.queryParamMap.get('searchTo')">{{bus.arrivalTime | date:'HH:mm'}} : {{params.queryParamMap.get('searchTo')}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <div class="base-fare">
-                        <div *ngIf="totalFareBus">
-                            <div class="row mb-10" *ngFor="let seats of seatdetails">
-                                <div class="gray-medium col-7" *ngIf="seats">
-                                    <p class="price_seat"> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
-                                </div>
-                                <div class="black-medium col-5 text-right"> 
-                                    <div class="fareTotal">
-                                        ₹  {{seats.seatfaretotal | number:'1.2-2'}}
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <p class="seat-numbers">{{seats.selseats}} </p>
+                <!-- </ng-container> -->
+            </div>
+            </ng-template>
+        </div>
+
+        <div class="col-md-4 ">
+            <div class="float-left layout-w brd_drop" *ngIf="bus.rtc==true && rtcseatcall == false">Please select boarding & dropping points to continue for seat selection</div>
+            <div class="bus_details_view_form">
+                <div class="gray_text_small" [ngClass]="{'errorred':showError}">Please select seat(s), boarding & dropping points to continue</div>
+                <mat-form-field class="w-100 bus_details_form">
+                    <mat-select placeholder="Boarding point" [ngClass]="'check'">
+                        <mat-option *ngFor="let boardingpoints of boardingtimes" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)" [value]="boardingpoints.boardingPointId"><span *ngIf="boardingpoints.nextday" style="color:red;font-size: 10px">({{boardingpoints.nextday | date:'dd LLL'}}) </span>{{boardingpoints.ctime}} : {{boardingpoints.location}} ({{boardingpoints.address}})</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="w-100 bus_details_form">
+                    <mat-select placeholder="Dropping point">
+                        <mat-option *ngFor="let droppingTimes of droppingtimes" (click)="Boardingdroping('dropping',droppingTimes.boardingPointId,bus.id)" [value]="droppingTimes.boardingPointId"><span *ngIf="droppingTimes.nextday" style="color:red;font-size: 10px">({{droppingTimes.nextday | date:'dd LLL'}}) </span> {{droppingTimes.ctime}} : {{droppingTimes.location}} ({{droppingTimes.address}})</mat-option>
+                        <mat-option *ngIf="droppingtimes.length==0" (click)="Boardingdroping('dropping','NA',bus.id)" [value]="params.queryParamMap.get('searchTo')">{{bus.arrivalTime | date:'HH:mm'}} : {{params.queryParamMap.get('searchTo')}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="base-fare">
+                    <div *ngIf="totalFareBus">
+                        <div class="row mb-10" *ngFor="let seats of seatdetails">
+                            <div class="gray-medium col-7" *ngIf="seats">
+                                <p class="price_seat"> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
+                            </div>
+                            <div class="black-medium col-5 text-right">
+                                <div class="fareTotal">
+                                    ₹ {{seats.seatfaretotal | number:'1.2-2'}}
                                 </div>
                             </div>
-                            <div class="row" *ngIf="maxSeatMessageStatus">
-                                <div class="col-2 text-center">
-                                    <img src="{{cdnUrl}}images/icons/orange_warning.svg">
-                                </div>
-                                <div class="col-10 ps-0">
-                                    <p class="maxseat_select_msg">{{maxSeatMessage}}</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-6">
-                                    <span class="float-left text-large">
-                                        <span class="titleLable"> Total Fare </span><br>
-                                        <span class="text-labels tax">(Includes Taxes)</span>
-                                    </span>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <span class="titleLable black-medium"><span *ngIf="totalfare > 0; else zero"> ₹  {{totalfare | number:'1.2-2'}}</span>
-                                        <ng-template #zero> ₹  {{totalfare}}</ng-template>
-                                    </span>
-                                </div>
+                            <div class="col-12">
+                                <p class="seat-numbers">{{seats.selseats}} </p>
                             </div>
                         </div>
-                        
-                        
+                        <div class="row" *ngIf="maxSeatMessageStatus">
+                            <div class="col-2 text-center">
+                                <img src="{{cdnUrl}}images/icons/orange_warning.svg">
+                            </div>
+                            <div class="col-10 ps-0">
+                                <p class="maxseat_select_msg">{{maxSeatMessage}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="float-left text-large">
+                                        <span class="titleLable"> Total Fare </span><br>
+                                <span class="text-labels tax">(Includes Taxes)</span>
+                                </span>
+                            </div>
+                            <div class="col-6 text-right">
+                                <span class="titleLable black-medium"><span *ngIf="totalfare > 0; else zero"> ₹  {{totalfare | number:'1.2-2'}}</span>
+                                <ng-template #zero> ₹ {{totalfare}}</ng-template>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                    <button class="btn-primary mt-15 w-100" id="{{bus.id}}" (click)="onSubmitSeats(bus.id,bus,rowvalue)" [disabled]="buttonstatus">
+
+
+                </div>
+            </div>
+            <button class="btn-primary mt-15 w-100" id="{{bus.id}}" (click)="onSubmitSeats(bus.id,bus,rowvalue)" [disabled]="buttonstatus">
                         <ng-container *ngIf="rtcseatcall; else selseatbut">CONTINUE</ng-container>
                         <ng-template #selseatbut><span [ngClass]="{'spinner-border spinner-border-sm': buttonstatus }"></span>  {{button2_name}}</ng-template> 
                     </button>
-            
-                </div>
-            </div>
-    
-        <!-- <ng-container *ngIf="show_dialog">  -->
-    
+
         </div>
-    </ng-container>
+</div>
+
+<!-- <ng-container *ngIf="show_dialog">  -->
+
+</div>
+</ng-container>
 
 </div>
 
@@ -519,21 +522,21 @@
             <div class="label-gray float-left">{{bus.busType}}</div>
         </div>
         <div class="col-4">
-             <div class="text-center amenities">
+            <div class="text-center amenities">
 
-            <div *ngIf="bus.rating > 0">
-                <div class="rating" [ngClass]="bus.rating >= 4 ? 'rating-green' : (bus.rating >= 3 ? 'rating-orange' : 'rating-red')"><i class="material-icons">
+                <div *ngIf="bus.rating > 0">
+                    <div class="rating" [ngClass]="bus.rating >= 4 ? 'rating-green' : (bus.rating >= 3 ? 'rating-orange' : 'rating-red')"><i class="material-icons">
                             star_rate
                         </i>
 
-                    <!-- <span class="rate-value">{{bus.rating}}</span> -->
-                    <span class="rate-value">{{bus.rating}}</span>
+                        <!-- <span class="rate-value">{{bus.rating}}</span> -->
+                        <span class="rate-value">{{bus.rating}}</span>
+                    </div>
+
                 </div>
 
+                <div class="m-rate-count">{{bus.total_rating_count | number}} Ratings </div>
             </div>
-
-            <div class="m-rate-count">{{bus.total_rating_count | number}} Ratings </div>
-        </div>
         </div>
 
         <div class="col-7 d-flex align-items-center pt20 pe-0">
@@ -541,7 +544,8 @@
                 <div class="label-name-large">{{bus.departureTime | date:'HH:mm'}}
                     <p *ngIf="nextDayFlag" class="next_flag ml-1">Next Day</p>
                 </div>
-                <div class="label-gray mx-1 min_w_40 text-center"><span class="m_bus_duartion"><span>{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</span></span></div>
+                <div class="label-gray mx-1 min_w_40 text-center"><span class="m_bus_duartion"><span>{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</span></span>
+                </div>
                 <div class="label-name-large">{{bus.arrivalTime | date:'HH:mm'}}</div>
 
             </div>
@@ -549,7 +553,7 @@
         <div class="col-5 pt20">
             <div class=" d-flex align-items-center text-right bus_fare_pos">
                 <div class="label-gray px-1">From</div>
-                <div class="label-name-large text-right"> ₹  {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                <div class="label-name-large text-right"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
             </div>
         </div>
         <div class="col-12">
@@ -564,18 +568,18 @@
     </div>
     <div class="row">
         <div class="d-flex align-items-center">
-        <div>
-            <img src="{{cdnUrl}}images/icons/live track.svg" >
-            <span class="rat-text">Live Tracking</span>
+            <div>
+                <img src="{{cdnUrl}}images/icons/live track.svg">
+                <span class="rat-text">Live Tracking</span>
+            </div>
+            <div>
+                <span class="rat-text"> | </span>
+            </div>
+            <div class="mx-2">
+                <img src="{{cdnUrl}}images/icons/mTicketEnabled.svg">
+                <span class="rat-text">M-ticket Supported</span>
+            </div>
         </div>
-        <div>
-            <span class="rat-text"> | </span>
-        </div>
-        <div class="mx-2">
-            <img src="{{cdnUrl}}images/icons/mTicketEnabled.svg" >
-            <span class="rat-text">M-ticket Supported</span>
-        </div>
-    </div>
     </div>
     <!-- <button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button> -->
 </div>
@@ -583,22 +587,22 @@
 
 
 <div class="seat-layout-m" *ngIf="searchParam.tripId == bus.id" [ngClass]="{'active': showDetails}">
-    
-          <div class="row">
-              <div class="col-md-12 p-0 fixed-top"  >
-              <div class="mob-listing-header">
+
+    <div class="row">
+        <div class="col-md-12 p-0 fixed-top">
+            <div class="mob-listing-header">
                 <div class="mob-listing-header-left">
-                    <a href="javascript:;"  (click)="onCloseDetail()" >
+                    <a href="javascript:;" (click)="onCloseDetail()">
                         <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                     </a>
                 </div>
                 <div class="mob-listing-header-center">
                     <div class="">
-                            <p>{{departure  | date:'EEE, dd MMM' }}   </p>
-                            <h6> {{bus.travels}}</h6>
-                            <p class="">{{bus.busType}}</p>
+                        <p>{{departure | date:'EEE, dd MMM' }} </p>
+                        <h6> {{bus.travels}}</h6>
+                        <p class="">{{bus.busType}}</p>
                     </div>
-                    
+
                 </div>
                 <div class="mob-listing-header-right">
                     <span (click)="seatTypeShow()">
@@ -606,97 +610,95 @@
                     </span>
                 </div>
             </div>
-          </div>
-       </div>
+        </div>
+    </div>
 
-   
+
     <div class="mlite_seat_layout">
         <div class="col-md-8 float-left layout-w" *ngIf="loading; else listngMlite">
             <div class="mt-150 d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                        </div>
-                        </div>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
         <ng-template #listngMlite>
-                <div id="tab-seats-m">
-                    <mat-tab-group mat-align-tabs="center" animationDuration="0ms" style="padding:0px;margin-top:10px;">
-                        <mat-tab label="All ({{bus.availableSeats}})">
+            <div id="tab-seats-m">
+                <mat-tab-group mat-align-tabs="center" animationDuration="0ms" style="padding:0px;margin-top:10px;">
+                    <mat-tab label="All ({{bus.availableSeats}})">
 
-                            <div class="seat_layover">
-                                <div class="bus_seats_view">
-                                    <div *ngIf="seatTypeMliteData">
-                                        <div class="layout">
-                                            <div>
-                                                <img src="{{cdnUrl}}images/icons/close.png" alt="close" class="close_seatInfo" (click)="seatTypeClose()">
-                                            </div>
-                                            <div class="">
-                                                <div class="seat_type_info_m">
-                                                    <div class="bus_driver">
-                                                        <div>
-                                                            <div class="label text-left">Seat Types</div>
-                                                        </div>
-                                                        <div>
-                                                            <!-- <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div> -->
-                                                        </div>
+                        <div class="seat_layover">
+                            <div class="bus_seats_view">
+                                <div *ngIf="seatTypeMliteData">
+                                    <div class="layout">
+                                        <div>
+                                            <img src="{{cdnUrl}}images/icons/close.png" alt="close" class="close_seatInfo" (click)="seatTypeClose()">
+                                        </div>
+                                        <div class="">
+                                            <div class="seat_type_info_m">
+                                                <div class="bus_driver">
+                                                    <div>
+                                                        <div class="label text-left">Seat Types</div>
                                                     </div>
-                                                    <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
-                                                        <div class="check_status_txt">Available
-                                                        </div>
+                                                    <div>
+                                                        <!-- <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div> -->
                                                     </div>
-                                                    <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_v.svg" width="38px" class="check_status_img"></div>
-                                                        <div class="check_status_txt">Sleeper
-                                                        </div>
+                                                </div>
+                                                <div class="seat_info">
+                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
+                                                    <div class="check_status_txt">Available
                                                     </div>
-                                                    <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
-                                                        <div class="check_status_txt">Booked By Others
-                                                        </div>
+                                                </div>
+                                                <div class="seat_info">
+                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_v.svg" width="38px" class="check_status_img"></div>
+                                                    <div class="check_status_txt">Sleeper
                                                     </div>
-                                                    <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
-                                                        <div class="check_status_txt"> Selected By You</div>
+                                                </div>
+                                                <div class="seat_info">
+                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
+                                                    <div class="check_status_txt">Booked By Others
                                                     </div>
-                                                    <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats_m.svg" class="check_status_img" width="75px"></div>
-                                                        <div class="check_status_txt"> Available only for 
-                                                            female passenger</div>
-                                                    </div>
-                                
-                                                    <div class="seat_info">
-                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img" width="66px"></div>
-                                                        <div class="check_status_txt">Available for male 
-                                                            passenger
-                                                        </div>
+                                                </div>
+                                                <div class="seat_info">
+                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
+                                                    <div class="check_status_txt"> Selected By You</div>
+                                                </div>
+                                                <div class="seat_info">
+                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats_m.svg" class="check_status_img" width="75px"></div>
+                                                    <div class="check_status_txt"> Available only for female passenger</div>
+                                                </div>
+
+                                                <div class="seat_info">
+                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img" width="66px"></div>
+                                                    <div class="check_status_txt">Available for male passenger
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="" *ngIf="Lowerdecks.length">
-                                        <div class="layout">
-                                           
-                                            <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
-            
-            
-                                            <div class="margin-auto content">
-                                                <div class="bus_driver">
-                                                    <div>
-                                                        <div class="label text-left">Lower Berth</div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
-                                                    </div>
+                                </div>
+                                <div class="" *ngIf="Lowerdecks.length">
+                                    <div class="layout">
+
+                                        <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
+
+
+                                        <div class="margin-auto content">
+                                            <div class="bus_driver">
+                                                <div>
+                                                    <div class="label text-left">Lower Berth</div>
                                                 </div>
-                                                <div class="">
-                                                <table  class="cabin fuselage">
-                                                <tr  class="row-no" *ngFor="let LD of Lowerdecks " >
-                                                <td *ngIf="LD && LD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
-                                                <td *ngFor="let seat of LD" align="right" >
-                                                        <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;&nbsp;</span>
-                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
+                                                <div>
+                                                    <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
+                                                </div>
+                                            </div>
+                                            <div class="">
+                                                <table class="cabin fuselage">
+                                                    <tr class="row-no" *ngFor="let LD of Lowerdecks ">
+                                                        <td *ngIf="LD && LD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td *ngFor="let seat of LD" align="right">
+                                                            <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;&nbsp;</span>
+                                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
                                                     <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"   >
                                                     
                                                        <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
@@ -706,110 +708,110 @@
                                                 
                                                     </a>
                                 </span>
-                                                    </td>
+                                                        </td>
                                                     </tr>
-                                                    </table>
-            
-                                                  
-                                                </div>
-                                                <!--<div class="text-center my-3" id="toggle">
+                                                </table>
+
+
+                                            </div>
+                                            <!--<div class="text-center my-3" id="toggle">
                                                     <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
                                                         <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
                                                     </mat-button-toggle-group>
                                                 </div>-->
-            
-                                            </div>
+
                                         </div>
                                     </div>
-                                    <div class="" *ngIf="Upperdecks.length">
-                                        <div class="layout">
-                                           
-                                            <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
-            
-            
-                                            <div class="margin-auto content">
-                                                <div class="bus_driver">
-                                                    <div>
-                                                        <div class="label text-left">Upper Berth</div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
-                                                    </div>
+                                </div>
+                                <div class="" *ngIf="Upperdecks.length">
+                                    <div class="layout">
+
+                                        <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
+
+
+                                        <div class="margin-auto content">
+                                            <div class="bus_driver">
+                                                <div>
+                                                    <div class="label text-left">Upper Berth</div>
                                                 </div>
-                                                <div class="">
-        
-                                                <table  class="cabin fuselage" >
-                                            <tr  class="row-no" *ngFor="let UD of Upperdecks " >
-                                                <td *ngIf="UD && UD.length==0" align="right" >&nbsp;&nbsp;&nbsp;</td>
-                                                <td *ngFor="let seat of UD"  align="right" >
-                                                        <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;&nbsp;</span>
-                                                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
+                                                <div>
+                                                    <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
+                                                </div>
+                                            </div>
+                                            <div class="">
+
+                                                <table class="cabin fuselage">
+                                                    <tr class="row-no" *ngFor="let UD of Upperdecks ">
+                                                        <td *ngIf="UD && UD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td *ngFor="let seat of UD" align="right">
+                                                            <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;&nbsp;</span>
+                                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
                                                     <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"    >
                                                        <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
                                                     <ng-template #other_content>    <div class="ms-{{seat.seattype}}"></div></ng-template>
                                                 
                                                     </a>
                                                     </span>
-                                                    </td>
+                                                        </td>
                                                     </tr>
-                                                    </table>
-                                                    <!-- <span class="pos-rear">REAR</span> --> 
-                                                </div>
-                                                <!--<div class="text-center my-3" id="toggle">
+                                                </table>
+                                                <!-- <span class="pos-rear">REAR</span> -->
+                                            </div>
+                                            <!--<div class="text-center my-3" id="toggle">
                                                     <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
                                                         <mat-button-toggle value="upper">upper</mat-button-toggle>
                                                     </mat-button-toggle-group>
                                                 </div>-->
-            
-                                            </div>
+
                                         </div>
                                     </div>
-                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
+                        <!-- Mlite Error Msg -->
+                        <div class="footer_error" *ngIf="mlite_seatError">
+                            <div class="error_bg">
+                                <div>
+                                    <i class="material-icons">warning</i>
+                                </div>
+                                <div>
+                                    <p>Please select seat(s)</p>
                                 </div>
                             </div>
-                            
-                            <!-- <a class="info-m" hrref="#" (click)="onSeatInfo()"><i class="material-icons  xs-mark" >error_outline</i></a> -->
-                            <!-- Mlite Error Msg -->
-                            <div class="footer_error" *ngIf="mlite_seatError">
-                                <div class="error_bg">
-                                    <div>
-                                        <i class="material-icons">warning</i>
-                                    </div>
-                                    <div>
-                                        <p>Please select seat(s)</p>
-                                    </div>
+                        </div>
+                        <!-- Mlite Error Msg -->
+                        <div class="footer_error" *ngIf="mlite_passengerError">
+                            <div class="error_bg">
+                                <div>
+                                    <i class="material-icons">warning</i>
+                                </div>
+                                <div>
+                                    <p>You can only add upto 6 travelers at a time.</p>
                                 </div>
                             </div>
-                            <!-- Mlite Error Msg -->
-                            <div class="footer_error" *ngIf="mlite_passengerError">
-                                <div class="error_bg">
-                                    <div>
-                                        <i class="material-icons">warning</i>
-                                    </div>
-                                    <div>
-                                        <p>You can only add upto 6 travelers at a time.</p>
-                                    </div>
+                        </div>
+                        <div class="fixed-f bg-white">
+                            <div class="row">
+                                <div class="col-6" (click)="openAmentiesmlite()">
+                                    <span class="blue_link float-start">Amenities & more</span>
+                                </div>
+                                <div class="col-6" *ngIf="seatdetails.length > 0">
+                                    <span class="blue_link float-end" (click)="openBottomSheet()">Fare Summary</span>
                                 </div>
                             </div>
-                            <div class="fixed-f bg-white">
-                                <div class="row">
-                                    <div class="col-6" (click)="openAmentiesmlite()">
-                                        <span class="blue_link float-start">Amenities & more</span>
+                            <hr class="my-2 row">
+                            <div class="row">
+                                <div class="col-4" (click)="openBottomSheet()">
+                                    <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹{{totalfare | number:'1.2'}}</span>
+                                        <ng-template #zero1> ₹{{totalfare | number:'1.2'}}</ng-template>
                                     </div>
-                                    <div class="col-6"  *ngIf="seatdetails.length > 0">
-                                        <span class="blue_link float-end">Fare Summary</span>
+                                    <div class="xs-text" *ngIf="seatdetails.length == 0">
+                                        <span>Select Seats</span>
                                     </div>
-                                </div>
-                                <hr class="my-2 row"> 
-                                <div class="row">
-                                    <div class="col-4" (click)="openBottomSheet()">
-                                        <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹{{totalfare | number:'1.2'}}</span>
-                                            <ng-template #zero1> ₹{{totalfare | number:'1.2'}}</ng-template>
-                                        </div>
-                                        <div class="xs-text" *ngIf="seatdetails.length == 0">
-                                            <span>Select Seats</span>
-                                        </div>
-                                        <div (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
+                                    <div (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
 
                                         <div class="xs-text li-h">
                                             <span *ngFor="let seats of seatdetails;let lastRow=last;">{{seats.selseats}}<span *ngIf="!lastRow">,</span>
@@ -817,41 +819,41 @@
 
                                         </div>
 
-                                        </div>
                                     </div>
-                                    
-                                    <div class="col-8" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
-                                        <button class="btn-primary w-100">CONTINUE</button>
-                                    </div>
+                                </div>
+
+                                <div class="col-8" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
+                                    <button class="btn-primary w-100">CONTINUE</button>
                                 </div>
                             </div>
-                            <div class="fare-break" [ngClass]="{'active': showFare}" *ngIf="seatdetails.length > 0">
-                                <h6>Fare Breakup</h6>
-                                <div *ngFor="let seats of seatdetails">
-                                    <div class="row" *ngIf="seats">
-                                        <div class="col-6">
-                                            <div> {{seats.totalseats}} Seat(s) @ {{seats.baseFare | number:'1.2-2'}} </div>
-                                            <div>Seat no(s): {{seats.selseats}} </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="text-right"> ₹  {{seats.totalbaseFare | number:'1.2-2'}} </div>
-                                        </div>
+                        </div>
+                        <div class="fare-break" [ngClass]="{'active': showFare}" *ngIf="seatdetails.length > 0">
+                            <h6>Fare Breakup</h6>
+                            <div *ngFor="let seats of seatdetails">
+                                <div class="row" *ngIf="seats">
+                                    <div class="col-6">
+                                        <div> {{seats.totalseats}} Seat(s) @ {{seats.baseFare | number:'1.2-2'}} </div>
+                                        <div>Seat no(s): {{seats.selseats}} </div>
                                     </div>
-                                    <!-- <li > <span></span></li> -->
+                                    <div class="col-6">
+                                        <div class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </div>
+                                    </div>
                                 </div>
-                                <div class="row" *ngIf="totServtax > 0">
-                                    <div class="col-6">
-                                        <div>Taxes</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="text-right">₹  {{totServtax | number:'1.2-2'}}</div>
-                                    </div>
+                                <!-- <li > <span></span></li> -->
+                            </div>
+                            <div class="row" *ngIf="totServtax > 0">
+                                <div class="col-6">
+                                    <div>Taxes</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-right">₹ {{totServtax | number:'1.2-2'}}</div>
                                 </div>
                             </div>
+                        </div>
 
-                        </mat-tab>
+                    </mat-tab>
 
-                        <span *ngIf="pricesplit.length > 1">
+                    <span *ngIf="pricesplit.length > 1">
     <span>
     <mat-tab  *ngFor="let price of pricesplit" label=" ₹ {{price.actfare | number}} ({{price.seattotal}})">
                     
@@ -869,7 +871,7 @@
         <td *ngIf="LD && LD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
         <td *ngFor="let seat of LD" align="right">
         <span *ngIf="seat && seat.length==0"  class="seat">&nbsp;&nbsp;&nbsp;</span>
-        <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
+                    <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
         <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"  *ngIf="price.actfare == seat.baseFare; else blurseat" >
         
             <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
@@ -883,30 +885,30 @@
         </td>
         </tr>
         </table>
-        
+
         </div>
         <!--<div class="text-center my-3" id="toggle">
         <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
         <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
         </mat-button-toggle-group>
         </div>-->
-        </div>
-        </div>
-     </div>
-     <div class="" *ngIf="Upperdecks.length">
-        <div class="layout">
+    </div>
+</div>
+</div>
+<div class="" *ngIf="Upperdecks.length">
+    <div class="layout">
         <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
         <div class="margin-auto content">
-        <div class="label  text-right float-left w-50">Lower Berth</div>
-        <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
-        <div class="">
-      
-        <table  class="cabin fuselage" >
-        <tr  class="row-no" *ngFor="let UD of Upperdecks " >
-        <td *ngIf="UD && UD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
-        <td *ngFor="let seat of UD" align="right">
-        <span *ngIf="seat && seat.length==0"  class="seat">&nbsp;&nbsp;&nbsp;</span>
-        <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
+            <div class="label  text-right float-left w-50">Lower Berth</div>
+            <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
+            <div class="">
+
+                <table class="cabin fuselage">
+                    <tr class="row-no" *ngFor="let UD of Upperdecks ">
+                        <td *ngIf="UD && UD.length==0" align="right">&nbsp;&nbsp;&nbsp;</td>
+                        <td *ngFor="let seat of UD" align="right">
+                            <span *ngIf="seat && seat.length==0" class="seat">&nbsp;&nbsp;&nbsp;</span>
+                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
         <span *ngIf="price.actfare == seat.baseFare; else blurseat">
         <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"   >
         <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
@@ -914,31 +916,31 @@
         <ng-template #other_content>  <div class="ms-{{seat.seattype}}"></div></ng-template>
         </a>
         </span>
-        <ng-template #blurseat>
-        <span><a>
+                            <ng-template #blurseat>
+                                <span><a>
           <div class="ms-{{seat.seattype}}_x"></div></a></span>
-        </ng-template>
-        </span>
-        </td>
-        </tr>
-        </table>
-        </div>
-        <!--<div class="text-center my-3" id="toggle">
+                            </ng-template>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--<div class="text-center my-3" id="toggle">
         <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
         <mat-button-toggle value="upper">upper</mat-button-toggle>
         </mat-button-toggle-group>
         </div>-->
         </div>
-        </div>
-         </div>
-        </div> 
-        </div>              
-    <div class="fixed-f">
+    </div>
+</div>
+</div>
+</div>
+<div class="fixed-f">
     <div class="row">
         <div class="col" (click)="openBottomSheet()">
             <div class="xs-text">Total</div>
             <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹ {{totalfare | number:'1.2'}}</span>
-                <ng-template #zero1> ₹  {{totalfare | number:'1.2'}}</ng-template>
+                <ng-template #zero1> ₹ {{totalfare | number:'1.2'}}</ng-template>
             </div>
         </div>
         <div class="col p0" (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
@@ -955,8 +957,8 @@
             <button class="btn-primary">CONTINUE</button>
         </div>
     </div>
-    </div>
-    <div class="fare-break" [ngClass]="{'active': showFare}" *ngFor="let seats of seatdetails">
+</div>
+<div class="fare-break" [ngClass]="{'active': showFare}" *ngFor="let seats of seatdetails">
     <h6>Fare Breakup</h6>
     <div *ngFor="let seats of seatdetails">
         <div class="row" *ngIf="seats">
@@ -965,7 +967,7 @@
                 <div>Seat no(s): {{seats.selseats}} </div>
             </div>
             <div class="col-6">
-                <div class="text-right"> ₹  {{seats.totalbaseFare | number:'1.2-2'}} </div>
+                <div class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </div>
             </div>
         </div>
         <!-- <li > <span></span></li> -->
@@ -975,13 +977,13 @@
             <div>Taxes</div>
         </div>
         <div class="col-6">
-            <div class="text-right">₹  {{totServtax | number:'1.2-2'}}</div>
+            <div class="text-right">₹ {{totServtax | number:'1.2-2'}}</div>
         </div>
     </div>
-    </div>
+</div>
 
-    </mat-tab>
-    <!-- <div class="seat-info-m"  *ngIf="seatinfo1">
+</mat-tab>
+<!-- <div class="seat-info-m"  *ngIf="seatinfo1">
         <div class="row m-0 p-2">
             <div class="col px-2">
             <img src="{{cdnUrl}}images/icons/seat_empty.svg">
@@ -1008,14 +1010,14 @@
 
         </div> 
     </div> -->
-    </span>
-                        </span>
-    </mat-tab-group>
-    </div>
+</span>
+</span>
+</mat-tab-group>
+</div>
 
-        </ng-template>
-    </div>
-    <!-- <mat-tab-group animationDuration="0ms">
+</ng-template>
+</div>
+<!-- <mat-tab-group animationDuration="0ms">
         <mat-tab label="Seats">
             
 
@@ -1075,12 +1077,12 @@
             </div>
             <div class="mob-listing-header-center">
                 <div class="">
-                       <!--  <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
+                    <!--  <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
                         <h6>{{ onward.travels }} </h6>
                         <p class="">{{ onward.busType }}</p> -->
-                        <p class="">{{ departure  | date:'EEE, dd MMM' }}</p>
-                        <h6 class="">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
-                        <p class="">{{bus.busType}}</p>
+                    <p class="">{{ departure | date:'EEE, dd MMM' }}</p>
+                    <h6 class="">{{params.queryParamMap.get('searchFrom')}} to {{params.queryParamMap.get('searchTo')}}</h6>
+                    <p class="">{{bus.busType}}</p>
                 </div>
             </div>
             <div> </div>
@@ -1122,20 +1124,20 @@
     </div>
 
     <div class="mob-sf-tabs mt-5">
-    <ul class="nav nav-tabs m-popup-tabs mt-5 ">
-        <li>
-            <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab" [ngClass]="{'active' : boardPointActive}" (click)="pressBoardPoint()">Boarding Points</a>
-        </li>
-        <li class="nav-item">
-            <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab" [ngClass]="{'active' : dropPointActive}">Dropping Points</a>
-        </li>
-    </ul>
-    <div class="tab-content clearfix">
-        <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab" [ngClass]="{'active' : boardPointActive}">
-            <div class="m-bordng-drpng-div">
-            <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
-            
-            <label *ngFor="let boardingpoints of boardingtimes" for="{{boardingpoints.boardingPointId}}" class="radio" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)">
+        <ul class="nav nav-tabs m-popup-tabs mt-5 ">
+            <li>
+                <a class="active" href="#broading" role="tab" aria-controls="broading" data-bs-toggle="tab" [ngClass]="{'active' : boardPointActive}" (click)="pressBoardPoint()">Boarding Points</a>
+            </li>
+            <li class="nav-item">
+                <a href="#dropping" role="tab" aria-controls="dropping" data-bs-toggle="tab" [ngClass]="{'active' : dropPointActive}">Dropping Points</a>
+            </li>
+        </ul>
+        <div class="tab-content clearfix">
+            <div class="tab-pane active" id="broading" role="tabpanel" aria-labelledby="broading-tab" [ngClass]="{'active' : boardPointActive}">
+                <div class="m-bordng-drpng-div">
+                    <div class="info text-gary" *ngIf="showErrorBoarding" [ngClass]="{'errorred':showErrorBoarding}">Please select boarding & dropping point to continue</div>
+
+                    <label *ngFor="let boardingpoints of boardingtimes" for="{{boardingpoints.boardingPointId}}" class="radio" (click)="Boardingdroping('boarding',boardingpoints.boardingPointId,bus.id)">
                 <div class="#">
                 <table>
                     <tr> 
@@ -1153,13 +1155,13 @@
                 </table>
                 </div>
             </label>
+                </div>
             </div>
-        </div>
-        <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab" [ngClass]="{'active show' : dropPointActive}">
-        <div class="m-bordng-drpng-div">
-                        <div class="info text-gary" *ngIf="showErrorDropping" [ngClass]="{'errorred':showErrorDropping}">Please select boarding & dropping points to continue</div>
+            <div class="tab-pane" id="dropping" role="tabpanel" aria-labelledby="dropping-tab" [ngClass]="{'active show' : dropPointActive}">
+                <div class="m-bordng-drpng-div">
+                    <div class="info text-gary" *ngIf="showErrorDropping" [ngClass]="{'errorred':showErrorDropping}">Please select boarding & dropping points to continue</div>
 
-            <label *ngFor="let droppingtimes of droppingtimes" for="{{droppingtimes.boardingPointId}}" class="radio" (click)="Boardingdroping('dropping',droppingtimes.boardingPointId,bus.id)">
+                    <label *ngFor="let droppingtimes of droppingtimes" for="{{droppingtimes.boardingPointId}}" class="radio" (click)="Boardingdroping('dropping',droppingtimes.boardingPointId,bus.id)">
                         <div class="#">
                         <table>
                             <tr>
@@ -1175,7 +1177,7 @@
                         </table>
                         </div>
                     </label>
-            <label *ngIf="droppingtimes.length==0" for="DNA" class="radio" (click)="Boardingdroping('dropping','NA',bus.id)">
+                    <label *ngIf="droppingtimes.length==0" for="DNA" class="radio" (click)="Boardingdroping('dropping','NA',bus.id)">
                         <input type="radio" name="mobile-boarding1" id="DNA" class="hidden"/>
                         <span class="label"></span>
                         <span class="">
@@ -1186,9 +1188,9 @@
                         </p>
                         </span>
                     </label>
-        </div>
+                </div>
 
-            <!-- <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+                <!-- <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
 
             <ng-template #noPartial>
                 <p class="cancel-text mt-2 mb-2">
@@ -1196,8 +1198,8 @@
                 </p>
             </ng-template> -->
 
+            </div>
         </div>
-    </div>
     </div>
 
     <mat-tab-group #tabGroup [selectedIndex]="selected" (selectedIndexChange)="tabSelectionChanged($event)">
@@ -1265,68 +1267,67 @@
 
 
 
-                                <!-- amenities modal popup -->
-                                <div class="mob-sf-area" id="Mobileamenities" style="left:0;">
+<!-- amenities modal popup -->
+<div class="mob-sf-area" id="Mobileamenities" style="left:0;">
 
-                                    <div class="mob-sf-box">
-                                        <div class="mob-title">
-                                            <h3>More about the bus</h3>
-                                            <a href="javascript:void(0)" (click)="closeAmenitiesmlite()" class="mob-close mob-ff-from-close">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="mob-sf-tabs ">
-                                            <ul class="nav nav-tabs m-popup-tabs">
-                                                <li>
-                                                    <a class="active" href="#amenities" role="tab" aria-controls="amenities" data-bs-toggle="tab">Amenities</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a href="#policy" role="tab" aria-controls="policy" data-bs-toggle="tab">Cancellation Policy</a>
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content clearfix">
-                                                <div class="tab-pane active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+    <div class="mob-sf-box">
+        <div class="mob-title">
+            <h3>More about the bus</h3>
+            <a href="javascript:void(0)" (click)="closeAmenitiesmlite()" class="mob-close mob-ff-from-close">
+                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+            </a>
+        </div>
+        <div class="mob-sf-tabs ">
+            <ul class="nav nav-tabs m-popup-tabs">
+                <li>
+                    <a class="active" href="#amenities" role="tab" aria-controls="amenities" data-bs-toggle="tab">Amenities</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#policy" role="tab" aria-controls="policy" data-bs-toggle="tab">Cancellation Policy</a>
+                </li>
+            </ul>
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
 
-                                                    <div class=" px-5 py-3">
-                                                        <ul class="amenities-m">
-                                                            <li *ngIf="busamenities.length <= 0">No Amenities Found</li>
-                                                            <li *ngFor="let amen of busamenities">
-                                                                 <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="policy" role="tabpanel" aria-labelledby="policy-tab">
-                                                <div class="m-policy-tbl">
-                                                    <table class="table table-bordered ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th width="33%">Time of Cancellation</th>
-                                                                <th width="33%">Deduction %</th>
-                                                                <th width="33%">Cancellation Charges</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr *ngFor="let cancel of retvalues">
-                                                                <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
-                                                                <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
-                                                                <td class="text-center"> ₹  {{cancel.cancharges}}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                    <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
-                                                    <ng-template #noPartial>
-                                                        <p class="cancel-text mt-2">
-                                                            <b>Partial cancellation not allowed</b>
-                                                        </p>
-                                                    </ng-template>
+                    <div class=" px-5 py-3">
+                        <ul class="amenities-m">
+                            <li *ngIf="busamenities.length <= 0" class="m_amenities_notfound">No Amenities Found</li>
+                            <li *ngFor="let amen of busamenities">
+                                <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-pane" id="policy" role="tabpanel" aria-labelledby="policy-tab">
+                    <div class="m-policy-tbl">
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th width="33%">Time of Cancellation</th>
+                                    <th width="33%">Deduction %</th>
+                                    <th width="33%">Cancellation Charges</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let cancel of retvalues">
+                                    <td><span *ngIf="cancel.from">After </span>{{cancel.from | date:'dd MMM y HH:mm a'}} <span *ngIf="cancel.from">& </span>Before {{cancel.to | date:'dd MMM y HH:mm a'}}</td>
+                                    <td class="text-center">{{cancel.amount}}<span *ngIf="cancel.amountType == 'Percentage'">%</span></td>
+                                    <td class="text-center"> ₹ {{cancel.cancharges}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="cancel-text mt-2" *ngIf="bus.partialCancellationAllowed; else noPartial"><b>Partial cancellation allowed. Please note that primary passenger booking cannot be cancelled.</b></p>
+                    <ng-template #noPartial>
+                        <p class="cancel-text mt-2">
+                            <b>Partial cancellation not allowed</b>
+                        </p>
+                    </ng-template>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- end of amenties modal pop up  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- end of amenties modal pop up  -->

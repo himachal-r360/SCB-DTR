@@ -1,35 +1,29 @@
-<section class="flight-area mt-150" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Travel & Stays</a></li>
-                        <li class="breadcrumb-item train-breadcrumb-item active" aria-current="page">Train Search</li>
-                    </ol>
-                </nav>
-
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/train">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Train Search</span></li>
+                    </ul>
+                </div>
             </div>
+        </div>
+    </div>
+</section>
+<section class="flight-area" *ngIf="!isMobile">
+    <div class="container">
+        <div class="row">
+
             <div class="col-lg-12">
                 <div class="travel-box mb-20" >
                     <app-train-search modifySearch="true"  isViewPartner="false"></app-train-search>
                  </div>
             </div>
-            <!-- <div class="row">
-              <div class="col-md-12">
-                  <div class="flight-partners">
-                      <p>Powered By:</p>
-                      <ul class="list-inline ms-3">
-                          <li class="list-inline-item" >
-                              <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" width="50" alt="irctc">
-                          </li>
-
-                      </ul>
-                  </div>
-              </div>
-          </div> -->
           
           <!-- Availability Pop Up Code  -->
 <div class="modal fade train-availability" tabindex="-1" role="dialog" aria-labelledby="train-availability" aria-hidden="true">
@@ -192,9 +186,9 @@
               </div>
 </div>
 
-            <div class="col-lg-12">
-                <div class="layout-box">
-                  <div class="layout-left">
+            <div class="col-lg-12 mb-82">
+                <div class="layout-box mb-0">
+                  <div class="layout-left" *ngIf="notrain==false">
                     <div class="filter-loaders animation-loader" *ngIf="loading">
                       <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
                           <div class="filter-loader-content ">
@@ -207,8 +201,9 @@
                   </div>
 
                         <div [hidden]="loading">
+                           
                         <ng-container *ngIf="trains">
-                 <app-trains-filter [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
+                 <app-trains-filter  [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
                 [arrivalTimeFilter] = "arrivalTimeFilter" (arriveEvent)="updateArrival($event)"
                 [availableClasses] = "availableClasses"  (availableClassesEvent) = "updateAvailableClassFilter($event)"
                 [trainTypes] = "trainTypes" (trainTypesEvent) = "updateTrainTypeFilter($event)"
@@ -224,7 +219,7 @@
                 </div>
 
                     <div class="layout-right">
-                        <div class="train-found" [hidden]="loading">
+                        <div class="train-found" [hidden]="loading" *ngIf="notrain==false">
                             <div class="flight-tosearch">
                                  <div class="flight-search-filters-left" >
 
@@ -237,8 +232,8 @@
                                 </mat-tab>
                                </mat-tab-group>-->
                                 <div class="train_sort_btn">
-                                    <mat-form-field>
-                                        <mat-select placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
+                                    <mat-form-field class="select_mat">
+                                        <mat-select panelClass="select_mat" placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
                                             <mat-option *ngFor = "let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -249,8 +244,8 @@
 
                                 <div class="flight-search-filters-right train_sort_btn">
                                 
-                                <mat-form-field>
-                                    <mat-select placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
+                                <mat-form-field class="select_mat">
+                                    <mat-select panelClass="select_mat" placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
                                         <mat-option  *ngIf = "avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
                                         <mat-option  *ngIf = "avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
                                     </mat-select>
@@ -262,23 +257,10 @@
        
                            </div>
 
-                           <!-- no train found new design web -->
-                        <div class="row p-2 d-none">
-                            <div class="col-md-12 text-center">
-                                <div class="empty_list_hdr">Yikes! No direct trains found.</div>
-                                <div>
-                                    <img src="{{cdnUrl}}/images/empty_list_train.svg">
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-3 text-center"  (click)="goback()">
-                                <p class="empty_list_text">Try another route or date</p>
-                                <button class="empty_list_btn">Go back to search page</button>
-                            </div>
-                        </div>
-                        <!-- end of no train found new design web -->
+                        
                      
                         <!-- Listing -->
-                        <div class="flight-listing-area bg-white p-3" *ngIf="loading" >
+                        <div class="flight-listing-area p-3" *ngIf="loading" >
                           <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
                                 <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
@@ -300,8 +282,26 @@
                         </div>
                         
                     </div>
+                       
+                </div>
+                <!-- no train found new design web -->
+                        
+            <div class="row p-2" *ngIf="notrain">
+                <div class="col-md-12 text-center">
+                    <div class="empty_list_hdr">Yikes! No direct trains found.</div>
+                    <div>
+                        <img src="{{cdnUrl}}/images/empty_list_train.svg">
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3 text-center"  (click)="goback()">
+                    <p class="empty_list_text">Try another route or date</p>
+                    <button class="empty_list_btn">Go back to search page</button>
                 </div>
             </div>
+         
+            <!-- end of no train found new design web -->
+            </div>
+            
         </div>
     </div>
 </section>
@@ -314,7 +314,7 @@
           <div class="col-md-12 p-0 fixed-top"  >
               <div class="mob-listing-header">
                   <div class="mob-listing-header-left">
-                      <a href="javascript:;" routerLink="/compare-fly" >
+                      <a href="javascript:;" routerLink="/train">
                           <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                       </a>
                   </div>
@@ -426,7 +426,7 @@
                               <div class="container filter-container">
                                 <div class="row m_sort_flex_div">
                                     <div class="col-6">
-                                        <label class="checkbox-cust" >
+                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                  <p class="m_sort_text" >Leave Early</p>
@@ -438,11 +438,11 @@
                                     </div>
     
                                     <div class="col-6">
-                                        <label class="checkbox-cust" >
+                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}" >
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                 <p class="m_sort_text">Leave Late</p>
-                                                <p class="m_sort_text50">Laest</p>
+                                                <p class="m_sort_text50">Latest</p>
                                             </div>
                                             <input  type="radio" (click)="orderBy('leave-late')" value="leave-late">
                                             <span class="checkmark-cust"></span>
