@@ -326,6 +326,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
 orderRetry:boolean=false;
+  isExpanded: boolean;
+
 
   constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
@@ -1658,8 +1660,9 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
   }
 
 
-  openmodal(content) {
-    this.modalService.open(content, { centered: true });
+    openmodal(content) {
+      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
 
@@ -1806,7 +1809,9 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
   }
   fillupGSTDetailOnCheck($event, data, GSTIndex) {
 
-
+    for(let i=0;i<this.GSTListLength;i++){
+      this.isCheckedGST[i]=false;
+    }
     this.gstshow = true;
     this.gstSelected = true;
 
