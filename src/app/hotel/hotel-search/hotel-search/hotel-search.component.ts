@@ -124,7 +124,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       });
       roomArr.forEach((x) => {
         this.hotelSearchForm.value.rooms = ""
-        console.log(x , "x");
         this.roomsDetails.push(this.modifyDetails(x));
       });
       this.showTotalCountOfAdult();
@@ -149,6 +148,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
+    // item.value.childrenAge="";
   }
 
   //Decrease child and adult value
@@ -204,7 +204,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         room: [1],
         numberOfAdults: ['1'],
         numberOfChildren: ['0'],
-        childrenAge:[]
+        childrenAge:['0']
       })
   }
 
@@ -264,8 +264,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       ageArr = [selectAge1.value,selectAge2.value,selectAge3.value]
     }
     item.value.childrenAge = ageArr;
-    console.log(ageArr , "ageArr");
-    console.log(this.hotelSearchForm.value, "form");
     
   }
 

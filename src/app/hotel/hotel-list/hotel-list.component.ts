@@ -281,7 +281,6 @@ export class HotelListComponent implements OnInit,OnDestroy {
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
       this.hotelWithoutFilterList = res.response.hotels;
-      console.log(this.hotelList)
       this.GetMinAndMaxPriceForFilter();
       this.AllFilteredData();
     }, (error) => { console.log(error) });
@@ -309,7 +308,6 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
       }
     });
-    console.log(StarFiltereddata);
     if(StarFiltereddata.length > 0)
     {
       this.hotelList = StarFiltereddata;
