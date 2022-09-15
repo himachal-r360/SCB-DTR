@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" *ngIf="isMobile">
+        <div class="col-md-12" *ngIf="isMobile && isResponse">
             <div class="mob-listing-fiters">
                 <h6 *ngIf="hotelList">{{hotelList.length}} Hotels Found</h6>
                 <a href="javaScript:void(0);" class="showfilters" (click)="showHideFilterMobile('show')">
@@ -67,7 +67,17 @@
                   </ul>
               </div>
           </div> -->
-
+          <div class="row justify-content-center" *ngIf="!isResponse">
+            <div class="col-lg-8">
+                <div class="no-flight text-center mt-40 mb-60">
+                    <h5 class="mb-20 fw_6 text-black">Yikes! No hotel found.</h5>
+                    <img src="/assets/images/hotel/no-hotel.png" class="img-fluid" alt="">
+                </div>
+                <div class="no-hotels-text text-center mb-50">
+                    <a href="javascript:;" class="button-style" routerLink="/compare-fly">Go back to search page</a>
+                </div>
+            </div>
+        </div>
           <div class="col-lg-12">
               <div class="layout-box">
                   <div class="layout-left" *ngIf="!isMobile">
@@ -457,8 +467,14 @@
                       <div class="hotel-list-box" [ngClass]="isMobile ? 'mobilehotel-list' : ''">
                         <ng-container #itemsContainer></ng-container>
                       </div>
-                        <div class="text-center" *ngIf="hotelList && hotelList.length < 1">No hotel found</div>
-
+                        <div class="row justify-content-center" *ngIf="hotelList && hotelList.length < 1">
+                          <div class="col-lg-8">
+                              <div class="no-flight text-center mt-40 mb-60">
+                                  <h5 class="mb-20 fw_6 text-black">No hotel found.</h5>
+                                  <img src="/assets/images/hotel/no-hotel.png" class="img-fluid" alt="">
+                              </div>
+                          </div>
+                      </div>
 
                         <ng-template #item let-item="item">
                           <div class="hotel-list-item" *ngFor="let list of item; let i = index" >

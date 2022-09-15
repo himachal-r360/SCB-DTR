@@ -23,11 +23,26 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   latestDate = new Date();
   cityName = 'New Delhi';
   continueSearchHotel;
+  childAgeArr = [
+    { value: 2 },
+    { value: 3 },
+    { value: 4 },
+    { value: 5 },
+    { value: 6 },
+    { value: 7 },
+    { value: 8 },
+    { value: 9 },
+    { value: 10 },
+    { value: 11 }
+  ]
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   @ViewChild('citySearchRef') citySearchRef: ElementRef;
   @ViewChild('checkIn') checkIn: ElementRef;
   @ViewChild('checkOut') checkOut: ElementRef;
+
+  
+
  
   
 
@@ -48,7 +63,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       countryName:['India'],
       rooms: this._fb.array(
         [
-          { room: 1, numberOfAdults: '1', numberOfChildren: '0' }
+          { room: 1, numberOfAdults: '1', numberOfChildren: '0', childrenAge:[]  }
         ]
 
       ),
@@ -123,19 +138,19 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren + 1;
-    
-     
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults + 1;
     }
+    childTotalCount = parseInt(item.value.numberOfChildren);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
-    totalCount > 4 ? childBtn.disabled = true : childBtn.disabled = false;
+    // childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
+    totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
-
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
+    
   }
 
   //Decrease child and adult value
@@ -190,7 +205,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     return this._fb.group({
         room: [1],
         numberOfAdults: ['1'],
-        numberOfChildren: ['0']
+        numberOfChildren: ['0'],
+        childrenAge:['0']
       })
   }
 
@@ -198,7 +214,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     return this._fb.group({
       room: [x.room],
       numberOfAdults: [x.numberOfAdults],
-      numberOfChildren: [x.numberOfChildren]
+      numberOfChildren: [x.numberOfChildren],
+      childrenAge:[x.childrenAge]
     })
   }
 
@@ -225,18 +242,36 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   checkInDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
-    console.log(this.hotelSearchForm.value.checkIn);
     this.checkOut.nativeElement.click();
   }
 
   checkOutDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
-    console.log(this.hotelSearchForm.value.checkOut);
-    
     this.showHideGuest.nativeElement.style.display = "block";
   }
 
+  onSelectAge(event ,item , i){
+    let ageArr:any = [];
+    let selectAge1:any = document.getElementById('selectAge1_' + i);
+    let selectAge2:any = document.getElementById('selectAge2_' + i);
+    let selectAge3:any = document.getElementById('selectAge3_' + i);
+    if(selectAge1 != null){
+      ageArr = [selectAge1.value]
+    }
+    if(selectAge1 != null && selectAge2 != null){
+      ageArr = [selectAge1.value,selectAge2.value]
+    }
+    if(selectAge1 != null && selectAge2 != null && selectAge3 != null){
+      ageArr = [selectAge1.value,selectAge2.value,selectAge3.value]
+    }
+    item.value.childrenAge = ageArr;
+    
+  }
+
+
+
+ 
 
   ngAfterViewInit(): void {
     fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
