@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
+import { Location } from '@angular/common';
+import { FlightService } from 'src/app/common/flight.service';
 declare var $: any;
 @Component({
   selector: 'app-hotel-detail',
@@ -13,6 +16,8 @@ declare var $: any;
 })
 export class HotelDetailComponent implements OnInit {
 
+  GoogleAPI_Key = environment.GOOGLEMAP_API;
+  GOOGLE_MAP_URL:any;
   HotelDetail :any;
   PriceSummery:any;
   DocKey:string;
@@ -23,6 +28,8 @@ export class HotelDetailComponent implements OnInit {
   checkout:any;
   hotelAmenity:any=[];
   currentLink :string;
+  SelectedQueryParam:any;
+  loaderValue:number;
   Facilities:any =
     {
     'roomService':{name:'Room Service',value:'roomService',image:'assets/images/hotel/Offered/hotelDetail_roomService.svg'},
@@ -100,10 +107,10 @@ export class HotelDetailComponent implements OnInit {
 
   }
   ThumbNailImageCustomOptions: OwlOptions = {
-    loop: false,
+    loop: true,
     autoplay:true,
-    mouseDrag: true,
-    touchDrag: true,
+    mouseDrag: false,
+    touchDrag: false,
     pullDrag: false,
     dots: false,
     navSpeed: 700,
@@ -127,14 +134,72 @@ export class HotelDetailComponent implements OnInit {
     navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
 
   }
+  MobileThumbNailImageCustomOptions: OwlOptions = {
+    loop: true,
+    autoplay:true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    margin: 10,
+    // navText: ['', ''],
+    responsive: {
+      0: {
+        items: 4.2
+      },
+      400: {
+        items: 4.2
+      },
+      740: {
+        items: 4.2
+      },
+      940: {
+        items: 4.2
+      }
+    },
+    nav: true,
+    navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
+
+  }
+  MobilecustomOptions: OwlOptions = {
+    loop: true,
+    autoplay:false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    margin: 10,
+    // navText: ['', ''],
+    responsive: {
+      0: {
+        items: 3
+      },
+      400: {
+        items: 3
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 3
+      }
+    },
+    nav: false
+  }
   sub:Subscription;
-  constructor( public route: ActivatedRoute, private router: Router,private sg: SimpleGlobal, private _hotelService: HotelService) {
+  isMobile:boolean = false;
+  constructor( public route: ActivatedRoute, private router: Router,private sg: SimpleGlobal, private _hotelService: HotelService,private _sanitizer: DomSanitizer,private location: Location , private _flightService:FlightService) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
   ngOnInit(): void {
     this.route.url.subscribe(url => {
+
+
       console.log(url)
+      this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
       var Details = JSON.parse(sessionStorage.getItem(urlParam.searchHotelKey));
@@ -148,18 +213,36 @@ export class HotelDetailComponent implements OnInit {
       this.PriceSummery = Details.PriceSummary;
       this.Hotelkey =Details.hotelkey;
       this.DocKey = Details.docKey;
+      this.SelectedQueryParam = Details.QueryData;
+      this.headerHideShow(null);
       this.GetHotelDetails();
     });
   }
 
   GetHotelDetails() {
+    $("#bookingprocess").modal('show')
+    this.loaderValue = 10;
+  const myInterval3 = setInterval(() => {
+    this.loaderValue = this.loaderValue + 10;
+
+    if (this.loaderValue == 110) {
+      this.loaderValue = 10;
+    }
+  }, 300);
     var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
      console.log(res);
+
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);
+    //  var url = 'https://www.google.com/maps/embed/v1/view?key='+this.GoogleAPI_Key+'&center='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18';
+
+    var url = 'https://www.google.com/maps/embed/v1/place?key='+this.GoogleAPI_Key+'&q='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18'
+     this.GOOGLE_MAP_URL = this._sanitizer.bypassSecurityTrustResourceUrl(url)
+     $("#bookingprocess").modal('hide')
+     clearInterval(myInterval3);
     }, (error) => { console.log(error) });
 
   }
@@ -168,8 +251,15 @@ export class HotelDetailComponent implements OnInit {
   {
     this.selectedTab = name;
     var container = $(document);
-   var position = parseInt($('#'+id).offset().top )- 130
+    if(!this.isMobile)
+    {
+      var position = parseInt($('#'+id).offset().top )- 130
+      $(document).scrollTop(position);
+    }
+   else{
+    var position = parseInt($('#'+id).offset().top )
         $(document).scrollTop(position);
+   }
     //$(id).scrollTop(0)
      //window.location.href = this.currentLink +id
     //this.router.navigateByUrl(this.currentLink +id);
@@ -178,5 +268,22 @@ export class HotelDetailComponent implements OnInit {
   onImageClick(index:number)
   {
     this.WideImageOwl.to('Id_'+index);
+  }
+  backClicked(){
+    this.location.back();
+  }
+
+  headerHideShow(event:any) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+    if(this.isMobile){
+     this._flightService.showHeader(false);
+    }else{
+    this._flightService.showHeader(true);
+    }
+  }
+
+  onBooking()
+  {
+    $("#bookingprocess").modal('show')
   }
 }
