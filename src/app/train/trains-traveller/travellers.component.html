@@ -377,7 +377,7 @@
                                                 <div class="form-check check_pass">
                                                     <input class="form-check-input pass_checkBox" id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                     <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
-                                {{passenger.title}}.{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
+                                {{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
                                 <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg" ></a> -->
                                 </label>
                                                 </div>
@@ -486,7 +486,7 @@
                                                                 </div>
                                                                 <div class="inner_input col-md-4 col-12">
                                                                     <mat-form-field class="matField_full_width" appearance="outline">
-                                                                        <mat-label>Seat Preference</mat-label>
+                                                                        <mat-label>Passenger Birth Choice</mat-label>
                                                                         <mat-select matNativeControl formControlName="passengerBerthChoice{{saveTravellerId[passenger.id]}}">
                                                                             <mat-option value="">No Preference</mat-option>
                                                                             <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
@@ -594,7 +594,7 @@
                           <div class="form-check check_pass">
                                 <input class="form-check-input pass_checkBox"  id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)" >
                                 <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
-                                {{passenger.title}}.{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
+                                {{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}
                                   <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg"></a> -->
                                 </label>
                             </div>
@@ -1470,7 +1470,7 @@
                     <div class="form-check mt-3">
                         <input class="form-check-input checkbox p-0" type="checkbox" formControlName="travelInsurence" name="travelInsurence" id="travelInsurence" [checked]="travelInsuranceOpted" />
                         <label class="form-check-label" for="travelInsurence">
-                  Include travel Insurance (₹ 0.49/person)
+                  Include travel Insurance
                 </label>
                     </div>
                 </div>
@@ -2102,84 +2102,84 @@
                                 </div>
                             </div>
                             <div class="trainTimeInfo d-block">
-                                        <div class="row my-2">
-                                            <div class="col-3 pr-0">
-                                                <div>
-                                                    <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="duration_train">
-                                                    <p class="dur_time">{{travelDuration}}</p>
-                                                    <div class="range m_range"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-3 text-right pl-0">
-                                                <div>
-                                                    <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
-                                                </div>
-                                            </div>
+                                <div class="row my-2">
+                                    <div class="col-3 pr-0">
+                                        <div>
+                                            <p><span class="time">{{scheduletime}}, {{traveldate | date:'EEE'}}</span></p>
                                         </div>
                                     </div>
-                                    <div class="trainTimeInfo d-block">
-                                        <div class="row border-bottom pb-4">
-                                            <div class="col-6">
-                                                <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
-                                                <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
-                                            </div>
-                                            <div class="col-6 text-right">
-                                                <p class="place">{{tostnDesc}}</p>
-                                                <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
-                                            </div>
+                                    <div class="col-6">
+                                        <div class="duration_train">
+                                            <p class="dur_time">{{travelDuration}}</p>
+                                            <div class="range m_range"></div>
                                         </div>
                                     </div>
-                                    
-                        </div>
-                    <div class="row mt-1 gy-4">
+                                    <div class="col-3 text-right pl-0">
+                                        <div>
+                                            <p><span class="time">{{arrivalTime}}, {{journeyArrivalDate | date:'EEE'}}</span> </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trainTimeInfo d-block">
+                                <div class="row border-bottom pb-4">
+                                    <div class="col-6">
+                                        <p class="place">{{fromstnDesc}} Boarding: {{boardingstnName}} </p>
+                                        <p class="date">{{traveldate | date:'MMM dd, yyyy'}}</p>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <p class="place">{{tostnDesc}}</p>
+                                        <p class="date">{{journeyArrivalDate | date:'MMM dd, yyyy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
 
-                                    <div class="col-sm-4">
-                                        <p class="train_title_label"> Availability Status </p>
-                                        <div class="common_box">
-                                            <div>
-                                                <p class="ava_status"> 
-                                                    <span class="coach">{{enqClass}}</span> 
-                                                    <!-- <span class="list">
+                        </div>
+                        <div class="row mt-1 gy-4">
+
+                            <div class="col-sm-4">
+                                <p class="train_title_label"> Availability Status </p>
+                                <div class="common_box">
+                                    <div>
+                                        <p class="ava_status">
+                                            <span class="coach">{{enqClass}}</span>
+                                            <!-- <span class="list">
                                                     {{seacthResult.selectedAvailablityFare.availablityStatus}}
                                                    </span> -->
-                                                   <span class="label-green" *ngIf="seacthResult.selectedAvailablityFare.availablityType!=0 && seacthResult.selectedAvailablityFare.availablityType!=4 && seacthResult.selectedAvailablityFare.availablityType!=5 && seacthResult.selectedAvailablityFare.availablityType!=8224 && seacthResult.selectedAvailablityFare.availablityType!=3">
+                                            <span class="label-green" *ngIf="seacthResult.selectedAvailablityFare.availablityType!=0 && seacthResult.selectedAvailablityFare.availablityType!=4 && seacthResult.selectedAvailablityFare.availablityType!=5 && seacthResult.selectedAvailablityFare.availablityType!=8224 && seacthResult.selectedAvailablityFare.availablityType!=3">
                                                     {{seacthResult.selectedAvailablityFare.availablityStatus}}
                                                    </span>
-                                                   <span class="label-red" *ngIf="seacthResult.selectedAvailablityFare.availablityType==0 || 
+                                            <span class="label-red" *ngIf="seacthResult.selectedAvailablityFare.availablityType==0 || 
                                                     seacthResult.selectedAvailablityFare.availablityType==4 || seacthResult.selectedAvailablityFare.availablityType==5 || seacthResult.selectedAvailablityFare.availablityType==8224">
                                                     {{seacthResult.selectedAvailablityFare.availablityStatus}}
                                                    </span>
-                                                   <span class="label-orange" *ngIf="seacthResult.selectedAvailablityFare.availablityType==3">
+                                            <span class="label-orange" *ngIf="seacthResult.selectedAvailablityFare.availablityType==3">
                                                     {{seacthResult.selectedAvailablityFare.availablityStatus}}
                                                    </span>
 
-                                                   
 
-                                                </p>
-                                            </div>
-                                        </div>
 
+                                        </p>
                                     </div>
-                                    <div class="col-sm-8">
-                                        <!--Show bording stations-->
-                                        <p class="train_title_label"> Boarding Station </p>
-                                        <div class="common_box">
-                                            <div>
-                                                <p class="ava_status"> 
-                                                    <span class="coach">{{defaultBoardingStation}}</span> 
-                                                </p>
-                                            </div>
-                                        </div>
-                                            <div class="train-schedule-time">
-                                                <span>Scheduled time: <span>{{scheduletime}}</span> </span>
-                                            </div>
-                                    </div>
-
                                 </div>
+
+                            </div>
+                            <div class="col-sm-8">
+                                <!--Show bording stations-->
+                                <p class="train_title_label"> Boarding Station </p>
+                                <div class="common_box">
+                                    <div>
+                                        <p class="ava_status">
+                                            <span class="coach">{{defaultBoardingStation}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="train-schedule-time">
+                                    <span>Scheduled time: <span>{{scheduletime}}</span> </span>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
@@ -2226,69 +2226,74 @@
             </div>
             <div class="booking-process-content traveller_review">
 
-                 <div class="booking-title-box mb-0">
-    
-    
-                <h4 class="heading_text">Traveller Details
-                    <p class="sub_head_text ps-3"><span class="ps-1"> <a href="javascript:void(0)" (click)="moveTab(2)"><img
-                          src="{{cdnUrl}}/images/icons/edit.png" alt=""></a></span></p>
+                <div class="booking-title-box mb-0">
 
-                </h4> <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
-                      Adults</span><span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span> <!-- <span
-                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> --> </p>
-               
-              </div>
-              <div class="booking-inner-box from-to-box">
-                <div class="p-2">
-                  <div *ngIf="travellerListArray.length > 0">
-                    <h6>{{travellerListArray.length}} Adults</h6>
-                    <table class="table  traveller_table">
-                      <thead>
-                        <tr>
-                          <th scope="col" width="50%">Name</th>
-                          <th scope="col" width="10%">Age</th>
-                          <th scope="col" width="20%">Gender</th>
-                          <th scope="col" width="20%">Birth Preference</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container *ngFor="let adult of travellerListArray;let i = index">
-                          <tr>
-                            <td>{{adult.passengerName}}</td>
-                            <td>{{adult.passengerAge}}</td>
-                            <td>{{adult.passengerGender}}</td>
-                            <td>{{(adult.passengerBerthChoice !='') ? adult.passengerBerthChoice : '-' }}</td>
-                          </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-                  </div>
-    
-                  <div *ngIf="infantListArray.length > 0">
-                    <h6>{{infantListArray.length}} Infant</h6>
-                    <table class="table  traveller_table">
-                      <thead>
-                        <tr>
-                          <th scope="col" width="50%">Name</th>
-                          <th scope="col" width="10%">Age</th>
-                          <th scope="col" width="20%">Gender</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ng-container *ngFor="let infant of infantListArray;let i = index">
-                          <tr>
-                            <td>{{infant.name}}</td>
-                            <td>{{infant.age}}</td>
-                            <td>{{infant.gender}}</td>
-                            <td></td>
-                         </tr>
-                        </ng-container>
-                      </tbody>
-                    </table>
-                  </div>
+
+                    <h4 class="heading_text">Traveller Details
+                        <p class="sub_head_text">
+                            <span class="sub_head_text">{{travellerListArray.length}}
+                                Adults<span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span>
+                            </span>
+                            <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}/images/icons/edit.png" class="ps-3" alt=""></a>
+
+                        </p>
+
+                    </h4>
+                    <!-- <p class="sub_head_text ps-3"><span>{{travellerListArray.length}}
+                      Adults</span><span *ngIf="infantListArray.length > 0">, {{infantListArray.length}} infant</span>
+                         <span
+                      *ngIf="travelerDetails.infants > 0">, {{travelerDetails.infants}} infant</span> </p> -->
+
                 </div>
-              </div>
+                <div class="booking-inner-box from-to-box">
+                    <div class="p-2">
+                        <div *ngIf="travellerListArray.length > 0">
+                            <h6>{{travellerListArray.length}} Adults</h6>
+                            <table class="table  traveller_table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="col-6">Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Birth Preference</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let adult of travellerListArray;let i = index">
+                                        <tr>
+                                            <td>{{adult.passengerName}}</td>
+                                            <td>{{adult.passengerAge}}</td>
+                                            <td>{{adult.passengerGender}}</td>
+                                            <td>{{(adult.passengerBerthChoice !='') ? adult.passengerBerthChoice : '-' }}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div *ngIf="infantListArray.length > 0">
+                            <h6>{{infantListArray.length}} Infant</h6>
+                            <table class="table  traveller_table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="col-6">Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Gender</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let infant of infantListArray;let i = index">
+                                        <tr>
+                                            <td>{{infant.name}}</td>
+                                            <td>{{infant.age}}</td>
+                                            <td>{{infant.gender}}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -2512,7 +2517,7 @@
                     </div>
                     <div *ngIf="steps==3 && !isMobile">
                         <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
-                            passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                            passServiceToken="Train" passPartnerToken="IRCTC" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                         </app-coupons>
                     </div>
                 </div>
@@ -2522,7 +2527,7 @@
         </div>
         </div>
     </section>
- 
+
 
 
     <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -2583,10 +2588,10 @@
     <div class="d-block d-sm-none">
         <div class="footer-sticky-mlite">
             <div>
-                <div class="apply_fare row">
+                <div class="apply_fare row" *ngIf="steps==3">
                     <!--  <p *ngIf="steps<5" class="w-75"></p> -->
                     <div class="col-6 text-left">
-                        <p *ngIf="steps==3"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
+                        <p ><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
                     </div>
                     <div class="col-6 text-right">
                         <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
@@ -2625,7 +2630,7 @@
                 </div>
                 <div class="modal-body">
                     <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
-                        passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
+                        passServiceToken="Train" passPartnerToken="IRCTC" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                     </app-coupons>
                 </div>
                 <!-- <div class="modal-footer">

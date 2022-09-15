@@ -156,6 +156,8 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
   saveInfantTravellerId = [];
   passengerArray = [];
   passengerFormCount: number = 1;
+  isAdultExpanded:boolean = false;
+    isInfantExpanded:boolean = false;
 
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router,
@@ -798,6 +800,9 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
   
   fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex, ladiesSeat) {
 
+    alertify.set('notifier', 'position', 'top-center');
+    alertify.dismissAll();
+
     const sum = travellerformid + 1;
 
     const sum1 = travellerformid - 1;
@@ -832,7 +837,8 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
       }
       else {
         
-       alertify.error('Please Select Female Passenger', '').delay(3);
+       alertify.error('Please select female passenger', '').delay(3);
+       
       this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
       this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
@@ -888,7 +894,7 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
           }
           else {
            
-           alertify.error('Please Select Female Passenger', '').delay(3);
+           alertify.error('Please select female passenger', '').delay(3);
           this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
           this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
           this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
@@ -1010,6 +1016,9 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
     })
   }
   fillupGSTDetailOnCheck($event, data, GSTIndex) {
+    for(let i=0;i<this.GSTListLength;i++){
+      this.isCheckedGST[i]=false;
+    }
     if ($event.target.checked) {
       this.isCheckedGST[GSTIndex] = true;
       this.selectedGST.push(GSTIndex);
@@ -1161,12 +1170,12 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     this.passengerForm['controls']['saveGST'].setValue('');
   }
   
-  
+  gstmodalcheckedvalue:any = false;
     openmodal(content) {
-    this.modalService.open(content, { centered: true });
+      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
-    gstmodalcheckedvalue: any = false;
 
   passengerFormerror: number = 0;
   ageValidError: any;

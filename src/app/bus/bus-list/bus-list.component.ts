@@ -407,13 +407,15 @@ goback() {
 
         //Arrival Timing Filter Data
         updatedbusList = this.timingArrivalFilterBus(updatedbusList);
+        
+       
 
      //PriceFilter
     if (this.busList.length > 0) {
       var min_price = this.minPrice;
       var max_price = this.maxPrice;
       var filteredPrice: any[] = [];
-      this.busList.filter((e: any) => {
+      updatedbusList.filter((e: any) => {
              if (e.fareDetails[0].baseFare >= min_price && e.fareDetails[0].baseFare <= max_price) {
             filteredPrice.push(e);
           }
@@ -422,6 +424,7 @@ goback() {
      
       updatedbusList = filteredPrice;
     }
+
 
   //Class Filter
   
