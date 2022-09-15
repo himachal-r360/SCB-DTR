@@ -1,35 +1,29 @@
-<section class="flight-area mt-150" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Travel & Stays</a></li>
-                        <li class="breadcrumb-item train-breadcrumb-item active" aria-current="page">Train Search</li>
-                    </ol>
-                </nav>
-
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/train">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Train Search</span></li>
+                    </ul>
+                </div>
             </div>
+        </div>
+    </div>
+</section>
+<section class="flight-area" *ngIf="!isMobile">
+    <div class="container">
+        <div class="row">
+
             <div class="col-lg-12">
                 <div class="travel-box mb-20" >
                     <app-train-search modifySearch="true"  isViewPartner="false"></app-train-search>
                  </div>
             </div>
-            <!-- <div class="row">
-              <div class="col-md-12">
-                  <div class="flight-partners">
-                      <p>Powered By:</p>
-                      <ul class="list-inline ms-3">
-                          <li class="list-inline-item" >
-                              <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" width="50" alt="irctc">
-                          </li>
-
-                      </ul>
-                  </div>
-              </div>
-          </div> -->
           
           <!-- Availability Pop Up Code  -->
 <div class="modal fade train-availability" tabindex="-1" role="dialog" aria-labelledby="train-availability" aria-hidden="true">

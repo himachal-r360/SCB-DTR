@@ -798,6 +798,9 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
   
   fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex, ladiesSeat) {
 
+    alertify.set('notifier', 'position', 'top-center');
+    alertify.dismissAll();
+
     const sum = travellerformid + 1;
 
     const sum1 = travellerformid - 1;
@@ -832,7 +835,8 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
       }
       else {
         
-       alertify.error('Please Select Female Passenger', '').delay(3);
+       alertify.error('Please select female passenger', '').delay(3);
+       
       this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
       this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
       this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
@@ -888,7 +892,7 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
           }
           else {
            
-           alertify.error('Please Select Female Passenger', '').delay(3);
+           alertify.error('Please select female passenger', '').delay(3);
           this.passengerForm.controls['passengerGender' + travellerformid].setValue('');
           this.passengerForm.controls['passengerid' + travellerformid].setValue(0);
           this.passengerForm.controls['passengerFirstName' + travellerformid].setValue('');
