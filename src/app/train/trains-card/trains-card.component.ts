@@ -384,7 +384,7 @@ openCovidHealthpopup(train,avlDay,avlClass){
     disableClose: true,
     width: '800px',
     autoFocus: false,
-    hasBackdrop: false
+    hasBackdrop: true
     
   });
 
