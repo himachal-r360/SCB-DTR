@@ -1669,9 +1669,10 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="add_new_traveler pt-0">
-                                <div>
-                                    <!--Manaual Passenger Infant-->
-                                    <!-- <ng-container *ngFor="let traveller of childrenArrayM; index as i;"> -->
+                                <!--Manaual Passenger Infant-->
+                                    <ng-container *ngFor="let infanttraveller of childrenArrayM; index as i;">
+                                <div *ngIf="infanttraveller==childrenArrayM.length">
+                                    
                                     <div class="modal-header">
                                         <h5 class="modal-title">Add New Infant </h5>
                                         <button type="button" class="btn-close" (click)="removeMobileInfant(infanttraveller,-1)"></button>
@@ -1777,8 +1778,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- </ng-container> -->
+                                    
                                 </div>
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -1792,7 +1794,9 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="add_new_traveler pt-0">
-                                <div>
+                                <ng-container *ngFor="let adulttraveller of travellersArrayM; index as i;">
+                                <div *ngIf="adulttraveller==travellersArrayM.length">
+                                
                                     <!--Manaual Passenger Adult-->
                                     <div class="modal-header">
                                         <h5 class="modal-title">Add New Adult </h5>
@@ -1986,7 +1990,7 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- </ng-container> -->
+                                               
 
 
 
@@ -1999,6 +2003,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                 </ng-container>
                             </div>
                         </div>
                     </div>
