@@ -34,6 +34,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   loader:boolean = false;
   loaderValue = 10;
   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
+  isResponse :boolean = true;
 
   options: Options = {
     floor: 0,
@@ -286,6 +287,19 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
+      if(res.response.hotels)
+      {
+        if(res.response.hotels.length > 0)
+        {
+          this.isResponse = true
+        }
+        else{
+          this.isResponse = false
+        }
+      }
+      else{
+        this.isResponse = false
+      }
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
       this.hotelWithoutFilterList = res.response.hotels;
@@ -294,7 +308,9 @@ export class HotelListComponent implements OnInit,OnDestroy {
       this.GetMinAndMaxPriceForFilter();
       this.GetPartners();
       this.AllFilteredData();
-    }, (error) => { console.log(error) });
+    }, (error) => { this.isResponse = false;
+    this.loader = false;
+    });
 
   }
 
