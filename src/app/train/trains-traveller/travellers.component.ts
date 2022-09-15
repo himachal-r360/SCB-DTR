@@ -1844,7 +1844,6 @@ whatsAppCheck:boolean=false;
         this.error = 0;
         this.generateTrainItinerary();
         this.spinnerService.show();
-
         var irctcPassData = {
         postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
         };
@@ -2233,7 +2232,7 @@ this.spinnerService.show();
                     "passengerNationality": this.passengerForm.controls['passengerNationality' + i]['value'],
                     "passengerSerialNumber": ii,
                     "saveTraveller":checksaveTraveller,
-                    "DOB":this.foreignPassDOBArr[i]
+                    "DOB": moment(this.foreignPassDOBArr[i]).format("DD/MM/YYYY")
 
                 }
                 travellerList.push(traveller);
