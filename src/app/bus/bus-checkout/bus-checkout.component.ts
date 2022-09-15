@@ -645,13 +645,14 @@ console.log(this.seacthResult.seatdetails);
 
 
     });
-
+    
+if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
     for (let i = 0; i < this.seacthResult.seatdetails.length; i++) {
       if(this.seacthResult.seatdetails[i].ladiesSeat){
         this.passengerForm.controls['passengerGender' + i].setValue('Female');
       }
     }
-
+  }
  
     
   }
