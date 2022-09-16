@@ -24,6 +24,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   cityName = 'New Delhi';
   continueSearchHotel;
   searchEvent;
+  isMobile:boolean= true;
 
   childAgeArr = [
     { value: 2 },
@@ -59,6 +60,9 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   @ViewChild('checkOut') checkOut: ElementRef;
 
   
+  @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
+  }
 
  
   
@@ -95,18 +99,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
    
   }
 
-  @HostListener('document:click', ['$event']) onDocumentClick(event) {
-    let element = event?.target as HTMLElement
-    // if(this.hideShowCity.nativeElement.contains(!event.target) && !element.classList.contains('hotel-search-list')) {
-    //   this.showCity('hide')
-    // }
-    // console.log('click' , element);
-    // console.log(event);
-    
-  }
-
-
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ?  true : false;
     this.getSearchValue = localStorage.getItem('hotelSearch')
     if(this.getSearchValue != undefined || this.getSearchValue != null){
       this.getSearchValueLocalStorage();
@@ -116,8 +110,9 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   public Error = (controlName: string, errorName: string) => {
     return this.hotelSearchForm.controls[controlName].hasError(errorName);
   };
-
+cityVal
   showCity(val) {
+    this.cityVal = val;
     if (val == 'show') {
       this.hideShowCity.nativeElement.style.display = "block";
       this.citySearchRef.nativeElement.focus();
@@ -270,7 +265,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.cityName = this.hotelSearchForm.value.city;
     this.hideShowCity.nativeElement.style.display = "none";
     this.checkIn.nativeElement.click()
-    console.log(this.citySearchRef.nativeElement.value);
     
   }
 

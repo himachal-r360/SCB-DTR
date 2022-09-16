@@ -11,6 +11,8 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HotelDetailComponent } from './hotel-detail/hotel-detail.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { HotelDropdownDirective } from '../directives/hoteldropdown.directive';
+import { DirectiveModule } from '../directives/directive.module';
 
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
@@ -36,7 +38,8 @@ const routes: Routes = [
     }),
     NgxSliderModule,
     CarouselModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    DirectiveModule
   ],
   exports: [RouterModule],
   providers:[ {
