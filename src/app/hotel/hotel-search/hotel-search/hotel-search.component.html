@@ -40,13 +40,13 @@
                 </div>
             </div>
             <div class="hotel-in-out">
-                <div class="hotel-in" (click)="picker.open()" #checkIn>
+                <div class="hotel-in" (click)="!isMobile ? picker.open() :openMliteDatePicker('checkin',0)" #checkIn>
                     <span class="small-text">CHECK-IN</span>
                     <h5 class="large-text"  [ngClass]="!hotelSearchForm.value.checkIn?'py-3':''">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
 
                     <div class="hotel-date">
-                        <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                        <mat-form-field [hidden]="isMobile" style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                             <input matInput [min]="latestDate" [matDatepicker]="picker" formControlName="checkIn"  (dateChange)="checkInDate($event)" >
                             <mat-datepicker-toggle matSuffix [for]="picker">
                             </mat-datepicker-toggle>
@@ -59,12 +59,12 @@
                         <small class="validate-msg">Please select CheckIn date</small>
                     </div>
                 </div>
-                <div class="hotel-out" (click)="picker2.open()" #checkOut>
+                <div class="hotel-out" (click)="!isMobile ? picker2.open() : openMliteDatePicker('checkout',0)" #checkOut>
                     <span class="small-text">CHECK-OUT</span>
                     <h5 class="large-text" [ngClass]="!hotelSearchForm.value.checkOut?'py-3':''">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text"  *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
-                    <div class="hotel-date">
-                        <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
+                    <div class="hotel-date" >
+                        <mat-form-field [hidden]="isMobile" style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                             <input matInput [matDatepicker]="picker2" [min]="hotelSearchForm.value.checkIn" formControlName="checkOut" (dateChange)="checkOutDate($event)" >
                             <mat-datepicker-toggle matSuffix [for]="picker2">
                             </mat-datepicker-toggle>
@@ -76,7 +76,113 @@
                         <small class="validate-msg">Please select CheckOut date</small>
                     </div>
                 </div>
+            <div class="modal bottom_mlite_popup" style="padding:0"  id="flight_departure_mlite" tabindex="-1"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">CHECK-IN</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <mat-calendar [minDate]="latestDate"
+                                (selectedChange)="onSelectMliteDate($event,'checkin')"
+                                [selected]="hotelSearchForm.value.checkIn"></mat-calendar>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="select_city d-block mb-15 flex-fill">
+                                <div class="row">
+                                    <div class="col-6 ">
+                                        <div class="input_box  date_input_box">
+                                            <label (click)="openMliteDatePicker('checkin',0)">
+                                                <span>CHECK-IN</span>
+                                                <div class="form-group flex_basis dep_m_cal"
+                                                    *ngIf="hotelSearchForm.value.checkIn">
+                                                    <b>{{hotelSearchForm.value.checkIn | date:'dd MMM' }} ,
+                                                    </b><span> {{hotelSearchForm.value.checkIn | date:'EEEE'}}</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 ">
+                                        <div class="input_box  date_input_box">
 
+                                            <label *ngIf="!hotelSearchForm.value.checkOut">
+                                                <a (click)="openMliteDatePicker('checkout',1)"
+                                                    class="">Add CHECK-OUT</a>
+                                            </label>
+
+                                            <label (click)="openMliteDatePicker('checkout',0)"
+                                                *ngIf="hotelSearchForm.value.checkOut">
+                                                <span>CHECK-OUT</span>
+                                                <div class="form-group flex_basis dep_m_cal"
+                                                    *ngIf="hotelSearchForm.value.checkOut">
+                                                    <b>{{hotelSearchForm.value.checkOut | date:'dd MMM' }} , </b><span>
+                                                        {{hotelSearchForm.value.checkOut | date:'EEEE' }}</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="w-100 btn btn-primary"
+                                data-bs-dismiss="modal"> Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">CHECK-OUT</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <mat-calendar [minDate]="hotelSearchForm.value.checkIn"
+                                (selectedChange)="onSelectMliteDate($event,'checkout')"
+                                [selected]="hotelSearchForm.value.checkOut"></mat-calendar>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="select_city d-block mb-15 flex-fill">
+                                <div class="row">
+                                    <div class="col-6 ">
+                                        <div class="input_box  date_input_box">
+                                            <label (click)="openMliteDatePicker('checkin',0)">
+                                                <span>CHECK-IN</span>
+                                                <div class="form-group flex_basis dep_m_cal"
+                                                    *ngIf="hotelSearchForm.value.checkIn">
+                                                    <b>{{hotelSearchForm.value.checkIn | date:'dd MMM' }} ,
+                                                    </b><span> {{hotelSearchForm.value.checkIn | date:'EEEE'
+                                                        }}</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 ">
+                                        <div class="input_box  date_input_box">
+                                            <label (click)="openMliteDatePicker('checkout',0)">
+                                                <span>CHECK-OUT</span>
+                                                <div class="form-group flex_basis dep_m_cal"
+                                                    *ngIf="hotelSearchForm.value.checkOut">
+                                                    <b>{{hotelSearchForm.value.checkOut | date:'dd MMM' }} , </b><span>
+                                                        {{hotelSearchForm.value.checkOut | date:'EEEE' }}</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="w-100 btn btn-primary"
+                                data-bs-dismiss="modal"> Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="hotel-room">
                 <div class="hotel-room-item" (click)="showGuest('show')">

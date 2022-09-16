@@ -5,7 +5,7 @@ import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { ActivatedRoute,  Router } from '@angular/router';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
-
+declare var $: any;
 @Component({
   selector: 'app-hotel-search',
   templateUrl: './hotel-search.component.html',
@@ -23,6 +23,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   latestDate = new Date();
   cityName = 'New Delhi';
   continueSearchHotel;
+  isMobile:boolean = false;
   childAgeArr = [
     { value: 2 },
     { value: 3 },
@@ -77,6 +78,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ? true : false;
     this.getSearchValueLocalStorage();
 
 
@@ -361,7 +363,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       var i = 0;
       var isvalid = true;
       rooms.forEach(z => {
-        if(z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0)
+        if((z.numberOfChildren != z.childrenAge.length ||  z.childrenAge=="0")  && z.numberOfChildren > 0)
         {
           var id = document.getElementById("error_"+i)
           id.hidden = false;
@@ -393,6 +395,35 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this. hotelSearchCallBack(this.hotelSearchForm.value)
       this.router.navigateByUrl(url);
+    }
+
+  }
+
+
+  onSelectMliteDate(event, field) {
+
+    if (field == 'checkin') {
+
+      this.hotelSearchForm['controls']['checkIn'].setValue(event);
+      var compare1 = new Date(event).getTime();
+      var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
+      if (compare1 > compare2) {
+        this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
+        this.hotelSearchForm['controls']['checkOut'].setValue(moment(event).format('YYYY-MM-DD'));
+      }
+    } else {
+      this.hotelSearchForm['controls']['checkOut'].setValue(moment(event).format('YYYY-MM-DD'));
+    }
+
+
+  }
+  openMliteDatePicker(field, rtype) {
+    if (field == 'checkin') {
+      $('#flight_arrival_mlite').modal('hide');
+      $('#flight_departure_mlite').modal('show');
+    } else {
+      $('#flight_arrival_mlite').modal('show');
+      $('#flight_departure_mlite').modal('hide');
     }
 
   }
