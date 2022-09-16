@@ -9,21 +9,21 @@ import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HotelDetailComponent } from './hotel-detail/hotel-detail.component';
-// import { HotelCheckoutComponent } from './hotel-checkout/hotel-checkout.component';
+import { HotelCheckoutComponent } from './hotel-checkout/hotel-checkout.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
-  {path:"hotel-detail",component:HotelDetailComponent}
-  // {path:"hotel-checkout",component:HotelCheckoutComponent}
+  {path:"hotel-detail",component:HotelDetailComponent},
+  {path:"hotel-checkout",component:HotelCheckoutComponent}
 ]
 
 @NgModule({
   declarations: [
     HotelListComponent,
     HotelDetailComponent,
-    // HotelCheckoutComponent
+    HotelCheckoutComponent
   ],
   imports: [
     CommonModule,

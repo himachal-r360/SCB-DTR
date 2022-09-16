@@ -1,10 +1,10 @@
 import { Route } from '@angular/router';
-import { BusCheckoutComponent } from './bus-checkout.component';
+import { HotelCheckoutComponent } from './hotel-checkout.component';
 
-export const BusCheckoutRoutes: Route[]=[
+export const HotelCheckoutComponent: Route[]=[
     {
         path: '',
-        component: BusCheckoutComponent
+        component: HotelCheckoutComponent
 
     }
 ]

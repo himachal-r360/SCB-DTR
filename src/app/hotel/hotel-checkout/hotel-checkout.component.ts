@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgModule, ChangeDetectorRef, ElementRef, Inject, ɵConsole, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, NgModule, ChangeDetectorRef, ElementRef, Inject, ɵConsole, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -24,7 +24,6 @@ import { APP_CONFIG, AppConfig } from '../../configs/app.config';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HotelService } from 'src/app/common/hotel.service';
-import { CheckoutBottomSheetComponent } from './bottom-sheet/bottom-sheet.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PlatformLocation } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -52,7 +51,7 @@ export const MY_DATE_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ]
 })
-export class HotelCheckoutComponent implements OnInit, OnDestroy {
+export class HotelCheckoutComponent implements OnInit {
   partnerToken: any;
   isMobile: boolean = true;
   completedSteps = 1;
@@ -208,12 +207,12 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.resetPopups();
-    if (this.sessionTimer) {
-      clearInterval(this.sessionTimer);
-    }
-  }
+  // ngOnDestroy(): void {
+  //   this.resetPopups();
+  //   if (this.sessionTimer) {
+  //     clearInterval(this.sessionTimer);
+  //   }
+  // }
   recivetotalFare($event) {
     this.flexipaysummry = false;
     this.flexiDiscount = 0;
@@ -239,18 +238,18 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isMobile = window.innerWidth < 991 ? true : false;
-    
+
   }
     resetPopups() {
 
-    $(".modal").hide();
-    $("body").removeAttr("style");
-    $(".modal-backdrop").remove();
+    // $(".modal").hide();
+    // $("body").removeAttr("style");
+    // $(".modal-backdrop").remove();
   }
 
   goBack() {
-    this.resetPopups();
-    this.router.navigateByUrl('/');
+    // this.resetPopups();
+    // this.router.navigateByUrl('/');
 
 
   }
