@@ -1867,9 +1867,9 @@ this.spinnerService.show();
                     var whatsappFlag;
                     if (this.whatsappFeature == 1){
                         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-                        this.whatsAppCheck=true;
+                        this.whatsAppCheck=whatsappFlag;
                     }else{
-                        whatsappFlag = 0;
+                        whatsappFlag = false;
                          this.whatsAppCheck=false;
                     }
                     this.contactDetails = {
