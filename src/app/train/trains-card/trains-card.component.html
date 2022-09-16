@@ -389,8 +389,8 @@
                             <div class="tier_m mt-3">
                                 <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
                                     <div>
-                                        <span class="check_avai_week">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE'}},</span><br>
-                                        <span class="check_avai_text">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'dd LLL'}}</span>
+                                        <span class="check_avai_week TrainSeatsInfo_item">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE'}},</span><br>
+                                        <span class="check_avai_text TrainSeatsInfo_item">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'dd LLL'}}</span>
                                     </div>
                                     <!-- <div class="check_avai_text">SL </div> -->
                                     <div class="status">
@@ -398,9 +398,10 @@
                                         <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
                                         <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
                                     </div>
-                                    <div><span class="check_avai_price">₹{{trainTotalFare|number}}</span></div>
-                                    <div class="check_avai_book three" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</div>
+                                    <div class="text-center"><span class="check_avai_price TrainSeatsInfo_item ">₹{{trainTotalFare|number}}</span></div>
+                                    <div class="check_avai_book three TrainSeatsInfo_item" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</div>
                                 </div>
+
 
                             </div>
 

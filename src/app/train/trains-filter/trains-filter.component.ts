@@ -2,12 +2,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BusHelper } from 'src/app/shared/utils/bus-helper';
 import {environment} from '../../../environments/environment';
 import { SimpleGlobal } from 'ng2-simple-global';
+import { ActivatedRoute, Router } from '@angular/router'; 
 @Component({
   selector: 'app-trains-filter',
   templateUrl: './trains-filter.component.html',
   styleUrls: ['./trains-filter.component.scss']
 })
 export class TrainsFilterComponent implements OnInit {
+   @Input() fromStationcode:string;
+   @Input() toStationcode:string;
+
    @Input() availableClasses: any[];
    @Output() departEvent = new EventEmitter();
    @Output() arriveEvent = new EventEmitter();
@@ -28,11 +32,18 @@ export class TrainsFilterComponent implements OnInit {
    @Output() selectedQuotaEvent = new EventEmitter();
     cdnUrl: any;
     isMobile:boolean= true;
-      constructor(private sg: SimpleGlobal) { this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; }
+      constructor(private sg: SimpleGlobal,private activatedRoute: ActivatedRoute) { 
+
+      this.cdnUrl = environment.cdnUrl+this.sg['assetPath']; 
+      this.fromStationcode = this.activatedRoute.snapshot.queryParamMap.get('fromTravelCode');
+      this.toStationcode = this.activatedRoute.snapshot.queryParamMap.get('toTravelCode'); 
+      }
     
   ngOnInit() {
     this.isMobile = window.innerWidth < 991 ?  true : false;
 this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+
+   
   }
 
 
@@ -70,9 +81,12 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.applyFil();
     }
     onlyClearSelectionAll(){
-      $('#seniorcitizen').trigger('click');
-      $('.quotas').prop('checked', false);
+      if(this.isMobile){
+        $('#seniorcitizen').trigger('click');
+        $('.quotas').prop('checked', false);
       this.updateTosSelectedQuota('');
+      }
+      
       this.removeallfilters.emit();
     }
 

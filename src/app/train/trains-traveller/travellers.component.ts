@@ -1844,7 +1844,6 @@ whatsAppCheck:boolean=false;
         this.error = 0;
         this.generateTrainItinerary();
         this.spinnerService.show();
-
         var irctcPassData = {
         postData: this.EncrDecr.set(JSON.stringify(this.passengerItineraryDetails))
         };
@@ -2233,7 +2232,7 @@ this.spinnerService.show();
                     "passengerNationality": this.passengerForm.controls['passengerNationality' + i]['value'],
                     "passengerSerialNumber": ii,
                     "saveTraveller":checksaveTraveller,
-                    "DOB":this.foreignPassDOBArr[i]
+                    "DOB": moment(this.foreignPassDOBArr[i]).format("DD/MM/YYYY")
 
                 }
                 travellerList.push(traveller);
@@ -2874,26 +2873,25 @@ this.spinnerService.show();
     
        manualAddTraveller(type){
         if(type==1){
+           this.addTraveller(-1,-1);
             if(this.isMobile){
-            $('#adultname').val('');
-            $('#adultage').val('');
-            $('#addTraveller_mlite').modal('show');
-            this.mlitetravellerformsubmit = false;
+                $('#addTraveller_mlite').modal('show');
+                this.mlitetravellerformsubmit = false;
         }
-            this.addTraveller(-1,-1);
+          
         }else{
+         this.addChild(-1,-1);
             if(this.isMobile){
-                $('#childname').val('');
-                $('#childage').val(0).change();;
+               
                 $('#addInfant_mlite').modal('show');
                 this.mlitechildformsubmit=false;
             }
-            this.addChild(-1,-1);
+           
         }
         
        }
 
-       /* manualMobileAdultTraveller(type) {
+      manualMobileAdultTraveller(type) {
         if(type==1){
             this.addTraveller(-1,-1);
             $('#addTraveller_mlite').modal('show'); 
@@ -2906,7 +2904,7 @@ this.spinnerService.show();
             $('#infantTraveller_mlite').modal('show');
         }
         
-      } */
+      }
     
     
     addTraveller(passenger,checkboxIndex) {
@@ -2943,6 +2941,8 @@ this.spinnerService.show();
                 passengerName=passenger.firstName+' '+passenger.lastName;
                 
                 }
+                
+                console.log(i);
  
             this.defaultCountryArr[i] = "IN";
             this.passengerForm.addControl('passengerName' + i, new FormControl(passengerName, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength), Validators.maxLength(this.maxNameLength)]));
@@ -3001,13 +3001,7 @@ this.spinnerService.show();
             this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
             this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
             this.passengerFormCount++;
-            if(this.isMobile){
-                 // this._form.patchValue({port_list: 'Sushi'}));
-                 var passname = 'passengerName' + (i+1);
-                 var passgender = 'passengerGender' + (i+1);
-                 var passage = 'passengerAge' + (i+1);
-                  this.passengerForm.patchValue({passname: '',passgender: '',passage: ''});
-            }
+  
             // console.log('form==>',this.passengerForm);
             
              if(checkboxIndex !=-1){
@@ -3162,13 +3156,7 @@ this.spinnerService.show();
             this.passengerForm.controls['childGender' + i].updateValueAndValidity();
             this.passengerForm.controls['childAge' + i].updateValueAndValidity();
             this.childCount++;
-            if(this.isMobile){
-                 // this._form.patchValue({port_list: 'Sushi'}));
-                 var passname = 'childName' + (i+1);
-                 var passgender = 'childGender' + (i+1);
-                 var passage = 'childAge' + (i+1);
-                  this.passengerForm.patchValue({passname: '',passgender:'',passage:''});
-            }
+   
               if(checkboxIndex !=-1){
            $('#passengerBox_'+checkboxIndex).removeClass('hidden');
            $('#travelPassenger_'+checkboxIndex).prop('checked', true); 

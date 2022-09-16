@@ -186,8 +186,8 @@
               </div>
 </div>
 
-            <div class="col-lg-12">
-                <div class="layout-box">
+            <div class="col-lg-12 mb-82">
+                <div class="layout-box mb-0">
                   <div class="layout-left" *ngIf="notrain==false">
                     <div class="filter-loaders animation-loader" *ngIf="loading">
                       <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
@@ -257,22 +257,7 @@
        
                            </div>
 
-                           <!-- no train found new design web -->
                         
-                        <div class="row p-2" *ngIf="notrain">
-                            <div class="col-md-12 text-center">
-                                <div class="empty_list_hdr">Yikes! No direct trains found.</div>
-                                <div>
-                                    <img src="{{cdnUrl}}/images/empty_list_train.svg">
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-3 text-center"  (click)="goback()">
-                                <p class="empty_list_text">Try another route or date</p>
-                                <button class="empty_list_btn">Go back to search page</button>
-                            </div>
-                        </div>
-                     
-                        <!-- end of no train found new design web -->
                      
                         <!-- Listing -->
                         <div class="flight-listing-area p-3" *ngIf="loading" >
@@ -297,8 +282,26 @@
                         </div>
                         
                     </div>
+                       
+                </div>
+                <!-- no train found new design web -->
+                        
+            <div class="row p-2" *ngIf="notrain">
+                <div class="col-md-12 text-center">
+                    <div class="empty_list_hdr">Yikes! No direct trains found.</div>
+                    <div>
+                        <img src="{{cdnUrl}}/images/empty_list_train.svg">
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3 text-center"  (click)="goback()">
+                    <p class="empty_list_text">Try another route or date</p>
+                    <button class="empty_list_btn">Go back to search page</button>
                 </div>
             </div>
+         
+            <!-- end of no train found new design web -->
+            </div>
+            
         </div>
     </div>
 </section>
