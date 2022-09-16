@@ -134,7 +134,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
   ngOnInit(): void {
    this._busService.showHeader(true);
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    let continueSearchValLs:any= localStorage.getItem(environment.continueSearchBus);
+    let continueSearchValLs:any= localStorage.getItem('continueSearchBus');
     if(continueSearchValLs!=null){
       this.continueSearchVal =JSON.parse(continueSearchValLs);
     }
@@ -324,7 +324,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
 
   busSearchCallBack(param:any){
       let searchValueAllobj=param;
-      let continueSearch:any=localStorage.getItem(environment.continueSearchBus);
+      let continueSearch:any=localStorage.getItem('continueSearchBus');
       if(continueSearch==null){
         this.continueSearchBuss=[];
       }
@@ -341,7 +341,7 @@ export class BusSearchComponent implements OnInit,  OnDestroy {
         this.continueSearchBuss=this.continueSearchBuss.slice(0,3);
       }
       this.continueSearchBuss.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem(environment.continueSearchBus,JSON.stringify(this.continueSearchBuss));
+      localStorage.setItem('continueSearchBus',JSON.stringify(this.continueSearchBuss));
   }
 
 

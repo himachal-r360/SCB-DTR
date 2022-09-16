@@ -233,14 +233,16 @@
                                                 <!-- radio buttons male/female-->
                                                 <div class="col-12">
                                                   <div class="trip_select">
-                                                      <div class="buttonTrip">
-                                                          <input type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
+                                                      <div class="buttonTrip" *ngIf = "!item.ladiesSeat">
+                                                          <input  type="radio" id="male{{ i }}" formControlName="passengerGender{{ i }}"  value="Male" />
                                                           <label class="btn btn-default" for="male{{ i }}">Male</label>
                                                       </div>
                                                       <div class="buttonTrip">
-                                                          <input type="radio" id="female{{ i }}" formControlName="passengerGender{{ i }}"  value="Female" />
+                                                          <input  type="radio"  id="female{{ i }}" formControlName="passengerGender{{ i }}"  value="Female" />
                                                           <label class="btn btn-default" for="female{{ i }}">Female</label>
                                                       </div>
+
+                                                   
 
 
                                                   </div>
@@ -259,7 +261,7 @@
                         <div class="col-12 col-lg-4 col-md-6">
                           <div>
                             <mat-form-field class="w-100" appearance="outline">
-                              <input    type="hidden" formControlName="passengerid{{ i }}" >
+                              <input type="hidden" formControlName="passengerid{{ i }}" >
                               <mat-label>First Name</mat-label>
                               <input matInput placeholder="" formControlName="passengerFirstName{{ i }}"
                                 name="passengerFirstName{{ i }}" id="passengerFirstName{{ i }}" (keypress)="flInput($event)"
@@ -320,12 +322,15 @@
                     <ul class="add-search-ul" *ngIf="travellerlist"> 
                       <ng-container *ngFor="let passenger of travellerlist | slice:0:3; let travellerIndex = index ">
 
-                        <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}">
-                          <div class="custom-controls-stacked " >
+                        <!-- <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}" [ngClass]="item.ladiesSeat && passenger.gender != 'Female' ? 'hidden' : '' " > -->
+
+                          <li class="custom-check-box adult-choose-box adult-choose-box{{passenger.id}} adult-choose-box_{{ passenger.id}}{{i}} "  id="adult-choose-box_{{ passenger.id}}" >
+                          
+                          <div class="custom-controls-stacked "  >
                             <label class="custom-control material-checkbox">
-                              <input type="checkbox" class="material-control-input pass_checkBox  pass_checkBox1_{{ passenger.id}} pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
+                              <input type="checkbox"  class="material-control-input pass_checkBox  pass_checkBox1_{{ passenger.id}} pass_checkBox_{{ passenger.id}}{{i}} pass_checkBox_{{i}}"
                                  name="travellerlist"
-                                (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
+                                (change)="fillupTravellerDetailOnCheck($event,passenger,i,passenger.id,travellerIndex,item.ladiesSeat)" [disabled]="disableCheckbox[travellerIndex]" [checked]="isChecked[travellerIndex]">
                               <span class="material-control-indicator"></span>
                               <span class="description fs_14 text-black fw_7 mr-10"><span
                                   *ngIf="passenger.title">{{ passenger.title }}.</span> {{ passenger.firstName }}
@@ -348,11 +353,13 @@
                         <!--expandid==i && isExpanded-->
                           <div   [ngClass]="expandid == i ? '' : 'hidden' " >
                             <ng-container *ngFor="let expandedItem of travellerlist; let expandedItemi = index">
-                              <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}">
+                              <!-- <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}"  [ngClass]="item.ladiesSeat && expandedItem.gender != 'Female' ? 'hidden' : '' " > -->
+                                <li class="custom-check-box adult-choose-box adult-choose-box{{expandedItem.id}} adult-choose-box_{{ expandedItem.id}}{{i}} " *ngIf="expandedItemi > 5" id="adult-choose-box_{{ expandedItem.id }}"  >
+
                                 <label class="custom-control material-checkbox">
                                   <input type="checkbox" class="material-control-input pass_checkBox1_{{ expandedItem.id}} pass_checkBox pass_checkBox_{{ expandedItem.id}}{{i}} pass_checkBox_{{i}}"
                                     name="travellerlist"
-                                    (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
+                                    (change)="fillupTravellerDetailOnCheck($event,expandedItem,i,expandedItem.id,expandedItemi,item.ladiesSeat)" [disabled]="disableCheckbox[expandedItemi]" [checked]="isChecked[expandedItemi]">
                                   <span class="material-control-indicator"></span>
                                   <span class="description fs_14 text-black fw_7 mr-10"><span
                                       *ngIf="expandedItem.title">{{ expandedItem.title }}.</span> {{ expandedItem.firstName }}
@@ -500,71 +507,83 @@
                 </div>
 
                 <ng-template #content let-modal>
-                  <div class="modal-header modal-inside-header">
-                    <h5 class="modal-title">Choose from Saved GSTs</h5>
-
+                  <div class="modal-header modal-inside-header justify-content-center border-0">
+                      <h5 class="modal-title gstTitle">Saved GST Details</h5>
+                      <span class="close_btn">
+                        <img src="{{cdnUrl}}images/smartbuy/icons/close_bold.svg" alt="close" (click)="modal.close()">
+                      </span>
                   </div>
                   <div class="modal-body">
-                    <div class="col-lg-12 col-md-6 col-12">
+                      <div class="">
+                          <div class="savedGst_sec">
+                              <div *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                  <div class="form-check pl-0">
+                                      <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]" style="display: none;">
+                                      <label class="travel-card-details" for="gst{{GSTIndex}}" [ngClass]="{'active': isCheckedGST[GSTIndex]}">
+                                           <div class="gstHeading">{{data.gstNumber}}</div>
+                                           <div class="gstName">{{data.gstName}}</div>
+                                           <div class="gstAddress">{{data.address}}</div>
+                                           <div class="d-flex gap-3">
+                                               <div class="gstAddress">{{data.city}}</div>
+                                               <div class="gstAddress">{{data.state}}</div>
+                                               <div class="gstAddress">{{data.pinCode}}</div>
+                                           </div>
+                                       </label>
+                                  </div>
+                              </div>
+                              <ng-container *ngIf="isGstExpanded">
+                                  <ng-container *ngFor="let gstexpandedItem of GSTList; let j = index">
+                                      <ng-container *ngIf="j>=5">
+                                          <div class="form-check pl-0">
+                                              <input class="form-check-input" type="radio" name="GSTList" id="gstL{{j}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,j)" [checked]="gstmodalcheckedvalue[j]" style="display: none;">
+                                              <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gstL{{j}}" [ngClass]="{'active': isCheckedGST[j]}">
+                                              <div  class="gstHeading">{{gstexpandedItem.gstNumber}}</div>
+                                              <div class="gstName">{{gstexpandedItem.gstName}}</div>
+                                              <div class="gstAddress">{{gstexpandedItem.address}}</div>
+                                              <div class="d-flex gap-3">
+                                                  <div class="gstAddress">{{gstexpandedItem.city}}</div>
+                                                  <div class="gstAddress">{{gstexpandedItem.state}}</div>
+                                                  <div class="gstAddress">{{gstexpandedItem.pinCode}}</div>
+                                              </div>
+                                          </label>
+                                          </div>
 
-                      <div>
-                        <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                          <input class="form-check-input" type="radio" name="GSTList" id="gst{{ GSTIndex }}"
-                            (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)"
-                            [checked]="gstmodalcheckedvalue[GSTIndex]">
-                          <label class="form-check-label" for="gst{{ GSTIndex }}">
-                            {{ data.gstName }}
-                          </label>
-                        </div>
-                      </div>
-                      <ng-container *ngIf="isGstExpanded">
-                        <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
-                          <div *ngIf="i > 5">
-                            <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                              <input class="form-check-input" type="radio" name="GSTList" id="gstL{{ GSTIndex }}"
-                                (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)"
-                                [checked]="gstmodalcheckedvalue[i]">
-                              <label class="form-check-label" for="gstL{{ GSTIndex }}">
-                                {{ gstexpandedItem.gstName }}
-                              </label>
-                            </div>
-                            <!--  <label class="checkbox">{{ gstexpandedItem.gstName }}
-                                        <input type="radio" name="GSTList" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
-                                        <span class="checkmark"></span>
-                                        </label> -->
+                                      </ng-container>
+                                  </ng-container>
+                              </ng-container>
                           </div>
-                        </ng-container>
-                      </ng-container>
-                      <p *ngIf="GSTList.length > 5">
-                        <label class="checkbox pl-0">
-                          <a (click)="gstExpandItems()">
-                            {{ !isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;' }}
-                          </a>
-                        </label>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" (click)="gstReset()">Reset</button>
-                    <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
-                  </div>
-                </ng-template>
 
-                <div class="row" *ngIf="gstSelected">
+                          <p *ngIf="GSTList.length > 5" class="text-center my-2">
+                              <a (click)="gstExpandItems()">
+                                      {{!isGstExpanded ? 'View More &#x25BC;' : 'View Less &#x25B2;'}}
+                                  </a>
+                          </p>
+                      </div>
+                  </div>
+                  <div class="modal-footer justify-content-center">
+                      <button type="button" class="btn btn-primary-outline gst_btn" (click)="gstReset()">Reset</button>
+                      <button type="button" class="btn btn-primary gst_btn" (click)="modal.close()">Close</button>
+                  </div>
+              </ng-template>
+
+                <div class="row g-3" *ngIf="gstSelected">
                   <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>GST Number</mat-label>
                       <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber"
                         minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)"
                         (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
+                      
+                    </mat-form-field>
 
+                    <span *ngIf="submitted && passengerForm.controls.gstNumber.errors" class="error">
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstNumber')">
                         Please enter gst number.
                       </mat-error>
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstNumber')">
                         Please enter valid gst number.
                       </mat-error>
-                    </mat-form-field>
+                    </span>
 
                   </div>
                 <!-- </div>
@@ -577,25 +596,29 @@
                         name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off"
                         (keypress)="specialcharInputAddress($event)">
 
+                    </mat-form-field>
+                    <span *ngIf="submitted && passengerForm.controls.gstBusinessName.errors" class="error">
                       <mat-error class="error_bus"
                         *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business name.
                       </mat-error>
                       <mat-error class="error_bus"
                         *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
                       </mat-error>
-                    </mat-form-field>
+                    </span>
                   </div>
                   <div class="col-lg-6 col-md-6 col-12">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Business Address</mat-label>
                       <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress"
                         id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
+                    </mat-form-field>
+                    <span *ngIf="submitted && passengerForm.controls.gstAddress.errors" class="error">
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstAddress')">
                         Please enter business address.
                       </mat-error>
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstAddress')">
                         Please enter valid address.No special characters allowed except / - ,</mat-error>
-                    </mat-form-field>
+                    </span>
                   </div>
                   <div class="col-lg-6 col-md-4 col-12">
                     <mat-form-field appearance="outline" class="w-100">
@@ -603,63 +626,73 @@
                       <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode"
                         id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)"
                         (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
+                      
+                    </mat-form-field>
+                    <span *ngIf="submitted && passengerForm.controls.gstPincode.errors" class="error">
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstPincode')">
                         Please enter pincode.
                       </mat-error>
                       <mat-error class="error_bus" *ngIf="passengerForm.hasError('minlength','gstPincode')">
                         Please enter 6 digits [0-9] pincode.
                       </mat-error>
-                    </mat-form-field>
+                    </span>
                   </div>
+                  <ng-container *ngIf="gstSelected">
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>City / Town</mat-label>
+                        <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
+                          autocomplete="nope">
+                        
+                      </mat-form-field>
+                      <span *ngIf="submitted && passengerForm.controls.gstCity.errors" class="error">
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstCity')">
+                          Please enter city name.
+                        </mat-error>
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstCity')">
+                          Please enter valid city name. </mat-error>
+                      </span>
+                    </div>
+  
+                    <div class="col-lg-6 col-md-6 col-12">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>State</mat-label>
+                        <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
+                          (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
+                          readonly="stateCheck" value="{{ state }}">
+                        
+                      </mat-form-field>
+                      <span *ngIf="submitted && passengerForm.controls.gstState.errors" class="error">
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
+                          Please enter state name.
+                        </mat-error>
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstState')">
+                          Please enter valid state name.
+                        </mat-error>
+                      </span>
+                    </div>
+  
+                    <div class="othertraveller" *ngIf="gstSelected">
+                      <ul class="add-search-ul d-block">
+                        <li class="custom-check-box">
+                          <div class="custom-controls-stacked">
+                            <label class="custom-control material-checkbox">
+                              <input type="checkbox" class="material-control-input" formControlName="saveGST"
+                                name="saveGST" id="saveGST" [checked]="checked">
+                              <span class="material-control-indicator"></span>
+                              <span class="description fs_12 text-black">Add these details to
+                                GST list. </span>
+                              <span class="description fs_12">You won't have to fill gst info on your next visit</span>
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+  
+  
+                  </ng-container>
                 </div>
-                <div class="row" *ngIf="gstSelected">
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>City / Town</mat-label>
-                      <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity"
-                        autocomplete="nope">
-                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstCity')">
-                        Please enter city name.
-                      </mat-error>
-                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstCity')">
-                        Please enter valid city name. </mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="col-lg-6 col-md-6 col-12">
-                    <mat-form-field appearance="outline" class="w-100">
-                      <mat-label>State</mat-label>
-                      <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState"
-                        (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state"
-                        readonly="stateCheck" value="{{ state }}">
-                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
-                        Please enter state name.
-                      </mat-error>
-                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstState')">
-                        Please enter valid state name.
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="othertraveller" *ngIf="gstSelected">
-                    <ul class="add-search-ul d-block">
-                      <li class="custom-check-box">
-                        <div class="custom-controls-stacked">
-                          <label class="custom-control material-checkbox">
-                            <input type="checkbox" class="material-control-input" formControlName="saveGST"
-                              name="saveGST" id="saveGST" [checked]="checked">
-                            <span class="material-control-indicator"></span>
-                            <span class="description fs_12 text-black">Add these details to
-                              GST list. </span>
-                            <span class="description fs_12">You won't have to fill gst info on your next visit</span>
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-
-
-                </div>
+                
               </div>
 
 

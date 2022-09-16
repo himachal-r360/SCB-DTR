@@ -116,7 +116,7 @@
                                         </div>
                                         <div class="Travellers-passengers-data">
                                             <div class="Travellers-name">
-                                                <h6>Children (0-11 years)</h6>
+                                                <h6>Children (2-11 years)</h6>
                                             </div>
                                             <div class="Travellers-qty">
                                                 <div class="quantity buttons_added">
@@ -129,7 +129,38 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <br>
+                                       <div class="d-flex align-items-center">
+                                        <div *ngIf="item.value.numberOfChildren > 0">
+                                            <div class="Travellers-name">
+                                                <h6>Child 1</h6>
+                                            </div>
+                                            <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}" class="p-1">
+                                                <option value="0" selected>Age</option>
+                                                <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[0] ? true : null"  *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="item.value.numberOfChildren > 1" class="ms-2">
+                                            <div class="Travellers-name">
+                                                <h6>Child 2</h6>
+                                            </div>
+                                            <select  (change)="onSelectAge($event,item , i)" id="selectAge2_{{i}}" class="p-1">
+                                                <option value="0" selected>Age</option>
+                                                <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[1] ? true : null" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                            </select>
+                                        </div>
+                                        <div *ngIf="item.value.numberOfChildren > 2" class="ms-2">
+                                            <div class="Travellers-name">
+                                                <h6>Child 3</h6>
+                                            </div>
+                                            <select (change)="onSelectAge($event,item,i)" id="selectAge3_{{i}}" class="p-1">
+                                                <option value="0" selected>Age</option>
+                                                <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[2] ? true : null" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                            </select>
+                                        </div>
                                     </div>
+                                </div> 
+                                      
                                     <hr>
                                 </ng-container>
                             </ng-container>

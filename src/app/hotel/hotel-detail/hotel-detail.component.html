@@ -1,4 +1,4 @@
-<section class="bradcome-area mt-110 mb-10 d-lg-block d-none">
+<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="!isMobile">
   <div class="container">
       <div class="row">
           <div class="col-md-12">
@@ -16,7 +16,7 @@
   </div>
 </section>
 
-<section class="travel-area mt-10 d-lg-block d-none" *ngIf="HotelDetail">
+<section class="travel-area mt-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
   <div class="container">
       <div class="row">
           <div class="col-md-12">
@@ -75,7 +75,7 @@
                                       <p class="p-rn">Per Room/Night</p>
                                   </div>
                                   <div class="hotel-list-info-Book">
-                                      <a href="#" class="button-style">Select Room</a>
+                                      <a href="javascript:;" (click)="onSectionChange('hdRooms','Rooms')"  class="button-style">Select Room</a>
                                   </div>
                               </div>
                           </div>
@@ -113,7 +113,7 @@
           </div>
           <div class="col-md-3">
               <div class="hd-map">
-                  <iframe class="d-flex" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d119066.55300480236!2d72.82229611618443!3d21.159171328254452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1662530866151!5m2!1sen!2sin" width="100%" height="440"></iframe>
+                  <iframe class="d-flex" [src]="GOOGLE_MAP_URL" width="100%" height="440"></iframe>
               </div>
           </div>
       </div>
@@ -206,14 +206,12 @@
                                           <div class="hd-rd-area">
                                               <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates">
                                                   <div class="hd-rd-left">
-                                                      <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
-                                                          <div class="item">
-                                                              <img src="{{item.imageInfo.wideAngleImageurl}}" alt="">
-                                                          </div>
+                                                      <div class="hd-rd-big">
+                                                        <img src="{{item.imageInfo.wideAngleImageurl}}" alt="">
                                                       </div>
-                                                      <div id="hd-rd-thumbs" class="owl-carousel owl-theme room-thumbs hd-rd-thumbs-right">
-                                                          <div class="item">
-                                                              <img src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
+                                                      <div class="hd-rd-thumbs">
+                                                          <div class="hd-rd-item">
+                                                            <img src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
                                                           </div>
                                                       </div>
                                                   </div>
@@ -276,6 +274,228 @@
   </div>
 </section>
 
+      <!-- mob-travel-area -->
+      <section class="mob-travel-area d-lg-block d-block" *ngIf="HotelDetail && isMobile">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <div class="mob-listing-header">
+                        <div class="mob-listing-header-left">
+                            <a (click)="backClicked()" >
+                                <img src="./assets/images/icons/left.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="mob-listing-header-center">
+                            <h6>{{SelectedQueryParam.city +', '+ SelectedQueryParam.countryName}}</h6>
+                            <p>{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
+                        </div>
+                        <div class="mob-listing-header-right">
+                            <a  (click)="backClicked()">
+                                <img src="./assets/images/icons/edit.png" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hd-gallery mb-20">
+                        <div id="mob-big" class="owl-carousel owl-theme">
+                          <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                            <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                              <ng-template carouselSlide  [id]="'Id_'+i">
+                                <div class="item">
+                                  <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="">
+                              </div>
+                                </ng-template>
+                             </ng-container>
+                          </owl-carousel-o>
+                        </div>
+                        <div id="mob-thumbs" class="owl-carousel owl-theme mt-10">
+                          <owl-carousel-o [options]="MobileThumbNailImageCustomOptions" #ThumbNailImageOwl>
+                            <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                              <ng-template carouselSlide >
+                                <div class="item" (click)="onImageClick(i)">
+                                  <img src="{{image.thumbnailImageUrl}}" class="img-fluid" alt="">
+                              </div>
+                                </ng-template>
+                             </ng-container>
+                          </owl-carousel-o>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="hotel-list-text me-3">
+                            <h6 class="hotel-name">{{HotelDetail.hotelName}}</h6>
+                            <p class="hotel-place">{{HotelDetail.address=='' ? HotelDetail.city : HotelDetail.address }}</p>
+                            <p class="hotel-star" *ngIf="HotelDetail.hotelRatings[0].rating > 0">
+                              <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 1}"></i>
+                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 2}"></i>
+                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 3}"></i>
+                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 4}"></i>
+                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 5}"></i>
+                              <span class="hotel-star-tag">{{HotelDetail.hotelRatings[0].rating}}/5</span>
+                          </p>
+                        </div>
+                        <div class="hd-map" style="width: 150px; height: 80px;">
+                            <iframe class="d-flex" [src]="GOOGLE_MAP_URL" width="100%" height="80px"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-20">
+                <div class="col-12">
+                    <div class="hd-tabs-area mob-hd-tabs-area">
+                        <ul class="list-unstyled hd-tabs">
+                            <li>
+                                <a href="javascript:void(0)" (click)="onSectionChange('hdOverview','Overview')" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}">Overview</a>
+                            </li>
+                            <li>
+                                <a  href="javascript:void(0)" (click)="onSectionChange('hdRooms','Rooms')" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"> Rooms</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" (click)="onSectionChange('hdAmenities','Amenities')" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}"> Amenities</a>
+                            </li>
+                        </ul>
+                        <div class="hd-tabs-details">
+                            <div id="hdOverview" class="hd-details-area hd-tabs-details-active">
+                                <div class="hd-details-body">
+                                    <div class="Overview-area">
+                                        <div class="Overview-top">
+                                            <div class="Overview-title">
+                                                <h6>About</h6>
+                                                <p>CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
+                                            </div>
+                                            <div class="Overview-details" innerHtml="{{HotelDetail.description}}">
+
+                                            </div>
+                                        </div>
+                                        <div class="Overview-bottom mt-10">
+                                            <div class="Overview-bottom-title mb-20">
+                                                <h6>Facilities Offered</h6>
+                                            </div>
+                                            <div class="owl-slider grid-7 hd-Offered-slider">
+                                              <owl-carousel-o [options]="MobilecustomOptions">
+                                                <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
+                                                  <ng-template carouselSlide>
+                                                    <div class="box-item">
+                                                      <div class="hd-Offered-thumbe">
+                                                          <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
+                                                      </div>
+                                                      <div class="hd-Offered-text">
+                                                          <h6>{{Facilities[item].name}}</h6>
+                                                      </div>
+                                                  </div>
+                                                    </ng-template>
+                                                 </ng-container>
+
+                                                  <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
+                                                 <div class="box-item box-item-text">
+                                                  <div class="hd-Offered-text">
+                                                      <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
+                                                          <p>{{hotelAmenity.length - 6}}+</p>
+                                                          <span>More Amenities</span>
+                                                      </a>
+                                                  </div>
+                                              </div>
+                                            </ng-template>
+                                                </owl-carousel-o>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="hdRooms" class="hd-details-area hd-tabs-details-active">
+                                <div class="hd-details-body">
+                                    <div class="hd-Rooms-area">
+                                        <div class="hd-Rooms-top">
+                                            <div class="hd-Rooms-title mb-20">
+                                                <h6>Rooms</h6>
+                                                <p>Choose a room with below room types</p>
+                                            </div>
+                                            <div class="hd-Rooms-details">
+                                                <div class="hd-rd-area">
+                                                    <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates">
+                                                        <div class="hd-rd-left">
+                                                            <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
+                                                              <owl-carousel-o [options]="WideImageCustomOptions" >
+                                                                <ng-container>
+                                                                  <ng-template carouselSlide >
+                                                                    <div class="item">
+                                                                      <img src="{{item.imageInfo.wideAngleImageurl}}" class="img-fluid" alt="">
+                                                                  </div>
+                                                                    </ng-template>
+                                                                 </ng-container>
+                                                              </owl-carousel-o>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="hd-rd-right">
+                                                            <div class="hd-rdetails-left">
+                                                                <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
+                                                                <ul class="hd-rd-Facilities">
+                                                                  <li *ngFor="let list of item.roomAmenities">
+                                                                    <p>{{list}}</p>
+                                                                  </li>
+                                                                </ul>
+                                                                <span class="information-icon hd-cc-Policy">
+                                                                    Check Cancellation Policy
+                                                                    <div class="hover-popover">
+                                                                        <a href="" class="popover-close">
+                                                                            <img src="./assets/images/icons/close.png" alt="">
+                                                                        </a>
+                                                                        <div class="hover-popover-title">
+                                                                            <h6>Cancellation Policy</h6>
+                                                                            <p>{{item.cancellationPolicy}}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </span>
+                                                            </div>
+                                                            <div class="hd-rdetails-right">
+                                                                <div class="hd-rdetails-right-price">
+                                                                    <h6>₹{{item.rateBreakdown.total | number}}</h6>
+                                                                    <p>Inclusive of taxes</p>
+                                                                </div>
+                                                                <div class="hd-rdetails-right-btn">
+                                                                    <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="onBooking()">Book Now</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="hdAmenities" class="hd-details-area hd-tabs-details-active">
+                                <div class="hd-details-body">
+                                    <div class="Amenities-area">
+                                        <div class="Amenities-top">
+                                            <div class="Amenities-title">
+                                                <h6>Amenities</h6>
+                                            </div>
+                                            <div class="Amenities-details">
+                                                <ul>
+                                                  <li *ngFor="let Amenity of HotelDetail.hotelAmenities">
+                                                    <p><strong>{{Amenity.category}}</strong>: {{Amenity.amenity.toString()}}</p></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
    <!-- ------------------------------
             >>> Modal More Amenities
@@ -295,6 +515,44 @@
                               <ul class="amenitiesmodal-ul">
                                   <li *ngFor="let item of hotelAmenity"><p>{{Facilities[item].name}}</p></li>
                               </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+<!-- ------------------------------
+            >>> Modal bookingprocess
+        ---------------------------------->
+        <div class="modal bookingprocess" id="bookingprocess">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-body" style="padding: 25px;">
+                      <div class="bookingprocess-items">
+                          <div class="bookingprocess-title text-center mb-30">
+                              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+                          </div>
+                          <div class="bookingprocess-content">
+                              <div class="bookingprocess-hotel">
+                                  <div class="bookingprocess-hotel-title">
+                                      <h6>Goa, India</h6>
+                                  </div>
+                                  <div class="bookingprocess-hotel-content">
+                                      <p>{{SelectedQueryParam.checkIn | date:'dd.MM.yyyy'}} - {{SelectedQueryParam.checkOut | date:'dd.MM.yyyy'}} </p>
+                                      <p>2 Adults, 1 Child, 1 Infant</p>
+                                      <p>{{SelectedQueryParam.numberOfRooms}} Delux Room</p>
+                                  </div>
+                              </div>
+                              <div class="bookingprocess-processbar hd-processbar">
+                                  <div class="progress">
+                                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                                          <span class="title"> &nbsp; </span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="refresh-text text-center pt-2">
+                              <p>Please don't click or refresh the page</p>
                           </div>
                       </div>
                   </div>

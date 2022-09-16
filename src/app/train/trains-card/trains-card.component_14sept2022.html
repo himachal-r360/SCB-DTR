@@ -71,7 +71,7 @@
                                 <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
                                 <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
                             </div>
-                            <p class="book_btn one" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
+                            <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                         </div>
                     </div>
 
@@ -156,13 +156,7 @@
         <div class="row rcheck-available checkAva_m d-block d-sm-none" id="rcheck-available{{train.trainNumber}}" *ngIf="showAvailableR && isMobile">
             <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndexR">
                 <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
-                    
-                    <div class="col-md-12 text-center layout-w" *ngIf="avlDayList.length==0 && fareDataIssue==false">
-                        <div class="mt-10 d-flex justify-content-center">
-                            <div class="spinner-border" role="status">
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="tier_m">
                         <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
                             <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> <span class="float-right price">₹{{trainTotalFare|number}}</span></p>
@@ -171,13 +165,13 @@
                                 <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
                                 <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
                             </div>
-                            <p class="book_btn two" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
+                            <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                         </div>
                     </div>
 
-                    <!--<div *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                    <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
                         <app-loader></app-loader>
-                    </div>-->
+                    </div>
 
                     <div *ngIf="fareDataIssue">
                         <div class="fareData-error">{{fareData.errorMessage}}</div>
@@ -379,18 +373,12 @@
                 <div class="row check-available checkAva_m d-block d-sm-none" id="check-available{{train.trainNumber}}" *ngIf="showAvailable && isMobile">
                     <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
                         <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
-                            <div class="col-md-12 text-center layout-w" *ngIf="avlDayList.length==0 && fareDataIssue==false">
-                        <div class="mt-10 d-flex justify-content-center">
-                            <div class="spinner-border" role="status">
-                            </div>
-                        </div>
-                    </div>
 
                             <div class="tier_m mt-3">
                                 <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
                                     <div>
-                                        <span class="check_avai_week TrainSeatsInfo_item">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE'}},</span><br>
-                                        <span class="check_avai_text TrainSeatsInfo_item">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'dd LLL'}}</span>
+                                        <span class="check_avai_week">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE'}},</span><br>
+                                        <span class="check_avai_text">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'dd LLL'}}</span>
                                     </div>
                                     <!-- <div class="check_avai_text">SL </div> -->
                                     <div class="status">
@@ -398,10 +386,9 @@
                                         <div class="label-green" style="color:red;" *ngIf="dayList.availablityType==0 || dayList.availablityType==4 || dayList.availablityType==5 || dayList.availablityType==8224">{{dayList.availablityStatus}}</div>
                                         <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
                                     </div>
-                                    <div class="text-center"><span class="check_avai_price TrainSeatsInfo_item ">₹{{trainTotalFare|number}}</span></div>
-                                    <div class="check_avai_book three TrainSeatsInfo_item" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</div>
+                                    <div><span class="check_avai_price">₹{{trainTotalFare|number}}</span></div>
+                                    <div class="check_avai_book" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</div>
                                 </div>
-
 
                             </div>
 
@@ -438,12 +425,12 @@
             <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
 
                
-                <div class="col-md-12 text-center layout-w" *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                <!-- <div class="col-md-12 text-center layout-w" >
                     <div class="mt-10 d-flex justify-content-center">
                         <div class="spinner-border" role="status">
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="tier" *ngFor="let dayList of avlDayList ;">
                     <div class="TrainSeatsInfo">
                         <p><span class="date">{{commonHelper.getFormattedDateTrain(dayList.availablityDate) |  date:'EEE dd LLL'}}</span> </p>
@@ -453,14 +440,14 @@
                             <div class="label-green" style="color:orange;" *ngIf="dayList.availablityType==3">{{dayList.availablityStatus}}</div>
                         </div>
                         <p><span class="price">₹{{trainTotalFare|number}}</span></p>
-                        <p class="book_btn four" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
+                        <p class="book_btn" *ngIf="dayList.availablityType!=0 && dayList.availablityType!=4 && dayList.availablityType!=5 && dayList.availablityType!=8224" (click)="openCovidHealthpopup(train,dayList,avlClass)">Book</p>
                     </div>
 
                 </div>
 
-                <!--<div *ngIf="avlDayList.length==0 && fareDataIssue==false">
+                <div *ngIf="avlDayList.length==0 && fareDataIssue==false">
                     <app-loader></app-loader>
-                </div> -->
+                </div>
 
                 <div *ngIf="fareDataIssue">
                     <div class="fareData-error px-2">{{fareData.errorMessage}}</div>

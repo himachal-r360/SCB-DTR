@@ -11,6 +11,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HotelDetailComponent } from './hotel-detail/hotel-detail.component';
 // import { HotelCheckoutComponent } from './hotel-checkout/hotel-checkout.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
@@ -37,8 +38,8 @@ const routes: Routes = [
       onSameUrlNavigation: 'reload'
     }),
     NgxSliderModule,
-    CarouselModule
-
+    CarouselModule,
+    NgxSkeletonLoaderModule
   ],
   exports: [RouterModule],
   providers:[ {

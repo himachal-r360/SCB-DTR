@@ -1,234 +1,224 @@
-<section class="flight-area mt-150" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10" *ngIf="!isMobile">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item train-breadcrumb-item"><a href="#">Travel & Stays</a></li>
-                        <li class="breadcrumb-item train-breadcrumb-item active" aria-current="page">Train Search</li>
-                    </ol>
-                </nav>
-
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/train">Travel & Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><span>Train Search</span></li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-lg-12">
-                <div class="travel-box mb-20" >
-                    <app-train-search modifySearch="true"  isViewPartner="false"></app-train-search>
-                 </div>
-            </div>
-            <!-- <div class="row">
-              <div class="col-md-12">
-                  <div class="flight-partners">
-                      <p>Powered By:</p>
-                      <ul class="list-inline ms-3">
-                          <li class="list-inline-item" >
-                              <img src="{{cdnUrl}}/images/smartbuy/partner/svg/irctc.svg" width="50" alt="irctc">
-                          </li>
+        </div>
+    </div>
+</section>
+<section class="flight-area" *ngIf="!isMobile">
+    <div class="container">
+        <div class="row">
 
-                      </ul>
-                  </div>
-              </div>
-          </div> -->
-          
-          <!-- Availability Pop Up Code  -->
-<div class="modal fade train-availability" tabindex="-1" role="dialog" aria-labelledby="train-availability" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered mpop-0 pop-schedule">
-                <div class="modal-content irctc-view-content" >
-                        <div class="col-12 irctc-header-{{domainName}}">     
+            <div class="col-lg-12">
+                <div class="travel-box mb-20">
+                    <app-train-search modifySearch="true" isViewPartner="false"></app-train-search>
+                </div>
+            </div>
+
+            <!-- Availability Pop Up Code  -->
+            <div class="modal fade train-availability" tabindex="-1" role="dialog" aria-labelledby="train-availability" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered mpop-0 pop-schedule">
+                    <div class="modal-content irctc-view-content">
+                        <div class="col-12 irctc-header-{{domainName}}">
                             <div class="d-flex">
                                 <div class="col-11 text-center">
                                     <div class="modal-title">
-                                          <div class="title">Availability</div>
+                                        <div class="title">Availability</div>
                                     </div>
-                                    
+
                                 </div>
-                                  <div class="col-1">
-                                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <div class="col-1">
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                           <span aria-hidden="true">&times;</span>
                                         </button>
-                                  </div>
-                              </div>
-                              </div>
-                  <div class="irctc-view-body">
-                      <div class="col-12 train-info">
-                      <div class="">
-                         <p class="avi-info-data">The information set out in this article is based on the information made available by IRCTC Authorised Partner, which may be updated from time to time. Confirm the information set out in this article on <strong>IRCTC’s Authorised Partner website</strong>.</p>
-                      </div>
-                  </div>
-                      <div class="table-responsive d-none d-sm-block">
-                    <table class="table info-heading-{{domainName}} w-availibility ">
-                        <thead>
-                          <tr>
-                            <th>Railway ticket code</th>
-                            <th>Description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td><b>AVAILABLE</b></td>
-                            <td>Confirmed availability for your ticket.</td>
-                          </tr>
-                          <tr>
-                              <td><b>CAN/MOD</b></td>
-                              <td>Cancelled or modified passenger.</td>
-                          </tr>
-                          <tr>
-                              <td><b>CNF/Confirmed</b></td>
-                              <td>Confirmed (coach or berth number is available after chart preparation).</td>
-                          </tr>
-                          <tr>
-                              <td><b>GNWL</b></td>
-                              <td>General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</td>
-                            </tr>
-                            <tr>
-                                <td><b>NOSB</b></td>
-                                <td>No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</td>
-                            </tr>
-                            <tr>
-                                <td><b>PQWL</b></td>
-                                <td>Pooled quota wait list. This waitlist is shared by several small stations as opposed to a single station.</td>
-                            </tr>
-                            <tr>
-                              <td><b>WL#</b></td>
-                              <td>Waiting list number. Each time a confirmed ticket or wait list ticket is cancelled, this number goes down.</td>
-                            </tr>
-                            <tr>
-                                <td><b>RAC</b></td>
-                                <td>Reservation against cancellation. Your seat is guaranteed, but berth needs to be shared between 2 people. Individual berths will be allotted only if RAC becomes a CNF ticket.</td>
-                            </tr>
-                            <tr>
-                                <td><b>R##</b></td>
-                                <td>RAC coach number or berth number. The same berth will be allotted to 2 RAC passengers and they need to share it.</td>
-                            </tr>
-                            <tr>
-                              <td><b>REGRET/WL</b></td>
-                              <td>No more booking is permitted.</td>
-                          </tr>
-                          <tr>
-                            <td><b>RELEASED</b></td>
-                            <td>Ticket not cancelled, but alternative accommodation provided.</td>
-                          </tr>
-                          <tr>
-                              <td><b>RQWL</b></td>
-                              <td>Roadside quota wait list. If you book a ticket from one intermediate station to another that isn’t covered by any other quotas or wait lists, your request may be added to an RQWL.</td>
-                          </tr>
-                          <tr>
-                              <td><b>TQWL</b></td>
-                              <td>Tatkal wait list. When the waiting list moves up, you can expect confirmed berth instead of RAC.</td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div>
-                      <div class="table-responsive table-bordered d-block d-sm-none">
-                      <table class="table  info-heading-{{domainName}} w-availibility ">
-                            <thead>
-                              <tr>
-                                <th>Railway ticket code</th>
-                                <th>Description</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td><b>AVAILABLE</b></td>
-                                <td>Confirmed availability for your ticket.</td>
-                              </tr>
-                              <tr>
-                                  <td><b>CAN/MOD</b></td>
-                                  <td>Cancelled or modified passenger.</td>
-                              </tr>
-                              <tr>
-                                  <td><b>CNF/Confirmed</b></td>
-                                  <td>Confirmed (coach or berth number is available after chart preparation).</td>
-                              </tr>
-                              <tr>
-                                  <td><b>GNWL</b></td>
-                                  <td>General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</td>
-                                </tr>
-                                <tr>
-                                    <td><b>NOSB</b></td>
-                                    <td>No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</td>
-                                </tr>
-                                <tr>
-                                    <td><b>PQWL</b></td>
-                                    <td>Pooled quota wait list. This waitlist is shared by several small stations as opposed to a single station.</td>
-                                </tr>
-                                <tr>
-                                  <td><b>WL#</b></td>
-                                  <td>Waiting list number. Each time a confirmed ticket or wait list ticket is cancelled, this number goes down.</td>
-                                </tr>
-                                <tr>
-                                    <td><b>RAC</b></td>
-                                    <td>Reservation against cancellation. Your seat is guaranteed, but berth needs to be shared between 2 people. Individual berths will be allotted only if RAC becomes a CNF ticket.</td>
-                                </tr>
-                                <tr>
-                                    <td><b>R##</b></td>
-                                    <td>RAC coach number or berth number. The same berth will be allotted to 2 RAC passengers and they need to share it.</td>
-                                </tr>
-                                <tr>
-                                  <td><b>REGRET/WL</b></td>
-                                  <td>No more booking is permitted.</td>
-                              </tr>
-                              <tr>
-                                <td><b>RELEASED</b></td>
-                                <td>Ticket not cancelled, but alternative accommodation provided.</td>
-                              </tr>
-                              <tr>
-                                  <td><b>RQWL</b></td>
-                                  <td>Roadside quota wait list. If you book a ticket from one intermediate station to another that isn’t covered by any other quotas or wait lists, your request may be added to an RQWL.</td>
-                              </tr>
-                              <tr>
-                                  <td><b>TQWL</b></td>
-                                  <td>Tatkal wait list. When the waiting list moves up, you can expect confirmed berth instead of RAC.</td>
-                              </tr>
-                              
-                            </tbody>
-                          </table>
-                  </div>
-                  </div>
-                  
-                </div>
-              </div>
-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="irctc-view-body">
+                            <div class="col-12 train-info">
+                                <div class="">
+                                    <p class="avi-info-data">The information set out in this article is based on the information made available by IRCTC Authorised Partner, which may be updated from time to time. Confirm the information set out in this article on <strong>IRCTC’s Authorised Partner website</strong>.</p>
+                                </div>
+                            </div>
+                            <div class="table-responsive d-none d-sm-block">
+                                <table class="table info-heading-{{domainName}} w-availibility ">
+                                    <thead>
+                                        <tr>
+                                            <th>Railway ticket code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><b>AVAILABLE</b></td>
+                                            <td>Confirmed availability for your ticket.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>CAN/MOD</b></td>
+                                            <td>Cancelled or modified passenger.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>CNF/Confirmed</b></td>
+                                            <td>Confirmed (coach or berth number is available after chart preparation).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>GNWL</b></td>
+                                            <td>General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>NOSB</b></td>
+                                            <td>No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>PQWL</b></td>
+                                            <td>Pooled quota wait list. This waitlist is shared by several small stations as opposed to a single station.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>WL#</b></td>
+                                            <td>Waiting list number. Each time a confirmed ticket or wait list ticket is cancelled, this number goes down.</td>
+                                        </tr>
 
-            <div class="col-lg-12">
-                <div class="layout-box">
-                  <div class="layout-left">
-                    <div class="filter-loaders animation-loader" *ngIf="loading">
-                      <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
-                          <div class="filter-loader-content ">
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px', width:'25%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px', width:'50%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                             <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '25px', width:'100%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
-                          </div>
-                      </div>
+                                        <tr>
+                                            <td><b>RAC</b></td>
+                                            <td>Reservation against cancellation. Your seat is guaranteed, but berth needs to be shared between 2 people. Individual berths will be allotted only if RAC becomes a CNF ticket.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>R##</b></td>
+                                            <td>RAC coach number or berth number. The same berth will be allotted to 2 RAC passengers and they need to share it.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>REGRET/WL</b></td>
+                                            <td>No more booking is permitted.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>RELEASED</b></td>
+                                            <td>Ticket not cancelled, but alternative accommodation provided.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>RQWL</b></td>
+                                            <td>Roadside quota wait list. If you book a ticket from one intermediate station to another that isn’t covered by any other quotas or wait lists, your request may be added to an RQWL.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>TQWL</b></td>
+                                            <td>Tatkal wait list. When the waiting list moves up, you can expect confirmed berth instead of RAC.</td>
+                                        </tr>
 
-                  </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="table-responsive table-bordered d-block d-sm-none">
+                                <table class="table  info-heading-{{domainName}} w-availibility ">
+                                    <thead>
+                                        <tr>
+                                            <th>Railway ticket code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><b>AVAILABLE</b></td>
+                                            <td>Confirmed availability for your ticket.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>CAN/MOD</b></td>
+                                            <td>Cancelled or modified passenger.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>CNF/Confirmed</b></td>
+                                            <td>Confirmed (coach or berth number is available after chart preparation).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>GNWL</b></td>
+                                            <td>General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>NOSB</b></td>
+                                            <td>No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>PQWL</b></td>
+                                            <td>Pooled quota wait list. This waitlist is shared by several small stations as opposed to a single station.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>WL#</b></td>
+                                            <td>Waiting list number. Each time a confirmed ticket or wait list ticket is cancelled, this number goes down.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>RAC</b></td>
+                                            <td>Reservation against cancellation. Your seat is guaranteed, but berth needs to be shared between 2 people. Individual berths will be allotted only if RAC becomes a CNF ticket.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>R##</b></td>
+                                            <td>RAC coach number or berth number. The same berth will be allotted to 2 RAC passengers and they need to share it.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>REGRET/WL</b></td>
+                                            <td>No more booking is permitted.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>RELEASED</b></td>
+                                            <td>Ticket not cancelled, but alternative accommodation provided.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>RQWL</b></td>
+                                            <td>Roadside quota wait list. If you book a ticket from one intermediate station to another that isn’t covered by any other quotas or wait lists, your request may be added to an RQWL.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>TQWL</b></td>
+                                            <td>Tatkal wait list. When the waiting list moves up, you can expect confirmed berth instead of RAC.</td>
+                                        </tr>
 
-                        <div [hidden]="loading">
-                        <ng-container *ngIf="trains">
-                 <app-trains-filter [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
-                [arrivalTimeFilter] = "arrivalTimeFilter" (arriveEvent)="updateArrival($event)"
-                [availableClasses] = "availableClasses"  (availableClassesEvent) = "updateAvailableClassFilter($event)"
-                [trainTypes] = "trainTypes" (trainTypesEvent) = "updateTrainTypeFilter($event)"
-                [fromStations] = "fromStations" (fromStationsEvent) = "updateFromStationFilter($event)"
-                [toStations] = "toStations" (toStationsEvent) = "updateToStationFilter($event)"
-                (removeallfilters) = "clearSelectionAll()"
-                (searchboard) = "searchboarding($event)"
-                (applyFilter) = "onFilter()">
-                </app-trains-filter>
-                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
+                    </div>
                 </div>
+            </div>
+
+            <div class="col-lg-12 mb-82">
+                <div class="layout-box mb-0">
+                    <div class="layout-left" *ngIf="notrain==false">
+                        <div class="filter-loaders animation-loader" *ngIf="loading">
+                            <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                                <div class="filter-loader-content ">
+                                    <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px', width:'25%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                    <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '15px', width:'50%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                    <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '25px', width:'100%', 'margin-bottom': '10px'  }"></ngx-skeleton-loader>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div [hidden]="loading">
+
+                            <ng-container *ngIf="trains">
+                                <app-trains-filter [departureTimeFilter]="departureTimeFilter" (departEvent)="updateDeparture($event)" [arrivalTimeFilter]="arrivalTimeFilter" (arriveEvent)="updateArrival($event)" [availableClasses]="availableClasses" (availableClassesEvent)="updateAvailableClassFilter($event)"
+                                    [trainTypes]="trainTypes" (trainTypesEvent)="updateTrainTypeFilter($event)" [fromStations]="fromStations" (fromStationsEvent)="updateFromStationFilter($event)" [toStations]="toStations" (toStationsEvent)="updateToStationFilter($event)"
+                                    (removeallfilters)="clearSelectionAll()" (searchboard)="searchboarding($event)" (applyFilter)="onFilter()">
+                                </app-trains-filter>
+                            </ng-container>
+                        </div>
+
+                    </div>
 
                     <div class="layout-right">
-                        <div class="train-found" [hidden]="loading">
+                        <div class="train-found" [hidden]="loading" *ngIf="notrain==false">
                             <div class="flight-tosearch">
-                                 <div class="flight-search-filters-left" >
+                                <div class="flight-search-filters-left">
 
-                                <!--<mat-tab-group mat-align-tabs="center" animationDuration="0ms" [selectedIndex]="1" style="padding:0px;margin-top:10px;" (selectedTabChange)= "quotaSelect($event,mobile = true)" 
+                                    <!--<mat-tab-group mat-align-tabs="center" animationDuration="0ms" [selectedIndex]="1" style="padding:0px;margin-top:10px;" (selectedTabChange)= "quotaSelect($event,mobile = true)" 
                                 >
                                 <mat-tab *ngFor = "let quota of avlQuota"  [label]="quota.quotaCode">
                                 <ng-template mat-tab-label>
@@ -236,74 +226,77 @@
                                 </ng-template>
                                 </mat-tab>
                                </mat-tab-group>-->
-                                <div class="train_sort_btn">
-                                    <mat-form-field class="select_mat">
-                                        <mat-select panelClass="select_mat" placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)" >
-                                            <mat-option *ngFor = "let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
+                                    <div class="train_sort_btn">
+                                        <mat-form-field class="select_mat">
+                                            <mat-select panelClass="select_mat" placeholder="Selected Quota" [(ngModel)]="selectedQuota" (ngModelChange)="quotaSelect($event,mobile=false)">
+                                                <mat-option *ngFor="let quota of avlQuota " [value]="quota.quotaCode"><span>{{quota.quotaName}}</span></mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <p class="train-avi-info" data-bs-toggle="modal" data-bs-target=".train-availability"> <i class="fa fa-exclamation-circle pe-2" aria-hidden="true"></i> Availability </p>
                                 </div>
-                                     <p class="train-avi-info" data-bs-toggle="modal" data-bs-target=".train-availability"> <i class="fa fa-exclamation-circle pe-2" aria-hidden="true"></i> Availability </p>
-                                </div>
-                      
+
 
                                 <div class="flight-search-filters-right train_sort_btn">
-                                
-                                <mat-form-field class="select_mat">
-                                    <mat-select panelClass="select_mat" placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)" >
-                                        <mat-option  *ngIf = "avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
-                                        <mat-option  *ngIf = "avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                         
-                                </div>
-                            </div>
-                       
-       
-                           </div>
 
-                           <!-- no train found new design web -->
-                        
-                        <div class="row p-2" *ngIf="notrain">
-                            <div class="col-md-12 text-center">
-                                <div class="empty_list_hdr">Yikes! No direct trains found.</div>
-                                <div>
-                                    <img src="{{cdnUrl}}/images/empty_list_train.svg">
+                                    <mat-form-field class="select_mat">
+                                        <mat-select panelClass="select_mat" placeholder="Sort By" [(ngModel)]="selected" (ngModelChange)="orderBy(selected)">
+                                            <mat-option *ngIf="avlQuota.length != 0" value="leave-early"><span>Early Departure</span></mat-option>
+                                            <mat-option *ngIf="avlQuota.length != 0" value="leave-late"><span>Late Departure</span></mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
                                 </div>
                             </div>
-                            <div class="col-md-12 mt-3 text-center"  (click)="goback()">
-                                <p class="empty_list_text">Try another route or date</p>
-                                <button class="empty_list_btn">Go back to search page</button>
-                            </div>
+
+
                         </div>
-                     
-                        <!-- end of no train found new design web -->
-                     
+
+
+
                         <!-- Listing -->
-                        <div class="flight-listing-area p-3" *ngIf="loading" >
-                          <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
+                        <div class="flight-listing-area p-3" *ngIf="loading">
+                            <div class="listing-loader animation-loader mt-2" *ngFor="let dummy of dummyForLoader">
                                 <div class="filter-loader-content w-100">
-                                <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
-                                <span class="float-right" style="width:85%;" >
+                                    <span style="width:15%;"><ngx-skeleton-loader  [theme]="{ width: '100px', height: '100px' }"></ngx-skeleton-loader></span>
+                                    <span class="float-right" style="width:85%;">
                                 <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '30px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 </span>
                                 </div>
-                          </div>
+                            </div>
                         </div>
 
                         <div class="flight-listing-area" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length > 0">
-                                <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >0" >  
+                            <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >0">  
                                  <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "selectedQuota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
                                 </span>
-                              
+
 
                         </div>
-                        
+
+                    </div>
+
+                </div>
+                <!-- no train found new design web -->
+
+                <div class="row p-2" *ngIf="notrain">
+                    <div class="col-md-12 text-center">
+                        <div class="empty_list_hdr">Yikes! No direct trains found.</div>
+                        <div>
+                            <img src="{{cdnUrl}}/images/empty_list_train.svg">
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3 text-center" (click)="goback()">
+                        <p class="empty_list_text">Try another route or date</p>
+                        <button class="empty_list_btn">Go back to search page</button>
                     </div>
                 </div>
+
+                <!-- end of no train found new design web -->
             </div>
+
         </div>
     </div>
 </section>
@@ -311,64 +304,64 @@
 <!--Mobile Screen starts-->
 
 <section class="mob-flights-listing" *ngIf="isMobile">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12 p-0 fixed-top"  >
-              <div class="mob-listing-header">
-                  <div class="mob-listing-header-left">
-                      <a href="javascript:;" (click)="goback()" >
-                          <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                      </a>
-                  </div>
-                  <div class="mob-listing-header-center">
-                      <h6>{{travalfrom}} - {{travalto}}</h6>
-                      <p>{{journeyDate | date:'EEE, dd MMM' }}   </p>
-                  </div>
-                  <div class="mob-listing-header-right">
-                      <a href="javascript:;" routerLink="/train" >
-                          <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
-                      </a>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-12 mt-70"  *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >= 1">
-            <div class="row">
-                <div class="col-6">
-                    <div class="mob-listing-fiters">
-                        <a href="javascript:void(0)" class="train_sort_btn d-flex align-items-center" (click)="openAvailability()">
-                            <img src="{{cdnUrl}}/images/icons/info.svg" alt="">
-                            <span class="px-2">Availability</span>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 p-0 fixed-top">
+                <div class="mob-listing-header">
+                    <div class="mob-listing-header-left">
+                        <a href="javascript:;" routerLink="/train">
+                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                         </a>
                     </div>
-                </div>
-                <div class="col-6 text-right">
-                    <div class="mob-listing-fiters">
-                        <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="train_sort_btn d-flex align-items-center float-end">
-                            <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
-                            <span class="px-2">Sort/Filters</span>
+                    <div class="mob-listing-header-center">
+                        <h6>{{travalfrom}} - {{travalto}}</h6>
+                        <p>{{journeyDate | date:'EEE, dd MMM' }} </p>
+                    </div>
+                    <div class="mob-listing-header-right">
+                        <a href="javascript:;" routerLink="/train">
+                            <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                         </a>
                     </div>
                 </div>
             </div>
-              
-          </div>
+            <div class="col-md-12 mt-70" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >= 1">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="mob-listing-fiters">
+                            <a href="javascript:void(0)" class="train_sort_btn d-flex align-items-center" (click)="openAvailability()">
+                                <img src="{{cdnUrl}}/images/icons/info.svg" alt="">
+                                <span class="px-2">Availability</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right">
+                        <div class="mob-listing-fiters">
+                            <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="train_sort_btn d-flex align-items-center float-end">
+                                <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                                <span class="px-2">Sort/Filters</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
 
 
-          <div class="col-md-12">
-            <div *ngIf="loading">
-              <div  class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
-                          <div class="filter-loader-content w-100">
-                              <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
-                              <span class="w-75 float-right">
+            <div class="col-md-12">
+                <div *ngIf="loading">
+                    <div class="filter-loader border-0" *ngFor="let dummy of dummyForLoader">
+                        <div class="filter-loader-content w-100">
+                            <span class=" w-25"><ngx-skeleton-loader  [theme]="{ width: '80px', height: '80px' }"></ngx-skeleton-loader></span>
+                            <span class="w-75 float-right">
                              <ngx-skeleton-loader [theme]="{   'border-radius': '0',height: '10px',width: '50%',  'margin-bottom': '10px'  }"></ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '15px',width: '75%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                 <ngx-skeleton-loader [theme]="{ 'border-radius': '0',height: '20px',width: '100%',  'margin-bottom': '10px'  }">  </ngx-skeleton-loader>
                                </span>
-                          </div>
-                      </div>
-                 </div>
-                  <div class="text-center" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length < 1">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length < 1">
 
                     <!-- no train found new design mlite -->
                     <div class="row p-2">
@@ -385,50 +378,50 @@
                     </div>
                     <!-- end of no train found new design mlite -->
 
-                  </div>
-              <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length > 0" >  
+                </div>
+                <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length > 0">  
                                  <trains-card *ngFor="let train of trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy ; let traintrow = index;let isFirstRow=first;" [train]="train" [stationsdump]="stationsdump" [tag]="tag"  [quota] = "selectedQuota" [rowvalue] = "traintrow" repeatBooking="0"  [repeatBookingData]=""  [fastestTrain]="fastestTrain" [passParam]="passParam"></trains-card> 
                                 </span>
-                              
-          </div>
+
+            </div>
 
 
 
- <!-- ------------------------------
+            <!-- ------------------------------
             >>> mobile Sort Filters
         ---------------------------------->
-        <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
+            <div class="mob-sf-area" id="sortMobileFilter" *ngIf="isMobile">
 
-          <div class="mob-sf-box train_m_sort_popup">
-              <div class="mob-title">
-                  <h3>Sort & Filters</h3>
-                  <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
-                      <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                  </a>
-              </div>
-              <div class="mob-sf-tabs train_mlite_tabs">
-                  <ul class="nav nav-tabs">
-                      <li>
-                          <a class="active" href="#Sort" role="tab" aria-controls="Sort" data-bs-toggle="tab">Sort by</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
-                      </li>
-                  </ul>
-                  <div class="tab-content clearfix train_mobile_sort_content">
-                      <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
-                          <div class="mob-sf-sort">
-                              <!-- <div class="mob-sf-sort-by">
+                <div class="mob-sf-box train_m_sort_popup">
+                    <div class="mob-title">
+                        <h3>Sort & Filters</h3>
+                        <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
+                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                        </a>
+                    </div>
+                    <div class="mob-sf-tabs train_mlite_tabs">
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a class="active" href="#Sort" role="tab" aria-controls="Sort" data-bs-toggle="tab">Sort by</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#Filters" role="tab" aria-controls="Filters" data-bs-toggle="tab">Filters</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content clearfix train_mobile_sort_content">
+                            <div class="tab-pane active" id="Sort" role="tabpanel" aria-labelledby="Sort-tab">
+                                <div class="mob-sf-sort">
+                                    <!-- <div class="mob-sf-sort-by">
                                               <select [(ngModel)]="selected" (ngModelChange)="orderBy(selected)">
                                                 <option *ngIf = "avlQuota.length != 0" value="leave-early">Early Departure</option>
                                                 <option *ngIf = "avlQuota.length != 0" value="leave-late">Late Departure</option>
                                             </select>
                               </div> -->
 
-                              <div class="container filter-container">
-                                <div class="row m_sort_flex_div">
-                                    <div class="col-6">
-                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
+                                    <div class="container filter-container">
+                                        <div class="row m_sort_flex_div">
+                                            <div class="col-6">
+                                                <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-early'}">
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                  <p class="m_sort_text" >Leave Early</p>
@@ -437,128 +430,171 @@
                                             <input checked="checked" type="radio" (click)="orderBy('leave-early')" value="leave-early">
                                             <span class="checkmark-cust"></span>
                                         </label>
-                                    </div>
-    
-                                    <div class="col-6">
-                                        <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}" >
+                                            </div>
+
+                                            <div class="col-6">
+                                                <label class="checkbox-cust" [ngClass]="{'selected': option === 'leave-late'}">
                                             <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/train_black_icon.svg" /></div>
                                             <div class="label-filter text-left">
                                                 <p class="m_sort_text">Leave Late</p>
-                                                <p class="m_sort_text50">Laest</p>
+                                                <p class="m_sort_text50">Latest</p>
                                             </div>
                                             <input  type="radio" (click)="orderBy('leave-late')" value="leave-late">
                                             <span class="checkmark-cust"></span>
                                         </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+
+                                <div class="mob-sf-btns">
+                                    <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
+                                </div>
                             </div>
-                          </div>
+                            <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
+                                <div class="mob-sf-filters train_filter_part">
+                                    <div class="mob-sf-accordion p-3">
+                                        <ng-container *ngIf="trains">
+                                            <app-trains-filter [departureTimeFilter]="departureTimeFilter" (departEvent)="updateDeparture($event)" [arrivalTimeFilter]="arrivalTimeFilter" (arriveEvent)="updateArrival($event)" [availableClasses]="availableClasses" (availableClassesEvent)="updateAvailableClassFilter($event)"
+                                                [trainTypes]="trainTypes" (trainTypesEvent)="updateTrainTypeFilter($event)" [fromStations]="fromStations" (fromStationsEvent)="updateFromStationFilter($event)" [toStations]="toStations" (toStationsEvent)="updateToStationFilter($event)"
+                                                (removeallfilters)="clearSelectionAll()" (searchboard)="searchboarding($event)" (applyFilter)="onFilter()" [avlQuota]="avlQuota" (selectedQuotaEvent)="updateTosSelectedQuota($event)">
+                                            </app-trains-filter>
+                                        </ng-container>
 
-
-                          <div class="mob-sf-btns">
-                              <a href="javascript:void(0)" (click)="applySortingMobile()">Apply</a>
-                          </div>
-                      </div>
-                      <div class="tab-pane" id="Filters" role="tabpanel" aria-labelledby="Filters-tab">
-                          <div class="mob-sf-filters train_filter_part">
-                              <div class="mob-sf-accordion p-3">
-                                   <ng-container *ngIf="trains">
-       <app-trains-filter [departureTimeFilter] = "departureTimeFilter" (departEvent)="updateDeparture($event)"
-                [arrivalTimeFilter] = "arrivalTimeFilter" (arriveEvent)="updateArrival($event)"
-                [availableClasses] = "availableClasses"  (availableClassesEvent) = "updateAvailableClassFilter($event)"
-                [trainTypes] = "trainTypes" (trainTypesEvent) = "updateTrainTypeFilter($event)"
-                [fromStations] = "fromStations" (fromStationsEvent) = "updateFromStationFilter($event)"
-                [toStations] = "toStations" (toStationsEvent) = "updateToStationFilter($event)"
-                (removeallfilters) = "clearSelectionAll()"
-                (searchboard) = "searchboarding($event)"
-                (applyFilter) = "onFilter()"  [avlQuota] = "avlQuota" (selectedQuotaEvent) = "updateTosSelectedQuota($event)">
-                </app-trains-filter>
-                        </ng-container>
-                                
-                              </div>
-                              <div class="mob-sf-btns">
-                                  <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- mobile availability popup design -->
-      <div class="mob-sf-area" id="m_availability_modal" *ngIf="isMobile">
-
-        <div class="mob-sf-box train_m_sort_popup">
-            <div class="mob-title">
-                <h3>Availability</h3>
-                <a href="javascript:void(0)" (click)="CloseAvailabilitySection()" class="mob-close mob-ff-from-close">
-                    <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                </a>
-            </div>
-            <div class="mob-sf-tabs">
-                <div class="avialability_container">
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="avai_info_box d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col-2 text-center">
-                                        <img src="{{cdnUrl}}/images/icons/orange_info.svg">
                                     </div>
-                                    <div class="col-10 ps-0">
-                                        The information set out in this article is based on the information made available by IRCTC Authorised Partner, which may be updated from time to time. Confirm the information set out in this article on IRCTC’s Authorised Partner website.
+                                    <div class="mob-sf-btns">
+                                        <a href="javascript:void(0)" (click)="onApplyFilter()">Apply</a>
                                     </div>
                                 </div>
-                              </div>
-                        </div>
-
-                        <div class="col-12 mt-3">
-                            <div class="availablity_row">
-                                <p class="availablity_row_hdr">AVAILABLE</p>
-                                <p class="availablity_row_text">Confirmed availability for your ticket.</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="availablity_row">
-                                <p class="availablity_row_hdr">CAN/MOD</p>
-                                <p class="availablity_row_text">Cancelled or modified passenger.</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="availablity_row">
-                                <p class="availablity_row_hdr">CNF/Confirmed</p>
-                                <p class="availablity_row_text">Confirmed (coach or berth number is available after chart preparation).</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="availablity_row">
-                                <p class="availablity_row_hdr">GNWL</p>
-                                <p class="availablity_row_text">General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="availablity_row no_brdr_btm">
-                                <p class="availablity_row_hdr">NOSB	</p>
-                                <p class="availablity_row_text">No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</p>
                             </div>
                         </div>
                     </div>
-                    
                 </div>
-                
             </div>
+
+            <!-- mobile availability popup design -->
+            <div class="mob-sf-area" id="m_availability_modal" *ngIf="isMobile">
+
+                <div class="mob-sf-box train_m_sort_popup">
+                    <div class="mob-title">
+                        <h3>Availability</h3>
+                        <a href="javascript:void(0)" (click)="CloseAvailabilitySection()" class="mob-close mob-ff-from-close">
+                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                        </a>
+                    </div>
+                    <div class="mob-sf-tabs">
+                        <div class="avialability_container">
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="avai_info_box d-flex align-items-center">
+                                        <div class="row">
+                                            <div class="col-2 text-center">
+                                                <img src="{{cdnUrl}}/images/icons/orange_info.svg">
+                                            </div>
+                                            <div class="col-10 ps-0">
+                                                The information set out in this article is based on the information made available by IRCTC Authorised Partner, which may be updated from time to time. Confirm the information set out in this article on IRCTC’s Authorised Partner website.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <div class="availablity_row">
+                                        <p class="availablity_row_hdr">AVAILABLE</p>
+                                        <p class="availablity_row_text">Confirmed availability for your ticket.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row">
+                                        <p class="availablity_row_hdr">CAN/MOD</p>
+                                        <p class="availablity_row_text">Cancelled or modified passenger.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row">
+                                        <p class="availablity_row_hdr">CNF/Confirmed</p>
+                                        <p class="availablity_row_text">Confirmed (coach or berth number is available after chart preparation).</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row">
+                                        <p class="availablity_row_hdr">GNWL</p>
+                                        <p class="availablity_row_text">General wait list. This is the most common type of wait list and has the highest chance to be confirmed. Upon confirmation, the status changes to RAC.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">NOSB </p>
+                                        <p class="availablity_row_text">No seat berth. This code is generally used for child passengers who aren’t assigned a berth as requested.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">PQWL </p>
+                                        <p class="availablity_row_text">Pooled quota wait list. This waitlist is shared by several small stations as opposed to a single station.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">WL# </p>
+                                        <p class="availablity_row_text">Waiting list number. Each time a confirmed ticket or wait list ticket is cancelled, this number goes down.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">RAC </p>
+                                        <p class="availablity_row_text">Reservation against cancellation. Your seat is guaranteed, but berth needs to be shared between 2 people. Individual berths will be allotted only if RAC becomes a CNF ticket.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">R##</p>
+                                        <p class="availablity_row_text">RAC coach number or berth number. The same berth will be allotted to 2 RAC passengers and they need to share it.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">REGRET/WL</p>
+                                        <p class="availablity_row_text">No more booking is permitted.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">RELEASED</p>
+                                        <p class="availablity_row_text">Ticket not cancelled, but alternative accommodation provided.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">RQWL</p>
+                                        <p class="availablity_row_text">Roadside quota wait list. If you book a ticket from one intermediate station to another that isn’t covered by any other quotas or wait lists, your request may be added to an RQWL.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="availablity_row no_brdr_btm">
+                                        <p class="availablity_row_hdr">TQWL</p>
+                                        <p class="availablity_row_text">Tatkal wait list. When the waiting list moves up, you can expect confirmed berth instead of RAC.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end of mobile availability popup design -->
         </div>
     </div>
-      <!-- end of mobile availability popup design -->
-       </div>
-      </div>
 
 
 </section>
 <!--Mobile Screen ends-->
 
-    <a href="javascript:void(0)"  (click)="moveTop()"  class="scrollToTop" >
-        <i class="far fa-dot-circle"></i>
-        <span>Top</span>
-    </a>
+<a href="javascript:void(0)" (click)="moveTop()" class="scrollToTop">
+    <i class="far fa-dot-circle"></i>
+    <span>Top</span>
+</a>

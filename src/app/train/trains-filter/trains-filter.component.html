@@ -146,7 +146,7 @@
           </mat-radio-group>
           </div> -->
           <label class="check-control" *ngFor="let quota of avlQuota">
-          <input type="radio" (change)="updateTosSelectedQuota(quota)"  [(ngModel)]="selectedQuota"  [value]="quota.quotaCode"  [checked]="quota.selected"  />
+          <input type="radio" class="quotas" (change)="updateTosSelectedQuota(quota)"  [(ngModel)]="selectedQuota"  [value]="quota.quotaCode"  [checked]="quota.selected"  />
          {{quota.quotaName}}
         </label>
       
@@ -157,7 +157,7 @@
        Train Timings
       </mat-expansion-panel-header>
       <div class="mb-3">
-        <p class="train_timeTitle">Departing Train</p>
+        <p class="train_timeTitle">Departing Train ({{fromStationcode}} - {{toStationcode}})</p>
       <div class="departure_check flex-items">
 
         <label class="checkbox-cust " [ngClass]="{ 'active_bg': departureTimeFilter[0].selected }">
@@ -185,7 +185,7 @@
           <div class="label-filter">After 06 PM</div><input checked="checked" type="checkbox" (change)="updateDepartureTimeFilter(departureTimeFilter[3])" [(ngModel)]="departureTimeFilter[3].selected" ><span class="checkmark-cust"></span>
         </label>
       </div>
-      <p class="train_timeTitle">Arrival Train</p>
+      <p class="train_timeTitle">Arrival Train ({{fromStationcode}}- {{toStationcode}})</p>
       <div class="arrival_check flex-items">
         <label class="checkbox-cust" [ngClass]="{ 'active_bg': arrivalTimeFilter[0].selected }">
           <div class="filter_category_icons px-1">

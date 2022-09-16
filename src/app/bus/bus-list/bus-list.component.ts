@@ -237,6 +237,11 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         
     }
 
+    /* Go home btn */
+goback() {
+  this.router.navigate([this.sg['domainPath']+'/bus']);
+ }
+
   headerHideShow(event:any) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     if(this.isMobile){
@@ -367,6 +372,8 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
   });
  }
 
+
+
   // Bus Timings Filter
   BusTimingsDepartureFilterBusData(timingsItems: any) {
     timingsItems.active = !timingsItems.active;
@@ -400,13 +407,15 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
 
         //Arrival Timing Filter Data
         updatedbusList = this.timingArrivalFilterBus(updatedbusList);
+        
+       
 
      //PriceFilter
     if (this.busList.length > 0) {
       var min_price = this.minPrice;
       var max_price = this.maxPrice;
       var filteredPrice: any[] = [];
-      this.busList.filter((e: any) => {
+      updatedbusList.filter((e: any) => {
              if (e.fareDetails[0].baseFare >= min_price && e.fareDetails[0].baseFare <= max_price) {
             filteredPrice.push(e);
           }
@@ -415,6 +424,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
      
       updatedbusList = filteredPrice;
     }
+
 
   //Class Filter
   
@@ -542,8 +552,8 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
    /* selected: any = "Rating"; */
- selectedOption: any = "Rating";
- selectedOptionNew: any = "rating";
+ selectedOption: any = "Price (Low to High)";
+ selectedOptionNew: any = "price-low-high";
       showSortbuy: boolean = false;
   option:string='';
  orderBy(option) {
@@ -561,7 +571,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         } else if (option == 'seats-availability') {
         this.selectedOption = 'Seats Availability';
         } else {
-        this.selectedOption = 'Rating';
+        this.selectedOption = 'Price (Low to High)';
         }
         this.option = option;
         this.sortBy = option;
@@ -1230,3 +1240,5 @@ export class ChromeExtBusDialog {
   }
 
 }
+
+
