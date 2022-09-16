@@ -2701,7 +2701,7 @@ recivetotalFare($event){
         if (actualtime >= parseInt(AppConfig.blocktimings.userUpdateBlockstart) && actualtime <= parseInt(AppConfig.blocktimings.userUpdateBlockend)) {
             this.openDialog();
         } else {
-            this.router.navigate(['/train/registration']);
+            this.router.navigate(['/train/registration'],{queryParams:{fromstn:this.fromstnDesc,tostn:this.tostnDesc,traveldate:this.traveldate}});
            /* this.trainDetails = false;
             this.irctcRegister = true ; */
         }
@@ -2873,20 +2873,21 @@ this.spinnerService.show();
     
        manualAddTraveller(type){
         if(type==1){
-           this.addTraveller(-1,-1);
+           
             if(this.isMobile){
                 $('#addTraveller_mlite').modal('show');
                 this.mlitetravellerformsubmit = false;
         }
+        this.addTraveller(-1,-1);
           
         }else{
-         this.addChild(-1,-1);
+        
             if(this.isMobile){
                
                 $('#addInfant_mlite').modal('show');
                 this.mlitechildformsubmit=false;
             }
-           
+            this.addChild(-1,-1);
         }
         
        }
@@ -3164,23 +3165,26 @@ this.spinnerService.show();
             
             
         } else {
+            // $('#infantTraveller_mlite').modal('hide');
             $('#addInfant_mlite').modal('hide');
           if(checkboxIndex !=-1){
 
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
           }
-            var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
+            // var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
+            var message = 'You can not add more than ' + this.maxInfants +' infants';
             const dialogRef = this.dialog.open(ConfirmationDialog, {
                 disableClose: true,
-                width: '600px',
+                // width: '600px',
                 id: 'messageforMliteDialog',
                 data: {
                     errorDialog: true,
                     messageData: message
                 }
             });
-            //this.childCount = Number(this.maxInfants)+1;
+            
+            // this.childCount = Number(this.mraxInfants)+1;
         }
 
     }

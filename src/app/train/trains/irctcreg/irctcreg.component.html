@@ -1,6 +1,41 @@
+    <!-- <div class="col-md-12 p-0 fixed-top" *ngIf="isMobile">
+                <div class="mob-listing-header">
+                    <div class="mob-listing-header-left">
+                        <a href="javascript:;" (click)="goback()">
+                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+    <section class="mob-flights-listing" *ngIf="isMobile">
+        <div class=" fixed-top">
+          <div class="container">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <div class="mob-listing-header">
+                        <div class="mob-listing-header-left">
+                            <a href="javascript:;" (click)="goback()">
+                                <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="mob-listing-header-center">
+                            <h6>{{fromstn}} - {{tostn}}</h6>
+                            <p>{{traveldate | date:'MMM dd, yyyy'}} </p>
+
+                        </div>
+                        <div class="mob-listing-header-right">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
   <div class="main-site">
 
     <div class="container" style="position: relative;">
+      <h6 class="my-2">IRCTC Authorised Partner Registration</h6>
       <div class="col-sm-8 bg_sec">
 
         <ul class="nav nav-pills register-tab" id="register-tab" role="tablist">
@@ -124,7 +159,7 @@
                         </div>
     
                         <div class="xs-center">
-                            <button class="btn btn-primary cm_btn" type="submit">Next</button>
+                            <button class="btn btn-primary cm_btn" type="submit">Continue</button>
                             <a class=" btn btn-primary-outline cm_btn" (click)="goback()">Back</a>
                           </div>
     
@@ -311,7 +346,7 @@
                     </div>
                   </div><br/>
                   <div class="xs-center">
-                      <button class="btn btn-primary cm_btn">Next</button>
+                      <button class="btn btn-primary cm_btn">Continue</button>
                       <a class="btn btn-primary-outline cm_btn" (click)="tabOpen(1)">Back</a>
                     </div>
                   
@@ -472,7 +507,7 @@
     
                 <ng-template #nextBtn>
                   <div class="xs-center">
-                    <button class="btn btn-primary cm_btn" (click)="openOfficeResidence()">Next</button>
+                    <button class="btn btn-primary cm_btn" (click)="openOfficeResidence()">Continue</button>
                     <a class="btn btn-primary-outline cm_btn" (click)="tabOpen(2)">Back</a>
                   </div>
                 </ng-template>
