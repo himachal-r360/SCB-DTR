@@ -3172,10 +3172,11 @@ this.spinnerService.show();
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
           }
-            var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
+            // var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
+            var message = 'You can not add more than ' + this.maxInfants +' infants';
             const dialogRef = this.dialog.open(ConfirmationDialog, {
                 disableClose: true,
-                width: '600px',
+                // width: '600px',
                 id: 'messageforMliteDialog',
                 data: {
                     errorDialog: true,
