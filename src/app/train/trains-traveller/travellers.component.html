@@ -1593,7 +1593,7 @@
                         <div class="col-xl-5 col-lg-5 col-md-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Business Name</mat-label>
-                                <input matInput placeholder="Business Name" formControlName="gstBusinessName" name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off" (keypress)="specialcharInputAddress($event)">
+                                <input matInput placeholder="Business Name" formControlName="gstBusinessName" name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off" (keypress)="specialcharInputAddress($event)" pattern="[a-zA-Z][a-zA-Z ]+">
 
                             </mat-form-field>
                             <mat-error class="error-flight-checkout train_gst_err_msg" *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business name.
@@ -1630,10 +1630,21 @@
                     </div>
                     <div class="row" *ngIf="gstSelected">
                         <div class="col-lg-5 col-md-5">
-                            <mat-form-field appearance="outline" class="w-100">
+                            <!-- <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>City / Town</mat-label>
                                 <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity" autocomplete="nope">
-                                
+<<<<<<< HEAD
+                                <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.
+                                </mat-error>
+                                <mat-error class="error-flight-checkout" *ngIf="passengerForm.hasError('pattern','gstCity')">Please enter valid city name. </mat-error>
+                            </mat-form-field> -->
+
+
+                            <mat-form-field class="matField_full_width w-100" appearance="outline">
+                                <mat-label>Select city</mat-label>
+                                <mat-select placeholder="" formControlName="gstCity" autocomplete="nope" name="gstCity"  id="gstCity" autocomplete="nope">
+                                    <mat-option *ngFor="let city of cityList" [value]="city" (onSelectionChange)="getcitypostoffice(city)"> {{city}} </mat-option>
+                                </mat-select>
                             </mat-form-field>
                             <mat-error class="error-flight-checkout train_gst_err_msg" *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.
                             </mat-error>
