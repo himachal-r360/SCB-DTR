@@ -115,11 +115,10 @@ public modeselectTrending= 'All';
   CardErrorMsg:any;
    t: Inputmask.Options;
 
-
   dateInputMask = createMask<Date>({
-    alias: 'datetime',
+     alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
-    inputFormat: 'dd/mm/yyyy',
+     inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
       debugger;
       console.log(value);

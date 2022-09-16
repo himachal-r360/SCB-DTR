@@ -1352,6 +1352,7 @@ input[type="radio"]:checked + .label:after {
   font-size: 12px;
   font-weight: 600;
   color: #1e89ff;
+  padding-left:0.4em;
 }
 .w-pg-title {
   color:#030303;
@@ -2229,6 +2230,11 @@ p{
       align-items: center;
       justify-content: space-between;
       flex-direction: row;
+      .charges_applicable_text{
+        font-family: 'opensans-regular';
+        font-size:13px;
+        color:#2e2e2e;
+      }
     }
     .partner_name{
       font-size: 14px;
@@ -2534,4 +2540,61 @@ p{
 .emi-active{
   background-color: transparent ; 
 }
+
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	appearance: none;
+  color:#000;
+	&:hover {
+		span {
+			opacity: 1;
+			transform: translate(-14%, 0);
+		}
+	}
+	span {
+		position: absolute;
+		left: 50%;
+		bottom: 100%;
+		opacity: 0;
+		margin-bottom: 1em;
+		padding: 1em;
+		background-color: #fff;
+		font-size: 10px;
+    font-weight:600;
+		line-height: 1.6;
+		text-align: left;
+		white-space: nowrap;
+		transform: translate(-12%, 1em);
+		transition: all .15s ease-in-out;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.18);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+    min-width:350px;
+    border-radius:5px;
+		&::before {
+			content: '';
+			position: absolute;
+			top: 100%;
+			left: 12%;
+			width: 0;
+			height: 0;
+			border: 1em solid transparent;
+			border-top-color: #fff;
+			transform: translate(-12%, 0);
+		}
+    hr{
+      margin:0px;
+    }
+	}
+}
+
+
+
+
+
 
