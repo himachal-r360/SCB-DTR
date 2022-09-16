@@ -1051,6 +1051,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   getClassVal(val: any) {
     this.flightData.value.flightclass = val;
+    this.flightData.get('flightclass').setValue(val);
     this.flightClassVal = val;
   }
   callMutlicityFunc = true;
