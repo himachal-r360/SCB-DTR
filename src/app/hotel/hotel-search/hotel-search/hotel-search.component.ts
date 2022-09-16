@@ -363,7 +363,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       var i = 0;
       var isvalid = true;
       rooms.forEach(z => {
-        if(z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0)
+        if((z.numberOfChildren != z.childrenAge.length ||  z.childrenAge=="0")  && z.numberOfChildren > 0)
         {
           var id = document.getElementById("error_"+i)
           id.hidden = false;
