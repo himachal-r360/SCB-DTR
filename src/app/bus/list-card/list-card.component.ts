@@ -645,7 +645,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   this.totServtax = totServtax;
   this.searchParam.seatdetails = this.seatdetails;
   this.seatdetails = seatdetails1;
-  
+  console.log(this.seatdetails);
     
   
  if(this.show_earnpoints){
