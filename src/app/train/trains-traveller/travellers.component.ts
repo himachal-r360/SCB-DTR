@@ -1867,9 +1867,9 @@ this.spinnerService.show();
                     var whatsappFlag;
                     if (this.whatsappFeature == 1){
                         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-                        this.whatsAppCheck=true;
+                        this.whatsAppCheck=whatsappFlag;
                     }else{
-                        whatsappFlag = 0;
+                        whatsappFlag = false;
                          this.whatsAppCheck=false;
                     }
                     this.contactDetails = {
@@ -2701,7 +2701,7 @@ recivetotalFare($event){
         if (actualtime >= parseInt(AppConfig.blocktimings.userUpdateBlockstart) && actualtime <= parseInt(AppConfig.blocktimings.userUpdateBlockend)) {
             this.openDialog();
         } else {
-            this.router.navigate(['/train/registration']);
+            this.router.navigate(['/train/registration'],{queryParams:{fromstn:this.fromstnDesc,tostn:this.tostnDesc,traveldate:this.traveldate}});
            /* this.trainDetails = false;
             this.irctcRegister = true ; */
         }
@@ -2930,6 +2930,9 @@ this.spinnerService.show();
                 gender = 'M'
                 }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
                 gender = 'F';
+                }
+                else if(passenger.gender == 'T'){
+                gender = 'T';
                 }
 
                
