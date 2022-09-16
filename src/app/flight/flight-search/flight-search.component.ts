@@ -148,7 +148,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     public _styleManager: StyleManagerService, private appConfigService:AppConfigService,
     public route: ActivatedRoute,
       public router: Router,
-      
+
       private _fb: FormBuilder,
       private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
 
@@ -200,7 +200,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-  
+
         if(this.router.url){
         switch (this.router.url) {
         case ('/'+this.sg['domainPath']+'multicity'):
@@ -215,12 +215,12 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.addMuticitySerchVal()
         }
         this.callMutlicityFunc = false;
-         
+
         break;
-       
-        }  
+
+        }
      }
-    
+
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -491,7 +491,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
 
   }
-  
+
   focusInput(i,type){
     setTimeout(() => {
    if (!this.isMobile) {
@@ -499,19 +499,19 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       if(type=='from'){
       // $('#fromCitySearch').select();
         $('#fromCitySearch').focus();
-      }else {   
+      }else {
       //$('#toCityMob').select();
        $('#toCityMob').focus();
-      
+
       }
      }else{
      if(type=='from'){
       // $('.fromCitySearch'+i).select();
         $('.fromCitySearch'+i).focus();
-      }else {   
+      }else {
       //$('.toCitySearch'+i).select();
        $('.toCitySearch'+i).focus();
-      
+
       }
      }
     }else{
@@ -519,7 +519,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       if(type=='from'){
        //$('#fromCitySearch').select();
         $('#fromCitySearch').focus();
-      }else {  
+      }else {
       //$('#toCitySearch').select();
       $('#toCitySearch').focus();
       }
@@ -527,13 +527,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
        if(type=='from'){
        //$('.fromCitySearch'+i).select();
         $('.fromCitySearch'+i).focus();
-      }else {  
+      }else {
       //$('.toCity'+i').select();
       $('.toCity'+i).focus();
       }
      }
-    
-    } 
+
+    }
     }, 10);
   }
 
@@ -623,11 +623,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         this.fromCountryName = lastSearch.fromCountryFullName;
         else
          this.fromCountryName ='';
-        if(lastSearch.toCountryFullName) 
+        if(lastSearch.toCountryFullName)
         this.toCountryName = lastSearch.toCountryFullName;
         else
         this.toCountryName ='';
-        
+
         this.fromAirpotName = lastSearch.fromAirportName;
         this.toAirpotName = lastSearch.toAirportName;
         this.departureDate = new Date(lastSearch.departure);
@@ -745,6 +745,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       return
     }
     else {
+      if(this.isMobile)
+      {
+        this.flightData.get('flightclass').setValue(this.flightClassVal);
+      }
+
       let searchValue = this.flightData.value;
 
 
@@ -835,7 +840,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.adultsVal=this.flightData.value.adults;
       this.childVal=this.flightData.value.child;
       this.infantsVal=this.flightData.value.infants;
-      
+
     }
     //this.flightData.value.adults = parseInt(this.flightData.value.adults) + 1;
   }
@@ -990,7 +995,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.flightData.get('fromCity').setValue(this.flightData.value.toCity);
     this.flightData.get('fromContry').setValue(this.flightData.value.toContry);
      this.flightData.get('fromCountryFullName').setValue(this.flightData.value.toCountryFullName);
-    
+
     this.flightData.get('fromAirportName').setValue(this.flightData.value.toAirportName);
     this.fromAirpotName = this.flightData.value.toAirportName;
     this.fromCityName = this.flightData.value.toCity;
@@ -1046,6 +1051,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   getClassVal(val: any) {
     this.flightData.value.flightclass = val;
+    this.flightClassVal = val;
   }
   callMutlicityFunc = true;
   navBarLink(navItem: any) {
