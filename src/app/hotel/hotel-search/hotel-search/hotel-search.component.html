@@ -32,7 +32,7 @@
                                 </a>
                             </li>
                         </ng-container>
-                        
+
                     </ul>
                 </div>
                 <div class="error_msg w-35" *ngIf="submitted && Error('city', 'required')">
@@ -44,7 +44,7 @@
                     <span class="small-text">CHECK-IN</span>
                     <h5 class="large-text"  [ngClass]="!hotelSearchForm.value.checkIn?'py-3':''">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
-                    
+
                     <div class="hotel-date">
                         <mat-form-field style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
                             <input matInput [min]="latestDate" [matDatepicker]="picker" formControlName="checkIn"  (dateChange)="checkInDate($event)" >
@@ -76,7 +76,7 @@
                         <small class="validate-msg">Please select CheckOut date</small>
                     </div>
                 </div>
-                
+
             </div>
             <div class="hotel-room">
                 <div class="hotel-room-item" (click)="showGuest('show')">
@@ -85,7 +85,7 @@
                             class="fs_14 fw_4">Adults</small>, {{totalChildCount}} <small class="fs_14 fw_4">Child</small>  </h5>
                     <span class="small-text"></span>
                 </div>
-                <div class="hotel-room-select pt-20 pb-20" #showHideGuest>
+                <div class="hotel-room-select pt-20 pb-20" style="z-index: 9;" #showHideGuest>
                     <div class="mob-title">
                         <h3>ROOMS & GUESTS</h3>
                         <a href="javaScript:void(0)" class="mob-close" (click)="showGuest('hide')">
@@ -97,8 +97,7 @@
                             <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">
                                     <div class="hotel-from-data-ul-list">
-                                        <p class="fw_7 fs_14 d-flex" formControlName="room">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto" (click)="removeDetails(i)">Delete</a></p>
-                                        
+                                        <p class="fw_7 fs_14 d-flex">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto" (click)="removeDetails(i)">Delete</a></p>
                                         <div class="Travellers-passengers-data mb-2">
                                             <div class="Travellers-name">
                                                 <h6>Adults</h6>
@@ -132,35 +131,39 @@
                                         <br>
                                        <div class="d-flex align-items-center">
                                         <div *ngIf="item.value.numberOfChildren > 0">
-                                            <div class="Travellers-name">
+                                            <div class="Travellers-name mb-1">
                                                 <h6>Child 1</h6>
                                             </div>
-                                            <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}" class="p-1">
+                                            <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}" required class="p-1" style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
                                                 <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[0] ? true : null"  *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
                                         <div *ngIf="item.value.numberOfChildren > 1" class="ms-2">
-                                            <div class="Travellers-name">
+                                            <div class="Travellers-name mb-1">
                                                 <h6>Child 2</h6>
                                             </div>
-                                            <select  (change)="onSelectAge($event,item , i)" id="selectAge2_{{i}}" class="p-1">
+                                            <select  (change)="onSelectAge($event,item , i)" id="selectAge2_{{i}}" class="p-1"  style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
                                                 <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[1] ? true : null" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
                                         <div *ngIf="item.value.numberOfChildren > 2" class="ms-2">
-                                            <div class="Travellers-name">
+                                            <div class="Travellers-name mb-1">
                                                 <h6>Child 3</h6>
                                             </div>
-                                            <select (change)="onSelectAge($event,item,i)" id="selectAge3_{{i}}" class="p-1">
+                                            <select (change)="onSelectAge($event,item,i)" id="selectAge3_{{i}}" class="p-1"  style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
                                                 <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[2] ? true : null" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
+
                                     </div>
-                                </div> 
-                                      
+                                    <div class="error_msg w-35" hidden id="error_{{i}}">
+                                      <small  class="validate-age-msg">Please select age of child</small>
+                                    </div>
+                                </div>
+
                                     <hr>
                                 </ng-container>
                             </ng-container>
@@ -170,12 +173,15 @@
                         </ng-container>
                     </div>
                 </div>
+                <div class="error_msg w-35" hidden id="error_AllAge">
+                  <small  class="validate-msg">Please select age of all child</small>
+                </div>
             </div>
             <div class="hotel-search-btns">
                 <a href="javaScript:void(0)"  data-bs-toggle="modal" data-bs-target="#itinerary" class="hotel-search-btn"
                     (click)="searchHotel()">Search</a>
             </div>
-         
+
         </div>
     </form>
     <div class="add-search-area">

@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { Subscription } from 'rxjs';
-import { Options } from 'ng5-slider';
+import { ChangeContext, Options, PointerType } from 'ng5-slider';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
 import { FlightService } from 'src/app/common/flight.service';
@@ -39,6 +39,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   options: Options = {
     floor: 0,
     ceil: 1000,
+    step: 10,
     translate: (value: number): string => {
       return '';
     }
@@ -105,7 +106,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     { name: 'P_H_L', active: false, value: 'High to Low' ,image: './assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
     { name: 'S_L_H', active: false, value: 'Low to High' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
     { name: 'S_H_L', active: false, value: 'High to Low' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
-    { name: 'Trending', active: false, value: 'Trending Hotels' ,image: './assets/hotel/icon/Trending.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:''},
+    { name: 'Trending', active: true, value: 'Trending Hotels' ,image: './assets/hotel/icon/Trending.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:''},
   ]
 
   showMoreAmenity:boolean = false;
@@ -208,6 +209,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
     this.sub = this.route.url.subscribe(url =>{
+    this.isResponse = true;
     this.loader = true;
     this.getSearchData();
     this.headerHideShow(null);
@@ -216,6 +218,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   }
 
   getSearchData(){
+    console.log(this.route.snapshot.queryParams)
     const urlParam = this.route.snapshot.queryParams;
     this.searchData =  urlParam;
     this.hotelSearchForm.get('checkIn').setValue(this.searchData.checkIn);
@@ -441,26 +444,39 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.starFiltersList.filter((item: any) => { item.active = false; return item; })
     this.AllFilteredData();
   }
-
-  onMinValueChange(event: any) {
-    this.minPrice = event;
-    if (this.minPrice != null) {
-      if(!this.isMobile)
-      {
-        this.AllFilteredData();
-      }
+  onUserChangeEnd(changeContext: ChangeContext): void {
+    if(changeContext.pointerType === PointerType.Min)
+    {
+      this.minPrice = changeContext.value;
     }
-
-  }
-  onMaxValueChange(event: any) {
-    this.maxPrice = event;
-    if (this.maxPrice != null) {
-      if(!this.isMobile)
-      {
-        this.AllFilteredData();
-      }
+    else{
+      this.maxPrice = changeContext.highValue;
+    }
+    if(!this.isMobile)
+    {
+      this.AllFilteredData();
     }
   }
+
+  // onMinValueChange(event: any) {
+  //   this.minPrice = event;
+  //   if (this.minPrice != null) {
+  //     if(!this.isMobile)
+  //     {
+  //       this.AllFilteredData();
+  //     }
+  //   }
+
+  // }
+  // onMaxValueChange(event: any) {
+  //   this.maxPrice = event;
+  //   if (this.maxPrice != null) {
+  //     if(!this.isMobile)
+  //     {
+  //       this.AllFilteredData();
+  //     }
+  //   }
+  // }
 
   Initslider() {
     var $that = this;
@@ -470,6 +486,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
     $that.options = {
       floor: minPrice,
       ceil: maxPrice,
+      step: 10,
+
       translate: (value: number): string => {
         return '';
       }
@@ -549,7 +567,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       "hotelkey":hotelkey,
       "hotel": hotel,
       "PriceSummary": selectedPartner,
-      "QueryData":this.searchData
+      "QueryData":this.hotelSearchForm.value
       };
     let randomHotelDetailKey = btoa(this.docKey+hotelkey+selectedPartner.partnerName);
     sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));

@@ -30,6 +30,8 @@ export class HotelDetailComponent implements OnInit {
   currentLink :string;
   SelectedQueryParam:any;
   loaderValue:number;
+  TotalAdult:number = 0;
+  TotalChild:number = 0;
   Facilities:any =
     {
     'roomService':{name:'Room Service',value:'roomService',image:'assets/images/hotel/Offered/hotelDetail_roomService.svg'},
@@ -198,7 +200,7 @@ export class HotelDetailComponent implements OnInit {
     this.route.url.subscribe(url => {
 
 
-      console.log(url)
+      console.log(this.checkin)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
@@ -214,6 +216,10 @@ export class HotelDetailComponent implements OnInit {
       this.Hotelkey =Details.hotelkey;
       this.DocKey = Details.docKey;
       this.SelectedQueryParam = Details.QueryData;
+   this.SelectedQueryParam.rooms.forEach((z)=>{
+    this.TotalAdult += parseInt(z.numberOfAdults);
+    this.TotalChild += parseInt(z.numberOfChildren);
+   })
       this.headerHideShow(null);
       this.GetHotelDetails();
     });
@@ -285,5 +291,9 @@ export class HotelDetailComponent implements OnInit {
   onBooking()
   {
     $("#bookingprocess").modal('show')
+  }
+  CloseModal()
+  {
+    $("#moreAmenities").modal('hide')
   }
 }
