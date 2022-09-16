@@ -2930,6 +2930,9 @@ this.spinnerService.show();
                 }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
                 gender = 'F';
                 }
+                else if(passenger.gender == 'T'){
+                gender = 'T';
+                }
 
                
                 if(passenger.age != undefined){
