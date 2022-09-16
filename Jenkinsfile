@@ -21,7 +21,7 @@ pipeline {
                     echo 'SonarQube analysis Report Uploading...'
                     emailext (
                         subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} Jenkins-SonarQube analysis Report",
-                        body: "SonarQube analysis Is Done For AngularUI4.0 Module. SonarQube analysis Report Is Uploaded On SonarQube Server - 'http://3.111.15.239:9000/'.  \n\n -------------------------------------------------- \n\n",
+                        body: "SonarQube analysis Is Done For AngularUI4.0 Module. SonarQube analysis Report Is Uploaded On SonarQube Server - 'https://sonar.reward360.in:8443/'.  \n\n -------------------------------------------------- \n\n",
                         to: "devops@reward360.co, lakshmi@reward360.co, smartbuy.qa@reward360.co, tamil.selvan@reward360.co",
                     )
                 }
