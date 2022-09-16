@@ -874,7 +874,7 @@
                                 <div class="dropdown-menu user-menu myaccount-drop" aria-labelledby="dropdown-user">
                                     <div class="">
 
-                                        <div class="points_sec" *ngIf="customeravailableStatus">
+                                        <div class="points_sec" *ngIf="points > 0">
                                             <div class="px-4 py-2">
                                                 <div class="row">
                                                     <div class="col-7 text-left">
@@ -918,7 +918,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <p class="mt-1 mb-2" *ngIf="points > 0"><span class="hdr_customer_pts" *ngIf="customeravailableStatus">{{customeravailablepoints}}</span></p>
+                            <p class="mt-1 mb-2" *ngIf="customeravailableStatus"><span class="hdr_customer_pts">{{customeravailablepoints}}</span></p>
                             <div *ngIf="cardList">
                                 <div class="dropdown myaccount-drop" *ngIf="cardList.length > 1">
                                     <a class="dropdown-toggle hdr_btn" href="#" role="button" id="dropdown-user1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1761,7 +1761,7 @@
         <div class="inner_m_item">
             <div class="head_img icn pr-0" *ngIf="guestLogin==false && customerLogin==true">
                 <div class="dropdown myaccount-drop-m">
-                    <a class="dropdown-toggle" href="{{domainRedirect}}manage_account" role="button" id="dropdown-user-m">
+                    <a class="dropdown-toggle" (click)="clickUrl('/manage_account')" role="button" id="dropdown-user-m">
                         <img src="{{cdnUrl}}images/smartbuy/icons/payment/profile.svg" alt="profile" class="profile_pic">
                     </a>
                     <div class="dropdown-menu user-menu myaccount-drop-m" aria-labelledby="dropdown-user-m">
@@ -2366,9 +2366,9 @@
             <div class="head_img icn reg_gold_icn pr-0" *ngIf="guestLogin==false && customerLogin==true">
 
                 <div class="dropdown myaccount-drop-m">
-                    <a class="dropdown-toggle" href="{{domainRedirect}}manage_account" role="button" id="dropdown-user-m">
-                        <!-- <img src="{{cdnUrl}}images/smartbuy/icons/payment/profile.svg" alt="profile" class="profile_pic"> -->
-                        <span class="m_custmr_name">Hi, {{ (customer_full_name.length>10)? (customer_full_name | slice:0:10)+'..':(customer_full_name) }} <i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                    <a class="dropdown-toggle" (click)="clickUrl('manage_account')" role="button" id="dropdown-user-m">
+                        <img src="{{cdnUrl}}images/smartbuy/icons/payment/profile.svg" alt="profile" class="profile_pic" id="profileImg">
+                      <!--   <span class="m_custmr_name">Hi, {{ (customer_full_name.length>10)? (customer_full_name | slice:0:10)+'..':(customer_full_name) }} <i class="fa fa-chevron-down" aria-hidden="true"></i></span> -->
                     </a>
                     <div class="dropdown-menu user-menu myaccount-drop-m" aria-labelledby="dropdown-user-m">
                         <div class="">
