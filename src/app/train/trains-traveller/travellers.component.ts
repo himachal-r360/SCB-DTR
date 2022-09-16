@@ -1219,8 +1219,8 @@ this.spinnerService.show();
                 if (this.fareEnqResponse['partnerResponse']['bkgCfg']['foodChoiceEnabled'] == 'false') {
                     this.foodChoiceEnabled = false;
                 } else {
-                    this.passengerForm.addControl('passengerMealPreference0', new FormControl('', [Validators.required]));
-                    this.passengerForm.controls['passengerMealPreference0'].updateValueAndValidity();
+                  //  this.passengerForm.addControl('passengerMealPreference0', new FormControl('', [Validators.required]));
+                  //  this.passengerForm.controls['passengerMealPreference0'].updateValueAndValidity();
                     this.foodChoiceEnabled = true;
                     if (this.fareEnqResponse['partnerResponse']['bkgCfg'].foodDetails) {
                         this.foodDetails = this.fareEnqResponse['partnerResponse']['bkgCfg'].foodDetails;

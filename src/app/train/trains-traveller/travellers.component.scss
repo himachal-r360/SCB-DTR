@@ -396,6 +396,7 @@
     align-items: center;
     @media screen and (max-width: 600px) {
         width: fit-content;
+        height:45px;
     }
 }
 
@@ -620,14 +621,22 @@
 .title-for {
     color: #000000;
     font-size: 18px;
-    margin: 5px 0px;
+    margin: 15px 0px;
     font-family: opensans-medium;
+    text-align:center;
+    @media screen and (max-width:600px){
+        text-align:left;
+    }
 }
 
 .sub_title-for {
     color: #000000;
-    font-size: 12px;
+    font-size: 14px;
     font-family: opensans-regular;
+    text-align:center;
+    @media screen and (max-width:600px){
+        text-align:left;
+    }
 }
 
 .otp-mobile {
@@ -984,15 +993,23 @@ ng::deep .mat-dialog-container {
     margin-top: -21px;
     color: #1d86ff;
     font-size: 14px;
+    font-weight:bold;
 
-    @media screen and (max-width:600px){
-        display:none;
-    }
     @media screen and (min-width:1500px) and (max-width:2249px){
         left: 53.5vw;
     }
     @media screen and (min-width:2250px){
         left: 52.5vw;
+    }
+    @media screen and (max-width:600px){
+        left: 74.5vw;
+        font-size: 12px;
+        margin-top: -23px;
+    }
+    @media screen and (max-width:390px){
+        left: 69.5vw;
+        font-size: 12px;
+        margin-top: -23px;
     }
 
 }
@@ -1035,4 +1052,79 @@ ng::deep .mat-dialog-container {
 .train_gst_err_msg{
     font-size:75%;
     margin-bottom:0.66666em;
+}
+.border_btn_link{
+    padding:10px 15px;
+    border: 1.25806px solid #1D86FF;
+    border-radius: 5px;
+    color:#1d86ff;
+    font-size:15px;
+    font-weight:600;
+    min-width:100px;
+    margin:5px;
+    @media screen and (max-width:600px){
+        width:100%;
+        margin:5px 0px;
+    }
+}
+.background_btn_link{
+    padding:10px 15px;
+    border: 1.25806px solid #1D86FF;
+    border-radius: 5px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    background:#1d86ff;
+    min-width:100px;
+    margin:5px;
+    @media screen and (max-width:600px){
+        width:100%;
+        margin:5px 0px;
+    }
+}
+
+@media screen and (max-width:600px){
+
+/* animation css */
+@keyframes bottom_top_animation {
+	from {
+		bottom: -300px;
+		opacity: 0;
+	}
+	to {
+		bottom: 0;
+		opacity: 1;
+	}
+}
+::ng-deep .reset_popup_mlite {
+		width: 100% !important;
+		position: fixed;
+		bottom: 0px !important;
+		left: 0;
+		// top: auto !important;
+		right: auto;
+		max-height: 90vh;
+		border-radius: 18px 18px 0px 0px;
+		animation-name: bottom_top_animation;
+		animation-duration: 200ms;
+		animation-timing-function: ease-in-out;
+        background:#fff;
+        padding:13px;
+
+        .mlite_reset_pass_form{
+            padding:5px;
+            max-height:60vh;
+            overflow-y: auto;
+            width:100%;
+            overflow-x:hidden;
+            
+        }
+}
+.rc-anchor-normal {
+    width:250px;
+}
+.button-style{
+    background:#1d86ff;
+    color:#fff;
+}
 }

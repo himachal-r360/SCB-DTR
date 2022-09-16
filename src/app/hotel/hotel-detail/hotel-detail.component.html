@@ -1,12 +1,12 @@
-<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
   <div class="container">
       <div class="row">
           <div class="col-md-12">
               <div class="bradcome-list">
                   <ul class="list-inline">
-                      <li class="list-inline-item"><a href="#">Home</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="#">Travel &amp; Stays</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel &amp; Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item" *ngIf="HotelDetail"><span>{{HotelDetail.hotelName}}</span></li>
                   </ul>
@@ -138,9 +138,10 @@
                                   <div class="Overview-top">
                                       <div class="Overview-title">
                                           <h6>About</h6>
-                                          <p>CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
+                                          <!-- <p>CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p> -->
+                                          <p>CHECK-IN 2PM | CHECK-OUT 11AM</p>
                                       </div>
-                                      <div class="Overview-details" innerHtml="{{HotelDetail.description}}">
+                                      <div class="Overview-details about-hotel" innerHtml="{{HotelDetail.description}}">
                                           <!-- <ul>
                                               <li><p><strong>Services</strong>: 24x7 power back up, 24 Hour Power Supply, Lift, Wheelchair accessible elevator, Waiting area, Room Service (24 Hours Available), Special occasion arrangement, Hot water available, Dry cleaning, Room/Rooms reserved for special need guests, Wheelchair accessible ramp, Wake up service/Alarm clock, Ironing Service, Hot water available 24x7, Luggage storage, Concierge, Babysitting or child care, Business center, Wheelchair, Separate Smoking Area, Laundry facilities.</p></li>
                                               <li><p><strong>Languages Spoken by Hotel Staff</strong>: English, Hindi</p></li>
@@ -207,11 +208,13 @@
                                               <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates">
                                                   <div class="hd-rd-left">
                                                       <div class="hd-rd-big">
-                                                        <img src="{{item.imageInfo.wideAngleImageurl}}" alt="">
+                                                        <img *ngIf="item.imageInfo.wideAngleImageurl != null" src="{{item.imageInfo.wideAngleImageurl}}" alt="">
+                                                        <img *ngIf="item.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                                                       </div>
                                                       <div class="hd-rd-thumbs">
                                                           <div class="hd-rd-item">
-                                                            <img src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
+                                                            <img *ngIf="item.imageInfo.thumbnailImageUrl != null" src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
+                                                            <!-- <img *ngIf="item.imageInfo.thumbnailImageUrl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt=""> -->
                                                           </div>
                                                       </div>
                                                   </div>
@@ -239,7 +242,7 @@
                                                       <div class="hd-rdetails-right">
                                                           <h6>₹{{item.rateBreakdown.total | number}}</h6>
                                                           <p>Inclusive of taxes</p>
-                                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book Now</a>
+                                                          <a href="javascript:;" class="button-style"  (click)="onBooking(item)">Book Now</a>
                                                       </div>
                                                   </div>
                                               </div>
@@ -287,7 +290,7 @@
                         </div>
                         <div class="mob-listing-header-center">
                             <h6>{{SelectedQueryParam.city +', '+ SelectedQueryParam.countryName}}</h6>
-                            <p>{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
+                            <p *ngIf="SelectedQueryParam.checkIn">{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
                         </div>
                         <div class="mob-listing-header-right">
                             <a  (click)="backClicked()">
@@ -368,7 +371,7 @@
                                         <div class="Overview-top">
                                             <div class="Overview-title">
                                                 <h6>About</h6>
-                                                <p>CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
+                                                <p *ngIf="checkin != undefined">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
                                             </div>
                                             <div class="Overview-details" innerHtml="{{HotelDetail.description}}">
 
@@ -461,7 +464,7 @@
                                                                     <p>Inclusive of taxes</p>
                                                                 </div>
                                                                 <div class="hd-rdetails-right-btn">
-                                                                    <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="onBooking()">Book Now</a>
+                                                                    <a href="javascript:;" class="button-style" (click)="onBooking(item)">Book Now</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -507,7 +510,7 @@
                       <div class="amenitiesmodal-items">
                           <div class="amenitiesmodal-title">
                               <h6>Amenities</h6>
-                              <a href="javascript:;" class="modal-close">
+                              <a href="javascript:;" class="modal-close" (click)="CloseModal()">
                                   <img src="./assets/images/icons/close.png" alt="">
                               </a>
                           </div>
@@ -535,11 +538,11 @@
                           <div class="bookingprocess-content">
                               <div class="bookingprocess-hotel">
                                   <div class="bookingprocess-hotel-title">
-                                      <h6>Goa, India</h6>
+                                      <h6>{{SelectedQueryParam.city}}, {{SelectedQueryParam.countryName}}</h6>
                                   </div>
                                   <div class="bookingprocess-hotel-content">
                                       <p>{{SelectedQueryParam.checkIn | date:'dd.MM.yyyy'}} - {{SelectedQueryParam.checkOut | date:'dd.MM.yyyy'}} </p>
-                                      <p>2 Adults, 1 Child, 1 Infant</p>
+                                      <p>{{TotalAdult}} Adults, {{TotalChild}} Child</p>
                                       <p>{{SelectedQueryParam.numberOfRooms}} Delux Room</p>
                                   </div>
                               </div>
