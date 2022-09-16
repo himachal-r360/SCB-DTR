@@ -119,7 +119,7 @@ public modeselectTrending= 'All';
   dateInputMask = createMask<Date>({
     alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
-    inputFormat: 'dd/MM/yyyy',
+    inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
       debugger;
       console.log(value);
@@ -158,8 +158,8 @@ public modeselectTrending= 'All';
    ngOnDestroy() {
    // this._styleManager.removeStyle('owl-default');
    // this._styleManager.removeScript('owl');
+ 
   }
-
 
    createForm() {
     this.angForm = this.fb.group({
