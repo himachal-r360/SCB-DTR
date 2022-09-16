@@ -48,6 +48,7 @@ pipeline {
 
                         echo "Removing Previous Backup Folder"
                         sshCommand remote: remote, command: 'rm -r /home/apache/git/backups/code_backup_AngularUI4.0_*'
+
                         echo "Creating Backup Folder"
                         sshCommand remote: remote, command: 'mkdir -p /home/apache/git/backups/code_backup_AngularUI4.0_`date +%Y%m%d`'
 
