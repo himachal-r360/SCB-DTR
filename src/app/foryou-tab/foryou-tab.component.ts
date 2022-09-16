@@ -341,14 +341,14 @@ public modeselectTrending= 'All';
         if (localStorage.getItem(environment.busLastSearch) !== null) allCookies_key.push(environment.busLastSearch);
         if (localStorage.getItem(environment.trainLastSearch) !== null) allCookies_key.push(environment.trainLastSearch);
 
-        if (localStorage.getItem(environment.flightLastSearch) !== null || localStorage.getItem('HotelRecentSearch') !== null || localStorage.getItem(environment.busLastSearch) !== null || localStorage.getItem(environment.trainLastSearch) !== null) {
+        if (localStorage.getItem(environment.flightLastSearch) !== null || localStorage.getItem(environment.hotelLastSearch) !== null || localStorage.getItem(environment.busLastSearch) !== null || localStorage.getItem(environment.trainLastSearch) !== null) {
 
           Object.values(allCookies_key).forEach(data => {
 
             let item = localStorage.getItem(data);
            
             var url;
-            if (data == environment.flightLastSearch || data == 'HotelRecentSearch') {
+            if (data == environment.flightLastSearch || data == environment.hotelLastSearch) {
 
               if (data == environment.flightLastSearch && localStorage.getItem(environment.flightLastSearch) !== null) {
                
@@ -374,27 +374,17 @@ public modeselectTrending= 'All';
              }
 
               }
-              else if (data == 'HotelRecentSearch' && localStorage.getItem('HotelRecentSearch') !== null) {
-                var get_valueall = atob(item);
-                var get_value = JSON.parse(get_valueall).slice(-1)[0];
-console.log("hotel "+ JSON.stringify( get_value));
-                var dateformat = get_value.checkin;
+              else if (data == environment.hotelLastSearch && localStorage.getItem(environment.hotelLastSearch) !== null) {
+               var searchValue = JSON.parse(item);
+                var type = 'hotel';
+                
+                var searchFrom = searchValue.city;
+                var searchTo = searchValue.city;
+                var dateformat = searchValue.checkIn;
                 var strdate = new Date(dateformat);
                 var date = moment(strdate).format('ddd, MMM Do');
-
-                var type = 'hotel';
-                var searchFrom = get_value.cityname;
-                var searchTo = get_value.city_id;
-
-                let diff = new Date().getTime() - strdate.getTime();
-
-                if (diff > 0) {
-                   url = '/compare-stay';
-                } else {
-
-                   url = this.domainRedirect + 'Hotels_lists?cityname=' + get_value.cityname + '&city_id=' + get_value.city_id + '&country=' + get_value.country + '&hotel_name=' + get_value.hotel_name + '&lattitude=' + get_value.lattitude + '&longitude=' + get_value.longitude + '&hotel_id=' + get_value.hotel_id + '&area=' + get_value.area + '&label_name=' + get_value.label_name + '&checkin=' + get_value.checkin + '&checkout=' + get_value.checkout + '&num_rooms=' + get_value.num_rooms + '&numberOfAdults1=' + get_value.numberOfAdults1 + '&numberOfChildren1=' + get_value.numberOfChildren1 + '&t=ZWFybg%3D%3D&hotel_search_done=' + get_value.hotel_search_done + '&hotel_modify=' + get_value.hotel_modify + '';
-                }
-
+                
+                url="/hotel-list?"+decodeURIComponent(this.ConvertObjToQueryStringHotel((searchValue)));
               }
               
             } else {
@@ -462,6 +452,8 @@ console.log("hotel "+ JSON.stringify( get_value));
               Redirecturl: url
             });
           });
+          console.log(this.cookie_all);
+          
           this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); 
           this.recentsearchData = this.cookie_all.slice(0, 2);
           this.recentsearchDataAll = this.cookie_all.slice(0, 4);
@@ -610,6 +602,27 @@ console.log("hotel "+ JSON.stringify( get_value));
     return str.join("&");
   }
 
+  ConvertObjToQueryStringHotel(obj: any) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+    }
+    return str.join("&");
+  }
  goToNew(path){
      if(environment.IS_MAIN==1){
         const current = new Date();

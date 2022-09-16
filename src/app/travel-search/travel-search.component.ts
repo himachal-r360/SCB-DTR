@@ -1052,50 +1052,54 @@ check_traveller_count(type) {
            //Hotels
         lastHotelSearch=localStorage.getItem(environment.hotelLastSearch);
        const lastHotelSearchValue=JSON.parse(lastHotelSearch);
+       
+       
+       console.log(lastHotelSearchValue);
 
         if(lastHotelSearchValue){
-        this.hotelFromText=lastHotelSearchValue.hotelName;
-        this.hotelName=lastHotelSearchValue.hotelName;
-        this.hotelNameDisp=lastHotelSearchValue.hotelName;
-        this.hotelId=lastHotelSearchValue.hotelId;
-        this.countryId=lastHotelSearchValue.countryId;
-        this.roomCount=parseInt(lastHotelSearchValue.roomCount);
-                this.searchHotelForm['controls']['hotelName'].setValue(lastHotelSearchValue.hotelName);
-        this.searchHotelForm['controls']['hotelId'].setValue(lastHotelSearchValue.hotelId);
-        this.searchHotelForm['controls']['countryId'].setValue(lastHotelSearchValue.countryId);
-        this.searchHotelForm['controls']['roomCount'].setValue(lastHotelSearchValue.roomCount);
+        this.hotelFromText=lastHotelSearchValue.city+', '+ lastHotelSearchValue.countryName;
+        this.hotelName=lastHotelSearchValue.city+', '+ lastHotelSearchValue.countryName;
+        this.hotelNameDisp=lastHotelSearchValue.city+', '+ lastHotelSearchValue.countryName;
+        this.hotelId=lastHotelSearchValue.city;
+        this.countryId=lastHotelSearchValue.country;
+        this.roomCount=parseInt(lastHotelSearchValue.numberOfRooms);
+        
+        this.searchHotelForm['controls']['hotelName'].setValue(this.hotelName);
+        this.searchHotelForm['controls']['hotelId'].setValue(this.hotelId);
+        this.searchHotelForm['controls']['countryId'].setValue(this.countryId);
+        this.searchHotelForm['controls']['roomCount'].setValue(this.roomCount);
 
 
 
-        var date8 = new Date(lastHotelSearchValue.hotelCheckin).getTime();
+        var date8 = new Date(lastHotelSearchValue.checkIn).getTime();
         if(date1 <= date8){
 
-        this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd/MM/YYYY', 'en-ES'));
-        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd/MM/YYYY', 'en-ES'));
-        this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd/MM/YYYY', 'en-ES'));
-         this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd/MM/YYYY', 'en-ES'));
+        this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.checkIn, 'dd/MM/YYYY', 'en-ES'));
+        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.checkOut, 'dd/MM/YYYY', 'en-ES'));
+        this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.checkIn, 'dd/MM/YYYY', 'en-ES'));
+         this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.checkOut, 'dd/MM/YYYY', 'en-ES'));
 
 
         this.hotelCheckin = this.hotelpickerDefaultFMlite;
         this.hotelCheckout =  this.hotelpickerDefaultTMlite;
         
-        this.hotelCheckinMlite=datePipe.transform(lastHotelSearchValue.hotelCheckin, 'dd/MM/YYYY', 'en-ES');
-        this.hotelCheckoutMlite=datePipe.transform(lastHotelSearchValue.hotelCheckout, 'dd/MM/YYYY', 'en-ES');
+        this.hotelCheckinMlite=datePipe.transform(lastHotelSearchValue.checkIn, 'dd/MM/YYYY', 'en-ES');
+        this.hotelCheckoutMlite=datePipe.transform(lastHotelSearchValue.checkOut, 'dd/MM/YYYY', 'en-ES');
 
         }
 
-        let localRooms=JSON.parse(lastHotelSearchValue.room);
+        let localRooms=JSON.parse(lastHotelSearchValue.rooms);
 
-           const controlArray = <FormArray> this.searchHotelForm.get('rooms');
+        /*   const controlArray = <FormArray> this.searchHotelForm.get('rooms');
            for (let room = 0; room < localRooms.length; room++) {
               this.hotelRooms.push(this.formBuilder.group({
-                hotel_adult: [localRooms[room]['hotel_adult'], Validators.required],
-                hotel_child: [localRooms[room]['hotel_child'], [Validators.required]],
+                hotel_adult: [localRooms[room]['numberOfAdults'], Validators.required],
+                hotel_child: [localRooms[room]['numberOfChildren'], [Validators.required]],
                 child_age: new FormArray([])
               }));
 
 
-                let childAgeArray=localRooms[room]['child_age'];
+                let childAgeArray=localRooms[room]['childrenAge'];
 
                  if (childAgeArray.length >0) {
                 var updatedChildValue=controlArray.controls[room].get('hotel_child').value;
@@ -1107,7 +1111,7 @@ check_traveller_count(type) {
                         }));
                     }
              }
-            }
+            }*/
          this.hoteltraveller();
 
         var date6 = new Date(lastHotelSearchValue.hotelCheckin).getTime();

@@ -237,7 +237,6 @@ export class HeaderComponent implements OnInit {
   
   
     this.serviceSettings=this.appConfigService.getConfig();
-    console.log(this.serviceSettings.poweredByPartners);
     this.FM_BULKORDER_QTYLIMIT=AppConfig.FM_BULKORDER_QTYLIMIT;
     
         this.cookieMessage=this.serviceSettings.cookieMessage;
