@@ -8,7 +8,7 @@
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
                 </div>
                 <div class="hotel-search-list dropdown" #hideShowCity>
-                    <div class="mob-title">
+                    <div class="mob-title" *ngIf="isMobile">
                         <h3>City, Hotel or Area</h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
                             <img src="assets/images/icons/close.png" alt="" class="close-mobile">
@@ -204,7 +204,7 @@
                     <span class="small-text"></span>
                 </div>
                 <div class="hotel-room-select pt-20 pb-20 dropdown" #showHideGuest>
-                    <div class="mob-title">
+                    <div class="mob-title" *ngIf="isMobile">
                         <h3>ROOMS & GUESTS</h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
                             <img src="./assets/images/icons/close.png" alt="" class="close-mobile">
@@ -302,9 +302,9 @@
 
         </div>
     </form>
-    <div class="add-search-area">
+    <div class="add-search-area " >
         <!-- Preferred-OTA-Partner -->
-        <div class="Preferred-OTA-Partner-area">
+        <div class="Preferred-OTA-Partner-area d-none">
             <ul class="Preferred-OTA-Partner-ul">
                 <li style="display: flex;flex-direction: column;">
                     <span>Preferred </span>
