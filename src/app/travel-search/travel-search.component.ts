@@ -668,6 +668,7 @@ export class TravelSearchComponent implements OnInit {
     alert("Can add only 5 guests in a room");
     return;
     }
+    
 
    if(currentChildValue < 3)
    controlArray.controls[room].get('hotel_child').setValue(currentChildValue+1)
@@ -678,6 +679,8 @@ export class TravelSearchComponent implements OnInit {
 
     var updatedChildValue=controlArray.controls[room].get('hotel_child').value;
     this.hotelRoomsChildAge= <FormArray> controlArray.controls[room].get('child_age')
+    
+    
 
    if (this.hotelRoomsChildAge.length < updatedChildValue) {
            var acnt;
@@ -701,6 +704,7 @@ export class TravelSearchComponent implements OnInit {
   }
 
   getChildAges(roomid: number): FormArray {
+  
     return this.getRooms()
       .at(roomid)
       .get('child_age') as FormArray;
@@ -1046,7 +1050,7 @@ check_traveller_count(type) {
 
 
            //Hotels
-        lastHotelSearch=localStorage.getItem('hotelLastSearch');
+        lastHotelSearch=localStorage.getItem(environment.hotelLastSearch);
        const lastHotelSearchValue=JSON.parse(lastHotelSearch);
 
         if(lastHotelSearchValue){
@@ -1466,7 +1470,11 @@ check_traveller_count(type) {
       localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
   }
   sameCityValidation = false;
+    isMobile:boolean= false;
+  
+  
   onSubmit(service,type) {
+   this.isMobile = window.innerWidth < 991 ?  true : false;
         var xss = require("xss");
        var cookieArray=[]; var datePipe =new DatePipe('en-US');   var uDate; var uDateR; var cDate;var cDateR;var cookieDate;
        
@@ -1573,79 +1581,31 @@ check_traveller_count(type) {
         });
 
 
-
-       this.searchArray = {
-        hotelName:xss(this.searchHotelForm.controls.hotelName.value),
-        hotelId:xss(this.searchHotelForm.controls.hotelId.value),
-        countryId:xss(this.searchHotelForm.controls.countryId.value),
-        hotelCheckin:xss(uDate),
-        chotelCheckin:xss(cDate),
-        hotelCheckout:xss(uDateR),
-        chotelCheckout:xss(cDateR),
-        roomCount:xss(this.searchHotelForm.controls.roomCount.value),
-        room:xss((JSON.stringify(resultArray)))
-        };
-        localStorage.setItem('hotelLastSearch', JSON.stringify(this.searchArray));
-
-
-       // Only for Recent Search
-        var search_values_setCookieHotel = []; var search_values_setCookieHotel_temp = {};
-        search_values_setCookieHotel_temp['cityname']=xss(this.searchHotelForm.controls.hotelName.value);
-        search_values_setCookieHotel_temp['city_id']=xss(this.searchHotelForm.controls.hotelId.value);
-        search_values_setCookieHotel_temp['country']=xss(this.searchHotelForm.controls.countryId.value);
-        search_values_setCookieHotel_temp['checkin']=xss(uDate);
-        search_values_setCookieHotel_temp['checkout']=xss(cDate);
-        search_values_setCookieHotel_temp['hotelCheckout']=xss(uDateR);
-        search_values_setCookieHotel_temp['chotelCheckout']=xss(cDateR);
-        search_values_setCookieHotel_temp['num_rooms']=xss(this.searchHotelForm.controls.roomCount.value);
-
-         for (let a = 0; a < this.searchHotelForm.controls.roomCount.value; a++) {
-         search_values_setCookieHotel_temp['numberOfAdults'+(a+1)]=resultArray[a]['hotel_adult'];
-         search_values_setCookieHotel_temp['numberOfChildren'+(a+1)]=resultArray[a]['hotel_child'];
-
-         for (let c = 0; c < resultArray[a]['child_age'].length; c++) {
-          search_values_setCookieHotel_temp['room'+(a+1)+'Child'+(c+1)]=resultArray[a]['child_age'][c]['age'];
-         }
-         }
-
-        search_values_setCookieHotel_temp['t']=xss("ZWFybg==");
-
-        search_values_setCookieHotel.push(search_values_setCookieHotel_temp);
-
-
-
-        if (localStorage.getItem("HotelRecentSearch") != null) {
-        var HotelRecentSearchResult = JSON.parse(window.atob(localStorage.getItem("HotelRecentSearch")));
-
-
-        for (let cok = 0; cok < HotelRecentSearchResult.length; cok++) {
-        if (HotelRecentSearchResult[cok]['city_id'] == search_values_setCookieHotel[0].city_id && HotelRecentSearchResult[cok]['checkin'] == search_values_setCookieHotel[0].checkin && HotelRecentSearchResult[cok]['checkout'] == search_values_setCookieHotel[0].checkout) {
-        HotelRecentSearchResult.splice(cok, 1);
-        }
-        }
-        search_values_setCookieHotel= HotelRecentSearchResult.concat(search_values_setCookieHotel)
-
-        if (search_values_setCookieHotel.length >= 3) {
-        search_values_setCookieHotel=search_values_setCookieHotel.reverse().slice(0,3).reverse();
-        }
-        }
-
-        localStorage.setItem('HotelRecentSearch', btoa(JSON.stringify(search_values_setCookieHotel)));
-// Recent search ends
-
-        let queryParam:string='';  var j=1
+        let queryParam:string='';  var j=0;
+        let totalGuest=0;
         $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
-        queryParam+='numberOfAdults'+j+'='+(jsonObject['hotel_adult'])+'&numberOfChildren'+j+'='+(jsonObject['hotel_child'])+'&';
-
+        totalGuest+=(jsonObject['hotel_adult'])+(jsonObject['hotel_child']);
+        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge['+j+']=';
        if(jsonObject['child_age'].length > 0){
          for (let k = 0; k < jsonObject['child_age'].length; k++) {
-         queryParam+='room'+j+'Child'+(k+1)+'='+jsonObject['child_age'][k]['age']+'&';
+         queryParam+=jsonObject['child_age'][k]['age'];
+         if(k!=jsonObject['child_age'].length-1)
+          queryParam+=',';
          }
         }
         j++;
         });
+        
+        let device= this.isMobile ? 'Mobile' : 'Web';
 
 
+
+      let url='/hotel-list?checkIn='+uDate+'&checkOut='+uDateR+'&noOfRooms='+(this.searchHotelForm.value.rooms.length);
+      url+='&city='+this.searchHotelForm.value.hotelId+'&country='+this.searchHotelForm.value.countryId+'&countryName='+this.searchHotelForm.value.countryId+'&scr=INR';
+      url+='&sct='+this.searchHotelForm.value.countryId+'&hotelName=&latitude=&longitude=&area=&hotelId=&'+queryParam;
+      url+='&channel='+device+'&programName='+this.sg['domainName']+'&limit=0&numberOfRooms='+(this.searchHotelForm.value.rooms.length)+'&totalGuest='+totalGuest;
+      
+      
                if(environment.IS_MAIN==1){
         const current = new Date();
         this.redirectPopupTriggerTimestamp=current.getTime();
@@ -1654,9 +1614,11 @@ check_traveller_count(type) {
         this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
          return;
         }
+        
 
- this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
-       //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
+ this.router.navigateByUrl(url);
+
+
 
         break;
         }
