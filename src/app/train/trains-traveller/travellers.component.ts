@@ -2873,20 +2873,21 @@ this.spinnerService.show();
     
        manualAddTraveller(type){
         if(type==1){
-           this.addTraveller(-1,-1);
+           
             if(this.isMobile){
                 $('#addTraveller_mlite').modal('show');
                 this.mlitetravellerformsubmit = false;
         }
+        this.addTraveller(-1,-1);
           
         }else{
-         this.addChild(-1,-1);
+        
             if(this.isMobile){
                
                 $('#addInfant_mlite').modal('show');
                 this.mlitechildformsubmit=false;
             }
-           
+            this.addChild(-1,-1);
         }
         
        }
@@ -3164,6 +3165,7 @@ this.spinnerService.show();
             
             
         } else {
+            // $('#infantTraveller_mlite').modal('hide');
             $('#addInfant_mlite').modal('hide');
           if(checkboxIndex !=-1){
 
@@ -3180,7 +3182,8 @@ this.spinnerService.show();
                     messageData: message
                 }
             });
-            //this.childCount = Number(this.maxInfants)+1;
+            
+            // this.childCount = Number(this.mraxInfants)+1;
         }
 
     }
