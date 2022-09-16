@@ -41,10 +41,10 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   @ViewChild('checkIn') checkIn: ElementRef;
   @ViewChild('checkOut') checkOut: ElementRef;
 
-  
 
- 
-  
+
+
+
 
   constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute) {
     this.hotelSearchForm = this._fb.group({
@@ -78,8 +78,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   ngOnInit(): void {
     this.getSearchValueLocalStorage();
-    
-    
+
+
   }
 
   public Error = (controlName: string, errorName: string) => {
@@ -149,7 +149,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
-    
+
   }
 
   //Decrease child and adult value
@@ -230,11 +230,11 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
-  
+
   onSelectCity(param){
     this.hotelSearchForm.value.city = param._source.city;
     this.cityName = this.hotelSearchForm.value.city;
-    this.hotelSearchForm.value.countryName = param._source.countryName; 
+    this.hotelSearchForm.value.countryName = param._source.countryName;
     this.hideShowCity.nativeElement.style.display = "none";
     this.checkIn.nativeElement.click()
   }
@@ -266,12 +266,40 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       ageArr = [selectAge1.value,selectAge2.value,selectAge3.value]
     }
     item.value.childrenAge = ageArr;
-    
+    if(this.submitted)
+    {
+      var rooms =  this.hotelSearchForm.value.rooms;
+      var j = 0;
+      var isvalid = true;
+      rooms.forEach(z => {
+        if(z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0)
+        {
+          var id = document.getElementById("error_"+j)
+          id.hidden = false;
+          isvalid = false;
+        }else{
+          var id = document.getElementById("error_"+j)
+          id.hidden = true;
+        }
+        j++;
+      });
+      if(!isvalid)
+      {
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = false;
+      }
+      else{
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = true;
+      }
+    }
+
+
   }
 
 
 
- 
+
 
   ngAfterViewInit(): void {
     fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
@@ -280,7 +308,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       switchMap(value => this._hotelService.getHotelCityList(value)))
       .subscribe((res: any) => { this.queryText = res.hits.hits; })
   }
-    
+
 
 
   ConvertObjToQueryString(obj: any) {
@@ -329,12 +357,36 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   searchHotel() {
     debugger;
       this.submitted = true;
+      var rooms =  this.hotelSearchForm.value.rooms;
+      var i = 0;
+      var isvalid = true;
+      rooms.forEach(z => {
+        if(z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0)
+        {
+          var id = document.getElementById("error_"+i)
+          id.hidden = false;
+          isvalid = false;
+        }else{
+          var id = document.getElementById("error_"+i)
+          id.hidden = true;
+        }
+        i++;
+      });
+
       if(this.hotelSearchForm.invalid){
-        return 
+        return
+      }
+      else if(!isvalid)
+      {
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = false;
+        return
       }
       else {
-      this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');  
-      this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;   
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = true;
+      this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');
+      this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
       localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
@@ -344,9 +396,4 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     }
 
   }
-
-
-
-
-
 }
