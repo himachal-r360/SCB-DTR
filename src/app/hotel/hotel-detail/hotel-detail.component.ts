@@ -271,10 +271,28 @@ export class HotelDetailComponent implements OnInit {
     //this.router.navigateByUrl(this.currentLink +id);
     //this.router.navigate([id], {relativeTo:this.route})
   }
-   onBooking()
+   onBooking(item)
   {
+
+        let hotelDetailsArr: any = {
+        "docKey": this.DocKey,
+        "Hotelkey": this.Hotelkey,
+        "queryHotelData": this.SelectedQueryParam,
+        "PriceSummery": this.PriceSummery,
+        "selectedHotel": item,
+        "hotel_detail": this.HotelDetail
+        };
+
+console.log(hotelDetailsArr);
+        let randomHotelDetailKey = btoa(item.roomType.bookingCode+this.PriceSummery.partnerName);
+        sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
+        let url = 'hotel-checkout?searchHotelKey=' + randomHotelDetailKey;
+
+        setTimeout(() => {
+        this.router.navigateByUrl(url);
+        }, 10);
    
-    this.router.navigate(['/hotel-checkout']);
+   
 }
   onImageClick(index:number)
   {

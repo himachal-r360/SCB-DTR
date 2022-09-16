@@ -1,12 +1,12 @@
-<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
   <div class="container">
       <div class="row">
           <div class="col-md-12">
               <div class="bradcome-list">
                   <ul class="list-inline">
-                      <li class="list-inline-item"><a href="#">Home</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="#">Travel &amp; Stays</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel &amp; Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item" *ngIf="HotelDetail"><span>{{HotelDetail.hotelName}}</span></li>
                   </ul>
@@ -242,7 +242,7 @@
                                                       <div class="hd-rdetails-right">
                                                           <h6>₹{{item.rateBreakdown.total | number}}</h6>
                                                           <p>Inclusive of taxes</p>
-                                                          <a href="javascript:;" class="button-style"  (click)="onBooking()">Book Now</a>
+                                                          <a href="javascript:;" class="button-style"  (click)="onBooking(item)">Book Now</a>
                                                       </div>
                                                   </div>
                                               </div>
@@ -464,7 +464,7 @@
                                                                     <p>Inclusive of taxes</p>
                                                                 </div>
                                                                 <div class="hd-rdetails-right-btn">
-                                                                    <a href="javascript:;" class="button-style" (click)="onBooking()">Book Now</a>
+                                                                    <a href="javascript:;" class="button-style" (click)="onBooking(item)">Book Now</a>
                                                                 </div>
                                                             </div>
                                                         </div>

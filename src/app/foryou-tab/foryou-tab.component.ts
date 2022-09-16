@@ -452,7 +452,6 @@ public modeselectTrending= 'All';
               Redirecturl: url
             });
           });
-          console.log(this.cookie_all);
           
           this.cookie_all.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); 
           this.recentsearchData = this.cookie_all.slice(0, 2);

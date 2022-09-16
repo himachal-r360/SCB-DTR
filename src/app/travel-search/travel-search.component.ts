@@ -1054,7 +1054,6 @@ check_traveller_count(type) {
        const lastHotelSearchValue=JSON.parse(lastHotelSearch);
        
        
-       console.log(lastHotelSearchValue);
 
         if(lastHotelSearchValue){
         this.hotelFromText=lastHotelSearchValue.city+', '+ lastHotelSearchValue.countryName;
