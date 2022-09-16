@@ -2701,7 +2701,7 @@ recivetotalFare($event){
         if (actualtime >= parseInt(AppConfig.blocktimings.userUpdateBlockstart) && actualtime <= parseInt(AppConfig.blocktimings.userUpdateBlockend)) {
             this.openDialog();
         } else {
-            this.router.navigate(['/train/registration']);
+            this.router.navigate(['/train/registration'],{queryParams:{fromstn:this.fromstnDesc,tostn:this.tostnDesc,traveldate:this.traveldate}});
            /* this.trainDetails = false;
             this.irctcRegister = true ; */
         }
