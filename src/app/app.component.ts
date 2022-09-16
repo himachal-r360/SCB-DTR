@@ -168,6 +168,7 @@ export class AppComponent implements OnInit {
     this.title.setTitle('Smartbuy');
    this.onEvents();
 
+
    var impMessageArg = {
     clientToken:'HDFC243'
     };
@@ -232,6 +233,11 @@ export class AppComponent implements OnInit {
 }
 
   onEvents() {
+  
+  
+     $(".dropdown").hover(function(){
+ $('.list-travel').removeClass("hideDrop");
+});
      this.checkOrientation();
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
         switch(this.serviceSettings.COOKIE_CONSENT_TYPE) { 
