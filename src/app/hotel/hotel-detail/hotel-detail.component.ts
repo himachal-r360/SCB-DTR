@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
@@ -271,6 +271,11 @@ export class HotelDetailComponent implements OnInit {
     //this.router.navigateByUrl(this.currentLink +id);
     //this.router.navigate([id], {relativeTo:this.route})
   }
+   onBooking()
+  {
+   
+    this.router.navigate(['/hotel-checkout']);
+}
   onImageClick(index:number)
   {
     this.WideImageOwl.to('Id_'+index);
@@ -288,10 +293,6 @@ export class HotelDetailComponent implements OnInit {
     }
   }
 
-  onBooking()
-  {
-    $("#bookingprocess").modal('show')
-  }
   CloseModal()
   {
     $("#moreAmenities").modal('hide')
