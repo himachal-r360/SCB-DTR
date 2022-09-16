@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef,  EventEmitter,  Input,  OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef,  EventEmitter,    HostListener,    Input,  OnInit, Output,  ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { debounceTime, fromEvent, map, reduce, switchMap } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { ActivatedRoute,  Router } from '@angular/router';
-import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+
 
 @Component({
   selector: 'app-hotel-search',
@@ -23,6 +23,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   latestDate = new Date();
   cityName = 'New Delhi';
   continueSearchHotel;
+  searchEvent;
+
   childAgeArr = [
     { value: 2 },
     { value: 3 },
@@ -34,7 +36,22 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     { value: 9 },
     { value: 10 },
     { value: 11 }
-  ]
+  ];
+  defaultHotelOptions=[
+    {"_source":{"full_content":"Mumbai, Maharashtra, India","city":"Mumbai","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Bangalore, Karnataka, India","city":"Bangalore","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"New Delhi, Delhi NCR, India","city":"New Delhi","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Chennai, Tamil Nadu, India","city":"Chennai","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Goa, India","city":"Goa","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Kolkata, West Bengal, India","city":"Kolkata","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Hyderabad, Andhra Pradesh, India","city":"Hyderabad","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Jaipur, Rajasthan, India","city":"Jaipur","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Cochin, Kerala, India","city":"Cochin","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"London, Greater London, United Kingdom","city":"London","countryName":"United Kingdom","country":"UK"}},
+    {"_source":{"full_content":"Dubai, Dubai Emirate, United Arab Emirates","city":"Dubai","countryName":" United Arab Emirates","country":"AE"}},
+    {"_source":{"full_content":"Bangkok, Bangkok Province, Thailand","city":"Bangkok","countryName":" Thailand","country":"TH"}},
+    
+    ];
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
   @ViewChild('citySearchRef') citySearchRef: ElementRef;
@@ -74,12 +91,26 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       numberOfRooms: [1],
       totalGuest:[]
     });
+
+   
   }
 
+  @HostListener('document:click', ['$event']) onDocumentClick(event) {
+    let element = event?.target as HTMLElement
+    // if(this.hideShowCity.nativeElement.contains(!event.target) && !element.classList.contains('hotel-search-list')) {
+    //   this.showCity('hide')
+    // }
+    // console.log('click' , element);
+    // console.log(event);
+    
+  }
+
+
   ngOnInit(): void {
-    this.getSearchValueLocalStorage();
-    
-    
+    this.getSearchValue = localStorage.getItem('hotelSearch')
+    if(this.getSearchValue != undefined || this.getSearchValue != null){
+      this.getSearchValueLocalStorage();
+    }
   }
 
   public Error = (controlName: string, errorName: string) => {
@@ -89,6 +120,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   showCity(val) {
     if (val == 'show') {
       this.hideShowCity.nativeElement.style.display = "block";
+      this.citySearchRef.nativeElement.focus();
     }
     else {
       this.hideShowCity.nativeElement.style.display = "none";
@@ -96,7 +128,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   }
 
   getSearchValueLocalStorage() {
-    this.getSearchValue = localStorage.getItem('hotelSearch')
+    
     let modifySearchValue = JSON.parse(this.getSearchValue);
     this.cityName = modifySearchValue.city
     let roomArr = modifySearchValue.rooms;
@@ -231,12 +263,15 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.showTotalCountsOfChild();
   }
   
-  onSelectCity(param){
-    this.hotelSearchForm.value.city = param._source.city;
+  onSelectCity(param) {
+    this.hotelSearchForm['controls']['city'].setValue(param._source.city);
+    this.hotelSearchForm['controls']['countryName'].setValue(param._source.countryName);
+    this.hotelSearchForm['controls']['country'].setValue(param._source.country);
     this.cityName = this.hotelSearchForm.value.city;
-    this.hotelSearchForm.value.countryName = param._source.countryName; 
     this.hideShowCity.nativeElement.style.display = "none";
     this.checkIn.nativeElement.click()
+    console.log(this.citySearchRef.nativeElement.value);
+    
   }
 
   checkInDate(event){
@@ -276,7 +311,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   ngAfterViewInit(): void {
     fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
       debounceTime(300),
-      map((e: any) => e.target.value),
+      map((e: any) => this.searchEvent =  e.target.value ),
       switchMap(value => this._hotelService.getHotelCityList(value)))
       .subscribe((res: any) => { this.queryText = res.hits.hits; })
   }
@@ -327,7 +362,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   }
 
   searchHotel() {
-    debugger;
       this.submitted = true;
       if(this.hotelSearchForm.invalid){
         return 

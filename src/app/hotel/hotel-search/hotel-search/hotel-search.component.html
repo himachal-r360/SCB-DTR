@@ -17,7 +17,7 @@
                     <div class="hotel-from-data-search">
                         <span>from</span>
                         <!-- <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city"  (keyup)="searchAutoComplete($event)"> -->
-                        <input type="text" class="w-100" #citySearchRef placeholder="Search City" formControlName="city" >
+                        <input type="text" class="w-100" #citySearchRef placeholder="Search City" formControlName="city">
                         <input type="hidden" class="w-100" formControlName="countryName" >
                     </div>
                     <ul class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
@@ -32,7 +32,19 @@
                                 </a>
                             </li>
                         </ng-container>
-                        
+                       <ng-container *ngIf="!searchEvent">
+                        <ng-container *ngFor="let item of defaultHotelOptions">
+                            <li class="hotel-from-ul-li"  >
+                                <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
+                                    <div class="hotel-from-name">
+                                        <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                        <h6>{{item._source.full_content}}</h6>
+                                        <p>528 Hotels</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ng-container>
+                    </ng-container> 
                     </ul>
                 </div>
                 <div class="error_msg w-35" *ngIf="submitted && Error('city', 'required')">
