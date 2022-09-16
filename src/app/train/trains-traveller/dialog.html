@@ -1,8 +1,14 @@
 <ng-container>
     <ng-container *ngIf="data.errorDialog">
       <mat-dialog-content >
-      <p class="py-2"><i class="material-icons" style="font-size: 50px;"> error </i> <br/> <span class="text-dark">{{data.messageData}}</span></p>
-      <button class="btn btn-outline-primary my-3" (click)="onYesClick()" tabindex="1" >OK</button>
+      
+        <!-- <i class="material-icons" style="font-size: 50px;"> error </i> <br/>  -->
+        <div class="p-3">
+          <h6 style="font-weight:600;">Alert</h6>
+            <p class="py-2">
+            <span class="text-dark">{{data.messageData}}</span></p>
+            <button class="btn btn-primary  pull-right my-2" (click)="onYesClick()" tabindex="1" >OK</button>
+        </div>
       </mat-dialog-content>
     </ng-container>
 

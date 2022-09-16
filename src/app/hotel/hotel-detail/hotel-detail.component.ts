@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
@@ -30,6 +30,8 @@ export class HotelDetailComponent implements OnInit {
   currentLink :string;
   SelectedQueryParam:any;
   loaderValue:number;
+  TotalAdult:number = 0;
+  TotalChild:number = 0;
   Facilities:any =
     {
     'roomService':{name:'Room Service',value:'roomService',image:'assets/images/hotel/Offered/hotelDetail_roomService.svg'},
@@ -198,7 +200,7 @@ export class HotelDetailComponent implements OnInit {
     this.route.url.subscribe(url => {
 
 
-      console.log(url)
+      console.log(this.checkin)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
@@ -214,6 +216,10 @@ export class HotelDetailComponent implements OnInit {
       this.Hotelkey =Details.hotelkey;
       this.DocKey = Details.docKey;
       this.SelectedQueryParam = Details.QueryData;
+   this.SelectedQueryParam.rooms.forEach((z)=>{
+    this.TotalAdult += parseInt(z.numberOfAdults);
+    this.TotalChild += parseInt(z.numberOfChildren);
+   })
       this.headerHideShow(null);
       this.GetHotelDetails();
     });
@@ -265,6 +271,29 @@ export class HotelDetailComponent implements OnInit {
     //this.router.navigateByUrl(this.currentLink +id);
     //this.router.navigate([id], {relativeTo:this.route})
   }
+   onBooking(item)
+  {
+
+        let hotelDetailsArr: any = {
+        "docKey": this.DocKey,
+        "Hotelkey": this.Hotelkey,
+        "queryHotelData": this.SelectedQueryParam,
+        "PriceSummery": this.PriceSummery,
+        "selectedHotel": item,
+        "hotel_detail": this.HotelDetail
+        };
+
+console.log(hotelDetailsArr);
+        let randomHotelDetailKey = btoa(item.roomType.bookingCode+this.PriceSummery.partnerName);
+        sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
+        let url = 'hotel-checkout?searchHotelKey=' + randomHotelDetailKey;
+
+        setTimeout(() => {
+        this.router.navigateByUrl(url);
+        }, 10);
+   
+   
+}
   onImageClick(index:number)
   {
     this.WideImageOwl.to('Id_'+index);
@@ -282,8 +311,8 @@ export class HotelDetailComponent implements OnInit {
     }
   }
 
-  onBooking()
+  CloseModal()
   {
-    $("#bookingprocess").modal('show')
+    $("#moreAmenities").modal('hide')
   }
 }
