@@ -776,8 +776,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         (target as HTMLElement).focus();
         }
         }
-        console.log(this.passengerForm);  
-        
       return;
     } else {
      this.spinnerService.show();
@@ -786,6 +784,89 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
       else
         whatsappFlag = 0;
+       
+       var gender; 
+       switch (this.passengerForm.controls['passengerTitle']['value']) {
+        case 'Mr':
+        gender='MALE';
+        break;
+        case 'Mrs':
+        gender='FEMALE';
+        break;
+        case 'Ms':
+        gender='FEMALE';
+        break;
+        default:
+        gender='Male';
+
+        }
+        
+        this.itineraryParam ={
+        "bookingAmount":this.selectedHotel.rateBreakdown.total,
+        "bookingCode": this.selectedHotel.roomType.bookingCode,
+        "checkIn": this.searchData.checkIn,
+        "checkOut": this.searchData.checkOut,
+        "clientName": "HDFC243",
+        "couponCode": "",
+        "customer-ip-address": "",
+        "customerId": this.REWARD_CUSTOMERID,
+        "customerInfo": {
+        "title": this.passengerForm.controls['passengerTitle']['value'],
+        "firstName": this.passengerForm.controls['passengerFirstName']['value'],
+        "lastName": this.passengerForm.controls['passengerLastName']['value'],
+        "email": this.passengerForm.controls['passengerEmail']['value'],
+        "mobile": this.passengerForm.controls['passengerMobile']['value'],
+        "city": "",
+        "country": "",
+        "postalCode": "",
+        "paxType": "ADULT",
+        "gender": gender,
+        "state": "",
+        "streetAddress1": "",
+        "nationality": ""
+        },
+        "discountAmount": 0,
+        "hotelId": this.Hotelkey,
+        "mobileCountryCode": 91,
+        "noOfRooms": this.searchData.numberOfRooms,
+        "operator": "",
+        "orderId": "",
+        "osVersion": "web",
+        "partnerName": this.partnerToken,
+        "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
+        "mmtTxnKey": "",
+        "rooms": [
+        {
+        "childrenAge": "",
+        "numberOfAdults": 2,
+        "numberOfChildren": 0,
+        "room": 1,
+        "roomRatePlanId": "385069069:315925976",
+        "roomTypeId": "385069069:315925976"
+        }
+        ],
+        "serviceName": "Hotel"
+        };
+        
+        
+        console.log(this.itineraryParam);return;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
        this.spinnerService.hide();  
         this.steps = 2;
         this.completedSteps = 2;
