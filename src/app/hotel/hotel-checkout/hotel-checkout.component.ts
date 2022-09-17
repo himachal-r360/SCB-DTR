@@ -18,16 +18,10 @@ import alertifyjs from 'alertifyjs';
 import * as moment from 'moment';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
-import { stringify } from '@angular/compiler/src/util';
-import { AbstractControl } from '@angular/forms';
-import { BusResponse } from 'src/app/entites/bus-response';
 import { NgxSpinnerService } from "ngx-spinner";
-import { Subscription } from 'rxjs';
 import { APP_CONFIG, AppConfig } from '../../configs/app.config';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BusService } from 'src/app/shared/services/bus.service';
-import { PlatformLocation } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MatDialogModule, MatDialogActions } from '@angular/material/dialog';
 import { parse } from 'path';
@@ -54,117 +48,81 @@ export const MY_DATE_FORMATS = {
   ]
 })
 export class HotelCheckoutComponent implements OnInit, OnDestroy {
-  partnerToken: any;
-  isMobile: boolean = true;
-  completedSteps = 1;
-  steps = 1;
-  sessionTimer: any = 3;
-  serviceId: string = 'RedBus';
-  template: string = '<div class="app-loading-new"><div class="logo"></div></div>'
-  pgCharges: number = 0;
-  errorMsg: any;
-  validateUser: boolean = true;
-  bookingFee: any;
-  cdnUrl: any;
-  showpassbox = false;
-  gstshow = false;
-  hideDelay = new FormControl(2000);
-  bpName: any;
-  dpName: any;
-  bpTime: any;
-  dpTime: any;
-  totalFareStr: string;
-  convertpipe: any;
-  saveTravllerShow: Boolean = false; getTravllerShow: Boolean = false;
-  getGSTShow: Boolean = false;
-  blockResponse: BusResponse;
-  busSubscription: Subscription;
-  searchArray: any = [];
-  ctype: string = 'redbus';
-  searchBusKey: string;
-  seacthResult: any = [];
-  onward: any = [];
-  totalBaseFare: number;
-  totalFare: number = 0;
-  intialTotalFare: number = 0;
-  totalTax: number;
-  assetPath: string;
-  passengerCount: any = [];
-  passengerForm: FormGroup;
-  submitted = false;
-  success = false;
-  blockKey: string;
-  passengerData: any = [];
-  passengerContactData: any = [];
-  gstDetails: any = [];
-  itineraryParam: any = [];
-  clientTransactionId: string;
-  orderReferenceNumber: string;
-  convenience_fee: number = 0;
-  REWARD_CUSTOMERID: string;
-  REWARD_EMAILID: string;
-  REWARD_MOBILE: string;
-  REWARD_FIRSTNAME: string;
-  REWARD_LASTNAME: string;
-  busData: any = [];
-  fareData: any = [];
-  savedCards: any = [];
-  defaultPrimary: number = 0;
-  whatsappFeature: number = 0;
-  gstSelected: boolean = false;
-  appConfig: any;
-  domainPath: string;
-  domainRedirect: string;
-  testError: any;
-  XSRFTOKEN: string;
-  statesdump: any = [];
-  seatResponse: any = [];
-  IsDcemiEligibleFlag: boolean = false;
-  enableGST: any; enablesavedTraveller: number = 0;
-  boardingpointName: any;
-  droppingpointName: any;
-  boardingpointTime: any;
-  droppingPointTime: any;
-  boardingDate: any;
-  droppingDate: any;
-  printdoj: boolean = false;
-  boardingID: any;
-  droppingID: any;
-  actualboarding: any;
-  actualdropping: any;
-  showFlexipay: any;
-  flexipaysummry: any;
-  flexiDiscount: any;
-  flexiIntrest: any;
-  isFlexipayEligibleFlag: boolean = false;
-  serviceSettings: any;
-  activecheckbox: boolean = true;
-  sendflexiFare: any;
-  customerInfo: any;
-  domainName: any;
-  isExpanded: boolean = false;
-  isGstExpanded: boolean = false;
-  isCollapseBasefare: boolean = false;
-  isCollapseDiscount: boolean = false;
-  isCollapseVas: boolean = false;
-  isCollapse: boolean = false;
-  SeatNumber: any;
-      passengerSelectedArray:any={};
-  saveAdultTravellerId = [];
-  saveInfantTravellerId = [];
-  passengerArray = [];
-  passengerFormCount: number = 1;
-  isAdultExpanded:boolean = false;
-    isInfantExpanded:boolean = false;
+        partnerToken: any;
+        selectedHotel:any=[];
+        hotelData:any=[];
+        searchData:any=[];
+        isMobile: boolean = true;
+        completedSteps = 1;
+        steps = 1;
+        sessionTimer: any = 3;
+        serviceId: string = 'RedBus';
+        pgCharges: number = 0;
+        errorMsg: any;
+        cdnUrl: any;
+        gstshow = false;
+        convertpipe: any;
+        getGSTShow: Boolean = false;
+        searchArray: any = [];
+        ctype: string = 'redbus';
+        searchHotelKey: string;
+        searchResult: any = [];
+        totalBaseFare: number;
+        totalFare: number = 0;
+        intialTotalFare: number = 0;
+        totalTax: number;
+        partnerDiscount:number;
+        assetPath: string;
+        passengerCount: any = [];
+        passengerForm: FormGroup;
+        submitted = false;
+        success = false;
+        passengerData: any = [];
+        passengerContactData: any = [];
+        gstDetails: any = [];
+        itineraryParam: any = [];
+        orderReferenceNumber: string;
+        convenience_fee: number = 0;
+        REWARD_CUSTOMERID: string;
+        REWARD_EMAILID: string;
+        REWARD_MOBILE: string;
+        REWARD_FIRSTNAME: string;
+        REWARD_LASTNAME: string;
+        fareData: any = [];
+        savedCards: any = [];
+        whatsappFeature: number = 0;
+        gstSelected: boolean = false;
+        appConfig: any;
+        domainPath: string;
+        domainRedirect: string;
+        XSRFTOKEN: string;
+        IsDcemiEligibleFlag: boolean = false;
+        enableGST: any; enablesavedTraveller: number = 0;
+        showFlexipay: any;
+        flexipaysummry: any;
+        flexiDiscount: any;
+        flexiIntrest: any;
+        isFlexipayEligibleFlag: boolean = false;
+        serviceSettings: any;
+        activecheckbox: boolean = true;
+        sendflexiFare: any;
+        customerInfo: any;
+        domainName: any;
+        isExpanded: boolean = false;
+        isGstExpanded: boolean = false;
+        isCollapseBasefare: boolean = false;
+        isCollapseDiscount: boolean = false;
+        isCollapseVas: boolean = false;
+        isCollapse: boolean = false;
+        passengerSelectedArray:any={};
+        totalAdult:number = 0;
+        totalChild:number = 0;
 
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
-    private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog, private busService: BusService, private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, plocation: PlatformLocation, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
+    private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog,  private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
 
     this.serviceSettings = this.appConfigService.getConfig();
-
-    
-
-    if (this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['BUS'] != 1) {
+    if (this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['HOTEL'] != 1) {
       this.router.navigate(['/**']);
     }
     this.domainName = this.sg['domainName'];
@@ -172,19 +130,11 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.appConfig = appConfig;
     this.domainPath = this.sg['domainPath'];
     this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
-    this.statesdump = require('src/assets/data/states.json');
     this.whatsappFeature = this.serviceSettings.whatsappFeature;
     this.enableGST = this.serviceSettings.enableSavedGST;
     this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
     this.partnerToken = 'Redbus';
-    this.passengerArray = [];
-    this.passengerFormCount = 1;
-    // plocation.onPopState(() => {
-    //   history.go(1);
-    // });
     alertify.set('notifier', 'position', 'bottom-center');
-
-
   }
   loaderValue = 10;
   public Button_loading: any = 'Processing...';
@@ -291,8 +241,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount));
       this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
       this.createItinerarydata();
-      sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
-      sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
     } else {
       this.coupon_id = '';
       this.coupon_name = '';
@@ -302,8 +252,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount));
       this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
       this.createItinerarydata();
-      sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
-      sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
     }
   }
 
@@ -316,23 +266,11 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
     this.createItinerarydata();
     this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-    sessionStorage.setItem(this.searchBusKey + '-passData', this.EncrDecr.set(JSON.stringify(this.busData)));
-    sessionStorage.setItem(this.searchBusKey + '-totalFare', String(this.totalFare));
+    sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
+    sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
 
-  isCollapseShow(identifyCollpase) {
 
-    if (identifyCollpase == 'BaseFare') {
-      this.isCollapseBasefare = !this.isCollapseBasefare;
-    } else if (identifyCollpase == 'vas') {
-      this.isCollapseVas = !this.isCollapseVas;
-    } else if (identifyCollpase == 'discount') {
-      this.isCollapseDiscount = !this.isCollapseDiscount;
-    } else {
-      this.isCollapse = !this.isCollapse;
-    }
-
-  }
 
 
 
@@ -340,7 +278,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.titleService.setTitle('Home | Hotels');
 
     this.activatedRoute.url.subscribe(url => {
-      this.buttonSubmitted = false;
       this.resetPopups();
       this.steps = 1;
       this.isMobile = window.innerWidth < 991 ? true : false;
@@ -349,18 +286,14 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       } else {
         this._flightService.showHeader(true);
       }
-      
-
 
       setTimeout(() => {
         //Check Laravel Seesion
         if (this.sg['customerInfo']) {
-
           if (sessionStorage.getItem("channel") == "payzapp") {
             var customerInfo = this.sg['customerInfo'];
             this.customerInfo = customerInfo;
             this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
-            setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
             this.REWARD_CUSTOMERID = '0000';
             this.REWARD_EMAILID = '';
             this.REWARD_MOBILE = '';
@@ -370,7 +303,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
             var customerInfo = this.sg['customerInfo'];
             if (customerInfo["org_session"] == 1) {
               this.customerInfo = customerInfo;
-              setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
 
               if (customerInfo["guestLogin"] == true) {
                 this.REWARD_CUSTOMERID = customerInfo["id"];
@@ -431,7 +363,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
                 });
               }
             } else {
-              setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
               this.REWARD_CUSTOMERID = '0000';
               this.REWARD_EMAILID = '';
               this.REWARD_MOBILE = '';
@@ -463,7 +394,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
           }
 
         } else {
-          setTimeout(function () { this.validateUser = false; }.bind(this), 1000);
           this.REWARD_CUSTOMERID = '0000';
           this.REWARD_EMAILID = '';
           this.REWARD_MOBILE = '';
@@ -493,38 +423,36 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
       sessionStorage.removeItem("coupon_amount");
       const jobGroup: FormGroup = new FormGroup({});
+      this.searchHotelKey = this.activatedRoute.snapshot.queryParamMap.get('searchHotelKey');
+      this.searchResult = JSON.parse(sessionStorage.getItem(this.searchHotelKey));
 
-
-      this.searchBusKey = this.activatedRoute.snapshot.queryParamMap.get('searchBusKey');
-     
-      this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchBusKey));
-                        if(!this.seacthResult){
-        // this.router.navigate(['/bus']);
+        if(!this.searchResult){
+        this.router.navigate(['/compare-stay']);
         }
+        
+        this.searchData=this.searchResult.queryHotelData;
+        this.searchData.rooms.forEach((z)=>{
+        this.totalAdult += parseInt(z.numberOfAdults);
+        this.totalChild += parseInt(z.numberOfChildren);
+        })
+      
+        this.selectedHotel=this.searchResult.selectedHotel;
+   
+        
+        this.totalFare = Number(this.selectedHotel.rateBreakdown.total);
+        this.intialTotalFare = Number(this.selectedHotel.rateBreakdown.total);
+       
+        this.totalBaseFare = Number(this.selectedHotel.rateBreakdown.baseFare);
+        this.totalTax = Number(this.selectedHotel.rateBreakdown.tax);
+         this.partnerDiscount = Number(this.selectedHotel.rateBreakdown.partnerDiscount);
+        
+         console.log(this.searchResult);
 
-
-      if (this.seacthResult != null) {
-        /*for (var i = 0; i < Number(this.passengerCount); i++) {
-          var firstname;
-          var lastname;
-          if (i == 0) {
-            firstname = '';
-            lastname = '';
-          } else {
-            firstname = '';
-            lastname = '';
-          }
-          jobGroup.addControl('passengerid' + i, new FormControl(0));
-          jobGroup.addControl('passengerFirstName' + i, new FormControl(firstname, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]));
-          jobGroup.addControl('passengerLastName' + i, new FormControl(lastname, [Validators.required, Validators.pattern(this.patternNameLastName)]));
-          jobGroup.addControl('passengerAge' + i, new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.max(125)]));
-          jobGroup.addControl('passengerGender' + i, new FormControl('', Validators.required));
-          jobGroup.addControl('saveTraveller', new FormControl(''));
-          
-          this.passengerSelectedArray[i]=0;
-          
-        }*/
-
+      if (this.searchResult != null) {
+        jobGroup.addControl('passengerId' , new FormControl());
+        jobGroup.addControl('passengerTitle', new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+        jobGroup.addControl('passengerFirstName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+        jobGroup.addControl('passengerLastName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
         jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]));
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID, [Validators.required, Validators.pattern(this.emailPattern)]));
         jobGroup.addControl('passengerAgree', new FormControl('', [Validators.required, Validators.pattern('true')]));
@@ -544,7 +472,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
           this.domainRedirect = environment.MAIN_SITE_URL + this.domainPath;
         }
       } else {
-        this.router.navigate(['/' + this.sg['domainPath'], 'bus']);
+        this.router.navigate(['/' + this.sg['domainPath'], 'compare-stay']);
       }
 
 
@@ -552,7 +480,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     });
     
   }
-
 
 
   /*--------Save traveller & gst info----------*/
@@ -570,27 +497,15 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
   isExpandedStretch : boolean = false;
   @ViewChild("contentTraveller") modalTraveller: TemplateRef<any>;
 
-  chooseFromSavedTravellers() {
-    this.isExpanded = false;
-    this.modalService.open(this.modalTraveller, { centered: true }).result.then((result) => {
-      // this.closeResult = `Closed with: ${result}`;
-      // console.log(this.isChecked);
-    }, (reason) => {
-      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+
   @ViewChild("contentGST") modalGST: TemplateRef<any>;
   expandItems(formId) {
    
     this.expandid = formId;
-    //this.isExpanded = true;
-    //this.isExpandedStretch=true;
   }
 
   expandItemsstretch(formId) {
     this.expandid = 'n'; //setting dummy value so that process will work without flaw.
-   // this.isExpanded = false;
-    //this.isExpandedStretch=false;
   }
 
 
@@ -598,26 +513,18 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     $('#bookingprocessFailed').modal('hide');
     let url;
     this.resetPopups();
-    
-    url = "hotel-list?searchFrom="+this.seacthResult.searchFrom+"&searchTo="+this.seacthResult.searchTo+"&fromTravelCode="+this.seacthResult.fromTravelCode+"&toTravelCode="+this.seacthResult.toTravelCode+"&fromState="+this.seacthResult.toTravelCode+"&toState="+this.seacthResult.toState+"&departure="+this.seacthResult.departure;
-    
-   
+    url = "hotel-list?searchFrom="+this.searchResult.searchFrom+"&searchTo="+this.searchResult.searchTo+"&fromTravelCode="+this.searchResult.fromTravelCode+"&toTravelCode="+this.searchResult.toTravelCode+"&fromState="+this.searchResult.toTravelCode+"&toState="+this.searchResult.toState+"&departure="+this.searchResult.departure;
     this.router.navigateByUrl(url);
-
   }
   
   
 
   bookingSessionExpires(e: CountdownEvent) {
-
     if (e.action == 'done') {
-
       $('#bookingprocessExpires').modal('show');
     }
-
-
-
   }
+  
   resetPopups() {
 
     $(".modal").hide();
@@ -651,11 +558,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     alertify.alert('I give consent to Reward360 to store personal information which I am entering on my own accord to facilitate convenience in future for quick data entry while undertaking transaction completion across all/diverse merchant offering on Reward360 hosted platform. This information includes Title, First Name, Last Name, Date of Birth, Mobile Number, Gender, Email ID, Passport Details and GST details. I understand that this information is not being stored by HDFC Bank under any facility and HDFC Bank will not be held responsible should any issue arise related to this data storage.').setHeader('<b>Save this GST for your future travel</b>');
   }
 
-  arrayRemove(arr, value) {
-    return arr.filter(function (ele) {
-      return ele != value;
-    });
-  }
+
 
   getCustomerGstDetails() {
     if (this.enableGST == 1) {
@@ -858,52 +761,15 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     this.passengerForm['controls']['saveGST'].setValue('');
   }
   
-  gstmodalcheckedvalue:any = false;
-    openmodal(content) {
-      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-    this.modalService.open(content, { centered: true, size: 'lg' });
-  }
+
 
 
   passengerFormerror: number = 0;
-  ageValidError: any;
-  ageCheck($event, i) { //System should not allow user to proceed when the traveller age is below "12" ,and if traveller is one.
-    //if(i==0){
-    if (i == this.defaultPrimary) {
-      var age = this.passengerForm.controls['passengerAge' + i]['value'];
-      if (!(Number(age) >= 12)) {
-        this.ageValidError = "Primary traveller's age should be above 11 years";
-        this.passengerFormerror = 1;
-      } else {
-        this.ageValidError = "";
-        this.passengerFormerror = 0;
-      }
-    } else {
-      this.ageValidError = "";
-      this.passengerFormerror = 0;
-    }
-  }
-  setPrimary(passengerRow) {
-    this.defaultPrimary = passengerRow;
-    var age = this.passengerForm.controls['passengerAge' + this.defaultPrimary]['value'];
-    if (!(Number(age) >= 12)) {
-      this.ageValidError = "Primary traveller's age should be above 11 years";
-      this.passengerFormerror = 1;
-    } else {
-      this.ageValidError = "";
-      this.passengerFormerror = 0;
-    }
-  }
-
-  buttonSubmitted: boolean = false;
   
-  
-
   createBusItinerary() {
     this.submitted = true;
 
   }
-
   isPaynowClicked: boolean = false;
   continuePayment() {
     //console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
@@ -973,111 +839,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     }
   }
   createItinerarydata() {
-    var busDetails: any = [];
-    var onwards: any = [];
-    var fare: any = [];
-    var postd = this.seacthResult;
-    var datePipe = new DatePipe('en-US');
-    var dtime = datePipe.transform(postd.busdetails.departureTime, 'HH:mm');
-    var atime = datePipe.transform(postd.busdetails.arrivalTime, 'HH:mm');
-    var duration = this.commonHelper.timeDifferMin(postd.busdetails.arrivalTime, postd.busdetails.departureTime);
 
-    var droppingTimes = postd.busdetails.droppingTimes;
-
-    var droppingTimesPointName = droppingTimes.filter(a => {
-      return a['boardingPointId'] == postd.dropping ? a.boardingPointName != -1 : '';
-    });
-
-    var droppingTime = droppingTimes.filter(a => {
-      return a['boardingPointId'] == postd.dropping ? a.ctime != -1 : '';
-    });
-    //console.log(droppingTime)
-
-
-    var boardingTimes = postd.busdetails.boardingTimes;
-
-    var boardingTimesPointName = boardingTimes.filter(a => {
-      return a['boardingPointId'] == postd.boarding ? a.boardingPointName != -1 : '';
-    });
-
-    var bordingTime = boardingTimes.filter(a => {
-      return a['boardingPointId'] == postd.boarding ? a.ctime != -1 : '';
-    });
-
-    this.bpName = boardingTimesPointName[0].boardingPointName.replace(/[^a-zA-Z0-9 - ]/g, "") + ", " + boardingTimesPointName[0].location.replace(/[^a-zA-Z0-9 - ]/g, "") + " (" + boardingTimesPointName[0].landmark.replace(/[^a-zA-Z0-9 - ]/g, "") + ")";
-    var droppingLandmark;
-    if (typeof droppingTimesPointName[0] === "undefined") {
-      this.dpName = 'NA';
-      this.dpTime = 'NA';
-      droppingLandmark = '';
-    } else {
-      this.dpName = droppingTimesPointName[0].boardingPointName.replace(/[^a-zA-Z0-9 - ]/g, "") + ", " + droppingTimesPointName[0].location.replace(/[^a-zA-Z0-9 - ]/g, "") + " (" + droppingTimesPointName[0].landmark.replace(/[^a-zA-Z0-9 - ]/g, "") + ")";
-      this.dpTime = droppingTime[0].ctime, 'HH:mm';
-      droppingLandmark = droppingTimesPointName[0].landmark.replace(/[^a-zA-Z0-9 - ]/g, "");
-    }
-    this.bpTime = bordingTime[0].ctime, 'HH:mm'
-
-    let bpNextDayDate;
-    if (this.boardingDate == '') {
-      bpNextDayDate = '';
-    }
-    else {
-      bpNextDayDate = "(" + datePipe.transform(this.boardingDate, 'dd-MMM') + ")";
-    }
-
-    //	console.log(this.bpTime + "  "+this.dpTime )
-    //console.log(boardingTimesPointName[0].locat;ion.replace(/[^a-zA-Z0-9 - ]/g, ""));
-    //console.log(boardingTimesPointName[0].boardingPointName);
-    onwards = {
-      "arrivaldate": datePipe.transform(this.actualdropping, 'EEE dd MMM yyyy'),
-      "departdate": datePipe.transform(this.actualboarding, 'EEE dd MMM yyyy'),
-      "arrivetime": this.droppingPointTime,
-      "dp": this.droppingpointName,
-      "source": postd.fromTravelCode,
-      "departtime": this.boardingpointTime,
-      "bp": this.boardingpointName,
-      "busStartTime": postd.busdetails.departureTime,
-      "destination": postd.toTravelCode,
-      "duration": duration,
-      "bpNextDayDate": bpNextDayDate,
-      "skey": "",
-      "refund": {
-        "data": {
-          "CancellationCharges": {
-            'list': postd.busdetails.cancellationPolicies
-          }
-        }
-      },
-      "travelname": postd.busdetails.travels
-
-    }
-    //console.log(onwards);
-    fare = {
-      "total_tax": this.fareData.totalTax,
-      "total_amount": this.fareData.totalFare,
-      "obasefare": this.fareData.totalBaseFare,
-      "ototaltax": this.fareData.totalTax,
-      "ototalfare": this.fareData.totalFare,
-      "total_bf": this.fareData.totalBaseFare,
-      "bookingFee": this.fareData.totalbookingFee
-    }
-    busDetails = {
-      "onwards": onwards,
-      "passengerBookingDetails": this.passengerData,
-      "fare": fare
-    }
-    var ttype;
-    if (postd.busdetails.rtc == true) {
-
-      var myString = this.onward.travels.replace(/ /g, "").toUpperCase();
-      var result = myString.match(/\((.*)\)/);
-      if (result != null)
-        ttype = result[1];
-      else
-        ttype = myString;
-    } else {
-      ttype = '';
-    }
 
     var saved_GST_flag;
     if (this.passengerForm.controls['saveGST']['value'] == 1)
@@ -1085,48 +847,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     else
       saved_GST_flag = 0;
 
-    this.busData = {
-      "customer_id": this.REWARD_CUSTOMERID,
-      "sourceName": postd.searchFrom,
-      "discount": this.coupon_amount,
-      "destinationName": postd.searchTo,
-      "clientToken": "HDFC243",
-      "travelType": ttype,
-      "coupon_code": this.coupon_code,
-      "orderId": this.orderReferenceNumber,
-      "tripId": this.onward.id,
-      "total_price": this.totalFare,
-      "source": this.onward.source,
-      "discount_amount": this.coupon_amount,
-      "serviceToken": "BUS",
-      "convenience_fee": this.convenience_fee,
-      "partner_amount": this.intialTotalFare,
-      "serviceName": "Bus",
-      "operator": this.onward.travels,
-      "boardingPointId": this.seacthResult.boarding,
-      "droppingPointId": this.seacthResult.dropping,
-      "osVersion": "",
-      "destination": this.onward.destination,
-      "busApiProvider": "RedBus",
-      "clientName": "HDFC243",
-      "partnerName": "RedBus",
-      "contactDetails": this.passengerContactData,
-      "busDetails": busDetails,
-      "bpDpSeatlayout": postd.busdetails.rtc,
-      "amenities": postd.busdetails.amenities,
-      "busType": postd.busdetails.busType,
-      "busTypeId": postd.busdetails.busTypeId,
-      "partialCancellationAllowed": postd.busdetails.partialCancellationAllowed,
-      "rating": postd.busdetails.rating,
-      "vehicleType": postd.busdetails.vehicleType,
-      "gstDetails": this.gstDetails,
-      "bpLandMark": boardingTimesPointName[0].landmark.replace(/[^a-zA-Z0-9 - ]/g, ""),
-      "dpLandMark": droppingLandmark,
-      "programName": this.sg['domainName'],
-      "cprogramName": this.sg['domainName'],
-      "seatResponse": this.seatResponse,
-      "saved_GST_flag": saved_GST_flag
-    }
+
   }
 
   receivePgCharges($event) {
@@ -1136,11 +857,11 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
   goback() {
     this.searchArray = {
-      searchFrom: this.seacthResult.searchFrom,
-      searchTo: this.seacthResult.searchTo,
-      fromTravelCode: this.seacthResult.fromTravelCode,
-      toTravelCode: this.seacthResult.toTravelCode,
-      departure: this.seacthResult.departure,
+      searchFrom: this.searchResult.searchFrom,
+      searchTo: this.searchResult.searchTo,
+      fromTravelCode: this.searchResult.fromTravelCode,
+      toTravelCode: this.searchResult.toTravelCode,
+      departure: this.searchResult.departure,
     };
     this.router.navigate([this.sg['domainPath'] + '/hotel-list/'], {
       queryParams: this.searchArray
@@ -1153,11 +874,11 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
   onFinishedTimer() {
     this.searchArray = {
-      searchFrom: this.seacthResult.searchFrom,
-      searchTo: this.seacthResult.searchTo,
-      fromTravelCode: this.seacthResult.fromTravelCode,
-      toTravelCode: this.seacthResult.toTravelCode,
-      departure: this.seacthResult.departure,
+      searchFrom: this.searchResult.searchFrom,
+      searchTo: this.searchResult.searchTo,
+      fromTravelCode: this.searchResult.fromTravelCode,
+      toTravelCode: this.searchResult.toTravelCode,
+      departure: this.searchResult.departure,
     };
 
 
