@@ -377,7 +377,7 @@
                                                 <div class="form-check check_pass">
                                                     <input class="form-check-input pass_checkBox" id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                     <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
-                                <div class="label_top_align">{{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}</div>
+                                <div class="label_top_align">{{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{(passenger.gender=="T") ? 'Transgender ': passenger.gender }}</div>
                                 <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg" ></a> -->
                                 </label>
                                                 </div>
