@@ -10,7 +10,8 @@
               </a>
             </div>
             <div class="mob-listing-header-center">
-
+               <h6>{{searchData.city}}, {{searchData.countryName}}</h6>
+                <p class="">{{searchData.checkIn | date:'EEE,dd MMM'}} - {{searchData.checkOut | date:'EEE,dd MMM'}} | {{searchData.totalGuest}} Guests </p>
             </div>
             <div class="mob-listing-header-right">
 
@@ -20,7 +21,7 @@
       </div>
     </div>
   </section>
-  <section class="details-steps-area mb-40 d-none d-md-block" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
+  <section class="details-steps-area mb-40 " [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
     <div class="container">
       <div class="row justify-content-center ">
         <div class="col-md-3">
@@ -31,7 +32,7 @@
                   (click)="moveTab(1)">
                   <!-- steps-done - Class For done steps -->
                   <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/bus.svg" alt="" /></span>
-                  <span class="steps-text">Booking Details</span>
+                  <span class="steps-text">Hotel Details</span>
                 </a>
               </li>
               <li>
@@ -49,36 +50,7 @@
   </section>
 </div>
 
-<!-- mlite fixed header top -->
-<div class="row d-md-none">
-  <div class="col-md-12 p-0 fixed-top"  >
-  <div class="mob-listing-header">
-    <div class="mob-listing-header-left">
-        <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==1" >
-            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-        </a>
-
-         <!-- <a href="javascript:;" (click)="moveTab(1)" *ngIf="steps==2" > -->
-                <a href="javascript:;" (click)="triggerBack()" *ngIf="steps==2" > 
-            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-        </a>
-    </div>
-    <div class="mob-listing-header-center">
-        <div class="">
-               <!-- <p>{{ actualboarding | date:'EEE, dd MMM' }}   </p>
-                <h6>{{ onward.travels }} </h6>
-                <p class="">{{ onward.busType }}</p>-->
-        </div>
-    </div>
-    <div> </div>
-</div>
-</div>
-</div>
-<!-- end of mlite fixed header top -->
-
-
 <main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'">
-
   <section class="flight-details-area">
     <!-- Mlite Sesssion Timer Code -->
     <div class="d-block d-sm-none">
@@ -89,30 +61,20 @@
           </strong></p>
       </div>
     </div>
-    <input *ngIf="searchData" type="hidden" id="journery_date"
-      value='{{ searchData.departure | date:"YYYY-MM-dd" }}' />
     <div class="container">
       <div class="row mb-5">
-
         <!--Steps 1-->
         <div class="col-md-8" *ngIf="steps==1">
           <div class="booking-process-content">
             <div class="booking-title-box d-md-none">
               <h4>Traveller Details</h4>
             </div>
-       
-
-   
-
-     
           </div>
-          <form [formGroup]="passengerForm" id="passengerForm" name="passengerForm" *ngIf="passengerForm && seacthResult.seatdetails.length">
+          <form [formGroup]="passengerForm" id="passengerForm" name="passengerForm" *ngIf="passengerForm ">
             <div class="">
               <div class="booking-inner-box mb-20">
-
-
+                   Hotel Details
        
-
            
               </div>
               <div class="contact_sec booking-inner-box">
@@ -121,6 +83,72 @@
                   <p class="note_text">Your booking details will be sent here.</p>
                 </div>
                 <div class="row contact-form">
+                 <div class="col-xl-2 col-lg-2 col-md-6">
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Title</mat-label>
+                                            <mat-select   formControlName="passengerTitle">
+                                              <mat-option value=""> Select </mat-option>
+                                              <mat-option value="Mr"> Mr </mat-option>
+                                              <mat-option value="Mrs">Mrs</mat-option>
+                                              <mat-option value="Ms">Ms</mat-option>
+                                              <mat-option value="Miss">Miss</mat-option>
+                                            </mat-select>
+                                            
+                                          </mat-form-field>
+                                          
+                                         <span *ngIf="submitted && passengerForm && passengerForm.controls.passengerTitle && passengerForm.controls.passengerTitle.errors" class="error">
+                                            <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerTitle.errors.required">  Select title</mat-error>
+                                          </span>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-xl-5 col-lg-5 col-md-6">
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>First Name</mat-label>
+                                            <input    type="hidden" formControlName="passengerId" >
+                                            <input matInput placeholder="First Name" name="passengerFirstName"   formControlName="passengerFirstName">
+                                          </mat-form-field>
+                                          <span *ngIf="submitted && passengerForm.controls['passengerFirstName'] && passengerForm.controls['passengerFirstName']['errors']">
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('required','passengerFirstName')">
+                                              Please enter first name</mat-error>
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('pattern','passengerFirstName')">
+                                              Please enter valid first name</mat-error>
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('minlength','passengerFirstName')">
+                                              Please enter atleast 2 character</mat-error>
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('maxlength','passengerFirstName')">
+                                              Please enter maximum 26 character</mat-error>
+                                          </span>
+                                      </div>
+                                    </div>
+                                    <div class="col-xl-5 col-lg-5 col-md-6">
+                                      <div>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>Last Name</mat-label>
+                                            <input matInput placeholder="Last Name"
+                                              formControlName="passengerLastName">
+                                          </mat-form-field>
+                                          <span *ngIf="submitted && passengerForm.controls['passengerLastName'] && passengerForm.controls['passengerLastName']['errors']">
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('required','passengerLastName')">
+                                              Please enter first name</mat-error>
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('pattern','passengerLastName')">
+                                              Please enter valid first name</mat-error>
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('minlength','passengerLastName')">
+                                              Please enter atleast 2 character</mat-error>
+                                            <mat-error class="error_bus_contectDetails"
+                                              *ngIf="passengerForm.hasError('maxlength','passengerLastName')">
+                                              Please enter maximum 26 character</mat-error>
+                                          </span>
+                                      </div>
+                                    </div>
                   <div class="col-sm-6 col-12">
                     <div class="">
                       <mat-form-field class="matField_full_width w-100" appearance="outline">
@@ -421,7 +449,7 @@
             </div>
 
             <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
-              [passSavedCardsData]="savedCards" [passSessionKey]="searchBusKey"
+              [passSavedCardsData]="savedCards" [passSessionKey]="searchHotelKey"
               (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalFare"
               [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId"
               [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
@@ -447,9 +475,7 @@
                 <div class="sidebar-widget fare-summary-widget">
                   <div class="widget-title">
                     <h4>Fare Summary</h4>
-                    <img *ngIf="busData" 
-                      src="{{ cdnUrl }}images/smartbuy/partner/48/svg/redbus.svg"
-                      alt="redbus">
+                              <img *ngIf="partnerToken"          src="{{ cdnUrl }}images/flight_partners/{{ partnerToken }}.png"        alt="{{ partnerToken }}">
 
                   </div>
                   <div class="widget-content">
@@ -457,68 +483,37 @@
                       <li class="fare-list-item">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
-                            <div (click)="isCollapseShow('BaseFare')">
-                              <div data-bs-toggle="collapse" class="collapse_text bus-collapse-txt"
-                                href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
-
-                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
-                                  *ngIf="!isCollapseBasefare">
-
-                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
-                                  *ngIf="isCollapseBasefare">
-
-                                Base Fare</div>
-
+                            <div >
+                              <div  class="collapse_text bus-collapse-txt">{{searchData.noOfRooms}} Rooms X {{searchData.noOfRooms}} Nights </div>
                             </div>
                           </div>
                           <div class="fare-list-right">
-                            <p>₹ {{ fareData.totalBaseFare|number }}</p>
+                            <p>₹ {{ totalBaseFare|number }}</p>
                           </div>
-
                         </div>
-
-                        <ng-container>
-                          <div>
-                            <div class="collapse base_fare_collapse" id="base-collpase">
-                              <div class="row ">
-                                <div class="col-md-11 offset-md-1">
-                                  <div class="row collapse_row mb-10">
-                         
-                             
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
-                        </ng-container>
-
                       </li>
                       <li class="fare-list-item">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div class="fare-list-font">
-
                               Taxes and Fees
                             </div>
                           </div>
                           <div class="fare-list-right">
-                            <p>&#8377; Tax</p>
+                            <p>&#8377; {{ totalTax |number }}</p>
                           </div>
                         </div>
                       </li>
 
-
-
-                      <li class="fare-list-item" *ngIf="convenience_fee>0.00">
+                      <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div class="fare-list-font">
-                              Convenience Fee
+                             Partner Discount
                             </div>
                           </div>
                           <div class="fare-list-right">
-                            <p>&#8377; {{ convenience_fee |number }}</p>
+                            <p>&#8377; {{ partnerDiscount |number }}</p>
                           </div>
                         </div>
                       </li>
@@ -574,8 +569,7 @@
                           </div>
                           <div class="fare-list-right">
                             <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                              {{ calculateEMI(totalFare)|number: '.2' }}/month</p>
+                          
                           </div>
 
                         </div>
@@ -585,16 +579,16 @@
                   </div>
                 </div>
                 <div class="continue-widget mb-20">
-                  <button class="btn-primary button-style w-100" (click)="createBusItinerary()"
+                  <button class="btn-primary button-style w-100" (click)="createHotelItinerary()"
                     *ngIf="steps==1" [disabled]="buttonSubmitted">Continue</button>
             
                 </div>
               </div>
-              <div *ngIf="steps==2 && !isMobile">
-                <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey"
+              <div *ngIf="steps==1 && !isMobile">
+                <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchHotelKey"
                   [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                   [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
-                  passServiceToken="Bus" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)"
+                  passServiceToken="Hotel" [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)"
                   [customerInfo]="customerInfo">
                 </app-coupons>
               </div>
@@ -608,24 +602,6 @@
   </section>
 
 
-  <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body " style="padding: 25px;">
-          <div class="bookingprocess-items">
-            <div class="bookingprocess-content">
-              An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
-            </div>
-            <div class="refresh-text text-center pt-2">
-              <button type="button" class="btn btn-primary" (click)="triggerBack()">Retry</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 
 
 
@@ -636,7 +612,7 @@
         <div class="apply_fare row">
           <!--  <p *ngIf="steps<5" class="w-75"></p> -->
           <div class="col-6 text-left">
-            <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+            <p *ngIf="steps==1"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
                 data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
           </div>
           <div class="col-6 text-right">
@@ -649,14 +625,13 @@
             <div class="col-5">
               <div class="">
                 <h6 class="price">₹{{ totalFare |number }} </h6>
-                <p class="emi" *ngIf="totalFare > EMIAvailableLimit">EMI @
-                  {{ calculateEMI(totalFare|number)|number: '.2' }}/month</p>
+
 <p class="hidden">{{fareData | json}}</p>
               </div>
             </div>
             <div class="col-7">
               <div>
-                <button class="btn-primary btn_pay" [disabled]="buttonSubmitted" (click)="createBusItinerary()"
+                <button class="btn-primary btn_pay" [disabled]="buttonSubmitted" (click)="createHotelItinerary()"
                   *ngIf="steps==1">Continue</button>
     <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()"
                   *ngIf="steps==2">Pay now</a>
@@ -670,7 +645,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true" *ngIf="steps==2 && isMobile">
+    aria-hidden="true" *ngIf="steps==1 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -679,16 +654,13 @@
         </div>
         <div class="modal-body">
 
-          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey"
+          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchHotelKey"
             [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare"
-            [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee" passServiceToken="Bus"
+            [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee" passServiceToken="Hotel"
             [passPartnerToken]="partnerToken" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
           </app-coupons>
         </div>
-        <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div> -->
+
       </div>
     </div>
   </div>
@@ -699,150 +671,109 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header pb-0">
-          <h5 class="modal-title">Fare Summary</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title">Fare Summary</h5> <img *ngIf="partnerToken"          src="{{ cdnUrl }}images/flight_partners/{{ partnerToken }}.png"        alt="{{ partnerToken }}">
         </div>
         <div class="modal-body pt-0">
-          <div>
-
-          </div>
+      
           <div class="widget-content">
              <ul class="widget-list clearfix">
               <li class="fare-list-item">
                 <div class="fare-list-box">
                   <div class="fare-list-left">
-                    <div (click)="isCollapseShow('BaseFare')">
-                      <div data-bs-toggle="collapse" class="collapse_text bus-collapse-txt" href="#base-collpase"
-                        role="button" aria-expanded="false" aria-controls="base-collpase">
-
-                        <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseBasefare">
-
-                        <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseBasefare">
-
-                        Base Fare</div>
+                    <div >
+                      <div  class="collapse_text bus-collapse-txt" >
+                        <div  class="collapse_text bus-collapse-txt">{{searchData.noOfRooms}} Rooms X {{searchData.noOfRooms}} Nights </div>
+                       </div>
 
                     </div>
                   </div>
                   <div class="fare-list-right">
-                    <p>₹ Base Fare</p>
+                    <p>₹  {{ totalBaseFare|number }}</p>
                   </div>
-
                 </div>
-
-                <ng-container>
-                  <div>
-                    <div class="collapse base_fare_collapse" id="base-collpase">
-                      <div class="row ">
-                        <div class="col-md-11 offset-md-1">
-
-                          <div class="row collapse_row mb-10">
-                            <div class="col-8 fare-list-left">
-                              <p>No Of Rooms(s) </p>
-                            </div>
-                            <div class="col-4 fare-list-right">
-                              <p> 111111 </p>
-                            </div>
-                          </div>
-
-                          <div class="row collapse_row mb-10">
-                            <div class="col-8 fare-list-left">
-                              <p> Seat No(s)</p>
-                            </div>
-                      
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </ng-container>
-
               </li>
               <li class="fare-list-item">
-                <div class="fare-list-box">
-                  <div class="fare-list-left">
-                    <div class="fare-list-font">
-
-                      Taxes and Fees
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p>&#8377; Total Tax</p>
-                  </div>
-                </div>
-              </li>
-
-
-
-              <li class="fare-list-item" *ngIf="convenience_fee>0.00">
-                <div class="fare-list-box">
-                  <div class="fare-list-left">
-                    <div class="fare-list-font">
-                      Convenience Fee
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p>&#8377; Convinenece Frr</p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                <div class="fare-list-box">
-                  <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase"
-                    role="button" aria-expanded="false" aria-controls="coupon-collpase"
-                    (click)="isCollapseShow('discount')">
-
-                    <div class="fare-list-font">
-                      <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseDiscount">
-
-                      <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseDiscount">
-                      Discounts
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p class="text-green">- &#8377; {{ coupon_amount }}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="collapse base_fare_collapse" id="coupon-collpase">
-                    <div class="row ">
-                      <div class="col-md-11 offset-md-1">
-
-                        <div class="row collapse_row">
-                          <div class="col-5 fare-list-left">
-                            <p>Coupoun Code</p>
+                        <div class="fare-list-box">
+                          <div class="fare-list-left">
+                            <div class="fare-list-font">
+                              Taxes and Fees
+                            </div>
                           </div>
-                          <div class="col-7 fare-list-right">
-                            <p>{{ coupon_code }}</p>
+                          <div class="fare-list-right">
+                            <p>&#8377; {{ totalTax |number }}</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
+                        <div class="fare-list-box">
+                          <div class="fare-list-left">
+                            <div class="fare-list-font">
+                             Partner Discount
+                            </div>
+                          </div>
+                          <div class="fare-list-right">
+                            <p>&#8377; {{ partnerDiscount |number }}</p>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                        <div class="fare-list-box">
+                          <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"
+                            href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"
+                            (click)="isCollapseShow('discount')">
+
+                            <div class="fare-list-font">
+                              <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
+                                *ngIf="!isCollapseDiscount">
+
+                              <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
+                                *ngIf="isCollapseDiscount">
+                              Discounts
+                            </div>
+                          </div>
+                          <div class="fare-list-right">
+                            <p class="text-green">- &#8377; {{ coupon_amount }}</p>
                           </div>
                         </div>
 
+                        <div>
+                          <div class="collapse base_fare_collapse" id="coupon-collpase">
+                            <div class="row ">
+                              <div class="col-md-11 offset-md-1">
 
-                      </div>
-                    </div>
-                  </div>
+                                <div class="row collapse_row">
+                                  <div class="col-5 fare-list-left">
+                                    <p>Coupoun Code</p>
+                                  </div>
+                                  <div class="col-7 fare-list-right">
+                                    <p>{{ coupon_code }}</p>
+                                  </div>
+                                </div>
 
-                </div>
 
-              </li>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </li>
 
 
-              <li class="fare-list-item">
-                <div class="fare-list-box pt-30">
-                  <div class="fare-list-left">
-                    <h6 class="fw_7">Grand Total</h6>
-                  </div>
-                  <div class="fare-list-right">
-                    <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                    <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                      {{ calculateEMI(totalFare)|number: '.2' }}/month</p>
-                  </div>
+                      <li class="fare-list-item">
+                        <div class="fare-list-box pt-30">
+                          <div class="fare-list-left">
+                            <h6 class="fw_7">Grand Total</h6>
+                          </div>
+                          <div class="fare-list-right">
+                            <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
+                          
+                          </div>
 
-                </div>
-              </li>
+                        </div>
+                      </li>
 
             </ul>
           </div>
@@ -896,26 +827,27 @@
       <div class="modal-body " style="padding: 25px;">
         <div class="bookingprocess-items">
           <div class="bookingprocess-title text-center mb-30">
-            <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-          </div>
-          <div class="bookingprocess-content">
-            <div class="bookingprocess-flight bus_checkout_modal_cities">
-              <h6>aaaaaaaaaa</h6>
-              <div class="bus_checkout_maodal_p d-none d-md-block">
-                <p>ssssssssssssssss-travellers</p>
-                
-              </div>
-              <h6> &nbsp; ffff</h6>
-            </div>
-            <div class="bookingprocess-processbar">
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{ loaderValue }}" aria-valuemin="0"
-                  aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                  <span class="title"> &nbsp; </span>
-                </div>
-              </div>
-            </div>
-          </div>
+                              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+                          </div>
+                          <div class="bookingprocess-content">
+                              <div class="bookingprocess-hotel">
+                                  <div class="bookingprocess-hotel-title">
+                                      <h6>{{searchData.city}}, {{searchData.countryName}}</h6>
+                                  </div>
+                                  <div class="bookingprocess-hotel-content">
+                                      <p>{{searchData.checkIn | date:'dd.MM.yyyy'}} - {{searchData.checkOut | date:'dd.MM.yyyy'}} </p>
+                                      <p>{{totalAdult}} Adults, {{totalChild}} Child</p>
+                                      <p>{{searchData.numberOfRooms}} Delux Room</p>
+                                  </div>
+                              </div>
+                              <div class="bookingprocess-processbar hd-processbar">
+                                  <div class="progress">
+                                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                                          <span class="title"> &nbsp; </span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
           <div class="refresh-text text-center pt-2">
             <p>Please don't click or refresh the page</p>
           </div>

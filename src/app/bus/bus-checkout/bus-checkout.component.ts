@@ -1639,7 +1639,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
 
     var boardingTimes = postd.busdetails.boardingTimes;
-
     var boardingTimesPointName = boardingTimes.filter(a => {
       return a['boardingPointId'] == postd.boarding ? a.boardingPointName != -1 : '';
     });
