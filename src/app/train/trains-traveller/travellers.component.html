@@ -377,7 +377,7 @@
                                                 <div class="form-check check_pass">
                                                     <input class="form-check-input pass_checkBox" id="travelPassenger_{{passenger.id}}" type="checkbox" name="travellerlist" (change)="clickPassenger($event,passenger,passenger.id)">
                                                     <label class="form-check-label" for="travelPassenger_{{passenger.id}}">
-                                <div class="label_top_align">{{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{passenger.gender}}</div>
+                                <div class="label_top_align">{{passenger.title?passenger.title+'.':''}}{{passenger.firstName}} {{passenger.lastName}}|  {{passenger.age}} Years |  {{(passenger.gender=="T") ? 'Transgender ': passenger.gender }}</div>
                                 <!-- <a href="javascript:;" class="ps-3" (click)="editPassenger(passenger,passenger.id)"><img src="{{cdnUrl}}images/smartbuy/icons/edit_icon.svg" ></a> -->
                                 </label>
                                                 </div>
@@ -1698,7 +1698,7 @@
         <div class="agree_conditions">
             <ul class="add-search-ul d-block">
                 <li class="custom-check-box">
-                    <div class="custom-controls-stacked">
+                    <div class="custom-controls-stacked pl-20">
                         <label class="custom-control material-checkbox">
                           <input type="checkbox" class="material-control-input" formControlName="passengerAgree"               name="passengerAgree" id="agree_terms"  >
                           <span class="material-control-indicator"></span>
@@ -2366,7 +2366,7 @@
         <div class="col-md-8" *ngIf="steps==4">
             <div class="booking-process-content" *ngIf="totalCollectibleAmount">
                 <div class="booking-title-box">
-                    <h4>Payment</h4>
+                    <h4>Choose Payment mode</h4>
                 </div>
 
                 <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
