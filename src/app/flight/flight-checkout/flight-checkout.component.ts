@@ -423,9 +423,7 @@ orderRetry:boolean=false;
                 this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
 
                 if (!this.flightSessionData) {
-                  setTimeout(() => {
-                    $("#bookingprocessFailed1").modal('show');
-                  }, 10);
+                   this.router.navigate(['/compare-fly']);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
                    this.searchDataOrg = this.searchData ;

@@ -580,10 +580,7 @@ export class PaymentComponent implements OnInit {
         const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
         if(cookieExistsp){  
         this.payzrestriction=true;
-        setTimeout(()=>{
-        $('#payzappCard').trigger('click');
-        $('html,body').animate({ scrollTop: 9999 }, 'slow');
-        });	
+
         }
 
      }
