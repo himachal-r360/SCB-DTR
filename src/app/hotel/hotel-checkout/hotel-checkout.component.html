@@ -98,7 +98,7 @@
                                           </mat-form-field>
                                           
                                          <span *ngIf="submitted && passengerForm && passengerForm.controls.passengerTitle && passengerForm.controls.passengerTitle.errors" class="error">
-                                            <mat-error class="error_flight  error_tv" ngIf="passengerForm.controls.passengerTitle.errors.required">  Select title</mat-error>
+                                            <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.controls.passengerTitle.errors.required">  Select title</mat-error>
                                           </span>
                                       </div>
                                     </div>
@@ -111,16 +111,16 @@
                                             <input matInput placeholder="First Name" name="passengerFirstName"   formControlName="passengerFirstName">
                                           </mat-form-field>
                                           <span *ngIf="submitted && passengerForm.controls['passengerFirstName'] && passengerForm.controls['passengerFirstName']['errors']">
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('required','passengerFirstName')">
                                               Please enter first name</mat-error>
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('pattern','passengerFirstName')">
                                               Please enter valid first name</mat-error>
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('minlength','passengerFirstName')">
                                               Please enter atleast 2 character</mat-error>
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('maxlength','passengerFirstName')">
                                               Please enter maximum 26 character</mat-error>
                                           </span>
@@ -134,16 +134,16 @@
                                               formControlName="passengerLastName">
                                           </mat-form-field>
                                           <span *ngIf="submitted && passengerForm.controls['passengerLastName'] && passengerForm.controls['passengerLastName']['errors']">
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('required','passengerLastName')">
                                               Please enter first name</mat-error>
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('pattern','passengerLastName')">
                                               Please enter valid first name</mat-error>
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('minlength','passengerLastName')">
                                               Please enter atleast 2 character</mat-error>
-                                            <mat-error class="error_flight  error_tv"
+                                            <mat-error class="error_bus_contectDetails"
                                               *ngIf="passengerForm.hasError('maxlength','passengerLastName')">
                                               Please enter maximum 26 character</mat-error>
                                           </span>
