@@ -212,13 +212,14 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.isResponse = true;
     this.loader = true;
     this.getSearchData();
+    if(this.isMobile)
     this.headerHideShow(null);
     this.searchHotel();
     });
   }
 
   getSearchData(){
-    console.log(this.route.snapshot.queryParams)
+   // console.log(this.route.snapshot.queryParams)
     const urlParam = this.route.snapshot.queryParams;
     this.searchData =  urlParam;
     this.hotelSearchForm.get('checkIn').setValue(this.searchData.checkIn);
@@ -648,7 +649,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
         }
       });
     });
-    console.log(this.partnerArr)
+   // console.log(this.partnerArr)
   }
 
   partnerFilter(item:any)
