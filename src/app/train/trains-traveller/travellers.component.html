@@ -2316,7 +2316,7 @@
                                         <th scope="col" width="50%">Name</th>
                                         <th scope="col" width="10%">Age</th>
                                         <th scope="col" width="20%">Gender</th>
-                                        <th scope="col" width="20%">Birth Preference</th>
+                                        <th scope="col" width="20%">Berth Preference</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -2324,7 +2324,7 @@
                                         <tr>
                                             <td>{{adult.passengerName}}</td>
                                             <td>{{adult.passengerAge}}</td>
-                                            <td>{{adult.passengerGender}}</td>
+                                            <td>{{(adult.passengerGender=="M") ? 'Male ': (adult.passengerGender=="F") ? 'Female' : 'Transgender'}}</td>
                                             <td>{{(adult.passengerBerthChoice !='') ? adult.passengerBerthChoice : '-' }}</td>
                                         </tr>
                                     </ng-container>
