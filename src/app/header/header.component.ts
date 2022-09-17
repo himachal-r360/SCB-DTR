@@ -185,7 +185,10 @@ export class HeaderComponent implements OnInit {
          var customer_cookie;
           if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
           
-            if(this.sg["customerInfo"]["guestLogin"]==true){
+          if(this.sg["customerInfo"]["payzapp_user"]==1) customer_cookie = 1;
+          
+          
+           if(this.sg["customerInfo"]["guestLogin"]==true){
             this.guestLogin=true;
               this.customerLogin = false;
             }else{
