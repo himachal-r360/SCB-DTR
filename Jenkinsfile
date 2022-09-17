@@ -21,7 +21,7 @@ pipeline {
                     echo 'SonarQube analysis Report Uploading...'
                     emailext (
                         subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} Jenkins-SonarQube analysis Report",
-                        body: "SonarQube analysis Is Done For AngularUI4.0 Module. SonarQube analysis Report Is Uploaded On SonarQube Server - 'http://3.111.15.239:9000/'.  \n\n -------------------------------------------------- \n\n",
+                        body: "SonarQube analysis Is Done For AngularUI4.0 Module. SonarQube analysis Report Is Uploaded On SonarQube Server - 'https://sonar.reward360.in:8443/'.  \n\n -------------------------------------------------- \n\n",
                         to: "devops@reward360.co, lakshmi@reward360.co, smartbuy.qa@reward360.co, tamil.selvan@reward360.co",
                     )
                 }
@@ -47,7 +47,8 @@ pipeline {
                       remote.allowAnyHosts = true
 
                         echo "Removing Previous Backup Folder"
-                        //sshCommand remote: remote, command: 'rm -r /home/apache/git/backups/code_backup_AngularUI4.0_*'
+                        sshCommand remote: remote, command: 'rm -r /home/apache/git/backups/code_backup_AngularUI4.0_*'
+
                         echo "Creating Backup Folder"
                         sshCommand remote: remote, command: 'mkdir -p /home/apache/git/backups/code_backup_AngularUI4.0_`date +%Y%m%d`'
 
