@@ -126,14 +126,23 @@
                         <div class="col-md-4 pe-md-0">
                             <div class="">
                                 <ul id="tabs" class="nav nav-tabs py-3" role="tablist">
+                                
+                                   <li class="nav-item" *ngIf="pgSettingsPAYZAPP && payzrestriction==true"> 
+                                        <a id="tab-payzapp" href="#pane-payzapp" class="nav-link" data-bs-toggle="tab" role="tab" [ngClass]="{'active': payzrestriction==true}">
+                                            <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
+                                        </a>
+                                      </li>
+                       
+                                
+                                
                                     <li class="nav-item" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
-                                      <a id="tab-savedCards" href="#pane-savedCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" data-bs-toggle="tab" role="tab">
+                                      <a id="tab-savedCards" href="#pane-savedCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length >0 && payzrestriction==false}" data-bs-toggle="tab" role="tab">
                                           <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
                                       </a>
                                     </li>
                             
                                     <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                      <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" data-bs-toggle="tab" role="tab">
+                                      <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false }" data-bs-toggle="tab" role="tab">
                                           <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                       </a>
                                     </li>
@@ -147,7 +156,7 @@
                                           <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
                                       </a>
                                     </li>
-                                    <li class="nav-item" *ngIf="pgSettingsPAYZAPP"> 
+                                    <li class="nav-item" *ngIf="pgSettingsPAYZAPP && payzrestriction==false"> 
                                         <a id="tab-payzapp" href="#pane-payzapp" class="nav-link" data-bs-toggle="tab" role="tab">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
                                         </a>
@@ -172,19 +181,92 @@
 
                         <div class="col-md-8 col-12 ps-md-0">
                             <div id="content" class="tab-content payment-content p-3" role="tablist">
+                            
+                            
+                             <!-- payzapp Section Starts -->
+                                <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade active show" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP && payzrestriction==true">
+                                    <div class="panel-heading" *ngIf="pgSettingsPAYZAPP">
+                                        <div class="" >
+                                            <a id="tab-payzapp" class="accordion-button" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-payzapp" aria-expanded="true" aria-controls="collapse-payzapp">
+                                                <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
+                                                
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="collapse-payzapp" class="accordion-collpase collapse show"  role="tabpanel" aria-labelledby="heading-payzapp" data-bs-parent="#content">
+                                        <div class="card-body p-0">
+                                            <div>
+                                                <div class="payzappCardSection" >
+
+                                                 
+                                                          <div class="common_title">
+                                                            <span class="">Pay Using Payzapp</span>
+                                                          </div>
+                                                          <div>
+                                                            <span class="col-md-7 p-0 col-10 offset-lg-0" *ngIf="serviceId=='IRCTC'"> <img src="{{cdnUrl}}images/pgicon.svg" class="pr-2"> <span class="pg-title" >PG Charges Applicable</span>
+                                                            <span class="pg-subtitle ps-4">Additional PG Charges : 1.8% + GST</span></span>
+                                                          </div>
+                                                    <form [formGroup]="payzappForm">
+                                                        <div id="payzappOption"  [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG  && emiArray.length==0  && emiDebitArray.length==0 && !pgSettingsNETBANKING && pgSettingsPAYZAPP }" data-bs-parent="#allPayments" name="paymentModule">
+                            
+                                                            <div class="payzapp-info">
+                                                                <img src="{{cdnUrl}}images/logo-payzapp.jpg" class="img-fluid">
+                                                                <p class="payzapp-total">Total Amount</p>
+                                                                <p class="payzapp-price">₹{{payTotalFare| number:'1.2-2' }}</p>
+                                                                <p class="payzapp-total" *ngIf="serviceId=='Flight' && convinenceFee" >*₹{{convinenceFee}} {{Partnertoken}} Convenience Fee added</p>
+                                                                
+                                                            </div>
+                            
+                                                            <div class="clearfix"></div>
+                                                            <div class="new-card-footer ">
+                                                                <div class="my-2">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_payzapp">
+                                                                        <label class="form-check-label xs-check-font" for="termscondition_payzapp" >
+                                                                            I understand and agree to the rules and restrictions of
+                                                                            this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                            understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                            SmartBuy.
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <p class="my-2"> 
+                                                                    <label class="checkbox xs-check-font">I understand and agree to the rules and restrictions of
+                                                                    this fare, the <a href="{{domainRedirect}}privacy_policy" target="_blank" >Privacy Policy</a> and the <a href="{{domainRedirect}}terms_conditions" target="_blank" >Terms & Conditions</a> of SmartBuy and Partners. I also
+                                                                    understand and agree that if my booking is cancelled, any discounts availed at the time of booking would be deducted by
+                                                                    SmartBuy.
+                                                                  <input type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition"> <span class="checkmark"></span></label>
+                                                                </p> -->
+                                                                <div *ngIf="submittedPayzappForm && payzappForm.controls.termscondition.errors" class="error_tc">
+                                                                    <small *ngIf="payzappForm.controls.termscondition.errors.required || payzappForm.controls.termscondition.errors.pattern">Please accept Terms and Conditions</small>
+                                                                </div>
+                                                                <div class="my-3 xs-center" [ngClass]="{'hidden': isMobile }">
+                                                                    <button class="btn btn-paynow   btn-pay-payz" (click)="payNow(4)" [disabled]="paynowBtnDisabled_5">Pay Now</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- payzapp Section Ends -->
+                            
+                            
 
                                 <!-- Saved Card Section Starts -->
-                                <div id="pane-savedCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade show" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
+                                <div id="pane-savedCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade show" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 && payzrestriction==false }" role="tabpanel" aria-labelledby="tab-savedCards" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
                                     
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsCYBER && isLoggedIn && cardData.length >0">
-                                            <a id="tab-savedCards" class="accordion-button" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-savedCards" aria-expanded="true" aria-controls="collapse-savedCards">
+                                            <a id="tab-savedCards" class="accordion-button" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length >0 && payzrestriction==false,'collapsed':payzrestriction==true  }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-savedCards" aria-expanded="true" aria-controls="collapse-savedCards">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/payment/saveCard.svg" alt="icon"> <span class="ps-2">Saved Cards</span>
                                             </a>
                                         </div>
                                     </div>
                                     
-                                    <div id="collapse-savedCards" class="accordion-collapse collapse show" role="tabpanel" aria-labelledby="heading-savedCards" data-bs-parent="#content">
+                                    <div id="collapse-savedCards" class="accordion-collapse collapse" [ngClass]="{'show ': pgSettingsCYBER && isLoggedIn && cardData.length >0 && payzrestriction==false}" role="tabpanel" aria-labelledby="heading-savedCards" data-bs-parent="#content">
                                         <div class="card-body">
                                             <div>
                                                 <div class="common_title">
@@ -295,16 +377,16 @@
 
 
                                 <!-- Credt/Debit Card Section Starts -->
-                                <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
+                                <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false }" role="tabpanel" aria-labelledby="tab-ccdcCards" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
                                     
                                     <div class="panel-heading">
                                         <div class="" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                            <a id="tab-ccdcCards"  class="accordion-button collapsed" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
+                                            <a id="tab-ccdcCards"  class="accordion-button"  [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length==0 && payzrestriction==false,'collapsed':payzrestriction==true  }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                             </a>
                                         </div>  
                                     </div>
-                                    <div id="collapse-ccdcCards" class="accordion-collapse collapse" role="tabpanel" aria-labelledby="heading-ccdcCards" data-bs-parent="#content">
+                                    <div id="collapse-ccdcCards" class="accordion-collapse collapse"  [ngClass]="{'show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false,'collapsed':payzrestriction==true  }" role="tabpanel" aria-labelledby="heading-ccdcCards" data-bs-parent="#content">
                                         <div class="card-body p-0">
                                             <div>
                                                 <div class="common_title">
@@ -1144,9 +1226,9 @@
 
 
                                 <!-- payzapp Section Starts -->
-                                <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP">
-                                    <div class="panel-heading">
-                                        <div class="" *ngIf="pgSettingsPAYZAPP">
+                                <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade"  role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP && payzrestriction==false">
+                                    <div class="panel-heading" *ngIf="pgSettingsPAYZAPP">
+                                        <div class="" >
                                             <a id="tab-payzapp" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-payzapp" aria-expanded="false" aria-controls="collapse-payzapp">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
                                                 
