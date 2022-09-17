@@ -133,7 +133,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.whatsappFeature = this.serviceSettings.whatsappFeature;
     this.enableGST = this.serviceSettings.enableSavedGST;
     this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
-    this.partnerToken = 'Redbus';
+  
     alertify.set('notifier', 'position', 'bottom-center');
   }
   loaderValue = 10;
@@ -202,8 +202,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.flexiDiscount = Number(values[0].value);
       this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount) - Number(this.flexiDiscount);
       this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
-      // console.log(this.sendflexiFare)
-      //sessionStorage.setItem(this.searchTrainKey + '-totalFare', String(this.totalCollectibleAmount));
     } else if (values[0].key !== 15) {
       this.flexipaysummry = false;
       this.flexiDiscount = 0;
@@ -211,7 +209,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.flexiDiscount = 0;
       this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
       this.sendflexiFare = this.totalFare;
-      //sessionStorage.setItem(this.searchTrainKey + '-totalFare', String(this.totalCollectibleAmount));
     }
   }
 
@@ -270,8 +267,19 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
 
+  isCollapseShow(identifyCollpase) {
 
+    if (identifyCollpase == 'BaseFare') {
+      this.isCollapseBasefare = !this.isCollapseBasefare;
+    } else if (identifyCollpase == 'vas') {
+      this.isCollapseVas = !this.isCollapseVas;
+    } else if (identifyCollpase == 'discount') {
+      this.isCollapseDiscount = !this.isCollapseDiscount;
+    } else {
+      this.isCollapse = !this.isCollapse;
+    }
 
+  }
 
 
   ngOnInit() {
@@ -286,6 +294,26 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       } else {
         this._flightService.showHeader(true);
       }
+        
+        const jobGroup: FormGroup = new FormGroup({});
+        jobGroup.addControl('passengerId' , new FormControl());
+        jobGroup.addControl('passengerTitle', new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
+        jobGroup.addControl('passengerFirstName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+        jobGroup.addControl('passengerLastName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+        jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]));
+        jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID, [Validators.required, Validators.pattern(this.emailPattern)]));
+        jobGroup.addControl('passengerAgree', new FormControl('', [Validators.required, Validators.pattern('true')]));
+
+        jobGroup.addControl('whatsappFlag', new FormControl('1'));
+        jobGroup.addControl('gstNumber', new FormControl(''));
+        jobGroup.addControl('gstBusinessName', new FormControl(''));
+        jobGroup.addControl('gstAddress', new FormControl(''));
+        jobGroup.addControl('gstCity', new FormControl(''));
+        jobGroup.addControl('gstPincode', new FormControl(''));
+        jobGroup.addControl('gstState', new FormControl(''));
+        jobGroup.addControl('saveGST', new FormControl('1'));
+
+        this.passengerForm = jobGroup;
 
       setTimeout(() => {
         //Check Laravel Seesion
@@ -323,9 +351,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
                 }
                   this.passengerForm.patchValue({
                     passengerFirstName: customerInfo["firstname"],
-                    passengerLastName: customerInfo["lastname"]
-                  });
-                this.passengerForm.patchValue({
+                    passengerLastName: customerInfo["lastname"],
                   passengerMobile: customerInfo["mobile"],
                   passengerEmail: customerInfo["email"]
                 });
@@ -422,7 +448,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       }, 2000);
 
       sessionStorage.removeItem("coupon_amount");
-      const jobGroup: FormGroup = new FormGroup({});
+     
       this.searchHotelKey = this.activatedRoute.snapshot.queryParamMap.get('searchHotelKey');
       this.searchResult = JSON.parse(sessionStorage.getItem(this.searchHotelKey));
 
@@ -437,36 +463,16 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         })
       
         this.selectedHotel=this.searchResult.selectedHotel;
-   
-        
+        this.partnerToken = this.searchResult.PriceSummery.partnerName;
         this.totalFare = Number(this.selectedHotel.rateBreakdown.total);
-        this.intialTotalFare = Number(this.selectedHotel.rateBreakdown.total);
-       
+        this.intialTotalFare= Number(this.selectedHotel.rateBreakdown.total);
         this.totalBaseFare = Number(this.selectedHotel.rateBreakdown.baseFare);
         this.totalTax = Number(this.selectedHotel.rateBreakdown.tax);
-         this.partnerDiscount = Number(this.selectedHotel.rateBreakdown.partnerDiscount);
+        this.partnerDiscount = Number(this.selectedHotel.rateBreakdown.partnerDiscount);
         
          console.log(this.searchResult);
 
       if (this.searchResult != null) {
-        jobGroup.addControl('passengerId' , new FormControl());
-        jobGroup.addControl('passengerTitle', new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
-        jobGroup.addControl('passengerFirstName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
-        jobGroup.addControl('passengerLastName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
-        jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]));
-        jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID, [Validators.required, Validators.pattern(this.emailPattern)]));
-        jobGroup.addControl('passengerAgree', new FormControl('', [Validators.required, Validators.pattern('true')]));
-
-        jobGroup.addControl('whatsappFlag', new FormControl('1'));
-        jobGroup.addControl('gstNumber', new FormControl(''));
-        jobGroup.addControl('gstBusinessName', new FormControl(''));
-        jobGroup.addControl('gstAddress', new FormControl(''));
-        jobGroup.addControl('gstCity', new FormControl(''));
-        jobGroup.addControl('gstPincode', new FormControl(''));
-        jobGroup.addControl('gstState', new FormControl(''));
-        jobGroup.addControl('saveGST', new FormControl('1'));
-
-        this.passengerForm = jobGroup;
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'] + this.domainPath;
         if (this.sg['domainPath'] != '') {
           this.domainRedirect = environment.MAIN_SITE_URL + this.domainPath;
@@ -517,7 +523,10 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(url);
   }
   
-  
+    gstmodalcheckedvalue:any = false;
+    openmodal(content) {
+    this.modalService.open(content, { centered: true, size: 'lg' });
+  }
 
   bookingSessionExpires(e: CountdownEvent) {
     if (e.action == 'done') {
@@ -665,19 +674,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.passengerForm['controls']['gstCity'].setValue('');
     this.passengerForm['controls']['gstState'].setValue('');
   }
-  travellerReset() {
-    this.selectedCheckbox = [];
-    for (let i = 0; i < this.travellerlistLength; i++) {
-      this.isChecked[i] = false;
-      this.disableCheckbox[i] = false;
-    }
-    for (var i = 0; i < this.passengerCount; i++) {
-      this.passengerForm.controls['passengerFirstName' + i].setValue('');
-      this.passengerForm.controls['passengerLastName' + i].setValue('');
-      this.passengerForm.controls['passengerAge' + i].setValue('');
-      this.passengerForm.controls['passengerGender' + i].setValue('');
-    }
-  }
+
   /*---------------------end------------------------*/
   
         state:any;
@@ -764,10 +761,37 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
 
 
-  passengerFormerror: number = 0;
   
-  createBusItinerary() {
-    this.submitted = true;
+  createHotelItinerary() {
+     this.submitted = true;
+  
+   if (this.passengerForm.invalid ) {
+        let target;
+        target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
+        if (target) {
+        if( target.id =='agree_terms'){
+        $(document).scrollTop($(document).height());
+        }else{
+        target.scrollIntoView();
+        (target as HTMLElement).focus();
+        }
+        }
+        console.log(this.passengerForm);  
+        
+      return;
+    } else {
+     this.spinnerService.show();
+       var whatsappFlag;
+      if (this.whatsappFeature == 1)
+        whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
+      else
+        whatsappFlag = 0;
+       this.spinnerService.hide();  
+        this.steps = 2;
+        this.completedSteps = 2;
+
+        
+    }
 
   }
   isPaynowClicked: boolean = false;
