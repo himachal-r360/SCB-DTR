@@ -109,7 +109,7 @@
                         <div>
                           <p class="label">Check-in</p>
                           <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
-                          <p class="label"> {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
+                          <p class="label"  *ngIf="searchResult.hotel_detail.checkIn" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                         </div>
                         <div>
                           <p><span class="duration">2 Nights</span></p>
@@ -117,7 +117,7 @@
                         <div>
                           <p class="label">Check-out</p>
                           <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
-                          <p class="label"> {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
+                          <p class="label" *ngIf="searchResult.hotel_detail.checkOut" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                         </div>
                       </div>
                     </div>
@@ -127,7 +127,7 @@
                           <div>
                             <p class="label">Check-in</p>
                             <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
-                            <p class="label"> {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
+                            <p class="label"  *ngIf="searchResult.hotel_detail.checkIn" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                           </div>
                           <div>
                             <p><span class="duration">2 Nights</span></p>
@@ -135,7 +135,7 @@
                           <div>
                             <p class="label">Check-out</p>
                             <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
-                            <p class="label"> {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
+                            <p class="label"  *ngIf="searchResult.hotel_detail.checkOut" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                           </div>
                         </div>
                         <hr class="my-2">
