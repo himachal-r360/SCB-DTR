@@ -97,8 +97,8 @@ IRCTC_List_Quota:{
   'userUpdateBlockend':'1745' 
  },
  couponcontroll:{
-  'RedBus':1, 
-  'IRCTC':1,
+  'RedBus':0, 
+  'IRCTC':0,
   'Freshmenu':1
  },
  flexipayInt:{
