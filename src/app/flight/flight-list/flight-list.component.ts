@@ -170,8 +170,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
         @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
-        pageIndex: number = 26;
-        ITEMS_RENDERED_AT_ONCE=25;
+        pageIndex: number = 11;
+        ITEMS_RENDERED_AT_ONCE=10;
         nextIndex=0;
 
         private loadData() {

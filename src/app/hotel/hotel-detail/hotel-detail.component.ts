@@ -53,7 +53,7 @@ export class HotelDetailComponent implements OnInit {
   }
 
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
-
+    isMobile: boolean = true;
     customOptions: OwlOptions = {
     loop: false,
     autoplay:false,
@@ -191,13 +191,14 @@ export class HotelDetailComponent implements OnInit {
     nav: false
   }
   sub:Subscription;
-  isMobile:boolean = false;
   constructor( public route: ActivatedRoute, private router: Router,private sg: SimpleGlobal, private _hotelService: HotelService,private _sanitizer: DomSanitizer,private location: Location , private _flightService:FlightService) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
   ngOnInit(): void {
+  
     this.route.url.subscribe(url => {
+    this.isMobile = window.innerWidth < 991 ? true : false;
       //console.log(this.checkin)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
@@ -218,11 +219,18 @@ export class HotelDetailComponent implements OnInit {
     this.TotalAdult += parseInt(z.numberOfAdults);
     this.TotalChild += parseInt(z.numberOfChildren);
    })
+    this.resetPopups();
+      if(this.isMobile)
       this.headerHideShow(null);
       this.GetHotelDetails();
     });
   }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   GetHotelDetails() {
     $("#bookingprocess").modal('show')
     this.loaderValue = 10;

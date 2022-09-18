@@ -136,6 +136,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
   
     alertify.set('notifier', 'position', 'bottom-center');
   }
+  noOfDays=1;
   loaderValue = 10;
   public Button_loading: any = 'Processing...';
   public buttonstatus: boolean = false;
@@ -283,7 +284,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.titleService.setTitle('Home | Hotels');
+    //this.titleService.setTitle('Home | Hotels');
 
     this.activatedRoute.url.subscribe(url => {
       this.resetPopups();
@@ -461,6 +462,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         this.totalAdult += parseInt(z.numberOfAdults);
         this.totalChild += parseInt(z.numberOfChildren);
         })
+        
+        this.noOfDays=moment(this.searchData.checkOut).diff(moment(this.searchData.checkIn).format('YYYY-MM-DD'), 'days');
       
         this.selectedHotel=this.searchResult.selectedHotel;
         this.partnerToken = this.searchResult.PriceSummery.partnerName;
@@ -768,6 +771,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
    if (this.passengerForm.invalid ) {
         let target;
         target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
+         console.log(target)
         if (target) {
         if( target.id =='agree_terms'){
         $(document).scrollTop($(document).height());

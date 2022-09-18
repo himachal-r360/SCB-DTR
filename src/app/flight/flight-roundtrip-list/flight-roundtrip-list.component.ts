@@ -167,11 +167,11 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('itemsReturnContainer', { read: ViewContainerRef }) returnContainer: ViewContainerRef;
   @ViewChild('returnItem', { read: TemplateRef }) returnTemplate: TemplateRef<any>;
-  pageIndex: number = 26;
-  ITEMS_RENDERED_AT_ONCE=25;
+  pageIndex: number = 11;
+  ITEMS_RENDERED_AT_ONCE=10;
   nextIndex=0;
 
-    pageIndexR: number = 26;
+    pageIndexR: number = 11;
   nextIndexR=0;
 
   constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,private _flightService: FlightService,  public route: ActivatedRoute, private router: Router, private location: Location,private sg: SimpleGlobal  ) {

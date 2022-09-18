@@ -30,7 +30,6 @@
               <li>
                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }"
                   (click)="moveTab(1)">
-                  <!-- steps-done - Class For done steps -->
                   <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/bus.svg" alt="" /></span>
                   <span class="steps-text">Hotel Details</span>
                 </a>
@@ -109,7 +108,7 @@
                         <div>
                           <p class="label">Check-in</p>
                           <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
-                          <p class="label"  *ngIf="searchResult.hotel_detail.checkIn" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
+                          <p class="label"  *ngIf="partnerToken=='Clearrip'" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                         </div>
                         <div>
                           <p><span class="duration">2 Nights</span></p>
@@ -117,7 +116,7 @@
                         <div>
                           <p class="label">Check-out</p>
                           <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
-                          <p class="label" *ngIf="searchResult.hotel_detail.checkOut" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
+                          <p class="label" *ngIf="partnerToken=='Clearrip'" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                         </div>
                       </div>
                     </div>
@@ -127,15 +126,15 @@
                           <div>
                             <p class="label">Check-in</p>
                             <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
-                            <p class="label"  *ngIf="searchResult.hotel_detail.checkIn" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
+                            <p class="label" *ngIf="partnerToken=='Clearrip'" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                           </div>
                           <div>
-                            <p><span class="duration">2 Nights</span></p>
+                            <p><span class="duration">{{noOfDays}} Nights</span></p>
                           </div>
                           <div>
                             <p class="label">Check-out</p>
                             <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
-                            <p class="label"  *ngIf="searchResult.hotel_detail.checkOut" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
+                            <p class="label"  *ngIf="partnerToken=='Clearrip'" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                           </div>
                         </div>
                         <hr class="my-2">
@@ -643,7 +642,7 @@
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div >
-                              <div  class="collapse_text bus-collapse-txt">{{searchData.noOfRooms}} Rooms X {{searchData.noOfRooms}} Nights </div>
+                              <div  class="collapse_text bus-collapse-txt">{{searchData.noOfRooms}} Rooms X {{noOfDays}} Nights </div>
                             </div>
                           </div>
                           <div class="fare-list-right">
@@ -841,7 +840,7 @@
                   <div class="fare-list-left">
                     <div >
                       <div  class="collapse_text bus-collapse-txt" >
-                        <div  class="collapse_text bus-collapse-txt">{{searchData.noOfRooms}} Rooms X {{searchData.noOfRooms}} Nights </div>
+                        <div  class="collapse_text bus-collapse-txt">{{searchData.noOfRooms}} Rooms X {{noOfDays}} Nights </div>
                        </div>
 
                     </div>

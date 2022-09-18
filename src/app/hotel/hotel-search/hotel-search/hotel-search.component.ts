@@ -4,7 +4,9 @@ import { debounceTime, fromEvent, map, reduce, switchMap } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { ActivatedRoute,  Router } from '@angular/router';
+import { SimpleGlobal } from 'ng2-simple-global';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+import { environment } from '../../../../environments/environment';
 declare var $: any;
 @Component({
   selector: 'app-hotel-search',
@@ -12,6 +14,7 @@ declare var $: any;
   styleUrls: ['./hotel-search.component.css']
 })
 export class HotelSearchComponent implements OnInit ,AfterViewInit{
+  cdnUrl: any;
   hotelSearchForm: any;
   hotelList: any;
   cityList: any;
@@ -67,7 +70,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
 
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute,private sg: SimpleGlobal) {
+   this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: ['',[Validators.required]],
       checkOut: ['',[Validators.required]],
