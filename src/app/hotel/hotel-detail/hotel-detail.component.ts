@@ -244,9 +244,10 @@ export class HotelDetailComponent implements OnInit {
     var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
     // console.log(res);
-
+     if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
+           
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);
     //  var url = 'https://www.google.com/maps/embed/v1/view?key='+this.GoogleAPI_Key+'&center='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18';
@@ -255,7 +256,17 @@ export class HotelDetailComponent implements OnInit {
      this.GOOGLE_MAP_URL = this._sanitizer.bypassSecurityTrustResourceUrl(url)
      $("#bookingprocess").modal('hide')
      clearInterval(myInterval3);
-    }, (error) => { console.log(error) });
+     }else{
+      $("#bookingprocess").modal('hide');
+       $("#bookingprocessFailed").modal('show');
+     
+     }
+     
+     
+    }, (error) => {       
+       $("#bookingprocess").modal('hide');
+       $("#bookingprocessFailed").modal('show'); 
+       });
 
   }
 
@@ -305,6 +316,7 @@ export class HotelDetailComponent implements OnInit {
     this.WideImageOwl.to('Id_'+index);
   }
   backClicked(){
+  this.resetPopups();
     this.location.back();
   }
 

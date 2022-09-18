@@ -842,11 +842,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
       return;
     } else {
-       var whatsappFlag;
-      if (this.whatsappFeature == 1)
-        whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-      else
-        whatsappFlag = 0;
+   
        
        var gender; 
        switch (this.passengerForm.controls['passengerTitle']['value']) {
@@ -976,20 +972,181 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }, 20);
       }
         
-     
-        
-        
-  
-
-        
     }
 
   }
   
   saveCheckout(interval){
   
-        this.steps = 2;
-        this.completedSteps = 2;
+      var whatsappFlag;
+      if (this.whatsappFeature == 1)
+        whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
+      else
+        whatsappFlag = 0;
+        
+        
+    let all_room_array:any=[];
+    let room_array:any=[];
+    
+      for(let i=0;i<(this.searchData.rooms.length);i++){
+        room_array['room'+(i+1)]={
+        "adult": this.searchData.rooms[i]['numberOfAdults'],
+        "child":this.searchData.rooms[i]['numberOfChildren'],
+        "bedTypeId": 0,
+        "smokingPreference": "",
+        "specialrequests": ""
+        };
+        }
+        
+    let roomTypeId=this.selectedHotel.roomType.roomTypeId;
+    let currentDate=moment().format('DD-MM-YYYY');
+    let checkoutData = {
+    "hoteldetails": {
+    "booking-date":moment().format('YYYY-MM-DD'),
+    "number-of-nights":  this.noOfDays,
+    "number-of-room-nights": this.noOfDays,
+    "country": this.searchData.country,
+    "check-in-date": this.searchData.checkIn,
+    "check-out-date": this.searchData.checkOut,
+    "check-in-time": this.searchResult.hotel_detail.checkIn,
+    "check-out-time": this.searchResult.hotel_detail.checkOut,
+    "city":  this.searchData.city,
+    "number-of-rooms": this.searchData.numberOfRooms,
+    "hotelid": this.searchResult.Hotelkey,
+    "hotelname": this.searchResult.hotel_detail.hotelName,
+    "hoteladdress": this.searchResult.hotel_detail.address,
+    "hotelImageUrl": this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'],
+    "room_type_id": this.selectedHotel.roomType.roomTypeId,
+    "room_type_code": this.selectedHotel.roomType.roomTypeCode,
+    "room_dec": this.selectedHotel.roomType.roomDescription,
+    "hotelratings":  this.searchResult.hotel_detail.hotelRatings[0]['rating'],
+    "provid": this.provisionalBookingId,
+    "booking_code": this.selectedHotel.roomType.bookingCode,
+    "roomdetails": room_array,
+    "inclusions": {
+      "inclusion": []
+    }
+  },
+  "fare": {
+    "total_tax": this.totalTax,
+    "total_amount": this.totalFare,
+    "partnerDiscount":this.partnerDiscount,
+    "totalDiscount": 0,
+    "totalBaseFare": this.totalBaseFare,
+    "couponDiscount": 0,
+    "voucher_amount": 0
+  },
+  "partner_amount": 4760,
+  "discount": 0,
+  "coupon_code": "",
+  "farebreakup": {
+    currentDate: {
+      "dis": 0,
+      "total": this.totalFare,
+      "basefare": this.totalBaseFare,
+      "partnerDiscount":this.partnerDiscount,
+      "tax": this.totalTax
+    }
+  },
+  "partnerToken": this.partnerToken,
+  "serviceToken": "Hotel",
+  "hotel_details": {
+    "response": {
+      "partnerName": this.partnerToken,
+      "validResponse": true,
+      "hotelInfo": this.searchResult.hotel_detail
+    },
+    "statusCode": 200,
+    "responseDateTime": ""
+  },
+  "room_details_book": {
+    roomTypeId: {
+      "roomTypeId": this.selectedHotel.roomType.roomTypeId,
+      "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
+      "bookingCode": this.selectedHotel.roomType.bookingCode,
+      "roomname": this.selectedHotel.roomType.roomDescription,
+      "price": this.totalFare,
+      "noOFRoomsLeft": "",
+      "maxOccupancy": "",
+      "guessadded": this.totalAdult,
+      "childadded":  this.totalChild,
+      "roomsadded": this.searchData.numberOfRooms
+    }
+  },
+  "search_input": {
+    "cityname": this.searchData.city+' '+this.searchData.countryName,
+    "city_id": this.searchData.city,
+    "country": this.searchData.country,
+    "hotel_name": "",
+    "lattitude": "",
+    "longitude": "",
+    "hotel_id": "",
+    "area": "",
+    "label_name": "",
+    "checkin": moment( this.searchData.checkIn).format('DD MMM YYYY'),
+    "checkout": moment( this.searchData.checkOut).format('DD MMM YYYY'),
+    "num_rooms": this.searchData.numberOfRooms,
+    "numberOfAdults1": this.totalAdult,
+    "numberOfChildren1": this.totalChild,
+    "t": "ZWFybg==",
+    "hotel_search_done": "0",
+    "hotel_modify": "0",
+    "arrive": moment( this.searchData.checkOut).format('DD/MM/YYYY'),
+    "depart": moment( this.searchData.checkIn).format('DD/MM/YYYY'),
+    "session_hotels_key": this.searchHotelKey
+  },
+  "room_input": {
+    "image": this.selectedHotel.imageInfo.wideAngleImageurl,
+    "room_dec": this.selectedHotel.roomType.roomDescription,
+    "room_type_code":   this.selectedHotel.roomType.roomTypeCode,
+    "bookingCode":   this.selectedHotel.roomType.bookingCode,
+    "room_type_id": this.selectedHotel.roomType.roomTypeId,
+    "room_title":this.selectedHotel.roomType.roomTitle,
+    "room_total": this.totalFare,
+    "room_left": "",
+    "room_max_occupancy": "",
+    "booking_code":  this.selectedHotel.roomType.bookingCode,
+    "provisional-booking-required": "",
+    "roomcount": this.searchData.noOfRooms,
+    "addedguest": this.totalAdult,
+    "addedchild": this.totalChild,
+    "t": "ZWFybg=="
+  },
+  "contactDetails": {
+    "title": this.passengerForm.controls['passengerTitle']['value'],
+    "firstName": this.passengerForm.controls['passengerFirstName']['value'],
+    "lastName": this.passengerForm.controls['passengerLastName']['value'],
+    "mobile": this.passengerForm.controls['passengerMobile']['value'],
+    "email": this.passengerForm.controls['passengerEmail']['value']
+  },
+  "passenger_info_retry": {
+    "provid": "",
+    "AdultId1": "",
+    "title": this.passengerForm.controls['passengerTitle']['value'],
+    "firstName": this.passengerForm.controls['passengerFirstName']['value'],
+    "lastName": this.passengerForm.controls['passengerLastName']['value'],
+    "mobile": this.passengerForm.controls['passengerMobile']['value'],
+    "email": this.passengerForm.controls['passengerEmail']['value'],
+    "whatsappFlag": whatsappFlag,
+    "gst_number": this.passengerForm.controls['gstNumber']['value'],
+    "gst_name": this.passengerForm.controls['gstBusinessName']['value'],
+    "gst_address": this.passengerForm.controls['gstAddress']['value'],
+    "gst_city": this.passengerForm.controls['gstCity']['value'],
+    "gst_pincode": this.passengerForm.controls['gstPincode']['value'],
+    "gst_state":this.passengerForm.controls['gstState']['value']
+  },
+  "order_ref_num": this.orderReferenceNumber,
+  "amd_url": "",
+  "redirect_url": "",
+  "sessionKey":this.searchHotelKey,
+   "docKey": this.searchResult.docKey,
+  "hotelSessionData":this.searchResult
+};
+  
+  console.log(checkoutData);return;
+  
+       // this.steps = 2;
+       // this.completedSteps = 2;
   }
   
   isPaynowClicked: boolean = false;
