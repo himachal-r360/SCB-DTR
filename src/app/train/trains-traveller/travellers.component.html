@@ -2579,7 +2579,7 @@
                         </div>
                     </div>
                     <div *ngIf="steps==3 && !isMobile">
-                        <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
+                        <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="totalCollectibleAmount" [passConvinenceFee]="convenience_fee"
                             passServiceToken="Train" passPartnerToken="IRCTC" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                         </app-coupons>
                     </div>
@@ -2692,7 +2692,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
+                    <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchBusKey" [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon" [passTotalFare]="totalFare" [passActualFare]="totalCollectibleAmount" [passConvinenceFee]="convenience_fee"
                         passServiceToken="Train" passPartnerToken="IRCTC" (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
                     </app-coupons>
                 </div>
