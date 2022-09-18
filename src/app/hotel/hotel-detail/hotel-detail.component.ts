@@ -53,7 +53,7 @@ export class HotelDetailComponent implements OnInit {
   }
 
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
-
+    isMobile: boolean = true;
     customOptions: OwlOptions = {
     loop: false,
     autoplay:false,
@@ -191,13 +191,14 @@ export class HotelDetailComponent implements OnInit {
     nav: false
   }
   sub:Subscription;
-  isMobile:boolean = false;
   constructor( public route: ActivatedRoute, private router: Router,private sg: SimpleGlobal, private _hotelService: HotelService,private _sanitizer: DomSanitizer,private location: Location , private _flightService:FlightService) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
   ngOnInit(): void {
+  
     this.route.url.subscribe(url => {
+    this.isMobile = window.innerWidth < 991 ? true : false;
       //console.log(this.checkin)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
@@ -218,11 +219,18 @@ export class HotelDetailComponent implements OnInit {
     this.TotalAdult += parseInt(z.numberOfAdults);
     this.TotalChild += parseInt(z.numberOfChildren);
    })
+    this.resetPopups();
+      if(this.isMobile)
       this.headerHideShow(null);
       this.GetHotelDetails();
     });
   }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   GetHotelDetails() {
     $("#bookingprocess").modal('show')
     this.loaderValue = 10;
@@ -236,9 +244,10 @@ export class HotelDetailComponent implements OnInit {
     var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
     // console.log(res);
-
+     if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
+           
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);
     //  var url = 'https://www.google.com/maps/embed/v1/view?key='+this.GoogleAPI_Key+'&center='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18';
@@ -247,7 +256,17 @@ export class HotelDetailComponent implements OnInit {
      this.GOOGLE_MAP_URL = this._sanitizer.bypassSecurityTrustResourceUrl(url)
      $("#bookingprocess").modal('hide')
      clearInterval(myInterval3);
-    }, (error) => { console.log(error) });
+     }else{
+      $("#bookingprocess").modal('hide');
+       $("#bookingprocessFailed").modal('show');
+     
+     }
+     
+     
+    }, (error) => {       
+       $("#bookingprocess").modal('hide');
+       $("#bookingprocessFailed").modal('show'); 
+       });
 
   }
 
@@ -297,6 +316,7 @@ export class HotelDetailComponent implements OnInit {
     this.WideImageOwl.to('Id_'+index);
   }
   backClicked(){
+  this.resetPopups();
     this.location.back();
   }
 

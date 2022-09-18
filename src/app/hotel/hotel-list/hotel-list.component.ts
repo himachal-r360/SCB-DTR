@@ -119,8 +119,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('showFilter')showFilter:ElementRef;
 
-  pageIndex: number = 26;
-        ITEMS_RENDERED_AT_ONCE=25;
+  pageIndex: number = 11;
+        ITEMS_RENDERED_AT_ONCE=10;
         nextIndex=0;
 
          loadData() {
@@ -196,26 +196,26 @@ export class HotelListComponent implements OnInit,OnDestroy {
         $('#endOfPage').trigger('click');
       }
     });
-
+ this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
 
   }
 
-  @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
+  /*@HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-  }
+  }*/
 
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.sub = this.route.url.subscribe(url =>{
+   // this.sub = this.route.url.subscribe(url =>{
     this.isResponse = true;
     this.loader = true;
     this.getSearchData();
     if(this.isMobile)
     this.headerHideShow(null);
     this.searchHotel();
-    });
+   // });
   }
 
   getSearchData(){
