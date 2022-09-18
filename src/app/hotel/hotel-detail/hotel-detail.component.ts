@@ -198,14 +198,12 @@ export class HotelDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.url.subscribe(url => {
-
-
-      console.log(this.checkin)
+      //console.log(this.checkin)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
       var Details = JSON.parse(sessionStorage.getItem(urlParam.searchHotelKey));
-      console.log(Details)
+      //console.log(Details)
       for (var key in Details.hotel.hotelInfo.amenity) {
         if(Details.hotel.hotelInfo.amenity[key] == 1)
         {
@@ -237,7 +235,7 @@ export class HotelDetailComponent implements OnInit {
   }, 300);
     var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
-     console.log(res);
+    // console.log(res);
 
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
@@ -283,7 +281,7 @@ export class HotelDetailComponent implements OnInit {
         "hotel_detail": this.HotelDetail
         };
 
-console.log(hotelDetailsArr);
+//console.log(hotelDetailsArr);
         let randomHotelDetailKey = btoa(item.roomType.bookingCode+this.PriceSummery.partnerName);
         sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
         let url = 'hotel-checkout?searchHotelKey=' + randomHotelDetailKey;

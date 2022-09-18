@@ -800,7 +800,18 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         gender='Male';
 
         }
+        let room_values:any=[];
         
+        for(let i=0;i<(this.searchData.rooms.length);i++){
+         room_values.push({
+        "childrenAge": this.searchData.rooms[i]['childrenAge'],
+        "numberOfAdults":this.searchData.rooms[i]['numberOfAdults'],
+        "numberOfChildren": this.searchData.rooms[i]['numberOfChildren'],
+        "room":  this.searchData.rooms[i]['room'],
+        "roomRatePlanId":this.selectedHotel.roomType.roomTypeCode,
+        "roomTypeId": this.selectedHotel.roomType.roomTypeId
+        });
+        }
         this.itineraryParam ={
         "bookingAmount":this.selectedHotel.rateBreakdown.total,
         "bookingCode": this.selectedHotel.roomType.bookingCode,
@@ -826,7 +837,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "nationality": ""
         },
         "discountAmount": 0,
-        "hotelId": this.Hotelkey,
+        "hotelId": this.searchResult.Hotelkey,
         "mobileCountryCode": 91,
         "noOfRooms": this.searchData.numberOfRooms,
         "operator": "",
@@ -835,23 +846,12 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "partnerName": this.partnerToken,
         "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
         "mmtTxnKey": "",
-        "rooms": [
-        {
-        "childrenAge": "",
-        "numberOfAdults": 2,
-        "numberOfChildren": 0,
-        "room": 1,
-        "roomRatePlanId": "385069069:315925976",
-        "roomTypeId": "385069069:315925976"
-        }
-        ],
+        "rooms": room_values,
         "serviceName": "Hotel"
         };
         
         
-        console.log(this.itineraryParam);return;
-        
-        
+        console.log(this.itineraryParam);
         
         
         

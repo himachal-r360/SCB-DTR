@@ -76,20 +76,22 @@
                    <div>
                     <div class="hotel_details">
                         <div>
-                          <img src="https://fastui.cltpstatic.com/hotels/places/hotels/3974/3974725/images/image_2884191_original_w.jpg" alt="img">
+                         <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
+                        <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                          
                         </div>
                         <div>
                           <div class="">
-                              <p class="hotel_name">Acron Candolim Regina</p>
-                              <p class="hotel_address">376, off Fort Aguada, Candolim, Bardez, Goa403507, India</p>
+                              <p class="hotel_name">{{searchResult.hotel_detail.hotelName}}</p>
+                              <p class="hotel_address">{{searchResult.hotel_detail.address}}</p>
                                 <p class="hotel-star" >
-                                  <i class="fas fa-star active" ></i>
-                                  <i class="fas fa-star active" ></i>
-                                  <i class="fas fa-star active" ></i>
-                                  <i class="fas fa-star active" ></i>
-                                  <i class="fas fa-star " ></i>
+                                  <i class="fas fa-star "  [ngClass]="{'active': searchResult.hotel_detail.hotelRatings[0]['rating'] >= 1 }"></i>
+                                  <i class="fas fa-star "  [ngClass]="{'active': searchResult.hotel_detail.hotelRatings[0]['rating'] > 1 }" ></i>
+                                  <i class="fas fa-star " [ngClass]="{'active': searchResult.hotel_detail.hotelRatings[0]['rating'] > 2 }" ></i>
+                                  <i class="fas fa-star "  [ngClass]="{'active': searchResult.hotel_detail.hotelRatings[0]['rating'] > 3 }" ></i>
+                                  <i class="fas fa-star " [ngClass]="{'active': searchResult.hotel_detail.hotelRatings[0]['rating'] > 4 }" ></i>
                                   
-                                  <span class="hotel-star-tag">4/5</span>
+                                  <span class="hotel-star-tag">{{searchResult.hotel_detail.hotelRatings[0]['rating']}}/5</span>
                               </p>
                           </div>
                         </div>
@@ -98,24 +100,24 @@
                       <div class="hotel_rooms">
                         <div>
                           <p class="label">Room Type</p>
-                          <p class="value"> 2 Delux Room</p>
-                          <p class="label"> 4 Guests</p>
+                          <p class="value"> {{searchResult.selectedHotel.roomType.roomTitle}}</p>
+                          <p class="label"> {{searchData.totalGuest}} Guests</p>
                         </div>
                         <div class="v_line">
                           <p></p>
                         </div>
                         <div>
                           <p class="label">Check-in</p>
-                          <p class="value"> 11 Aug 2022</p>
-                          <p class="label"> Thursday, 2PM</p>
+                          <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
+                          <p class="label"  *ngIf="searchResult.hotel_detail.checkIn" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                         </div>
                         <div>
                           <p><span class="duration">2 Nights</span></p>
                         </div>
                         <div>
                           <p class="label">Check-out</p>
-                          <p class="value"> 13 Aug 2022</p>
-                          <p class="label"> Saturday, 12PM</p>
+                          <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
+                          <p class="label" *ngIf="searchResult.hotel_detail.checkOut" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                         </div>
                       </div>
                     </div>
@@ -124,23 +126,23 @@
                         <div class="hotel_rooms p-0">
                           <div>
                             <p class="label">Check-in</p>
-                            <p class="value"> 11 Aug 2022</p>
-                            <p class="label"> Thursday, 2PM</p>
+                            <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
+                            <p class="label"  *ngIf="searchResult.hotel_detail.checkIn" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                           </div>
                           <div>
                             <p><span class="duration">2 Nights</span></p>
                           </div>
                           <div>
                             <p class="label">Check-out</p>
-                            <p class="value"> 13 Aug 2022</p>
-                            <p class="label"> Saturday, 12PM</p>
+                            <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
+                            <p class="label"  *ngIf="searchResult.hotel_detail.checkOut" > {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                           </div>
                         </div>
                         <hr class="my-2">
                           <div>
                             <p class="label">Room Type</p>
-                            <p class="value"> 2 Delux Room</p>
-                            <p class="label"> 4 Guests</p>
+                            <p class="value"> {{searchResult.selectedHotel.roomType.roomTitle}}</p>
+                            <p class="label"> {{searchData.totalGuest}} Guests</p>
                           </div>
                       </div>
                     </div>
@@ -152,22 +154,23 @@
                  <div class="web_code d-none d-sm-block">
                   <div class="hotel_details ">
                     <div>
-                      <img src="https://fastui.cltpstatic.com/hotels/places/hotels/3974/3974725/images/image_2884191_original_w.jpg" alt="img">
+                           <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
+                        <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                     </div>
                     <div>
                       <div class="">
                           <div class="mb-20">
-                           <p class="hotel_name">Deluxe Room King Bed with Balcony</p>
-                           <p class="hotel_address">1 Adult, 1 Child</p>
+                           <p class="hotel_name">{{searchResult.selectedHotel.roomType.roomTitle}}</p>
+                           <p class="hotel_address">{{totalAdult}} Adult<span *ngIf="totalChild">, {{totalChild}} Child</span></p>
                           </div>
                           <div>
-                            <p class="price_includes"> Price Includes </p>
-                            <ul class="list_includes">
-                             <li> Free Breakfast</li>
-                             <li> All 4 guests can use the existing bed(s) for free</li>
-                             <li> All 4 guests can use the existing bed(s) for free</li>
+                            <p class="price_includes" *ngIf="searchResult.selectedHotel.roomAmenities.length"> Price Includes </p>
+                            <ul class="list_includes" *ngIf="searchResult.selectedHotel.roomAmenities.length">
+                                <li *ngFor="let list of searchResult.selectedHotel.roomAmenities">
+                                <p>{{list}}</p>
+                                </li>
                             </ul>
-                            <p class="view_all_includes"><a href="">View all room inclusions</a></p>
+                           <!-- <p class="view_all_includes"><a href="">View all room inclusions</a></p>-->
                           </div>
                       </div>
                     </div>
@@ -177,22 +180,23 @@
                   <div class="">
                     <div class="hotel_details">
                       <div>
-                        <img src="https://fastui.cltpstatic.com/hotels/places/hotels/3974/3974725/images/image_2884191_original_w.jpg" alt="img">
+                        <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
+                        <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                       </div>
                       <div class="">
-                        <p class="hotel_name">Deluxe Room King Bed with Balcony</p>
-                        <p class="hotel_address">1 Adult, 1 Child</p>
+                        <p class="hotel_name">{{searchResult.selectedHotel.roomType.roomTitle}}</p>
+                           <p class="hotel_address">{{totalAdult}} Adult<span *ngIf="totalChild">, {{totalChild}} Child</span></p>
                        </div>
                     </div>
                     <div>
                         <div>
-                          <p class="price_includes"> Price Includes </p>
-                          <ul class="list_includes">
-                            <li> Free Breakfast</li>
-                            <li> All 4 guests can use the existing bed(s) for free</li>
-                            <li> All 4 guests can use the existing bed(s) for free</li>
-                          </ul>
-                          <p class="view_all_includes"><a href="">View all room inclusions</a></p>
+                           <p class="price_includes" *ngIf="searchResult.selectedHotel.roomAmenities.length"> Price Includes </p>
+                            <ul class="list_includes" *ngIf="searchResult.selectedHotel.roomAmenities.length">
+                                <li *ngFor="let list of searchResult.selectedHotel.roomAmenities">
+                                <p>{{list}}</p>
+                                </li>
+                            </ul>
+                          <!--<p class="view_all_includes"><a href="">View all room inclusions</a></p>-->
                         </div>
                     </div>
                   </div>
@@ -200,6 +204,40 @@
                
                 </div>
               </div>
+
+              <!--Cancellation Policy-->
+              <div class="booking-inner-box mb-20" *ngIf="searchResult.selectedHotel.cancellationPolicy">
+                <div>
+                 <div class="web_code d-none d-sm-block">
+                  <div class="hotel_details ">
+                    <div>
+                      <div class="">
+                          <div class="mb-20">
+                           <p class="hotel_name">Cancellation Policy</p>
+                          </div>
+                          <div>
+                           <p>{{searchResult.selectedHotel.cancellationPolicy}}</p>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="mlite_code d-block d-sm-none">
+                  <div class="hotel_details">
+                    <div>
+                        <div>
+                           <p class="hotel_name">Cancellation Policy</p>
+                            <div>
+                           <p>{{searchResult.selectedHotel.cancellationPolicy}}</p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+              </div>
+
+
 
               <div class="contact_sec booking-inner-box">
                 <div class="mb-3 traveller-person-left">
