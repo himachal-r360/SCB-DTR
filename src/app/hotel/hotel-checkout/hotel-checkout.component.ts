@@ -82,6 +82,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         gstDetails: any = [];
         itineraryParam: any = [];
         orderReferenceNumber: string;
+        provisionalBookingId:string;
+        superPnr:string;
+        itineraryResponse: any = [];
         convenience_fee: number = 0;
         REWARD_CUSTOMERID: string;
         REWARD_EMAILID: string;
@@ -137,6 +140,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     alertify.set('notifier', 'position', 'bottom-center');
   }
   noOfDays=1;
+  showGstBox:boolean=false;
   loaderValue = 10;
   public Button_loading: any = 'Processing...';
   public buttonstatus: boolean = false;
@@ -319,6 +323,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         //Check Laravel Seesion
         if (this.sg['customerInfo']) {
+         
           if (sessionStorage.getItem("channel") == "payzapp") {
             var customerInfo = this.sg['customerInfo'];
             this.customerInfo = customerInfo;
@@ -419,7 +424,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
               })
             }
           }
-
+              
         } else {
           this.REWARD_CUSTOMERID = '0000';
           this.REWARD_EMAILID = '';
@@ -433,8 +438,13 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         }
 
       }, 50);
+    this.syncData();
+    });
+    
+  }
 
-      this.loaderValue = 10;
+  syncData(){
+        this.loaderValue = 10;
       const myInterval3 = setInterval(() => {
         this.loaderValue = this.loaderValue + 10;
 
@@ -464,6 +474,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         })
         
         this.noOfDays=moment(this.searchData.checkOut).diff(moment(this.searchData.checkIn).format('YYYY-MM-DD'), 'days');
+        
+       
       
         this.selectedHotel=this.searchResult.selectedHotel;
         this.partnerToken = this.searchResult.PriceSummery.partnerName;
@@ -472,6 +484,11 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         this.totalBaseFare = Number(this.selectedHotel.rateBreakdown.baseFare);
         this.totalTax = Number(this.selectedHotel.rateBreakdown.tax);
         this.partnerDiscount = Number(this.selectedHotel.rateBreakdown.partnerDiscount);
+        
+         let bookingCode=this.selectedHotel.roomType.bookingCode;
+        
+        if(bookingCode.slice(0,2) !=16 && this.totalFare >=1000 && this.enableGST == 1)
+        this.showGstBox=true;
         
          console.log(this.searchResult);
 
@@ -484,11 +501,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['/' + this.sg['domainPath'], 'compare-stay']);
       }
 
-
-
-    });
-    
-  }
+}
 
 
   /*--------Save traveller & gst info----------*/
@@ -570,7 +583,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     alertify.alert('I give consent to Reward360 to store personal information which I am entering on my own accord to facilitate convenience in future for quick data entry while undertaking transaction completion across all/diverse merchant offering on Reward360 hosted platform. This information includes Title, First Name, Last Name, Date of Birth, Mobile Number, Gender, Email ID, Passport Details and GST details. I understand that this information is not being stored by HDFC Bank under any facility and HDFC Bank will not be held responsible should any issue arise related to this data storage.').setHeader('<b>Save this GST for your future travel</b>');
   }
 
-
+  convertToUpperCase($event) {
+    $event.target.value = $event.target.value.toUpperCase();
+  }
 
   getCustomerGstDetails() {
     if (this.enableGST == 1) {
@@ -609,15 +624,30 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.getGSTShow = false;
     }
   }
-  saveGSTfunc(saveGSTArray) {
-    //console.log(saveGSTArray);
-    var requestParamsEncrpt = {
-      postData: this.EncrDecr.set(JSON.stringify(saveGSTArray))
-    };
-    this.rest.saveCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
-      // console.log(response);
-    })
+
+  saveCustomerGst() {
+    if (this.passengerForm['controls']['saveGST'].value == true) {
+      var saveGSTArray: any = [];
+      saveGSTArray.push({
+        "address": this.passengerForm.controls['gstAddress']['value'],
+        "city": this.passengerForm.controls['gstCity']['value'],
+        "customerId": this.REWARD_CUSTOMERID,
+        "gstName": this.passengerForm.controls['gstBusinessName']['value'],
+        "gstNumber": this.passengerForm.controls['gstNumber']['value'],
+        "id": 0,
+        "pinCode": this.passengerForm.controls['gstPincode']['value'],
+        "state": this.passengerForm.controls['gstState']['value'],
+      });
+      var requestParamsEncrpt = {
+        postData: this.EncrDecr.set(JSON.stringify(saveGSTArray))
+      };
+      this.rest.saveCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
+        // console.log(response);
+      })
+    }
   }
+
+
   fillupGSTDetailOnCheck($event, data, GSTIndex) {
     for(let i=0;i<this.GSTListLength;i++){
       this.isCheckedGST[i]=false;
@@ -767,11 +797,41 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   
   createHotelItinerary() {
      this.submitted = true;
+     
+    if (this.gstSelected == true) {
+      this.passengerForm.controls['gstNumber'].setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1]{1}[0-9]{1}|[2]{1}[0-7]{1}|[2]{1}[9]{1}|[3]{1}[0-7]{1})[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[a-zA-Z0-9]{3}$'), Validators.minLength(15)]);
+      this.passengerForm.controls['gstBusinessName'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9]*$"), Validators.minLength(2)]);
+      this.passengerForm.controls['gstAddress'].setValidators([Validators.required, Validators.pattern("^[a-z A-Z 0-9 /,]*$"), Validators.minLength(2)]);
+      this.passengerForm.controls['gstCity'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]);
+      this.passengerForm.controls['gstPincode'].setValidators([Validators.required, Validators.minLength(6)]);
+      this.passengerForm.controls['gstState'].setValidators([Validators.required, Validators.pattern(this.patternName), Validators.minLength(2)]);
+      this.passengerForm.controls['gstNumber'].updateValueAndValidity();
+      this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
+      this.passengerForm.controls['gstAddress'].updateValueAndValidity();
+      this.passengerForm.controls['gstCity'].updateValueAndValidity();
+      this.passengerForm.controls['gstPincode'].updateValueAndValidity();
+      this.passengerForm.controls['gstState'].updateValueAndValidity();
+
+    } else {
+      this.passengerForm.get('gstNumber').clearValidators();
+      this.passengerForm.get('gstBusinessName').clearValidators();
+      this.passengerForm.get('gstAddress').clearValidators();
+      this.passengerForm.get('gstCity').clearValidators();
+      this.passengerForm.get('gstPincode').clearValidators();
+      this.passengerForm.get('gstState').clearValidators();
+      this.passengerForm.controls['gstNumber'].updateValueAndValidity();
+      this.passengerForm.controls['gstBusinessName'].updateValueAndValidity();
+      this.passengerForm.controls['gstAddress'].updateValueAndValidity();
+      this.passengerForm.controls['gstCity'].updateValueAndValidity();
+      this.passengerForm.controls['gstPincode'].updateValueAndValidity();
+      this.passengerForm.controls['gstState'].updateValueAndValidity();
+    }
+
   
    if (this.passengerForm.invalid ) {
         let target;
         target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
-         console.log(target)
+         console.log(this.passengerForm)
         if (target) {
         if( target.id =='agree_terms'){
         $(document).scrollTop($(document).height());
@@ -782,7 +842,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
       return;
     } else {
-     this.spinnerService.show();
        var whatsappFlag;
       if (this.whatsappFeature == 1)
         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
@@ -805,6 +864,30 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
         }
         let room_values:any=[];
+        
+        
+      if (this.gstSelected) {
+        this.gstDetails = {
+          "city": this.passengerForm.controls['gstCity']['value'],
+          "address": this.passengerForm.controls['gstAddress']['value'],
+          "gstNumber": this.passengerForm.controls['gstNumber']['value'],
+          "name": this.passengerForm.controls['gstBusinessName']['value'],
+          "pincode": this.passengerForm.controls['gstPincode']['value'],
+          "state": this.passengerForm.controls['gstState']['value']
+        }
+        if (this.enablesavedTraveller == 1)
+          this.saveCustomerGst();
+      } else {
+        this.gstDetails = {
+          "address": '',
+          "city": '',
+          "gstNumber": '',
+          "name": '',
+          "pincode": '',
+          "state": '',
+        }
+      }
+        
         
         for(let i=0;i<(this.searchData.rooms.length);i++){
          room_values.push({
@@ -840,6 +923,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "streetAddress1": "",
         "nationality": ""
         },
+         "gst": this.gstDetails,
         "discountAmount": 0,
         "hotelId": this.searchResult.Hotelkey,
         "mobileCountryCode": 91,
@@ -854,31 +938,60 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "serviceName": "Hotel"
         };
         
+        this.resetPopups();
+
+        $('#infoprocess').modal('show');
+        this.loaderValue = 10;
+        const myInterval1 = setInterval(() => {
+        this.loaderValue = this.loaderValue + 10;
+        if (this.loaderValue == 110) {
+        this.loaderValue = 10;
+        }
+        }, 700);
+
+
+      var requestParamsEncrpt = {
+        postData: this.EncrDecr.set(JSON.stringify(this.itineraryParam))
+      };
+      this.rest.createHotelItinerary(requestParamsEncrpt).subscribe(response => {
+        if (response && response['response'] && response['response']['provisionalBookingId']) {
+        this.itineraryResponse=response['response'];
+        this.orderReferenceNumber=response['response']['order_id'];
+        this.provisionalBookingId=response['response']['provisionalBookingId'];
+        this.superPnr=response['response']['superPnr'];
+        this.saveCheckout(myInterval1);
+        }else{
+        clearInterval(myInterval1);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 20);
+        }
+      
+      }), (err: HttpErrorResponse) => {
+        clearInterval(myInterval1);
+        setTimeout(() => {
+          $('#infoprocess').modal('hide');
+          $('#bookingprocessFailed').modal('show');
+        }, 20);
+      }
         
-        console.log(this.itineraryParam);
+     
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-       this.spinnerService.hide();  
-        this.steps = 2;
-        this.completedSteps = 2;
+  
 
         
     }
 
   }
+  
+  saveCheckout(interval){
+  
+        this.steps = 2;
+        this.completedSteps = 2;
+  }
+  
   isPaynowClicked: boolean = false;
   continuePayment() {
     //console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
