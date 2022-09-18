@@ -997,9 +997,22 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "specialrequests": ""
         };
         }
+      
+      
+        this.fareData = {
+        "total_tax": this.totalTax,
+        "total_amount": this.totalFare,
+        "partnerDiscount":this.partnerDiscount,
+        "totalDiscount": 0,
+        "totalBaseFare": this.totalBaseFare,
+        "couponDiscount": 0,
+        "voucher_amount": 0
+        };    
+        
         
     let roomTypeId=this.selectedHotel.roomType.roomTypeId;
     let currentDate=moment().format('DD-MM-YYYY');
+    
     let checkoutData = {
     "hoteldetails": {
     "booking-date":moment().format('YYYY-MM-DD'),
@@ -1027,15 +1040,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       "inclusion": []
     }
   },
-  "fare": {
-    "total_tax": this.totalTax,
-    "total_amount": this.totalFare,
-    "partnerDiscount":this.partnerDiscount,
-    "totalDiscount": 0,
-    "totalBaseFare": this.totalBaseFare,
-    "couponDiscount": 0,
-    "voucher_amount": 0
-  },
+  "fare": this.fareData,
   "partner_amount": 4760,
   "discount": 0,
   "coupon_code": "",
@@ -1142,11 +1147,48 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
    "docKey": this.searchResult.docKey,
   "hotelSessionData":this.searchResult
 };
-  
-  console.log(checkoutData);return;
-  
-       // this.steps = 2;
-       // this.completedSteps = 2;
+
+
+    var saveCheckoutData = {
+      orderReferenceNumber: this.orderReferenceNumber,
+      flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
+    };
+
+
+    let trackUrlParams = new HttpParams()
+      .set('current_url', window.location.href)
+      .set('category', 'Flight')
+      .set('event', 'Save Checkout')
+      .set('metadata', '{"save_checkout":"' + this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData))) + '"}');
+
+    const track_body: string = trackUrlParams.toString();
+    this.rest.trackEvents(track_body).subscribe(result => { });
+
+    this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
+      if (rdata == 1) {
+        sessionStorage.setItem(this.searchHotelKey + '-clientTransactionId', this.provisionalBookingId);
+        sessionStorage.setItem(this.searchHotelKey + '-orderReferenceNumber', this.orderReferenceNumber);
+        sessionStorage.setItem(this.searchHotelKey + '-ctype', 'hotels');
+        sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+        sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(checkoutData)));
+        sessionStorage.setItem(this.searchHotelKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
+        clearInterval(interval);
+
+        this.gotoTop();
+         this.steps = 2;
+         this.completedSteps = 2;
+        setTimeout(() => {
+          $('#infoprocess').modal('hide');
+        }, 10);
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          $('#infoprocess').modal('hide');
+          $('#bookingprocessFailed').modal('show');
+        }, 10);
+      }
+    });
+
   }
   
   isPaynowClicked: boolean = false;
