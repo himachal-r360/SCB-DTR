@@ -445,8 +445,8 @@
     <div class="pnr_srch_details d-none d-md-block">
       <div class="row">
         <div class="col-md-4">
-          <h5 class="check_pnr_title">LTT VSKP EXP<span>(18520)</span></h5>
-          <span class="check_pnr_title_text">Runs on: 
+          <h5 class="check_pnr_title">{{PnrDetails.trainName}}<span>({{PnrDetails.trainNumber}})</span></h5>
+          <!-- <span class="check_pnr_title_text">Runs on: 
             <a href="#">S</a>
             <a href="#">M</a>
             <a href="#">T</a>
@@ -454,17 +454,17 @@
             <a href="#">T</a>
             <a href="#">F</a>
             <a href="#">S</a>
-          </span>
+          </span> -->
         </div>
         <div class="col-md-8">
           <div class="row">
             <div class="col-5 text-right">
-              <span class="check_pnr_place mx-1">Lokmantatilak (LTT)</span>
-              <span class="check_pnr_time">06:05 Sat</span>
-              <p class="check_pnr_place">Jul 11, 2022</p>
+              <span class="check_pnr_place mx-1">{{PnrDetails.boardingPoint}}</span>
+              <span class="check_pnr_time"></span>
+              <p class="check_pnr_place">{{PnrDetails.dateOfJourney | date }}</p>
             </div>
             <div class="col-2 text-center">
-              <span class="check_pnr_duration">13 hrs 35 mins</span>
+              <span class="check_pnr_duration"></span>
               <div class="d-flex align-items-center justify-content-center">
                 <span class="dots"></span>
                 <hr>
@@ -473,9 +473,9 @@
 
             </div>
             <div class="col-5 text-left">
-              <span class="check_pnr_time">20:30, Sun</span>
-              <span class="check_pnr_place mx-1">Secunderabad Jn (SC)</span>
-              <p class="check_pnr_place">Jul 11, 2022</p>
+              <span class="check_pnr_time"></span>
+              <span class="check_pnr_place mx-1">{{PnrDetails.destinationStation}}</span>
+              <p class="check_pnr_place"></p>
             </div>
           </div>
         </div>
@@ -487,7 +487,7 @@
             <table  class="table table-borderless pnr_check_tbl">
                 <thead>
                     <tr>
-                      <th>Name</th>
+                      
                       <!-- <th>Passenger Number</th> -->
                         <th>Age</th>
                         <th >Booking Status</th>
@@ -498,7 +498,7 @@
                 </thead>
                 <tbody >
                     <tr  *ngFor="let each of PnrDetails.passengerList">
-                      <td>Aman Shrivastava</td>
+                      
                       <!-- <td>{{each.passengerSerialNumber}}</td> -->
                          <td>{{each.passengerAge}}</td>
                           <td class="success_text">{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}/</span>{{each.bookingBerthNo}}
@@ -532,7 +532,7 @@
           <h5 class="check_pnr_title">LTT VSKP EXP<span>(18520)</span></h5>
         </div>
         <div class="col-4 px-0">
-          <span class="check_pnr_title_text">
+          <!-- <span class="check_pnr_title_text">
             <a href="#">S</a>
             <a href="#">M</a>
             <a href="#">T</a>
@@ -540,17 +540,17 @@
             <a href="#">T</a>
             <a href="#">F</a>
             <a href="#">S</a>
-          </span>
+          </span> -->
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <div class="row" class="m_check_pnr_row">
             <div class="col-4">
-              <span class="check_pnr_time">06:05 <span class="time_gray_text">Sat</span></span>
+              <span class="check_pnr_time"><span class="time_gray_text"></span></span>
             </div>
             <div class="col-4 text-center">
-              <span class="check_pnr_duration">13 hrs 35 mins</span>
+              <span class="check_pnr_duration"></span>
               <div class="d-flex align-items-center justify-content-center">
                 <span class="dots"></span>
                 <hr>
@@ -558,18 +558,18 @@
               </div>
             </div>
             <div class="col-4 text-right">
-              <span class="check_pnr_time">20:30, Sun</span>
+              <span class="check_pnr_time"></span>
             </div>
           </div>
           <div class="pb-2 brdr_btm_row">
           <div class="row">
             <div class="col-6 text-left">
-              <span class="check_pnr_place">Lokmantatilak (LTT)</span>
-              <p class="check_pnr_place">Jul 11, 2022</p>
+              <span class="check_pnr_place">{{PnrDetails.boardingPoint}}</span>
+              <p class="check_pnr_place">{{PnrDetails.dateOfJourney | date }}</p>
             </div>
             <div class="col-6 text-right">
-              <span class="check_pnr_place">Secunderabad Jn (SC)</span>
-              <p class="check_pnr_place">Jul 11, 2022</p>
+              <span class="check_pnr_place">{{PnrDetails.destinationStation}}</span>
+              <p class="check_pnr_place"></p>
             </div>
           </div>
           </div>
@@ -579,25 +579,26 @@
 
       <div class="row collapse_rows" *ngFor="let each of PnrDetails.passengerList">
         <div class="col-12 panel-title" data-bs-toggle="collapse" data-bs-target="#mem_1" aria-expanded="false" aria-controls="mem_1">
-          <div class="row">
-            <div class="col-4">Name</div>
-            <div class="col-8 text-right">Amit Kumar</div>
-          </div>
+
           <div class="collapse brdr_btm_row" id="mem_1">
-
-            <div class="row">
-              <div class="col-4">Gender</div>
-              <div class="col-8 text-right">Male</div>
-            </div>
-            <div class="row">
-              <div class="col-5">Seat Status</div>
-              <div class="col-7 success_text text-right">CNF/S3/42</div>
-            </div>
-            <div class="row">
-              <div class="col-4">Berth</div>
-              <div class="col-8 text-right">CNF/S3/42</div>
-            </div>
-
+             <div class="row">
+               <div class="col-4">Name</div>
+               <div class="col-8 text-right">NA</div>
+             </div>
+            <ng-container *ngFor="let each of PnrDetails.passengerList">
+                <div class="row">
+                  <div class="col-4">Age</div>
+                  <div class="col-8 text-right">{{each.passengerAge}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-5">Booking Status</div>
+                  <div class="col-7 success_text text-right">{{each.bookingStatus}}/<span *ngIf="each.bookingCoachId!=''" >{{each.bookingCoachId}}</span>{{each.bookingBerthNo}}<span *ngIf = "each.passengerBerthChoice">/{{each.passengerBerthChoice}}</span></div>
+                </div>
+                <div class="row">
+                  <div class="col-4">Berth</div>
+                  <div class="col-8 text-right">{{each.bookingBerthCode}}</div>
+                </div>
+             </ng-container>
           </div>
 
         </div>
