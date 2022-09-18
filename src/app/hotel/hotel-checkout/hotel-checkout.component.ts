@@ -1079,7 +1079,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     }
   },
   "search_input": {
-    "cityname": this.searchData.city+' '+this.searchData.countryName,
+    "cityname": this.searchData.city+', '+this.searchData.countryName,
     "city_id": this.searchData.city,
     "country": this.searchData.country,
     "hotel_name": "",
@@ -1091,8 +1091,12 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "checkin": moment( this.searchData.checkIn).format('DD MMM YYYY'),
     "checkout": moment( this.searchData.checkOut).format('DD MMM YYYY'),
     "num_rooms": this.searchData.numberOfRooms,
-    "numberOfAdults1": this.totalAdult,
-    "numberOfChildren1": this.totalChild,
+   
+   
+    "numberOfAdults": this.totalAdult,
+    "numberOfChildren": this.totalChild,
+  
+  
     "t": "ZWFybg==",
     "hotel_search_done": "0",
     "hotel_modify": "0",

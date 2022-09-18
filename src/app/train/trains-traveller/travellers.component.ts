@@ -352,8 +352,21 @@ export class TrainsTravellerComponent implements OnInit {
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
         
         if(this.seacthResult== null){
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/train');
         }
+        
+                
+        var suggestHotels = {
+        service: 'Train',
+        city: this.seacthResult.searchHistory['travalto'],
+        country_code: 'IN',
+        address: '',
+        check_in_date: this.seacthResult.searchHistory.journeyDate,
+        adult: 1,
+        child: 1
+        };
+        this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
+        
 
         this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");
         this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");
@@ -1705,7 +1718,7 @@ gstReset(){
 
     
         continueReviewBooking(){
-        
+        this.gotoTop();
            if( this.enablesavedTraveller==1)
             this.saveTravellerFunc();
            
@@ -1850,7 +1863,7 @@ whatsAppCheck:boolean=false;
 
              
                 
-this.spinnerService.show();
+        this.spinnerService.show();
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
                 this.spinnerService.hide();
                 let dData = JSON.parse(this.EncrDecr.get(response.result));

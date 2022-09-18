@@ -1507,7 +1507,7 @@
                 <!-- <h6> <span class="form-switch m-0  pl-0"> -->
                 <div class="form-check mt-3">
                     <label class="form-check-label" for="gst_num">
-                                <input type="checkbox" formControlName="gst_num" (click)="gstToggle()" id="gst_num"  class="ps-1 form-check-input pass_checkBox"> 
+                                <input type="checkbox"  (click)="gstToggle()" id="gst_num"  class="ps-1 form-check-input pass_checkBox"> 
                                     <div class="label_top_align"><h6>GST number for business travel (Optional)</h6></div>
                                     <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                                     </p>
@@ -1698,7 +1698,7 @@
         <div class="agree_conditions">
             <ul class="add-search-ul d-block">
                 <li class="custom-check-box">
-                    <div class="custom-controls-stacked">
+                    <div class="custom-controls-stacked pl-20">
                         <label class="custom-control material-checkbox">
                           <input type="checkbox" class="material-control-input" formControlName="passengerAgree"               name="passengerAgree" id="agree_terms"  >
                           <span class="material-control-indicator"></span>
@@ -1708,7 +1708,7 @@
                     </div>
                 </li>
             </ul>
-            <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error">
+            <div *ngIf="submitted && passengerForm.controls['passengerAgree']['errors']" class="error pl-20">
                 <small *ngIf="passengerForm.controls['passengerAgree']['errors']['required'] || passengerForm.controls['passengerAgree']['errors']['pattern']">Please accept Terms and Conditions.</small>
             </div>
         </div>
