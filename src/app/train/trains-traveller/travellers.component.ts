@@ -1812,15 +1812,24 @@ whatsAppCheck:boolean=false;
 
             if (result == '1') {
                 this.travelInsuranceOpted = true;
-                this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+               /* this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
                 this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
-                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);*/
+
+
+                this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length));
+                this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length));
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
                
             } else {
                 this.travelInsuranceOpted = false;
                 this.travel_ins_charge = 0;
                 this.travel_ins_charge_tax = 0;
-                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+                //this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
+
+
                 
             }
  	 this.createTrainItinerary2();
@@ -1831,7 +1840,9 @@ whatsAppCheck:boolean=false;
 	this.travelInsuranceOpted = false;
 	this.travel_ins_charge = 0;
 	this.travel_ins_charge_tax = 0;
-	this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+	//this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+
+    this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
         
          this.createTrainItinerary2();
         } 
@@ -1843,14 +1854,18 @@ whatsAppCheck:boolean=false;
     
         if (this.passengerForm.controls['travelInsurence']['value'] == true) {
         this.travelInsuranceOpted = true;
-        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
-        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
-        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        // this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+        // this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
+        // this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length));
+        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length));
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
         } else {
         this.travelInsuranceOpted = false;
         this.travel_ins_charge = 0;
         this.travel_ins_charge_tax = 0;
-        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        // this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
 
         }
 
