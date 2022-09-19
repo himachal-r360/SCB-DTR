@@ -367,42 +367,40 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   }
 
   searchHotel() {
-      this.submitted = true;
-      var rooms =  this.hotelSearchForm.value.rooms;
-      var i = 0;
-      var isvalid = true;
-      rooms.forEach(z => {
-        if((z.numberOfChildren != z.childrenAge.length ||  z.childrenAge=="0")  && z.numberOfChildren > 0)
-        {
-          var id = document.getElementById("error_"+i)
-          id.hidden = false;
-          isvalid = false;
-        }else{
-          var id = document.getElementById("error_"+i)
-          id.hidden = true;
-        }
-        i++;
-      });
+    this.submitted = true;
+    var rooms = this.hotelSearchForm.value.rooms;
+    var i = 0;
+    var isvalid = true;
+    rooms.forEach(z => {
+      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0") && z.numberOfChildren > 0) {
+        var id = document.getElementById("error_" + i)
+        id.hidden = false;
+        isvalid = false;
+      } else {
+        var id = document.getElementById("error_" + i)
+        id.hidden = true;
+      }
+      i++;
+    });
 
-      if(this.hotelSearchForm.invalid){
-        return
-      }
-      else if(!isvalid)
-      {
-        var id1 = document.getElementById("error_AllAge")
-        id1.hidden = false;
-        return
-      }
-      else {
-        var id1 = document.getElementById("error_AllAge")
-        id1.hidden = true;
+    if (this.hotelSearchForm.invalid) {
+      return
+    }
+    else if (!isvalid) {
+      var id1 = document.getElementById("error_AllAge")
+      id1.hidden = false;
+      return
+    }
+    else {
+      var id1 = document.getElementById("error_AllAge")
+      id1.hidden = true;
       this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
       localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
-      this. hotelSearchCallBack(this.hotelSearchForm.value)
+      this.hotelSearchCallBack(this.hotelSearchForm.value)
       this.router.navigateByUrl(url);
     }
 
