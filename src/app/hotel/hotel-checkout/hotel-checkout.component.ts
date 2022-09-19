@@ -983,8 +983,13 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
       else
         whatsappFlag = 0;
-        
-        
+       
+    
+    let tmp_searchResult:any=[];
+    tmp_searchResult['queryHotelData'] =this.searchResult['queryHotelData'];  
+      tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
+      
+    //  console.log(tmp_searchResult);return;  
     let all_room_array:any=[];
     let room_array:any=[];
     
@@ -1055,7 +1060,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   },
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
-  "hotel_details": {
+  /*"hotel_details": {
     "response": {
       "partnerName": this.partnerToken,
       "validResponse": true,
@@ -1063,7 +1068,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     },
     "statusCode": 200,
     "responseDateTime": ""
-  },
+  },*/
   "room_details_book": {
     roomTypeId: {
       "roomTypeId": this.selectedHotel.roomType.roomTypeId,
@@ -1091,12 +1096,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "checkin": moment( this.searchData.checkIn).format('DD MMM YYYY'),
     "checkout": moment( this.searchData.checkOut).format('DD MMM YYYY'),
     "num_rooms": this.searchData.numberOfRooms,
-   
-   
     "numberOfAdults": this.totalAdult,
     "numberOfChildren": this.totalChild,
-  
-  
     "t": "ZWFybg==",
     "hotel_search_done": "0",
     "hotel_modify": "0",
@@ -1149,9 +1150,10 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "redirect_url": "",
   "sessionKey":this.searchHotelKey,
    "docKey": this.searchResult.docKey,
-  "hotelSessionData":this.searchResult
+  "hotelSessionData":tmp_searchResult
 };
 
+//console.log(checkoutData);return;
 
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,

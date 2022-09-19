@@ -5,13 +5,13 @@ import {
 } from '@angular/router';
 import {
   environment
-} from '../../../environments/environment';
+} from '../../../../environments/environment';
 import {
   RestapiService
-} from '../../shared/services/restapi.service';
+} from '../../../shared/services/restapi.service';
 import {
   EncrDecrService
-} from '../../shared/services/encr-decr.service';
+} from '../../../shared/services/encr-decr.service';
 import {
   HttpClient,
   HttpHeaders,
@@ -35,7 +35,7 @@ import {
 } from '@angular/forms';
 import {
   IrctcApiService
-} from '../../shared/services/irctc.service';
+} from 'src/app/shared/services/irctc.service';
 import {
   DOCUMENT
 } from '@angular/common';
@@ -43,7 +43,7 @@ import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
-} from '@angular/material';
+} from '@angular/material/dialog';
 import {
   Overlay
 } from '@angular/cdk/overlay';
@@ -54,16 +54,13 @@ import {
   MatTableDataSource
 } from '@angular/material/table';
 import {
-  MatPaginator,
-  MatSort
-} from '@angular/material';
-import {
-  resetCompiledComponents
-} from '@angular/core/src/render3/jit/module';
-
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { MatInput } from '@angular/material';
-import { AppConfigService } from '../../app-config.service';
+  MatPaginator
+} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+//import { resetCompiledComponents} from '@angular/core/src/render3/jit/module';
+import { NgxSpinnerService } from "ngx-spinner";
+import { MatInput } from '@angular/material/input';
+import { AppConfigService } from '../../../app-config.service';
 import * as moment from 'moment';
 
 
@@ -138,7 +135,7 @@ export class TdrHistoryComponent implements OnInit {
   domainRedirect: string; domainPath: string;
   customerInfo: any[];
      serviceSettings:any;
-  constructor(private spinnerService: Ng4LoadingSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, public _irctc: IrctcApiService, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
+  constructor(private spinnerService: NgxSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, public _irctc: IrctcApiService, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
    this.serviceSettings=this.appConfigService.getConfig();
     this.stationsdump = require('src/assets/data/stations.json');
     this.domainName = this.sg['domainName'];
