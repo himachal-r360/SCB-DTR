@@ -985,9 +985,9 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         whatsappFlag = 0;
        
     
-    let tmp_searchResult:any=[];
-    tmp_searchResult['queryHotelData'] =this.searchResult['queryHotelData'];  
-      tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
+        let tmp_searchResult:any={};
+        tmp_searchResult['queryHotelData'] =this.searchResult['queryHotelData'];  
+        tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
       
     //  console.log(tmp_searchResult);return;  
     let all_room_array:any={};
@@ -1003,19 +1003,9 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         };
         }
         
-        let a= {
-      "room1": {
-        "adult": 2,
-        "child": 0,
-        "bedTypeId": 0,
-        "smokingPreference": "",
-        "specialrequests": ""
-      }
-    };
     
     //console.log(all_room_array); console.log(a);return;
         
-
         this.fareData = {
         "total_tax": this.totalTax,
         "total_amount": this.totalFare,
@@ -1023,7 +1013,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "totalDiscount": 0,
         "totalBaseFare": this.totalBaseFare,
         "couponDiscount": 0,
-        "voucher_amount": 0
+        "voucher_amount": 0,
+        "totalFare":this.totalFare
         };    
         
         
@@ -1167,7 +1158,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
 
 
-console.log(checkoutData);
+//console.log(checkoutData);return;
 //return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
