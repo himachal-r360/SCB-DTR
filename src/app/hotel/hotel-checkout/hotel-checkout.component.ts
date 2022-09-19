@@ -990,20 +990,32 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
       
     //  console.log(tmp_searchResult);return;  
-    let all_room_array:any=[];
-    let room_array:any=[];
+    let all_room_array:any={};
     
       for(let i=0;i<(this.searchData.rooms.length);i++){
-        room_array['room'+(i+1)]={
-        "adult": this.searchData.rooms[i]['numberOfAdults'],
-        "child":this.searchData.rooms[i]['numberOfChildren'],
+        all_room_array['room'+(i+1)]=[];
+        all_room_array['room'+(i+1)]={
+        "adult": Number(this.searchData.rooms[i]['numberOfAdults']),
+        "child": Number(this.searchData.rooms[i]['numberOfChildren']),
         "bedTypeId": 0,
         "smokingPreference": "",
         "specialrequests": ""
         };
         }
-      
-      
+        
+        let a= {
+      "room1": {
+        "adult": 2,
+        "child": 0,
+        "bedTypeId": 0,
+        "smokingPreference": "",
+        "specialrequests": ""
+      }
+    };
+    
+    //console.log(all_room_array); console.log(a);return;
+        
+
         this.fareData = {
         "total_tax": this.totalTax,
         "total_amount": this.totalFare,
@@ -1040,7 +1052,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "hotelratings":  this.searchResult.hotel_detail.hotelRatings[0]['rating'],
     "provid": this.provisionalBookingId,
     "booking_code": this.selectedHotel.roomType.bookingCode,
-    "roomdetails": room_array,
+    "roomdetails": all_room_array,
     "inclusions": {
       "inclusion": []
     }
@@ -1153,8 +1165,10 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "hotelSessionData":tmp_searchResult
 };
 
-//console.log(checkoutData);return;
 
+
+console.log(checkoutData);
+//return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
@@ -1163,7 +1177,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
-      .set('category', 'Flight')
+      .set('category', 'Hotel')
       .set('event', 'Save Checkout')
       .set('metadata', '{"save_checkout":"' + this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData))) + '"}');
 
