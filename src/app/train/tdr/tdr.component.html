@@ -1,0 +1,275 @@
+<div  class="list-back-title"> 
+    <div class="row">
+      <div class="col-11"> <a routerLink="{{domainPath}}/train/tdrhistory"><i class="fa fa-angle-left backOrder_sym"
+      aria-hidden="true"></i><span class="font-weight-bold ml-4">IRCTC Authorised Partner File TDR</span></a></div>
+    </div>
+ </div>
+
+<div class="container train-tdr-section">
+  <div class="d-none d-sm-block">
+      <div class="manage_account m-0">
+        <div>
+          <h4 class="cus_name">Welcome {{REWARD_FIRSTNAME}}</h4>
+        </div>
+     </div>
+      <div class="mbt20 row">
+        <div class="col-md-12 w-bb">
+          <div>
+            <ul class="nav nav-tabs tabs-left manage_account_tabs">
+              <div class="tab_title">
+                <div class="row">
+                
+                <div class="col-md-12 text-left">
+                <h4 class="title_name">
+                 <a routerLink="{{domainPath}}/train/tdrhistory"><i class="fa fa-angle-left" aria-hidden="true"></i></a> IRCTC Authorised Partner File TDR</h4></div>
+              
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="col-12 train-btn-group my-4">
+    <a *ngIf="!isguestUser" href="{{domainRedirect}}train_orders" class="btn btnTdr-default btn-sm  mr-3">Booking
+      History</a>
+    <a *ngIf="!isguestUser" href="{{domainRedirect}}train_cancellation_history"
+      class="btn btnTdr-default btn-sm  mr-3">Cancellation History</a>
+    <a *ngIf="!isguestUser" href="{{domainRedirect}}train_failed_orders" class="btn btnTdr-default btn-sm  mr-3">Failed
+      History</a>
+    <a routerLink="/{{domainPath}}/train/filetdr" class="btn  btnTdr-active-{{domainName}} btn-sm mr-3"
+      [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">File TDR</a>
+    <a routerLink="/{{domainPath}}/train/tdrhistory" class="btn  btnTdr-default btn-sm mr-3"
+      [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">TDR History</a>
+  </div>
+  <div class="bookedTicketHistory-section">
+    <div class="tdr-heading-{{domainName}}">
+      TDR Filing Requisition Form
+    </div>
+    <form [formGroup]="pnrForm">
+      <div class="pnr-section">
+        <p class="number-title pb-2">File TDR using PNR/ Transaction ID/ SmartBuy Reference ID</p>
+        <mat-radio-group formControlName="tdrbuttselection" name="tdrbuttselection" [(ngModel)]="selection"
+          #radioGroup="matRadioGroup" (change)="getcheckboxValues()">
+          <mat-radio-button name="tdr_option1" value='1' id='pnrButton'>PNR</mat-radio-button>
+          <mat-radio-button name="tdr_option2" value='2'>Transaction ID</mat-radio-button>
+          <mat-radio-button name="tdr_option3" value='3'>SmartBuy Reference ID</mat-radio-button>
+        </mat-radio-group>
+        <div class="row pt-2">
+          <div class="col-md-8 col-12">
+            <div class="row">
+              <!-- <div class="col-md-5">
+              <mat-form-field class="">
+                <input matInput id="pnrno" matInput placeholder="PNR" [(ngModel)]="pnr" (ngModelChange)="changeEvent()"  (keypress)="numberOnly($event);" formControlName="pnrnumber" name="pnrnumber" maxlength="10" onDrag="return false" onDrop="return false"  autocomplete="off" [ngClass]="{ 'is-invalid': formControls.pnrnumber.errors }">
+              </mat-form-field>
+              <div *ngIf=" submitted && formControls.pnrnumber.errors" class="error" style="color: red">
+                <small *ngIf = "formControls.pnrnumber.errors.pattern">Please enter a valid PNR</small>
+                <small *ngIf = "formControls.pnrnumber.errors.minLength">Please enter 10 Digits PNR</small>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <p class="text-or">OR</p>
+            </div> -->
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput placeholder="Enter {{placeholderValue}}" formControlName="pnrnumber"
+                    [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
+                    name="pnrnumber" onDrag="return false" onDrop="return false" autocomplete="off">
+                </mat-form-field>
+
+                <!-- <div  style="color: red"  class="pb-2"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+
+                <div *ngIf="tdrFetchingsubmitted && pnrForm.get('pnrnumber').invalid" class="error" style="color: red">
+                  <small *ngIf="pnrForm.get('pnrnumber').errors.required">{{placeholderValue}} is required</small>
+                  <small *ngIf="pnrForm.get('pnrnumber').errors.minlength">Please enter correct {{dynamiclength}} digits
+                    {{placeholderValue}}</small>
+                  <small *ngIf="pnrForm.get('pnrnumber').errors.maxlength">Please enter correct {{dynamiclength}} digits
+                    {{placeholderValue}}</small>
+                  <small *ngIf="pnrForm.get('pnrnumber').errors.pattern">Please enter valid {{dynamiclength}} digits
+                    {{placeholderValue}}</small>
+                </div>
+                <!-- <span *ngIf="flexipayForm.get('cardnumber').errors.maxlength">Please enter a correct card number.</span> -->
+
+                <!-- <div *ngIf="submitted && formControls.pnrnumber.errors" class="error" style="color: red">
+                <small *ngIf="formControls.pnrnumber.errors.required">{{placeholderValue}} is required</small>
+                <small *ngIf="formControls.pnrnumber.errors.minlength">Please enter a correct {{placeholderValue}}</small>
+                <small *ngIf="formControls.pnrnumber.errors.pattern">Please enter a correct {{placeholderValue}}</small>
+              </div> -->
+
+              </div>
+              ​
+
+              <!-- <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+              <div class="col-md-6 pt-2">
+                <div class="row">
+                  <div class="col-md-6 col-6 text-center">
+                    <button type="submit" class="btn btnTdr-submit-{{domainName}}"
+                      (click)="gettdrdata()">Submit</button>
+                  </div>
+                  <div class="col-md-6 col-6 text-center">
+                    <button class="btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-12 sub-btn-group">
+            ​
+          </div>
+        </div>
+      </div>
+      <!-- <div class="pnr-section">
+  <p class="number-title">PNR/Transaction ID</p>
+  <div class="row">
+    <div class="col-md-8 col-12">
+      <div class="row">
+      <div class="col-md-5">
+        <mat-form-field class="">
+          <input matInput id="pnrno" matInput placeholder="PNR" [(ngModel)]="pnr" (ngModelChange)="changeEvent()"  (keypress)="numberOnly($event);" formControlName="pnrnumber" name="pnrnumber" maxlength="10" onDrag="return false" onDrop="return false"  autocomplete="off" [ngClass]="{ 'is-invalid': formControls.pnrnumber.errors }">
+        </mat-form-field>
+        <div *ngIf=" submitted && formControls.pnrnumber.errors" class="error" style="color: red">
+          <small *ngIf = "formControls.pnrnumber.errors.pattern">Please enter a valid PNR.&nbsp;</small>
+          <small *ngIf = "formControls.pnrnumber.errors.minlength">Please enter 10 Digits PNR.</small>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <p class="text-or">OR</p>
+      </div>
+      <div class="col-md-5">
+        <mat-form-field class="">
+          <input matInput placeholder="Transaction ID" [(ngModel)]="tid" (ngModelChange)="changeEvent()" maxlength="15" formControlName="tid"name="tid" onDrag="return false" onDrop="return false"  autocomplete="off" [ngClass]="{ 'is-invalid': formControls.tid.errors }">
+        </mat-form-field>
+        <div *ngIf="submitted && formControls.tid.errors" class="error" style="color: red">
+          <small *ngIf="formControls.tid.errors.pattern">Please enter a valid Transaction ID. &nbsp;</small>
+          <small *ngIf="formControls.tid.errors.minlength">Please enter minimum 15 digits.</small>
+          
+        </div>
+        
+      </div>
+      <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div>
+    </div>
+    
+    </div>
+    <div class="col-md-4 col-12 sub-btn-group">
+      <div class="row">
+      <div class="col-md-6 col-6 text-center">
+        <button type="submit" class="btn btnTdr-submit">Submit</button>
+      </div>
+      <div class="col-md-6 col-6 text-center">
+        <button type="reset" class="btn btnTdr-reset " (click)="resetpnrform()">Reset</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div> -->
+    </form>
+  </div>
+  <div *ngIf="tdrResponse && showdetails">
+    <div class="ticketDetailsSection-{{domainName}}">
+      <p class="title">Ticket Details</p>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="ticket-details"><span class="t-name">Reference ID: </span> <span
+              class="t-value">{{tdrResponse.reservationId}}</span></p>
+          <p class="ticket-details"><span class="t-name">PNR: </span> <span
+              class="t-value">{{tdrResponse.pnrNumber}}</span></p>
+          <p class="ticket-details"><span class="t-name">Train No: </span> <span class="t-value">
+              {{tdrResponse.trainNumber}}</span></p>
+          <p class="ticket-details"><span class="t-name">Train Name: </span> <span class="t-value">
+              {{tdrResponse.trainName}}</span></p>
+          <p class="ticket-details"><span class="t-name">Date of journey: </span> <span class="t-value">
+              {{tdrResponse.journeyDate | date:'mediumDate'}}</span></p>
+        </div>
+        <div class="col-md-4">
+          <p class="ticket-details"><span class="t-name">From: </span> <span
+              class="t-value">{{fromstn}}<span>({{tdrResponse.fromStn}})</span></span></p>
+          <p class="ticket-details"><span class="t-name">To: </span> <span class="t-value"> {{tostn}}
+              <span>({{tdrResponse.destStn}})</span></span></p>
+          <p class="ticket-details"><span class="t-name">Class: </span> <span class="t-value"> {{journeyClass}}
+              ({{tdrResponse.journeyClass}})</span></p>
+          <p class="ticket-details"><span class="t-name"> Quota: </span> <span class="t-value">{{journeyQuota}}
+              ({{tdrResponse.journeyQuota}}) <span></span></span></p>
+        </div>
+        <div class="col-md-4">
+          <p class="ticket-details"><span class="t-name">Boarding: </span> <span class="t-value">
+              <span>{{stationsdump[tdrResponse.boardingStn]}}</span>({{tdrResponse.boardingStn}})</span></p>
+          <p class="ticket-details"><span class="t-name">Date of Boarding: </span> <span class="t-value">
+              {{tdrResponse.boardingDate | date:'mediumDate'}}</span></p>
+          <!-- <p class="ticket-details"><span class="t-name"> Ticket Type: </span> <span class="t-value">General <span>(GN)</span></span></p> -->
+        </div>
+      </div>
+    </div>
+    <div class="passengerDetailsSection-{{domainName}}">
+      <p class="title">Passenger Details</p>
+      <div>
+        <div class="table-responsive">
+          <table class="table table-borderless">
+            <thead>
+              <tr class="table-titles">
+                <th scope="col">S.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Booking Status</th>
+                <th scope="col">Select</th>
+              </tr>
+            </thead>
+            <tbody class="table-values">
+              <tr *ngFor="let data of passdata">
+                <td>{{data.passengerSerialNumber}}</td>
+                <td>{{data.passengerName}}</td>
+                <td>{{data.passengerAge}}</td>
+                <td>{{data.passengerGender}}</td>
+                <td>{{data.currentStatus}}</td>
+                <td class="text-center" *ngIf="data.currentStatus!='CAN'">
+                  <p><label class="checkbox m-0"><input formcontrolname="" name="" type="checkbox" value="{{data}}"
+                        class="" (change)="onCheckboxChange(data,$event)">
+                      <span class="checkmark"></span></label></p>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+        <div style="color: red" *ngIf="checkerror">Please select atleast one passenger</div>
+      </div>
+    </div>
+
+    <div class="ticketDetailsSection-{{domainName}}">
+      <p class="title">TDR Reason</p>
+      <div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field>
+              <mat-select placeholder="Select TDR Reason" (selectionChange)="onChange($event)">
+
+                <mat-option *ngFor="let r of tdrReasons" [value]="r.reasonIndex">{{r.tdrReason}} </mat-option>
+
+              </mat-select>
+            </mat-form-field>
+            <div style="color: red" *ngIf='reasonerror'>Please select a reason</div>
+          </div>
+        </div>
+        <div class="row w-select-reason">
+          <div class="col-md-12" *ngIf="showwarningmsg && submitShowwarningmsg" style="color: red">
+            <p><sup>**</sup>Please ensure that you're filing this TDR with the Original Certificate enclosed and courier
+              it to the following address:</p>
+            <small style="color: red">General Manager (Ops)
+              IRCTC Authorised Partner Internet Ticketing Centre,
+              State Entry Road,
+              New Delhi-110055</small>
+          </div>
+          <div class="col-12 col-md-12 float-md-right mt-2 text-right">
+            <button type="button" class="btn btnTdr-file-{{domainName}}" [disabled]="tdrpass != true"
+              (click)="submittdrData()">File TDR</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-running-dots" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
+</div>

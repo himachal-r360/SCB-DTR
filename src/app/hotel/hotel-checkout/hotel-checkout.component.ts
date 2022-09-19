@@ -983,22 +983,29 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
       else
         whatsappFlag = 0;
-        
-        
-    let all_room_array:any=[];
-    let room_array:any=[];
+       
+    
+        let tmp_searchResult:any={};
+        tmp_searchResult['queryHotelData'] =this.searchResult['queryHotelData'];  
+        tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
+      
+    //  console.log(tmp_searchResult);return;  
+    let all_room_array:any={};
     
       for(let i=0;i<(this.searchData.rooms.length);i++){
-        room_array['room'+(i+1)]={
-        "adult": this.searchData.rooms[i]['numberOfAdults'],
-        "child":this.searchData.rooms[i]['numberOfChildren'],
+        all_room_array['room'+(i+1)]=[];
+        all_room_array['room'+(i+1)]={
+        "adult": Number(this.searchData.rooms[i]['numberOfAdults']),
+        "child": Number(this.searchData.rooms[i]['numberOfChildren']),
         "bedTypeId": 0,
         "smokingPreference": "",
         "specialrequests": ""
         };
         }
-      
-      
+        
+    
+    //console.log(all_room_array); console.log(a);return;
+        
         this.fareData = {
         "total_tax": this.totalTax,
         "total_amount": this.totalFare,
@@ -1006,7 +1013,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "totalDiscount": 0,
         "totalBaseFare": this.totalBaseFare,
         "couponDiscount": 0,
-        "voucher_amount": 0
+        "voucher_amount": 0,
+        "totalFare":this.totalFare
         };    
         
         
@@ -1035,7 +1043,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "hotelratings":  this.searchResult.hotel_detail.hotelRatings[0]['rating'],
     "provid": this.provisionalBookingId,
     "booking_code": this.selectedHotel.roomType.bookingCode,
-    "roomdetails": room_array,
+    "roomdetails": all_room_array,
     "inclusions": {
       "inclusion": []
     }
@@ -1055,7 +1063,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   },
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
-  "hotel_details": {
+  /*"hotel_details": {
     "response": {
       "partnerName": this.partnerToken,
       "validResponse": true,
@@ -1063,7 +1071,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     },
     "statusCode": 200,
     "responseDateTime": ""
-  },
+  },*/
   "room_details_book": {
     roomTypeId: {
       "roomTypeId": this.selectedHotel.roomType.roomTypeId,
@@ -1091,12 +1099,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "checkin": moment( this.searchData.checkIn).format('DD MMM YYYY'),
     "checkout": moment( this.searchData.checkOut).format('DD MMM YYYY'),
     "num_rooms": this.searchData.numberOfRooms,
-   
-   
     "numberOfAdults": this.totalAdult,
     "numberOfChildren": this.totalChild,
-  
-  
     "t": "ZWFybg==",
     "hotel_search_done": "0",
     "hotel_modify": "0",
@@ -1149,10 +1153,13 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "redirect_url": "",
   "sessionKey":this.searchHotelKey,
    "docKey": this.searchResult.docKey,
-  "hotelSessionData":this.searchResult
+  "hotelSessionData":tmp_searchResult
 };
 
 
+
+//console.log(checkoutData);return;
+//return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
       flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
@@ -1161,7 +1168,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
-      .set('category', 'Flight')
+      .set('category', 'Hotel')
       .set('event', 'Save Checkout')
       .set('metadata', '{"save_checkout":"' + this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData))) + '"}');
 
