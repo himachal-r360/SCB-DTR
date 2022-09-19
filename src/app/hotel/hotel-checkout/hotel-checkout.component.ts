@@ -1022,6 +1022,10 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     let currentDate=moment().format('DD-MM-YYYY');
     
     let checkoutData = {
+    "provisionalBookingId": this.provisionalBookingId,
+    "booking_code": this.selectedHotel.roomType.bookingCode,
+    "hotelid": this.searchResult.Hotelkey,
+    "superPnr": this.superPnr,
     "hoteldetails": {
     "booking-date":moment().format('YYYY-MM-DD'),
     "number-of-nights":  this.noOfDays,
@@ -1049,7 +1053,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     }
   },
   "fare": this.fareData,
-  "partner_amount": 4760,
+  "partner_amount": this.totalFare,
   "discount": 0,
   "coupon_code": "",
   "farebreakup": {
@@ -1132,7 +1136,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "mobile": this.passengerForm.controls['passengerMobile']['value'],
     "email": this.passengerForm.controls['passengerEmail']['value']
   },
-  "passenger_info_retry": {
+  "guest_data": {
     "provid": "",
     "AdultId1": "",
     "title": this.passengerForm.controls['passengerTitle']['value'],
@@ -1157,7 +1161,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "hotelSessionData":tmp_searchResult
 };
 
-
+console.log(checkoutData);
 
 //console.log(checkoutData);return;
 //return;
