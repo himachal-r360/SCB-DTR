@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrainsComponent,BottomSortbySheet,ChromeExtBusDialog, BottomFilterSheet,seniorCitizenDilog } from './trains/trains.component';
+import { TdrComponent } from './tdr/tdr.component';
+import { TdrHistoryComponent } from './tdr/tdr-history/tdr-history.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes,RouteReuseStrategy } from '@angular/router';
 import { MaterialModule } from '../material.module';
@@ -10,6 +12,7 @@ import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { TrainSearchModule } from './train-search/train-search.module';
+import { TdrModule } from './trains/tdr/tdr.module';
 import { CustomReuseStrategy } from 'src/app/route-reuse-strategy';
 import { CountdownModule } from 'ngx-countdown';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -24,6 +27,11 @@ import { DecimalPipe } from '@angular/common';
 import {IrctcregComponent } from './trains/irctcreg/irctcreg.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
+  { 
+    path: 'train/filetdr', component: TdrComponent
+  },
+  { path: 'train/tdrhistory', component: TdrHistoryComponent
+  },
   {
     path:"train/search" ,component:TrainsComponent,
   },
