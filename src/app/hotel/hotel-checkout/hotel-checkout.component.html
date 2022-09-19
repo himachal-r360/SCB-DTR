@@ -74,12 +74,12 @@
               <div class="booking-inner-box mb-20">
                    <div>
                     <div class="hotel_details">
-                        <div>
+                        <div class="img_hr">
                          <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
-                        <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                          <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                           
                         </div>
-                        <div>
+                        <div class="name_hr">
                           <div class="">
                               <p class="hotel_name">{{searchResult.hotel_detail.hotelName}}</p>
                               <p class="hotel_address">{{searchResult.hotel_detail.address}}</p>
@@ -128,7 +128,7 @@
                             <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
                             <p class="label" *ngIf="partnerToken=='Clearrip'" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                           </div>
-                          <div>
+                          <div class="text-center">
                             <p><span class="duration">{{noOfDays}} Nights</span></p>
                           </div>
                           <div>
@@ -152,8 +152,8 @@
                 <div>
                  <div class="web_code d-none d-sm-block">
                   <div class="hotel_details ">
-                    <div>
-                           <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
+                    <div style="flex-basis: 20%;">
+                        <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
                         <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                     </div>
                     <div>
@@ -178,7 +178,7 @@
                  <div class="mlite_code d-block d-sm-none">
                   <div class="">
                     <div class="hotel_details">
-                      <div>
+                      <div >
                         <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
                         <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                       </div>
@@ -359,7 +359,7 @@
                 </div>
               </div>
 
-             <p  *ngIf="!showGstBox">No GST is applicable for this room/Booking. </p>
+             <p  *ngIf="!showGstBox" class="no_gst">No GST is applicable for this room/Booking. </p>
 
               <div class="booking-inner-box gst-number-box" *ngIf="showGstBox">
                 <h6> <span class="form-switch m-0 mr-10">

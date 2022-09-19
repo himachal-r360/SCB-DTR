@@ -1153,6 +1153,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "redirect_url": "",
   "sessionKey":this.searchHotelKey,
    "docKey": this.searchResult.docKey,
+   "itineraryRequest":this.itineraryParam,
   "hotelSessionData":tmp_searchResult
 };
 
