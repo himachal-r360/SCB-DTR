@@ -1,22 +1,21 @@
 import { Component, OnInit, Input,Inject } from '@angular/core';
 import { ActivatedRoute, Router} from '@angular/router';
-import { environment } from '../../environments/environment';
-import { RestapiService } from '../shared/services/restapi.service';
-import { EncrDecrService } from '../shared/services/encr-decr.service';
+import { environment } from '../../../environments/environment';
+import { RestapiService } from '../../shared/services/restapi.service';
+import { EncrDecrService } from '../../shared/services/encr-decr.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse , HttpParams} from '@angular/common/http';
 import { SimpleGlobal } from 'ng2-simple-global';
-
 import {MatSelectModule} from '@angular/material/select';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule,FormArray,FormControl } from '@angular/forms';
-import { IrctcApiService } from '../shared/services/irctc.service';
+import { IrctcApiService } from '../../shared/services/irctc.service';
 import { DOCUMENT } from '@angular/common';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {Overlay} from '@angular/cdk/overlay';
 import { DatePipe } from '@angular/common';
-import { VALID } from '@angular/forms/src/model';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { AppConfig } from '../configs/app.config';
-import { AppConfigService } from '../app-config.service';
+//import { VALID } from '@angular/forms/src/model';
+import { NgxSpinnerService } from "ngx-spinner";
+import { AppConfig } from '../../configs/app.config';
+import { AppConfigService } from '../../app-config.service';
 export interface DialogData {
   messageData: string;
   showC: boolean;
@@ -89,7 +88,7 @@ checkRAC:any;
     domainRedirect: string;domainPath:string;
     customerInfo:any[];
       serviceSettings:any;
-  constructor(private spinnerService: Ng4LoadingSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe,private dialog: MatDialog,private fb: FormBuilder,public _irctc: IrctcApiService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
+  constructor(private spinnerService: NgxSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe,private dialog: MatDialog,private fb: FormBuilder,public _irctc: IrctcApiService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
    this.serviceSettings=this.appConfigService.getConfig();
     this.stationsdump =  require('src/assets/data/stations.json');
     this.domainName = this.sg['domainName'];
@@ -288,6 +287,7 @@ checkRAC:any;
     this.tdrResponse = data.partnerResponse.bookingResponseList;
 //console.log(this.tdrReasons);
 this.tdrReasons = data.partnerResponse.tdrReasonList;
+
 if(data.errorcode != 1){
     let pnrurlParams = new HttpParams()
         .set('pnrnumber', this.tdrResponse.pnrNumber);

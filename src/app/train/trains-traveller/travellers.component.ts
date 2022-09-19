@@ -3566,7 +3566,9 @@ export class ConfirmationDialog {
         var dd = ("0" + this.maxDate.getDate()).slice(-2);
         var yyyy = this.maxDate.getFullYear();
 
-        this.checkDate = this.checkmaxDate(dd, mm, yyyy)
+        this.checkDate = this.checkmaxDate(dd, mm, yyyy);
+                   
+    
 
     }
      ngAfterContentChecked() {
