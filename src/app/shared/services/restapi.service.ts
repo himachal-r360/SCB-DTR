@@ -418,5 +418,11 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
         return this.http.post( this.endpoint+'getOrderDetail',param, config).pipe(map((response: any) => response));
         }
     }  
-    
+    createHotelItinerary(param){
+        if(LOCALJSON=='true'){
+        return this.http.get('assets/data/createHotelItinerary.json');
+        }else{
+        return this.http.post( this.endpoint+'createHotelItinerary',param, config).pipe(map((response: any) => response));
+       }
+   }  
 }

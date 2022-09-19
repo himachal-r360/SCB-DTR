@@ -330,7 +330,7 @@ export class TrainsTravellerComponent implements OnInit {
     }
 
     ngOnInit() {
-         this.titleService.setTitle('Home | IRCTC');
+       //  this.titleService.setTitle('Home | IRCTC');
         var datePipe = new DatePipe('en-US');
         this.masterBerth = AppConfig.IRCTC_Berth;
         this.masterFood = AppConfig.IRCTC_Food;
@@ -352,8 +352,21 @@ export class TrainsTravellerComponent implements OnInit {
         this.seacthResult = JSON.parse(sessionStorage.getItem(this.searchTrainKey));
         
         if(this.seacthResult== null){
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/train');
         }
+        
+                
+        var suggestHotels = {
+        service: 'Train',
+        city: this.seacthResult.searchHistory['travalto'],
+        country_code: 'IN',
+        address: '',
+        check_in_date: this.seacthResult.searchHistory.journeyDate,
+        adult: 1,
+        child: 1
+        };
+        this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
+        
 
         this.travalfrom=this.seacthResult.searchHistory.travalfrom.replace(/-/g, " ");
         this.travalto=this.seacthResult.searchHistory.travalto.replace(/-/g, " ");
@@ -1219,8 +1232,8 @@ this.spinnerService.show();
                 if (this.fareEnqResponse['partnerResponse']['bkgCfg']['foodChoiceEnabled'] == 'false') {
                     this.foodChoiceEnabled = false;
                 } else {
-                    this.passengerForm.addControl('passengerMealPreference0', new FormControl('', [Validators.required]));
-                    this.passengerForm.controls['passengerMealPreference0'].updateValueAndValidity();
+                  //  this.passengerForm.addControl('passengerMealPreference0', new FormControl('', [Validators.required]));
+                  //  this.passengerForm.controls['passengerMealPreference0'].updateValueAndValidity();
                     this.foodChoiceEnabled = true;
                     if (this.fareEnqResponse['partnerResponse']['bkgCfg'].foodDetails) {
                         this.foodDetails = this.fareEnqResponse['partnerResponse']['bkgCfg'].foodDetails;
@@ -1705,7 +1718,7 @@ gstReset(){
 
     
         continueReviewBooking(){
-        
+        this.gotoTop();
            if( this.enablesavedTraveller==1)
             this.saveTravellerFunc();
            
@@ -1850,7 +1863,7 @@ whatsAppCheck:boolean=false;
 
              
                 
-this.spinnerService.show();
+        this.spinnerService.show();
             this._irctc.fareEnquiryMultiplePassengers(irctcPassData).subscribe(response => {
                 this.spinnerService.hide();
                 let dData = JSON.parse(this.EncrDecr.get(response.result));
@@ -1867,9 +1880,9 @@ this.spinnerService.show();
                     var whatsappFlag;
                     if (this.whatsappFeature == 1){
                         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-                        this.whatsAppCheck=true;
+                        this.whatsAppCheck=whatsappFlag;
                     }else{
-                        whatsappFlag = 0;
+                        whatsappFlag = false;
                          this.whatsAppCheck=false;
                     }
                     this.contactDetails = {
@@ -2701,7 +2714,7 @@ recivetotalFare($event){
         if (actualtime >= parseInt(AppConfig.blocktimings.userUpdateBlockstart) && actualtime <= parseInt(AppConfig.blocktimings.userUpdateBlockend)) {
             this.openDialog();
         } else {
-            this.router.navigate(['/train/registration']);
+            this.router.navigate(['/train/registration'],{queryParams:{fromstn:this.fromstnDesc,tostn:this.tostnDesc,traveldate:this.traveldate}});
            /* this.trainDetails = false;
             this.irctcRegister = true ; */
         }
@@ -2873,17 +2886,17 @@ this.spinnerService.show();
     
        manualAddTraveller(type){
         if(type==1){
+           
             if(this.isMobile){
-            $('#adultname').val('');
-            $('#adultage').val('');
-            $('#addTraveller_mlite').modal('show');
-            this.mlitetravellerformsubmit = false;
+                $('#addTraveller_mlite').modal('show');
+                this.mlitetravellerformsubmit = false;
         }
-            this.addTraveller(-1,-1);
+        this.addTraveller(-1,-1);
+          
         }else{
+        
             if(this.isMobile){
-                $('#childname').val('');
-                $('#childage').val(0).change();;
+               
                 $('#addInfant_mlite').modal('show');
                 this.mlitechildformsubmit=false;
             }
@@ -2892,7 +2905,7 @@ this.spinnerService.show();
         
        }
 
-       /* manualMobileAdultTraveller(type) {
+      manualMobileAdultTraveller(type) {
         if(type==1){
             this.addTraveller(-1,-1);
             $('#addTraveller_mlite').modal('show'); 
@@ -2905,7 +2918,7 @@ this.spinnerService.show();
             $('#infantTraveller_mlite').modal('show');
         }
         
-      } */
+      }
     
     
     addTraveller(passenger,checkboxIndex) {
@@ -2931,6 +2944,9 @@ this.spinnerService.show();
                 }else if((passenger.gender == 'F') || (passenger.gender == 'Female')){
                 gender = 'F';
                 }
+                else if(passenger.gender == 'T'){
+                gender = 'T';
+                }
 
                
                 if(passenger.age != undefined){
@@ -2942,6 +2958,8 @@ this.spinnerService.show();
                 passengerName=passenger.firstName+' '+passenger.lastName;
                 
                 }
+                
+                console.log(i);
  
             this.defaultCountryArr[i] = "IN";
             this.passengerForm.addControl('passengerName' + i, new FormControl(passengerName, [Validators.required, Validators.pattern(this.patternName), Validators.minLength(this.minNameLength), Validators.maxLength(this.maxNameLength)]));
@@ -3000,13 +3018,7 @@ this.spinnerService.show();
             this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
             this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
             this.passengerFormCount++;
-            if(this.isMobile){
-                 // this._form.patchValue({port_list: 'Sushi'}));
-                 var passname = 'passengerName' + (i+1);
-                 var passgender = 'passengerGender' + (i+1);
-                 var passage = 'passengerAge' + (i+1);
-                  this.passengerForm.patchValue({passname: '',passgender: '',passage: ''});
-            }
+  
             // console.log('form==>',this.passengerForm);
             
              if(checkboxIndex !=-1){
@@ -3161,13 +3173,7 @@ this.spinnerService.show();
             this.passengerForm.controls['childGender' + i].updateValueAndValidity();
             this.passengerForm.controls['childAge' + i].updateValueAndValidity();
             this.childCount++;
-            if(this.isMobile){
-                 // this._form.patchValue({port_list: 'Sushi'}));
-                 var passname = 'childName' + (i+1);
-                 var passgender = 'childGender' + (i+1);
-                 var passage = 'childAge' + (i+1);
-                  this.passengerForm.patchValue({passname: '',passgender:'',passage:''});
-            }
+   
               if(checkboxIndex !=-1){
            $('#passengerBox_'+checkboxIndex).removeClass('hidden');
            $('#travelPassenger_'+checkboxIndex).prop('checked', true); 
@@ -3175,23 +3181,26 @@ this.spinnerService.show();
             
             
         } else {
+            // $('#infantTraveller_mlite').modal('hide');
             $('#addInfant_mlite').modal('hide');
           if(checkboxIndex !=-1){
 
           $('#passengerBox_'+checkboxIndex).addClass('hidden');
           $('#travelPassenger_'+checkboxIndex).prop('checked', false); 
           }
-            var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
+            // var message = 'Maximum Infants cannot be more than ' + this.maxInfants;
+            var message = 'You can not add more than ' + this.maxInfants +' infants';
             const dialogRef = this.dialog.open(ConfirmationDialog, {
                 disableClose: true,
-                width: '600px',
+                // width: '600px',
                 id: 'messageforMliteDialog',
                 data: {
                     errorDialog: true,
                     messageData: message
                 }
             });
-            //this.childCount = Number(this.maxInfants)+1;
+            
+            // this.childCount = Number(this.mraxInfants)+1;
         }
 
     }

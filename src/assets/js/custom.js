@@ -14,8 +14,8 @@ $(document).ready(function($) {
     // Whole Script Strict Mode Syntax
 	"use strict";
 	
-$(".sb_head .dropdown").hover(function(){
- $('.sb_head  .list-travel').removeClass("hideDrop");
+$(".dropdown").hover(function(){
+ $('.list-travel').removeClass("hideDrop");
 });
 
     /*-------------------------------------------------------------

@@ -9,20 +9,26 @@ import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { HotelDetailComponent } from './hotel-detail/hotel-detail.component';
+import { HotelCheckoutComponent } from './hotel-checkout/hotel-checkout.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { HotelDropdownDirective } from '../directives/hoteldropdown.directive';
 import { DirectiveModule } from '../directives/directive.module';
-
+import { CountdownModule } from 'ngx-countdown';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { CouponsModule } from 'src/app/coupons/coupons.module';
+import { PaymentModule } from 'src/app/payment/payment.module';
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
-  {path:"hotel-detail",component:HotelDetailComponent}
+  {path:"hotel-detail",component:HotelDetailComponent},
+  {path:"hotel-checkout",component:HotelCheckoutComponent}
 ]
 
 @NgModule({
   declarations: [
     HotelListComponent,
-    HotelDetailComponent
+    HotelDetailComponent,
+    HotelCheckoutComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +36,7 @@ const routes: Routes = [
     HotelSearchModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
+    MaterialModule,CountdownModule,NgxSpinnerModule,CouponsModule,PaymentModule,
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       anchorScrolling: 'enabled',

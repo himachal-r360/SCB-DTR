@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Subscription } from 'rxjs';
@@ -53,7 +53,7 @@ export class HotelDetailComponent implements OnInit {
   }
 
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
-
+    isMobile: boolean = true;
     customOptions: OwlOptions = {
     loop: false,
     autoplay:false,
@@ -191,21 +191,20 @@ export class HotelDetailComponent implements OnInit {
     nav: false
   }
   sub:Subscription;
-  isMobile:boolean = false;
   constructor( public route: ActivatedRoute, private router: Router,private sg: SimpleGlobal, private _hotelService: HotelService,private _sanitizer: DomSanitizer,private location: Location , private _flightService:FlightService) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
   ngOnInit(): void {
+  
     this.route.url.subscribe(url => {
-
-
-      console.log(this.checkin)
+    this.isMobile = window.innerWidth < 991 ? true : false;
+      //console.log(this.checkin)
       this.isMobile = window.innerWidth < 991 ?  true : false;
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
       var Details = JSON.parse(sessionStorage.getItem(urlParam.searchHotelKey));
-      console.log(Details)
+      //console.log(Details)
       for (var key in Details.hotel.hotelInfo.amenity) {
         if(Details.hotel.hotelInfo.amenity[key] == 1)
         {
@@ -220,11 +219,18 @@ export class HotelDetailComponent implements OnInit {
     this.TotalAdult += parseInt(z.numberOfAdults);
     this.TotalChild += parseInt(z.numberOfChildren);
    })
+    this.resetPopups();
+      if(this.isMobile)
       this.headerHideShow(null);
       this.GetHotelDetails();
     });
   }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   GetHotelDetails() {
     $("#bookingprocess").modal('show')
     this.loaderValue = 10;
@@ -237,10 +243,11 @@ export class HotelDetailComponent implements OnInit {
   }, 300);
     var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
-     console.log(res);
-
+    // console.log(res);
+     if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
+           
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);
     //  var url = 'https://www.google.com/maps/embed/v1/view?key='+this.GoogleAPI_Key+'&center='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18';
@@ -249,7 +256,17 @@ export class HotelDetailComponent implements OnInit {
      this.GOOGLE_MAP_URL = this._sanitizer.bypassSecurityTrustResourceUrl(url)
      $("#bookingprocess").modal('hide')
      clearInterval(myInterval3);
-    }, (error) => { console.log(error) });
+     }else{
+      $("#bookingprocess").modal('hide');
+       $("#bookingprocessFailed").modal('show');
+     
+     }
+     
+     
+    }, (error) => {       
+       $("#bookingprocess").modal('hide');
+       $("#bookingprocessFailed").modal('show'); 
+       });
 
   }
 
@@ -271,11 +288,35 @@ export class HotelDetailComponent implements OnInit {
     //this.router.navigateByUrl(this.currentLink +id);
     //this.router.navigate([id], {relativeTo:this.route})
   }
+   onBooking(item)
+  {
+
+        let hotelDetailsArr: any = {
+        "docKey": this.DocKey,
+        "Hotelkey": this.Hotelkey,
+        "queryHotelData": this.SelectedQueryParam,
+        "PriceSummery": this.PriceSummery,
+        "selectedHotel": item,
+        "hotel_detail": this.HotelDetail
+        };
+
+//console.log(hotelDetailsArr);
+        let randomHotelDetailKey = btoa(item.roomType.bookingCode+this.PriceSummery.partnerName);
+        sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
+        let url = 'hotel-checkout?searchHotelKey=' + randomHotelDetailKey;
+
+        setTimeout(() => {
+        this.router.navigateByUrl(url);
+        }, 10);
+   
+   
+}
   onImageClick(index:number)
   {
     this.WideImageOwl.to('Id_'+index);
   }
   backClicked(){
+  this.resetPopups();
     this.location.back();
   }
 
@@ -288,10 +329,6 @@ export class HotelDetailComponent implements OnInit {
     }
   }
 
-  onBooking()
-  {
-    $("#bookingprocess").modal('show')
-  }
   CloseModal()
   {
     $("#moreAmenities").modal('hide')

@@ -344,7 +344,7 @@ const message = errmsg;
 
  let dialogRef = this.dialog.open(ConfirmationDialog, {
   disableClose: true,
-  width: '850px',
+  width: '615px',
   panelClass: 'different-route',
 	data: {
 	searchfrom: this.searchfrom,
@@ -389,8 +389,7 @@ openCovidHealthpopup(train,avlDay,avlClass){
     
   });
 
-  
-  
+ 
   dialogRef.afterClosed().subscribe(result => {
     
     if(result){

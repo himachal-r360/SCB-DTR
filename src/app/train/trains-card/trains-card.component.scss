@@ -163,6 +163,34 @@ $break-md-tab: 768px;
                     right: 0;
                 }
             }
+            .modal_range {
+                border-top: 1px solid #E6E6E6;
+                position: relative;
+                margin: 5px 0;
+                width: 100px;
+                &::before {
+                    border-radius: 50%;
+                    background: #888888;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    display: block;
+                    position: absolute;
+                    top: -5px;
+                    left: 0;
+                }
+                &::after {
+                    border-radius: 50%;
+                    background: #888888;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    display: block;
+                    position: absolute;
+                    top: -5px;
+                    right: 0;
+                }
+            }
             .route {
                 color: #1D86FF;
                 margin-top: 15px;
@@ -1460,6 +1488,34 @@ $break-md-tab: 768px;
             right: 0;
         }
     }
+    .modal_range {
+        border-top: 1px solid #E6E6E6;
+        position: relative;
+        margin: 10px 0;
+        width: 90px;
+        &::before {
+            border-radius: 50%;
+            background: #888888;
+            content: "";
+            width: 10px;
+            height: 10px;
+            display: block;
+            position: absolute;
+            top: -5px;
+            left: 0;
+        }
+        &::after {
+            border-radius: 50%;
+            background: #888888;
+            content: "";
+            width: 10px;
+            height: 10px;
+            display: block;
+            position: absolute;
+            top: -5px;
+            right: 0;
+        }
+    }
     .route {
         color: #1D86FF;
         font-size: 11px;
@@ -1544,9 +1600,9 @@ $break-md-tab: 768px;
             .TrainSeatsInfo {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: flex-start;
                 flex-basis: 100%;
-                gap: 10px;
+                gap: 0px;
                 margin-right: 0;
                 text-align: left;
                 padding: 10px 0;
@@ -1556,6 +1612,7 @@ $break-md-tab: 768px;
                 
                 div{
                     flex-basis: 25%;
+                    word-break: break-word;
                     .status{
                         word-break: break-word;
                     }
@@ -1706,6 +1763,7 @@ $break-md-tab: 768px;
         overflow: inherit;
         height: 4px;
         background-color: $primary-color;
+        max-width:30% !important;
     }
     .bookingprocess-processbar .progress span.title {
         position: relative;

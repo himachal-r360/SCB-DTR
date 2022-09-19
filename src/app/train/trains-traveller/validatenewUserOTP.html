@@ -1,5 +1,6 @@
 
 <!-- Reset Password IRCTC   step 1 of 1 -->
+<div class="reset_popup_mlite">
   <ng-container>
       <form [formGroup]="Form2Submit" name="Form2Submit">
         <div class="col-md-12" *ngIf="step1">
@@ -9,7 +10,7 @@
                 <p class="sub_title-for my-2">STEP 1 OF 2 </p>
               </div>
               <div class="row">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                   <mat-form-field>
                       <input matInput placeholder="IRCTC Authorised Partner User ID" maxlength="35" autocomplete="off"  formControlName="userID" (keypress)="AvoidSpace($event)">
                     </mat-form-field>
@@ -18,12 +19,23 @@
                         <small *ngIf="Form2Submit.controls['userID']['errors']['pattern']">Please enter valid user id.</small>
                         <small *ngIf="Form2Submit.controls['userID']['errors']['minlength']">Please enter atleast 3 characters.</small>
                     </div>
+              </div> -->
+              <div class="col-md-6 col-12 train_custom_input">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>IRCTC Authorised Partner User ID</mat-label>
+                    <input matInput placeholder=""  maxlength="35" autocomplete="off"  formControlName="userID" (keypress)="AvoidSpace($event)">
+                </mat-form-field>
+                <div *ngIf="submittedForm2 && Form2Submit.controls['userID']['errors']" class="error">
+                  <small *ngIf="Form2Submit.controls['userID']['errors']['required']">Please enter user id.</small>
+                  <small *ngIf="Form2Submit.controls['userID']['errors']['pattern']">Please enter valid user id.</small>
+                  <small *ngIf="Form2Submit.controls['userID']['errors']['minlength']">Please enter atleast 3 characters.</small>
               </div>
+            </div>
               </div>
               <div class="">
                   <div class="xs-center my-3">
-                      <button class="btn-c btn-primary my-2" (click)="nextStep()" >Next</button>
-                      <a class="btn-b btn my-2" (click)="goback()">Go Back</a>
+                      <button class="background_btn_link my-2" (click)="nextStep()" >Next</button>
+                      <a class="border_btn_link btn my-2" (click)="goback()">Go Back</a>
                     </div>
               </div>
         </div>
@@ -39,7 +51,7 @@
             <!-- {{OTPmessage}}  -->
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <mat-form-field>
                     <input matInput placeholder="OTP" (keypress)="numberInput($event)" formControlName="smsOTP">
                   </mat-form-field>
@@ -48,10 +60,20 @@
                       <small *ngIf="Form2Submit.controls['smsOTP']['errors']['required']">Please enter SMS OTP.</small>
                       <small *ngIf="Form2Submit.controls['smsOTP']['errors']['pattern']">Please enter a valid OTP.</small>
                     </div>
-            </div>
+            </div> -->
+            <div class="col-md-6 col-12 train_custom_input">
+              <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>OTP</mat-label>
+                  <input matInput placeholder="" (keypress)="numberInput($event)" formControlName="smsOTP">
+              </mat-form-field>
+              <div *ngIf="submittedForm3 && Form2Submit.controls['smsOTP']['errors']" class="error">
+                <small *ngIf="Form2Submit.controls['smsOTP']['errors']['required']">Please enter SMS OTP.</small>
+                <small *ngIf="Form2Submit.controls['smsOTP']['errors']['pattern']">Please enter a valid OTP.</small>
+              </div>
+          </div>
          
 
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <mat-form-field>
                     <input matInput placeholder="Email OTP" (keypress)="numberInput($event)" formControlName="emailOTP">
                   </mat-form-field>
@@ -59,14 +81,24 @@
                       <small *ngIf="Form2Submit.controls['emailOTP']['errors']['required']">Please enter Email OTP.</small>
                       <small *ngIf="Form2Submit.controls['emailOTP']['errors']['pattern']">Please enter a valid OTP.</small>
                     </div>
-            </div>
+            </div> -->
+            <div class="col-md-6 col-12 train_custom_input">
+              <mat-form-field class="w-100" appearance="outline">
+                  <mat-label>Email OTP</mat-label>
+                  <input matInput placeholder="" (keypress)="numberInput($event)" formControlName="emailOTP">
+              </mat-form-field>
+              <div *ngIf="submittedForm3 && Form2Submit.controls['emailOTP']['errors']" class="error">
+                <small *ngIf="Form2Submit.controls['emailOTP']['errors']['required']">Please enter Email OTP.</small>
+                <small *ngIf="Form2Submit.controls['emailOTP']['errors']['pattern']">Please enter a valid OTP.</small>
+              </div>
+          </div>
         </div>
         <div class="my-3">
             <div class="row">
                 <div class="xs-center ">
 
-                    <button class="btn-c btn-primary my-3" style="width: 145px;" (click)="verifyOTP()">Update Password</button> 
-                    <a class="btn-b btn my-3" (click)="gotoStep1()">Go Back</a>
+                    <button class="background_btn_link my-3" style="width: 145px;" (click)="verifyOTP()">Update Password</button> 
+                    <a class="border_btn_link btn my-3" (click)="gotoStep1()">Go Back</a>
                     <!-- <button class="btn-c btn-primary" style="width: 145px;" (click)="goback()">Close</button> -->
                   </div>
             </div>
@@ -97,6 +129,7 @@
       <button class="btn-c btn-primary m-0 my-3" style="width: 145px;" (click)="goback()">Close</button>
 </div>
   </ng-container>
+</div>
 
  
 

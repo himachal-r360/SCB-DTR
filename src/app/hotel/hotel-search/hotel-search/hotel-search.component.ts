@@ -4,7 +4,9 @@ import { debounceTime, fromEvent, map, reduce, switchMap } from 'rxjs';
 import { HotelService } from 'src/app/common/hotel.service';
 import * as moment from 'moment';
 import { ActivatedRoute,  Router } from '@angular/router';
+import { SimpleGlobal } from 'ng2-simple-global';
 import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.service';
+import { environment } from '../../../../environments/environment';
 declare var $: any;
 @Component({
   selector: 'app-hotel-search',
@@ -12,6 +14,7 @@ declare var $: any;
   styleUrls: ['./hotel-search.component.css']
 })
 export class HotelSearchComponent implements OnInit ,AfterViewInit{
+  cdnUrl: any;
   hotelSearchForm: any;
   hotelList: any;
   cityList: any;
@@ -67,7 +70,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
 
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute) {
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute,private sg: SimpleGlobal) {
+   this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: ['',[Validators.required]],
       checkOut: ['',[Validators.required]],
@@ -110,17 +114,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   public Error = (controlName: string, errorName: string) => {
     return this.hotelSearchForm.controls[controlName].hasError(errorName);
   };
-cityVal
-  showCity(val) {
-    this.cityVal = val;
-    if (val == 'show') {
-      this.hideShowCity.nativeElement.style.display = "block";
-      this.citySearchRef.nativeElement.focus();
-    }
-    else {
-      this.hideShowCity.nativeElement.style.display = "none";
-    }
-  }
+
 
   getSearchValueLocalStorage() {
     
@@ -215,14 +209,6 @@ cityVal
       .reduce((sum, current) => sum + current);
   }
 
-  showGuest(val) {
-    if (val == 'show') {
-      this.showHideGuest.nativeElement.style.display = "block";
-    }
-    else {
-      this.showHideGuest.nativeElement.style.display = "none";
-    }
-  }
 
   get roomsDetails(): FormArray {
     return this.hotelSearchForm.controls["rooms"] as FormArray;
@@ -280,44 +266,41 @@ cityVal
     this.showHideGuest.nativeElement.style.display = "block";
   }
 
-  onSelectAge(event ,item , i){
-    let ageArr:any = [];
-    let selectAge1:any = document.getElementById('selectAge1_' + i);
-    let selectAge2:any = document.getElementById('selectAge2_' + i);
-    let selectAge3:any = document.getElementById('selectAge3_' + i);
-    if(selectAge1 != null){
+  onSelectAge(event, item, i) {
+    let ageArr: any = [];
+    let selectAge1: any = document.getElementById('selectAge1_' + i);
+    let selectAge2: any = document.getElementById('selectAge2_' + i);
+    let selectAge3: any = document.getElementById('selectAge3_' + i);
+    if (selectAge1 != null) {
       ageArr = [selectAge1.value]
     }
-    if(selectAge1 != null && selectAge2 != null){
-      ageArr = [selectAge1.value,selectAge2.value]
+    if (selectAge1 != null && selectAge2 != null) {
+      ageArr = [selectAge1.value, selectAge2.value]
     }
-    if(selectAge1 != null && selectAge2 != null && selectAge3 != null){
-      ageArr = [selectAge1.value,selectAge2.value,selectAge3.value]
+    if (selectAge1 != null && selectAge2 != null && selectAge3 != null) {
+      ageArr = [selectAge1.value, selectAge2.value, selectAge3.value]
     }
     item.value.childrenAge = ageArr;
-    if(this.submitted)
-    {
-      var rooms =  this.hotelSearchForm.value.rooms;
+    if (this.submitted) {
+      var rooms = this.hotelSearchForm.value.rooms;
       var j = 0;
       var isvalid = true;
       rooms.forEach(z => {
-        if(z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0)
-        {
-          var id = document.getElementById("error_"+j)
+        if (z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0) {
+          var id = document.getElementById("error_" + j)
           id.hidden = false;
           isvalid = false;
-        }else{
-          var id = document.getElementById("error_"+j)
+        } else {
+          var id = document.getElementById("error_" + j)
           id.hidden = true;
         }
         j++;
       });
-      if(!isvalid)
-      {
+      if (!isvalid) {
         var id1 = document.getElementById("error_AllAge")
         id1.hidden = false;
       }
-      else{
+      else {
         var id1 = document.getElementById("error_AllAge")
         id1.hidden = true;
       }
@@ -333,7 +316,7 @@ cityVal
   ngAfterViewInit(): void {
     fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
       debounceTime(300),
-      map((e: any) => this.searchEvent =  e.target.value ),
+      map((e: any) => this.searchEvent = e.target.value),
       switchMap(value => this._hotelService.getHotelCityList(value)))
       .subscribe((res: any) => { this.queryText = res.hits.hits; })
   }

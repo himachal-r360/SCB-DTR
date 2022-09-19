@@ -326,8 +326,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
 orderRetry:boolean=false;
-  isExpanded: boolean;
-
 
   constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
@@ -425,9 +423,7 @@ orderRetry:boolean=false;
                 this.flightSessionData = JSON.parse(this.flightDetailsArrVal);
 
                 if (!this.flightSessionData) {
-                  setTimeout(() => {
-                    $("#bookingprocessFailed1").modal('show');
-                  }, 10);
+                   this.router.navigate(['/compare-fly']);
                 } else {
                   this.searchData = (this.flightSessionData.queryFlightData);
                    this.searchDataOrg = this.searchData ;
@@ -1660,9 +1656,8 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
   }
 
 
-    openmodal(content) {
-      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-    this.modalService.open(content, { centered: true, size: 'lg' });
+  openmodal(content) {
+    this.modalService.open(content, { centered: true });
   }
 
 
@@ -1809,9 +1804,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
   }
   fillupGSTDetailOnCheck($event, data, GSTIndex) {
 
-    for(let i=0;i<this.GSTListLength;i++){
-      this.isCheckedGST[i]=false;
-    }
+
     this.gstshow = true;
     this.gstSelected = true;
 
@@ -4191,6 +4184,8 @@ orderReferenceNumber:any;
     this.orderReferenceNumber=order_ref_num;
     
     console.log(checkoutData);
+
+    this.whatsAppCheck =  checkoutData.contactDetails.whatsappFlag;
 
     var saveCheckoutData = {
       orderReferenceNumber: order_ref_num,

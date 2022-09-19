@@ -185,7 +185,10 @@ export class HeaderComponent implements OnInit {
          var customer_cookie;
           if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
           
-            if(this.sg["customerInfo"]["guestLogin"]==true){
+          if(this.sg["customerInfo"]["payzapp_user"]==1) customer_cookie = 1;
+          
+          
+           if(this.sg["customerInfo"]["guestLogin"]==true){
             this.guestLogin=true;
               this.customerLogin = false;
             }else{
@@ -306,7 +309,8 @@ export class HeaderComponent implements OnInit {
     
     
     this.DOMAIN_SETTINGS=this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
-    
+    //console.log(this.DOMAIN_SETTINGS);
+
     this.menuOfferDropdown=this.serviceSettings.menuOfferDropdown;
     this.fp_popup_control = this.serviceSettings.home_page_banner;
     this.scrollMenu=this.serviceSettings.scrollMenu;
@@ -814,9 +818,7 @@ closeCookieConsent(value){
     }
     });
 
-$(".sb_head .dropdown").hover(function(){
- $('.sb_head  .list-travel').removeClass("hideDrop");
-});
+
 
       let queryParamMap=this.activatedRoute.snapshot.queryParamMap;
     	if(queryParamMap.keys[0])

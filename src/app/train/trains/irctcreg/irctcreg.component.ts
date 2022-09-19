@@ -70,19 +70,29 @@ export class IrctcregComponent implements OnInit {
   tab_1_disabled:boolean=true;
   tab_2_disabled:boolean=true;tab_3_disabled:boolean=true;tab_4_disabled:boolean=true;
   maxDate:any;
+  cdnUrl:any;
   dialog1:boolean;
   dialog2:boolean;
   thankSection: boolean = false;
-
+ isMobile:boolean= true;
+ fromstn:any;
+ tostn:any;
+ traveldate:any;
 
 
   //defaultISD:string;
    serviceSettings:any;
   
-  constructor(private calendar: NgbCalendar,private ngbDateParserFormatter: NgbDateParserFormatter,public _irctc: IrctcApiService,private EncrDecr: EncrDecrService,private location: Location,private dialog: MatDialog,private appConfigService:AppConfigService)
-   { }
+  constructor(private calendar: NgbCalendar,private router: Router,private sg: SimpleGlobal,private ngbDateParserFormatter: NgbDateParserFormatter,public _irctc: IrctcApiService,private EncrDecr: EncrDecrService,private location: Location,private dialog: MatDialog,private appConfigService:AppConfigService)
+   { 
+    this.fromstn=this.router.getCurrentNavigation().extras.queryParams.fromstn;
+    this.tostn=this.router.getCurrentNavigation().extras.queryParams.tostn;
+    this.traveldate=this.router.getCurrentNavigation().extras.queryParams.traveldate;
+   }
 
   ngOnInit() {
+    this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
+    this.isMobile = window.innerWidth < 991 ?  true : false;
   this.serviceSettings=this.appConfigService.getConfig();
     this.siteKey=this.serviceSettings.SITEKEY; 
     this.tab_1=true;

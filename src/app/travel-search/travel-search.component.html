@@ -563,7 +563,7 @@
                                                     </ul>
                                                     <div class="child-added">
                                                         <div class="child-add-continer child-add-pre" *ngFor="let cage of getChildAges(i)['controls']; let childIndex=index">
-                                                            <div class="">
+                                                            <div class="" [formGroup]="cage">
                                                                 <span class="child_count"><b>Child {{childIndex + 1}}</b></span>
                                                                 <div class="custom-dropdown pos-relative child-add-dd" id="childadd{{childIndex + 1}}">
                                                                     <select class="categorie_select sel-pr-0 f-12" formControlName="age">
@@ -592,7 +592,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="px-2">
+                                        <div class="px-2 text-center mb-10">
                                             <button class="btn btn-primary" (click)="closeTavelPopup()">Apply</button>
                                         </div>
                                     </div>
@@ -1452,7 +1452,7 @@
                                             </ul>
                                             <div class="child-added">
                                                 <div class="child-add-continer child-add-pre" *ngFor="let cage of getChildAges(i)['controls']; let childIndex=index">
-                                                    <div class="">
+                                                    <div class=""  [formGroup]="cage">
                                                         <span class="child_count"><b>Child {{childIndex + 1}}</b></span>
                                                         <div class="custom-dropdown pos-relative child-add-dd" id="childadd{{childIndex + 1}}">
                                                             <select class="categorie_select sel-pr-0 f-12" formControlName="age">

@@ -1,12 +1,12 @@
-<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="!isMobile">
+<section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
   <div class="container">
       <div class="row">
           <div class="col-md-12">
               <div class="bradcome-list">
                   <ul class="list-inline">
-                      <li class="list-inline-item"><a href="#">Home</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="#">Travel &amp; Stays</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel &amp; Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item" *ngIf="HotelDetail"><span>{{HotelDetail.hotelName}}</span></li>
                   </ul>
@@ -230,7 +230,7 @@
                                                               Check Cancellation Policy
                                                               <div class="hover-popover">
                                                                   <a href="" class="popover-close">
-                                                                      <img src="./assets/images/icons/close.png" alt="">
+                                                                      <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                   </a>
                                                                   <div class="hover-popover-title">
                                                                       <h6>Cancellation Policy</h6>
@@ -242,7 +242,7 @@
                                                       <div class="hd-rdetails-right">
                                                           <h6>₹{{item.rateBreakdown.total | number}}</h6>
                                                           <p>Inclusive of taxes</p>
-                                                          <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess">Book Now</a>
+                                                          <a href="javascript:;" class="button-style"  (click)="onBooking(item)">Book Now</a>
                                                       </div>
                                                   </div>
                                               </div>
@@ -285,7 +285,7 @@
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
                             <a (click)="backClicked()" >
-                                <img src="./assets/images/icons/left.png" alt="" />
+                                <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                             </a>
                         </div>
                         <div class="mob-listing-header-center">
@@ -294,7 +294,7 @@
                         </div>
                         <div class="mob-listing-header-right">
                             <a  (click)="backClicked()">
-                                <img src="./assets/images/icons/edit.png" alt="" />
+                                <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                             </a>
                         </div>
                     </div>
@@ -449,7 +449,7 @@
                                                                     Check Cancellation Policy
                                                                     <div class="hover-popover">
                                                                         <a href="" class="popover-close">
-                                                                            <img src="./assets/images/icons/close.png" alt="">
+                                                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                         </a>
                                                                         <div class="hover-popover-title">
                                                                             <h6>Cancellation Policy</h6>
@@ -464,7 +464,7 @@
                                                                     <p>Inclusive of taxes</p>
                                                                 </div>
                                                                 <div class="hd-rdetails-right-btn">
-                                                                    <a href="" class="button-style" data-bs-toggle="modal" data-bs-target="#bookingprocess" (click)="onBooking()">Book Now</a>
+                                                                    <a href="javascript:;" class="button-style" (click)="onBooking(item)">Book Now</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -511,7 +511,7 @@
                           <div class="amenitiesmodal-title">
                               <h6>Amenities</h6>
                               <a href="javascript:;" class="modal-close" (click)="CloseModal()">
-                                  <img src="./assets/images/icons/close.png" alt="">
+                                  <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                               </a>
                           </div>
                           <div class="amenitiesmodal-content">
@@ -543,7 +543,7 @@
                                   <div class="bookingprocess-hotel-content">
                                       <p>{{SelectedQueryParam.checkIn | date:'dd.MM.yyyy'}} - {{SelectedQueryParam.checkOut | date:'dd.MM.yyyy'}} </p>
                                       <p>{{TotalAdult}} Adults, {{TotalChild}} Child</p>
-                                      <p>{{SelectedQueryParam.numberOfRooms}} Delux Room</p>
+                                      <p>{{SelectedQueryParam.numberOfRooms}}  Room</p>
                                   </div>
                               </div>
                               <div class="bookingprocess-processbar hd-processbar">
@@ -562,3 +562,21 @@
               </div>
           </div>
       </div>
+      
+      <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body " style="padding: 25px;">
+        <div class="bookingprocess-items">
+          <div class="bookingprocess-content">
+            An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
+          </div>
+          <div class="refresh-text text-center pt-2">
+            <button type="button" class="btn btn-primary" (click)="backClicked()">Retry</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

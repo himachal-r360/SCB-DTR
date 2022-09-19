@@ -156,7 +156,7 @@
         <div class="row rcheck-available checkAva_m d-block d-sm-none" id="rcheck-available{{train.trainNumber}}" *ngIf="showAvailableR && isMobile">
             <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndexR">
                 <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
-                    
+
                     <div class="col-md-12 text-center layout-w" *ngIf="avlDayList.length==0 && fareDataIssue==false">
                         <div class="mt-10 d-flex justify-content-center">
                             <div class="spinner-border" role="status">
@@ -377,14 +377,17 @@
 
                 <!-- Mlite code  -->
                 <div class="row check-available checkAva_m d-block d-sm-none" id="check-available{{train.trainNumber}}" *ngIf="showAvailable && isMobile">
+                    <div class="col-xs-12 mb-10">
+                        <p Class="f-12">Class</p>
+                    </div>
                     <mat-tab-group animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
                         <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
                             <div class="col-md-12 text-center layout-w" *ngIf="avlDayList.length==0 && fareDataIssue==false">
-                        <div class="mt-10 d-flex justify-content-center">
-                            <div class="spinner-border" role="status">
+                                <div class="mt-10 d-flex justify-content-center">
+                                    <div class="spinner-border" role="status">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
                             <div class="tier_m mt-3">
                                 <div class="TrainSeatsInfo" *ngFor="let dayList of avlDayList ;">
@@ -437,7 +440,7 @@
         <mat-tab-group class="p-0 train_mat_tabGroup" animationDuration="0ms" (selectedTabChange)="checkFare(train,$event.tab.textLabel)" [(selectedIndex)]="selectedIndex">
             <mat-tab *ngFor="let avlClass of avlClasses ;" label="{{avlClass}}">
 
-               
+
                 <div class="col-md-12 text-center layout-w" *ngIf="avlDayList.length==0 && fareDataIssue==false">
                     <div class="mt-10 d-flex justify-content-center">
                         <div class="spinner-border" role="status">
