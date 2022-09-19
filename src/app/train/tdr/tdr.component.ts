@@ -284,9 +284,8 @@ checkRAC:any;
   const body:string = this.urlParams.toString();
   this.spinnerService.show();
   this._irctc.gettdrDetails(body).subscribe(data => {
-    this.tdrResponse = data.partnerResponse.bookingResponseList;
-//console.log(this.tdrReasons);
-this.tdrReasons = data.partnerResponse.tdrReasonList;
+  this.tdrResponse = data.partnerResponse.bookingResponseList;
+  this.tdrReasons = data.partnerResponse.tdrReasonList;
 
 if(data.errorcode != 1){
     let pnrurlParams = new HttpParams()
@@ -313,16 +312,12 @@ if(data.errorcode != 1){
       var canceledCount = temp.filter(function(x){ return x == "CAN"; }).length;
 
       var totalCount = temp.length;
-
-
-      if((totalCount == canceledCount) && (indexValue != -1 || indexValue == -1)){
+      /*if((totalCount == canceledCount) && (indexValue != -1 || indexValue == -1)){
         this.cancelledpopup();
-return      
-}
-      
-
-   
-      if(indexValue != -1){
+        return      
+      }*/
+      // if(indexValue != -1){
+     if(false){   
        this.optCancelpopUp();
         this.showdetails = false;
       }   
@@ -477,7 +472,7 @@ numberOnly(event): boolean {
 
 }
 optCancelpopUp(){
-  let message = 'Filing a TDR for the PNR '+this.tdrResponse.pnrNumber+' is not allowed as it is eligible for cancellation. Kindly proceed for cancellation.';
+  let message = 'Filing a TDR for the PNR '+this.tdrResponse.pnrNumber+' is not allowed.';
   let dialogRef = this.dialog.open(tdrConfirmationDialog, {
    disableClose: true,
    width: '800px',
