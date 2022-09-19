@@ -55,6 +55,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         isMobile: boolean = true;
         completedSteps = 1;
         steps = 1;
+          voucher_amount:number=0;
+  voucher_code:string='';
         sessionTimer: any = 3;
         serviceId: string = 'Hotel';
         pgCharges: number = 0;
@@ -205,16 +207,20 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     if (values[0].key == 15) {
       this.flexipaysummry = true;
       this.flexiDiscount = Number(values[0].value);
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount) - Number(this.flexiDiscount);
-      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount) - Number(this.flexiDiscount)- Number(this.voucher_amount);
+      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
     } else if (values[0].key !== 15) {
       this.flexipaysummry = false;
       this.flexiDiscount = 0;
       this.flexiIntrest = Number(values[0].value);
       this.flexiDiscount = 0;
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
       this.sendflexiFare = this.totalFare;
     }
+    
+     this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
 
   ngOnDestroy(): void {
@@ -226,7 +232,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
   recivetotalFare($event) {
     this.flexipaysummry = false;
     this.flexiDiscount = 0;
-    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
 
   }
   /***----- APPLY COUPON (--parent--) ------***/
@@ -240,10 +246,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       // this.coupon_amount = 200;
       if (this.flexiDiscount == undefined) this.flexiDiscount = 0;
 
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount));
-      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-      this.createItinerarydata();
-      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount))- Number(this.voucher_amount);
+      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
       sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
     } else {
       this.coupon_id = '';
@@ -251,12 +255,12 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.coupon_code = '';
       this.coupon_amount = 0;
       if (this.flexiDiscount == undefined) this.flexiDiscount = 0;
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount));
-      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-      this.createItinerarydata();
-      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
-      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount))- Number(this.voucher_amount);
+      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
     }
+     this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
 
   /**----------REMOVE COUPON----------**/
@@ -265,12 +269,23 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.coupon_name = '';
     this.coupon_code = '';
     this.coupon_amount = 0;
-    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
-    this.createItinerarydata();
-    this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-    sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
-    sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
+    this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
+    
+     this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
+
+  receivePointsPlus($event) {
+    this.voucher_code=$event.code;
+    this.voucher_amount=$event.value;
+    
+      this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+  }
+
 
   isCollapseShow(identifyCollpase) {
 
@@ -559,7 +574,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.resetPopups();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/compare-stay');
 
 
   }
@@ -977,8 +992,124 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   }
   
   saveCheckout(interval){
+      this.createItinerarydata();
+        console.log(this.checkoutData);
+    var saveCheckoutData = {
+      orderReferenceNumber: this.orderReferenceNumber,
+      flightData: this.EncrDecr.set(JSON.stringify(this.checkoutData))
+    };
+
+
+    let trackUrlParams = new HttpParams()
+      .set('current_url', window.location.href)
+      .set('category', 'Hotel')
+      .set('event', 'Save Checkout')
+      .set('metadata', '{"save_checkout":"' + this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData))) + '"}');
+
+    const track_body: string = trackUrlParams.toString();
+    this.rest.trackEvents(track_body).subscribe(result => { });
+
+    this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
+      if (rdata == 1) {
+        sessionStorage.setItem(this.searchHotelKey + '-clientTransactionId', this.provisionalBookingId);
+        sessionStorage.setItem(this.searchHotelKey + '-orderReferenceNumber', this.orderReferenceNumber);
+        sessionStorage.setItem(this.searchHotelKey + '-ctype', 'hotels');
+        sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+        sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+        sessionStorage.setItem(this.searchHotelKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
+        clearInterval(interval);
+
+        this.gotoTop();
+         this.steps = 2;
+         this.completedSteps = 2;
+        setTimeout(() => {
+          $('#infoprocess').modal('hide');
+        }, 10);
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          $('#infoprocess').modal('hide');
+          $('#bookingprocessFailed').modal('show');
+        }, 10);
+      }
+    });
+
+  }
   
-      var whatsappFlag;
+  isPaynowClicked: boolean = false;
+  continuePayment() {
+    //console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
+    switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+      case 'tab-savedCards':
+        $('.btn-pay-saved-card').trigger('click');
+        break;
+      case 'tab-testPg':
+        $('.btn-pay-test').trigger('click');
+        break;
+      case 'tab-payzapp':
+        $('.btn-pay-payz').trigger('click');
+        break;
+      case 'tab-netBanking':
+        $('.btn-pay-netbanking').trigger('click');
+        break;
+      case 'tab-ccdcCards':
+        if ($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+          $('.btn-pay-card').trigger('click');
+
+        if ($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+          $('.btn-pay-rupay').trigger('click');
+
+        break;
+
+      case 'tab-emi':
+        if ($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
+          $('.btn-pay-emi-cc').trigger('click');
+
+
+        break;
+
+
+      case 'tab-testPg':
+        $('.btn-pay-test').trigger('click');
+        break;
+    }
+
+  }
+
+  gotoTop() {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  gotoTopmiddle() {
+    window.scroll({
+      top: 500,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+  moveTab(page) {
+    this.gotoTop();
+    if (page < 2) {
+      this.totalFare = this.intialTotalFare;
+      this.coupon_amount = 0;
+    }
+
+
+
+    if (page <= this.completedSteps) {
+      this.steps = page;
+      this.completedSteps = page;
+    }
+  }
+  
+  checkoutData:any;
+  createItinerarydata() {
+
+
+ var whatsappFlag;
       if (this.whatsappFeature == 1)
         whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
       else
@@ -1013,7 +1144,10 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "totalDiscount": 0,
         "totalBaseFare": this.totalBaseFare,
         "couponDiscount": 0,
-        "voucher_amount": 0,
+        "discount": this.coupon_amount,
+        "voucher_amount": this.voucher_amount,
+        "voucher_code": this.voucher_code,
+        "couponcode": "",
         "totalFare":this.totalFare
         };    
         
@@ -1161,130 +1295,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "hotelSessionData":tmp_searchResult
 };
 
-console.log(checkoutData);
-
-//console.log(checkoutData);return;
-//return;
-    var saveCheckoutData = {
-      orderReferenceNumber: this.orderReferenceNumber,
-      flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
-    };
-
-
-    let trackUrlParams = new HttpParams()
-      .set('current_url', window.location.href)
-      .set('category', 'Hotel')
-      .set('event', 'Save Checkout')
-      .set('metadata', '{"save_checkout":"' + this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData))) + '"}');
-
-    const track_body: string = trackUrlParams.toString();
-    this.rest.trackEvents(track_body).subscribe(result => { });
-
-    this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
-      if (rdata == 1) {
-        sessionStorage.setItem(this.searchHotelKey + '-clientTransactionId', this.provisionalBookingId);
-        sessionStorage.setItem(this.searchHotelKey + '-orderReferenceNumber', this.orderReferenceNumber);
-        sessionStorage.setItem(this.searchHotelKey + '-ctype', 'hotels');
-        sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
-        sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(checkoutData)));
-        sessionStorage.setItem(this.searchHotelKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
-        clearInterval(interval);
-
-        this.gotoTop();
-         this.steps = 2;
-         this.completedSteps = 2;
-        setTimeout(() => {
-          $('#infoprocess').modal('hide');
-        }, 10);
-      } else {
-        clearInterval(interval);
-        setTimeout(() => {
-          $('#infoprocess').modal('hide');
-          $('#bookingprocessFailed').modal('show');
-        }, 10);
-      }
-    });
-
-  }
-  
-  isPaynowClicked: boolean = false;
-  continuePayment() {
-    //console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
-    switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
-      case 'tab-savedCards':
-        $('.btn-pay-saved-card').trigger('click');
-        break;
-      case 'tab-testPg':
-        $('.btn-pay-test').trigger('click');
-        break;
-      case 'tab-payzapp':
-        $('.btn-pay-payz').trigger('click');
-        break;
-      case 'tab-netBanking':
-        $('.btn-pay-netbanking').trigger('click');
-        break;
-      case 'tab-ccdcCards':
-        if ($(".addCardTab[aria-selected='true']").attr("aria-selected"))
-          $('.btn-pay-card').trigger('click');
-
-        if ($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
-          $('.btn-pay-rupay').trigger('click');
-
-        break;
-
-      case 'tab-emi':
-        if ($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
-          $('.btn-pay-emi-cc').trigger('click');
-
-
-        break;
-
-
-      case 'tab-testPg':
-        $('.btn-pay-test').trigger('click');
-        break;
-    }
-
-  }
-
-  gotoTop() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-  gotoTopmiddle() {
-    window.scroll({
-      top: 500,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-  moveTab(page) {
-    this.gotoTop();
-    if (page < 2) {
-      this.totalFare = this.intialTotalFare;
-      this.coupon_amount = 0;
-    }
-
-
-
-    if (page <= this.completedSteps) {
-      this.steps = page;
-      this.completedSteps = page;
-    }
-  }
-  createItinerarydata() {
-
-
-    var saved_GST_flag;
-    if (this.passengerForm.controls['saveGST']['value'] == 1)
-      saved_GST_flag = 1;
-    else
-      saved_GST_flag = 0;
-
-
+this.checkoutData=checkoutData;
   }
 
   receivePgCharges($event) {
