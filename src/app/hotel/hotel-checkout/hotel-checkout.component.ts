@@ -56,7 +56,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         completedSteps = 1;
         steps = 1;
         sessionTimer: any = 3;
-        serviceId: string = 'RedBus';
+        serviceId: string = 'Hotel';
         pgCharges: number = 0;
         errorMsg: any;
         cdnUrl: any;

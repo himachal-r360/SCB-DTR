@@ -75,7 +75,7 @@
                    <div>
                     <div class="hotel_details">
                         <div class="img_hr">
-                         <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
+                         <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
                           <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                           
                         </div>
@@ -359,7 +359,7 @@
                 </div>
               </div>
 
-             <p  *ngIf="!showGstBox" class="no_gst">No GST is applicable for this room/Booking. </p>
+             <p  *ngIf="!showGstBox" class="no_gst mb-10">No GST is applicable for this room/Booking. </p>
 
               <div class="booking-inner-box gst-number-box" *ngIf="showGstBox">
                 <h6> <span class="form-switch m-0 mr-10">
@@ -607,7 +607,6 @@
             <div class="booking-title-box">
               <h4>Choose Payment Mode</h4>
             </div>
-
             <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
               [passSavedCardsData]="savedCards" [passSessionKey]="searchHotelKey"
               (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalFare"
@@ -744,7 +743,7 @@
             
                 </div>
               </div>
-              <div *ngIf="steps==1 && !isMobile">
+              <div *ngIf="steps==2 && !isMobile">
                 <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchHotelKey"
                   [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                   [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
@@ -772,7 +771,7 @@
         <div class="apply_fare row">
           <!--  <p *ngIf="steps<5" class="w-75"></p> -->
           <div class="col-6 text-left">
-            <p *ngIf="steps==1"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+            <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
                 data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
           </div>
           <div class="col-6 text-right">
@@ -805,7 +804,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true" *ngIf="steps==1 && isMobile">
+    aria-hidden="true" *ngIf="steps==2 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
