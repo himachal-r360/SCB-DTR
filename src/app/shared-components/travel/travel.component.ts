@@ -1512,7 +1512,7 @@ console.log(this.searchFlightForm);
   let url;
   if(this.searchFlightForm.value.fromContry=='IN' && this.searchFlightForm.value.toContry=='IN' ){
   if(this.searchFlightForm.value.arrival == null || this.searchFlightForm.value.arrival == undefined ||this.searchFlightForm.value.arrival == "") {
-  url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+  url=this.sg['domainPath']+"flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
 console.log(this.sg['domainPath']);  
 this.router.navigateByUrl(url);
   }

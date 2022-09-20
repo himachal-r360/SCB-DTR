@@ -1112,7 +1112,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   
   saveCheckout(interval){
       this.createItinerarydata();
-     //  console.log(this.checkoutData);return;
+    //  console.log(this.checkoutData);return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
       flightData: this.EncrDecr.set(JSON.stringify(this.checkoutData))
@@ -1272,7 +1272,7 @@ console.log(this.orderReferenceNumber);
         
         
     let roomTypeId=this.selectedHotel.roomType.roomTypeId;
-    let currentDate=moment().format('DD-MM-YYYY');
+    let currentDate=moment(this.searchData.checkIn).format('DD-MM-YYYY');
     
     let farebreakup:any={};
     

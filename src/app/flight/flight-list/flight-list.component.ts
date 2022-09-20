@@ -1330,7 +1330,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
-    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+    let url = this.sg['domainPath']+'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
 
         setTimeout(() => {
                 this.router.navigateByUrl(url);
@@ -1359,7 +1359,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
     let randomFlightDetailKey = btoa(this.DocKey+flightKey+selected.partnerName);
     sessionStorage.setItem(randomFlightDetailKey, JSON.stringify(flightDetailsArr));
-    let url = 'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
+    let url = this.sg['domainPath']+'flight-checkout?searchFlightKey=' + randomFlightDetailKey;
 
         setTimeout(() => {
                 this.router.navigateByUrl(url);
