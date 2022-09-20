@@ -276,33 +276,17 @@
 
                         </div>
 
-                        <!-- no train found on filtering web -->
-                        <div class="flight-listing-area" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length == 0">
-                            <span *ngIf="(trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length == 0">  
-                               
-                                <div class="row p-2">
-                                    <div class="col-md-12 text-center">
-                                        <div class="empty_list_hdr">Yikes! No direct trains found.</div>
-                                        <div>
-                                            <img src="{{cdnUrl}}/images/empty_list_train.svg">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 mt-3 text-center" (click)="goback()">
-                                        <p class="empty_list_text">Try another route or date</p>
-                                        <button class="empty_list_btn">Go back to search page</button>
-                                    </div>
-                                </div>
-
-                            </span>
-                        </div>
-                        <!-- end no train found on filtering web-->
 
                     </div>
 
                 </div>
-                <!-- no train found new design web -->
 
-                <div class="row p-2" *ngIf="notrain">
+                <!-- no train found on filtering web -->
+                <div class="flight-listing-area" *ngIf="notrain || (!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length == 0)">
+                    <span *ngIf="notrain || (!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length == 0)">  
+
+                    
+                <div class="row p-2">
                     <div class="col-md-12 text-center">
                         <div class="empty_list_hdr">Yikes! No direct trains found.</div>
                         <div>
@@ -314,8 +298,10 @@
                         <button class="empty_list_btn">Go back to search page</button>
                     </div>
                 </div>
+                </span>
+                </div>
+                <!-- end no train found on filtering web-->
 
-                <!-- end of no train found new design web -->
             </div>
 
         </div>
@@ -387,7 +373,7 @@
                     <!-- no train found new design mlite -->
                     <div class="row p-2">
                         <div class="col-md-12 text-center">
-                            <div class="empty_list_hdr">Yikes! No direct trains found.</div>
+                            <div class="empty_list_hdr">Yikes! No direct trains found mobile 1.</div>
                             <div>
                                 <img src="{{cdnUrl}}/images/empty_list_train.svg" width="200px">
                             </div>

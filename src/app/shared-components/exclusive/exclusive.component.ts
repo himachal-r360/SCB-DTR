@@ -32,7 +32,7 @@ export class ExclusiveComponent implements OnInit {
   }
 
   exclusiveOptions: any = {
-    loop: false,
+    loop: true,
     autoplay: true,
     autoplayTimeout: 8000,
     autoplayHoverPause: true,
