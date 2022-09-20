@@ -5,245 +5,456 @@
     </div>
  </div>
 
-<div class="container train-tdr-section">
-  <div class="d-none d-sm-block">
-      <div class="manage_account m-0">
-        <div>
-          <h4 class="cus_name">Welcome {{REWARD_FIRSTNAME}}</h4>
-        </div>
-     </div>
-      <div class="mbt20 row">
-        <div class="col-md-12 w-bb">
-          <div>
-            <ul class="nav nav-tabs tabs-left manage_account_tabs">
-              <div class="tab_title">
-                <div class="row">
-                
-                <div class="col-md-12 text-left">
-                <h4 class="title_name">
-                 <a routerLink="{{domainPath}}/train/tdrhistory"><i class="fa fa-angle-left" aria-hidden="true"></i></a> IRCTC Authorised Partner File TDR</h4></div>
-              
-                </div>
-              </div>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+ <div class="container tdr_cntnr">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Manage Account</a></li>
+      <li class="breadcrumb-item active" aria-current="page">File TDR</li>
+    </ol>
+  </nav>
 
-
-  <div class="col-12 train-btn-group my-4">
-    <a *ngIf="!isguestUser" href="{{domainRedirect}}train_orders" class="btn btnTdr-default btn-sm  mr-3">Booking
-      History</a>
-    <a *ngIf="!isguestUser" href="{{domainRedirect}}train_cancellation_history"
-      class="btn btnTdr-default btn-sm  mr-3">Cancellation History</a>
-    <a *ngIf="!isguestUser" href="{{domainRedirect}}train_failed_orders" class="btn btnTdr-default btn-sm  mr-3">Failed
-      History</a>
-    <a routerLink="/{{domainPath}}/train/filetdr" class="btn  btnTdr-active-{{domainName}} btn-sm mr-3"
+  <div class="main_hdr">
+    Train Booking
+  </div>
+  <div class="col-12 train-btn-group mt-4 mb-2">
+    <a routerLink="/{{domainPath}}/train/filetdr" class="sort_btn btnTdr-active-{{domainName}} btn-sm mr-3"
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">File TDR</a>
-    <a routerLink="/{{domainPath}}/train/tdrhistory" class="btn  btnTdr-default btn-sm mr-3"
+    <a routerLink="/{{domainPath}}/train/tdrhistory" class="sort_btn btnTdr-default btn-sm mr-3"
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">TDR History</a>
   </div>
-  <div class="bookedTicketHistory-section">
-    <div class="tdr-heading-{{domainName}}">
-      TDR Filing Requisition Form
-    </div>
-    <form [formGroup]="pnrForm">
-      <div class="pnr-section">
-        <p class="number-title pb-2">File TDR using PNR/ Transaction ID/ SmartBuy Reference ID</p>
-        <mat-radio-group formControlName="tdrbuttselection" name="tdrbuttselection" [(ngModel)]="selection"
-          #radioGroup="matRadioGroup" (change)="getcheckboxValues()">
-          <mat-radio-button name="tdr_option1" value='1' id='pnrButton'>PNR</mat-radio-button>
-          <mat-radio-button name="tdr_option2" value='2'>Transaction ID</mat-radio-button>
-          <mat-radio-button name="tdr_option3" value='3'>SmartBuy Reference ID</mat-radio-button>
-        </mat-radio-group>
-        <div class="row pt-2">
-          <div class="col-md-8 col-12">
-            <div class="row">
-              <!-- <div class="col-md-5">
-              <mat-form-field class="">
-                <input matInput id="pnrno" matInput placeholder="PNR" [(ngModel)]="pnr" (ngModelChange)="changeEvent()"  (keypress)="numberOnly($event);" formControlName="pnrnumber" name="pnrnumber" maxlength="10" onDrag="return false" onDrop="return false"  autocomplete="off" [ngClass]="{ 'is-invalid': formControls.pnrnumber.errors }">
-              </mat-form-field>
-              <div *ngIf=" submitted && formControls.pnrnumber.errors" class="error" style="color: red">
-                <small *ngIf = "formControls.pnrnumber.errors.pattern">Please enter a valid PNR</small>
-                <small *ngIf = "formControls.pnrnumber.errors.minLength">Please enter 10 Digits PNR</small>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <p class="text-or">OR</p>
-            </div> -->
-              <div class="col-md-6">
-                <mat-form-field>
-                  <input matInput placeholder="Enter {{placeholderValue}}" formControlName="pnrnumber"
-                    [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
-                    name="pnrnumber" onDrag="return false" onDrop="return false" autocomplete="off">
-                </mat-form-field>
 
-                <!-- <div  style="color: red"  class="pb-2"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+  <div class="pri_hdr">
+    File TDR Using PNR / Transaction ID / SmartBuy Reference ID
+  </div>
 
-                <div *ngIf="tdrFetchingsubmitted && pnrForm.get('pnrnumber').invalid" class="error" style="color: red">
-                  <small *ngIf="pnrForm.get('pnrnumber').errors.required">{{placeholderValue}} is required</small>
-                  <small *ngIf="pnrForm.get('pnrnumber').errors.minlength">Please enter correct {{dynamiclength}} digits
-                    {{placeholderValue}}</small>
-                  <small *ngIf="pnrForm.get('pnrnumber').errors.maxlength">Please enter correct {{dynamiclength}} digits
-                    {{placeholderValue}}</small>
-                  <small *ngIf="pnrForm.get('pnrnumber').errors.pattern">Please enter valid {{dynamiclength}} digits
-                    {{placeholderValue}}</small>
-                </div>
-                <!-- <span *ngIf="flexipayForm.get('cardnumber').errors.maxlength">Please enter a correct card number.</span> -->
-
-                <!-- <div *ngIf="submitted && formControls.pnrnumber.errors" class="error" style="color: red">
-                <small *ngIf="formControls.pnrnumber.errors.required">{{placeholderValue}} is required</small>
-                <small *ngIf="formControls.pnrnumber.errors.minlength">Please enter a correct {{placeholderValue}}</small>
-                <small *ngIf="formControls.pnrnumber.errors.pattern">Please enter a correct {{placeholderValue}}</small>
-              </div> -->
-
-              </div>
-              ​
-
-              <!-- <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
-              <div class="col-md-6 pt-2">
+  <div clas="row">
+    <div class="col-md-12">
+      <div class="tdr_box">
+        <form [formGroup]="pnrForm">
+          <div class="pnr-section">
+            <mat-radio-group formControlName="tdrbuttselection" name="tdrbuttselection" [(ngModel)]="selection"
+              #radioGroup="matRadioGroup" (change)="getcheckboxValues()" class="filetdr_sort_radio">
+              <mat-radio-button name="tdr_option1" value='1' id='pnrButton' class="mlite_rdio_btn">PNR</mat-radio-button>
+              <mat-radio-button name="tdr_option2" value='2' class="mlite_rdio_btn">Transaction ID</mat-radio-button>
+              <mat-radio-button name="tdr_option3" value='3' class="mlite_rdio_btn">SmartBuy Reference ID</mat-radio-button>
+            </mat-radio-group>
+            <div class="row pt-2">
+              <div class="col-md-8 col-12">
                 <div class="row">
-                  <div class="col-md-6 col-6 text-center">
-                    <button type="submit" class="btn btnTdr-submit-{{domainName}}"
-                      (click)="gettdrdata()">Submit</button>
+                  <div class="col-md-6 mt-2">
+                    <!-- <mat-form-field>
+                      <input matInput placeholder="Enter {{placeholderValue}}" formControlName="pnrnumber"
+                        [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
+                        name="pnrnumber" onDrag="return false" onDrop="return false" autocomplete="off" class="form-control">
+                    </mat-form-field> -->
+
+                    <mat-form-field class="matField_full_width w-100" appearance="outline">
+                      <mat-label>Enter {{placeholderValue}}</mat-label>
+                      <input matInput placeholder="" formControlName="pnrnumber"
+                      [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
+                      name="pnrnumber" onDrag="return false" onDrop="return false" autocomplete="off">
+                  </mat-form-field>
+    
+                    <!-- <div  style="color: red"  class="pb-2"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+    
+                    <div *ngIf="tdrFetchingsubmitted && pnrForm.get('pnrnumber').invalid" class="error" style="color: red">
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.required">{{placeholderValue}} is required</small>
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.minlength">Please enter correct {{dynamiclength}} digits
+                        {{placeholderValue}}</small>
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.maxlength">Please enter correct {{dynamiclength}} digits
+                        {{placeholderValue}}</small>
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.pattern">Please enter valid {{dynamiclength}} digits
+                        {{placeholderValue}}</small>
+                    </div>
+    
                   </div>
-                  <div class="col-md-6 col-6 text-center">
-                    <button class="btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
+                  ​
+    
+                  <!-- <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+                  <div class="col-md-6 pt-2">
+                    <div class="row">
+                      <div class="col-md-12 col-12 text-center">
+                        <button type="submit" class="btn submit_btn btnTdr-submit-{{domainName}}"
+                          (click)="gettdrdata()">Submit</button>
+                          <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
+                      </div>
+                      <!-- <div class="col-md-6 col-6 text-center px-0">
+                        <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
+                      </div> -->
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-12 sub-btn-group">
-            ​
-          </div>
-        </div>
+        </form>
       </div>
-      <!-- <div class="pnr-section">
-  <p class="number-title">PNR/Transaction ID</p>
-  <div class="row">
-    <div class="col-md-8 col-12">
-      <div class="row">
-      <div class="col-md-5">
-        <mat-form-field class="">
-          <input matInput id="pnrno" matInput placeholder="PNR" [(ngModel)]="pnr" (ngModelChange)="changeEvent()"  (keypress)="numberOnly($event);" formControlName="pnrnumber" name="pnrnumber" maxlength="10" onDrag="return false" onDrop="return false"  autocomplete="off" [ngClass]="{ 'is-invalid': formControls.pnrnumber.errors }">
-        </mat-form-field>
-        <div *ngIf=" submitted && formControls.pnrnumber.errors" class="error" style="color: red">
-          <small *ngIf = "formControls.pnrnumber.errors.pattern">Please enter a valid PNR.&nbsp;</small>
-          <small *ngIf = "formControls.pnrnumber.errors.minlength">Please enter 10 Digits PNR.</small>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <p class="text-or">OR</p>
-      </div>
-      <div class="col-md-5">
-        <mat-form-field class="">
-          <input matInput placeholder="Transaction ID" [(ngModel)]="tid" (ngModelChange)="changeEvent()" maxlength="15" formControlName="tid"name="tid" onDrag="return false" onDrop="return false"  autocomplete="off" [ngClass]="{ 'is-invalid': formControls.tid.errors }">
-        </mat-form-field>
-        <div *ngIf="submitted && formControls.tid.errors" class="error" style="color: red">
-          <small *ngIf="formControls.tid.errors.pattern">Please enter a valid Transaction ID. &nbsp;</small>
-          <small *ngIf="formControls.tid.errors.minlength">Please enter minimum 15 digits.</small>
-          
-        </div>
-        
-      </div>
-      <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div>
-    </div>
-    
-    </div>
-    <div class="col-md-4 col-12 sub-btn-group">
-      <div class="row">
-      <div class="col-md-6 col-6 text-center">
-        <button type="submit" class="btn btnTdr-submit">Submit</button>
-      </div>
-      <div class="col-md-6 col-6 text-center">
-        <button type="reset" class="btn btnTdr-reset " (click)="resetpnrform()">Reset</button>
-      </div>
-    </div>
     </div>
   </div>
-</div> -->
-    </form>
-  </div>
+ </div>
+
+<div class="container">
+
   <div *ngIf="tdrResponse && showdetails">
     <div class="ticketDetailsSection-{{domainName}}">
-      <p class="title">Ticket Details</p>
-      <div class="row">
-        <div class="col-md-4">
-          <p class="ticket-details"><span class="t-name">Reference ID: </span> <span
-              class="t-value">{{tdrResponse.reservationId}}</span></p>
-          <p class="ticket-details"><span class="t-name">PNR: </span> <span
-              class="t-value">{{tdrResponse.pnrNumber}}</span></p>
-          <p class="ticket-details"><span class="t-name">Train No: </span> <span class="t-value">
-              {{tdrResponse.trainNumber}}</span></p>
-          <p class="ticket-details"><span class="t-name">Train Name: </span> <span class="t-value">
-              {{tdrResponse.trainName}}</span></p>
-          <p class="ticket-details"><span class="t-name">Date of journey: </span> <span class="t-value">
-              {{tdrResponse.journeyDate | date:'mediumDate'}}</span></p>
-        </div>
-        <div class="col-md-4">
-          <p class="ticket-details"><span class="t-name">From: </span> <span
-              class="t-value">{{fromstn}}<span>({{tdrResponse.fromStn}})</span></span></p>
-          <p class="ticket-details"><span class="t-name">To: </span> <span class="t-value"> {{tostn}}
-              <span>({{tdrResponse.destStn}})</span></span></p>
-          <p class="ticket-details"><span class="t-name">Class: </span> <span class="t-value"> {{journeyClass}}
-              ({{tdrResponse.journeyClass}})</span></p>
-          <p class="ticket-details"><span class="t-name"> Quota: </span> <span class="t-value">{{journeyQuota}}
-              ({{tdrResponse.journeyQuota}}) <span></span></span></p>
-        </div>
-        <div class="col-md-4">
-          <p class="ticket-details"><span class="t-name">Boarding: </span> <span class="t-value">
-              <span>{{stationsdump[tdrResponse.boardingStn]}}</span>({{tdrResponse.boardingStn}})</span></p>
-          <p class="ticket-details"><span class="t-name">Date of Boarding: </span> <span class="t-value">
-              {{tdrResponse.boardingDate | date:'mediumDate'}}</span></p>
-          <!-- <p class="ticket-details"><span class="t-name"> Ticket Type: </span> <span class="t-value">General <span>(GN)</span></span></p> -->
+
+      <!-- train detrails new design web-->
+      <div class="row tdr_train_details" *ngIf="!isMobile">
+        <div class="col-md-12">
+          <div class="tdr_box">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="train_img_div">
+                  <img src="{{cdnUrl}}/images/train_tickets.svg" class="train_img">
+                </div>
+              </div>
+              <div class="col-md-10">
+                <div class="row">
+                  <div class="col-md-6">
+                    <span class="gray_text">Order ID <span class="number_highlight">#{{tdrResponse.reservationId}}</span></span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <span class="gray_text">PNR Number <span class="number_highlight">{{tdrResponse.pnrNumber}}</span></span>
+                  </div>
+                  <div class="col-md-12 mt-2 mb-2">
+                    <span class="highlight_text">{{tdrResponse.trainName}}</span>
+                    <span class="gray_text px-1">#{{tdrResponse.trainNumber}}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <span class="highlight_text">{{fromstn}} ({{tdrResponse.fromStn}})</span>
+                        <p class="gray_text px-1">08:55 hrs, 12 May</p>
+                        <p class="gray_text px-1">New Delhi Railway Station</p>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <hr class="dashed_hr">
+                        <span class="gray_text px-1">1h 30m</span>
+                      </div>
+                      <div class="col-md-4">
+                        <span class="highlight_text">{{tostn}} ({{tdrResponse.destStn}})</span>
+                        <p class="gray_text px-1">08:55 hrs, 12 May</p>
+                        <p class="gray_text px-1">New Delhi Railway Station</p>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <span class="gray_text px-1">Booked Via</span>
+                        <div class="booked_via_div">
+                          <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc_long.svg" class="booked_via_img">
+                        </div>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <p class="price_text">₹ 9,874</p>
+                        <span class="text_success">+ 430 points</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="div_flex">
+                    <div class="div_flex_item">
+                        <p class="gray_text">Transaction ID</p>
+                        <p class="black_text">10204959969936935</p>
+                    </div>
+                    <div class="div_flex_item">
+                      <p class="gray_text">Date of Journey</p>
+                      <p class="black_text">{{tdrResponse.journeyDate | date:'mediumDate'}}</p>
+                  </div>
+                  <div class="div_flex_item">
+                    <p class="gray_text">Date of Boarding</p>
+                    <p class="black_text">{{tdrResponse.boardingDate | date:'mediumDate'}}</p>
+                  </div>
+                  <div class="div_flex_item">
+                    <p class="gray_text">Class</p>
+                    <p class="black_text">{{journeyClass}} ({{tdrResponse.journeyClass}})</p>
+                  </div>
+                  <div class="div_flex_item">
+                    <p class="gray_text">From</p>
+                    <p class="black_text">{{fromstn}} ({{tdrResponse.fromStn}})</p>
+                  </div>
+                  
+                  <div class="div_flex_item">
+                    <p class="gray_text">To</p>
+                    <p class="black_text">{{tostn}} ({{tdrResponse.destStn}})</p>
+                  </div>
+                  <div class="div_flex_item">
+                    <p class="gray_text">Resv Upto</p>
+                    <p class="black_text">Yeshwantpur Jn (SC)</p>
+                  </div>
+                  <div class="div_flex_item">
+                    <p class="gray_text">Ticket Type</p>
+                    <p class="black_text">E Ticket</p>
+                  </div>
+                  </div>
+                </div>
+                <div class="row mt-4">
+                  <div class="col-md-12 d-flex align-items-center">
+                    <img src="{{cdnUrl}}images/success_tick.svg">
+                    <span class="gray_text px-1">regesara@gmail.com | +91 9635246543</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="passengerDetailsSection-{{domainName}}">
-      <p class="title">Passenger Details</p>
-      <div>
+      <!-- end of train details web -->
+
+      <!-- train details mlite -->
+      <div class="row tdr_train_details" *ngIf="isMobile">
+        <div class="col-md-12">
+          <div class="tdr_box">
+            <div class="row">
+              <div class="col-6">
+                <p class="gray_text">#{{tdrResponse.reservationId}}</p>
+              </div>
+              <div class="col-6 text-right">
+                <p class="gray_text px-1">{{tdrResponse.pnrNumber}}</p>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-6">
+                <p class="highlight_text">Train Ticket</p>
+              </div>
+              <div class="col-6 text-right">
+                <p class="price_text">₹ 9,874</p>
+                <span class="text_success">+ 430 points</span>
+              </div>
+              <div class="col-12">
+                <span class="highlight_text">{{tdrResponse.trainName}}</span>
+                <span class="gray_text px-1">#{{tdrResponse.trainNumber}}</span>
+              </div>
+              <div class="col-12">
+                <hr class="dashed_hr">
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-5">
+                <span class="highlight_text">{{fromstn}} ({{tdrResponse.fromStn}})</span>
+                <p class="gray_text px-1">08:55 hrs, 12 May</p>
+                <p class="gray_text px-1">New Delhi Railway Station</p>
+              </div>
+              <div class="col-2 text-center px-0">
+                <hr class="dashed_hr">
+                <span class="gray_text px-1">1h 30m</span>
+              </div>
+              <div class="col-5 text-right">
+                <span class="highlight_text">{{tostn}} ({{tdrResponse.destStn}})</span>
+                <p class="gray_text px-1">08:55 hrs, 12 May</p>
+                <p class="gray_text px-1">New Delhi Railway Station</p>
+              </div>
+              <div class="col-12">
+                <hr class="dashed_hr">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-7">
+                <div class="d-flex align-items-center">
+                  <img src="{{cdnUrl}}/images/success_tick.svg">
+                  <div>
+                    <p class="gray_text px-1">testingemail@gmail.com</p>
+                    <p class="gray_text px-1">91 9876543211</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-5 text-right">
+                <p class="gray_text px-1">Booked Via</p>
+                        <div class="booked_via_div float-right">
+                          <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc_long.svg" class="booked_via_img">
+                        </div>
+              </div>
+              <div class="col-12">
+                <hr class="dashed_hr">
+              </div>
+            </div>
+            <div class="row">
+              <div class="div_flex">
+                <div class="div_flex_item">
+                    <p class="gray_text">Transaction ID</p>
+                    <p class="black_text">10204959969936935</p>
+                </div>
+                <div class="div_flex_item text-right">
+                  <p class="gray_text">Date of Journey</p>
+                  <p class="black_text">{{tdrResponse.journeyDate | date:'mediumDate'}}</p>
+              </div>
+              <div class="div_flex_item">
+                <p class="gray_text">Date of Boarding</p>
+                <p class="black_text">{{tdrResponse.boardingDate | date:'mediumDate'}}</p>
+              </div>
+              <div class="div_flex_item text-right">
+                <p class="gray_text">Class</p>
+                <p class="black_text">{{journeyClass}} ({{tdrResponse.journeyClass}})</p>
+              </div>
+              <div class="div_flex_item">
+                <p class="gray_text">From</p>
+                <p class="black_text">{{fromstn}} ({{tdrResponse.fromStn}})</p>
+              </div>
+              
+              <div class="div_flex_item text-right">
+                <p class="gray_text">To</p>
+                <p class="black_text">{{tostn}} ({{tdrResponse.destStn}})</p>
+              </div>
+              <div class="div_flex_item">
+                <p class="gray_text">Resv Upto</p>
+                <p class="black_text">Yeshwantpur Jn (SC)</p>
+              </div>
+              <div class="div_flex_item text-right">
+                <p class="gray_text">Ticket Type</p>
+                <p class="black_text">E Ticket</p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end of train details mlite -->
+
+      <!-- passengers list web -->
+      <div class="tdr_train_details" *ngIf="!isMobile">
+        <div class="tdr_box">
+        <div class="highlight_text">Passengers</div>
         <div class="table-responsive">
-          <table class="table table-borderless">
+          <table class="table table-borderless tdr_pssngr_tbl">
             <thead>
               <tr class="table-titles">
-                <th scope="col">S.No</th>
+                <th scope="col"></th>
                 <th scope="col">Name</th>
                 <th scope="col">Age</th>
                 <th scope="col">Gender</th>
-                <th scope="col">Booking Status</th>
-                <th scope="col">Select</th>
+                <th scope="col">Berth Preference</th>
+                <th scope="col">Food Choice</th>
+                <th scope="col">Concession</th>
+                <th scope="col">Booking/Current Status</th>
+                <th scope="col">Policy Number</th>
               </tr>
             </thead>
             <tbody class="table-values">
               <tr *ngFor="let data of passdata">
-                <td>{{data.passengerSerialNumber}}</td>
-                <td>{{data.passengerName}}</td>
-                <td>{{data.passengerAge}}</td>
-                <td>{{data.passengerGender}}</td>
-                <td>{{data.currentStatus}}</td>
-                <td class="text-center" *ngIf="data.currentStatus!='CAN'">
+                <td class="text-center" >
+                  <span *ngIf="data.currentStatus!='CAN'">
                   <p><label class="checkbox m-0"><input formcontrolname="" name="" type="checkbox" value="{{data}}"
                         class="" (change)="onCheckboxChange(data,$event)">
                       <span class="checkmark"></span></label></p>
+                    </span>
                 </td>
+                <td>{{data.passengerName}}</td>
+                <td>{{data.passengerAge}}</td>
+                <td>{{data.passengerGender}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{data.currentStatus}}</td>
+                <td></td>
+               
               </tr>
 
 
             </tbody>
           </table>
         </div>
-        <div style="color: red" *ngIf="checkerror">Please select atleast one passenger</div>
       </div>
-    </div>
+      </div>
+      <!-- end of passengers list web -->
 
-    <div class="ticketDetailsSection-{{domainName}}">
-      <p class="title">TDR Reason</p>
-      <div>
-        <div class="row">
-          <div class="col-md-12">
-            <mat-form-field>
+      <!-- passengers list mlite -->
+      
+      <div class="tdr_train_details" *ngIf="isMobile">
+        <div class="tdr_box">
+        <div class="highlight_text">Passengers</div>
+        <div class="row mt-2" *ngFor="let data of passdata">
+          <div class="col-12 panel-title pos_rel" type="button" data-bs-toggle="collapse" data-bs-target="#member_1" aria-expanded="false" aria-controls="member_1">
+            <div class="row">
+            <div class="col-1">
+              <span *ngIf="data.currentStatus!='CAN'">
+                <p><label class="checkbox m-0"><input formcontrolname="" name="" type="checkbox" value="{{data}}"
+                      class="" (change)="onCheckboxChange(data,$event)">
+                    <span class="checkmark"></span></label></p>
+                  </span>
+            </div>
+            <div class="col-5">
+                <p class="black_text">Name</p>
+            </div>
+            <div class="col-5 text-right">
+                <p class="black_text">{{data.passengerName}}</p>
+            </div>
+            </div>
+        </div>
+        <div class="collapse" id="member_1">
+          <div class="col-12">
+            <div class="row mt-3">
+              <div class="col-5 offset-1">
+                  <p class="black_text">Age</p>
+              </div>
+              <div class="col-5 text-right">
+                  <p class="black_text">{{data.passengerAge}}</p>
+              </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-5 offset-1">
+                    <p class="black_text">Gender</p>
+                </div>
+                <div class="col-5 text-right">
+                    <p class="black_text">{{data.passengerGender}}</p>
+                </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-5 offset-1">
+                      <p class="black_text">Berth Preference</p>
+                  </div>
+                  <div class="col-5 text-right">
+                      <p class="black_text"></p>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-5 offset-1">
+                      <p class="black_text">Food Choice</p>
+                  </div>
+                  <div class="col-5 text-right">
+                      <p class="black_text"></p>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-5 offset-1">
+                      <p class="black_text">Concession</p>
+                  </div>
+                  <div class="col-5 text-right">
+                      <p class="black_text"></p>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-5 offset-1">
+                      <p class="black_text">Booking/Current Status</p>
+                  </div>
+                  <div class="col-5 text-right">
+                      <p class="black_text">{{data.currentStatus}}</p>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-5 offset-1">
+                      <p class="black_text">Policy Number</p>
+                  </div>
+                  <div class="col-5 text-right">
+                      <p class="black_text"></p>
+                  </div>
+                </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+      <!-- end of passengers list mlite -->
+
+      <div class="tdr_train_details">
+        <div class="tdr_box">
+        <div class="highlight_text">Reason for TDR</div>
+            <mat-form-field class="tdr_select">
               <mat-select placeholder="Select TDR Reason" (selectionChange)="onChange($event)">
 
                 <mat-option *ngFor="let r of tdrReasons" [value]="r.reasonIndex">{{r.tdrReason}} </mat-option>
@@ -251,23 +462,30 @@
               </mat-select>
             </mat-form-field>
             <div style="color: red" *ngIf='reasonerror'>Please select a reason</div>
-          </div>
-        </div>
-        <div class="row w-select-reason">
-          <div class="col-md-12" *ngIf="showwarningmsg && submitShowwarningmsg" style="color: red">
-            <p><sup>**</sup>Please ensure that you're filing this TDR with the Original Certificate enclosed and courier
-              it to the following address:</p>
-            <small style="color: red">General Manager (Ops)
-              IRCTC Authorised Partner Internet Ticketing Centre,
-              State Entry Road,
-              New Delhi-110055</small>
-          </div>
-          <div class="col-12 col-md-12 float-md-right mt-2 text-right">
-            <button type="button" class="btn btnTdr-file-{{domainName}}" [disabled]="tdrpass != true"
-              (click)="submittdrData()">File TDR</button>
-          </div>
+
+
+            <div class="row w-select-reason">
+              <div class="col-md-12" *ngIf="showwarningmsg && submitShowwarningmsg" style="color: red">
+                <p><sup>**</sup>Please ensure that you're filing this TDR with the Original Certificate enclosed and courier
+                  it to the following address:</p>
+                <small style="color: red">General Manager (Ops)
+                  IRCTC Authorised Partner Internet Ticketing Centre,
+                  State Entry Road,
+                  New Delhi-110055</small>
+              </div>
+            </div>
+        
+      </div>
+      </div>
+      <div class="row mt-4 mb-4">
+        <div class="col-md-12 text-right">
+          <a href="#" class="blue_text_link px-3">Don't Cancel</a>
+          <button class="btn tdr_btn" [disabled]="tdrpass != true"
+          (click)="submittdrData()">File TDR</button>
         </div>
       </div>
+
+
     </div>
   </div>
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-running-dots" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

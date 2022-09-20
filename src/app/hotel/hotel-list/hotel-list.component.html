@@ -496,17 +496,10 @@
                                         <span class="hotel-star-tag">{{list.hotelInfo.starRating}}/5</span>
                                     </p>
                                     <ul class="hotel-amenities">
-                                        <li *ngIf="list.hotelInfo.amenity.gym == '1'">
-                                            <img src="{{cdnUrl}}/images/hotel/icon/gym.png" alt="">
-                                            <span>Gym</span>
-                                        </li>
-                                        <li *ngIf="list.hotelInfo.amenity.swimming == '1'">
-                                            <img src="{{cdnUrl}}/images/hotel/icon/pool.png" alt="">
-                                            <span>Pool</span>
-                                        </li>
-                                        <li *ngIf="list.hotelInfo.amenity.bar == '1'">
-                                            <img src="{{cdnUrl}}/images/hotel/icon/bar.png" alt="">
-                                            <span>Bar</span>
+
+                                        <li  *ngFor="let image of Facilities | amenitiesFilter:list.hotelInfo.amenity">
+                                            <img src="{{image.image}}"  *ngIf="list.hotelInfo.amenity[image.value] == '1'" alt="" >
+                                            <span  *ngIf="list.hotelInfo.amenity[image.value] == '1'">{{image.name}}</span>
                                         </li>
                                     </ul>
                                 </div>

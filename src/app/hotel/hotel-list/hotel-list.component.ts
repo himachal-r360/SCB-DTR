@@ -109,6 +109,26 @@ export class HotelListComponent implements OnInit,OnDestroy {
     { name: 'Trending', active: true, value: 'Trending Hotels' ,image: './assets/hotel/icon/Trending.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:''},
   ]
 
+  Facilities:any =
+    [
+    {name:'Room Service',value:'roomService',image:'assets/images/hotel/amenities/18X18/room-service-svgrepo-com-2.svg'},
+    {name:'Gym',value:'gym',image:'assets/images/hotel/amenities/18X18/GYm.svg'},
+    {name:'Pool',value:'swimming',image:'assets/images/hotel/amenities/18X18/pool.svg'},
+    {name:'Bar',value:'bar',image:'assets/images/hotel/amenities/18X18/Baar.svg'},
+    {name:'AC',value:'airConditioner',image:'assets/images/hotel/amenities/18X18/AC_18.svg'},
+    {name:'Internet',value:'wireless',image:'assets/images/hotel/amenities/18X18/Wireless.svg'},
+    {name:'Breakfast',value:'breakfast',image:'assets/images/hotel/amenities/18X18/BreakFast.svg'},
+    {name:'Business Centre',value:'businessCentre',image:'assets/images/hotel/amenities/18X18/Business_Center.svg'},
+    {name:'Cafe',value:'cafe',image:'assets/images/hotel/amenities/18X18/Cafe.svg'},
+    {name:'Conference Room',value:'conferenceRoom',image:'assets/images/hotel/amenities/18X18/Conference_Room.svg'},
+    {name:'Elevator',value:'elevator',image:'assets/images/hotel/amenities/18X18/Elevator.svg'},
+    {name:'Lounge',value:'lounge',image:'assets/images/hotel/amenities/18X18/Lounge.svg'},
+    {name:'Packing',value:'packing',image:'assets/images/hotel/amenities/18X18/Packing.svg'},
+    {name:'Power Backup',value:'powerBackup',image:'assets/images/hotel/amenities/18X18/Power_Backup.svg'},
+    {name:'Projector',value:'projector',image:'assets/images/hotel/amenities/18X18/Projector.svg'},
+    {name:'Restaurant',value:'restaurant',image:'assets/images/hotel/amenities/18X18/restaurant-svgrepo-com-2.svg'},
+  ]
+
   showMoreAmenity:boolean = false;
   SearchText:string = '';
   searchData:any;

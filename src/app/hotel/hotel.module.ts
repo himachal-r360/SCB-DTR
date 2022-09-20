@@ -18,6 +18,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { PaymentModule } from 'src/app/payment/payment.module';
+import { AmenitiesFilterPipe } from '../pipes/amenities-filter.pipe';
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
   {path:"hotel-detail",component:HotelDetailComponent},
@@ -28,7 +29,8 @@ const routes: Routes = [
   declarations: [
     HotelListComponent,
     HotelDetailComponent,
-    HotelCheckoutComponent
+    HotelCheckoutComponent,
+    AmenitiesFilterPipe
   ],
   imports: [
     CommonModule,

@@ -42,6 +42,7 @@ import {  LOCALE_ID } from '@angular/core';
 import { TdrModule } from './train/tdr/tdr.module';
 
 import "@angular/common/locales/global/en-IN";
+import { InfiniaModule } from './infinia/infinia.module';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }

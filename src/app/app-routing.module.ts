@@ -66,6 +66,11 @@ const routes: Routes = [
     loadChildren: () => import('./hotel/hotel.module').then(m => m.HotelModule)
   },
 
+  {
+
+    path: 'infinia',
+    loadChildren: () => import('./infinia/infinia.module').then(m => m.InfiniaModule)
+  },
 
   {
 
