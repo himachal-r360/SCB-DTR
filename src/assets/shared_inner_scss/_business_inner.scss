@@ -386,14 +386,140 @@ a.list-travel-font {
     
 }
 
-.train_section{
-	
-	.nav-link.active{
-		border: 1px solid $primary-color;
-        background-color: rgba(206, 141, 91, 0.08);
-	}
+/* shared componet Travel componet */
+.buttonTrip input[type="radio"]:checked+label {
+    background: #2C0E00;
+    border-radius: 5px;
+    border: 0px solid $primary-color;
+}
 
-	
+.btn-icn-search {
+    background: radial-gradient(100.63% 100.63% at 91.14% 124.68%, #CF8D56 26.04%, #2C0E00 74.48%);
+}
+
+.select_options {
+    
+    .travelList {
+        
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #ccc;
+        
+        ul {
+            
+            li {
+                a {
+                    
+                    .sub_name {
+                        color: #5b5e61;
+                    }
+                    .count {
+                        background: #fceee4;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.select_city,
+.select_date {
+    
+    .input_box,
+    .date_box {
+       
+        label {
+           
+            .inputField {
+                
+                color: #C3832C;
+                
+            }
+            
+            span {
+                color: #555555;
+                font-size: 12px;
+            }
+        }
+        .from_cities {
+            
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+            
+            border: 1px solid #ccc;
+            
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                color: #000000;
+            }
+            .from_list {
+                
+                ul {
+                    
+                    li {
+                       
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        .to_cities {
+            
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+           
+            border: 1px solid #ccc;
+            
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                color: #000000;
+            }
+            .to_list {
+                max-height: 270px;
+                overflow-y: auto;
+                ul {
+                    padding: 0;
+                    margin: 0;
+                    li {
+                        padding: 6px 10px;
+                        margin-bottom: 5px;
+                        list-style: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            height: 30px;
+                            cursor: not-allowed;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            span {
+                                i {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 /* override Angular css */
