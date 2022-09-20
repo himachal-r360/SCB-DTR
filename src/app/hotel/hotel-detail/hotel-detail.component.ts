@@ -317,7 +317,31 @@ export class HotelDetailComponent implements OnInit {
   }
   backClicked(){
   this.resetPopups();
-    this.location.back();
+    let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.SelectedQueryParam));
+    this.router.navigateByUrl(url);
+  }
+
+
+  ConvertObjToQueryString(obj: any) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+    }
+    return str.join("&");
   }
 
   headerHideShow(event:any) {
