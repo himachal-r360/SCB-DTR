@@ -831,7 +831,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
 
 
-  
+  mmtTxnKey:any;
   createHotelItinerary() {
      this.submitted = true;
      
@@ -879,8 +879,101 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
       return;
     } else {
-   
+    
+        $('#infoprocess').modal('show');
+        this.loaderValue = 10;
+        const myInterval1 = setInterval(() => {
+        this.loaderValue = this.loaderValue + 10;
+        if (this.loaderValue == 110) {
+        this.loaderValue = 10;
+        }
+        }, 700);
+    
+    
+        if(this.partnerToken=='Cleartrip'){
+         this.itineraryProcess();
+        }else{
+        /********Check Availablity***********/
+        
+        
+          let rooms:any=[];
+                
+        for(let i=0;i<(this.searchData.rooms.length);i++){
+         rooms.push({
+        "childrenAge": this.searchData.rooms[i]['childrenAge'],
+        "numberOfAdults":this.searchData.rooms[i]['numberOfAdults'],
+        "numberOfChildren": this.searchData.rooms[i]['numberOfChildren'],
+        "room":  this.searchData.rooms[i]['room'],
+        "roomRatePlanId":this.selectedHotel.roomType.roomTypeCode,
+        "roomTypeId": this.selectedHotel.roomType.roomTypeId,
+        "bookingCode": this.selectedHotel.roomType.bookingCode
+        });
+        }
+        
        
+        let checkAvailablity;
+        checkAvailablity={
+        "checkIn": this.searchResult.hotel_detail.checkIn,
+        "checkOut": this.searchResult.hotel_detail.checkOut,
+        "clientName": "HDFC243",
+        "cityName":  this.searchResult.hotel_detail.city,
+        "noOfRooms":this.searchData.numberOfRooms,
+        "hotelId": this.searchResult.Hotelkey,
+        "blockid_quantity": [
+        {
+        "blockId": this.searchResult.selectedHotel.roomType.roomTypeId,
+        "quantity": this.searchData.numberOfRooms
+        }
+        ],
+        "roomIds": [
+        this.searchResult.selectedHotel.roomType.roomTypeId
+        ],
+        "guestCurrency": "INR",
+        "guestCountry": "IN",
+        "scr": "INR",
+        "sct": "IN",
+        "partnerName": this.partnerToken,
+        "rooms": rooms
+        };
+        
+        var requestParams = {
+        postData: this.EncrDecr.set(JSON.stringify(checkAvailablity))
+        };
+        
+        
+        this.rest.checkAvailabilityHotel(requestParams).subscribe(results => {
+        $('#infoprocess').modal('hide');
+         let response = JSON.parse(this.EncrDecr.get(results.result));
+         if(response && response.response && response.response.mmtTxnKey &&  response.response.mmtTxnKey !=''){
+         this.mmtTxnKey=response.response.mmtTxnKey;
+          this.itineraryProcess();
+         }else{
+          clearInterval(myInterval1);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 20);
+         
+         }
+
+        }), (err: HttpErrorResponse) => {
+        clearInterval(myInterval1);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 20);
+        }
+        
+        
+        }
+        
+    }
+
+  }
+  
+  
+  itineraryProcess(){
+  
        var gender; 
        switch (this.passengerForm.controls['passengerTitle']['value']) {
         case 'Mr':
@@ -932,6 +1025,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "roomTypeId": this.selectedHotel.roomType.roomTypeId
         });
         }
+        
         this.itineraryParam ={
         "bookingAmount":this.selectedHotel.rateBreakdown.total,
         "bookingCode": this.selectedHotel.roomType.bookingCode,
@@ -966,16 +1060,16 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "osVersion": "web",
         "partnerName": this.partnerToken,
         "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
-        "mmtTxnKey": "",
+        "mmtTxnKey":this.mmtTxnKey,
         "rooms": room_values,
         "serviceName": "Hotel"
         };
         
         this.resetPopups();
 
-        $('#infoprocess').modal('show');
+         $('#infoprocess').modal('show');
         this.loaderValue = 10;
-        const myInterval1 = setInterval(() => {
+        const myInterval2 = setInterval(() => {
         this.loaderValue = this.loaderValue + 10;
         if (this.loaderValue == 110) {
         this.loaderValue = 10;
@@ -986,15 +1080,17 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryParam))
       };
-      this.rest.createHotelItinerary(requestParamsEncrpt).subscribe(response => {
+      this.rest.createHotelItinerary(requestParamsEncrpt).subscribe(results => {
+        let response = JSON.parse(this.EncrDecr.get(results.result));
+            
         if (response && response['response'] && response['response']['provisionalBookingId']) {
         this.itineraryResponse=response['response'];
         this.orderReferenceNumber=response['response']['order_id'];
         this.provisionalBookingId=response['response']['provisionalBookingId'];
         this.superPnr=response['response']['superPnr'];
-        this.saveCheckout(myInterval1);
+        this.saveCheckout(myInterval2);
         }else{
-        clearInterval(myInterval1);
+        clearInterval(myInterval2);
         setTimeout(() => {
         $('#infoprocess').modal('hide');
         $('#bookingprocessFailed').modal('show');
@@ -1002,16 +1098,18 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
       
       }), (err: HttpErrorResponse) => {
-        clearInterval(myInterval1);
+        clearInterval(myInterval2);
         setTimeout(() => {
           $('#infoprocess').modal('hide');
           $('#bookingprocessFailed').modal('show');
         }, 20);
       }
-        
-    }
-
+  
+  
   }
+  
+  
+  
   
   saveCheckout(interval){
       this.createItinerarydata();
