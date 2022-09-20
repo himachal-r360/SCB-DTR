@@ -1296,6 +1296,10 @@ closeCookieConsent(value){
       this.navbarOpen =false;
      $('.sb_head  .list-travel').addClass("hideDrop");
     }
+
+    goToInfinia(route){
+      this.router.navigate([route])
+    }
     
     
     getCountClicked(id) {
