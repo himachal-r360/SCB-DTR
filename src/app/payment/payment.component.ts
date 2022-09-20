@@ -187,7 +187,6 @@ export class PaymentComponent implements OnInit {
         });
         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
-        console.log(this.emiDebitArray);
         this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
         };
 

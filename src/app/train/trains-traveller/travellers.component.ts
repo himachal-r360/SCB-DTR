@@ -653,8 +653,8 @@ export class TrainsTravellerComponent implements OnInit {
     }
 isPaynowClicked:boolean=false;
 continuePayment(){
-//console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
-switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+//console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
+switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
         break;
