@@ -74,12 +74,12 @@
               <div class="booking-inner-box mb-20">
                    <div>
                     <div class="hotel_details">
-                        <div>
-                         <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
-                        <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                        <div class="img_hr">
+                         <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
+                          <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                           
                         </div>
-                        <div>
+                        <div class="name_hr">
                           <div class="">
                               <p class="hotel_name">{{searchResult.hotel_detail.hotelName}}</p>
                               <p class="hotel_address">{{searchResult.hotel_detail.address}}</p>
@@ -128,7 +128,7 @@
                             <p class="value"> {{ searchData.checkIn | date:"dd MMM YYYY" }}</p>
                             <p class="label" *ngIf="partnerToken=='Clearrip'" > {{ searchData.checkIn | date:"EEE" }}, {{ searchData.checkIn+' '+searchResult.hotel_detail.checkIn | date:"H a" }}</p>
                           </div>
-                          <div>
+                          <div class="text-center">
                             <p><span class="duration">{{noOfDays}} Nights</span></p>
                           </div>
                           <div>
@@ -152,8 +152,8 @@
                 <div>
                  <div class="web_code d-none d-sm-block">
                   <div class="hotel_details ">
-                    <div>
-                           <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
+                    <div style="flex-basis: 20%;">
+                        <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
                         <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                     </div>
                     <div>
@@ -178,7 +178,7 @@
                  <div class="mlite_code d-block d-sm-none">
                   <div class="">
                     <div class="hotel_details">
-                      <div>
+                      <div >
                         <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null"src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
                         <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                       </div>
@@ -359,7 +359,7 @@
                 </div>
               </div>
 
-             <p  *ngIf="!showGstBox">No GST is applicable for this room/Booking. </p>
+             <p  *ngIf="!showGstBox" class="no_gst mb-10">No GST is applicable for this room/Booking. </p>
 
               <div class="booking-inner-box gst-number-box" *ngIf="showGstBox">
                 <h6> <span class="form-switch m-0 mr-10">
@@ -607,7 +607,6 @@
             <div class="booking-title-box">
               <h4>Choose Payment Mode</h4>
             </div>
-
             <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon"
               [passSavedCardsData]="savedCards" [passSessionKey]="searchHotelKey"
               (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalFare"
@@ -665,7 +664,7 @@
                         </div>
                       </li>
 
-                      <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
+                     <!-- <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div class="fare-list-font">
@@ -676,8 +675,19 @@
                             <p>&#8377; {{ partnerDiscount |number }}</p>
                           </div>
                         </div>
-                      </li>
-
+                      </li>-->
+                   <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 1">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>
+                            Voucher Amount
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{ voucher_amount |number }}</p>
+                        </div>
+                      </div>
+                    </li>
                       <li class="fare-list-item" *ngIf="coupon_amount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"
@@ -744,7 +754,7 @@
             
                 </div>
               </div>
-              <div *ngIf="steps==1 && !isMobile">
+              <div *ngIf="steps==2 && !isMobile">
                 <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="searchHotelKey"
                   [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
                   [passTotalFare]="totalFare" [passActualFare]="intialTotalFare" [passConvinenceFee]="convenience_fee"
@@ -772,7 +782,7 @@
         <div class="apply_fare row">
           <!--  <p *ngIf="steps<5" class="w-75"></p> -->
           <div class="col-6 text-left">
-            <p *ngIf="steps==1"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
+            <p *ngIf="steps==2"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
                 data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
           </div>
           <div class="col-6 text-right">
@@ -805,7 +815,7 @@
 
   <!-- Mlite Apply Coupon Popup -->
   <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" tabindex="-1" aria-labelledby="applyCoupon_mliteLabel"
-    aria-hidden="true" *ngIf="steps==1 && isMobile">
+    aria-hidden="true" *ngIf="steps==2 && isMobile">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -865,7 +875,7 @@
                         </div>
                       </li>
 
-                      <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
+                     <!-- <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div class="fare-list-font">
@@ -876,8 +886,19 @@
                             <p>&#8377; {{ partnerDiscount |number }}</p>
                           </div>
                         </div>
-                      </li>
-
+                      </li>-->
+                <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 1">
+                      <div class="fare-list-box">
+                        <div class="fare-list-left">
+                          <p>
+                            Voucher Amount
+                          </p>
+                        </div>
+                        <div class="fare-list-right">
+                          <p>&#8377; {{ voucher_amount |number }}</p>
+                        </div>
+                      </div>
+                    </li>
                       <li class="fare-list-item" *ngIf="coupon_amount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"

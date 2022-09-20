@@ -925,9 +925,9 @@
                                         <img src="{{cdnUrl}}/images/smartbuy/icons/card_icn.svg"><span class="btn-text">SWITCH TO</span><i class="fa fa-caret-down hdr_btn_caret" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end privilege_drpdwn_div" aria-labelledby="dropdown-user1">
-                                        <div class="row">
+                                        <ul class="regalai_switch_list">
 
-                                            <div class="col-sm-12" *ngFor="let cardItem of cardList;">
+                                            <li class="" *ngFor="let cardItem of cardList;">
                                                 <div class="hdr_privilege_card">
                                                     <a href="{{mainRedirect}}{{cardItem.program_name | lowercase}}" target="_blank">
                                                         <div class="row cntnt_center">
@@ -937,7 +937,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 pl-1">
-                                                                <p class="privilege_text_highlight mb-0">{{cardItem.program_name}}</p>
+                                                                <p class="privilege_text_highlight mb-0">{{cardItem.program_name | titlecase }}</p>
                                                                 <p class="privilege_text mb-0">xxx {{cardItem.last4digit}}</p>
                                                             </div>
                                                             <div class="col-sm-2 pl-0">
@@ -946,9 +946,9 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                            </div>
+                                            </li>
 
-                                        </div>
+                                        </ul>
 
                                     </div>
                                 </div>

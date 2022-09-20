@@ -334,7 +334,9 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
       }
   }
-  
+  searchTrainTab(){
+    this.showDetails=false;
+  }
    pnr(){ 
     this.showPnr=true;
     this.showSearch=false;
@@ -622,3 +624,7 @@ export class DialogOverviewExampleDialog {
   }
 
 }
+function searchTrainBtn() {
+  throw new Error('Function not implemented.');
+}
+

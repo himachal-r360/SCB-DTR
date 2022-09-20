@@ -264,12 +264,33 @@ export class HotelListComponent implements OnInit,OnDestroy {
         hotelSearchArr.push(objSearch); // Add object in array.
       }
     }
-    this.hotelSearchData = hotelSearchArr;
-    this.hotelSearchForm.value.rooms = this.hotelSearchData;
+    this.hotelSearchForm.value.rooms = hotelSearchArr;
+   // console.log(this.hotelSearchForm.value);
+      localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
+     this. hotelSearchCallBack(this.hotelSearchForm.value);
 
-  // this.selectedTripData = this.searchData[0];
-    // this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
-
+  }
+  
+    continueSearchHotel;
+    hotelSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem(environment.continueSearchHotel);
+    if (continueSearch == null) {
+      this.continueSearchHotel = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchHotel = JSON.parse(continueSearch);
+      this.continueSearchHotel = this.continueSearchHotel.filter((item: any) => {
+        if (item.city != searchValueAllobj.city) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchHotel.length > 3) {
+      this.continueSearchHotel = this.continueSearchHotel.slice(0, 3);
+    }
+    this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
   }
 
   headerHideShow(event:any) {

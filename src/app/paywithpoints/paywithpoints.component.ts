@@ -200,7 +200,6 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
 }
   setSlider(){
     // update slider dynamically
-    console.log(this.pointData);
     if(this.pointData !== undefined)
     {
         if(Object.keys(this.pointData['condition']).length!=0){

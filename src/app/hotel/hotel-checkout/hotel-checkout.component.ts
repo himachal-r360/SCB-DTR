@@ -55,8 +55,10 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         isMobile: boolean = true;
         completedSteps = 1;
         steps = 1;
+          voucher_amount:number=0;
+  voucher_code:string='';
         sessionTimer: any = 3;
-        serviceId: string = 'RedBus';
+        serviceId: string = 'Hotel';
         pgCharges: number = 0;
         errorMsg: any;
         cdnUrl: any;
@@ -205,16 +207,20 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     if (values[0].key == 15) {
       this.flexipaysummry = true;
       this.flexiDiscount = Number(values[0].value);
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount) - Number(this.flexiDiscount);
-      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount) - Number(this.flexiDiscount)- Number(this.voucher_amount);
+      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
     } else if (values[0].key !== 15) {
       this.flexipaysummry = false;
       this.flexiDiscount = 0;
       this.flexiIntrest = Number(values[0].value);
       this.flexiDiscount = 0;
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
       this.sendflexiFare = this.totalFare;
     }
+    
+     this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
 
   ngOnDestroy(): void {
@@ -226,7 +232,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
   recivetotalFare($event) {
     this.flexipaysummry = false;
     this.flexiDiscount = 0;
-    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
+    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
 
   }
   /***----- APPLY COUPON (--parent--) ------***/
@@ -240,10 +246,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       // this.coupon_amount = 200;
       if (this.flexiDiscount == undefined) this.flexiDiscount = 0;
 
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount));
-      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-      this.createItinerarydata();
-      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount))- Number(this.voucher_amount);
+      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
       sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
     } else {
       this.coupon_id = '';
@@ -251,12 +255,12 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.coupon_code = '';
       this.coupon_amount = 0;
       if (this.flexiDiscount == undefined) this.flexiDiscount = 0;
-      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount));
-      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-      this.createItinerarydata();
-      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
-      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+      this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount))- Number(this.voucher_amount);
+      this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
     }
+     this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
 
   /**----------REMOVE COUPON----------**/
@@ -265,12 +269,23 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     this.coupon_name = '';
     this.coupon_code = '';
     this.coupon_amount = 0;
-    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount);
-    this.createItinerarydata();
-    this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount));
-    sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.hotelData)));
-    sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+    this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - Number(this.coupon_amount)- Number(this.voucher_amount);
+    this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
+    
+     this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
+
+  receivePointsPlus($event) {
+    this.voucher_code=$event.code;
+    this.voucher_amount=$event.value;
+    
+      this.createItinerarydata();
+      sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
+      sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
+  }
+
 
   isCollapseShow(identifyCollpase) {
 
@@ -473,10 +488,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         this.totalChild += parseInt(z.numberOfChildren);
         })
         
+          
         this.noOfDays=moment(this.searchData.checkOut).diff(moment(this.searchData.checkIn).format('YYYY-MM-DD'), 'days');
-        
        
-      
         this.selectedHotel=this.searchResult.selectedHotel;
         this.partnerToken = this.searchResult.PriceSummery.partnerName;
         this.totalFare = Number(this.selectedHotel.rateBreakdown.total);
@@ -533,9 +547,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   triggerBack() {
     $('#bookingprocessFailed').modal('hide');
-    let url;
     this.resetPopups();
-    url = "hotel-list?searchFrom="+this.searchResult.searchFrom+"&searchTo="+this.searchResult.searchTo+"&fromTravelCode="+this.searchResult.fromTravelCode+"&toTravelCode="+this.searchResult.toTravelCode+"&fromState="+this.searchResult.toTravelCode+"&toState="+this.searchResult.toState+"&departure="+this.searchResult.departure;
+    let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.searchData));
     this.router.navigateByUrl(url);
   }
   
@@ -550,6 +563,30 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
     }
   }
   
+  
+  ConvertObjToQueryString(obj: any) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+    }
+    return str.join("&");
+  }
+
+  
   resetPopups() {
 
     $(".modal").hide();
@@ -559,7 +596,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.resetPopups();
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/compare-stay');
 
 
   }
@@ -977,192 +1014,11 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   }
   
   saveCheckout(interval){
-  
-      var whatsappFlag;
-      if (this.whatsappFeature == 1)
-        whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
-      else
-        whatsappFlag = 0;
-       
-    
-        let tmp_searchResult:any={};
-        tmp_searchResult['queryHotelData'] =this.searchResult['queryHotelData'];  
-        tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
-      
-    //  console.log(tmp_searchResult);return;  
-    let all_room_array:any={};
-    
-      for(let i=0;i<(this.searchData.rooms.length);i++){
-        all_room_array['room'+(i+1)]=[];
-        all_room_array['room'+(i+1)]={
-        "adult": Number(this.searchData.rooms[i]['numberOfAdults']),
-        "child": Number(this.searchData.rooms[i]['numberOfChildren']),
-        "bedTypeId": 0,
-        "smokingPreference": "",
-        "specialrequests": ""
-        };
-        }
-        
-    
-    //console.log(all_room_array); console.log(a);return;
-        
-        this.fareData = {
-        "total_tax": this.totalTax,
-        "total_amount": this.totalFare,
-        "partnerDiscount":this.partnerDiscount,
-        "totalDiscount": 0,
-        "totalBaseFare": this.totalBaseFare,
-        "couponDiscount": 0,
-        "voucher_amount": 0,
-        "totalFare":this.totalFare
-        };    
-        
-        
-    let roomTypeId=this.selectedHotel.roomType.roomTypeId;
-    let currentDate=moment().format('DD-MM-YYYY');
-    
-    let checkoutData = {
-    "hoteldetails": {
-    "booking-date":moment().format('YYYY-MM-DD'),
-    "number-of-nights":  this.noOfDays,
-    "number-of-room-nights": this.noOfDays,
-    "country": this.searchData.country,
-    "check-in-date": this.searchData.checkIn,
-    "check-out-date": this.searchData.checkOut,
-    "check-in-time": this.searchResult.hotel_detail.checkIn,
-    "check-out-time": this.searchResult.hotel_detail.checkOut,
-    "city":  this.searchData.city,
-    "number-of-rooms": this.searchData.numberOfRooms,
-    "hotelid": this.searchResult.Hotelkey,
-    "hotelname": this.searchResult.hotel_detail.hotelName,
-    "hoteladdress": this.searchResult.hotel_detail.address,
-    "hotelImageUrl": this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'],
-    "room_type_id": this.selectedHotel.roomType.roomTypeId,
-    "room_type_code": this.selectedHotel.roomType.roomTypeCode,
-    "room_dec": this.selectedHotel.roomType.roomDescription,
-    "hotelratings":  this.searchResult.hotel_detail.hotelRatings[0]['rating'],
-    "provid": this.provisionalBookingId,
-    "booking_code": this.selectedHotel.roomType.bookingCode,
-    "roomdetails": all_room_array,
-    "inclusions": {
-      "inclusion": []
-    }
-  },
-  "fare": this.fareData,
-  "partner_amount": 4760,
-  "discount": 0,
-  "coupon_code": "",
-  "farebreakup": {
-    currentDate: {
-      "dis": 0,
-      "total": this.totalFare,
-      "basefare": this.totalBaseFare,
-      "partnerDiscount":this.partnerDiscount,
-      "tax": this.totalTax
-    }
-  },
-  "partnerToken": this.partnerToken,
-  "serviceToken": "Hotel",
-  /*"hotel_details": {
-    "response": {
-      "partnerName": this.partnerToken,
-      "validResponse": true,
-      "hotelInfo": this.searchResult.hotel_detail
-    },
-    "statusCode": 200,
-    "responseDateTime": ""
-  },*/
-  "room_details_book": {
-    roomTypeId: {
-      "roomTypeId": this.selectedHotel.roomType.roomTypeId,
-      "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
-      "bookingCode": this.selectedHotel.roomType.bookingCode,
-      "roomname": this.selectedHotel.roomType.roomDescription,
-      "price": this.totalFare,
-      "noOFRoomsLeft": "",
-      "maxOccupancy": "",
-      "guessadded": this.totalAdult,
-      "childadded":  this.totalChild,
-      "roomsadded": this.searchData.numberOfRooms
-    }
-  },
-  "search_input": {
-    "cityname": this.searchData.city+', '+this.searchData.countryName,
-    "city_id": this.searchData.city,
-    "country": this.searchData.country,
-    "hotel_name": "",
-    "lattitude": "",
-    "longitude": "",
-    "hotel_id": "",
-    "area": "",
-    "label_name": "",
-    "checkin": moment( this.searchData.checkIn).format('DD MMM YYYY'),
-    "checkout": moment( this.searchData.checkOut).format('DD MMM YYYY'),
-    "num_rooms": this.searchData.numberOfRooms,
-    "numberOfAdults": this.totalAdult,
-    "numberOfChildren": this.totalChild,
-    "t": "ZWFybg==",
-    "hotel_search_done": "0",
-    "hotel_modify": "0",
-    "arrive": moment( this.searchData.checkOut).format('DD/MM/YYYY'),
-    "depart": moment( this.searchData.checkIn).format('DD/MM/YYYY'),
-    "session_hotels_key": this.searchHotelKey
-  },
-  "room_input": {
-    "image": this.selectedHotel.imageInfo.wideAngleImageurl,
-    "room_dec": this.selectedHotel.roomType.roomDescription,
-    "room_type_code":   this.selectedHotel.roomType.roomTypeCode,
-    "bookingCode":   this.selectedHotel.roomType.bookingCode,
-    "room_type_id": this.selectedHotel.roomType.roomTypeId,
-    "room_title":this.selectedHotel.roomType.roomTitle,
-    "room_total": this.totalFare,
-    "room_left": "",
-    "room_max_occupancy": "",
-    "booking_code":  this.selectedHotel.roomType.bookingCode,
-    "provisional-booking-required": "",
-    "roomcount": this.searchData.noOfRooms,
-    "addedguest": this.totalAdult,
-    "addedchild": this.totalChild,
-    "t": "ZWFybg=="
-  },
-  "contactDetails": {
-    "title": this.passengerForm.controls['passengerTitle']['value'],
-    "firstName": this.passengerForm.controls['passengerFirstName']['value'],
-    "lastName": this.passengerForm.controls['passengerLastName']['value'],
-    "mobile": this.passengerForm.controls['passengerMobile']['value'],
-    "email": this.passengerForm.controls['passengerEmail']['value']
-  },
-  "passenger_info_retry": {
-    "provid": "",
-    "AdultId1": "",
-    "title": this.passengerForm.controls['passengerTitle']['value'],
-    "firstName": this.passengerForm.controls['passengerFirstName']['value'],
-    "lastName": this.passengerForm.controls['passengerLastName']['value'],
-    "mobile": this.passengerForm.controls['passengerMobile']['value'],
-    "email": this.passengerForm.controls['passengerEmail']['value'],
-    "whatsappFlag": whatsappFlag,
-    "gst_number": this.passengerForm.controls['gstNumber']['value'],
-    "gst_name": this.passengerForm.controls['gstBusinessName']['value'],
-    "gst_address": this.passengerForm.controls['gstAddress']['value'],
-    "gst_city": this.passengerForm.controls['gstCity']['value'],
-    "gst_pincode": this.passengerForm.controls['gstPincode']['value'],
-    "gst_state":this.passengerForm.controls['gstState']['value']
-  },
-  "order_ref_num": this.orderReferenceNumber,
-  "amd_url": "",
-  "redirect_url": "",
-  "sessionKey":this.searchHotelKey,
-   "docKey": this.searchResult.docKey,
-  "hotelSessionData":tmp_searchResult
-};
-
-
-
-//console.log(checkoutData);return;
-//return;
+      this.createItinerarydata();
+     //   console.log(this.checkoutData);return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
-      flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
+      flightData: this.EncrDecr.set(JSON.stringify(this.checkoutData))
     };
 
 
@@ -1181,7 +1037,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         sessionStorage.setItem(this.searchHotelKey + '-orderReferenceNumber', this.orderReferenceNumber);
         sessionStorage.setItem(this.searchHotelKey + '-ctype', 'hotels');
         sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
-        sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(checkoutData)));
+        sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
         sessionStorage.setItem(this.searchHotelKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
         clearInterval(interval);
 
@@ -1204,8 +1060,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   
   isPaynowClicked: boolean = false;
   continuePayment() {
-    //console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
-    switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+    //console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
+    switch ($(".accordion-button:not(.collapsed)").attr("id")) {
       case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
         break;
@@ -1270,16 +1126,198 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       this.completedSteps = page;
     }
   }
+  
+  checkoutData:any;
   createItinerarydata() {
 
 
-    var saved_GST_flag;
-    if (this.passengerForm.controls['saveGST']['value'] == 1)
-      saved_GST_flag = 1;
-    else
-      saved_GST_flag = 0;
+ var whatsappFlag;
+      if (this.whatsappFeature == 1)
+        whatsappFlag = this.passengerForm.controls['whatsappFlag']['value'];
+      else
+        whatsappFlag = 0;
+       
+    
+        let tmp_searchResult:any={};
+        tmp_searchResult['queryHotelData'] =this.searchResult['queryHotelData'];  
+        tmp_searchResult['selectedHotel'] =this.searchResult['selectedHotel'];   
+      
+    //  console.log(tmp_searchResult);return;  
+    let all_room_array:any={};
+    
+      for(let i=0;i<(this.searchData.rooms.length);i++){
+        all_room_array['room'+(i+1)]=[];
+        all_room_array['room'+(i+1)]={
+        "adult": Number(this.searchData.rooms[i]['numberOfAdults']),
+        "child": Number(this.searchData.rooms[i]['numberOfChildren']),
+        "bedTypeId": 0,
+        "smokingPreference": "",
+        "specialrequests": ""
+        };
+        }
+        
+    
+    //console.log(all_room_array); console.log(a);return;
+        
+        this.fareData = {
+        "total_tax": this.totalTax,
+        "total_amount": this.intialTotalFare,
+        "partnerDiscount":this.partnerDiscount,
+        "totalDiscount": 0,
+        "totalBaseFare": this.totalBaseFare,
+        "couponDiscount": 0,
+        "discount": this.coupon_amount,
+        "voucher_amount": this.voucher_amount,
+        "voucher_code": this.voucher_code,
+        "couponcode": "",
+        "totalFare":this.intialTotalFare
+        };    
+        
+        
+    let roomTypeId=this.selectedHotel.roomType.roomTypeId;
+    let currentDate=moment().format('DD-MM-YYYY');
+    
+    let checkoutData = {
+    "provisionalBookingId": this.provisionalBookingId,
+    "booking_code": this.selectedHotel.roomType.bookingCode,
+    "hotelid": this.searchResult.Hotelkey,
+    "superPnr": this.superPnr,
+    "hoteldetails": {
+    "booking-date":moment().format('YYYY-MM-DD'),
+    "number-of-nights":  this.noOfDays,
+    "number-of-room-nights": this.noOfDays,
+    "country": this.searchData.country,
+    "check-in-date": this.searchData.checkIn,
+    "check-out-date": this.searchData.checkOut,
+    "check-in-time": this.searchResult.hotel_detail.checkIn,
+    "check-out-time": this.searchResult.hotel_detail.checkOut,
+    "city":  this.searchData.city,
+    "number-of-rooms": this.searchData.numberOfRooms,
+    "hotelid": this.searchResult.Hotelkey,
+    "hotelname": this.searchResult.hotel_detail.hotelName,
+    "hoteladdress": this.searchResult.hotel_detail.address,
+    "hotelImageUrl": this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'],
+    "room_type_id": this.selectedHotel.roomType.roomTypeId,
+    "room_type_code": this.selectedHotel.roomType.roomTypeCode,
+    "room_dec": this.selectedHotel.roomType.roomDescription,
+    "hotelratings":  this.searchResult.hotel_detail.hotelRatings[0]['rating'],
+    "provid": this.provisionalBookingId,
+    "booking_code": this.selectedHotel.roomType.bookingCode,
+    "roomdetails": all_room_array,
+    "inclusions": {
+      "inclusion": []
+    }
+  },
+  "fare": this.fareData,
+  "partner_amount": this.intialTotalFare,
+  "discount": 0,
+  "coupon_code": "",
+  "farebreakup": {
+    currentDate: {
+      "dis": 0,
+      "total": this.intialTotalFare,
+      "basefare": this.totalBaseFare,
+      "partnerDiscount":this.partnerDiscount,
+      "tax": this.totalTax
+    }
+  },
+  "partnerToken": this.partnerToken,
+  "serviceToken": "Hotel",
+  /*"hotel_details": {
+    "response": {
+      "partnerName": this.partnerToken,
+      "validResponse": true,
+      "hotelInfo": this.searchResult.hotel_detail
+    },
+    "statusCode": 200,
+    "responseDateTime": ""
+  },*/
+  "room_details_book": {
+    roomTypeId: {
+      "roomTypeId": this.selectedHotel.roomType.roomTypeId,
+      "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
+      "bookingCode": this.selectedHotel.roomType.bookingCode,
+      "roomname": this.selectedHotel.roomType.roomDescription,
+      "price": this.intialTotalFare,
+      "noOFRoomsLeft": "",
+      "maxOccupancy": "",
+      "guessadded": this.totalAdult,
+      "childadded":  this.totalChild,
+      "roomsadded": this.searchData.numberOfRooms
+    }
+  },
+  "search_input": {
+    "cityname": this.searchData.city+', '+this.searchData.countryName,
+    "city_id": this.searchData.city,
+    "country": this.searchData.country,
+    "hotel_name": "",
+    "lattitude": "",
+    "longitude": "",
+    "hotel_id": "",
+    "area": "",
+    "label_name": "",
+    "checkin": moment( this.searchData.checkIn).format('DD MMM YYYY'),
+    "checkout": moment( this.searchData.checkOut).format('DD MMM YYYY'),
+    "num_rooms": this.searchData.numberOfRooms,
+    "numberOfAdults": this.totalAdult,
+    "numberOfChildren": this.totalChild,
+    "t": "ZWFybg==",
+    "hotel_search_done": "0",
+    "hotel_modify": "0",
+    "arrive": moment( this.searchData.checkOut).format('DD/MM/YYYY'),
+    "depart": moment( this.searchData.checkIn).format('DD/MM/YYYY'),
+    "session_hotels_key": this.searchHotelKey
+  },
+  "room_input": {
+    "image": this.selectedHotel.imageInfo.wideAngleImageurl,
+    "room_dec": this.selectedHotel.roomType.roomDescription,
+    "room_type_code":   this.selectedHotel.roomType.roomTypeCode,
+    "bookingCode":   this.selectedHotel.roomType.bookingCode,
+    "room_type_id": this.selectedHotel.roomType.roomTypeId,
+    "room_title":this.selectedHotel.roomType.roomTitle,
+    "room_total": this.intialTotalFare,
+    "room_left": "",
+    "room_max_occupancy": "",
+    "booking_code":  this.selectedHotel.roomType.bookingCode,
+    "provisional-booking-required": "",
+    "roomcount": this.searchData.noOfRooms,
+    "addedguest": this.totalAdult,
+    "addedchild": this.totalChild,
+    "t": "ZWFybg=="
+  },
+  "contactDetails": {
+    "title": this.passengerForm.controls['passengerTitle']['value'],
+    "firstName": this.passengerForm.controls['passengerFirstName']['value'],
+    "lastName": this.passengerForm.controls['passengerLastName']['value'],
+    "mobile": this.passengerForm.controls['passengerMobile']['value'],
+    "email": this.passengerForm.controls['passengerEmail']['value']
+  },
+  "guest_data": {
+    "provid": "",
+    "AdultId1": "",
+    "title": this.passengerForm.controls['passengerTitle']['value'],
+    "firstName": this.passengerForm.controls['passengerFirstName']['value'],
+    "lastName": this.passengerForm.controls['passengerLastName']['value'],
+    "mobile": this.passengerForm.controls['passengerMobile']['value'],
+    "email": this.passengerForm.controls['passengerEmail']['value'],
+    "whatsappFlag": whatsappFlag,
+    "gst_number": this.passengerForm.controls['gstNumber']['value'],
+    "gst_name": this.passengerForm.controls['gstBusinessName']['value'],
+    "gst_address": this.passengerForm.controls['gstAddress']['value'],
+    "gst_city": this.passengerForm.controls['gstCity']['value'],
+    "gst_pincode": this.passengerForm.controls['gstPincode']['value'],
+    "gst_state":this.passengerForm.controls['gstState']['value']
+  },
+  "order_ref_num": this.orderReferenceNumber,
+  "amd_url": "",
+  "redirect_url": "",
+  "sessionKey":this.searchHotelKey,
+   "docKey": this.searchResult.docKey,
+   "itineraryRequest":this.itineraryParam,
+  "hotelSessionData":tmp_searchResult
+};
 
-
+this.checkoutData=checkoutData;
   }
 
   receivePgCharges($event) {
