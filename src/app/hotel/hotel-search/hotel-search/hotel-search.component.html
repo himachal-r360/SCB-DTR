@@ -15,7 +15,7 @@
                         </a>
                     </div>
                     <div class="hotel-from-data-search">
-                        <span>from</span>
+                        <span>From</span>
                         <!-- <input type="text" class="w-100" id="" placeholder="Search City" formControlName="city"  (keyup)="searchAutoComplete($event)"> -->
                         <input type="text" class="w-100" id="citySearchRef" #citySearchRef placeholder="Search City" formControlName="city" [autofocus]="true">
                         <input type="hidden" class="w-100" formControlName="countryName" >
@@ -27,7 +27,7 @@
                                     <div class="hotel-from-name">
                                         <img src="assets/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <p>528 Hotels</p>
+                                        <p class="d-none">528 Hotels</p>
                                     </div>
                                 </a>
                             </li>
@@ -144,7 +144,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1"            aria-hidden="true" *ngIf="isMobile" >
+            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="isMobile" >
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -209,7 +209,7 @@
                             <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile">
                         </a>
                     </div>
-                    <div class="hotel-from-data-ul mCustomScrollbar "  [ngClass]="isMobile?'mob-add-travels':''"   data-mcs-theme="dark">
+                    <div class="hotel-from-data-ul mCustomScrollbar " [ngClass]="isMobile?'mob-add-travels':''" data-mcs-theme="dark">
                         <ng-container formArrayName="rooms">
                             <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">
