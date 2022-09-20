@@ -187,7 +187,6 @@ export class PaymentComponent implements OnInit {
         });
         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
-        console.log(this.emiDebitArray);
         this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
         };
 
@@ -580,10 +579,7 @@ export class PaymentComponent implements OnInit {
         const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
         if(cookieExistsp){  
         this.payzrestriction=true;
-        setTimeout(()=>{
-        $('#payzappCard').trigger('click');
-        $('html,body').animate({ scrollTop: 9999 }, 'slow');
-        });	
+
         }
 
      }

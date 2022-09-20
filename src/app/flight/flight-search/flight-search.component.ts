@@ -148,7 +148,6 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     public _styleManager: StyleManagerService, private appConfigService:AppConfigService,
     public route: ActivatedRoute,
       public router: Router,
-
       private _fb: FormBuilder,
       private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private es: ElasticsearchService
 

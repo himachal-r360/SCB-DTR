@@ -195,28 +195,28 @@ export class HomeComponent implements OnInit {
 
     this._flightService.showHeader(true);
 
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-    
-    let continueSearchValLs:any= localStorage.getItem(environment.continueFlightSearch);
-    if(continueSearchValLs!=null){
-      this.continueSearchVal =JSON.parse(continueSearchValLs);
-    }
-        let continueSearchValBusParse:any= localStorage.getItem(environment.continueSearchBus);
-        if(continueSearchValBusParse!=null){
-        this.continueSearchValBus =JSON.parse(continueSearchValBusParse);
-        }
-           let continueSearchValTrainParse:any= localStorage.getItem(environment.continueSearchTrain);
-        if(continueSearchValTrainParse!=null){
-        this.continueSearchValTrain =JSON.parse(continueSearchValTrainParse);
+    this.isMobile = window.innerWidth < 991 ? true : false;
 
-        }
-        let continueSearchValHotelParse:any= localStorage.getItem('continueSearchForHotel');
-        if(continueSearchValHotelParse!=null){
-        this.continueSearchValHotel =JSON.parse(continueSearchValHotelParse);
-        
-        }    
-    
-    
+    let continueSearchValLs: any = localStorage.getItem(environment.continueFlightSearch);
+    if (continueSearchValLs != null) {
+      this.continueSearchVal = JSON.parse(continueSearchValLs);
+    }
+    let continueSearchValBusParse: any = localStorage.getItem(environment.continueSearchBus);
+    if (continueSearchValBusParse != null) {
+      this.continueSearchValBus = JSON.parse(continueSearchValBusParse);
+    }
+    let continueSearchValTrainParse: any = localStorage.getItem(environment.continueSearchTrain);
+    if (continueSearchValTrainParse != null) {
+      this.continueSearchValTrain = JSON.parse(continueSearchValTrainParse);
+
+    }
+    let continueSearchValHotelParse: any = localStorage.getItem('continueSearchForHotel');
+    if (continueSearchValHotelParse != null) {
+      this.continueSearchValHotel = JSON.parse(continueSearchValHotelParse);
+
+    }
+
+
   }
   navBarLink(item){
    

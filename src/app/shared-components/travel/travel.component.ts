@@ -1513,7 +1513,8 @@ console.log(this.searchFlightForm);
   if(this.searchFlightForm.value.fromContry=='IN' && this.searchFlightForm.value.toContry=='IN' ){
   if(this.searchFlightForm.value.arrival == null || this.searchFlightForm.value.arrival == undefined ||this.searchFlightForm.value.arrival == "") {
   url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
-  this.router.navigateByUrl(url);
+console.log(this.sg['domainPath']);  
+this.router.navigateByUrl(url);
   }
   else{
   url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));

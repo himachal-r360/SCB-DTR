@@ -159,12 +159,9 @@ export class CouponsComponent implements OnInit {
 					}
 				}
 				this.couponOptions=couponMinValCheckArr;
-				
-				
 				//console.log(this.couponOptions);
-				
-        		if(this.couponOptions[0])
-			this.validateCoupon(this.couponOptions[0]);
+        		//if(this.couponOptions[0])
+			//this.validateCoupon(this.couponOptions[0]);
 		});
 		
 	}

@@ -208,16 +208,17 @@
 }
 
 .details-steps-ul li a:before{
-    left: 70px;
+    left: 60px;
+    width: 200px;
 
     @media only screen and (max-width:600px){
-        width: 300px; 
+        width: 198px; 
     }
     @media only screen and (max-width:375px){
-        width: 250px; 
+        width: 160px; 
     }
     @media only screen and (max-width:320px){
-        width: 200px; 
+        width: 100px; 
     }
 }
 
@@ -362,9 +363,6 @@ mat-error {
 
 // mlite checkout page extra css
 @media screen and (max-width:600px){
-    .site-main{
-        margin-bottom:3em;
-    }
     .booking-inner-box {
         padding:12px;
     }
@@ -402,11 +400,7 @@ mat-error {
             }
         }
     } 
-    .btn-primary-outline {
-        font-size:12px;
-        padding:8px 20px;
-        width:100%;
-    }
+    
     .fixed-top{
         z-index:5;
     }
@@ -494,7 +488,7 @@ mat-error {
 .flight-details-area{
     margin-top:10px;
     @media screen and (max-width:600px){
-        margin-top:7rem;
+        margin-top:1rem;
     }
 }
 .bus_checkout_modal_cities{
@@ -509,4 +503,239 @@ mat-error {
     line-height: 13px;
     text-align: center;
     color: #00000070;
+}
+
+
+.hotel_details{
+    display: flex;
+    /* align-items: center; */
+    justify-content: start;
+    margin-bottom: 1em;
+    gap: 15px;
+    
+    img{
+        height: 100px;
+        width: 100%;
+        object-fit: fill;
+        border-radius: 8px;
+        @media only screen and (max-width:600px) {
+            height: 70px;
+            width: 100px;
+        }
+    }
+    .img_hr{
+        flex-basis: 20%;
+        @media only screen and (max-width:600px) {
+            flex-basis: 30%;
+        }
+    }
+    .name_hr{
+        flex-basis: 80%;
+        @media only screen and (max-width:600px) {
+            flex-basis: 70%;
+        }
+    }
+    .hotel_name{
+        font-size: 20px;
+        font-weight: 600;
+        @media only screen and (max-width:600px) {
+            width: 265px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 25px;
+        }
+        @media only screen and (max-width:375px) {
+            width: 230px;
+        }
+        @media only screen and (max-width:320px) {
+            width: 195px;
+        }
+    }
+    .hotel_address{
+        font-size: 12px;
+        color:#555555;
+        margin: 5px 0px;
+    }
+    /* .hotel_rating{
+        font-size: 12px;
+        color:#555555;
+    } */
+}
+.mlite_hd{
+    @media only screen and (max-width:600px) {
+        flex-direction: column;
+    }
+}
+.hotel_rooms{
+    display: flex;
+    align-items: center;
+    background-color: #F7FAFF;
+    border-radius: 8px;
+    padding: 15px;
+    justify-content: space-between;
+    gap: 15px;
+    .v_line{
+        border-right: 1px solid #00000033;
+        height: 40px;
+        flex-basis: 5%;
+    }
+    .label{
+        font-size: 11px;
+        color:#555555;
+         font-weight: 600;
+    }
+    .value{
+        font-size: 18px;
+        color:#000000;
+         font-weight: 700;
+    }
+    .duration{
+        background-color: #1D86FF;
+        border-radius: 50px;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 15px;
+        text-align: center;
+    }
+    div{
+        flex-basis: 20%;
+        @media only screen and (max-width:600px) {
+            flex-basis: 33.3%;
+        }
+    }
+    
+}
+.mlite_hotel_rooms{
+    background-color: #F7FAFF;
+    padding: 10px;
+    justify-content: space-between;
+    .hotel_rooms{
+        gap: 10px;
+    }
+    .label{
+        font-size: 11px;
+        color:#555555;
+         font-weight: 600;
+         @media only screen and (max-width:320px) {
+            font-size: 10px;
+        }
+    }
+    .value{
+        font-size: 18px;
+        color:#000000;
+         font-weight: 700;
+         margin: 3px 0px;
+
+         @media only screen and (max-width:320px) {
+            font-size: 13px;
+        }
+    }
+}
+.price_includes{
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 5px;
+}
+.list_includes{
+    padding-left: 1.5em;
+    li{
+        font-size: 13px;
+        font-weight: 400;
+        color: #000000;
+        list-style-type: disc;
+        margin-bottom:3px;
+        .hotel_address{
+            font-size: 13px;
+            font-weight: 400;
+            color: #000000;
+            margin-bottom: 3px;
+        }
+    }
+}
+.view_all_includes a{
+    color: #1D86FF;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.close_btn{
+    cursor: pointer;
+    position: absolute;
+    right: 2%;
+    top: 4%;
+}
+.gstTitle {
+    color: #1C1C1C;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+.gst_btn{
+    width: 150px;
+    cursor: pointer;
+    @media only screen and (max-width:600px){
+        width: 110px;
+    }
+}
+
+.savedGst_sec {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    -ms-grid-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+    @media only screen and (max-width:600px){
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .travel-card-details {
+        border: 1px solid #ededed;
+        padding: 15px;
+        border-radius: 8px;
+        width: 100%;
+    }
+    .active {
+        border-color: #1b73f9 !important;
+    }
+    .gstHeading {
+        color: #000000;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .gstName {
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .gstAddress {
+        color: #828282;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    
+}
+
+@media only screen and (max-width:600px){
+    .mob-listing-header{
+        box-shadow: none;
+    }
+    
+    .mlite_steps{
+        background-color: #ffffff;
+        padding: 20px 50px;
+        margin: 0px !important;
+        border-top: 1px solid rgb(0 0 0 / 5%);
+        box-shadow: 0px 4.14444px 4.14444px rgb(0 0 0 / 5%);
+    }
+}
+
+
+.no_gst{
+    background: rgba(29, 134, 255, 0.1);
+    border-radius: 5px;
+    padding: 10px 10px;
+    font-weight: 800;
+    font-size:12px;
 }

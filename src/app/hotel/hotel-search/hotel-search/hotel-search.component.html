@@ -4,10 +4,10 @@
             <div class="hotel-area" appHotelDropdown>
                 <div class="hotel-area-item" >
                     <span class="small-text">CITY, Hotel or Area</span>
-                    <h5 class="large-text text-capitalize">{{cityName}}</h5>
+                    <h5 class="large-text text-capitalize ">{{cityName}}</h5>
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
                 </div>
-                <div class="hotel-search-list dropdown" #hideShowCity>
+                <div class="hotel-search-list dropdown flight-from-hide" #hideShowCity>
                     <div class="mob-title" *ngIf="isMobile">
                         <h3>City, Hotel or Area</h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
@@ -64,7 +64,7 @@
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
-                        <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
+                        <img src="{{cdnUrl}}/images/icons/date.png" class="single-datepicker" alt="">
                     </div>
 
                     <div class="error_msg w-35" *ngIf="submitted && Error('checkIn', 'required')">
@@ -82,7 +82,7 @@
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                         </mat-form-field>
-                        <img src="./assets/images/icons/date.png" class="single-datepicker" alt="">
+                        <img src="{{cdnUrl}}/images/icons/date.png" class="single-datepicker" alt="">
                     </div>
                     <div class="error_msg w-35" *ngIf="submitted && Error('checkOut', 'required')">
                         <small class="validate-msg">Please select CheckOut date</small>
@@ -144,8 +144,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1"
-                aria-hidden="true">
+            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1"            aria-hidden="true" *ngIf="isMobile" >
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -203,14 +202,14 @@
                             class="fs_14 fw_4">Adults</small>, {{totalChildCount}} <small class="fs_14 fw_4">Child</small>  </h5>
                     <span class="small-text"></span>
                 </div>
-                <div class="hotel-room-select pt-20 pb-20 dropdown" #showHideGuest>
+                <div class="hotel-room-select pt-20 pb-20 dropdown flight-from-hide "  [ngClass]="isMobile?'mob-filter-travellers preferred-airline-hide':''" #showHideGuest>
                     <div class="mob-title" *ngIf="isMobile">
                         <h3>ROOMS & GUESTS</h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
-                            <img src="./assets/images/icons/close.png" alt="" class="close-mobile">
+                            <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile">
                         </a>
                     </div>
-                    <div class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                    <div class="hotel-from-data-ul mCustomScrollbar "  [ngClass]="isMobile?'mob-add-travels':''"   data-mcs-theme="dark">
                         <ng-container formArrayName="rooms">
                             <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">
@@ -302,8 +301,8 @@
 
         </div>
     </form>
+    <!--
     <div class="add-search-area " >
-        <!-- Preferred-OTA-Partner -->
         <div class="Preferred-OTA-Partner-area d-none">
             <ul class="Preferred-OTA-Partner-ul">
                 <li style="display: flex;flex-direction: column;">
@@ -325,11 +324,11 @@
             </ul>
         </div>
     </div>
-
+  -->
     <!-- Mobile Preferred-OTA-Partner -->
-    <div class="mob-Preferred-OTA-Partner-area">
+   <!-- <div class="mob-Preferred-OTA-Partner-area">
         <div class="mob-Preferred-area">
-            <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="./assets/images/icons/down.png" class="ms-1"
+            <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="{{cdnUrl}}/images/icons/down.png" class="ms-1"
                     alt=""></h5>
         </div>
 
@@ -338,7 +337,7 @@
                 <div class="mob-title">
                     <h3>Select Preferred OTA Partner</h3>
                     <a href="javaScript:void(0)" class="mob-close mob-OTA-close">
-                        <img src="./assets/images/icons/close.png" alt="">
+                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                     </a>
                 </div>
                 <div class="mob-OTA-listed">
@@ -375,4 +374,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
