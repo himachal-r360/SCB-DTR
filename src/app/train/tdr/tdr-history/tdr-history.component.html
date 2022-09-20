@@ -5,219 +5,179 @@
     </div>
  </div>
 
-<div class="container train-tdr-section">
-  <div class="d-none d-sm-block">
-      <div class="manage_account m-0">
-        <div>
-          <h4 class="cus_name">Welcome {{REWARD_FIRSTNAME}}</h4>
-        </div>
-     </div>
-      <div class="mbt20 row">
-        <div class="col-md-12 w-bb">
-          <div>
-            <ul class="nav nav-tabs tabs-left manage_account_tabs">
-              <div class="tab_title">
-                <div class="row">
-                
-                <div class="col-md-12 text-left">
-                <h4 class="title_name">
-                 <a href="{{domainRedirect}}manage_orders"><i class="fa fa-angle-left" aria-hidden="true"></i></a> Trains Booking History</h4></div>
-              
+
+ <div class="container tdr_cntnr">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item"><a href="#">Manage Account</a></li>
+      <li class="breadcrumb-item active" aria-current="page">File TDR</li>
+    </ol>
+  </nav>
+
+  <div class="main_hdr">
+    Train Booking
+  </div>
+  <div class="col-12 train-btn-group mt-4 mb-0" >
+    <a routerLink="/{{domainPath}}/train/filetdr" class="sort_btn  btnTdr-default btn-sm mr-3" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">File TDR</a>
+    <a routerLink="/{{domainPath}}/train/tdrhistory" class="sort_btn  btnTdr-active-{{domainName}} btn-sm mr-3" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">TDR History</a>
+  </div>
+
+  <div class="d-none d-md-block mt-4">
+  <div class="row tdr_train_details" *ngFor="let data of tdrHistoryData">
+    <div class="col-md-12">
+      <div class="tdr_box">
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <div class="train_img_div">
+              <img src="{{cdnUrl}}/images/train_tickets.svg" class="train_img">
+            </div>
+          </div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-4">
+                <span class="gray_text">Order ID <span class="number_highlight">{{data.order_ref_num}}</span></span>
+              </div>
+              <div class="col-md-4 text-center">
+                <span class="gray_text">TDR Filing Date <span class="number_highlight">{{data.tdr_fileddate | date:'mediumDate'}}</span></span>
+              </div>
+              <div class="col-md-4 text-right">
+                <span class="gray_text">PNR Number <span class="number_highlight">{{data.pnr_no}}</span></span>
+              </div>
+              <div class="col-md-12 mt-2 mb-2">
+                <span class="highlight_text">#{{data.train_no}}</span>
+                <!-- <span class="gray_text px-1">#{{12310}}</span> -->
+              </div>
+            </div>
+            <div class="row mt-2 mb-2">
+              <div class="col-md-8">
+                <div class="div_flex align-items-center">
+                  <span class="highlight_text">{{data.from_station}}</span>
+                  <hr class="dashed_hr">
+                  <span class="highlight_text">{{data.to_station}}</span>
                 </div>
               </div>
-            </ul>
+              <!-- <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <span class="gray_text px-1">Booked Via</span>
+                    <div class="booked_via_div">
+                      <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc_long.svg" class="booked_via_img">
+                    </div>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <p class="price_text">₹ 9,874</p>
+                    <span class="text_success">+ 430 points</span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <div class="row mb-4">
+              <div class="div_flex">
+                <div class="div_flex_item">
+                    <p class="gray_text">Transaction ID</p>
+                    <p class="black_text">{{data.transaction_id}}</p>
+                </div>
+                <div class="div_flex_item">
+                  <p class="gray_text">Date of Journey</p>
+                  <p class="black_text">{{data.journey_date | date:'mediumDate'}}</p>
+              </div>
+              <div class="div_flex_item">
+                <p class="gray_text">Status</p>
+                <p class="black_text">{{data.tdrstatus}}</p>
+              </div>
+              <div class="div_flex_item">
+                <p class="gray_text">Reason</p>
+                <p class="black_text">{{data.reason}}</p>
+              </div>
+              </div>
+            </div>
+            <!-- <div class="row mt-4">
+              <div class="col-md-12 d-flex align-items-center">
+                <img src="{{cdnUrl}}images/success_tick.svg">
+                <span class="gray_text px-1">regesara@gmail.com | +91 9635246543</span>
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
-    
-    
-    <div class="col-12 train-btn-group my-4" >
-        <a *ngIf = "!isguestUser" href="{{domainRedirect}}train_orders" class="btn btnTdr-default btn-sm  mr-3">Booking History</a>
-        <a *ngIf = "!isguestUser" href="{{domainRedirect}}train_cancellation_history" class="btn btnTdr-default btn-sm  mr-3">Cancellation History</a>
-        <a *ngIf = "!isguestUser" href="{{domainRedirect}}train_failed_orders" class="btn btnTdr-default btn-sm  mr-3">Failed History</a>
-        <a routerLink="/{{domainPath}}/train/filetdr" class="btn  btnTdr-default btn-sm mr-3" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">File TDR</a>
-    <a routerLink="/{{domainPath}}/train/tdrhistory" class="btn  btnTdr-active-{{domainName}} btn-sm mr-3" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">TDR History</a>
-      </div>
-
-     <div class="bookedTicketHistory-section-{{domainName}}">
-      <div class="title-book">
-        TDR History
-        </div>
-         <div class="content-search">
-          <!-- <form id="searchform"> -->
-            <div class="row">
-                <div class="col-md-12 pl-5 pr-5 pt-4">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="row mb-2">
-                          <label class="col-md-4 pt-2">PNR Number :</label>
-                          <div class="col-md-8"> 
-                            <input maxlength="10" (keypress)="numberOnly($event)" id="searchpnr" class="form-control" type="tel"></div>
-                        </div>
-                        <div class="row mb-2">
-                          <label class="col-md-4 pt-2">From :</label>
-                          <div class="col-md-8"> <input (keypress)="specialcharInput($event)"  id="searchfrmstn"  class="form-control" type="text"></div>
-                        </div>
-                        <!-- <div class="row mb-2">
-                          <label class="col-md-4 pt-2">OrderID :</label>
-                          <div class="col-md-8"> <input  class="form-control" id="refernceID"></div>
-                        </div> -->
-                      </div>
-                      <div class="col-md-6">
-                        <div class="row mb-2">
-                          <label class="col-md-4 pt-2">Transaction ID :</label>
-                          <div class="col-md-8"> <input maxlength="15" (keypress)="numberOnly($event)" id="searchtsID" class="form-control" type="text"></div>
-                        </div>
-                        <div class="row mb-2">
-                          <label class="col-md-4 pt-2">To :</label>
-                          <div class="col-md-8"> <input (keypress)="specialcharInput($event)"  id="searchtostn"  class="form-control" type="text"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="row mb-2">
-                          <label class="col-md-4 pt-4">From Date :</label> 
-                          <div class="col-md-8">
-                            <mat-form-field floatLabel="never">
-                              <input id="searchtdate" #fromdateInput matInput placeholder="DD/MM/YYYY" [matDatepicker]="dp3" [(ngModel)]="dateToPass" (ngModelChange)="getfromdate()"  disabled>
-                              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                            </mat-form-field>
-                          
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="row mb-2">
-                          <label class="col-md-4 pt-4">To Date :</label> 
-                          <div class="col-md-8">
-                            <mat-form-field floatLabel="never">
-                              <input id="searchjdate" #todatenput matInput [min]="fromDate" placeholder="DD/MM/YYYY" [matDatepicker]="dp4" disabled>
-                              <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-                              <mat-datepicker #dp4 disabled="false" ></mat-datepicker>
-                            </mat-form-field>
-                          
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                          <div class="row mb-2">
-                            <div class="col-md-12 text-md-right">
-                              <button type="submit" id="search_submit" class="w-btn-submit">Submit</button> &nbsp;&nbsp;
-                              <button type="submit" class="w-btn-danger" (click)='reset()'>Reset</button>
-                            </div>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-          <!-- </form> -->
-         </div>
-     </div>
-      <!-- <form id="searchform" [formGroup]="searchForm">
-          <label>PNR Number: <input formControlName="pnrNumber" id="searchpnr" class="form-control" type="tel" placeholder="PNR NUmber"></label>
-          <label>Transcation ID: <input formControlName="transactionID" id="searchtsID" class="form-control" type="text" placeholder="Transcation ID"></label>
-         <label> From:<input  id="searchfrmstn"  class="form-control" type="text"></label>
-         <label>To:<input   id="searchtostn"  class="form-control" type="text"></label>
-         <label>OrderID:<input  class="form-control" id="refernceID"></label>
-         <label>From Journey Date:
-            <mat-form-field>
-                <input id="searchjdate" style="width:50%" matInput [matDatepicker]="picker" placeholder="Choose a date">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-         </label>
-         <label>To Journey Date:
-            <mat-form-field>
-                <input id="searchtdate"  style="width:50%" matInput [matDatepicker]="picker2" placeholder="Choose a date">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-form-field>
-         </label>
-
-
-      </form> -->
-<!-- 
-      <mat-form-field>
-          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" autocomplete="off">
-        </mat-form-field> -->
-
-      <!-- <table mat-table [dataSource]="dataSource" matSort>
-
-          
-                <ng-container matColumnDef="tdr_fileddate">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>TDR Filling Date</th>
-                    <td mat-cell *matCellDef="let element"> {{element.tdr_fileddate | date}} </td>
-                  </ng-container>
-          
-          <ng-container matColumnDef="pnr_no">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> PNR Number </th>
-            <td mat-cell *matCellDef="let element"> {{element.pnr_no}} </td>
-          </ng-container>
-           
-          <ng-container matColumnDef="transaction_id">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Transcation ID </th>
-              <td mat-cell *matCellDef="let element"> {{element.transaction_id}} </td>
-            </ng-container>
-        
-          
-          <ng-container matColumnDef="from_station">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> From Station </th>
-            <td mat-cell *matCellDef="let element"> {{element.from_station}} </td>
-          </ng-container>
-        
-          
-          <ng-container matColumnDef="to_station">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> To Station </th>
-            <td mat-cell *matCellDef="let element"> {{element.to_station}} </td>
-          </ng-container>
-        
-         
-          <ng-container matColumnDef="tdrstatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> TDR Status </th>
-            <td mat-cell *matCellDef="let element"> {{element.tdrstatus}} </td>
-          </ng-container>
-        
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <mat-paginator
-  [pageSizeOptions]="[5, 10, 20]"
-  showFirstLastButtons
-></mat-paginator> -->
-
-<div class="bookedTickets-section-{{domainName}}">
-  <div class="title-book">
-    TDR Tickets
-    </div>
-    <div class="table-responsive">
-      <table  class="display" style="width:100%" id="historyTable">
-        <thead>
-        <tr>
-          <th>TDR Filing Date</th>
-          <th>PNR Number</th>
-          <th>Train no</th>
-          <th>From</th>
-          <th>TDR Reason Code</th>
-          <th>TDR Status</th>
-        </tr>
-        </thead>
-        <!-- <tbody>
-        <tr *ngFor="let data of tdrHistoryData">
-          <td>{{data.pnr_no}}</td>
-          <td>{{data.transaction_id}}</td>
-          <td>{{data.from_station}}</td>
-          <td>{{data.to_station}}</td>
-          <td>{{data.order_ref_num}}</td>
-          <td>{{data.journey_date}}</td>
-        </tr>
-        
-        </tbody> -->
-        
-      </table>
-    </div>
+  </div>
 </div>
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-running-dots" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-      </div>
+
+
+
+
+        <!-- train details mlite -->
+        <div class="row tdr_train_details d-md-none" *ngFor="let data of tdrHistoryData">
+          <div class="col-md-12">
+            <div class="tdr_box">
+              <div class="row">
+                <div class="col-6">
+                  <p class="gray_text">#{{data.order_ref_num}}</p>
+                </div>
+                <div class="col-6 text-right">
+                  <p class="gray_text px-1">{{data.pnr_no}}</p>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-6">
+                  <p class="highlight_text">Train Ticket</p>
+                </div>
+                <div class="col-6 text-right">
+                  <p class="highlight_text"><span class="highlight_text">#{{data.train_no}}</span></p>
+                </div>
+                <div class="col-12">
+                  <hr class="dashed_hr">
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-8">
+                  <div class="div_flex align-items-center">
+                    <span class="highlight_text">{{data.from_station}}</span>
+                    <hr class="dashed_hr">
+                    <span class="highlight_text">{{data.to_station}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <hr class="dashed_hr">
+              </div>
+              
+              <div class="row mb-4">
+                <div class="div_flex">
+                  <div class="div_flex_item">
+                      <p class="gray_text">Transaction ID</p>
+                      <p class="black_text">{{data.transaction_id}}</p>
+                  </div>
+                  <div class="div_flex_item  text-right">
+                    <p class="gray_text">TDR Filing Date</p>
+                    <p class="black_text">{{data.tdr_fileddate | date:'mediumDate'}}</p>
+                </div>
+                  <div class="div_flex_item">
+                    <p class="gray_text">Date of Journey</p>
+                    <p class="black_text">{{data.journey_date | date:'mediumDate'}}</p>
+                </div>
+                <div class="div_flex_item  text-right">
+                  <p class="gray_text">Status</p>
+                  <p class="black_text">{{data.tdrstatus}}</p>
+                </div>
+                <div class="div_flex_item ">
+                  <p class="gray_text">Reason</p>
+                  <p class="black_text">{{data.reason}}</p>
+                </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+        <!-- end of train details mlite -->
+
+
+  
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type="ball-running-dots" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+
+ <!-- train details -->
+ </div>
