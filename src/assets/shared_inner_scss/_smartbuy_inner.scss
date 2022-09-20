@@ -300,3 +300,290 @@ a.list-travel-font {
     }
     
 }
+
+/* Train Componets */
+.train_section{
+	.nav-link{
+		background-color: #E8F3FF;
+		border: 1px solid #E6E6E6;
+		color: #00000050;
+	}
+	.nav-link.active{
+		background-color: #E8F3FF;
+		border: 1px solid $primary-color;
+		color: #000000 !important;
+	}
+}
+
+.list-row,
+.list-row-m {
+    box-shadow: 0.5px 0.9px 4px 0 rgba(25, 25, 25, 0.08);
+    border: solid 1px #e6e6e6;
+    background-color: $white-color;
+    
+    .tagTrains {
+       
+        span {
+            background-color: #ff7031;
+            color: #fff;
+        }
+    }
+    .available-status span {
+        
+        color: #888888;
+        
+    }
+    .available-status span.active {
+        color: $primary-color;
+    }
+    .label-black-small {
+        color: $color-dark-gray;
+    }
+    .label-gray-bold {
+        
+        color: $primary-color;
+    }
+    .trainTimeInfo {
+       
+        .time,
+        .day {
+            
+            color: $black-color;
+        }
+        /* .day{
+            font-size: 12px;
+            font-family: 'opensans-regular';
+            color: #888888;
+        } */
+        .place {
+            color: #888888;
+        }
+        .duration_train {
+            
+            .dur_time {
+                color: #888888;
+            }
+            .range {
+                border-top: 1px solid #E6E6E6;
+                &::before {
+                    background: #888888;
+                }
+                &::after {
+                    background: #888888;
+                }
+            }
+            .modal_range {
+                border-top: 1px solid #E6E6E6;
+                &::before {
+                    background: #888888;
+                }
+                &::after {
+                    background: #888888;
+                }
+            }
+            .route {
+                color: #1D86FF;
+            }
+        }
+        .timeShow {
+            
+            p {
+                &:first-child {
+                    color: $black-color;
+                }
+                &:last-child {
+                    color: $primary-color;
+                }
+            }
+        }
+        .fromStn,
+        .toStn {
+            p {
+                margin-bottom: 2px;
+                color: $primary-color;
+            }
+        }
+        .trainCode {
+            color: #888888;
+            font-size: 12px;
+        }
+    }
+    .amenities {
+        .rating {
+            background: green;
+            color: $white-color;
+        }
+        .more-details {
+            
+            li {
+                color: $primary-color;
+                &::after {
+                    color: $primary-color;
+                }
+            }
+            li.active {
+                border-bottom: 4px solid $primary-color;
+            }
+        }
+    }
+}
+
+.tier {
+    .TrainSeatsInfo {
+        p {
+            span.date {
+                color: #888888;
+            }
+            span.price {
+                color: $black-color;
+            }
+        }
+        .book_btn {
+            cursor: pointer;
+            color: $primary-color;
+            background-color: $primary-color;
+            color: $white-color;
+        }
+    }
+    .label-name {
+        color: $color-dark-gray;
+    }
+    .label-green {
+        color: #06ac39;
+    }
+    .label-red {
+        color: #dc3226;
+    }
+    .btn-outline {
+        &:hover {
+            color: $white-color;
+            background-color: $primary-color;
+            border: 1px solid $primary-color;
+        }
+    }
+}
+
+/* shared componet Travel componet */
+.buttonTrip input[type="radio"]:checked+label {
+    background: #2C0E00;
+    border-radius: 5px;
+    border: 0px solid $primary-color;
+}
+
+.btn-icn-search {
+    background: radial-gradient(100.63% 100.63% at 91.14% 124.68%, #CF8D56 26.04%, #2C0E00 74.48%);
+}
+
+.select_options {
+    
+    .travelList {
+        
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #ccc;
+        
+        ul {
+            
+            li {
+                a {
+                    
+                    .sub_name {
+                        color: #5b5e61;
+                    }
+                    .count {
+                        background: #fceee4;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.select_city,
+.select_date {
+    .input_box,
+    .date_box {
+        label {
+            .inputField {
+                color: $black-color;
+            }
+            span {
+                color: #555555;
+                font-size: 12px;
+            }
+        }
+        .from_cities {
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+            border: 1px solid #ccc;
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                color: #000000;
+            }
+            .from_list {
+                ul {
+                    li {
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        .to_cities {
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+            border: 1px solid #ccc;
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                color: #000000;
+            }
+            .to_list {
+                max-height: 270px;
+                overflow-y: auto;
+                ul {
+                    padding: 0;
+                    margin: 0;
+                    li {
+                        padding: 6px 10px;
+                        margin-bottom: 5px;
+                        list-style: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            height: 30px;
+                            cursor: not-allowed;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            span {
+                                i {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* override Angular css */
+::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+    background: rgba(29, 134, 255, 0.1) !important;
+}

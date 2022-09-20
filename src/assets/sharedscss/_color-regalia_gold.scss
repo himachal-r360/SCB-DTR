@@ -13,6 +13,7 @@ $black-color:#000000;
 $transparent: transparent;
 $bg-dark-brown: #3f261a;
 $color-dark-gray:#444444;
+$color-dark-gray-01:#868686;
 
 $footer-text-color:#A38164;
 
@@ -26,17 +27,38 @@ $box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.15);
 
 /* Buttons CSS Code */
 
-.btn-check:focus+.btn, .btn:focus{
-    outline: 0;
-    box-shadow: 0 0 0 0.25rem rgb(253 146 13 / 25%);
-    color: #ffffff;
-}
-
 .btn-primary{
     color: $white-color;
-    background-color: $primary-color !important;
-    border-color: $primary-color !important;
+    background-color: $primary-color ;
+    border:1px solid $primary-color ;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
     width: 100%;
+    &:hover{
+        color: $white-color;
+        background-color: $primary-color ;
+        border-color: $primary-color ;
+    }
+}
+
+.btn-primary-outline{
+    color: $primary-color;
+    background-color: $white-color ;
+    border: 1px solid $primary-color ;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+
+    &:hover{
+        color: $white-color;
+        background-color: #9e7049 ;
+        border-color: $primary-color ;
+    }
 }
 
 .btn-gradient-three{
@@ -55,4 +77,10 @@ $box-shadow: 0px 4px 44px rgba(0, 0, 0, 0.15);
     color: $white-color;
     font-family: 'opensans-medium';
     border: transparent;
+}
+
+.btn-check:focus+.btn, .btn:focus{
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(253 146 13 / 25%);
+    color: #ffffff;
 }
