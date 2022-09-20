@@ -868,7 +868,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
    if (this.passengerForm.invalid ) {
         let target;
         target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
-         console.log(this.passengerForm)
         if (target) {
         if( target.id =='agree_terms'){
         $(document).scrollTop($(document).height());
@@ -880,7 +879,13 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       return;
     } else {
     
-        $('#infoprocess').modal('show');
+
+    
+        if(this.partnerToken=='Cleartrip'){
+         this.itineraryProcess();
+        }else{
+        /********Check Availablity***********/
+                $('#infoprocess').modal('show');
         this.loaderValue = 10;
         const myInterval1 = setInterval(() => {
         this.loaderValue = this.loaderValue + 10;
@@ -889,12 +894,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
         }, 700);
     
-    
-        if(this.partnerToken=='Cleartrip'){
-         this.itineraryProcess();
-        }else{
-        /********Check Availablity***********/
-        
         
           let rooms:any=[];
                 
@@ -1113,13 +1112,13 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   
   saveCheckout(interval){
       this.createItinerarydata();
-     //   console.log(this.checkoutData);return;
+      //  console.log(this.checkoutData);return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
       flightData: this.EncrDecr.set(JSON.stringify(this.checkoutData))
     };
 
-
+console.log(this.orderReferenceNumber);
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
       .set('category', 'Hotel')
@@ -1275,6 +1274,20 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     let roomTypeId=this.selectedHotel.roomType.roomTypeId;
     let currentDate=moment().format('DD-MM-YYYY');
     
+    let farebreakup:any={};
+    
+    farebreakup[currentDate]=[];
+    
+    farebreakup[currentDate].push({
+      "dis": 0,
+      "total": this.intialTotalFare,
+      "basefare": this.totalBaseFare,
+      "partnerDiscount":this.partnerDiscount,
+      "tax": this.totalTax
+    });
+    
+    
+    
     let checkoutData = {
     "provisionalBookingId": this.provisionalBookingId,
     "booking_code": this.selectedHotel.roomType.bookingCode,
@@ -1310,15 +1323,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   "partner_amount": this.intialTotalFare,
   "discount": 0,
   "coupon_code": "",
-  "farebreakup": {
-    currentDate: {
-      "dis": 0,
-      "total": this.intialTotalFare,
-      "basefare": this.totalBaseFare,
-      "partnerDiscount":this.partnerDiscount,
-      "tax": this.totalTax
-    }
-  },
+  "farebreakup":farebreakup,
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
   /*"hotel_details": {
@@ -1414,6 +1419,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
    "itineraryRequest":this.itineraryParam,
   "hotelSessionData":tmp_searchResult
 };
+
 
 this.checkoutData=checkoutData;
   }
