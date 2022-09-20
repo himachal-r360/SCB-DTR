@@ -193,6 +193,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.isMobile = window.innerWidth < 991 ? true : false;
         this.getQueryParamData();
           this.getAirlinelist();
+this.getAirpotsList();
+this.getAirlinesDump();
            this.getAirpotsNameList();
         this.flightSearch();
        
@@ -234,6 +236,21 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       let multicitySearchValue = JSON.stringify(flightSearchArr);
       localStorage.setItem('multicityLastSearch',multicitySearchValue)
   }
+  
+      // get airline list
+  getAirlinesDump() {
+    this._flightService.getFlightIcon().subscribe((res: any) => {
+      this.airlinesNameJson = res;
+
+    })
+  }
+   // get airport list
+  getAirpotsList() {
+    this._flightService.getAirportName().subscribe((res: any) => {
+      this.airportsNameJson = res;
+
+    })
+  } 
   continueSearchFlights: any = []
     flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
