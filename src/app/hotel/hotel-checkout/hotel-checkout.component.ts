@@ -1112,7 +1112,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   
   saveCheckout(interval){
       this.createItinerarydata();
-      //  console.log(this.checkoutData);return;
+     //  console.log(this.checkoutData);return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
       flightData: this.EncrDecr.set(JSON.stringify(this.checkoutData))
@@ -1278,13 +1278,13 @@ console.log(this.orderReferenceNumber);
     
     farebreakup[currentDate]=[];
     
-    farebreakup[currentDate].push({
+    farebreakup[currentDate]={
       "dis": 0,
       "total": this.intialTotalFare,
       "basefare": this.totalBaseFare,
       "partnerDiscount":this.partnerDiscount,
       "tax": this.totalTax
-    });
+    };
     
     
     
