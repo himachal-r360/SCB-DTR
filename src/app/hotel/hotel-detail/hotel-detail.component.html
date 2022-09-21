@@ -72,7 +72,7 @@
                                               </div>
                                           </span>
                                       </h6>
-                                      <p class="p-rn">Per Room/Night</p>
+                                      <p class="p-rn">Inclusive of taxes</p>
                                   </div>
                                   <div class="hotel-list-info-Book">
                                       <a href="javascript:;" (click)="onSectionChange('hdRooms','Rooms')"  class="button-style">Select Room</a>
@@ -87,7 +87,19 @@
       <div class="row">
           <div class="col-md-9">
               <div class="hd-gallery">
-                  <div id="big" class="owl-carousel owl-theme">
+                 <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
+                    <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                      <ng-container >
+                        <ng-template carouselSlide  [id]="'Id_0'">
+                          <div class="item">
+                             <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid" alt="">
+                        </div>
+                          </ng-template>
+                       </ng-container>
+                    </owl-carousel-o>
+                  </div>
+              
+                  <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
                     <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                         <ng-template carouselSlide  [id]="'Id_'+i">
@@ -98,7 +110,7 @@
                        </ng-container>
                     </owl-carousel-o>
                   </div>
-                  <div id="thumbs" class="owl-carousel owl-theme mt-10">
+                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0">
                     <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl>
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                         <ng-template carouselSlide >
@@ -138,8 +150,8 @@
                                   <div class="Overview-top">
                                       <div class="Overview-title">
                                           <h6>About</h6>
-                                          <!-- <p>CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p> -->
-                                          <p>CHECK-IN 2PM | CHECK-OUT 11AM</p>
+                                          <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p> 
+                                          <p *ngIf="PriceSummery.partnerName!='Cleartrip'">CHECK-IN 12PM | CHECK-OUT 12AM</p>
                                       </div>
                                       <div class="Overview-details about-hotel" innerHtml="{{HotelDetail.description}}">
                                           <!-- <ul>
@@ -303,7 +315,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="hd-gallery mb-20">
-                        <div id="mob-big" class="owl-carousel owl-theme">
+                    
+                     <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
+                          <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                            <ng-container>
+                              <ng-template carouselSlide  [id]="'Id_0'">
+                                <div class="item">
+                                    <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid" alt="">
+                              </div>
+                                </ng-template>
+                             </ng-container>
+                          </owl-carousel-o>
+                        </div>
+                    
+                        <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
                           <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
                             <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                               <ng-template carouselSlide  [id]="'Id_'+i">
@@ -314,7 +339,7 @@
                              </ng-container>
                           </owl-carousel-o>
                         </div>
-                        <div id="mob-thumbs" class="owl-carousel owl-theme mt-10">
+                        <div id="mob-thumbs" class="owl-carousel owl-theme mt-10" *ngIf="HotelDetail.images.length >0">
                           <owl-carousel-o [options]="MobileThumbNailImageCustomOptions" #ThumbNailImageOwl>
                             <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                               <ng-template carouselSlide >

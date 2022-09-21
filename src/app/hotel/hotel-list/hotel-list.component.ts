@@ -145,8 +145,8 @@ export class HotelListComponent implements OnInit, OnDestroy {
   nextIndex = 0;
 
   loadData() {
-    console.log(this.pageIndex,"this.pageIndex + ")
-    console.log(this.hotelList.length,"this.hotelList.length")
+   // console.log(this.pageIndex,"this.pageIndex + ")
+   // console.log(this.hotelList.length,"this.hotelList.length")
     if (this.pageIndex >= this.hotelList.length) {
       return false;
     } else {
@@ -164,7 +164,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
-      console.log(this.hotelList,"this.hotelList");
+     // console.log(this.hotelList,"this.hotelList");
     }
 
     //$('.scrollToTop').trigger('click');
@@ -215,7 +215,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
     $(window).scroll(function (this) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-        console.log("scroll");
+     //   console.log("scroll");
         $('#endOfPage').trigger('click');
       }
     });
@@ -592,6 +592,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
 
   BookingSummery(hotelkey: string, hotel: any, selectedPartner: any) {
+ // console.log(hotel);
     let hotelDetailsArr: any = {
       "docKey": this.docKey,
       "hotelkey": hotelkey,
