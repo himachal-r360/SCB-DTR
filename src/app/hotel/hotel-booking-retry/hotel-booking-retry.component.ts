@@ -124,8 +124,8 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                 this.totalBaseFare = Number(result.fare.totalBaseFare);
                 this.totalTax = Number(result.fare.total_tax);
                 this.partnerDiscount = Number(result.fare.partnerDiscount);
-                this.orderReferenceNumber=result.hoteldetails.provid;
-                this.provisionalBookingId=result.hoteldetails.booking_code;
+                this.orderReferenceNumber=this.fetchOrderId;
+                this.provisionalBookingId=result.hoteldetails.provid;
                 this.coupon_code=result.fare.couponcode;
                 this.coupon_amount=result.fare.discount;
                 this.voucher_amount=result.fare.voucher_amount;
