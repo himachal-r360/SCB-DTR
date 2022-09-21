@@ -287,10 +287,24 @@ checkRAC:any;
   const body:string = this.urlParams.toString();
   this.spinnerService.show();
   this._irctc.gettdrDetails(body).subscribe(data => {
-  this.tdrResponse = data.partnerResponse.bookingResponseList;
-  this.tdrReasons = data.partnerResponse.tdrReasonList;
-
+  
 if(data.errorcode != 1){
+    if(data.errorDesc!="Success"){
+       this.spinnerService.hide();
+        const dialogRef = this.dialog.open(tdrConfirmationDialog, {
+          disableClose: true,
+          width: '600px',
+          id: 'messageforMliteDialog',
+          data: {
+              errorDialog: true,
+              messageData: data.errorDesc
+          }
+      });
+      return false;  
+
+    }
+    this.tdrResponse = data.partnerResponse.bookingResponseList;
+    this.tdrReasons = data.partnerResponse.tdrReasonList;
     let pnrurlParams = new HttpParams()
         .set('pnrnumber', this.tdrResponse.pnrNumber);
 
