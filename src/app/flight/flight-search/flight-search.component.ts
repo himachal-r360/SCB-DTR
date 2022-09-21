@@ -1210,7 +1210,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       });
       let multicitySearchValue = JSON.stringify(this.multicityFormArr.value);
       localStorage.setItem('multicityLastSearch',multicitySearchValue)
-      url = "flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multicityFormArr.value))
+      url = this.sg['domainPath']+"flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multicityFormArr.value))
       this.router.navigateByUrl(url)
     }
   }
