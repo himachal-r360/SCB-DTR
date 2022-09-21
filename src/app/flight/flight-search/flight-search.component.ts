@@ -763,15 +763,15 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       let url;
       if (this.flightData.value.fromContry == 'IN' && this.flightData.value.toContry == 'IN') {
         if (this.flightData.value.arrival == null || this.flightData.value.arrival == undefined || this.flightData.value.arrival == "") {
-          url = "flight-list?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+          url = this.sg['domainPath']+"flight-list?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
         else {
-          url = "flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+          url = this.sg['domainPath']+"flight-roundtrip?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
           this.router.navigateByUrl(url);
         }
       } else {
-        url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+        url = this.sg['domainPath']+"flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
         this.router.navigateByUrl(url);
       }
     }
