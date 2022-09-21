@@ -3,7 +3,7 @@
         <div class="hotel-search mt-20">
             <div class="hotel-area" appHotelDropdown>
                 <div class="hotel-area-item" >
-                    <span class="small-text">CITY, Hotel or Area</span>
+                    <span class="small-text">City, Hotel or Area</span>
                     <h5 class="large-text text-capitalize ">{{cityName}}</h5>
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
                 </div>
@@ -44,7 +44,7 @@
                                 </a>
                             </li>
                         </ng-container>
-                    </ng-container> 
+                    </ng-container>
                     </ul>
                 </div>
                 <div class="error_msg w-35" *ngIf="submitted && Error('city', 'required')">
@@ -53,7 +53,7 @@
             </div>
             <div class="hotel-in-out">
                 <div class="hotel-in" (click)="!isMobile ? picker.open() :openMliteDatePicker('checkin',0)" #checkIn>
-                    <span class="small-text">CHECK-IN</span>
+                    <span class="small-text">Check-In</span>
                     <h5 class="large-text"  [ngClass]="!hotelSearchForm.value.checkIn?'py-3':''">{{hotelSearchForm.value.checkIn | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text" *ngIf="hotelSearchForm.value.checkIn">{{hotelSearchForm.value.checkIn|date:'EEEE'}}</span>
 
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="hotel-out" (click)="!isMobile ? picker2.open() : openMliteDatePicker('checkout',0)" #checkOut>
-                    <span class="small-text">CHECK-OUT</span>
+                    <span class="small-text">Check-Out</span>
                     <h5 class="large-text" [ngClass]="!hotelSearchForm.value.checkOut?'py-3':''">{{hotelSearchForm.value.checkOut | date:'MMM dd'}}</h5>
                     <span class="hotel-city small-text"  *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
                     <div class="hotel-date" >
@@ -93,7 +93,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">CHECK-IN</h5>
+                            <h5 class="modal-title">Select Check-In Date</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -108,7 +108,7 @@
                                     <div class="col-6 ">
                                         <div class="input_box  date_input_box">
                                             <label (click)="openMliteDatePicker('checkin',0)">
-                                                <span>CHECK-IN</span>
+                                                <span>Check-In</span>
                                                 <div class="form-group flex_basis dep_m_cal"
                                                     *ngIf="hotelSearchForm.value.checkIn">
                                                     <b>{{hotelSearchForm.value.checkIn | date:'dd MMM' }} ,
@@ -127,7 +127,7 @@
 
                                             <label (click)="openMliteDatePicker('checkout',0)"
                                                 *ngIf="hotelSearchForm.value.checkOut">
-                                                <span>CHECK-OUT</span>
+                                                <span>Check-Out</span>
                                                 <div class="form-group flex_basis dep_m_cal"
                                                     *ngIf="hotelSearchForm.value.checkOut">
                                                     <b>{{hotelSearchForm.value.checkOut | date:'dd MMM' }} , </b><span>
@@ -148,7 +148,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">CHECK-OUT</h5>
+                            <h5 class="modal-title">Select Check-Out Date</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -163,7 +163,7 @@
                                     <div class="col-6 ">
                                         <div class="input_box  date_input_box">
                                             <label (click)="openMliteDatePicker('checkin',0)">
-                                                <span>CHECK-IN</span>
+                                                <span>Check-In</span>
                                                 <div class="form-group flex_basis dep_m_cal"
                                                     *ngIf="hotelSearchForm.value.checkIn">
                                                     <b>{{hotelSearchForm.value.checkIn | date:'dd MMM' }} ,
@@ -177,7 +177,7 @@
                                     <div class="col-6 ">
                                         <div class="input_box  date_input_box">
                                             <label (click)="openMliteDatePicker('checkout',0)">
-                                                <span>CHECK-OUT</span>
+                                                <span>Check-Out</span>
                                                 <div class="form-group flex_basis dep_m_cal"
                                                     *ngIf="hotelSearchForm.value.checkOut">
                                                     <b>{{hotelSearchForm.value.checkOut | date:'dd MMM' }} , </b><span>
@@ -197,14 +197,14 @@
             </div>
             <div class="hotel-room" appHotelDropdown>
                 <div class="hotel-room-item" >
-                    <span class="small-text">ROOMS & GUESTS</span>
+                    <span class="small-text">Rooms & Guests</span>
                     <h5 class="large-text">{{this.hotelSearchForm.value.rooms.length}} <small class="fs_14 fw_4">Rooms</small>, {{totalAdultsCount}} <small
                             class="fs_14 fw_4">Adults</small>, {{totalChildCount}} <small class="fs_14 fw_4">Child</small>  </h5>
                     <span class="small-text"></span>
                 </div>
                 <div class="hotel-room-select pt-20 pb-20 dropdown flight-from-hide "  [ngClass]="isMobile?'mob-filter-travellers preferred-airline-hide':''" #showHideGuest>
                     <div class="mob-title" *ngIf="isMobile">
-                        <h3>ROOMS & GUESTS</h3>
+                        <h3>Rooms & Guests </h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
                             <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile">
                         </a>
@@ -214,7 +214,7 @@
                             <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">
                                     <div class="hotel-from-data-ul-list">
-                                        <p class="fw_7 fs_14 d-flex">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto" (click)="removeDetails(i)">Delete</a></p>
+                                        <p class="fw_7 fs_14 d-flex mb-2">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto" (click)="removeDetails(i)">Delete</a></p>
                                         <div class="Travellers-passengers-data mb-2">
                                             <div class="Travellers-name">
                                                 <h6>Adults</h6>
