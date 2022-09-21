@@ -334,7 +334,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 mt-70" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >= 1">
+            <!-- <div class="col-md-12 mt-70" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length >= 1"> -->
+                <div class="col-md-12 mt-70" *ngIf="!notrain">
                 <div class="row">
                     <div class="col-6">
                         <div class="mob-listing-fiters">
@@ -374,9 +375,9 @@
                 <div class="text-center" *ngIf="!loading && (trains|irctcfilter:filterDeparture:filterArrival:filterClasses:filterTrainTypes:filterFromStations:filterToStations:sortBy).length < 1">
 
                     <!-- no train found new design mlite -->
-                    <div class="row p-2 mlite_no_train_found">
+                    <div class="row p-2">
                         <div class="col-md-12 text-center">
-                            <div class="empty_list_hdr" *ngIf="notrain">Yikes! No direct trains found.</div>
+                            <div class="empty_list_hdr mlite_no_train_found" *ngIf="notrain">Yikes! No direct trains found.</div>
                             <div class="empty_list_hdr" *ngIf="!notrain">Yikes! No result found.</div>
                             <div>
                                 <img src="{{cdnUrl}}/images/empty_list_train.svg" width="200px">
