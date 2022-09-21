@@ -232,13 +232,19 @@ export class HotelListComponent implements OnInit,OnDestroy {
    // this.sub = this.route.url.subscribe(url =>{
     this.isResponse = true;
     this.loader = true;
+      this.resetPopups();
     this.getSearchData();
     if(this.isMobile)
     this.headerHideShow(null);
     this.searchHotel();
    // });
   }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   getSearchData(){
    // console.log(this.route.snapshot.queryParams)
     const urlParam = this.route.snapshot.queryParams;

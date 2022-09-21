@@ -738,8 +738,10 @@
                             <h6 class="fw_7">Grand Total</h6>
                           </div>
                           <div class="fare-list-right">
-                            <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                          
+                            <h6 class="fw_7">₹ {{ totalFare|number }}</h6> 
+                          <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @
+                        {{ calculateEMI(totalFare)|number }}/month
+                        </p>
                           </div>
 
                         </div>
@@ -795,8 +797,9 @@
             <div class="col-5">
               <div class="">
                 <h6 class="price">₹{{ totalFare |number }} </h6>
-
-<p class="hidden">{{fareData | json}}</p>
+<p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @
+                        {{ calculateEMI(totalFare)|number }}/month
+                        </p>
               </div>
             </div>
             <div class="col-7">
@@ -950,7 +953,9 @@
                           </div>
                           <div class="fare-list-right">
                             <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                          
+                          <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @
+                        {{ calculateEMI(totalFare)|number }}/month
+                        </p>
                           </div>
 
                         </div>
