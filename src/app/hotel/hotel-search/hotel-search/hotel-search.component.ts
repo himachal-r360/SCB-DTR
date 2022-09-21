@@ -249,9 +249,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.hotelSearchForm['controls']['countryName'].setValue(param._source.countryName);
     this.hotelSearchForm['controls']['country'].setValue(param._source.country);
     this.cityName = this.hotelSearchForm.value.city;
-    this.hideShowCity.nativeElement.style.display = "none";
     this.checkIn.nativeElement.click()
-    
   }
 
   checkInDate(event){
