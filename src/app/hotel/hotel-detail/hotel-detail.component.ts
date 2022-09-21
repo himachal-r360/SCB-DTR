@@ -165,7 +165,7 @@ export class HotelDetailComponent implements OnInit {
 
   }
   MobilecustomOptions: OwlOptions = {
-    loop: true,
+    loop: false,
     autoplay:false,
     mouseDrag: true,
     touchDrag: true,
