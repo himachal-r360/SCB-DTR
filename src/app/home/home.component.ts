@@ -239,15 +239,15 @@ export class HomeComponent implements OnInit {
   
     if(param.fromContry=='IN' && param.toContry=='IN' ){
     if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
-      let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      let url=this.sg['domainPath']+"flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
     }
     else {
-      let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      let url=this.sg['domainPath']+"flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
     }
     }else{
-      let url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
+      let url=this.sg['domainPath']+"flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
           this.router.navigateByUrl(url);
 
        }
