@@ -35,6 +35,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   loaderValue = 10;
   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   isResponse :boolean = true;
+  @ViewChild('closeModel')closeModel:ElementRef
 
   options: Options = {
     floor: 0,
@@ -326,9 +327,6 @@ export class HotelListComponent implements OnInit,OnDestroy {
       }
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
-      console.log(this.hotelList);
-      
-      
       this.hotelWithoutFilterList = res.response.hotels;
       this.GetMinAndMaxPriceForFilter();
       this.GetPartners();
@@ -730,12 +728,29 @@ export class HotelListComponent implements OnInit,OnDestroy {
   showAminitiesList:any = [];
   showAminities(item) {
     this.showAminitiesList = item.hotelInfo.amenity;
-    console.log(this.showAminitiesList , "filteraminities");
+    
   }
 
 
-amenityCount(data){
-  data.reduce((prev, next) => {return prev + next});
-}
+  amenityCount(data) {
+    let retVal = "";
+    let obj: any = Object.values(data)
+    obj = obj.reduce((prev: any, next: any) => {
+      return prev + next;
+
+    });
+    if (obj > 3) {
+      obj = obj - 3;
+      retVal = obj + "+";
+    }
+
+    return retVal;
+
+  }
+  closeAmenityModelDiv:boolean = true;
+
+  // closeAmenityModel(){
+  //  this.closeAmenityModelDiv = false;
+  // }
 
 }
