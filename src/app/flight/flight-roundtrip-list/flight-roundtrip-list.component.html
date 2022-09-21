@@ -1,34 +1,34 @@
 <main class="site-main mob-main">
-  <section class="bradcome-area mt-110 mb-10">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="bradcome-list">
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
-                        <li class="list-inline-item"><span>/</span></li>
-                        <li class="list-inline-item"><a href="javascript:;"  routerLink="/compare-fly">Travel & Stays</a></li>
-                        <li class="list-inline-item"><span>/</span></li>
-                        <li class="list-inline-item"><span>Flight Search</span></li>
-                    </ul>
+    <section class="bradcome-area mt-110 mb-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="bradcome-list">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
+                            <li class="list-inline-item"><span>/</span></li>
+                            <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Travel & Stays</a></li>
+                            <li class="list-inline-item"><span>/</span></li>
+                            <li class="list-inline-item"><span>Flight Search</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center" *ngIf="!isMobile && serverIssue==1">
+        <div class="no_flights_sec">
+            <div>
+                <p class="title">Yikes! No flight found</p>
+                <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                <div>
+                    <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
                 </div>
             </div>
         </div>
     </div>
-  </section>
-  
-  <div class="text-center" *ngIf="!isMobile && serverIssue==1">
-<div class="no_flights_sec">
-<div>
-<p class="title">Yikes! No flight found</p>
-<img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
-<p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
-<div>
-<button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
-</div>
-</div>
-</div>
-</div>
 
 
     <section class="flight-listing-area mt-10" *ngIf="!isMobile && serverIssue==0">
@@ -301,11 +301,11 @@
                                                 </div>
                                             </div>
                                             <div class="flight-listing-area">
-                                                <div class="accordion accordion-flush" id="accordionFlushOnward" >
-                                                <ng-container #itemsContainer></ng-container>
+                                                <div class="accordion accordion-flush" id="accordionFlushOnward">
+                                                    <ng-container #itemsContainer></ng-container>
                                                 </div>
                                                 <div class="text-center" *ngIf="!loader && flightList.length < 1">
-                                                    <div class="no_flights_sec" >
+                                                    <div class="no_flights_sec">
                                                         <div>
                                                             <p class="title">Yikes! No flight found</p>
                                                             <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
@@ -319,20 +319,20 @@
                                             </div>
 
                                             <ng-template #item let-item="item">
-                                                   <ng-container  *ngFor="let list of item; let i = index">
-                                                <div class="round-flight-listing round-click" *ngIf="list">
+                                                <ng-container *ngFor="let list of item; let i = index">
+                                                    <div class="round-flight-listing round-click" *ngIf="list">
 
 
-                                             <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
+                                                        <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
                                                             <div class="round-content-left">
                                                                 <div class="round-content-radio">
                                                                     <div>
-                                                                        <input id="onwardlist_{{list.flightKey}}" name="onwardRadio" class="RadioClass" type="radio"  >
+                                                                        <input id="onwardlist_{{list.flightKey}}" name="onwardRadio" class="RadioClass" type="radio">
                                                                         <label for="onwardlist_{{list.flightKey}}" class="css-label"></label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="round-content-image">
-                                                                   <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
+                                                                    <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
                                                                 </div>
                                                                 <div class="round-content-time" *ngIf="flightList">
                                                                     <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -357,8 +357,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                <div id="flush-collapse{{list.flightKey}}" class="collapse round-options-box" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
-                                               <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                                        <div id="flush-collapse{{list.flightKey}}" class="collapse round-options-box" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
+                                                            <ng-container *ngFor="let item of list.priceSummary; let j = index">
                                                                 <div class="round-options-box-list selectedOnwardDiv" *ngIf="item.splrtFareFlight==false" id="selectedOnwardDiv_{{list.flightKey}}_{{j}}">
                                                                     <div class="round-options-list-top">
                                                                         <div class="round-list-image-box">
@@ -446,14 +446,14 @@
 
                                                                 </div>
                                                             </ng-container>
-                                                </div>
-                                                </div>
-                                                   </ng-container >
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
                                             </ng-template>
-                                             </div>
-                                            <div id="endOfPage" (click)="loadData()"></div>
-
                                         </div>
+                                        <div id="endOfPage" (click)="loadData()"></div>
+
+                                    </div>
 
                                     <div class="col-md-6">
                                         <div class="round-flight-listing round-from-box" [hidden]="loader">
@@ -488,12 +488,12 @@
                                         </div>
                                         <div class="flight-listing-area">
 
-                                           <div class="accordion accordion-flush" id="accordionFlushReturn" >
+                                            <div class="accordion accordion-flush" id="accordionFlushReturn">
                                                 <ng-container #itemsReturnContainer></ng-container>
                                             </div>
-                                            
+
                                             <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">
-                                                <div class="no_flights_sec" >
+                                                <div class="no_flights_sec">
                                                     <div>
                                                         <p class="title">Yikes! No flight found</p>
                                                         <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
@@ -506,63 +506,63 @@
                                             </div>
 
                                             <ng-template #returnItem let-item="item">
-                                                   <ng-container  *ngFor="let list of item; let i = index">
-                                                <div class=" round-flight-listing round-click" *ngIf="list">
+                                                <ng-container *ngFor="let list of item; let i = index">
+                                                    <div class=" round-flight-listing round-click" *ngIf="list">
 
 
-                                             <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
+                                                        <div class="round-flight-listing-content  collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
                                                             <div class="round-content-left">
-                                                               <div class="round-content-radio">
-                                                                <div>
-                                                                    <input name="return_roundlist" id="return_roundlist_{{list.flightKey}}" class="RadioClass" (change)="onReturnRadioChange(i,$event)" type="radio">
-                                                                    <label for="return_roundlist_{{list.flightKey}}" class="css-label"></label>
+                                                                <div class="round-content-radio">
+                                                                    <div>
+                                                                        <input name="return_roundlist" id="return_roundlist_{{list.flightKey}}" class="RadioClass" (change)="onReturnRadioChange(i,$event)" type="radio">
+                                                                        <label for="return_roundlist_{{list.flightKey}}" class="css-label"></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="round-content-image">
+                                                                    <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
+                                                                </div>
+                                                                <div class="round-content-time">
+                                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                                    <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}} |
+                                                                        <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
+                                                                        <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                            <div class="round-content-image">
-                                                               <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
-                                                            </div>
-                                                            <div class="round-content-time">
-                                                                <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
-                                                                <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}} |
-                                                                    <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
-                                                                    <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
-                                                                </p>
-                                                            </div>
-                                                            </div>
                                                             <div class="round-content-right">
-                                                                 <div class="round-content-stops">
-                                                                <h6>{{ list.flights | durationTotalTime }}</h6>
-                                                                <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
-                                                                <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
-                                                                <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
-                                                            </div>
-                                                            <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
-                                                                <h6>₹ {{list.priceSummary[0].totalFare | number}}</h6>
-                                                                <img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1">
-                                                                <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
-                                                                <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more </a>
-                                                                <a href="javascript:void(0)" class="moreview" style="cursor:default ;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
-                                                            </div>
+                                                                <div class="round-content-stops">
+                                                                    <h6>{{ list.flights | durationTotalTime }}</h6>
+                                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</p>
+                                                                    <p *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</p>
+                                                                    <p *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</p>
+                                                                </div>
+                                                                <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
+                                                                    <h6>₹ {{list.priceSummary[0].totalFare | number}}</h6>
+                                                                    <img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1">
+                                                                    <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                                    <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more </a>
+                                                                    <a href="javascript:void(0)" class="moreview" style="cursor:default ;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                <div id="flush-collapser{{list.flightKey}}" class="collapse round-options-box" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
-<ng-container *ngFor="let item of list.priceSummary; let j = index">
-                                                            <div class="round-options-box-list selectedReturnDiv" *ngIf="item.splrtFareFlight==false" id="selectedReturnDiv_{{list.flightKey}}_{{j}}">
-                                                                <div class="round-options-list-top">
-                                                                    <div class="round-list-image-box">
-                                                                        <div class="round-list-image">
-                                                                            <img src="{{cdnUrl}}/images/flight_partners/small-no/{{item.partnerName}}.png" alt="{{item.partnerName}}" class="pt-1 pb-1">
-                                                                            <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                        <div id="flush-collapser{{list.flightKey}}" class="collapse round-options-box" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
+                                                            <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                                                <div class="round-options-box-list selectedReturnDiv" *ngIf="item.splrtFareFlight==false" id="selectedReturnDiv_{{list.flightKey}}_{{j}}">
+                                                                    <div class="round-options-list-top">
+                                                                        <div class="round-list-image-box">
+                                                                            <div class="round-list-image">
+                                                                                <img src="{{cdnUrl}}/images/flight_partners/small-no/{{item.partnerName}}.png" alt="{{item.partnerName}}" class="pt-1 pb-1">
+                                                                                <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                                            </div>
+                                                                            <div class="flight-options-text">
+                                                                                <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
+                                                                                <p class="text-red" *ngIf="item.refundStatus != 1">Non-Refundable</p>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="flight-options-text">
-                                                                            <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
-                                                                            <p class="text-red" *ngIf="item.refundStatus != 1">Non-Refundable</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="round-list-price">
-                                                                        <div class="flight-options-price d-flex align-items-center">
-                                                                            <p>&#8377;{{item.totalFare |number}}</p>
-                                                                            <span class="information-icon">
+                                                                        <div class="round-list-price">
+                                                                            <div class="flight-options-price d-flex align-items-center">
+                                                                                <p>&#8377;{{item.totalFare |number}}</p>
+                                                                                <span class="information-icon">
                                                                   <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title">
@@ -588,15 +588,15 @@
                                                                       </div>
                                                                   </div>
                                                               </span>
-                                                                        </div>
-                                                                        <div class="round-list-btns">
-                                                                            <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</button>
+                                                                            </div>
+                                                                            <div class="round-list-btns">
+                                                                                <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="round-options-list-bottom">
-                                                                    <div class="round-extra">
-                                                                        <!--<ul class="extra-tabs-right-ul">
+                                                                    <div class="round-options-list-bottom">
+                                                                        <div class="round-extra">
+                                                                            <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
                                                                       <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
@@ -624,18 +624,18 @@
                                                                   </div>
                                                               </li>
                                                           </ul>-->
-                                                                    </div>
-                                                                    <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail(list.flightKey,list.flights,item,$event,'return')">
+                                                                        </div>
+                                                                        <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail(list.flightKey,list.flights,item,$event,'return')">
                                                           Flight Details
                                                           <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                        </ng-container>
-                                                </div>
-                                                </div>
-                                                   </ng-container >
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
                                             </ng-template>
                                         </div>
 
@@ -712,16 +712,16 @@
                     </div>
                 </div>
                 <div class="text-center" *ngIf="serverIssue==1">
-                <div class="no_flights_sec" >
-                <div>
-                <p class="title">Yikes! No flight found</p>
-                <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
-                <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
-                <div>
-                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
-                </div>
-                </div>
-                </div>
+                    <div class="no_flights_sec">
+                        <div>
+                            <p class="title">Yikes! No flight found</p>
+                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                            <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
+                            <div>
+                                <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12" *ngIf="serverIssue==0">
                     <div class="mob-list-area mob-fr-list-area">
@@ -730,11 +730,11 @@
                                 <div class="mob-fr-list-title" [hidden]="loader">
                                     <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} To {{toCityName}}</h6>
                                 </div>
-                                <div class="accordion accordion-flush" id="accordionFlushOnward" >
-                                <ng-container #itemsContainer></ng-container>
+                                <div class="accordion accordion-flush" id="accordionFlushOnward">
+                                    <ng-container #itemsContainer></ng-container>
                                 </div>
                                 <div class="text-center" *ngIf="!loader && flightList.length < 1">
-                                    <div class="no_flights_sec" >
+                                    <div class="no_flights_sec">
                                         <div>
                                             <p class="title">Yikes! No flight found</p>
                                             <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
@@ -746,75 +746,75 @@
                                     </div>
                                 </div>
                                 <ng-template #item let-item="item">
-                                    <ng-container  *ngFor="let list of item; let i = index">
-                                    <div >
-                                        <div class="mob-list-itemsr mob-list-itemsor"  *ngIf="list" id="MobileOnward_{{list.flightKey}}">
-                                            <div class="mob-list-items-name collapsed"  type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
-                                                <div class="mob-list-items-name-top">
-                                                    <div class="mob-list-items-image">
-                                                    <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
-                                                        <div class="mob-list-flight-name">
-                                                            <h6>{{list.flights[0].airlineName}}</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mob-list-items-name-bottom">
-                                                    <div class="name-bottom-top">
-                                                        <div class="name-bottom-top-left">
-                                                            <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
-                                                            <p>{{list.flights[0].departureAirport}}</p>
-                                                        </div>
-                                                        <div class="name-bottom-top-center">
-                                                            <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                        </div>
-                                                        <div class="name-bottom-top-right">
-                                                            <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}} </h6>
-                                                            <p>{{list.flights[0].arrivalAirport}}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mob-fr-time">
-                                                        <p>{{ list.flights | durationTotalTime }} |
-                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</span>
-                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</span>
-                                                                    <span  *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="mob-items-book-list-items">
-                                                        <div class="mob-book-list-top">
-                                                            <div class="mob-booking-image">
-                                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="20">
+                                    <ng-container *ngFor="let list of item; let i = index">
+                                        <div>
+                                            <div class="mob-list-itemsr mob-list-itemsor" *ngIf="list" id="MobileOnward_{{list.flightKey}}">
+                                                <div class="mob-list-items-name collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapse{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapse{{list.flightKey}}" (click)="toggle(list.flightKey)">
+                                                    <div class="mob-list-items-name-top">
+                                                        <div class="mob-list-items-image">
+                                                            <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
+                                                            <div class="mob-list-flight-name">
+                                                                <h6>{{list.flights[0].airlineName}}</h6>
                                                             </div>
-                                                            <div class="mob-booking-price">
-                                                                <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mob-list-items-name-bottom">
+                                                        <div class="name-bottom-top">
+                                                            <div class="name-bottom-top-left">
+                                                                <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                                <p>{{list.flights[0].departureAirport}}</p>
                                                             </div>
-                                                            <div class="mob-more-flight">
-                                                                <a href="javascript:void(0)" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more</a>
+                                                            <div class="name-bottom-top-center">
+                                                                <img src="{{cdnUrl}}/images/icons/mob-flight.svg" alt="" />
+                                                            </div>
+                                                            <div class="name-bottom-top-right">
+                                                                <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}} </h6>
+                                                                <p>{{list.flights[0].arrivalAirport}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mob-fr-time">
+                                                            <p>{{ list.flights | durationTotalTime }} |
+                                                                <span *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</span>
+                                                                <span *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</span>
+                                                                <span *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="mob-items-book-list-items">
+                                                            <div class="mob-book-list-top">
+                                                                <div class="mob-booking-image">
+                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="20">
+                                                                </div>
+                                                                <div class="mob-booking-price">
+                                                                    <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
+                                                                </div>
+                                                                <div class="mob-more-flight">
+                                                                    <a href="javascript:void(0)" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more</a>
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <!--  <div class="name-bottom-bottom">
+                                                        <!--  <div class="name-bottom-bottom">
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
                                           </div>-->
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="mob-items-book-list collapse"  id="flush-collapse{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
-                                                <ng-container *ngFor="let item of list.priceSummary; let j = index">
-                                                    <div class="mob-items-book-list-items mob-items-book-list-itemso" id="mob-items-book-list-itemso_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
-                                                        <div class="mob-book-list-top">
-                                                            <div class="mob-booking-image">
-                                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
+                                                <div class="mob-items-book-list collapse" id="flush-collapse{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushOnward">
+                                                    <ng-container *ngFor="let item of list.priceSummary; let j = index">
+                                                        <div class="mob-items-book-list-items mob-items-book-list-itemso" id="mob-items-book-list-itemso_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
+                                                            <div class="mob-book-list-top">
+                                                                <div class="mob-booking-image">
+                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
+                                                                </div>
+                                                                <div class="mob-booking-price">
+                                                                    <h6>₹ {{item.totalFare |number}}</h6>
+                                                                </div>
+                                                                <div class="mob-booking-Selected">
+                                                                    <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</a>
+                                                                </div>
                                                             </div>
-                                                            <div class="mob-booking-price">
-                                                                <h6>₹ {{item.totalFare |number}}</h6>
-                                                            </div>
-                                                            <div class="mob-booking-Selected">
-                                                                <a href="javascript:void(0)" class="button-style onwardbuttons" id="selectedOnward_{{list.flightKey}}_{{j}}" (click)="onSelectOnword(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mob-book-list-bottom">
-                                                            <div class="mob-extra">
-                                                                <!--<ul>
+                                                            <div class="mob-book-list-bottom">
+                                                                <div class="mob-extra">
+                                                                    <!--<ul>
                                                       <li>
                                                           <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
                                                       </li>
@@ -825,67 +825,66 @@
                                                           <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
                                                       </li>
                                                   </ul>-->
+                                                                </div>
+                                                                <div class="mob-details">
+                                                                    <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.svg" alt="" /> </a>
+                                                                </div>
                                                             </div>
-                                                            <div class="mob-details">
-                                                                <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
-                                                            </div>
+
                                                         </div>
 
+                                                    </ng-container>
+                                                    <div class="mob-items-book-Showless showless-close">
+                                                        <a href="javascript:void(0);">Show less</a>
                                                     </div>
-
-                                                </ng-container>
-                                                <div class="mob-items-book-Showless showless-close">
-                                                    <a href="javascript:void(0);">Show less</a>
                                                 </div>
-                                            </div>
-                                            <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
-                                                <div class="mob-fd-box">
-                                                    <div class="mob-title">
-                                                        <h3>Flight Details</h3>
-                                                        <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
-                                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="mob-fd-filters">
-                                                        <div class="mob-fd-accordion">
-                                                            <div class="accordion" id="accordionExample">
-                                                                <div class="accordion-item">
-                                                                    <!-- <h2 class="accordion-header" id="headingOne-fd">
+                                                <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
+                                                    <div class="mob-fd-box">
+                                                        <div class="mob-title">
+                                                            <h3>Flight Details</h3>
+                                                            <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
+                                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="mob-fd-filters">
+                                                            <div class="mob-fd-accordion">
+                                                                <div class="accordion" id="accordionExample">
+                                                                    <div class="accordion-item">
+                                                                        <!-- <h2 class="accordion-header" id="headingOne-fd">
                                                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-fd"
                                                                 aria-expanded="true" aria-controls="collapseOne-fd">
                                                                 Flight Details
                                                             </button>
                                                         </h2> -->
-                                                                    <div id="collapseOne-fd">
-                                                                        <div class="accordion-body">
-                                                                            <div class="extra-tabs-details FlightDetails-box">
-                                                                                <div class="extra-tabs-details-top">
-                                                                                    <div class="extra-tabs-left">
-                                                                                        <p>{{fromCityName}} to {{toCityName}} <br> Depart</p>
+                                                                        <div id="collapseOne-fd">
+                                                                            <div class="accordion-body">
+                                                                                <div class="extra-tabs-details FlightDetails-box">
+                                                                                    <div class="extra-tabs-details-top">
+                                                                                        <div class="extra-tabs-left">
+                                                                                            <p>{{fromCityName}} to {{toCityName}} <br> Depart</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="extra-tabs-details-bottom ">
-                                                                                    <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
-                                                                                        <div class="tabs-depart-one">
-                                                                                            <p class="depart-one-image">
-                                                                                            <i class="me-2 free-flow air-logo intAirLogo size-28 x{{list.flights[i].airline}}"></i>
-                                                                                          {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
-                                                                                            <div class="tabs-depart-left  float-none">
-                                                                                                <div class="tabs-depart-times">
-                                                                                                    <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
-                                                                                                    <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                                                    <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                    <div class="extra-tabs-details-bottom ">
+                                                                                        <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
+                                                                                            <div class="tabs-depart-one">
+                                                                                                <p class="depart-one-image">
+                                                                                                    <i class="me-2 free-flow air-logo intAirLogo size-28 x{{list.flights[i].airline}}"></i> {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                                <div class="tabs-depart-left  float-none">
+                                                                                                    <div class="tabs-depart-times">
+                                                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                                    </div>
+                                                                                                    <div class="tabs-depart-total">
+                                                                                                        <p>{{details.duration | durationTime}}</p>
+                                                                                                    </div>
+                                                                                                    <div class="tabs-depart-times">
+                                                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                                <div class="tabs-depart-total">
-                                                                                                    <p>{{details.duration | durationTime}}</p>
-                                                                                                </div>
-                                                                                                <div class="tabs-depart-times">
-                                                                                                    <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
-                                                                                                    <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                                                    <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <!-- <div class="tabs-depart-right">
+                                                                                                <!-- <div class="tabs-depart-right">
                                                                                     <div class="Baggage">
                                                                                         <h5>Baggage</h5>
                                                                                         <p>Adult</p>
@@ -899,17 +898,17 @@
                                                                                         <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
                                                                                     </div>
                                                                                 </div> -->
-                                                                                        </div>
-                                                                                        <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
-                                                                                            <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                                            </div>
+                                                                                            <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                                                <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <!-- <div class="accordion-item">
+                                                                    <!-- <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingTwo-fd">
                                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                                                 data-bs-target="#collapseTwo-fd" aria-expanded="false" aria-controls="collapseTwo-fd">
@@ -1132,17 +1131,17 @@
                                                             </div>
                                                         </div>
                                                     </div>  -->
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- <div class="mob-sf-btns">
+                                                            <!-- <div class="mob-sf-btns">
                                                 <a href="">Apply</a>
                                             </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                        </ng-container >
+                                    </ng-container>
                                 </ng-template>
                                 <div id="endOfPage" (click)="loadData()"></div>
                             </div>
@@ -1166,11 +1165,11 @@
                                 <div class="mob-fr-list-title" [hidden]="loader">
                                     <h6><img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{toCityName}} To {{fromCityName}}</h6>
                                 </div>
-                                <div class="accordion accordion-flush" id="accordionFlushReturn" >
-                                                <ng-container #itemsReturnContainer></ng-container>
-                                            </div>
+                                <div class="accordion accordion-flush" id="accordionFlushReturn">
+                                    <ng-container #itemsReturnContainer></ng-container>
+                                </div>
                                 <div class="text-center" *ngIf="!loader && ReturnflightList.length < 1">
-                                    <div class="no_flights_sec" >
+                                    <div class="no_flights_sec">
                                         <div>
                                             <p class="title">Yikes! No flight found</p>
                                             <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
@@ -1182,75 +1181,75 @@
                                     </div>
                                 </div>
                                 <ng-template #returnItem let-item="item">
-                                    <ng-container  *ngFor="let list of item; let i = index">
-                                    <div >
-                                        <div class="mob-list-itemsr mob-list-itemsrr"  *ngIf="list" id="MobileReturn_{{list.flightKey}}">
-                                            <div class="mob-list-items-name  collapsed" type="button" data-bs-toggle="collapse"  attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
-                                                <div class="mob-list-items-name-top">
-                                                    <div class="mob-list-items-image">
-                                                      <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
-                                                        <div class="mob-list-flight-name">
-                                                            <h6>{{list.flights[0].airlineName}}</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mob-list-items-name-bottom">
-                                                    <div class="name-bottom-top">
-                                                        <div class="name-bottom-top-left">
-                                                            <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
-                                                            <p>{{list.flights[0].departureAirport}}</p>
-                                                        </div>
-                                                        <div class="name-bottom-top-center">
-                                                            <img src="{{cdnUrl}}/images/icons/mob-flight.png" alt="" />
-                                                        </div>
-                                                        <div class="name-bottom-top-right">
-                                                            <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
-                                                            <p>{{list.flights[0].arrivalAirport}}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mob-fr-time">
-                                                                    <p>{{ list.flights | durationTotalTime }} |
-                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</span>
-                                                                    <span *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</span>
-                                                                    <span  *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="mob-items-book-list-items">
-                                                        <div class="mob-book-list-top">
-                                                            <div class="mob-booking-image">
-                                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="20">
+                                    <ng-container *ngFor="let list of item; let i = index">
+                                        <div>
+                                            <div class="mob-list-itemsr mob-list-itemsrr" *ngIf="list" id="MobileReturn_{{list.flightKey}}">
+                                                <div class="mob-list-items-name  collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapser{{list.flightKey}}" aria-expanded="false" aria-controls="flush-collapser{{list.flightKey}}" (click)="toggleR(list.flightKey)">
+                                                    <div class="mob-list-items-name-top">
+                                                        <div class="mob-list-items-image">
+                                                            <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
+                                                            <div class="mob-list-flight-name">
+                                                                <h6>{{list.flights[0].airlineName}}</h6>
                                                             </div>
-                                                            <div class="mob-booking-price">
-                                                                <h6>₹ {{list.priceSummary[0].totalFare|number}}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mob-list-items-name-bottom">
+                                                        <div class="name-bottom-top">
+                                                            <div class="name-bottom-top-left">
+                                                                <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}}</h6>
+                                                                <p>{{list.flights[0].departureAirport}}</p>
                                                             </div>
-                                                            <div class="mob-more-flight">
-                                                                <a href="javascript:void(0)" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more</a>
+                                                            <div class="name-bottom-top-center">
+                                                                <img src="{{cdnUrl}}/images/icons/mob-flight.svg" alt="" />
+                                                            </div>
+                                                            <div class="name-bottom-top-right">
+                                                                <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                                <p>{{list.flights[0].arrivalAirport}}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mob-fr-time">
+                                                            <p>{{ list.flights | durationTotalTime }} |
+                                                                <span *ngIf="list.flights.length ==1 && list.flights[0].stops==0">non stop</span>
+                                                                <span *ngIf="list.flights.length ==1 && list.flights[0].stops==1">{{list.flights[0].stops}} stop</span>
+                                                                <span *ngIf="list.flights.length > 1">{{list.flights.length-1}} stop</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="mob-items-book-list-items">
+                                                            <div class="mob-book-list-top">
+                                                                <div class="mob-booking-image">
+                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" width="20">
+                                                                </div>
+                                                                <div class="mob-booking-price">
+                                                                    <h6>₹ {{list.priceSummary[0].totalFare|number}}</h6>
+                                                                </div>
+                                                                <div class="mob-more-flight">
+                                                                    <a href="javascript:void(0)" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more</a>
 
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <!-- <div class="name-bottom-bottom">
+                                                        <!-- <div class="name-bottom-bottom">
                                               <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
                                           </div>-->
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="mob-items-book-list collapse" id="flush-collapser{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
-                                                <ng-container *ngFor="let item of list.priceSummary; let j = index;let last=last;">
-                                                    <div class="mob-items-book-list-items mob-items-book-list-itemsr" id="mob-items-book-list-itemsr_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
-                                                        <div class="mob-book-list-top">
-                                                            <div class="mob-booking-image">
-                                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
+                                                <div class="mob-items-book-list collapse" id="flush-collapser{{list.flightKey}}" aria-labelledby="flush-heading{{list.flightKey}}" data-bs-parent="#accordionFlushReturn">
+                                                    <ng-container *ngFor="let item of list.priceSummary; let j = index;let last=last;">
+                                                        <div class="mob-items-book-list-items mob-items-book-list-itemsr" id="mob-items-book-list-itemsr_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
+                                                            <div class="mob-book-list-top">
+                                                                <div class="mob-booking-image">
+                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="20" />
+                                                                </div>
+                                                                <div class="mob-booking-price">
+                                                                    <h6>₹{{item.totalFare |number}}</h6>
+                                                                </div>
+                                                                <div class="mob-booking-Selected">
+                                                                    <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</button>
+                                                                </div>
                                                             </div>
-                                                            <div class="mob-booking-price">
-                                                                <h6>₹{{item.totalFare |number}}</h6>
-                                                            </div>
-                                                            <div class="mob-booking-Selected">
-                                                                <button class="button-style returnButtons" [disabled]="item.disabled" [ngClass]="{'disable-partner':item.disabled}" id="selectedReturn_{{list.flightKey}}_{{j}}" (click)="onSelectReturn(list.flightKey,list.flights,item,list.priceSummary,$event,j)">Select</button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mob-book-list-bottom">
-                                                            <div class="mob-extra">
-                                                                <!--<ul>
+                                                            <div class="mob-book-list-bottom">
+                                                                <div class="mob-extra">
+                                                                    <!--<ul>
                                                       <li>
                                                           <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
                                                       </li>
@@ -1261,66 +1260,65 @@
                                                           <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
                                                       </li>
                                                   </ul>-->
-                                                            </div>
-                                                            <div class="mob-details">
-                                                                <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.png" alt="" /> </a>
+                                                                </div>
+                                                                <div class="mob-details">
+                                                                    <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.svg" alt="" /> </a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                </ng-container>
-                                                <div class="mob-items-book-Showless showless-close">
-                                                    <a href="javascript:void(0);">Show less</a>
-                                                </div>
-                                            </div>
-                                            <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
-                                                <div class="mob-fd-box">
-                                                    <div class="mob-title">
-                                                        <h3>Flight Details</h3>
-                                                        <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
-                                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                        </a>
+                                                    </ng-container>
+                                                    <div class="mob-items-book-Showless showless-close">
+                                                        <a href="javascript:void(0);">Show less</a>
                                                     </div>
-                                                    <div class="mob-fd-filters">
-                                                        <div class="mob-fd-accordion">
-                                                            <div class="accordion" id="accordionExample">
-                                                                <div class="accordion-item">
-                                                                    <!-- <h2 class="accordion-header" id="headingOne-fd">
+                                                </div>
+                                                <div class="mob-fd-area" id="flightDetailMobile_{{list.flightKey}}">
+                                                    <div class="mob-fd-box">
+                                                        <div class="mob-title">
+                                                            <h3>Flight Details</h3>
+                                                            <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
+                                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div class="mob-fd-filters">
+                                                            <div class="mob-fd-accordion">
+                                                                <div class="accordion" id="accordionExample">
+                                                                    <div class="accordion-item">
+                                                                        <!-- <h2 class="accordion-header" id="headingOne-fd">
                                                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-fd"
                                                                 aria-expanded="true" aria-controls="collapseOne-fd">
                                                                 Flight Details
                                                             </button>
                                                         </h2> -->
-                                                                    <div id="collapseOne-fd" >
-                                                                        <div class="accordion-body">
-                                                                            <div class="extra-tabs-details FlightDetails-box">
-                                                                                <div class="extra-tabs-details-top">
-                                                                                    <div class="extra-tabs-left">
-                                                                                        <p>{{toCityName}} to {{fromCityName}} <br> Depart</p>
+                                                                        <div id="collapseOne-fd">
+                                                                            <div class="accordion-body">
+                                                                                <div class="extra-tabs-details FlightDetails-box">
+                                                                                    <div class="extra-tabs-details-top">
+                                                                                        <div class="extra-tabs-left">
+                                                                                            <p>{{toCityName}} to {{fromCityName}} <br> Depart</p>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="extra-tabs-details-bottom ">
-                                                                                    <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
-                                                                                        <div class="tabs-depart-one">
-                                                                                            <p class="depart-one-image">
-                                                                                            <i class="me-2 free-flow air-logo intAirLogo size-28 x{{list.flights[i].airline}}"></i>
-                                                                                            {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
-                                                                                            <div class="tabs-depart-left  float-none">
-                                                                                                <div class="tabs-depart-times">
-                                                                                                    <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
-                                                                                                    <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
-                                                                                                    <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                    <div class="extra-tabs-details-bottom ">
+                                                                                        <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
+                                                                                            <div class="tabs-depart-one">
+                                                                                                <p class="depart-one-image">
+                                                                                                    <i class="me-2 free-flow air-logo intAirLogo size-28 x{{list.flights[i].airline}}"></i> {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
+                                                                                                <div class="tabs-depart-left  float-none">
+                                                                                                    <div class="tabs-depart-times">
+                                                                                                        <h5 class="mb-1 fw_7">{{details.departureDateTime | date:'HH:mm'}}</h5>
+                                                                                                        <p>{{details.departureDateTime | date:"EEE, MMM dd"}}</p>
+                                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.departureAirport].airport_name}} ({{details.departureAirport}})</p>
+                                                                                                    </div>
+                                                                                                    <div class="tabs-depart-total">
+                                                                                                        <p>{{details.duration | durationTime}}</p>
+                                                                                                    </div>
+                                                                                                    <div class="tabs-depart-times">
+                                                                                                        <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
+                                                                                                        <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
+                                                                                                        <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
+                                                                                                    </div>
                                                                                                 </div>
-                                                                                                <div class="tabs-depart-total">
-                                                                                                    <p>{{details.duration | durationTime}}</p>
-                                                                                                </div>
-                                                                                                <div class="tabs-depart-times">
-                                                                                                    <h5 class="mb-1 fw_7">{{details.arrivalDateTime | date:'HH:mm'}}</h5>
-                                                                                                    <p>{{details.arrivalDateTime | date:"EEE ,MMM dd"}}</p>
-                                                                                                    <p class="mt-1 opacity_05" *ngIf="airportsNameJson">{{this.airportsNameJson[details.arrivalAirport].airport_name}} ({{details.arrivalAirport}})</p>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <!-- <div class="tabs-depart-right">
+                                                                                                <!-- <div class="tabs-depart-right">
                                                                                     <div class="Baggage">
                                                                                         <h5>Baggage</h5>
                                                                                         <p>Adult</p>
@@ -1334,17 +1332,17 @@
                                                                                         <p>7 Kgs <span class="opacity_05">(1 plece only)</span></p>
                                                                                     </div>
                                                                                 </div> -->
-                                                                                        </div>
-                                                                                        <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
-                                                                                            <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                                            </div>
+                                                                                            <div class="tabs-depart-two" *ngIf="getLayoverHour(list.flights[i],list.flights[i+1])">
+                                                                                                <p>Change of planes・{{getLayoverHour(list.flights[i],list.flights[i+1]) | durationTime}} Layover in {{this.airportsNameJson[details.arrivalAirport].airport_name}}</p>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <!-- <div class="accordion-item">
+                                                                    <!-- <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingTwo-fd">
                                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                                                 data-bs-target="#collapseTwo-fd" aria-expanded="false" aria-controls="collapseTwo-fd">
@@ -1567,17 +1565,17 @@
                                                             </div>
                                                         </div>
                                                     </div>  -->
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- <div class="mob-sf-btns">
+                                                            <!-- <div class="mob-sf-btns">
                                                 <a href="">Apply</a>
                                             </div> -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                        </ng-container>
+                                    </ng-container>
                                 </ng-template>
                                 <div id="endOfReturnPage" (click)="loadReturnData()"></div>
                             </div>
@@ -1603,7 +1601,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body pt-0">
-                <div >
+                <div>
                     <img src="{{cdnUrl}}/images/flight_partners/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
                 </div>
                 <div class="widget-content">
@@ -2274,8 +2272,8 @@
                             <div class="round-ff-content">
                                 <div class="round-ff-left" [hidden]="!isOnwardSelected">
                                     <div class="round-ff-image">
-                                    <i class="free-flow air-logo intAirLogo size-28 x{{onwardSelectedFlight.flights|airlines}}"></i>
-                   
+                                        <i class="free-flow air-logo intAirLogo size-28 x{{onwardSelectedFlight.flights|airlines}}"></i>
+
                                         <p> {{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                     </div>
                                     <div class="round-ff-time">
@@ -2290,7 +2288,7 @@
                                         <h6> {{onwardSelectedFlight.flights | durationTotalTime}}</h6>
                                         <p *ngIf="onwardSelectedFlight.flights.length ==1 && onwardSelectedFlight.flights[0].stops==0">non stop</p>
                                         <p *ngIf="onwardSelectedFlight.flights.length ==1 && onwardSelectedFlight.flights[0].stops==1">{{onwardSelectedFlight.flights[0].stops}} stop</p>
-                                        <p  *ngIf="onwardSelectedFlight.flights.length > 1">{{onwardSelectedFlight.flights.length-1}} stop</p>
+                                        <p *ngIf="onwardSelectedFlight.flights.length > 1">{{onwardSelectedFlight.flights.length-1}} stop</p>
 
                                     </div>
                                     <div class="round-ff-price">
@@ -2304,7 +2302,7 @@
                             <div class="round-ff-content">
                                 <div class="round-ff-left">
                                     <div class="round-ff-image">
-                                     <i class="free-flow air-logo intAirLogo size-28 x{{returnSelectedFlight.flights | airlines}}"></i>
+                                        <i class="free-flow air-logo intAirLogo size-28 x{{returnSelectedFlight.flights | airlines}}"></i>
                                         <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                     </div>
                                     <div class="round-ff-time">
@@ -2322,7 +2320,7 @@
 
                                         <p *ngIf="returnSelectedFlight.flights.length ==1 && returnSelectedFlight.flights[0].stops==0">non stop</p>
                                         <p *ngIf="returnSelectedFlight.flights.length ==1 && returnSelectedFlight.flights[0].stops==1">{{returnSelectedFlight.flights[0].stops}} stop</p>
-                                        <p  *ngIf="returnSelectedFlight.flights.length > 1">{{returnSelectedFlight.flights.length-1}} stop</p>
+                                        <p *ngIf="returnSelectedFlight.flights.length > 1">{{returnSelectedFlight.flights.length-1}} stop</p>
 
                                     </div>
                                     <div class="round-ff-price">
@@ -2461,8 +2459,7 @@
                                             <div class="tabs-depart-box">
                                                 <div class="tabs-depart-three" *ngFor="let flights of returnSelectedFlight.flights;let i = index">
                                                     <p class="depart-one-image">
-                                                    <i class=" me-2 free-flow air-logo intAirLogo size-28 x{{flights.airline}}"></i>
-                                                    {{flights.airline}} {{flights.flightNumber}}</p>
+                                                        <i class=" me-2 free-flow air-logo intAirLogo size-28 x{{flights.airline}}"></i> {{flights.airline}} {{flights.flightNumber}}</p>
                                                     <div class="tabs-depart-left  float-none">
                                                         <div class="tabs-depart-times">
                                                             <h5 class="mb-1 fw_7">{{flights.departureDateTime| date:'HH:mm'}}</h5>
