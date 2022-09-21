@@ -255,17 +255,17 @@ export class HomeComponent implements OnInit {
   }
 
   continueSearchHotel(param:any){
-    let  url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryStringForHotel((param)));
+    let  url = this.sg['domainPath']+"hotel-list?" + decodeURIComponent(this.ConvertObjToQueryStringForHotel((param)));
     this.router.navigateByUrl(url);
  }
 
   continueSearchBus(param:any){
-     let  url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
+     let  url = this.sg['domainPath']+"bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
       this.router.navigateByUrl(url);
 
   }
   continueSearchTrain(param:any){
-    let  url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
+    let  url = this.sg['domainPath']+"train/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
       this.router.navigateByUrl(url);
 
   }
