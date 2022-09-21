@@ -749,8 +749,8 @@ export class HotelListComponent implements OnInit,OnDestroy {
   }
   closeAmenityModelDiv:boolean = true;
 
-  // closeAmenityModel(){
-  //  this.closeAmenityModelDiv = false;
-  // }
+  closeAmenityModel(){
+    $('#moreAmenities').modal('hide');
+  }
 
 }
