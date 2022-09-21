@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: 'app-hotel-detail',
   templateUrl: './hotel-detail.component.html',
-  styleUrls: ['./hotel-detail.component.sass']
+  styleUrls: ['./hotel-detail.component.scss']
 })
 export class HotelDetailComponent implements OnInit {
 
@@ -204,7 +204,7 @@ export class HotelDetailComponent implements OnInit {
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
       var Details = JSON.parse(sessionStorage.getItem(urlParam.searchHotelKey));
-      //console.log(Details)
+     // console.log(Details)
       for (var key in Details.hotel.hotelInfo.amenity) {
         if(Details.hotel.hotelInfo.amenity[key] == 1)
         {

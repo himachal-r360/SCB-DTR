@@ -127,7 +127,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         };
         flight_PopularItems = [
         { name: 'Refundable_Fares', active: false, value: 'Refundable-Fares', count: 0 },
-        { name: 'non_stop', active: false, value: 'non-stop', count: 0 },
+        { name: 'non_stop', active: false, value: 'Non-Stop', count: 0 },
         { name: 'Morning_Departures', active: false, value: 'Morning-Departures', count: 0 },
         { name: 'Meals_Included', active: false, value: 'Meals-Included', count: 0 }
         ]
@@ -380,7 +380,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (popularItems.active == true && item.name == "no_stops") { item.active = true; return item; }else { item.active = false; return item;} })
     }
     if(!this.isMobile)
     {

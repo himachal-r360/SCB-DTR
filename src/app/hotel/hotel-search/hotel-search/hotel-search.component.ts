@@ -272,6 +272,10 @@ focusInput(){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
     this.checkOut.nativeElement.click();
+    if(moment(this.hotelSearchForm.value.checkOut ).format('YYYY-MM-DD') < moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD')){
+      this.hotelSearchForm.controls.checkOut.setValue(moment(event, 'YYYY-MM-DD').add(1, 'days'));
+    }
+    // this.hotelSearchForm.value.checkOut =  moment(event, 'YYYY-MM-DD').add(1, 'days');
   }
 
   checkOutDate(event){
