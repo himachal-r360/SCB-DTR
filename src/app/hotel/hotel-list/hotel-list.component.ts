@@ -35,6 +35,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   loaderValue = 10;
   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   isResponse :boolean = true;
+  @ViewChild('closeModel')closeModel:ElementRef
 
   options: Options = {
     floor: 0,
@@ -744,4 +745,33 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.showHideFilterMobile('hide');
     this.AllFilteredData();
   }
+
+  showAminitiesList:any = [];
+  showAminities(item) {
+    this.showAminitiesList = item.hotelInfo.amenity;
+    
+  }
+
+
+  amenityCount(data) {
+    let retVal = "";
+    let obj: any = Object.values(data)
+    obj = obj.reduce((prev: any, next: any) => {
+      return prev + next;
+
+    });
+    if (obj > 3) {
+      obj = obj - 3;
+      retVal = obj + "+";
+    }
+
+    return retVal;
+
+  }
+  closeAmenityModelDiv:boolean = true;
+
+  closeAmenityModel(){
+    $('#moreAmenities').modal('hide');
+  }
+
 }
