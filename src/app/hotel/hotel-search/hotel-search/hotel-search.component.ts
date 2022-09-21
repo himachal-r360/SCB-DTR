@@ -155,6 +155,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   increaseCount(i, item, title) {
     let totalCount;
     let childTotalCount;
+    let adultTotalCount;
     let adultBtn: any = document.getElementById('adultBtn_' + i);
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
@@ -164,10 +165,12 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       item.value.numberOfAdults = +item.value.numberOfAdults + 1;
     }
     childTotalCount = parseInt(item.value.numberOfChildren);
+    adultTotalCount = parseInt(item.value.numberOfAdults);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
+    // adultTotalCound > 3 ? adultBtn.disabled = true : adultBtn.disabled = false;
+    // childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
-    totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
-    // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
+    totalCount > 4 || adultTotalCount > 3 ? adultBtn.disabled = true : adultBtn.disabled = false;
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
 
@@ -176,6 +179,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   //Decrease child and adult value
   decreaseCount(i, item, title) {
     let totalCount;
+    let childTotalCount;
+    let adultTotalCount;
     let adultBtn: any = document.getElementById('adultBtn_' + i);
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
@@ -185,9 +190,13 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
     }
+    adultTotalCount = parseInt(item.value.numberOfAdults);
+    childTotalCount = parseInt(item.value.numberOfChildren);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
-    totalCount < 5 ? childBtn.disabled = false : childBtn.disabled = true;
-    totalCount < 5 ? adultBtn.disabled = false : adultBtn.disabled = true;
+    totalCount < 5  ? childBtn.disabled = false : childBtn.disabled = true;
+    totalCount < 5  ? adultBtn.disabled = false : adultBtn.disabled = true;
+    totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
+    totalCount > 4 || adultTotalCount > 3 ? adultBtn.disabled = true : adultBtn.disabled = false;
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
@@ -249,8 +258,15 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.hotelSearchForm['controls']['countryName'].setValue(param._source.countryName);
     this.hotelSearchForm['controls']['country'].setValue(param._source.country);
     this.cityName = this.hotelSearchForm.value.city;
+    $('.hotel-search-list').hide();
     this.checkIn.nativeElement.click()
   }
+focusInput(){
+        setTimeout(() => {
+        $('.hotel-search-list').show();
+        $('#citySearchRef').focus();
+        }, 10);
+}
 
   checkInDate(event){
     event = event.target.value;

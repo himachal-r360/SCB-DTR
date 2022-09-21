@@ -2,46 +2,21 @@ import { Component, OnInit, OnDestroy, DebugNode, NgModule, ViewChild, ChangeDet
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { environment } from '../../../environments/environment';
 import { AppConfigService } from '../../app-config.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IrctcApiService } from 'src/app/shared/services/irctc.service';
-import alertifyjs from 'alertifyjs';
 import * as moment from 'moment';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { stringify } from '@angular/compiler/src/util';
-
-
-declare let alertify: any;
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'YYYY-MM-DD',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
-
-
 declare var $: any;
-
 @Component({
   selector: 'app-flight-booking-retry',
   templateUrl: './flight-booking-retry.component.html',
-  styleUrls: ['./flight-booking-retry.component.scss'],
-  providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+  styleUrls: ['./flight-booking-retry.component.scss']
 })
 export class FlightBookingRetryComponent implements OnInit, OnDestroy {
   savedCards: any = [];
@@ -65,21 +40,15 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
   enableVAS: number = 0;
   completedSteps = 1;
   loaderValue = 10;
-
   maxAdults: number;
   maxChilds: number;
   maxInfants: number;
-  
   cdnUrl: any;
   serviceSettings: any;
   flightClasses: any;
   whatsappFeature: number = 0;
   customerInfo: any;
-  coupon_id: any;
-  indexCoupon: any;
-  coupon_name: any;
   coupon_code: any;
-  remove_Coupon: any;
   coupon_amount: number = 0;
   voucher_amount:number=0;
   voucher_code:string='';
@@ -96,16 +65,12 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
   returnAmount: any;
   convenience_fee: number = 0;
   partnerToken: any;
-
-
   flightOnwardDetails: any;
   flightReturnDetails: any;
 
   selectedOnwardVendor: any;
   selectedReturnVendor: any;
 
-  airportsNameJson: any;
-  airlinesNameJson: any;
   countryJson: any;
   EMI_interest: number = 16;
   EMIAvailableLimit: number = 3000;
@@ -130,14 +95,9 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
   ChildBaseFare: number = 0;
   InfantBaseFare: number = 0;
 
-
-
-  flightDetailsArrVal: any;
   steps: any =5;
 
   travelerDetails: any = {};
-  checked: any = false;
-  gstNumber: any
   mobileNumber: any;
   showLoader: number = 1;
   serviceId: string = 'Flight';
@@ -149,7 +109,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
 
   fetchOrderId:string;
 
-  constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService,  private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
+  constructor(private el: ElementRef,private ref: ChangeDetectorRef,  private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -207,12 +167,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 this.searchData = (this.flightSessionData.queryFlightData);
                 this.searchDataOrg = this.searchData ;
                 
-                
-                
-                console.log(this.flightSessionData);
-                
                 setTimeout(() => {
-               // $("#infoprocess").modal('show');
                 }, 10);
                 if( this.flightSessionData['travel_type']=='M') {
                 //Multicity
@@ -296,9 +251,6 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
                 sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(result)));
                 sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(result.flightDetails.fare)));
-
-                 
-                 
                  
                  this.syncCustomer(customerInfo);
                   
@@ -455,9 +407,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
         this.flightReturnDetails = this.flightSessionData.returnFlights;
         else
         this.flightReturnDetails = [];
-
         }
-
 
         this.partnerToken = this.selectedOnwardVendor.partnerName;
         } 
@@ -519,39 +469,6 @@ continuePayment(){
 
 }
 
- 
-
-  numberInput($event) {
-    var keycode = $event.which;
-    if (!(keycode >= 48 && keycode <= 57)) {
-      event.preventDefault();
-    }
-  }
-  AvoidSpace($event) {
-    var keycode = $event.which;
-    if (keycode == 32)
-      event.preventDefault();
-  }
-  specialcharInputAddress($event) {
-    var keycode = $event.which;
-    if ((keycode >= 33 && keycode <= 34) || (keycode >= 36 && keycode <= 43) || (keycode >= 60 && keycode <= 64) || (keycode >= 91 && keycode <= 96) || (keycode >= 123 && keycode <= 126) || (keycode == 8377) || (keycode == 8364) || (keycode == 128) || (keycode == 163) ||
-      (keycode == 165)) {
-      event.preventDefault();
-    }
-  }
-  convertToUpperCase($event) {
-    $event.target.value = $event.target.value.toUpperCase();
-  }
-
-
-  openmodal(content) {
-    this.modalService.open(content, { centered: true });
-  }
-
-
- 
-
-
 
   ConvertObjToQueryString(obj: any) {
     var str = [];
@@ -567,14 +484,10 @@ continuePayment(){
 
     if (e.action == 'done') {
      this.triggerBack();
-      //$('#bookingprocessExpires').modal('show');
     }
-
-
 
   }
 
-  
 
   calculateEMI(amount: number) {
     return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
@@ -645,23 +558,6 @@ continuePayment(){
     }
   }
 
-  sendFlightDetails() {
-    this.gotoTop();
-    this.completedSteps = 2;
-    this.steps = 2;
-  }
-
-  // get rendom string value
-  getRandomString(length: any) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-
   orderReferenceNumber:any;
 
   gotoTop() {
@@ -671,40 +567,6 @@ continuePayment(){
       behavior: 'smooth'
     });
   }
-
-  
-
-  moveTab(page) {
-    this.gotoTop();
-    if(page<5){
-    this.totalCollectibleAmount=this.totalCollectibleAmount-this.coupon_amount;
-    this.coupon_amount=0;
-    }
-
-    if(page<4){
-      this.totalCollectibleAmount=this.totalCollectibleAmount-this.partnerConvFee;
-    this.partnerConvFee=0;
-    }
-
-    if (page <= this.completedSteps) {
-      this.steps = page;
-      this.completedSteps = page;
-    }
-  }
-
-  continueSeatSelection() {
-    this.gotoTop();
-    this.steps = 4;
-    this.completedSteps = 4;
-  }
-
-
-  continueReviewBooking() {
-    this.gotoTop();
-    this.steps = 5;
-    this.completedSteps = 5;
-  }
-
 
 
   reciveflexiAmount(values) {
@@ -734,32 +596,6 @@ continuePayment(){
 
   }
 
-  /***----- APPLY COUPON (--parent--) ------***/
-  receiveCouponDetails($event) {
-
-    if ($event.type == 0) {
-      this.indexCoupon = $event.couponOptions;
-      this.coupon_id = this.indexCoupon.coupon_id;
-      this.coupon_name = this.indexCoupon.coupon_name;
-      this.coupon_code = this.indexCoupon.coupon_code;
-      this.coupon_amount = this.indexCoupon.coupon_amount;
-      this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) - (Number(this.coupon_amount))- Number(this.voucher_amount);
-      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - (Number(this.coupon_amount))- Number(this.voucher_amount);
-      sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
-    } else {
-      this.coupon_id = '';
-      this.coupon_name = '';
-      this.coupon_code = '';
-      this.coupon_amount = 0;
-      this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) - (Number(this.coupon_amount))- Number(this.voucher_amount);
-      this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) ) - (Number(this.coupon_amount))- Number(this.voucher_amount);
-      sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
-    }
-
-
-
-  }
-
   receivePointsPlus($event) {
     this.voucher_code=$event.code;
     this.voucher_amount=$event.value;
@@ -767,16 +603,6 @@ continuePayment(){
   }
 
 
-  /**----------REMOVE COUPON----------**/
-  removeCoupon(coupon_id, coupon_amount) {
-    this.coupon_id = '';
-    this.coupon_name = '';
-    this.coupon_code = '';
-    this.coupon_amount = 0;
-    this.totalCollectibleAmount = Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee) - Number(this.coupon_amount)- Number(this.voucher_amount);
-    this.sendflexiFare = (Number(this.totalCollectibleAmountFromPartnerResponse) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
-    sessionStorage.setItem(this.randomFlightDetailKey + '-totalFare', String(this.totalCollectibleAmount));
-  }
 
   isCollapseShow(identifyCollpase) {
 

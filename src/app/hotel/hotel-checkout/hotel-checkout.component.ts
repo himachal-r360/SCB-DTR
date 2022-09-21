@@ -122,7 +122,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         passengerSelectedArray:any={};
         totalAdult:number = 0;
         totalChild:number = 0;
-
+        EMI_interest: number = 16;
+        EMIAvailableLimit: number = 3000;
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog,  private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
 
@@ -285,7 +286,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
       sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
-
+  calculateEMI(amount: number) {
+    return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
+  }
 
   isCollapseShow(identifyCollpase) {
 
@@ -1266,7 +1269,7 @@ console.log(this.orderReferenceNumber);
         "discount": this.coupon_amount,
         "voucher_amount": this.voucher_amount,
         "voucher_code": this.voucher_code,
-        "couponcode": "",
+        "couponcode": this.coupon_code,
         "totalFare":this.intialTotalFare
         };    
         
@@ -1322,19 +1325,10 @@ console.log(this.orderReferenceNumber);
   "fare": this.fareData,
   "partner_amount": this.intialTotalFare,
   "discount": 0,
-  "coupon_code": "",
+  "coupon_code": this.coupon_code,
   "farebreakup":farebreakup,
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
-  /*"hotel_details": {
-    "response": {
-      "partnerName": this.partnerToken,
-      "validResponse": true,
-      "hotelInfo": this.searchResult.hotel_detail
-    },
-    "statusCode": 200,
-    "responseDateTime": ""
-  },*/
   "room_details_book": {
     roomTypeId: {
       "roomTypeId": this.selectedHotel.roomType.roomTypeId,

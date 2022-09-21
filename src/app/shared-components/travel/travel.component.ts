@@ -1517,11 +1517,11 @@ console.log(this.sg['domainPath']);
 this.router.navigateByUrl(url);
   }
   else{
-  url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+  url=this.sg['domainPath']+"flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
   this.router.navigateByUrl(url);
   }
   }else{
-  url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+  url=this.sg['domainPath']+"flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
   this.router.navigateByUrl(url);
 
   }

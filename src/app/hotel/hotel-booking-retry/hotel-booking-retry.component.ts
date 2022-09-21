@@ -2,45 +2,23 @@ import { Component, OnInit, OnDestroy, DebugNode, NgModule, ViewChild, ChangeDet
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FlightService } from 'src/app/common/flight.service';
 import { Location } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { environment } from '../../../environments/environment';
 import { AppConfigService } from '../../app-config.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import alertifyjs from 'alertifyjs';
 import * as moment from 'moment';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { stringify } from '@angular/compiler/src/util';
-
-
-declare let alertify: any;
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'YYYY-MM-DD',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
-
 
 declare var $: any;
 
 @Component({
   selector: 'app-hotel-booking-retry',
   templateUrl: './hotel-booking-retry.component.html',
-  styleUrls: ['./hotel-booking-retry.component.scss'],
-  providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
-  ]
+  styleUrls: ['./hotel-booking-retry.component.scss']
 })
 export class HotelBookingRetryComponent implements OnInit, OnDestroy {
         savedCards: any = [];
@@ -91,7 +69,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
         superPnr:string;
           fareData: any = [];
 
-  constructor(private el: ElementRef,private ref: ChangeDetectorRef,   private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
+  constructor(private el: ElementRef,private ref: ChangeDetectorRef,   private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,  @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -146,8 +124,8 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                 this.totalBaseFare = Number(result.fare.totalBaseFare);
                 this.totalTax = Number(result.fare.total_tax);
                 this.partnerDiscount = Number(result.fare.partnerDiscount);
-                this.orderReferenceNumber=result.hoteldetails.provid;
-                this.provisionalBookingId=result.hoteldetails.booking_code;
+                this.orderReferenceNumber=this.fetchOrderId;
+                this.provisionalBookingId=result.hoteldetails.provid;
                 this.coupon_code=result.fare.couponcode;
                 this.coupon_amount=result.fare.discount;
                 this.voucher_amount=result.fare.voucher_amount;
