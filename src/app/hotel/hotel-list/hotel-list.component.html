@@ -496,11 +496,47 @@
                                         <span class="hotel-star-tag">{{list.hotelInfo.starRating}}/5</span>
                                     </p>
                                     <ul class="hotel-amenities">
-
-                                        <li  *ngFor="let image of Facilities | amenitiesFilter:list.hotelInfo.amenity">
-                                            <img src="{{image.image}}"  *ngIf="list.hotelInfo.amenity[image.value] == '1'" alt="" >
-                                            <span  *ngIf="list.hotelInfo.amenity[image.value] == '1'">{{image.name}}</span>
+                                        <ng-container *ngFor="let image of Facilities | amenitiesFilter:list.hotelInfo.amenity | slice: 0:3 ">
+                                            <li>
+                                                <img src="{{image.image}}"  *ngIf="list.hotelInfo.amenity[image.value] == '1'" alt="" >
+                                                <span  *ngIf="list.hotelInfo.amenity[image.value] == '1'">{{image.name}}</span>
+                                            </li>
+                                           
+                                            
+                                        </ng-container>
+                                        
+                                        <li>
+                                            
+                                            <a href="javaScript:void(0)" *ngIf="list.hotelInfo.amenity" class="MoreAmenities" data-bs-toggle="modal" data-bs-target="#moreAmenities" (click)="showAminities(list)">
+                                                <strong>21+</strong>
+                                                More Amenities
+                                            </a> 
+                                        <!-- Amenity Model -->
+                                        <div class="modal amenities-modal" id="moreAmenities">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body" style="padding: 25px;">
+                                                        <div class="amenitiesmodal-items">
+                                                            <div class="amenitiesmodal-title">
+                                                                <h6>Amenities</h6>
+                                                                <a href="javaScript:void(0)" class="modal-close">
+                                                                    <img src="./assets/images/icons/close.png" alt="">
+                                                                </a>
+                                                            </div>
+                                                            <div class="amenitiesmodal-content">
+                                                                <ul class="amenitiesmodal-ul">
+                                                                    <li *ngFor="let image of Facilities| amenitiesFilter:showAminitiesList">
+                                                                        <p *ngIf="showAminitiesList[image.value] == '1'">{{image.name}}</p>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         </li>
+   
                                     </ul>
                                 </div>
                             </div>
@@ -863,3 +899,7 @@
     </div>
 </div>
 
+
+
+
+      

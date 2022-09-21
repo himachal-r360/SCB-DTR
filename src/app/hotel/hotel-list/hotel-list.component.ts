@@ -326,6 +326,9 @@ export class HotelListComponent implements OnInit,OnDestroy {
       }
       this.docKey = res.response.docKey;
       this.hotelList = res.response.hotels;
+      console.log(this.hotelList);
+      
+      
       this.hotelWithoutFilterList = res.response.hotels;
       this.GetMinAndMaxPriceForFilter();
       this.GetPartners();
@@ -723,4 +726,16 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.showHideFilterMobile('hide');
     this.AllFilteredData();
   }
+
+  showAminitiesList:any = [];
+  showAminities(item) {
+    this.showAminitiesList = item.hotelInfo.amenity;
+    console.log(this.showAminitiesList , "filteraminities");
+  }
+
+
+amenityCount(data){
+  data.reduce((prev, next) => {return prev + next});
+}
+
 }
