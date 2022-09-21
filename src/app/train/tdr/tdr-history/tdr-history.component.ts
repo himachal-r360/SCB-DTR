@@ -62,7 +62,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { MatInput } from '@angular/material/input';
 import { AppConfigService } from '../../../app-config.service';
 import * as moment from 'moment';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 declare var $;
 export interface PeriodicElement {
@@ -119,6 +119,7 @@ export class TdrHistoryComponent implements OnInit {
   fromDate:any;
   isguestUser:string;
   domainName:any;
+  isMobile:boolean=false;
   // searchForm: FormGroup;
   template: string = '<div class="app-loading-new"><div class="logo"></div></div>';
 
@@ -135,11 +136,12 @@ export class TdrHistoryComponent implements OnInit {
   domainRedirect: string; domainPath: string;
   customerInfo: any[];
      serviceSettings:any;
-  constructor(private spinnerService: NgxSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, public _irctc: IrctcApiService, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
+  constructor(private deviceService: DeviceDetectorService,private spinnerService: NgxSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, public _irctc: IrctcApiService, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
    this.serviceSettings=this.appConfigService.getConfig();
     this.stationsdump = require('src/assets/data/stations.json');
     this.domainName = this.sg['domainName'];
     this.domainPath = this.sg['domainPath'];
+    this.isMobile = this.deviceService.isMobile();
   }
 
 

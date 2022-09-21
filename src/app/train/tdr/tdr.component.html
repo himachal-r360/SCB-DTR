@@ -8,8 +8,8 @@
  <div class="container tdr_cntnr">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Manage Account</a></li>
+      <li class="breadcrumb-item"><a href="javascript:;" routerLink="/">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{domainRedirect}}manage_orders">Manage Account</a></li>
       <li class="breadcrumb-item active" aria-current="page">File TDR</li>
     </ol>
   </nav>
@@ -127,17 +127,17 @@
                     <div class="row">
                       <div class="col-md-4">
                         <span class="highlight_text">{{fromstn}} ({{tdrResponse.fromStn}})</span>
-                        <p class="gray_text px-1">08:55 hrs, 12 May</p>
-                        <p class="gray_text px-1">New Delhi Railway Station</p>
+                        <p class="gray_text px-1">{{tdrResponse.boardingDate | date:'mediumDate'}}  {{tdrResponse.departureTime}}</p>
+                        <p class="gray_text px-1"></p>
                       </div>
                       <div class="col-md-4 text-center">
                         <hr class="dashed_hr">
-                        <span class="gray_text px-1">1h 30m</span>
+                        <span class="gray_text px-1"></span>
                       </div>
                       <div class="col-md-4">
                         <span class="highlight_text">{{tostn}} ({{tdrResponse.destStn}})</span>
-                        <p class="gray_text px-1">08:55 hrs, 12 May</p>
-                        <p class="gray_text px-1">New Delhi Railway Station</p>
+                        <p class="gray_text px-1">{{tdrResponse.destArrvDate | date:'mediumDate'}} {{tdrResponse.arrivalTime}}</p>
+                        <p class="gray_text px-1"></p>
                       </div>
 
                     </div>
@@ -151,8 +151,8 @@
                         </div>
                       </div>
                       <div class="col-md-6 text-right">
-                        <p class="price_text">₹ 9,874</p>
-                        <span class="text_success">+ 430 points</span>
+                        <p class="price_text">₹ {{tdrResponse.totalCollectibleAmount}}</p>
+                        <!-- <span class="text_success">+ 430 points</span> -->
                       </div>
                     </div>
                   </div>
@@ -161,7 +161,7 @@
                   <div class="div_flex">
                     <div class="div_flex_item">
                         <p class="gray_text">Transaction ID</p>
-                        <p class="black_text">10204959969936935</p>
+                        <p class="black_text">{{tdrResponse.reservationId}}</p>
                     </div>
                     <div class="div_flex_item">
                       <p class="gray_text">Date of Journey</p>
@@ -186,7 +186,7 @@
                   </div>
                   <div class="div_flex_item">
                     <p class="gray_text">Resv Upto</p>
-                    <p class="black_text">Yeshwantpur Jn (SC)</p>
+                    <p class="black_text">{{tdrResponse.reservationUpTo}}</p>
                   </div>
                   <div class="div_flex_item">
                     <p class="gray_text">Ticket Type</p>
@@ -194,12 +194,12 @@
                   </div>
                   </div>
                 </div>
-                <div class="row mt-4">
+                <!-- <div class="row mt-4">
                   <div class="col-md-12 d-flex align-items-center">
                     <img src="{{cdnUrl}}images/success_tick.svg">
                     <span class="gray_text px-1">regesara@gmail.com | +91 9635246543</span>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -224,8 +224,8 @@
                 <p class="highlight_text">Train Ticket</p>
               </div>
               <div class="col-6 text-right">
-                <p class="price_text">₹ 9,874</p>
-                <span class="text_success">+ 430 points</span>
+                <p class="price_text">₹ {{tdrResponse.totalCollectibleAmount}}</p>
+                <!-- <span class="text_success">+ 430 points</span> -->
               </div>
               <div class="col-12">
                 <span class="highlight_text">{{tdrResponse.trainName}}</span>
@@ -238,24 +238,24 @@
             <div class="row mt-4">
               <div class="col-5">
                 <span class="highlight_text">{{fromstn}} ({{tdrResponse.fromStn}})</span>
-                <p class="gray_text px-1">08:55 hrs, 12 May</p>
-                <p class="gray_text px-1">New Delhi Railway Station</p>
+                <p class="gray_text px-1">{{tdrResponse.boardingDate | date:'mediumDate'}}  {{tdrResponse.departureTime}}</p>
+                <!-- <p class="gray_text px-1">New Delhi Railway Station</p> -->
               </div>
               <div class="col-2 text-center px-0">
                 <hr class="dashed_hr">
-                <span class="gray_text px-1">1h 30m</span>
+                <span class="gray_text px-1"></span>
               </div>
               <div class="col-5 text-right">
                 <span class="highlight_text">{{tostn}} ({{tdrResponse.destStn}})</span>
-                <p class="gray_text px-1">08:55 hrs, 12 May</p>
-                <p class="gray_text px-1">New Delhi Railway Station</p>
+                <p class="gray_text px-1">{{tdrResponse.destArrvDate | date:'mediumDate'}} {{tdrResponse.arrivalTime}}</p>
+                <!-- <p class="gray_text px-1">New Delhi Railway Station</p> -->
               </div>
               <div class="col-12">
                 <hr class="dashed_hr">
               </div>
             </div>
             <div class="row mt-2">
-              <div class="col-7">
+              <!-- <div class="col-7">
                 <div class="d-flex align-items-center">
                   <img src="{{cdnUrl}}/images/success_tick.svg">
                   <div>
@@ -263,7 +263,7 @@
                     <p class="gray_text px-1">91 9876543211</p>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="col-5 text-right">
                 <p class="gray_text px-1">Booked Via</p>
                         <div class="booked_via_div float-right">
@@ -278,7 +278,7 @@
               <div class="div_flex">
                 <div class="div_flex_item">
                     <p class="gray_text">Transaction ID</p>
-                    <p class="black_text">10204959969936935</p>
+                    <p class="black_text">{{tdrResponse.reservationId}}</p>
                 </div>
                 <div class="div_flex_item text-right">
                   <p class="gray_text">Date of Journey</p>
@@ -303,7 +303,7 @@
               </div>
               <div class="div_flex_item">
                 <p class="gray_text">Resv Upto</p>
-                <p class="black_text">Yeshwantpur Jn (SC)</p>
+                <p class="black_text">{{tdrResponse.reservationUpTo}}</p>
               </div>
               <div class="div_flex_item text-right">
                 <p class="gray_text">Ticket Type</p>
@@ -329,16 +329,14 @@
                 <th scope="col">Age</th>
                 <th scope="col">Gender</th>
                 <th scope="col">Berth Preference</th>
-                <th scope="col">Food Choice</th>
-                <th scope="col">Concession</th>
                 <th scope="col">Booking/Current Status</th>
-                <th scope="col">Policy Number</th>
               </tr>
             </thead>
             <tbody class="table-values">
               <tr *ngFor="let data of passdata">
                 <td class="text-center" >
-                  <span *ngIf="data.currentStatus!='CAN'">
+                  <!-- <span *ngIf="data.currentStatus!='CAN'"> -->
+                  <span>  
                   <p><label class="checkbox m-0"><input formcontrolname="" name="" type="checkbox" value="{{data}}"
                         class="" (change)="onCheckboxChange(data,$event)">
                       <span class="checkmark"></span></label></p>
@@ -347,18 +345,13 @@
                 <td>{{data.passengerName}}</td>
                 <td>{{data.passengerAge}}</td>
                 <td>{{data.passengerGender}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{data.passengerBerthChoice}}</td>
                 <td>{{data.currentStatus}}</td>
-                <td></td>
-               
               </tr>
-
-
             </tbody>
           </table>
         </div>
+        <div style="color: red" *ngIf="checkerror">Please select atleast one passenger</div>
       </div>
       </div>
       <!-- end of passengers list web -->
@@ -368,11 +361,12 @@
       <div class="tdr_train_details" *ngIf="isMobile">
         <div class="tdr_box">
         <div class="highlight_text">Passengers</div>
-        <div class="row mt-2" *ngFor="let data of passdata">
-          <div class="col-12 panel-title pos_rel" type="button" data-bs-toggle="collapse" data-bs-target="#member_1" aria-expanded="false" aria-controls="member_1">
+        <div class="row mt-2" *ngFor="let data of passdata; let i = index;">
+          <div class="col-12 panel-title pos_rel" type="button" data-bs-toggle="collapse" data-bs-target="#member_1" aria-expanded="false" aria-controls="member_{{i}}">
             <div class="row">
             <div class="col-1">
-              <span *ngIf="data.currentStatus!='CAN'">
+              <!-- <span *ngIf="data.currentStatus!='CAN'"> -->
+                <span>
                 <p><label class="checkbox m-0"><input formcontrolname="" name="" type="checkbox" value="{{data}}"
                       class="" (change)="onCheckboxChange(data,$event)">
                     <span class="checkmark"></span></label></p>
@@ -386,7 +380,7 @@
             </div>
             </div>
         </div>
-        <div class="collapse" id="member_1">
+        <div class="collapse" id="member_{{i}}">
           <div class="col-12">
             <div class="row mt-3">
               <div class="col-5 offset-1">
@@ -409,23 +403,7 @@
                       <p class="black_text">Berth Preference</p>
                   </div>
                   <div class="col-5 text-right">
-                      <p class="black_text"></p>
-                  </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-5 offset-1">
-                      <p class="black_text">Food Choice</p>
-                  </div>
-                  <div class="col-5 text-right">
-                      <p class="black_text"></p>
-                  </div>
-                </div>
-                <div class="row mt-3">
-                  <div class="col-5 offset-1">
-                      <p class="black_text">Concession</p>
-                  </div>
-                  <div class="col-5 text-right">
-                      <p class="black_text"></p>
+                      <p class="black_text">{{data.passengerBerthChoice}}</p>
                   </div>
                 </div>
                 <div class="row mt-3">
@@ -436,17 +414,10 @@
                       <p class="black_text">{{data.currentStatus}}</p>
                   </div>
                 </div>
-                <div class="row mt-3">
-                  <div class="col-5 offset-1">
-                      <p class="black_text">Policy Number</p>
-                  </div>
-                  <div class="col-5 text-right">
-                      <p class="black_text"></p>
-                  </div>
-                </div>
           </div>
         </div>
         </div>
+        <div style="color: red" *ngIf="checkerror">Please select atleast one passenger</div>
       </div>
       </div>
       <!-- end of passengers list mlite -->
@@ -479,7 +450,7 @@
       </div>
       <div class="row mt-4 mb-4">
         <div class="col-md-12 text-right">
-          <a href="#" class="blue_text_link px-3">Don't Cancel</a>
+          <a href="javascript:void(0)" class="blue_text_link px-3" (click)="resetpnrform()">Don't Cancel</a>
           <button class="btn tdr_btn" [disabled]="tdrpass != true"
           (click)="submittdrData()">File TDR</button>
         </div>
