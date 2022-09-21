@@ -1269,7 +1269,7 @@ console.log(this.orderReferenceNumber);
         "discount": this.coupon_amount,
         "voucher_amount": this.voucher_amount,
         "voucher_code": this.voucher_code,
-        "couponcode": "",
+        "couponcode": this.coupon_amount,
         "totalFare":this.intialTotalFare
         };    
         
@@ -1325,19 +1325,10 @@ console.log(this.orderReferenceNumber);
   "fare": this.fareData,
   "partner_amount": this.intialTotalFare,
   "discount": 0,
-  "coupon_code": "",
+  "coupon_code": this.coupon_amount,
   "farebreakup":farebreakup,
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
-  /*"hotel_details": {
-    "response": {
-      "partnerName": this.partnerToken,
-      "validResponse": true,
-      "hotelInfo": this.searchResult.hotel_detail
-    },
-    "statusCode": 200,
-    "responseDateTime": ""
-  },*/
   "room_details_book": {
     roomTypeId: {
       "roomTypeId": this.selectedHotel.roomType.roomTypeId,
