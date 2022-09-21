@@ -1269,7 +1269,7 @@ console.log(this.orderReferenceNumber);
         "discount": this.coupon_amount,
         "voucher_amount": this.voucher_amount,
         "voucher_code": this.voucher_code,
-        "couponcode": this.coupon_amount,
+        "couponcode": this.coupon_code,
         "totalFare":this.intialTotalFare
         };    
         
@@ -1325,7 +1325,7 @@ console.log(this.orderReferenceNumber);
   "fare": this.fareData,
   "partner_amount": this.intialTotalFare,
   "discount": 0,
-  "coupon_code": this.coupon_amount,
+  "coupon_code": this.coupon_code,
   "farebreakup":farebreakup,
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
