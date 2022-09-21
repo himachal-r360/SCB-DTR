@@ -5,8 +5,17 @@
     </div>
  </div>
 
+
+ <div class="mlite_fixed_hdr" *ngIf="isMobile">
+  <div class="d-flex align-items-center">
+      <img src="{{cdnUrl}}/images/icons/m_arw_icn.svg">
+      <span class="hdr_navi_title px-1">My Account</span>
+  </div>
+</div>
+
+
  <div class="container tdr_cntnr">
-  <nav aria-label="breadcrumb">
+  <nav aria-label="breadcrumb" *ngIf="!isMobile">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="javascript:;" routerLink="/">Home</a></li>
       <li class="breadcrumb-item"><a href="{{domainRedirect}}manage_orders">Manage Account</a></li>
@@ -14,10 +23,11 @@
     </ol>
   </nav>
 
+
   <div class="main_hdr">
     Train Booking
   </div>
-  <div class="col-12 train-btn-group mt-4 mb-2">
+  <div class="col-12 train-btn-group">
     <a routerLink="/{{domainPath}}/train/filetdr" class="sort_btn btnTdr-active-{{domainName}} btn-sm mr-3"
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">File TDR</a>
     <a routerLink="/{{domainPath}}/train/tdrhistory" class="sort_btn btnTdr-default btn-sm mr-3"
@@ -35,14 +45,14 @@
           <div class="pnr-section">
             <mat-radio-group formControlName="tdrbuttselection" name="tdrbuttselection" [(ngModel)]="selection"
               #radioGroup="matRadioGroup" (change)="getcheckboxValues()" class="filetdr_sort_radio">
-              <mat-radio-button name="tdr_option1" value='1' id='pnrButton' class="mlite_rdio_btn">PNR</mat-radio-button>
+              <mat-radio-button name="tdr_option1" value='1' id='pnrButton' class="mlite_rdio_btn">PNR Number</mat-radio-button>
               <mat-radio-button name="tdr_option2" value='2' class="mlite_rdio_btn">Transaction ID</mat-radio-button>
               <mat-radio-button name="tdr_option3" value='3' class="mlite_rdio_btn">SmartBuy Reference ID</mat-radio-button>
             </mat-radio-group>
             <div class="row pt-2">
               <div class="col-md-8 col-12">
-                <div class="row">
-                  <div class="col-md-6 mt-2">
+                <div class="row" *ngIf="!isMobile">
+                  <div class="col-md-6 col-8 mt-2">
                     <!-- <mat-form-field>
                       <input matInput placeholder="Enter {{placeholderValue}}" formControlName="pnrnumber"
                         [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
@@ -72,12 +82,12 @@
                   ​
     
                   <!-- <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
-                  <div class="col-md-6 pt-2">
+                  <div class="col-md-6 col-4 mt-2">
                     <div class="row">
-                      <div class="col-md-12 col-12 text-center">
+                      <div class="col-md-12 col-12">
                         <button type="submit" class="btn submit_btn btnTdr-submit-{{domainName}}"
                           (click)="gettdrdata()">Submit</button>
-                          <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
+                         <!--  <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button> -->
                       </div>
                       <!-- <div class="col-md-6 col-6 text-center px-0">
                         <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
@@ -85,6 +95,57 @@
                     </div>
                   </div>
                 </div>
+
+
+<!-- mlite search bar -->
+                <div class="row mt-1" *ngIf="isMobile">
+                  <div class="col-md-6 col-8 pe-0">
+                    <!-- <mat-form-field>
+                      <input matInput placeholder="Enter {{placeholderValue}}" formControlName="pnrnumber"
+                        [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
+                        name="pnrnumber" onDrag="return false" onDrop="return false" autocomplete="off" class="form-control">
+                    </mat-form-field> -->
+
+                    <mat-form-field class="matField_full_width w-100 mlite_filetdr_inp" appearance="outline">
+                      <mat-label>Enter {{placeholderValue}}</mat-label>
+                      <input matInput placeholder="" formControlName="pnrnumber"
+                      [(ngModel)]="pnrnumber" (ngModelChange)="changeEvent()" maxlength="{{dynamiclength}}"
+                      name="pnrnumber" onDrag="return false" onDrop="return false" autocomplete="off">
+                  </mat-form-field>
+    
+                    <!-- <div  style="color: red"  class="pb-2"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+    
+                    <div *ngIf="tdrFetchingsubmitted && pnrForm.get('pnrnumber').invalid" class="error" style="color: red">
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.required">{{placeholderValue}} is required</small>
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.minlength">Please enter correct {{dynamiclength}} digits
+                        {{placeholderValue}}</small>
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.maxlength">Please enter correct {{dynamiclength}} digits
+                        {{placeholderValue}}</small>
+                      <small *ngIf="pnrForm.get('pnrnumber').errors.pattern">Please enter valid {{dynamiclength}} digits
+                        {{placeholderValue}}</small>
+                    </div>
+    
+                  </div>
+                  ​
+    
+                  <!-- <div  style="color: red"  class="pb-2 pl-3"  *ngIf='errormesssage'><small>Please enter PNR/Transaction ID</small></div> -->
+                  <div class="col-md-6 col-4">
+                    <div class="row ps-0 mt-1">
+                      <div class="col-md-12 col-12 ps-0">
+                        <button type="submit" class="btn submit_btn btnTdr-submit-{{domainName}}"
+                          (click)="gettdrdata()">Submit</button>
+                          <!-- <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button> -->
+                      </div>
+                      <!-- <div class="col-md-6 col-6 text-center px-0">
+                        <button class="btn reset_btn btnTdr-reset-{{domainName}} " (click)="resetpnrform()">Reset</button>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+                <!-- end of mlite search bar -->
+
+
+
               </div>
             </div>
           </div>
@@ -264,7 +325,7 @@
                   </div>
                 </div>
               </div> -->
-              <div class="col-5 text-right">
+              <div class="col-12 text-right">
                 <p class="gray_text px-1">Booked Via</p>
                         <div class="booked_via_div float-right">
                           <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc_long.svg" class="booked_via_img">
@@ -362,12 +423,12 @@
         <div class="tdr_box">
         <div class="highlight_text">Passengers</div>
         <div class="row mt-2" *ngFor="let data of passdata; let i = index;">
-          <div class="col-12 panel-title pos_rel" type="button" data-bs-toggle="collapse" data-bs-target="#member_1" aria-expanded="false" aria-controls="member_{{i}}">
+          <div class="col-12  pos_rel {{i}}" type="button" data-bs-toggle="collapse" data-bs-target="#member_0" aria-expanded="true" aria-controls="member_0">
             <div class="row">
             <div class="col-1">
               <!-- <span *ngIf="data.currentStatus!='CAN'"> -->
                 <span>
-                <p><label class="checkbox m-0"><input formcontrolname="" name="" type="checkbox" value="{{data}}"
+                <p><label><input formcontrolname="" name="" type="checkbox" value="{{data}}"
                       class="" (change)="onCheckboxChange(data,$event)">
                     <span class="checkmark"></span></label></p>
                   </span>
@@ -380,7 +441,7 @@
             </div>
             </div>
         </div>
-        <div class="collapse" id="member_{{i}}">
+        <div class="collapse show" id="member_0">
           <div class="col-12">
             <div class="row mt-3">
               <div class="col-5 offset-1">

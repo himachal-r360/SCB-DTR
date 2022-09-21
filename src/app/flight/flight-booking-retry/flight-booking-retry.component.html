@@ -72,7 +72,7 @@
               </li>
               <li>
                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }"
-                  (click)="moveTab(5)">
+                  >
                   <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/card.svg" alt="" /></span>
                   <span class="steps-text">Payment</span>
                 </a>
@@ -429,13 +429,7 @@
             </div>
 
             <div *ngIf="steps==4 && !isMobile">
-              <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey"
-                [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-                [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
-                [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
-                (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
-              </app-coupons>
-
+       
             </div>
           </div>
 
@@ -578,27 +572,6 @@
     </div>
   </div>
 
-  <!-- Mlite Apply Coupon Popup -->
-  <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==4 && isMobile">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Coupon Code</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey"
-            [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-            [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
-            [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
-            (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
-          </app-coupons>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Mlite Fare Summary Popup -->
   <div class="modal coupon_mlite_popup" id="fareSummary_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -836,10 +809,7 @@
             </ul>
           </div>
         </div>
-        <!-- <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
+
       </div>
     </div>
   </div>
