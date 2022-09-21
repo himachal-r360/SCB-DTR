@@ -780,8 +780,8 @@ closeCookieConsent(value){
   ngOnInit() {
 
     this.mainRedirect=this.DOMAIN_SETTINGS['main_domain_url']+'/';
-
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
+
     this.sub_domain_redirection_url=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/';
     if(this.DOMAIN_SETTINGS['FRESHMENU'])
     this.getcart();
@@ -1285,7 +1285,8 @@ closeCookieConsent(value){
         this.redirectPopupTriggerTimestamp=current.getTime();
         this.redirectPopupTrigger=1;
         this.redirectPopup=2;
-        this.redirectPopupUrl=environment.ANGULAR_SITE_URL+path;
+        this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+path;
+       // console.log(environment.ANGULAR_SITE_URL+path+"  =======0000");
      }else{
      if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')
       this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
