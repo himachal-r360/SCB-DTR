@@ -2,7 +2,7 @@
     <form [formGroup]="hotelSearchForm">
         <div class="hotel-search mt-20">
             <div class="hotel-area" appHotelDropdown >
-                <div class="hotel-area-item" >
+                <div class="hotel-area-item"  (click)='focusInput()'>
                     <span class="small-text">City, Hotel or Area</span>
                     <h5 class="large-text text-capitalize ">{{cityName}}</h5>
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
@@ -27,7 +27,7 @@
                                     <div class="hotel-from-name">
                                         <img src="assets/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <p class="d-none">528 Hotels</p>
+                                        <!--<p class="d-none">528 Hotels</p>-->
                                     </div>
                                 </a>
                             </li>
@@ -39,7 +39,7 @@
                                     <div class="hotel-from-name">
                                         <img src="assets/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <p class="d-none">528 Hotels</p>
+                                        <!--<p class="d-none">528 Hotels</p>-->
                                     </div>
                                 </a>
                             </li>

@@ -261,7 +261,12 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     $('.hotel-search-list').hide();
     this.checkIn.nativeElement.click()
   }
-
+focusInput(){
+        setTimeout(() => {
+        $('.hotel-search-list').show();
+        $('#citySearchRef').focus();
+        }, 10);
+}
 
   checkInDate(event){
     event = event.target.value;
