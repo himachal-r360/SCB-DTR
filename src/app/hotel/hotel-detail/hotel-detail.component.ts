@@ -241,7 +241,8 @@ export class HotelDetailComponent implements OnInit {
       this.loaderValue = 10;
     }
   }, 300);
-    var Request = {docKey:this.DocKey,hotelId:this.Hotelkey,partnerName:this.PriceSummery.partnerName}
+    var Request = {docKey:this.DocKey,hotelId:this.PriceSummery.hotelId,partnerName:this.PriceSummery.partnerName}
+    console.log(Request);
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
     // console.log(res);
      if(res && res.response && res.response[" hotelInfo"]){
