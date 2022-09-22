@@ -105,7 +105,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.getSearchValue = localStorage.getItem('hotelSearch')
+    this.getSearchValue = localStorage.getItem(environment.hotelLastSearch)
     if(this.getSearchValue != undefined || this.getSearchValue != null){
       this.getSearchValueLocalStorage();
     }
@@ -114,17 +114,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   public Error = (controlName: string, errorName: string) => {
     return this.hotelSearchForm.controls[controlName].hasError(errorName);
   };
-cityVal
-  showCity(val) {
-    this.cityVal = val;
-    if (val == 'show') {
-      this.hideShowCity.nativeElement.style.display = "block";
-      this.citySearchRef.nativeElement.focus();
-    }
-    else {
-      this.hideShowCity.nativeElement.style.display = "none";
-    }
-  }
+
 
   getSearchValueLocalStorage() {
     
@@ -165,6 +155,7 @@ cityVal
   increaseCount(i, item, title) {
     let totalCount;
     let childTotalCount;
+    let adultTotalCount;
     let adultBtn: any = document.getElementById('adultBtn_' + i);
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
@@ -174,10 +165,12 @@ cityVal
       item.value.numberOfAdults = +item.value.numberOfAdults + 1;
     }
     childTotalCount = parseInt(item.value.numberOfChildren);
+    adultTotalCount = parseInt(item.value.numberOfAdults);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
+    // adultTotalCound > 3 ? adultBtn.disabled = true : adultBtn.disabled = false;
+    // childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
     totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
-    totalCount > 4 ? adultBtn.disabled = true : adultBtn.disabled = false;
-    // checkTotalCountValue = totalCount > 5 ? alert("Can add only 5 guests in a room") : '';
+    totalCount > 4 || adultTotalCount > 3 ? adultBtn.disabled = true : adultBtn.disabled = false;
     this.showTotalCountOfAdult()
     this.showTotalCountsOfChild()
 
@@ -186,6 +179,8 @@ cityVal
   //Decrease child and adult value
   decreaseCount(i, item, title) {
     let totalCount;
+    let childTotalCount;
+    let adultTotalCount;
     let adultBtn: any = document.getElementById('adultBtn_' + i);
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
@@ -195,9 +190,13 @@ cityVal
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
     }
+    adultTotalCount = parseInt(item.value.numberOfAdults);
+    childTotalCount = parseInt(item.value.numberOfChildren);
     totalCount = parseInt(item.value.numberOfAdults) + parseInt(item.value.numberOfChildren);
-    totalCount < 5 ? childBtn.disabled = false : childBtn.disabled = true;
-    totalCount < 5 ? adultBtn.disabled = false : adultBtn.disabled = true;
+    totalCount < 5  ? childBtn.disabled = false : childBtn.disabled = true;
+    totalCount < 5  ? adultBtn.disabled = false : adultBtn.disabled = true;
+    totalCount > 4 || childTotalCount > 2 ? childBtn.disabled = true : childBtn.disabled = false;
+    totalCount > 4 || adultTotalCount > 3 ? adultBtn.disabled = true : adultBtn.disabled = false;
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
@@ -219,14 +218,6 @@ cityVal
       .reduce((sum, current) => sum + current);
   }
 
-  showGuest(val) {
-    if (val == 'show') {
-      this.showHideGuest.nativeElement.style.display = "block";
-    }
-    else {
-      this.showHideGuest.nativeElement.style.display = "none";
-    }
-  }
 
   get roomsDetails(): FormArray {
     return this.hotelSearchForm.controls["rooms"] as FormArray;
@@ -267,15 +258,24 @@ cityVal
     this.hotelSearchForm['controls']['countryName'].setValue(param._source.countryName);
     this.hotelSearchForm['controls']['country'].setValue(param._source.country);
     this.cityName = this.hotelSearchForm.value.city;
-    this.hideShowCity.nativeElement.style.display = "none";
+    $('.hotel-search-list').hide();
     this.checkIn.nativeElement.click()
-    
   }
+focusInput(){
+        setTimeout(() => {
+        $('.hotel-search-list').show();
+        $('#citySearchRef').focus();
+        }, 10);
+}
 
   checkInDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
     this.checkOut.nativeElement.click();
+    if(moment(this.hotelSearchForm.value.checkOut ).format('YYYY-MM-DD') < moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD')){
+      this.hotelSearchForm.controls.checkOut.setValue(moment(event, 'YYYY-MM-DD').add(1, 'days'));
+    }
+    // this.hotelSearchForm.value.checkOut =  moment(event, 'YYYY-MM-DD').add(1, 'days');
   }
 
   checkOutDate(event){
@@ -284,44 +284,41 @@ cityVal
     this.showHideGuest.nativeElement.style.display = "block";
   }
 
-  onSelectAge(event ,item , i){
-    let ageArr:any = [];
-    let selectAge1:any = document.getElementById('selectAge1_' + i);
-    let selectAge2:any = document.getElementById('selectAge2_' + i);
-    let selectAge3:any = document.getElementById('selectAge3_' + i);
-    if(selectAge1 != null){
+  onSelectAge(event, item, i) {
+    let ageArr: any = [];
+    let selectAge1: any = document.getElementById('selectAge1_' + i);
+    let selectAge2: any = document.getElementById('selectAge2_' + i);
+    let selectAge3: any = document.getElementById('selectAge3_' + i);
+    if (selectAge1 != null) {
       ageArr = [selectAge1.value]
     }
-    if(selectAge1 != null && selectAge2 != null){
-      ageArr = [selectAge1.value,selectAge2.value]
+    if (selectAge1 != null && selectAge2 != null) {
+      ageArr = [selectAge1.value, selectAge2.value]
     }
-    if(selectAge1 != null && selectAge2 != null && selectAge3 != null){
-      ageArr = [selectAge1.value,selectAge2.value,selectAge3.value]
+    if (selectAge1 != null && selectAge2 != null && selectAge3 != null) {
+      ageArr = [selectAge1.value, selectAge2.value, selectAge3.value]
     }
     item.value.childrenAge = ageArr;
-    if(this.submitted)
-    {
-      var rooms =  this.hotelSearchForm.value.rooms;
+    if (this.submitted) {
+      var rooms = this.hotelSearchForm.value.rooms;
       var j = 0;
       var isvalid = true;
       rooms.forEach(z => {
-        if(z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0)
-        {
-          var id = document.getElementById("error_"+j)
+        if (z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0) {
+          var id = document.getElementById("error_" + j)
           id.hidden = false;
           isvalid = false;
-        }else{
-          var id = document.getElementById("error_"+j)
+        } else {
+          var id = document.getElementById("error_" + j)
           id.hidden = true;
         }
         j++;
       });
-      if(!isvalid)
-      {
+      if (!isvalid) {
         var id1 = document.getElementById("error_AllAge")
         id1.hidden = false;
       }
-      else{
+      else {
         var id1 = document.getElementById("error_AllAge")
         id1.hidden = true;
       }
@@ -337,7 +334,7 @@ cityVal
   ngAfterViewInit(): void {
     fromEvent(this.citySearchRef.nativeElement, 'input').pipe(
       debounceTime(300),
-      map((e: any) => this.searchEvent =  e.target.value ),
+      map((e: any) => this.searchEvent = e.target.value),
       switchMap(value => this._hotelService.getHotelCityList(value)))
       .subscribe((res: any) => { this.queryText = res.hits.hits; })
   }
@@ -368,7 +365,7 @@ cityVal
 
   hotelSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearchForHotel');
+    let continueSearch: any = localStorage.getItem(environment.continueSearchHotel);
     if (continueSearch == null) {
       this.continueSearchHotel = [];
     }
@@ -384,46 +381,45 @@ cityVal
       this.continueSearchHotel = this.continueSearchHotel.slice(0, 3);
     }
     this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearchForHotel', JSON.stringify(this.continueSearchHotel));
+    localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
   }
 
   searchHotel() {
-      this.submitted = true;
-      var rooms =  this.hotelSearchForm.value.rooms;
-      var i = 0;
-      var isvalid = true;
-      rooms.forEach(z => {
-        if((z.numberOfChildren != z.childrenAge.length ||  z.childrenAge=="0")  && z.numberOfChildren > 0)
-        {
-          var id = document.getElementById("error_"+i)
-          id.hidden = false;
-          isvalid = false;
-        }else{
-          var id = document.getElementById("error_"+i)
-          id.hidden = true;
-        }
-        i++;
-      });
+    this.submitted = true;
+    var rooms = this.hotelSearchForm.value.rooms;
+    var i = 0;
+    var isvalid = true;
+    rooms.forEach(z => {
+      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0") && z.numberOfChildren > 0) {
+        var id = document.getElementById("error_" + i)
+        id.hidden = false;
+        isvalid = false;
+      } else {
+        var id = document.getElementById("error_" + i)
+        id.hidden = true;
+      }
+      i++;
+    });
 
-      if(this.hotelSearchForm.invalid){
-        return
-      }
-      else if(!isvalid)
-      {
-        var id1 = document.getElementById("error_AllAge")
-        id1.hidden = false;
-        return
-      }
-      else {
-        var id1 = document.getElementById("error_AllAge")
-        id1.hidden = true;
+    if (this.hotelSearchForm.invalid) {
+      return
+    }
+    else if (!isvalid) {
+      var id1 = document.getElementById("error_AllAge")
+      id1.hidden = false;
+      return
+    }
+    else {
+      var id1 = document.getElementById("error_AllAge")
+      id1.hidden = true;
       this.hotelSearchForm.value.checkIn = moment(this.hotelSearchForm.value.checkIn).format('YYYY-MM-DD');
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
-      localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
+      
+      localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
-      this. hotelSearchCallBack(this.hotelSearchForm.value)
+      this. hotelSearchCallBack(this.hotelSearchForm.value);
       this.router.navigateByUrl(url);
     }
 

@@ -122,7 +122,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         passengerSelectedArray:any={};
         totalAdult:number = 0;
         totalChild:number = 0;
-
+        EMI_interest: number = 16;
+        EMIAvailableLimit: number = 3000;
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog,  private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
 
@@ -285,7 +286,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       sessionStorage.setItem(this.searchHotelKey + '-passData', this.EncrDecr.set(JSON.stringify(this.checkoutData)));
       sessionStorage.setItem(this.searchHotelKey + '-totalFare', String(this.totalFare));
   }
-
+  calculateEMI(amount: number) {
+    return Math.round((amount + (amount * (this.EMI_interest / 100))) / 12);
+  }
 
   isCollapseShow(identifyCollpase) {
 
@@ -488,10 +491,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         this.totalChild += parseInt(z.numberOfChildren);
         })
         
+          
         this.noOfDays=moment(this.searchData.checkOut).diff(moment(this.searchData.checkIn).format('YYYY-MM-DD'), 'days');
-        
        
-      
         this.selectedHotel=this.searchResult.selectedHotel;
         this.partnerToken = this.searchResult.PriceSummery.partnerName;
         this.totalFare = Number(this.selectedHotel.rateBreakdown.total);
@@ -548,9 +550,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   triggerBack() {
     $('#bookingprocessFailed').modal('hide');
-    let url;
     this.resetPopups();
-    url = "hotel-list?searchFrom="+this.searchResult.searchFrom+"&searchTo="+this.searchResult.searchTo+"&fromTravelCode="+this.searchResult.fromTravelCode+"&toTravelCode="+this.searchResult.toTravelCode+"&fromState="+this.searchResult.toTravelCode+"&toState="+this.searchResult.toState+"&departure="+this.searchResult.departure;
+    let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.searchData));
     this.router.navigateByUrl(url);
   }
   
@@ -564,6 +565,30 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       $('#bookingprocessExpires').modal('show');
     }
   }
+  
+  
+  ConvertObjToQueryString(obj: any) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+    }
+    return str.join("&");
+  }
+
   
   resetPopups() {
 
@@ -809,7 +834,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
 
 
-  
+  mmtTxnKey:any;
   createHotelItinerary() {
      this.submitted = true;
      
@@ -846,7 +871,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
    if (this.passengerForm.invalid ) {
         let target;
         target = this.el.nativeElement.querySelector('.ng-invalid:not(form)');
-         console.log(this.passengerForm)
         if (target) {
         if( target.id =='agree_terms'){
         $(document).scrollTop($(document).height());
@@ -857,8 +881,101 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
       return;
     } else {
-   
+    
+
+    
+        if(this.partnerToken=='Cleartrip'){
+         this.itineraryProcess();
+        }else{
+        /********Check Availablity***********/
+                $('#infoprocess').modal('show');
+        this.loaderValue = 10;
+        const myInterval1 = setInterval(() => {
+        this.loaderValue = this.loaderValue + 10;
+        if (this.loaderValue == 110) {
+        this.loaderValue = 10;
+        }
+        }, 700);
+    
+        
+          let rooms:any=[];
+                
+        for(let i=0;i<(this.searchData.rooms.length);i++){
+         rooms.push({
+        "childrenAge": this.searchData.rooms[i]['childrenAge'],
+        "numberOfAdults":this.searchData.rooms[i]['numberOfAdults'],
+        "numberOfChildren": this.searchData.rooms[i]['numberOfChildren'],
+        "room":  this.searchData.rooms[i]['room'],
+        "roomRatePlanId":this.selectedHotel.roomType.roomTypeCode,
+        "roomTypeId": this.selectedHotel.roomType.roomTypeId,
+        "bookingCode": this.selectedHotel.roomType.bookingCode
+        });
+        }
+        
        
+        let checkAvailablity;
+        checkAvailablity={
+        "checkIn": this.searchResult.hotel_detail.checkIn,
+        "checkOut": this.searchResult.hotel_detail.checkOut,
+        "clientName": "HDFC243",
+        "cityName":  this.searchResult.hotel_detail.city,
+        "noOfRooms":this.searchData.numberOfRooms,
+        "hotelId": this.searchResult.Hotelkey,
+        "blockid_quantity": [
+        {
+        "blockId": this.searchResult.selectedHotel.roomType.roomTypeId,
+        "quantity": this.searchData.numberOfRooms
+        }
+        ],
+        "roomIds": [
+        this.searchResult.selectedHotel.roomType.roomTypeId
+        ],
+        "guestCurrency": "INR",
+        "guestCountry": "IN",
+        "scr": "INR",
+        "sct": "IN",
+        "partnerName": this.partnerToken,
+        "rooms": rooms
+        };
+        
+        var requestParams = {
+        postData: this.EncrDecr.set(JSON.stringify(checkAvailablity))
+        };
+        
+        
+        this.rest.checkAvailabilityHotel(requestParams).subscribe(results => {
+        $('#infoprocess').modal('hide');
+         let response = JSON.parse(this.EncrDecr.get(results.result));
+         if(response && response.response && response.response.mmtTxnKey &&  response.response.mmtTxnKey !=''){
+         this.mmtTxnKey=response.response.mmtTxnKey;
+          this.itineraryProcess();
+         }else{
+          clearInterval(myInterval1);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 20);
+         
+         }
+
+        }), (err: HttpErrorResponse) => {
+        clearInterval(myInterval1);
+        setTimeout(() => {
+        $('#infoprocess').modal('hide');
+        $('#bookingprocessFailed').modal('show');
+        }, 20);
+        }
+        
+        
+        }
+        
+    }
+
+  }
+  
+  
+  itineraryProcess(){
+  
        var gender; 
        switch (this.passengerForm.controls['passengerTitle']['value']) {
         case 'Mr':
@@ -910,6 +1027,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "roomTypeId": this.selectedHotel.roomType.roomTypeId
         });
         }
+        
         this.itineraryParam ={
         "bookingAmount":this.selectedHotel.rateBreakdown.total,
         "bookingCode": this.selectedHotel.roomType.bookingCode,
@@ -944,16 +1062,16 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "osVersion": "web",
         "partnerName": this.partnerToken,
         "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
-        "mmtTxnKey": "",
+        "mmtTxnKey":this.mmtTxnKey,
         "rooms": room_values,
         "serviceName": "Hotel"
         };
         
         this.resetPopups();
 
-        $('#infoprocess').modal('show');
+         $('#infoprocess').modal('show');
         this.loaderValue = 10;
-        const myInterval1 = setInterval(() => {
+        const myInterval2 = setInterval(() => {
         this.loaderValue = this.loaderValue + 10;
         if (this.loaderValue == 110) {
         this.loaderValue = 10;
@@ -964,15 +1082,17 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryParam))
       };
-      this.rest.createHotelItinerary(requestParamsEncrpt).subscribe(response => {
+      this.rest.createHotelItinerary(requestParamsEncrpt).subscribe(results => {
+        let response = JSON.parse(this.EncrDecr.get(results.result));
+            
         if (response && response['response'] && response['response']['provisionalBookingId']) {
         this.itineraryResponse=response['response'];
         this.orderReferenceNumber=response['response']['order_id'];
         this.provisionalBookingId=response['response']['provisionalBookingId'];
         this.superPnr=response['response']['superPnr'];
-        this.saveCheckout(myInterval1);
+        this.saveCheckout(myInterval2);
         }else{
-        clearInterval(myInterval1);
+        clearInterval(myInterval2);
         setTimeout(() => {
         $('#infoprocess').modal('hide');
         $('#bookingprocessFailed').modal('show');
@@ -980,26 +1100,28 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
       
       }), (err: HttpErrorResponse) => {
-        clearInterval(myInterval1);
+        clearInterval(myInterval2);
         setTimeout(() => {
           $('#infoprocess').modal('hide');
           $('#bookingprocessFailed').modal('show');
         }, 20);
       }
-        
-    }
-
+  
+  
   }
+  
+  
+  
   
   saveCheckout(interval){
       this.createItinerarydata();
-        console.log(this.checkoutData);
+    //  console.log(this.checkoutData);return;
     var saveCheckoutData = {
       orderReferenceNumber: this.orderReferenceNumber,
       flightData: this.EncrDecr.set(JSON.stringify(this.checkoutData))
     };
 
-
+console.log(this.orderReferenceNumber);
     let trackUrlParams = new HttpParams()
       .set('current_url', window.location.href)
       .set('category', 'Hotel')
@@ -1139,7 +1261,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         
         this.fareData = {
         "total_tax": this.totalTax,
-        "total_amount": this.totalFare,
+        "total_amount": this.intialTotalFare,
         "partnerDiscount":this.partnerDiscount,
         "totalDiscount": 0,
         "totalBaseFare": this.totalBaseFare,
@@ -1147,13 +1269,27 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "discount": this.coupon_amount,
         "voucher_amount": this.voucher_amount,
         "voucher_code": this.voucher_code,
-        "couponcode": "",
-        "totalFare":this.totalFare
+        "couponcode": this.coupon_code,
+        "totalFare":this.intialTotalFare
         };    
         
         
     let roomTypeId=this.selectedHotel.roomType.roomTypeId;
-    let currentDate=moment().format('DD-MM-YYYY');
+    let currentDate=moment(this.searchData.checkIn).format('DD-MM-YYYY');
+    
+    let farebreakup:any={};
+    
+    farebreakup[currentDate]=[];
+    
+    farebreakup[currentDate]={
+      "dis": 0,
+      "total": this.intialTotalFare,
+      "basefare": this.totalBaseFare,
+      "partnerDiscount":this.partnerDiscount,
+      "tax": this.totalTax
+    };
+    
+    
     
     let checkoutData = {
     "provisionalBookingId": this.provisionalBookingId,
@@ -1187,36 +1323,19 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     }
   },
   "fare": this.fareData,
-  "partner_amount": this.totalFare,
+  "partner_amount": this.intialTotalFare,
   "discount": 0,
-  "coupon_code": "",
-  "farebreakup": {
-    currentDate: {
-      "dis": 0,
-      "total": this.totalFare,
-      "basefare": this.totalBaseFare,
-      "partnerDiscount":this.partnerDiscount,
-      "tax": this.totalTax
-    }
-  },
+  "coupon_code": this.coupon_code,
+  "farebreakup":farebreakup,
   "partnerToken": this.partnerToken,
   "serviceToken": "Hotel",
-  /*"hotel_details": {
-    "response": {
-      "partnerName": this.partnerToken,
-      "validResponse": true,
-      "hotelInfo": this.searchResult.hotel_detail
-    },
-    "statusCode": 200,
-    "responseDateTime": ""
-  },*/
   "room_details_book": {
     roomTypeId: {
       "roomTypeId": this.selectedHotel.roomType.roomTypeId,
       "roomTypeCode": this.selectedHotel.roomType.roomTypeCode,
       "bookingCode": this.selectedHotel.roomType.bookingCode,
       "roomname": this.selectedHotel.roomType.roomDescription,
-      "price": this.totalFare,
+      "price": this.intialTotalFare,
       "noOFRoomsLeft": "",
       "maxOccupancy": "",
       "guessadded": this.totalAdult,
@@ -1253,7 +1372,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     "bookingCode":   this.selectedHotel.roomType.bookingCode,
     "room_type_id": this.selectedHotel.roomType.roomTypeId,
     "room_title":this.selectedHotel.roomType.roomTitle,
-    "room_total": this.totalFare,
+    "room_total": this.intialTotalFare,
     "room_left": "",
     "room_max_occupancy": "",
     "booking_code":  this.selectedHotel.roomType.bookingCode,
@@ -1294,6 +1413,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
    "itineraryRequest":this.itineraryParam,
   "hotelSessionData":tmp_searchResult
 };
+
 
 this.checkoutData=checkoutData;
   }

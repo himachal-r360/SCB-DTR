@@ -899,7 +899,8 @@ a {
 .traveler-details-info .mat-form-field-wrapper,
 .contact-form .mat-form-field-wrapper,
 .destination_details_train .mat-form-field-wrapper,
-.add_new_traveler .mat-form-field-wrapper, .gst-number-box .mat-form-field-wrapper{
+.add_new_traveler .mat-form-field-wrapper,
+.gst-number-box .mat-form-field-wrapper {
     padding-bottom: 0px;
 }
 
@@ -926,6 +927,9 @@ a {
 
 .select_mat .mat-option .mat-option-text {
     font-weight: 700 !important;
+}
+.mat-select-panel{
+    font-size: 14px !important;
 }
 
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
@@ -954,19 +958,80 @@ a {
         }
     }
 }
-.mlite_broading_pint_select{
-.mat-select-trigger {
-    position:absolute;
-    top:12px;
-    .mat-select-value {
-        .mat-select-value-text {
-            font-size: 14px;
-            color: #000000;
+
+.mlite_broading_pint_select {
+    .mat-select-trigger {
+        position: absolute;
+        top: 12px;
+        .mat-select-value {
+            .mat-select-value-text {
+                font-size: 14px;
+                color: #000000;
+            }
         }
     }
 }
-}
 
+.tdr_cntnr{
+    .pnr-section{
+        .mat-radio-group{
+            .mat-radio-button.mat-accent.mat-radio-checked{
+                .mat-radio-outer-circle{
+                        border-color:#1d86ff;
+                }
+            }
+            .mat-radio-button.mat-accent{
+                .mat-radio-inner-circle{
+                    background-color: #1d86ff;
+                }
+            } 
+            .mat-radio-button {
+                .mat-radio-label{
+                    // margin-left:20px !important;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 19px;
+                    color: #555555;
+                    .mat-radio-label-content{
+                        margin-right:20px;
+                    }
+                }
+               
+            }
+        }
+        // .filetdr_sort_radio{
+        //     .mat-radio-group{
+        //         .mat-radio-button {
+        //             .mat-radio-label{
+        //                 margin-left:0px !important;
+        //             }
+        //         }
+        //     }
+        // }
+    }
+    
+
+    .tdr_box{
+        ng::deep .mat-form-field-appearance-legacy{
+            ng::deep .mat-form-field-underline {
+                height:0px !important;
+            }
+        }
+    }
+    // .mat-form-field{
+    //     .mat-form-field-wrapper{
+    //         .mat-form-field-flex{
+
+    //             .mat-form-field-infix{
+    //                height:45px;
+    //                 .mat-form-field-label-wrapper{
+    //                     top:-1.5em;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
 
 // .train_custom_input{
 //     .mat-form-field-appearance-outline{
@@ -977,14 +1042,32 @@ a {
 //         }
 //     }
 // }
-
-.caontact_sec_label_highlight{
-    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float{
-        .mat-form-field-label{
-            font-weight:bold;
-            color:#000;
+.mlite_filetdr_inp{
+    .mat-form-field-wrapper{
+        .mat-form-field-flex{
+            .mat-form-field-outline.mat-form-field-outline-thick{
+                .mat-form-field-outline-end{
+                    border-radius:0px 0px 0px 0px !important; 
+                }
+            }
+            .mat-form-field-outline{
+                .mat-form-field-outline-end{
+                    border-radius:0px 0px 0px 0px !important; 
+                }
+            }
         }
-    } 
+    }
+}
+
+
+.mat-form-field-outline-end
+.caontact_sec_label_highlight {
+    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float {
+        .mat-form-field-label {
+            font-weight: bold;
+            color: #000;
+        }
+    }
 }
 
 .bus_sort_btn {
@@ -2224,7 +2307,8 @@ ul.travel-select-trip-ul {
 
 .layout-right {
     position: relative;
-    width: calc(100% - 250px);
+    /* width: calc(100% - 250px); */
+    width: 100%;
 }
 
 hr:not([size]) {
@@ -6958,6 +7042,11 @@ button.accordion-button .xlsheats {
     height: 100%;
     background: #fff;
     border-radius: 20px 20px 0 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-top: unset;
+    height: 65vh;
 }
 
 .mob-fd-box {
@@ -8844,7 +8933,7 @@ img {
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     color: #A6A6A6;
 }
 
@@ -9182,13 +9271,14 @@ img {
     right: 0;
     top: 0;
     bottom: 0;
+    border-radius: 10px;
 }
 
 .hotel-name {
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 20px;
     color: #000000;
 }
 
@@ -9237,9 +9327,9 @@ img {
     line-height: 16px;
     color: #555555;
 }
-.hotel-list-info-price
-{
-  width:100%;
+
+.hotel-list-info-price {
+    width: 100%;
 }
 
 .hotel-list-info-price .p-rn {
@@ -9263,7 +9353,7 @@ img {
 }
 
 .hotel-list-info-Book a {
-    min-width: 100px;
+    min-width: 110px;
     background: #1D86FF;
     border: 1px solid #1D86FF;
     color: #fff;
@@ -9347,6 +9437,19 @@ img {
     min-width: 80px;
 }
 
+.hotel-amenities .MoreAmenities {
+    color: #1D86FF;
+    font-style: normal;
+    font-size: 10px;
+    line-height: 14px;
+}
+.hotel-amenities .MoreAmenities strong {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 8px;
+    color: #1D86FF;
+    display: block;
+}
 
 /* Hotel details start */
 
@@ -9410,7 +9513,7 @@ img {
 
 .hd-tabs {
     display: flex;
-    gap: 30px;
+    gap: 60px;
     justify-content: center;
 }
 
@@ -9501,6 +9604,7 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width:150px;
 }
 
 .hd-Offered-slider .hd-Offered-text h6 {
@@ -9650,7 +9754,7 @@ img {
     line-height: 26px;
     color: #000000;
     padding-left: 19px;
-    background: url(/assets/images/hotel/icon/right.png) no-repeat;
+    background: url(../src/assets/images/hotel/icon/right.png) no-repeat;
     background-position: 0 8px;
 }
 
@@ -10017,6 +10121,17 @@ img {
     .layout-right {
         width: 100%;
     }
+
+.hd-cc-Policy .hover-popover {
+    min-width: 350px;
+    left: -20px;
+    right: 0;
+    top: -196px;
+}
+.hotel-list-thumbe img
+{
+  max-width: 100px;
+}
 }
 
 
@@ -13771,21 +13886,48 @@ img {
     }
 }
 
+
 /* No Hotel Start */
-.no-hotels-text a{
+
+.no-hotels-text a {
     background: #1D86FF;
     color: #fff;
-  }
-  /* No Hotel end */
-  .about-hotel
-{
-  font-style: normal;
-  font-size: 12px;
-  line-height: 30px;
 }
-.about-hotel p,.about-hotel span
-{
-  font-style: normal;
-  font-size: 12px;
-  line-height: 30px;
+
+.about-hotel {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.about-hotel p,
+.about-hotel span {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+
+
+.about-hotel {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+
+.hotel-list-text {
+  width: calc(100% - 100px);
+}
+.item.ng-star-inserted {
+  border-radius: 10px;
+  overflow: hidden;
+}
+.hd-rd-big {
+  border-radius: 6px;
+  overflow: hidden;
+}
+.form-check-input:checked{
+    background-color: $primary-color;
+    border-color: $primary-color;
 }

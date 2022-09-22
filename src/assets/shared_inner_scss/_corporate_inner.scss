@@ -1,31 +1,528 @@
 
-//background
-$c-background01:linear-gradient(154deg, #0c77b9, #00a546);
-$c-background02:linear-gradient(to bottom, #fafcff, #f4f7ff);
-$c-background03: linear-gradient(to bottom, #fafcff, #f4f7ff);
-$c-background04: linear-gradient(129deg, #0e93e6,#0c77b9 );
-
-$color-light-blue:#dcebf8;
-$color-dark-blue:#000;
-$color-black: #000000;
-$color-light-orange:#fef5e1;
-$color-vivid-blue:#020812;
-$color-dark-gray:#444444;
-$color--white-blue:#e8ecff;
-$color-dark-gray-01:#868686;
-$color-pure-orange:#ffba00;
-$color-white:#ffffff;
-$color-red:#ff0000;
-$color-very-light-gray:#fafafa;
-$color-footer-bg:#646568;
+@import './../sharedscss/color-corporate';
+@import './../sharedscss/fonts';
 
 
-$color-traveler-bg: #fbfbfb;
-// $color-blue-btn: #4285f4;
-$color-lightGray: #d7d7d7;
-$color-gray2: #686868;
-$color-redmix: #db3428;
 
-/*borders*/
-$c-border:2px solid $color-pure-orange;
-$c-box-shadow:  1px 1.7px 4px 0 rgba(25, 25, 25, 0.24);
+/* All Inside Component Color Code CSS ONLY */
+
+/* Header */
+.bg-header{
+    background: $primary-gradient;
+}
+.sb_head {
+    background-color: $transparent;
+}
+.dropdown-content-list {
+    h5 {
+        color: $primary-color;
+    }
+    p {
+        color: $sub-text-color;
+    }
+    a {
+        color: $primary-color;
+        &:hover {
+            color: $primary-color;
+        }
+    }
+    a.view_text {
+        color: $white-color;
+        cursor: pointer;
+    }
+    a.list-travel-font {
+        color: $white-color;
+        &:hover {
+            color: $primary-color;
+        }
+    }
+    
+}
+.menu_list {
+   
+    ul {
+       
+        li {
+           
+            a {
+                color: $white-color;
+            }
+            &:hover a.nav_link_item {
+                border-bottom: 3px solid $primary-color;
+            }
+            a.active {
+                border-bottom: 3px solid $primary-color;
+            }
+        }
+
+    }
+   
+}
+.list-shop h5{
+    color: $white-color;
+    &:hover{
+        color: $primary-color;
+    }
+}
+
+.privi-list {
+    .privilege_list {
+        li {
+            border-bottom: 1px solid $primary-color;
+            span {
+                color: $white-color;
+            }
+            &:hover a {
+                span {
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.list-travel, .list-shop {
+    .content_show {
+        a {
+            img {
+                border: 1px solid #DFE2F6;
+                background-color: $white-color;
+            }
+            /*  h5{
+                
+            } */
+        }
+        &:hover p {
+            color: $sub-text-color;
+        }
+        &:hover a, &:hover h5 {
+            color: $primary-color;
+        }
+    }
+}
+.search_input {
+    .sb_search {
+        border: none;
+        background-color: $bg-dark-brown;
+        border-radius: 5px;
+        color: $white-color;
+        &:focus {
+            border-bottom: 1px solid $primary-color;
+            border-radius: 5px 5px 0px 0px;
+        }
+    }
+    input.sb_search::placeholder {
+        color: #989696;
+    }
+}
+
+.dropdown-content-list {
+    background: $primary-gradient;
+}
+a.list-travel-font {
+    color: $black-color;
+}
+.myaccount-drop {
+    .dropdown-toggle {
+        .custName {
+            color: $white-color;
+        }
+        i {
+            color: $white-color;
+        }
+    }
+}
+.compare-title{
+    color: $primary-color;
+}
+
+/* New Menu Css */
+
+.reg_gold_navbar_collapse{
+    background: radial-gradient(106.27% 178.22% at 119.25% 161.9%, #CF8D56 10.23%, #2C0E00 65.18%, #2C0E00 100%) !important;
+    .m_profile_name {
+        font-family: $regular;
+        color: $white-color;
+    }
+    .m_profile_points {
+        background: #CF8D56;
+        color: $white-color;
+    }
+    .hdr_text {
+        font-family: $regular;
+        color: $white-color;
+    }
+    
+    .hdr_text .fa {
+        color: $white-color;
+    }
+    .hdr_seperator {
+        border: 1px solid #ffffff50;
+    }
+    .m_sidebar_link {
+        font-family: $regular;
+        color: $white-color !important;
+    }
+    .opt_seperator {
+        border: 1px dashed #ffffff50;
+    }
+    .m_support_div {
+        .m_support_text {
+            font-family: $regular;
+            color: $white-color;
+        }
+    }
+    .hdr_travel {
+        background: #FFFFFF05;
+        &:hover {
+            .circular_div {
+                background: $white-color;
+                .card_img {
+                    filter: invert(55%) sepia(22%) saturate(1391%) hue-rotate(355deg) brightness(95%) contrast(85%);
+                }
+            }
+            .travel_highlight {
+                color: #C3832C !important;
+            }
+            background: #FFFFFF15;
+        }
+        .circular_div {
+            background: #FFFFFF20;
+            .fa {
+                color: $white-color;
+            }
+        }
+        .travel_highlight {
+            color: $white-color !important;
+        }
+        .travel_text {
+            color: $white-color !important;
+            opacity: 0.5;
+        }
+        .travel_arw_icn {
+            color: #C3832C;
+        }
+    }
+    .m_navigational_link {
+        font-family: $regular;
+        color: $white-color;
+    }
+    .hdr_privilege_card{
+        background: #FFFFFF10;
+        .privilege_text_highlight{
+            font-family: $regular;
+            color: $white-color;
+        }
+        .privilege_text{
+            font-family: $regular;
+            color: $white-color;
+        }
+    }
+}
+
+.cancel_btn, .resend_otp_link{
+    color: $primary-color;
+}
+
+
+
+/* For you tab */
+.view_all_link {
+    color: $primary-color;
+}
+.view_btn{
+    color: $primary-color;
+    border: 1px solid $primary-color;
+    background-color: $white-color;
+    &:hover {
+        background-color: $primary-color;
+        color: $white-color;
+    }
+}
+.journey_search_box {
+    p{
+        span{
+            color: $primary-color;
+        }
+    }
+}
+
+
+
+/* Travel - Search Component */
+
+.search_icon{
+    span{
+        background: $primary-gradient;
+    }
+}
+.control_input {
+    border: none;
+    border-bottom: 1px solid #ccc !important;
+    &:hover {
+        border-bottom: 1px solid $primary-color !important;
+    }
+}
+
+/* Flight Folder SCSS */
+.bookingprocess-content{
+    .new_fare_flight{
+        color: $primary-color;
+        font-size: 25px;
+    }
+}
+
+
+/* Footer Component Inner CSS */
+.footer-smartbuy{
+    a{
+        color: $white-color;
+        &:hover{
+            color: $primary-color;
+        }
+    }
+}
+
+.sb_footer{
+    .footer_one{
+        background-color: #192451;
+        .footer_links{
+            .global_footer_links{
+                .footer_link_column{
+                    .column_sec{
+                        label{
+                            h3{
+                                color: $white-color;
+                            }
+                        }
+                        ul{
+                            li{
+                                h4{
+                                    color: $white-color;
+                                }
+                                a{
+                                    color: #C7CFFE;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            .global_footer_links_one{
+                .column_sec{
+                    label{
+                        h3{
+                            color: $white-color;
+                        }
+                    }
+                    .voucher_list{
+                        li{
+                            h4{
+                                color: $white-color;
+                            }
+                            a{
+                                color: #C7CFFE;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .footer_two{
+        background: $primary-gradient-two;
+        .footer_info{
+            .content{
+                p{
+                    background-color: transparent;
+                }
+                .img{
+
+                }
+                .text{
+                    color: $footer-text-color;
+                }
+            }
+            .footer_customercare{
+                background-color: #ffffff10;
+                .info{
+                    color: $white-color;
+                    opacity: 1;
+                    p{
+                        background-color: transparent;
+                    }
+                    .title{
+                        color: $white-color;
+                    }
+                    .value{
+                        color: $white-color;
+                    }
+                    .day{
+                        color:$footer-text-color;
+                    }
+                }
+            }
+            .menu_footer{
+                p{
+                    background-color: transparent;
+                    a{
+                        color: $white-color;
+                    }
+                    span{
+                        color: $white-color;
+                    }
+                }
+            }
+            .footer_final{
+                p{
+                    background-color: transparent;
+                    color: $footer-text-color;
+                }
+            }
+        }
+    }
+    
+}
+
+/* shared componet Travel componet */
+.buttonTrip input[type="radio"]:checked+label {
+    background: #2C0E00;
+    border-radius: 5px;
+    border: 0px solid $primary-color;
+}
+
+.btn-icn-search {
+    background: radial-gradient(100.63% 100.63% at 91.14% 124.68%, #CF8D56 26.04%, #2C0E00 74.48%);
+}
+
+.select_options {
+    
+    .travelList {
+        
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #ccc;
+        
+        ul {
+            
+            li {
+                a {
+                    
+                    .sub_name {
+                        color: #5b5e61;
+                    }
+                    .count {
+                        background: #fceee4;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.select_city,
+.select_date {
+    
+    .input_box,
+    .date_box {
+       
+        label {
+           
+            .inputField {
+                
+                color: #C3832C;
+                
+            }
+            
+            span {
+                color: #555555;
+                font-size: 12px;
+            }
+        }
+        .from_cities {
+            
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+            
+            border: 1px solid #ccc;
+            
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                color: #000000;
+            }
+            .from_list {
+                
+                ul {
+                    
+                    li {
+                       
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        .to_cities {
+            
+            background-color: #ffffff;
+            box-shadow: 0 2px 3px 0 #0000001a;
+           
+            border: 1px solid #ccc;
+            
+            input {
+                background: #ffffff;
+                box-shadow: 0 2px 3px 0 #0000001a;
+                color: #000000;
+            }
+            .to_list {
+                max-height: 270px;
+                overflow-y: auto;
+                ul {
+                    padding: 0;
+                    margin: 0;
+                    li {
+                        padding: 6px 10px;
+                        margin-bottom: 5px;
+                        list-style: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                        &:first-child {
+                            background-color: #e5e6e9;
+                            height: 30px;
+                            cursor: not-allowed;
+                            &:hover {
+                                background-color: #e5e6e9;
+                            }
+                            span {
+                                i {
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        &:hover {
+                            background-color: #d3d3d3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* override Angular css */
+::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+    background: rgba(206, 141, 91, 0.08) !important;
+}

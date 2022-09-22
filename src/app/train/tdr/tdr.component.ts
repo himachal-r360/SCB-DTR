@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AppConfig } from '../../configs/app.config';
 import { AppConfigService } from '../../app-config.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 export interface DialogData {
   messageData: string;
   showC: boolean;
@@ -82,17 +83,19 @@ checkRAC:any;
   tdrshowtermsConditions:any;
   domainName:any;
   filetdrURL:any;
+  isMobile:boolean=false;
  
 
   @Input('stationsdump') stationsdump;
     domainRedirect: string;domainPath:string;
     customerInfo:any[];
       serviceSettings:any;
-  constructor(private spinnerService: NgxSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe,private dialog: MatDialog,private fb: FormBuilder,public _irctc: IrctcApiService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
+  constructor(private deviceService: DeviceDetectorService,private spinnerService: NgxSpinnerService,private routeactive: ActivatedRoute,private datePipe: DatePipe,private dialog: MatDialog,private fb: FormBuilder,public _irctc: IrctcApiService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient,private sg: SimpleGlobal,@Inject(DOCUMENT) private document: any, private router: Router, public overlay: Overlay,private appConfigService:AppConfigService) {
    this.serviceSettings=this.appConfigService.getConfig();
     this.stationsdump =  require('src/assets/data/stations.json');
     this.domainName = this.sg['domainName'];
     this.domainPath=this.sg['domainPath'];
+    this.isMobile = this.deviceService.isMobile();
 
    if(this.router.url == "/"+this.domainPath+"train/filetdr"){
     this.tdragreementPopup();
@@ -284,10 +287,24 @@ checkRAC:any;
   const body:string = this.urlParams.toString();
   this.spinnerService.show();
   this._irctc.gettdrDetails(body).subscribe(data => {
-  this.tdrResponse = data.partnerResponse.bookingResponseList;
-  this.tdrReasons = data.partnerResponse.tdrReasonList;
-
+  
 if(data.errorcode != 1){
+    if(data.errorDesc!="Success"){
+       this.spinnerService.hide();
+        const dialogRef = this.dialog.open(tdrConfirmationDialog, {
+          disableClose: true,
+          width: '600px',
+          id: 'messageforMliteDialog',
+          data: {
+              errorDialog: true,
+              messageData: data.errorDesc
+          }
+      });
+      return false;  
+
+    }
+    this.tdrResponse = data.partnerResponse.bookingResponseList;
+    this.tdrReasons = data.partnerResponse.tdrReasonList;
     let pnrurlParams = new HttpParams()
         .set('pnrnumber', this.tdrResponse.pnrNumber);
 

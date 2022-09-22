@@ -2846,7 +2846,8 @@ this.spinnerService.show();
                 
                 
 		this.adulttravellerlist =  this.travellerlist.filter(function(tra) {
-		return tra.age > 1;
+		// return tra.age > 1;
+        return tra.age > 4;
 		});
 		
 		

@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: 'app-hotel-detail',
   templateUrl: './hotel-detail.component.html',
-  styleUrls: ['./hotel-detail.component.sass']
+  styleUrls: ['./hotel-detail.component.scss']
 })
 export class HotelDetailComponent implements OnInit {
 
@@ -34,22 +34,22 @@ export class HotelDetailComponent implements OnInit {
   TotalChild:number = 0;
   Facilities:any =
     {
-    'roomService':{name:'Room Service',value:'roomService',image:'assets/images/hotel/Offered/hotelDetail_roomService.svg'},
-    'gym':{name:'Gym',value:'gym',image:'assets/images/hotel/Offered/hotelDetail_gym.svg'},
-    'swimming':{name:'Pool',value:'swimming',image:'assets/images/hotel/Offered/swimming1.svg'},
-    'bar':{name:'Bar',value:'bar',image:'assets/images/hotel/Offered/bar1.svg'},
-    'airConditioner':{name:'Air Conditioner',value:'airConditioner',image:'assets/images/hotel/Offered/airConditioner1.svg'},
-    'wireless':{name:'Internet',value:'wireless',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'breakfast':{name:'Breakfast',value:'breakfast',image:'assets/images/hotel/Offered/breakfast.svg'},
-    'businessCentre':{name:'Business Centre',value:'businessCentre',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'cafe':{name:'Cafe',value:'cafe',image:'assets/images/hotel/Offered/cafe1.svg'},
-    'conferenceRoom':{name:'Conference Room',value:'conferenceRoom',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'elevator':{name:'Elevator',value:'elevator',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'lounge':{name:'Lounge',value:'lounge',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'packing':{name:'Packing',value:'packing',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'powerBackup':{name:'Power Backup',value:'powerBackup',image:'assets/images/hotel/Offered/hotelDetail_wifi.svg'},
-    'projector':{name:'Projector',value:'projector',image:'assets/images/hotel/Offered/projector1.svg'},
-    'restaurant':{name:'Restaurant',value:'restaurant',image:'assets/images/hotel/Offered/hotelDetail_restaurant.svg'},
+    'roomService':{name:'Room Service',value:'roomService',image:'assets/images/hotel/amenities/54X54/room-service-svgrepo-com-1.svg'},
+    'gym':{name:'Gym',value:'gym',image:'assets/images/hotel/amenities/54X54/GYm.svg'},
+    'swimming':{name:'Pool',value:'swimming',image:'assets/images/hotel/amenities/54X54/pool.svg'},
+    'bar':{name:'Bar',value:'bar',image:'assets/images/hotel/amenities/54X54/Baar.svg'},
+    'airConditioner':{name:'Air Conditioner',value:'airConditioner',image:'assets/images/hotel/amenities/54X54/AC_54.svg'},
+    'wireless':{name:'Internet',value:'wireless',image:'assets/images/hotel/amenities/54X54/Wireless.svg'},
+    'breakfast':{name:'Breakfast',value:'breakfast',image:'assets/images/hotel/amenities/54X54/BreakFast.svg'},
+    'businessCentre':{name:'Business Centre',value:'businessCentre',image:'assets/images/hotel/amenities/54X54/Business_Center.svg'},
+    'cafe':{name:'Cafe',value:'cafe',image:'assets/images/hotel/amenities/54X54/Cafe.svg'},
+    'conferenceRoom':{name:'Conference Room',value:'conferenceRoom',image:'assets/images/hotel/amenities/54X54/Conference_Room.svg'},
+    'elevator':{name:'Elevator',value:'elevator',image:'assets/images/hotel/amenities/54X54/Elevator.svg'},
+    'lounge':{name:'Lounge',value:'lounge',image:'assets/images/hotel/amenities/54X54/Lounge.svg'},
+    'packing':{name:'Packing',value:'packing',image:'assets/images/hotel/amenities/54X54/Packing.svg'},
+    'powerBackup':{name:'Power Backup',value:'powerBackup',image:'assets/images/hotel/amenities/54X54/Power_Backup.svg'},
+    'projector':{name:'Projector',value:'projector',image:'assets/images/hotel/amenities/54X54/Projector.svg'},
+    'restaurant':{name:'Restaurant',value:'restaurant',image:'assets/images/hotel/amenities/54X54/restaurant-svgrepo-com-1.svg'},
   }
 
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
@@ -165,7 +165,7 @@ export class HotelDetailComponent implements OnInit {
 
   }
   MobilecustomOptions: OwlOptions = {
-    loop: true,
+    loop: false,
     autoplay:false,
     mouseDrag: true,
     touchDrag: true,
@@ -196,7 +196,7 @@ export class HotelDetailComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  
+
     this.route.url.subscribe(url => {
     this.isMobile = window.innerWidth < 991 ? true : false;
       //console.log(this.checkin)
@@ -204,7 +204,7 @@ export class HotelDetailComponent implements OnInit {
       const urlParam = this.route.snapshot.queryParams;
       this.currentLink = '/'+url[0].path+'/'+urlParam.searchHotelKey;
       var Details = JSON.parse(sessionStorage.getItem(urlParam.searchHotelKey));
-      //console.log(Details)
+     // console.log(Details)
       for (var key in Details.hotel.hotelInfo.amenity) {
         if(Details.hotel.hotelInfo.amenity[key] == 1)
         {
@@ -247,7 +247,7 @@ export class HotelDetailComponent implements OnInit {
      if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
-           
+
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);
     //  var url = 'https://www.google.com/maps/embed/v1/view?key='+this.GoogleAPI_Key+'&center='+this.HotelDetail.latitude+','+this.HotelDetail.longitude+'&zoom=18';
@@ -259,13 +259,13 @@ export class HotelDetailComponent implements OnInit {
      }else{
       $("#bookingprocess").modal('hide');
        $("#bookingprocessFailed").modal('show');
-     
+
      }
-     
-     
-    }, (error) => {       
+
+
+    }, (error) => {
        $("#bookingprocess").modal('hide');
-       $("#bookingprocessFailed").modal('show'); 
+       $("#bookingprocessFailed").modal('show');
        });
 
   }
@@ -308,8 +308,8 @@ export class HotelDetailComponent implements OnInit {
         setTimeout(() => {
         this.router.navigateByUrl(url);
         }, 10);
-   
-   
+
+
 }
   onImageClick(index:number)
   {
@@ -317,7 +317,31 @@ export class HotelDetailComponent implements OnInit {
   }
   backClicked(){
   this.resetPopups();
-    this.location.back();
+    let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.SelectedQueryParam));
+    this.router.navigateByUrl(url);
+  }
+
+
+  ConvertObjToQueryString(obj: any) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        if (typeof (obj[p]) == "object") {
+          let objRooms: any = obj[p];
+          for (var i = 0; i < objRooms.length; i++) {
+            let objRoomObj: any = objRooms[i];
+            for (var roomField in objRoomObj) {
+              if (objRoomObj.hasOwnProperty(roomField)) {
+                str.push(encodeURIComponent(roomField) + "[" + i + "]=" + encodeURIComponent(objRoomObj[roomField]));
+              }
+            }
+          }
+        } else {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      }
+    }
+    return str.join("&");
   }
 
   headerHideShow(event:any) {
