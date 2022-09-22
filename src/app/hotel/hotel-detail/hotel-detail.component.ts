@@ -335,6 +335,10 @@ export class HotelDetailComponent implements OnInit {
     $("#moreAmenities").modal('hide')
   }
 
+  goToModifySearch(){
+    this.router.navigate(['compare-fly']);
+  }
+
 
   
 }
