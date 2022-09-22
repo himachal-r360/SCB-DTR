@@ -2590,7 +2590,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightto']+`</h6>
+        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -2602,7 +2602,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightfrom']+`</h6>
+        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData['flightfrom']+`</h6>
         </div>
         </div>
         </a>
@@ -2709,7 +2709,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -2787,7 +2787,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
         </div>
         </a>

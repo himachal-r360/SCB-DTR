@@ -23,10 +23,10 @@
     </section>
     <!-- mlite fixed header  -->
     <div class="row d-md-none">
-    <div class="col-md-12 p-0 fixed-top"  *ngIf="isMobile">
+        <div class="col-md-12 p-0 fixed-top" *ngIf="isMobile">
 
-        <div class="mlite_fixed_hdr">
-            <!-- <div class="mob-listing-header-left">
+            <div class="mlite_fixed_hdr">
+                <!-- <div class="mob-listing-header-left">
                 <a href="javascript:;" routerLink="/compare-fly" >
                     <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                 </a>
@@ -36,22 +36,22 @@
                 <p>{{traveldate | date:'MMM dd, yyyy'}}  </p>
             </div> -->
 
-            <div class="row ">
-                <div class="col-1 pr-0 text-center">
-                    <a href="javascript:;" routerLink="/compare-fly" >
-                        <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                    </a>
-                </div>
-                <div class="col-10 p-0">
-                    <div class="mob-listing-header-center">
-                        <h6>{{fromstnDesc}} - {{tostnDesc}}</h6>
-                        <p>{{traveldate | date:'MMM dd, yyyy'}}  </p>
+                <div class="row ">
+                    <div class="col-1 pr-0 text-center">
+                        <a href="javascript:;" routerLink="/compare-fly">
+                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                        </a>
+                    </div>
+                    <div class="col-10 p-0">
+                        <div class="mob-listing-header-center">
+                            <h6>{{fromstnDesc}} - {{tostnDesc}}</h6>
+                            <p>{{traveldate | date:'MMM dd, yyyy'}} </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+        </div>
     </div>
     <!-- end of mlite fixed header -->
     <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-6rem':isMobile }">
@@ -97,7 +97,7 @@
         <!-- Mlite Sesssion Timer Code -->
         <div class="d-block d-sm-none">
             <div class="sidebar-widget session-expires-widget text-center">
-                <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+                <p><img src="{{cdnUrl}}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
           <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)"></countdown>
           min
         </strong></p>
@@ -289,8 +289,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <p class="note_msg"><span>Note:</span> Please make sure that you remember your IRCTC Authorised Partner password as you need to confirm your booking. Incase you don't, you can <a href="javascript:void();" (click)="resetPassword()" class="# anchor">Reset your password</a>.
-                                                            If the OTP validation is not completed at the time of registration, you could click <a href="javascript:void();" class="# anchor" (click)="validateOTP()">here to validate.</a></p>
+                                                        <p class="note_msg"><span>Note:</span> Please make sure that you remember your IRCTC Authorised Partner password as you need to confirm your booking. Incase you don't, you can <a href="javascript:void();" (click)="resetPassword()"
+                                                                class="# anchor">Reset your password</a>. If the OTP validation is not completed at the time of registration, you could click <a href="javascript:void();" class="# anchor" (click)="validateOTP()">here to validate.</a></p>
 
                                                         <!-- <span class="# anchor" (click)="validateOTP()">Validate OTP</span> -->
                                                     </div>
@@ -303,10 +303,10 @@
                             </div>
                         </form>
 
-                        <div class="traveler-details mb-100" *ngIf="!isMobile" >
+                        <div class="traveler-details mb-100" *ngIf="!isMobile">
                             <div class="gap-2 d-md-block">
                                 <button class="btn btn-primary btn-w" (click)="submitBookingInfo()">Continue</button>
-                                <button class="btn btn-primary-outline btn-w ms-3" (click)="backClicked()" >Back</button>
+                                <button class="btn btn-primary-outline btn-w ms-3" (click)="backClicked()">Back</button>
                             </div>
                         </div>
 
@@ -385,10 +385,10 @@
                                                                 <mat-form-field class="matField_full_width" appearance="outline">
                                                                     <mat-label>Gender</mat-label>
                                                                     <mat-select matNativeControl formControlName="childGender{{saveChildTravellerId[passenger.id]}}">
-                                          <mat-option value="M">Male</mat-option>
-                                          <mat-option value="F">Female</mat-option>
-                                        <mat-option value="T">Transgender</mat-option> 
-                                        </mat-select>
+                                                                        <mat-option value="M">Male</mat-option>
+                                                                        <mat-option value="F">Female</mat-option>
+                                                                        <mat-option value="T">Transgender</mat-option>
+                                                                    </mat-select>
                                                                 </mat-form-field>
                                                                 <div *ngIf="submitted && passengerForm.controls['childGender'+saveChildTravellerId[passenger.id]]['errors'] && passengerForm.controls['childGender'+saveChildTravellerId[passenger.id]]['touched']" class="error">
                                                                     <small *ngIf="passengerForm.hasError('required','childGender'+saveChildTravellerId[passenger.id])">Please select
@@ -399,12 +399,12 @@
                                                                 <mat-form-field class="matField_full_width" appearance="outline">
                                                                     <mat-label>Age</mat-label>
                                                                     <mat-select matNativeControl formControlName="childAge{{saveChildTravellerId[passenger.id]}}">
-                                          <mat-mat-option value="0">Below One Year</mat-mat-option>
-                                          <mat-mat-option value="1">One year</mat-mat-option>
-                                          <mat-mat-option value="2">Two years</mat-mat-option>
-                                          <mat-mat-option value="3">Three years</mat-mat-option>
-                                            <mat-mat-option value="4">Four years</mat-mat-option>
-                                        </mat-select>
+                                                                        <mat-mat-option value="0">Below One Year</mat-mat-option>
+                                                                        <mat-mat-option value="1">One year</mat-mat-option>
+                                                                        <mat-mat-option value="2">Two years</mat-mat-option>
+                                                                        <mat-mat-option value="3">Three years</mat-mat-option>
+                                                                        <mat-mat-option value="4">Four years</mat-mat-option>
+                                                                    </mat-select>
                                                                 </mat-form-field>
                                                                 <div *ngIf="submitted && passengerForm.controls['childAge'+saveChildTravellerId[passenger.id]]['errors'] && passengerForm.controls['childAge'+saveChildTravellerId[passenger.id]]['touched']" class="error">
                                                                     <small *ngIf="passengerForm.hasError('required','childAge'+saveChildTravellerId[passenger.id])">Please select
@@ -439,10 +439,10 @@
                                                                     <mat-form-field class="matField_full_width" appearance="outline">
                                                                         <mat-label>Gender</mat-label>
                                                                         <mat-select matNativeControl [(ngModel)]="genderSelectArr[saveTravellerId[passenger.id]]" (ngModelChange)="seniorCitizenArr(genderSelectArr[saveTravellerId[passenger.id]],saveTravellerId[passenger.id])" formControlName="passengerGender{{saveTravellerId[passenger.id]}}">
-                                            <mat-option value="M">Male</mat-option>
-                                            <mat-option value="F">Female</mat-option>
-                                            <mat-option value="T">Transgender</mat-option>
-                                            </mat-select>
+                                                                            <mat-option value="M">Male</mat-option>
+                                                                            <mat-option value="F">Female</mat-option>
+                                                                            <mat-option value="T">Transgender</mat-option>
+                                                                        </mat-select>
                                                                     </mat-form-field>
                                                                     <div *ngIf="submitted && 'passengerGender'+saveTravellerId[passenger.id].errors && 'passengerGender'+saveTravellerId[passenger.id].touched" class="error">
                                                                         <small *ngIf="passengerForm.hasError('required','passengerGender'+saveTravellerId[passenger.id])">Please
@@ -468,17 +468,17 @@
                                                                     <mat-form-field class="matField_full_width" appearance="outline">
                                                                         <mat-label>Seat Preference</mat-label>
                                                                         <mat-select matNativeControl formControlName="passengerBerthChoice{{saveTravellerId[passenger.id]}}">
-                                                <mat-option value="">No Preference</mat-option>
-                                                <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
-                                            </mat-select>
+                                                                            <mat-option value="">No Preference</mat-option>
+                                                                            <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
+                                                                        </mat-select>
                                                                     </mat-form-field>
                                                                 </div>
                                                                 <div class="inner_input col-md-4 col-12">
                                                                     <mat-form-field class="matField_full_width" appearance="outline">
                                                                         <mat-label>Country</mat-label>
                                                                         <mat-select matNativeControl [(ngModel)]="defaultCountryArr[saveTravellerId[passenger.id]]" (ngModelChange)="countrySelectAddMore(saveTravellerId[passenger.id])" formControlName="passengerNationality{{saveTravellerId[passenger.id]}}">
-                                            <mat-option *ngFor="let each of countries" [value]="each.countryCode"> {{each.country}}</mat-option>
-                                            </mat-select>
+                                                                            <mat-option *ngFor="let each of countries" [value]="each.countryCode"> {{each.country}}</mat-option>
+                                                                        </mat-select>
                                                                     </mat-form-field>
                                                                 </div>
                                                             </div>
@@ -808,7 +808,7 @@
 
                                         <div class="row">
                                             <!-- radio buttons male/female-->
-                                          <!--   <div class="col-12">
+                                            <!--   <div class="col-12">
                                               <div class="trip_select">
                                                   <div class="buttonTrip">
                                                       <input type="radio" id="male" name="" value="M" />
@@ -824,7 +824,7 @@
                                                 </div>
                                               </div>
                                             </div> -->
-                                        <!-- end of radio buttons male/female -->
+                                            <!-- end of radio buttons male/female -->
                                         </div>
 
                                         <!--Manaual Passenger Adult-->
@@ -855,10 +855,10 @@
                                                         <mat-form-field class="matField_full_width" appearance="outline">
                                                             <mat-label>Gender</mat-label>
                                                             <mat-select matNativeControl [(ngModel)]="genderSelectArr[traveller]" (ngModelChange)="seniorCitizenArr(genderSelectArr[traveller],traveller)" formControlName="passengerGender{{traveller}}" class="custom_select">
-                                    <mat-option value="M" class="custom_option">Male</mat-option>
-                                    <mat-option value="F">Female</mat-option>
-                                    <mat-option value="T">Transgender</mat-option>
-                                    </mat-select>
+                                                                <mat-option value="M" class="custom_option">Male</mat-option>
+                                                                <mat-option value="F">Female</mat-option>
+                                                                <mat-option value="T">Transgender</mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                         <div *ngIf="submitted && 'passengerGender'+traveller.errors && 'passengerGender'+traveller.touched" class="error">
                                                             <small *ngIf="passengerForm.hasError('required','passengerGender'+traveller)">Please
@@ -883,9 +883,9 @@
                                                         <mat-form-field class="matField_full_width" appearance="outline">
                                                             <mat-label>Seat Preference</mat-label>
                                                             <mat-select matNativeControl formControlName="passengerBerthChoice{{traveller}}">
-                                       <mat-option value="">No Preference</mat-option>
-                                       <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
-                                    </mat-select>
+                                                                <mat-option value="">No Preference</mat-option>
+                                                                <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                     </div>
 
@@ -893,8 +893,8 @@
                                                         <mat-form-field class="matField_full_width" appearance="outline">
                                                             <mat-label>Country</mat-label>
                                                             <mat-select matNativeControl [(ngModel)]="defaultCountryArr[traveller]" (ngModelChange)="countrySelectAddMore(traveller)" formControlName="passengerNationality{{traveller}}">
-                                    <mat-option *ngFor="let each of countries" [value]="each.countryCode"> {{each.country}}</mat-option>
-                                    </mat-select>
+                                                                <mat-option *ngFor="let each of countries" [value]="each.countryCode"> {{each.country}}</mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
@@ -991,12 +991,10 @@
                                                 <a class="" (click)="manualAddTraveller(1)"> + Add New Traveller</a>
                                             </div> -->
                                             <div class="add-traveller-btn">
-                                                <div class="d-none d-sm-block"><a href="javascript:void(0);" class="Addnew-Adult-btn"
-                                                    (click)="manualAddTraveller(1)">+ Add New Adult</a></div>
-                                                <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" data-bs-toggle="modal" data-bs-target="#addTraveller_mlite" 
-                                                    >+ Add New Adult</a>
+                                                <div class="d-none d-sm-block"><a href="javascript:void(0);" class="Addnew-Adult-btn" (click)="manualAddTraveller(1)">+ Add New Adult</a></div>
+                                                <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" data-bs-toggle="modal" data-bs-target="#addTraveller_mlite">+ Add New Adult</a>
                                                 </div>
-                                              </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -1023,7 +1021,7 @@
 
                                             <div class="row">
                                                 <!-- radio buttons male/female-->
-                                              <!--   <div class="col-12">
+                                                <!--   <div class="col-12">
                                                   <div class="trip_select">
                                                       <div class="buttonTrip">
                                                           <input type="radio" id="male" name="" value="M" formControlName="childGender{{traveller}}"/>
@@ -1039,7 +1037,7 @@
                                                     </div>
                                                   </div>
                                                 </div> -->
-                                            <!-- end of radio buttons male/female -->
+                                                <!-- end of radio buttons male/female -->
                                             </div>
 
                                             <ng-container *ngFor="let traveller of childrenArrayM; index as i; trackBy: trackByTraveller;let last = last;">
@@ -1065,10 +1063,10 @@
                                                         <mat-form-field class="matField_full_width" appearance="outline">
                                                             <mat-label>Gender</mat-label>
                                                             <mat-select matNativeControl formControlName="childGender{{traveller}}">
-                                                <mat-option value="M">Male</mat-option>
-                                                <mat-option value="F">Female</mat-option>
-                                               <mat-option value="T">Transgender</mat-option> 
-                                              </mat-select>
+                                                                <mat-option value="M">Male</mat-option>
+                                                                <mat-option value="F">Female</mat-option>
+                                                                <mat-option value="T">Transgender</mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                         <div *ngIf="submitted && passengerForm.controls['childGender'+traveller]['errors'] && passengerForm.controls['childGender'+traveller]['touched']" class="error">
                                                             <small *ngIf="passengerForm.hasError('required','childGender'+traveller)">Please select
@@ -1076,16 +1074,16 @@
                                                         </div>
                                                     </div>
                                                     <div class="inner_input col-md-4 col-12 ">
-                                                 
+
                                                         <mat-form-field class="matField_full_width w-100" appearance="outline">
                                                             <mat-label>Age</mat-label>
                                                             <mat-select matNativeControl formControlName="childAge{{traveller}}">
-                                                <mat-option value="0">Below One Year</mat-option>
-                                                <mat-option value="1">One year</mat-option>
-                                                <mat-option value="2">Two years</mat-option>
-                                                 <mat-option value="3">Three years</mat-option>
-                                                  <mat-option value="4">Four years</mat-option>
-                                              </mat-select>
+                                                                <mat-option value="0">Below One Year</mat-option>
+                                                                <mat-option value="1">One year</mat-option>
+                                                                <mat-option value="2">Two years</mat-option>
+                                                                <mat-option value="3">Three years</mat-option>
+                                                                <mat-option value="4">Four years</mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                         <div *ngIf="submitted && passengerForm.controls['childAge'+traveller]['errors'] && passengerForm.controls['childAge'+traveller]['touched']" class="error">
                                                             <small *ngIf="passengerForm.hasError('required','childAge'+traveller)">Please select
@@ -1107,14 +1105,14 @@
                                         </div> -->
                                         <div class="add-traveller-btn">
                                             <div class="d-none d-sm-block">
-                                              <a href="javascript:void(0);" class="Addnew-Adult-btn" (click)="manualAddTraveller(2)">+ Add New Infant</a>
+                                                <a href="javascript:void(0);" class="Addnew-Adult-btn" (click)="manualAddTraveller(2)">+ Add New Infant</a>
                                             </div>
-                    
+
                                             <div class="d-block d-sm-none">
-                                              <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" data-bs-toggle="modal" data-bs-target="#addInfant_mlite ">+ Add New Infant</a>
-                                              </div>
+                                                <div class="d-block d-sm-none"><a href="javascript:void(0);" class="Addnew-Adult-btn" data-bs-toggle="modal" data-bs-target="#addInfant_mlite ">+ Add New Infant</a>
+                                                </div>
                                             </div>
-                                          </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1381,9 +1379,9 @@
                     <p>To claim credit of GST charged by airlines / SmartBuy, please enter your company’s GST number
                     </p>
 
-                    
 
-                    <ng-template #content let-modal>  
+
+                    <ng-template #content let-modal>
                         <div class="modal-header modal-inside-header">
                             <h5 class="modal-title">Saved GST Details</h5>
 
@@ -1392,13 +1390,13 @@
                             <div class="">
                                 <div>
                                     <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                       <!--  <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
+                                        <!--  <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
                                         <label class="form-check-label" for="gst{{GSTIndex}}">
                                             {{data.gstName}}
                                         </label> -->
                                         <div class="">
                                             <div class="">
-                                               <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]"> 
+                                                <input class="form-check-input" type="radio" name="GSTList" id="gst{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,data,GSTIndex)" [checked]="gstmodalcheckedvalue[GSTIndex]">
                                                 <label class="travel-card-details" style="border: 1px solid #ededed;padding: 15px;" for="gst{{GSTIndex}}">
                                                     <div>{{data.gstNumber}}</div>
                                                     <div>{{data.gstName}}</div>
@@ -1408,24 +1406,24 @@
                                                     <div>{{data.pinCode}}</div>
                                                 </label>
                                             </div>
-                                            
+
                                         </div>
 
 
                                     </div>
                                 </div>
-                                
+
                                 <ng-container *ngIf="isGstExpanded">
                                     <ng-container *ngFor="let gstexpandedItem of GSTList; let i = index">
                                         <div *ngIf="i > 5">
-                                           <div class="row"> 
-                                            <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
-                                                <!-- <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
+                                            <div class="row">
+                                                <div class="form-check" *ngFor="let data of GSTList | slice:0:5;let GSTIndex = index">
+                                                    <!-- <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
                                                 <label class="form-check-label" for="gstL{{GSTIndex}}">
                                                     {{gstexpandedItem.gstName}}
                                                 </label> -->
 
-                                                
+
                                                     <div class="form-check" style="    float: left;
     margin-right: 15px;">
                                                         <input class="form-check-input" type="radio" name="GSTList" id="gstL{{GSTIndex}}" (change)="fillupGSTDetailOnCheck($event,gstexpandedItem,i)" [checked]="gstmodalcheckedvalue[i]">
@@ -1439,9 +1437,9 @@
                                                         </label>
                                                     </div>
 
-                                                    
+
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                     </ng-container>
@@ -1489,7 +1487,7 @@
                     </div>
 
                     <div class="row" *ngIf="gstSelected">
-                        
+
                         <div class="col-lg-5 col-md-5 col-5">
                             <mat-form-field appearance="outline" class="w-100">
                                 <mat-label>Business Address</mat-label>
@@ -1533,7 +1531,7 @@
                         </div>
                     </div>
                     <div class="row">
-                         <div class="othertraveller1 col-7" *ngIf="gstSelected">
+                        <div class="othertraveller1 col-7" *ngIf="gstSelected">
                             <ul class="add-search-ul d-block">
                                 <li class="custom-check-box">
                                     <div class="custom-controls-stacked">
@@ -1638,7 +1636,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <p class="train_name">
-                                        {{trainName}}({{trainnumber}}) 
+                                        {{trainName}}({{trainnumber}})
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
@@ -1836,8 +1834,7 @@
 
                 <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchTrainKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
                     [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)"
-               (sendPointsPlusEvent)="receivePointsPlus($event)"       [passflexiFare]="sendflexiFare"  [partnerToken]="partnerToken"
-              [isMobile]="isMobile"   [retryPay]="1">
+                    (sendPointsPlusEvent)="receivePointsPlus($event)" [passflexiFare]="sendflexiFare" [partnerToken]="partnerToken" [isMobile]="isMobile" [retryPay]="1">
                 </app-payment>
             </div>
         </div>
@@ -1849,7 +1846,7 @@
                 <div class="default-sidebar">
                     <div class="d-none d-sm-block">
                         <div class="sidebar-widget session-expires-widget">
-                            <p><img src="{{cdnUrl}}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+                            <p><img src="{{cdnUrl}}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
                     <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
                     </countdown> min
                   </strong></p>
@@ -1867,9 +1864,9 @@
                                                 <div (click)="isCollapseShow('BaseFare')">
                                                     <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
 
-                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png" alt="" *ngIf="!isCollapseBasefare">
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
 
-                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png" alt="" *ngIf="isCollapseBasefare"> Ticket Fare</div>
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Ticket Fare</div>
 
                                                 </div>
                                             </div>
@@ -1975,9 +1972,9 @@
                                                 <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                                     <div>
-                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/expand.png" alt="" *ngIf="!isCollapseDiscount">
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.png" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                        <img class="me-2" src="{{cdnUrl}}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                                     </div>
                                                 </div>
                                                 <div class="fare-list-right">
@@ -2136,10 +2133,10 @@
                         </div>
                         <div class="col-7">
                             <div>
-                             <a href="javascript:void(0);" class="button-style w-100" (click)="submitBookingInfo()"      *ngIf="steps==1">Continue</a>
+                                <a href="javascript:void(0);" class="button-style w-100" (click)="submitBookingInfo()" *ngIf="steps==1">Continue</a>
                                 <a href="javascript:void(0);" class="button-style w-100" (click)="createTrainItinerary()" *ngIf="steps==2">Continue</a>
                                 <a href="javascript:void(0);" class="button-style w-100" (click)="opencovidconfirmationDialog()" *ngIf="steps==3">Continue</a>
-                                 <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()"  *ngIf="steps==4">Pay now</a>
+                                <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()" *ngIf="steps==4">Pay now</a>
                             </div>
                         </div>
                     </div>
@@ -2326,28 +2323,27 @@
 </div>
 
 
-                
+
 
 
 <!-- Mlite Adult Add  -->
 
 <div *ngIf="isMobile">
     <!-- Mlite Add Traveller Popup -->
-    <div class=" modal coupon_mlite_popup" id="addTraveller_mlite" data-bs-keyboard="true"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="add_new_traveler pt-0" >
-            <div>
-              <!--Manaual Passenger Adult-->
-                <div class="modal-header">
-                  <h5 class="modal-title">Add New Adult</h5>
-                  <button type="button" class="btn-close" ></button>
-                </div>
-                <div class="modal-body pt-0 mlite_add_traveller_popupbody">
-                  <div>
+    <div class=" modal coupon_mlite_popup" id="addTraveller_mlite" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="add_new_traveler pt-0">
                     <div>
-                        <!-- add traveller popup form -->
+                        <!--Manaual Passenger Adult-->
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add New Adult</h5>
+                            <button type="button" class="btn-close"></button>
+                        </div>
+                        <div class="modal-body pt-0 mlite_add_traveller_popupbody">
+                            <div>
+                                <div>
+                                    <!-- add traveller popup form -->
 
 
 
@@ -2355,9 +2351,9 @@
 
 
 
-                        <div class="row">
-                            <!-- radio buttons male/female-->
-                            <!-- <div class="col-12">
+                                    <div class="row">
+                                        <!-- radio buttons male/female-->
+                                        <!-- <div class="col-12">
                               <div class="trip_select">
                                   <div class="buttonTrip">
                                       <input type="radio" id="male" name="" value="M" />
@@ -2373,180 +2369,180 @@
                                 </div>
                               </div>
                             </div> -->
-                        <!-- end of radio buttons male/female -->
-                        </div>
+                                        <!-- end of radio buttons male/female -->
+                                    </div>
 
-                        <!--Manaual Passenger Adult-->
-                        <!-- <ng-container *ngFor="let traveller of travellersArrayM; index as i; trackBy: trackByTraveller;let last = last;"> -->
+                                    <!--Manaual Passenger Adult-->
+                                    <!-- <ng-container *ngFor="let traveller of travellersArrayM; index as i; trackBy: trackByTraveller;let last = last;"> -->
 
-                            <div>
-                                <div class="row contact-form edit_traveller_sec g-3">
-                                    <div class="inner_input col-md-4 col-12">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Passenger Name</mat-label>
-                                            <input matInput placeholder="Name" formControlName="passengerName{{traveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onDrag="return false" onDrop="return false">
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && 'passengerName'+traveller.errors && 'passengerName'+traveller.touched" class="error">
-                                            <small *ngIf="passengerForm.hasError('required','passengerName'+traveller)">Please enter
+                                    <div>
+                                        <div class="row contact-form edit_traveller_sec g-3">
+                                            <div class="inner_input col-md-4 col-12">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Passenger Name</mat-label>
+                                                    <input matInput placeholder="Name" formControlName="passengerName{{traveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onDrag="return false" onDrop="return false">
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && 'passengerName'+traveller.errors && 'passengerName'+traveller.touched" class="error">
+                                                    <small *ngIf="passengerForm.hasError('required','passengerName'+traveller)">Please enter
                     name.</small>
-                                            <small *ngIf="passengerForm.hasError('pattern','passengerName'+traveller)">Please enter
+                                                    <small *ngIf="passengerForm.hasError('pattern','passengerName'+traveller)">Please enter
                     valid name.</small>
-                                            <small *ngIf="passengerForm.hasError('minlength','passengerName'+traveller)">Please enter
+                                                    <small *ngIf="passengerForm.hasError('minlength','passengerName'+traveller)">Please enter
                     atleast {{minNameLength}} character.</small>
-                                            <small *ngIf="passengerForm.hasError('maxlength','passengerName'+traveller)">Please enter
+                                                    <small *ngIf="passengerForm.hasError('maxlength','passengerName'+traveller)">Please enter
                     atleast {{maxNameLength}} character.</small>
-                                        </div>
-                                    </div>
-                                    <div class="inner_input col-md-4 col-12 gender_sec">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Gender</mat-label>
-                                            <mat-select matNativeControl [(ngModel)]="genderSelectArr[traveller]" (ngModelChange)="seniorCitizenArr(genderSelectArr[traveller],traveller)" formControlName="passengerGender{{traveller}}">
-                    <mat-option value="M">Male</mat-option>
-                    <mat-option value="F">Female</mat-option>
-                    <mat-option value="T">Transgender</mat-option>
-                    </mat-select>
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && 'passengerGender'+traveller.errors && 'passengerGender'+traveller.touched" class="error">
-                                            <small *ngIf="passengerForm.hasError('required','passengerGender'+traveller)">Please
+                                                </div>
+                                            </div>
+                                            <div class="inner_input col-md-4 col-12 gender_sec">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Gender</mat-label>
+                                                    <mat-select matNativeControl [(ngModel)]="genderSelectArr[traveller]" (ngModelChange)="seniorCitizenArr(genderSelectArr[traveller],traveller)" formControlName="passengerGender{{traveller}}">
+                                                        <mat-option value="M">Male</mat-option>
+                                                        <mat-option value="F">Female</mat-option>
+                                                        <mat-option value="T">Transgender</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && 'passengerGender'+traveller.errors && 'passengerGender'+traveller.touched" class="error">
+                                                    <small *ngIf="passengerForm.hasError('required','passengerGender'+traveller)">Please
                     select gender.</small>
-                                        </div>
-                                    </div>
-                                    <div class="inner_input col-md-4 col-12 age_sec">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Age</mat-label>
-                                            <input matInput placeholder="Age" formControlName="passengerAge{{traveller}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(traveller)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && 'passengerAge'+traveller.errors && 'passengerAge'+traveller.touched" class="error">
-                                            <small *ngIf="passengerForm.hasError('required','passengerAge'+traveller)">Please
+                                                </div>
+                                            </div>
+                                            <div class="inner_input col-md-4 col-12 age_sec">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Age</mat-label>
+                                                    <input matInput placeholder="Age" formControlName="passengerAge{{traveller}}" maxlength="3" (keypress)="numberInput($event)" (keyup)="maxAgeLimitArr(traveller)" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && 'passengerAge'+traveller.errors && 'passengerAge'+traveller.touched" class="error">
+                                                    <small *ngIf="passengerForm.hasError('required','passengerAge'+traveller)">Please
                     enter age.</small>
-                                            <small *ngIf="passengerForm.hasError('pattern','passengerAge'+traveller)">Age should
+                                                    <small *ngIf="passengerForm.hasError('pattern','passengerAge'+traveller)">Age should
                     be numeric.</small>
-                                            <small *ngIf="passengerForm.hasError('min','passengerAge'+traveller)">{{ageValidErrorArr[traveller]}}</small>
-                                            <small *ngIf="passengerForm.hasError('max','passengerAge'+traveller)">{{ageValidErrorArr[traveller]}}</small>
-                                        </div>
-                                    </div>
-                                    <div class="inner_input col-md-4 col-12">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Seat Preference</mat-label>
-                                            <mat-select matNativeControl formControlName="passengerBerthChoice{{traveller}}">
-                       <mat-option value="">No Preference</mat-option>
-                       <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
-                    </mat-select>
-                                        </mat-form-field>
-                                    </div>
+                                                    <small *ngIf="passengerForm.hasError('min','passengerAge'+traveller)">{{ageValidErrorArr[traveller]}}</small>
+                                                    <small *ngIf="passengerForm.hasError('max','passengerAge'+traveller)">{{ageValidErrorArr[traveller]}}</small>
+                                                </div>
+                                            </div>
+                                            <div class="inner_input col-md-4 col-12">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Seat Preference</mat-label>
+                                                    <mat-select matNativeControl formControlName="passengerBerthChoice{{traveller}}">
+                                                        <mat-option value="">No Preference</mat-option>
+                                                        <mat-option *ngFor="let each of applicableBerthTypes" value="{{each}}">{{masterBerth[each]}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
 
-                                    <div class="inner_input col-md-4 col-12">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Country</mat-label>
-                                            <mat-select matNativeControl [(ngModel)]="defaultCountryArr[traveller]" (ngModelChange)="countrySelectAddMore(traveller)" formControlName="passengerNationality{{traveller}}">
-                    <mat-option *ngFor="let each of countries" [value]="each.countryCode"> {{each.country}}</mat-option>
-                    </mat-select>
-                                        </mat-form-field>
+                                            <div class="inner_input col-md-4 col-12">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Country</mat-label>
+                                                    <mat-select matNativeControl [(ngModel)]="defaultCountryArr[traveller]" (ngModelChange)="countrySelectAddMore(traveller)" formControlName="passengerNationality{{traveller}}">
+                                                        <mat-option *ngFor="let each of countries" [value]="each.countryCode"> {{each.country}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="traveler-details-info">
-                                <div class="row contact-form">
-                                    <div class="col-12 col-md-6" *ngIf="showTravelDocumentAddMore[traveller]">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Travel Document</mat-label>
-                                            <mat-select placeholder="" formControlName="passengerTravelDocument{{traveller}}">
-                                                <mat-option value="PASSPORT"> PASSPORT/TRAVEL DOCUMENT</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && passengerForm.controls['passengerTravelDocument'+traveller]['errors'] &&passengerForm.controls['passengerTravelDocument'+traveller]['touched']" class="error">
-                                            <small *ngIf="passengerForm.hasError('required','passengerTravelDocument'+traveller)">Please
+                                    <div class="traveler-details-info">
+                                        <div class="row contact-form">
+                                            <div class="col-12 col-md-6" *ngIf="showTravelDocumentAddMore[traveller]">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Travel Document</mat-label>
+                                                    <mat-select placeholder="" formControlName="passengerTravelDocument{{traveller}}">
+                                                        <mat-option value="PASSPORT"> PASSPORT/TRAVEL DOCUMENT</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && passengerForm.controls['passengerTravelDocument'+traveller]['errors'] &&passengerForm.controls['passengerTravelDocument'+traveller]['touched']" class="error">
+                                                    <small *ngIf="passengerForm.hasError('required','passengerTravelDocument'+traveller)">Please
                        enter travel document.</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12" *ngIf="showTravelDocumentAddMore[traveller]">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Passport No</mat-label>
-                                            <input matInput placeholder="" formControlName="passengerTravelDocCardNo{{traveller}}" maxlength="{{maxPassportLength}}" autocomplete="off" onDrag="return false" onDrop="return false" (keypress)="specialcharInput($event)" (keyup)="convertToUpperCase($event)">
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && passengerForm.controls['passengerTravelDocCardNo'+traveller]['errors'] &&passengerForm.controls['passengerTravelDocCardNo'+traveller]['touched']" class="error">
-                                            <small *ngIf="passengerForm.hasError('required','passengerTravelDocCardNo'+traveller)">Please
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12" *ngIf="showTravelDocumentAddMore[traveller]">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Passport No</mat-label>
+                                                    <input matInput placeholder="" formControlName="passengerTravelDocCardNo{{traveller}}" maxlength="{{maxPassportLength}}" autocomplete="off" onDrag="return false" onDrop="return false" (keypress)="specialcharInput($event)" (keyup)="convertToUpperCase($event)">
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && passengerForm.controls['passengerTravelDocCardNo'+traveller]['errors'] &&passengerForm.controls['passengerTravelDocCardNo'+traveller]['touched']" class="error">
+                                                    <small *ngIf="passengerForm.hasError('required','passengerTravelDocCardNo'+traveller)">Please
                        enter passport number.</small>
-                                            <small *ngIf="passengerForm.hasError('minlength','passengerTravelDocCardNo'+traveller)">Please
+                                                    <small *ngIf="passengerForm.hasError('minlength','passengerTravelDocCardNo'+traveller)">Please
                        enter atleast {{minPassportLength}} characters.</small>
-                                            <small *ngIf="passengerForm.hasError('pattern','passengerTravelDocCardNo'+traveller)">Please
+                                                    <small *ngIf="passengerForm.hasError('pattern','passengerTravelDocCardNo'+traveller)">Please
                        enter valid passport number.</small>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row contact-form" *ngIf="showTravelDocumentAddMore[traveller]">
-                                    <div class="col-md-6">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Date of Birth(DD-MM-YYYY)</mat-label>
-                                            <input matInput [matDatepicker]="picker2" disabled formControlName="foreignPassengerDOB{{traveller}}" [min]="calenderminDate" [max]="calendermaxDate">
-                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker2 disabled="false"></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
-                                <div class="row contact-form">
-                                    <div class="col-12 col-md-6" *ngIf="foodChoiceEnabled">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Meal Preference</mat-label>
-                                            <mat-select placeholder="" formControlName="passengerMealPreference{{traveller}}">
-                                                <mat-option *ngFor="let each of foodDetails" [value]="each"> {{masterFood[each]}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && passengerForm.controls['passengerMealPreference'+traveller]['errors']" class="error">
-                                            <small *ngIf="passengerForm.controls['passengerMealPreference'+traveller]['errors']['required']">Food
+                                        <div class="row contact-form" *ngIf="showTravelDocumentAddMore[traveller]">
+                                            <div class="col-md-6">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Date of Birth(DD-MM-YYYY)</mat-label>
+                                                    <input matInput [matDatepicker]="picker2" disabled formControlName="foreignPassengerDOB{{traveller}}" [min]="calenderminDate" [max]="calendermaxDate">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="row contact-form">
+                                            <div class="col-12 col-md-6" *ngIf="foodChoiceEnabled">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Meal Preference</mat-label>
+                                                    <mat-select placeholder="" formControlName="passengerMealPreference{{traveller}}">
+                                                        <mat-option *ngFor="let each of foodDetails" [value]="each"> {{masterFood[each]}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && passengerForm.controls['passengerMealPreference'+traveller]['errors']" class="error">
+                                                    <small *ngIf="passengerForm.controls['passengerMealPreference'+traveller]['errors']['required']">Food
                        Choice is required.</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6" *ngIf="seniorCitizenEnabledArr[traveller] && seniorCitizenApplicableArr[traveller]">
+                                                <mat-form-field class="matField_full_width" appearance="outline">
+                                                    <mat-label>Senior Citizen Concession</mat-label>
+                                                    <mat-select placeholder="" formControlName="passengerSeniorCitizen{{traveller}}">
+                                                        <mat-option value="1"> Avail Concession </mat-option>
+                                                        <mat-option value="2"> Forgo 50% Concession </mat-option>
+                                                        <mat-option value="3"> Forgo full Concession </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <div *ngIf="submitted && passengerForm.controls['passengerSeniorCitizen'+traveller]['errors']" class="error">
+                                                    <small *ngIf="passengerForm.controls['passengerSeniorCitizen'+traveller]['errors']['required']">Please select Senior citizen concession.</small>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-6" *ngIf="seniorCitizenEnabledArr[traveller] && seniorCitizenApplicableArr[traveller]">
-                                        <mat-form-field class="matField_full_width" appearance="outline">
-                                            <mat-label>Senior Citizen Concession</mat-label>
-                                            <mat-select placeholder="" formControlName="passengerSeniorCitizen{{traveller}}">
-                                                <mat-option value="1"> Avail Concession </mat-option>
-                                                <mat-option value="2"> Forgo 50% Concession </mat-option>
-                                                <mat-option value="3"> Forgo full Concession </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                        <div *ngIf="submitted && passengerForm.controls['passengerSeniorCitizen'+traveller]['errors']" class="error">
-                                            <small *ngIf="passengerForm.controls['passengerSeniorCitizen'+traveller]['errors']['required']">Please select Senior citizen concession.</small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p *ngIf="optChildBerthStatusArr[traveller]"> <label class="checkbox">Opt Child Berth
+                                        <p *ngIf="optChildBerthStatusArr[traveller]"> <label class="checkbox">Opt Child Berth
                  <input type="checkbox" (click)="optChildBerth($event)" [checked]="ladiesQuotaTrue"
                  formControlName="optChildBerth{{traveller}}" id="optChildBerth{{traveller}}" >
                  <span class="checkmark"></span>
                  </label>
-                                </p>
-                                <p *ngIf="optBedRollStatus"> <label class="checkbox">Opt Bed Roll
+                                        </p>
+                                        <p *ngIf="optBedRollStatus"> <label class="checkbox">Opt Bed Roll
                  <input type="checkbox" (change)="optBedRoll($event,i)"
                     formControlName="optBedRoll{{traveller}}">
                  <span class="checkmark"></span>
                  </label>
-                                </p>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <button type="submit" class="add_new_submit_btn">Add</button>
+                                        </p>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button type="submit" class="add_new_submit_btn">Add</button>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <!-- </ng-container> -->
+
+
+
+
+
+
+
+                                    <!-- end of traveller popup form -->
                                 </div>
                             </div>
-
-                        <!-- </ng-container> -->
-
-
-
-
-
-                        
-
-                        <!-- end of traveller popup form -->
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 </div>
 
@@ -2555,28 +2551,27 @@
 
 <div *ngIf="isMobile">
     <!-- Mlite Add Traveller Popup -->
-    <div class=" modal coupon_mlite_popup" id="addInfant_mlite"  data-bs-keyboard="true"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="add_new_traveler pt-0" >
-            <div>
-              <!--Manaual Passenger Infant-->
-                <div class="modal-header">
-                  <h5 class="modal-title">Add New Infant</h5>
-                  <button type="button" class="btn-close" ></button>
-                </div>
-                <div class="modal-body pt-0">
-                  <div>
+    <div class=" modal coupon_mlite_popup" id="addInfant_mlite" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="add_new_traveler pt-0">
                     <div>
-                        <!-- <div *ngIf="travellersArrayM.length>0">
-                            <div *ngIf="childrenArrayM && childrenArrayM.length > 0"> -->
+                        <!--Manaual Passenger Infant-->
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add New Infant</h5>
+                            <button type="button" class="btn-close"></button>
+                        </div>
+                        <div class="modal-body pt-0">
+                            <div>
                                 <div>
+                                    <!-- <div *ngIf="travellersArrayM.length>0">
+                            <div *ngIf="childrenArrayM && childrenArrayM.length > 0"> -->
                                     <div>
+                                        <div>
 
-                                <div class="row">
-                                    <!-- radio buttons male/female-->
-                                   <!--  <div class="col-12">
+                                            <div class="row">
+                                                <!-- radio buttons male/female-->
+                                                <!--  <div class="col-12">
                                       <div class="trip_select">
                                           <div class="buttonTrip">
                                               <input type="radio" id="male" name="" value="M" formControlName="childGender{{traveller}}"/>
@@ -2592,74 +2587,73 @@
                                         </div>
                                       </div>
                                     </div> -->
-                                <!-- end of radio buttons male/female -->
-                                </div>
+                                                <!-- end of radio buttons male/female -->
+                                            </div>
 
-                                <!-- <ng-container *ngFor="let traveller of childrenArrayM; index as i; trackBy: trackByTraveller;let last = last;"> -->
+                                            <!-- <ng-container *ngFor="let traveller of childrenArrayM; index as i; trackBy: trackByTraveller;let last = last;"> -->
 
-                                    <div class="contact-form edit_traveller_sec">
-                                        <div class="inner_input col-md-4 col-12">
-                                            <mat-form-field class="matField_full_width" appearance="outline">
-                                                <mat-label>Name</mat-label>
-                                                <input matInput placeholder="Name" formControlName="childName{{traveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
-                                            </mat-form-field>
-                                            <div *ngIf="submitted && passengerForm.controls['childName'+traveller]['errors'] && passengerForm.controls['childName'+traveller]['touched'] " class="error">
-                                                <small *ngIf="passengerForm.hasError('required','childName'+traveller)">Please enter
+                                            <div class="contact-form edit_traveller_sec">
+                                                <div class="inner_input col-md-4 col-12">
+                                                    <mat-form-field class="matField_full_width" appearance="outline">
+                                                        <mat-label>Name</mat-label>
+                                                        <input matInput placeholder="Name" formControlName="childName{{traveller}}" (keypress)="flInput($event)" maxlength="{{maxNameLength}}" autocomplete="off" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false">
+                                                    </mat-form-field>
+                                                    <div *ngIf="submitted && passengerForm.controls['childName'+traveller]['errors'] && passengerForm.controls['childName'+traveller]['touched'] " class="error">
+                                                        <small *ngIf="passengerForm.hasError('required','childName'+traveller)">Please enter
                         name.</small>
-                                                <small *ngIf="passengerForm.hasError('pattern','childName'+traveller)">Please enter valid
+                                                        <small *ngIf="passengerForm.hasError('pattern','childName'+traveller)">Please enter valid
                         name.</small>
-                                                <small *ngIf="passengerForm.hasError('minlength','childName'+traveller)">Please enter atleast
+                                                        <small *ngIf="passengerForm.hasError('minlength','childName'+traveller)">Please enter atleast
                         {{minNameLength}} character.</small>
-                                            </div>
-                                        </div>
-                                        <div class="inner_input col-md-4 col-12 gender_sec">
-                                            <mat-form-field class="matField_full_width" appearance="outline">
-                                                <mat-label>Gender</mat-label>
-                                                <mat-select matNativeControl formControlName="childGender{{traveller}}">
-                                    <mat-option value="M">Male</mat-option>
-                                    <mat-option value="F">Female</mat-option>
-                                   <mat-option value="T">Transgender</mat-option> 
-                                  </mat-select>
-                                            </mat-form-field>
-                                            <div *ngIf="submitted && passengerForm.controls['childGender'+traveller]['errors'] && passengerForm.controls['childGender'+traveller]['touched']" class="error">
-                                                <small *ngIf="passengerForm.hasError('required','childGender'+traveller)">Please select
+                                                    </div>
+                                                </div>
+                                                <div class="inner_input col-md-4 col-12 gender_sec">
+                                                    <mat-form-field class="matField_full_width" appearance="outline">
+                                                        <mat-label>Gender</mat-label>
+                                                        <mat-select matNativeControl formControlName="childGender{{traveller}}">
+                                                            <mat-option value="M">Male</mat-option>
+                                                            <mat-option value="F">Female</mat-option>
+                                                            <mat-option value="T">Transgender</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <div *ngIf="submitted && passengerForm.controls['childGender'+traveller]['errors'] && passengerForm.controls['childGender'+traveller]['touched']" class="error">
+                                                        <small *ngIf="passengerForm.hasError('required','childGender'+traveller)">Please select
                             gender.</small>
-                                            </div>
-                                        </div>
-                                        <div class="inner_input col-md-4 col-12 ">
-                                            <mat-form-field class="matField_full_width" appearance="outline">
-                                                <mat-label>Age</mat-label>
-                                                <mat-select matNativeControl formControlName="childAge{{traveller}}">
-                                    <mat-option value="0">Below One Year</mat-option>
-                                    <mat-option value="1">One year</mat-option>
-                                    <mat-option value="2">Two years</mat-option>
-                                     <mat-option value="3">Three years</mat-option>
-                                      <mat-option value="4">Four years</mat-option>
-                                  </mat-select>
-                                            </mat-form-field>
-                                            <div *ngIf="submitted && passengerForm.controls['childAge'+traveller]['errors'] && passengerForm.controls['childAge'+traveller]['touched']" class="error">
-                                                <small *ngIf="passengerForm.hasError('required','childAge'+traveller)">Please select
+                                                    </div>
+                                                </div>
+                                                <div class="inner_input col-md-4 col-12 ">
+                                                    <mat-form-field class="matField_full_width" appearance="outline">
+                                                        <mat-label>Age</mat-label>
+                                                        <mat-select matNativeControl formControlName="childAge{{traveller}}">
+                                                            <mat-option value="0">Below One Year</mat-option>
+                                                            <mat-option value="1">One year</mat-option>
+                                                            <mat-option value="2">Two years</mat-option>
+                                                            <mat-option value="3">Three years</mat-option>
+                                                            <mat-option value="4">Four years</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <div *ngIf="submitted && passengerForm.controls['childAge'+traveller]['errors'] && passengerForm.controls['childAge'+traveller]['touched']" class="error">
+                                                        <small *ngIf="passengerForm.hasError('required','childAge'+traveller)">Please select
                             age.</small>
+                                                    </div>
+                                                </div>
+
                                             </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button type="submit" class="add_new_submit_btn">Add</button>
+                                                </div>
+                                            </div>
+                                            <!-- </ng-container> -->
                                         </div>
 
                                     </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <button type="submit" class="add_new_submit_btn">Add</button>
-                                        </div>
-                                    </div>
-                                <!-- </ng-container> -->
+                                </div>
                             </div>
-
                         </div>
                     </div>
-                  </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
 </div>
-

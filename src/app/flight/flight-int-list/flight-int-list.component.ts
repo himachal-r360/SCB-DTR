@@ -132,10 +132,10 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         { name: 'Meals_Included', active: false, value: 'Meals-Included', count: 0 }
         ]
         flight_Timingsitems = [
-        { name: '0_6', active: false, value: '00-06', image: '1.png' },
-        { name: '6_12', active: false, value: '06-12', image: '2.png' },
-        { name: '12_18', active: false, value: '12-18', image: '3.png' },
-        { name: '18_0', active: false, value: '18-00', image: '4.png' }
+        { name: '0_6', active: false, value: '00-06', image: '1.svg' },
+        { name: '6_12', active: false, value: '06-12', image: '2.svg' },
+        { name: '12_18', active: false, value: '12-18', image: '3.svg' },
+        { name: '18_0', active: false, value: '18-00', image: '4.svg' }
         ]
         stopsFilteritems = [
         { name: 'no_stops', active: false, value: '<p>No <br> stops</p>' },
