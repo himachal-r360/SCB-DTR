@@ -140,10 +140,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'Meals_Included', active: false, value: 'Meals-Included', count: 0 }
   ]
   flight_Timingsitems = [
-    { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
-    { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
-    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.png' },
-    { name: '18_0', active: false, value: 'After 6 PM', image: '3.png' }
+    { name: '0_6', active: false, value: 'Before 6 AM', image: '1.svg' },
+    { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.svg' },
+    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.svg' },
+    { name: '18_0', active: false, value: 'After 6 PM', image: '3.svg' }
   ]
   stopsFilteritems = [
     { name: 'no_stops', active: false, value: '<p>Non <br> stop</p>' },
