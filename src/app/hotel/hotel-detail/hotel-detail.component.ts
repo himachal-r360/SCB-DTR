@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -51,7 +51,7 @@ export class HotelDetailComponent implements OnInit {
     'projector':{name:'Projector',value:'projector',image:'assets/images/hotel/amenities/54X54/Projector.svg'},
     'restaurant':{name:'Restaurant',value:'restaurant',image:'assets/images/hotel/amenities/54X54/restaurant-svgrepo-com-1.svg'},
   }
-
+  
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
     isMobile: boolean = true;
     customOptions: OwlOptions = {
@@ -334,4 +334,7 @@ export class HotelDetailComponent implements OnInit {
   {
     $("#moreAmenities").modal('hide')
   }
+
+
+  
 }
