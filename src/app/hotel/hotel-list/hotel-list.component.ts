@@ -162,7 +162,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
-      
+
     }
 
     //$('.scrollToTop').trigger('click');
@@ -311,6 +311,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
+      console.log(res.response.hotels);
       if (res.response.hotels) {
         if (res.response.hotels.length > 0) {
           this.isResponse = true

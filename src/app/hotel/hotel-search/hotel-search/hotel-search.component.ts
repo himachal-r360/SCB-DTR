@@ -54,7 +54,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     {"_source":{"full_content":"London, Greater London, United Kingdom","city":"London","countryName":"United Kingdom","country":"UK"}},
     {"_source":{"full_content":"Dubai, Dubai Emirate, United Arab Emirates","city":"Dubai","countryName":" United Arab Emirates","country":"AE"}},
     {"_source":{"full_content":"Bangkok, Bangkok Province, Thailand","city":"Bangkok","countryName":" Thailand","country":"TH"}},
-    
+
     ];
   @ViewChild('hideShowCity') hideShowCity: ElementRef;
   @ViewChild('showHideGuest') showHideGuest: ElementRef;
@@ -62,7 +62,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   @ViewChild('checkIn') checkIn: ElementRef;
   @ViewChild('checkOut') checkOut: ElementRef;
 
-  
+
   @HostListener('window:resize', ['$event']) resizeEvent(event: Event) {
     this.isMobile = window.innerWidth < 991 ?  true : false;
   }
@@ -100,7 +100,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       totalGuest:[]
     });
 
-   
+
   }
 
   ngOnInit(): void {
@@ -117,7 +117,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
 
   getSearchValueLocalStorage() {
-    
+
     let modifySearchValue = JSON.parse(this.getSearchValue);
     this.cityName = modifySearchValue.city
     let roomArr = modifySearchValue.rooms;
@@ -186,6 +186,31 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren - 1;
       item.value.childrenAge.pop()
+
+      if (this.submitted) {
+        var rooms = this.hotelSearchForm.value.rooms;
+        var j = 0;
+        var isvalid = true;
+        rooms.forEach(z => {
+          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0')) && z.numberOfChildren > 0) {
+            var id = document.getElementById("error_" + j)
+            id.hidden = false;
+            isvalid = false;
+          } else {
+            var id = document.getElementById("error_" + j)
+            id.hidden = true;
+          }
+          j++;
+        });
+        if (!isvalid) {
+          var id1 = document.getElementById("error_AllAge")
+          id1.hidden = false;
+        }
+        else {
+          var id1 = document.getElementById("error_AllAge")
+          id1.hidden = true;
+        }
+      }
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
@@ -252,7 +277,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.showTotalCountOfAdult();
     this.showTotalCountsOfChild();
   }
-  
+
   onSelectCity(param) {
     this.hotelSearchForm['controls']['city'].setValue(param._source.city);
     this.hotelSearchForm['controls']['countryName'].setValue(param._source.countryName);
@@ -293,7 +318,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       var j = 0;
       var isvalid = true;
       rooms.forEach(z => {
-        if (z.numberOfChildren != z.childrenAge.length && z.numberOfChildren > 0) {
+        if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0')) && z.numberOfChildren > 0) {
           var id = document.getElementById("error_" + j)
           id.hidden = false;
           isvalid = false;
@@ -379,7 +404,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     var i = 0;
     var isvalid = true;
     rooms.forEach(z => {
-      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0") && z.numberOfChildren > 0) {
+      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0'))  && z.numberOfChildren > 0) {
         var id = document.getElementById("error_" + i)
         id.hidden = false;
         isvalid = false;
