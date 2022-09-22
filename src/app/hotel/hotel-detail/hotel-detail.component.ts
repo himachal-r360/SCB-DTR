@@ -338,12 +338,13 @@ export class HotelDetailComponent implements OnInit {
   ClosePopover()
   {
       $('.hover-popover').css('display','none');
+  }    
   goToModifySearch(){
     this.router.navigate(['compare-fly']);
   }
 
 
-  }
+  
 
   // OpenPopover(event:any)
   // {
