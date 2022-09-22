@@ -13,29 +13,29 @@ declare var $: any;
 @Component({
   selector: 'app-hotel-list',
   templateUrl: './hotel-list.component.html',
-  styleUrls: ['./hotel-list.component.sass','./hotel-list.component.css']
+  styleUrls: ['./hotel-list.component.sass', './hotel-list.component.css']
 })
-export class HotelListComponent implements OnInit,OnDestroy {
+export class HotelListComponent implements OnInit, OnDestroy {
   hotelSearchForm: any;
-  hotelList:any;
-  hotelWithoutFilterList:any;
-  docKey:string;
+  hotelList: any;
+  hotelWithoutFilterList: any;
+  docKey: string;
   cdnUrl: any;
-  CheckInDate:Date;
-  CheckoutDate:Date;
-  City:string;
+  CheckInDate: Date;
+  CheckoutDate: Date;
+  City: string;
   Country: string;
   minPrice: number = 0;
   maxPrice: number = 1000;
   resetMinPrice: number = 0;
   resetMaxPrice: number = 1000;
-  isMobile:boolean= true;
-  partnerArr:any = [];
-  loader:boolean = false;
+  isMobile: boolean = true;
+  partnerArr: any = [];
+  loader: boolean = false;
   loaderValue = 10;
-  dummyForLoader = Array(10).fill(0).map((x,i)=>i);
-  isResponse :boolean = true;
-  @ViewChild('closeModel')closeModel:ElementRef
+  dummyForLoader = Array(10).fill(0).map((x, i) => i);
+  isResponse: boolean = true;
+  @ViewChild('closeModel') closeModel: ElementRef
 
   options: Options = {
     floor: 0,
@@ -46,147 +46,148 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
   };
   totalGuest = 0;
-  starFiltersList:any = [
-    { active: false, value: '5'},
-    { active: false, value: '4'},
-    { active: false, value: '3'},
-    { active: false, value: '2'},
-    { active: false, value: '1'}
+  starFiltersList: any = [
+    { active: false, value: '5' },
+    { active: false, value: '4' },
+    { active: false, value: '3' },
+    { active: false, value: '2' },
+    { active: false, value: '1' }
   ]
 
-  amenityList:any =[
-    {name:'Gym',value:'gym',active:false},
-    {name:'Wireless',value:'wireless',active:false},
-    {name:'Projector',value:'projector',active:false},
-    {name:'Swimming',value:'swimming',active:false},
-    {name:'Breakfast',value:'breakfast',active:false},
-    {name:'Bar',value:'bar',active:false},
-    {name:'Cafe',value:'cafe',active:false},
-    {name:'AirConditioner',value:'airConditioner',active:false},
-    {name:'Packing',value:'packing',active:false},
-    {name:'Lounge',value:'lounge',active:false},
-    {name:'Business Centre',value:'businessCentre',active:false},
-    {name:'Conference Room',value:'conferenceRoom',active:false},
-    {name:'Elevator',value:'elevator',active:false},
-    {name:'Room Service',value:'roomService',active:false},
-    {name:'Power Backup',value:'powerBackup',active:false},
-    {name:'Restaurant',value:'restaurant',active:false}
+  amenityList: any = [
+    { name: 'Gym', value: 'gym', active: false },
+    { name: 'Wireless', value: 'wireless', active: false },
+    { name: 'Projector', value: 'projector', active: false },
+    { name: 'Swimming', value: 'swimming', active: false },
+    { name: 'Breakfast', value: 'breakfast', active: false },
+    { name: 'Bar', value: 'bar', active: false },
+    { name: 'Cafe', value: 'cafe', active: false },
+    { name: 'AirConditioner', value: 'airConditioner', active: false },
+    { name: 'Packing', value: 'packing', active: false },
+    { name: 'Lounge', value: 'lounge', active: false },
+    { name: 'Business Centre', value: 'businessCentre', active: false },
+    { name: 'Conference Room', value: 'conferenceRoom', active: false },
+    { name: 'Elevator', value: 'elevator', active: false },
+    { name: 'Room Service', value: 'roomService', active: false },
+    { name: 'Power Backup', value: 'powerBackup', active: false },
+    { name: 'Restaurant', value: 'restaurant', active: false }
   ]
 
   specialOffers = [
-    {name:'Offers 1',active:false},
-    {name:'Offers 2',active:false},
-    {name:'Offers 3',active:true},
+    { name: 'Offers 1', active: false },
+    { name: 'Offers 2', active: false },
+    { name: 'Offers 3', active: true },
   ]
 
   houseRules = [
-    {name:'Entire Property' , active:false},
-    {name:'Star Host' , active:false},
-    {name:'Caretaker' , active:false},
-    {name:'Homestays' , active:true},
+    { name: 'Entire Property', active: false },
+    { name: 'Star Host', active: false },
+    { name: 'Caretaker', active: false },
+    { name: 'Homestays', active: true },
   ]
 
   bookingPreferences = [
-    {name:'Entire Property' , active:false},
-    {name:'Caretaker' , active:false},
-    {name:'Instant Book' , active:true},
-    {name:'Homestays' , active:false},
+    { name: 'Entire Property', active: false },
+    { name: 'Caretaker', active: false },
+    { name: 'Instant Book', active: true },
+    { name: 'Homestays', active: false },
   ]
 
   populateFilter = [
-    {name:'Apartment',active:false},
-    {name:'ApartHotel',active:false},
-    {name:'Holiday Home',active:false},
-    {name:'Camping',active:false},
-    {name:'Villas',active:false},
-    {name:'Resorts',active:false},
+    { name: 'Apartment', active: false },
+    { name: 'ApartHotel', active: false },
+    { name: 'Holiday Home', active: false },
+    { name: 'Camping', active: false },
+    { name: 'Villas', active: false },
+    { name: 'Resorts', active: false },
   ]
 
   priceSortingFilteritems = [
-    { name: 'P_L_H', active: false, value: 'Low to High' ,image: './assets/images/icons/price-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
-    { name: 'P_H_L', active: false, value: 'High to Low' ,image: './assets/images/icons/price-h.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Price'},
-    { name: 'S_L_H', active: false, value: 'Low to High' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
-    { name: 'S_H_L', active: false, value: 'High to Low' ,image: './assets/hotel/icon/Star-l.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:'Star'},
-    { name: 'Trending', active: true, value: 'Trending Hotels' ,image: './assets/hotel/icon/Trending.png',activeImage:'./assets/images/icons/active_lth.png', sortValue:''},
+    { name: 'P_L_H', active: false, value: 'Low to High', image: './assets/images/icons/price-l.png', activeImage: './assets/images/icons/active_lth.png', sortValue: 'Price' },
+    { name: 'P_H_L', active: false, value: 'High to Low', image: './assets/images/icons/price-h.png', activeImage: './assets/images/icons/active_lth.png', sortValue: 'Price' },
+    { name: 'S_L_H', active: false, value: 'Low to High', image: './assets/hotel/icon/Star-l.png', activeImage: './assets/images/icons/active_lth.png', sortValue: 'Star' },
+    { name: 'S_H_L', active: false, value: 'High to Low', image: './assets/hotel/icon/Star-l.png', activeImage: './assets/images/icons/active_lth.png', sortValue: 'Star' },
+    { name: 'Trending', active: true, value: 'Trending Hotels', image: './assets/hotel/icon/Trending.png', activeImage: './assets/images/icons/active_lth.png', sortValue: '' },
   ]
 
-  Facilities:any =
+  Facilities: any =
     [
-    {name:'Room Service',value:'roomService',image:'assets/images/hotel/amenities/18X18/room-service-svgrepo-com-2.svg'},
-    {name:'Gym',value:'gym',image:'assets/images/hotel/amenities/18X18/GYm.svg'},
-    {name:'Pool',value:'swimming',image:'assets/images/hotel/amenities/18X18/pool.svg'},
-    {name:'Bar',value:'bar',image:'assets/images/hotel/amenities/18X18/Baar.svg'},
-    {name:'AC',value:'airConditioner',image:'assets/images/hotel/amenities/18X18/AC_18.svg'},
-    {name:'Internet',value:'wireless',image:'assets/images/hotel/amenities/18X18/Wireless.svg'},
-    {name:'Breakfast',value:'breakfast',image:'assets/images/hotel/amenities/18X18/BreakFast.svg'},
-    {name:'Business Centre',value:'businessCentre',image:'assets/images/hotel/amenities/18X18/Business_Center.svg'},
-    {name:'Cafe',value:'cafe',image:'assets/images/hotel/amenities/18X18/Cafe.svg'},
-    {name:'Conference Room',value:'conferenceRoom',image:'assets/images/hotel/amenities/18X18/Conference_Room.svg'},
-    {name:'Elevator',value:'elevator',image:'assets/images/hotel/amenities/18X18/Elevator.svg'},
-    {name:'Lounge',value:'lounge',image:'assets/images/hotel/amenities/18X18/Lounge.svg'},
-    {name:'Packing',value:'packing',image:'assets/images/hotel/amenities/18X18/Packing.svg'},
-    {name:'Power Backup',value:'powerBackup',image:'assets/images/hotel/amenities/18X18/Power_Backup.svg'},
-    {name:'Projector',value:'projector',image:'assets/images/hotel/amenities/18X18/Projector.svg'},
-    {name:'Restaurant',value:'restaurant',image:'assets/images/hotel/amenities/18X18/restaurant-svgrepo-com-2.svg'},
-  ]
+      { name: 'Room Service', value: 'roomService', image: 'assets/images/hotel/amenities/18X18/room-service-svgrepo-com-2.svg' },
+      { name: 'Gym', value: 'gym', image: 'assets/images/hotel/amenities/18X18/GYm.svg' },
+      { name: 'Pool', value: 'swimming', image: 'assets/images/hotel/amenities/18X18/pool.svg' },
+      { name: 'Bar', value: 'bar', image: 'assets/images/hotel/amenities/18X18/Baar.svg' },
+      { name: 'AC', value: 'airConditioner', image: 'assets/images/hotel/amenities/18X18/AC_18.svg' },
+      { name: 'Internet', value: 'wireless', image: 'assets/images/hotel/amenities/18X18/Wireless.svg' },
+      { name: 'Breakfast', value: 'breakfast', image: 'assets/images/hotel/amenities/18X18/BreakFast.svg' },
+      { name: 'Business Centre', value: 'businessCentre', image: 'assets/images/hotel/amenities/18X18/Business_Center.svg' },
+      { name: 'Cafe', value: 'cafe', image: 'assets/images/hotel/amenities/18X18/Cafe.svg' },
+      { name: 'Conference Room', value: 'conferenceRoom', image: 'assets/images/hotel/amenities/18X18/Conference_Room.svg' },
+      { name: 'Elevator', value: 'elevator', image: 'assets/images/hotel/amenities/18X18/Elevator.svg' },
+      { name: 'Lounge', value: 'lounge', image: 'assets/images/hotel/amenities/18X18/Lounge.svg' },
+      { name: 'Packing', value: 'packing', image: 'assets/images/hotel/amenities/18X18/Packing.svg' },
+      { name: 'Power Backup', value: 'powerBackup', image: 'assets/images/hotel/amenities/18X18/Power_Backup.svg' },
+      { name: 'Projector', value: 'projector', image: 'assets/images/hotel/amenities/18X18/Projector.svg' },
+      { name: 'Restaurant', value: 'restaurant', image: 'assets/images/hotel/amenities/18X18/restaurant-svgrepo-com-2.svg' },
+    ]
 
-  showMoreAmenity:boolean = false;
-  SearchText:string = '';
-  searchData:any;
-  hotelSearchData:any;
-  sub:Subscription;
+  showMoreAmenity: boolean = false;
+  SearchText: string = '';
+  searchData: any;
+  hotelSearchData: any;
+  sub: Subscription;
 
   @ViewChild('itemsContainer', { read: ViewContainerRef }) container: ViewContainerRef;
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
-  @ViewChild('showFilter')showFilter:ElementRef;
+  @ViewChild('showFilter') showFilter: ElementRef;
 
   pageIndex: number = 11;
-        ITEMS_RENDERED_AT_ONCE=10;
-        nextIndex=0;
+  ITEMS_RENDERED_AT_ONCE = 10;
+  nextIndex = 0;
 
-         loadData() {
-             if (this.pageIndex >= this.hotelList.length) {
-             return false;
-              }else{
-             this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
+  loadData() {
+   // console.log(this.pageIndex,"this.pageIndex + ")
+   // console.log(this.hotelList.length,"this.hotelList.length")
+    if (this.pageIndex >= this.hotelList.length) {
+      return false;
+    } else {
+      this.nextIndex = this.pageIndex + this.ITEMS_RENDERED_AT_ONCE;
 
-             if(this.nextIndex > this.hotelList.length){
-             this.nextIndex=this.hotelList.length;
-             }
+      if (this.nextIndex > this.hotelList.length) {
+        this.nextIndex = this.hotelList.length;
+      }
 
-            for (let n = this.pageIndex; n < this.nextIndex ; n++) {
-             const context = {
-                item: [this.hotelList[n]]
-              };
+      for (let n = this.pageIndex; n < this.nextIndex; n++) {
+        const context = {
+          item: [this.hotelList[n]]
+        };
 
-              this.container.createEmbeddedView(this.template, context);
-            }
-             this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+        this.container.createEmbeddedView(this.template, context);
+      }
+      this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+     // console.log(this.hotelList,"this.hotelList");
+    }
 
-           }
-
-           //$('.scrollToTop').trigger('click');
-        }
+    //$('.scrollToTop').trigger('click');
+  }
 
 
-         private intialData() {
-            for (let n = 0; n <this.ITEMS_RENDERED_AT_ONCE ; n++) {
-              if(this.hotelList[n] != undefined)
-              {
-                const context = {
-                  item: [this.hotelList[n]]
-                };
+  private intialData() {
+    for (let n = 0; n < this.ITEMS_RENDERED_AT_ONCE; n++) {
+      if (this.hotelList[n] != undefined) {
+        const context = {
+          item: [this.hotelList[n]]
+        };
 
-                this.container.createEmbeddedView(this.template, context);
-              }
+        this.container.createEmbeddedView(this.template, context);
+      }
 
-            }
-            //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
-            //  this.gotoTop();
-        }
+    }
+    //this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+    //  this.gotoTop();
+  }
 
-  constructor(private _fb: FormBuilder, private _hotelService: HotelService,private sg: SimpleGlobal ,private route:ActivatedRoute , private _flightService:FlightService ,private location: Location , private router:Router ) {
-    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+  constructor(private _fb: FormBuilder, private _hotelService: HotelService, private sg: SimpleGlobal, private route: ActivatedRoute, private _flightService: FlightService, private location: Location, private router: Router) {
+    this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
       checkIn: [],
       checkOut: [],
@@ -201,23 +202,24 @@ export class HotelListComponent implements OnInit,OnDestroy {
       area: [''],
       hotelId: [''],
       rooms: this._fb.array([
-        { room: 1, numberOfAdults: '1', numberOfChildren: '0' , childrenAge:[]}
+        { room: 1, numberOfAdults: '1', numberOfChildren: '0', childrenAge: [] }
       ]),
       channel: ['Web'],
       programName: ['SMARTBUY'],
       pageNumber: [0],
       limit: [0],
       numberOfRooms: [1],
-      countryName : ['India'],
-      totalGuest:[]
+      countryName: ['India'],
+      totalGuest: []
     });
 
-    $(window).scroll(function(this) {
-      if($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
+    $(window).scroll(function (this) {
+      if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
+     //   console.log("scroll");
         $('#endOfPage').trigger('click');
       }
     });
- this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 
 
   }
@@ -228,16 +230,16 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
 
   ngOnInit(): void {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-   // this.sub = this.route.url.subscribe(url =>{
+    this.isMobile = window.innerWidth < 991 ? true : false;
+    // this.sub = this.route.url.subscribe(url =>{
     this.isResponse = true;
     this.loader = true;
       this.resetPopups();
     this.getSearchData();
-    if(this.isMobile)
-    this.headerHideShow(null);
+    if (this.isMobile)
+      this.headerHideShow(null);
     this.searchHotel();
-   // });
+    // });
   }
   resetPopups() {
 
@@ -248,7 +250,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   getSearchData(){
    // console.log(this.route.snapshot.queryParams)
     const urlParam = this.route.snapshot.queryParams;
-    this.searchData =  urlParam;
+    this.searchData = urlParam;
     this.hotelSearchForm.get('checkIn').setValue(this.searchData.checkIn);
     this.hotelSearchForm.get('checkOut').setValue(this.searchData.checkOut);
     this.hotelSearchForm.get('city').setValue(this.searchData.city);
@@ -320,12 +322,12 @@ export class HotelListComponent implements OnInit,OnDestroy {
     localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
   }
 
-  headerHideShow(event:any) {
-    this.isMobile = window.innerWidth < 991 ?  true : false;
-    if(this.isMobile){
-     this._flightService.showHeader(false);
-    }else{
-    this._flightService.showHeader(true);
+  headerHideShow(event: any) {
+    this.isMobile = window.innerWidth < 991 ? true : false;
+    if (this.isMobile) {
+      this._flightService.showHeader(false);
+    } else {
+      this._flightService.showHeader(true);
     }
   }
 
@@ -335,21 +337,19 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.loader = true;
     this.CheckInDate = this.hotelSearchForm.value.checkIn;
     this.CheckoutDate = this.hotelSearchForm.value.checkOut;
-    this.City =  this.hotelSearchForm.value.city;
+    this.City = this.hotelSearchForm.value.city;
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
-      if(res.response.hotels)
-      {
-        if(res.response.hotels.length > 0)
-        {
+      if (res.response.hotels) {
+        if (res.response.hotels.length > 0) {
           this.isResponse = true
         }
-        else{
+        else {
           this.isResponse = false
         }
       }
-      else{
+      else {
         this.isResponse = false
       }
       this.docKey = res.response.docKey;
@@ -358,35 +358,34 @@ export class HotelListComponent implements OnInit,OnDestroy {
       this.GetMinAndMaxPriceForFilter();
       this.GetPartners();
       this.AllFilteredData();
-    }, (error) => { this.isResponse = false;
-    this.loader = false;
+    }, (error) => {
+      this.isResponse = false;
+      this.loader = false;
     });
 
   }
 
-  AllFilteredData()
-  {
+  AllFilteredData() {
     //Star Filter Start
+    this.resetSorttingWithScroll();
     let hotelWithoutFilterList = this.hotelWithoutFilterList;
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
 
-     var StarFiltereddata = [];
-    this.starFiltersList.forEach(z=>{
+    var StarFiltereddata = [];
+    this.starFiltersList.forEach(z => {
       var data = [];
-      if(z.active)
-      {
+      if (z.active) {
 
-          data = this.hotelList.filter(x=>{
-            return x.hotelInfo.starRating == z.value;
-          })
+        data = this.hotelList.filter(x => {
+          return x.hotelInfo.starRating == z.value;
+        })
 
-          StarFiltereddata.push(...data);
+        StarFiltereddata.push(...data);
 
       }
     });
-    if(StarFiltereddata.length > 0)
-    {
+    if (StarFiltereddata.length > 0) {
       this.hotelList = StarFiltereddata;
     }
 
@@ -398,12 +397,10 @@ export class HotelListComponent implements OnInit,OnDestroy {
       var max_price = this.maxPrice;
       var filteredPrice: any[] = [];
       this.hotelList.filter((e: any) => {
-        var filtered = e.priceSummary.filter(z=>
-          {
-            return z.price >= min_price && z.price<=max_price
-          });
-        if(filtered.length > 0)
-        {
+        var filtered = e.priceSummary.filter(z => {
+          return z.price >= min_price && z.price <= max_price
+        });
+        if (filtered.length > 0) {
           filteredPrice.push(e);
         }
       });
@@ -416,19 +413,17 @@ export class HotelListComponent implements OnInit,OnDestroy {
     if (this.hotelList.length > 0) {
       var applyFilter = false;
       var AmenityFiltered = [];
-      this.amenityList.forEach(z=>{
-        if(z.active == true)
-        {
+      this.amenityList.forEach(z => {
+        if (z.active == true) {
           applyFilter = true;
           var data = []
-          data =  this.hotelList.filter((e: any) => {
+          data = this.hotelList.filter((e: any) => {
             return e.hotelInfo.amenity[z.value] == 1
           });
           AmenityFiltered.push(...data);
         }
       });
-      if(applyFilter)
-      {
+      if (applyFilter) {
         this.hotelList = AmenityFiltered;
       }
 
@@ -440,69 +435,62 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
 
     //Search Text Filter Start
-      if(this.SearchText !='')
-      {
-        if (this.hotelList.length > 0) {
-          var data =  this.hotelList.filter((e: any) => {
-            return e.hotelInfo.name.toLowerCase().includes(this.SearchText.toLowerCase());
-          });
-          this.hotelList = data;
-        }
+    if (this.SearchText != '') {
+      if (this.hotelList.length > 0) {
+        var data = this.hotelList.filter((e: any) => {
+          return e.hotelInfo.name.toLowerCase().includes(this.SearchText.toLowerCase());
+        });
+        this.hotelList = data;
       }
-      // shortings
-      this.priceSortingFilteritems.filter((item: any) => {
-        if (item.name == 'P_L_H' && item.active == true) {
-          this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
-        }
-        else if (item.name == 'P_H_L' && item.active == true) {
-          this.hotelList.sort((a: any, b: any) => b.priceSummary[0].price - a.priceSummary[0].price);
-        }
-        else if (item.name == 'S_L_H' && item.active == true) {
-          this.hotelList.sort((a: any, b: any) => a.hotelInfo.starRating - b.hotelInfo.starRating);
-        }
-        else if (item.name == 'S_H_L' && item.active == true) {
-          this.hotelList.sort((a: any, b: any) => b.hotelInfo.starRating - a.hotelInfo.starRating);
-        }
-      })
+    }
+    // shortings
+    this.priceSortingFilteritems.filter((item: any) => {
+      if (item.name == 'P_L_H' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
+      }
+      else if (item.name == 'P_H_L' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => b.priceSummary[0].price - a.priceSummary[0].price);
+      }
+      else if (item.name == 'S_L_H' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => a.hotelInfo.starRating - b.hotelInfo.starRating);
+      }
+      else if (item.name == 'S_H_L' && item.active == true) {
+        this.hotelList.sort((a: any, b: any) => b.hotelInfo.starRating - a.hotelInfo.starRating);
+      }
+    })
 
 
     //Search Text Filter End
     //partner Filter start
     this.filteredPartner();
     //partner Filter end
-    if(this.container)
-    {
+    if (this.container) {
       this.container.clear();
     }
-   this.intialData();
+    this.intialData();
   }
 
 
 
-  StarFilter(item:any)
-  {
-      item.active = !item.active;
-      if(!this.isMobile)
-      {
-        this.AllFilteredData();
-      }
+  StarFilter(item: any) {
+    item.active = !item.active;
+    if (!this.isMobile) {
+      this.AllFilteredData();
+    }
   }
 
-  ResetStarFilter()
-  {
+  ResetStarFilter() {
     this.starFiltersList.filter((item: any) => { item.active = false; return item; })
     this.AllFilteredData();
   }
   onUserChangeEnd(changeContext: ChangeContext): void {
-    if(changeContext.pointerType === PointerType.Min)
-    {
+    if (changeContext.pointerType === PointerType.Min) {
       this.minPrice = changeContext.value;
     }
-    else{
+    else {
       this.maxPrice = changeContext.highValue;
     }
-    if(!this.isMobile)
-    {
+    if (!this.isMobile) {
       this.AllFilteredData();
     }
   }
@@ -550,7 +538,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
       this.minPrice = this.hotelList[0].priceSummary[0].price;
       this.maxPrice = this.hotelList[0].priceSummary[0].price;
       this.hotelList.forEach((z: any) => {
-        z.priceSummary.forEach(x=>{
+        z.priceSummary.forEach(x => {
           var temp = x.price;
           if (temp < this.minPrice) {
             this.minPrice = temp;
@@ -569,39 +557,33 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
   }
 
-  ResetPriceFilter()
-  {
+  ResetPriceFilter() {
     this.minPrice = this.resetMinPrice;
     this.maxPrice = this.resetMaxPrice;
     this.Initslider();
     this.AllFilteredData();
   }
 
-  amenityFilter(item:any)
-  {
+  amenityFilter(item: any) {
     item.active = !item.active;
-    if(!this.isMobile)
-    {
+    if (!this.isMobile) {
       this.AllFilteredData();
     }
   }
-  ResetAmenityFilter()
-  {
+  ResetAmenityFilter() {
     this.amenityList.filter((item: any) => { item.active = false; return item; })
     this.AllFilteredData();
   }
 
-  ResetAllFilter()
-  {
+  ResetAllFilter() {
     this.ResetStarFilter();
     this.ResetPriceFilter();
     this.ResetAmenityFilter();
     this.ResetPartnerFilter();
   }
 
-  onSearchInput()
-  {
-      this.AllFilteredData();
+  onSearchInput() {
+    this.AllFilteredData();
   }
 
   ngOnDestroy(): void {
@@ -609,16 +591,16 @@ export class HotelListComponent implements OnInit,OnDestroy {
   }
 
 
-  BookingSummery(hotelkey:string,hotel:any,selectedPartner:any)
-  {
+  BookingSummery(hotelkey: string, hotel: any, selectedPartner: any) {
+ // console.log(hotel);
     let hotelDetailsArr: any = {
       "docKey": this.docKey,
-      "hotelkey":hotelkey,
+      "hotelkey": hotelkey,
       "hotel": hotel,
       "PriceSummary": selectedPartner,
-      "QueryData":this.hotelSearchForm.value
-      };
-    let randomHotelDetailKey = btoa(this.docKey+hotelkey+selectedPartner.partnerName);
+      "QueryData": this.hotelSearchForm.value
+    };
+    let randomHotelDetailKey = btoa(this.docKey + hotelkey + selectedPartner.partnerName);
     sessionStorage.setItem(randomHotelDetailKey, JSON.stringify(hotelDetailsArr));
     let url = 'hotel-detail?searchHotelKey=' + randomHotelDetailKey;
 
@@ -627,11 +609,11 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }, 10);
 
   }
-  backClicked(){
+  backClicked() {
     this.location.back();
   }
 
-  showHideFilterMobile(val:string){
+  showHideFilterMobile(val: string) {
     if (val == 'show') {
       this.showFilter.nativeElement.style.display = 'block';
     }
@@ -640,9 +622,15 @@ export class HotelListComponent implements OnInit,OnDestroy {
     }
 
   }
-
-  hotelSortingMobile(val){
+  resetSorttingWithScroll()
+  {
+    this.pageIndex= 11;
+    this.ITEMS_RENDERED_AT_ONCE = 10;
+    this.nextIndex = 0;
+  }
+  hotelSortingMobile(val) {
     let selectedVal = val;
+    this.resetSorttingWithScroll();
     this.priceSortingFilteritems.filter((item: any) => {
       item.active = false;
       if (item.name == selectedVal) {
@@ -650,14 +638,13 @@ export class HotelListComponent implements OnInit,OnDestroy {
       }
       return item;
     });
-    if(!this.isMobile)
-    {
+    if (!this.isMobile) {
       this.AllFilteredData();
     }
   }
-  hotelSorting(event:any)
-  {
+  hotelSorting(event: any) {
     let selectedVal = event.target.value;
+    this.resetSorttingWithScroll();
     this.priceSortingFilteritems.filter((item: any) => {
       item.active = false;
       if (item.name == selectedVal) {
@@ -668,7 +655,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.AllFilteredData();
   }
 
-  shortings(){
+  shortings() {
     this.priceSortingFilteritems.filter((item: any) => {
       if (item.name == 'P_L_H' && item.active == true) {
         this.hotelList.sort((a: any, b: any) => a.priceSummary[0].price - b.priceSummary[0].price);
@@ -687,75 +674,64 @@ export class HotelListComponent implements OnInit,OnDestroy {
 
   }
 
-  GetPartners()
-  {
-    this.hotelList.forEach(z=>{
-      z.priceSummary.map((a:any)=>{
-        if(!this.partnerArr.find(b=>b.partnerName == a.partnerName))
-        {
-          this.partnerArr.push({partnerName:a.partnerName,active:false});
+  GetPartners() {
+    this.hotelList.forEach(z => {
+      z.priceSummary.map((a: any) => {
+        if (!this.partnerArr.find(b => b.partnerName == a.partnerName)) {
+          this.partnerArr.push({ partnerName: a.partnerName, active: false });
         }
       });
     });
-   // console.log(this.partnerArr)
+    // console.log(this.partnerArr)
   }
 
-  partnerFilter(item:any)
-  {
+  partnerFilter(item: any) {
     item.active = !item.active;
-    if(!this.isMobile)
-    {
+    if (!this.isMobile) {
       this.AllFilteredData();
     }
 
   }
 
-  filteredPartner()
-  {
+  filteredPartner() {
     let FilteredArray = [];
-    var isFilter =  false;
-    if(this.partnerArr.filter(z=>z.active == true).length > 0)
-    {
+    var isFilter = false;
+    if (this.partnerArr.filter(z => z.active == true).length > 0) {
       isFilter = true;
     }
-        this.hotelList.forEach(z=>{
-         let FilterPartner = [];
-          z.priceSummary.map((b:any)=>{
-            if(this.partnerArr.find(a=>a.partnerName == b.partnerName).active)
-            {
-              FilterPartner.push(b);
+    this.hotelList.forEach(z => {
+      let FilterPartner = [];
+      z.priceSummary.map((b: any) => {
+        if (this.partnerArr.find(a => a.partnerName == b.partnerName).active) {
+          FilterPartner.push(b);
 
-            }
-        });
-        if(FilterPartner.length > 0 && isFilter)
-        {
-          FilteredArray.push(z);
-          z.priceSummary = FilterPartner;
         }
-
       });
-    if(isFilter)
-    {
+      if (FilterPartner.length > 0 && isFilter) {
+        FilteredArray.push(z);
+        z.priceSummary = FilterPartner;
+      }
+
+    });
+    if (isFilter) {
       this.hotelList = FilteredArray;
     }
 
   }
 
-  ResetPartnerFilter()
-  {
+  ResetPartnerFilter() {
     this.partnerArr.filter((item: any) => { item.active = false; return item; })
     this.AllFilteredData();
   }
-  ApplyFilter()
-  {
+  ApplyFilter() {
     this.showHideFilterMobile('hide');
     this.AllFilteredData();
   }
 
-  showAminitiesList:any = [];
+  showAminitiesList: any = [];
   showAminities(item) {
     this.showAminitiesList = item.hotelInfo.amenity;
-    
+
   }
 
 
@@ -774,9 +750,9 @@ export class HotelListComponent implements OnInit,OnDestroy {
     return retVal;
 
   }
-  closeAmenityModelDiv:boolean = true;
+  closeAmenityModelDiv: boolean = true;
 
-  closeAmenityModel(){
+  closeAmenityModel() {
     $('#moreAmenities').modal('hide');
   }
 
