@@ -1,8 +1,9 @@
 /* @import './fonts'; */
 
 /* background */
-$primary-gradient:linear-gradient(154deg, #0c77b9, #00a546);
-$primary-gradient-two:linear-gradient(to bottom, #fafcff, #f4f7ff);
+$primary-gradient:radial-gradient(80.14% 162.9% at 60.16% 91.34%, #002E57 0%, #000000 66.31%, #000000 100%);
+$primary-gradient-two:radial-gradient(737.47% 10575.25% at 100% 244.44%, #002E57 0%, #0C2646 47.14%, #0C2646 100%);
+$primary-gradient-three:radial-gradient(127.34% 127.34% at 9.38% 7.03%, #000000 0%, #00386C 76.29%);
 $c-background03: linear-gradient(to bottom, #fafcff, #f4f7ff);
 $c-background04: linear-gradient(129deg, #0e93e6,#0c77b9 );
 
@@ -65,30 +66,35 @@ $ms_text-color:#030303;
 $white-color: #ffffff;
 $black-color:#000000;
 $transparent: transparent;
-$bg-dark-brown: #3f261a;
+$bg-dark-brown: #f2f8fb1a;
 $color-dark-gray:#444444;
 
-$footer-text-color:#A38164;
+$footer-text-color:#C7CFFE;
 
 $sub-text-color:$primary-color;
 
 /* Buttons CSS Code */
 
-/* .btn-primary{
+.btn-primary{
     color: $white-color;
-    background-color: $primary-color ;
-    border:1px solid $primary-color ;
+    background-color: $primary-color !important;
+    border:1px solid $primary-color !important;
     border-radius: 4px;
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 600;
     padding: 10px 20px;
+    &:hover{
+        color: $white-color;
+        background-color: $primary-color !important;
+        border-color: $primary-color !important;
+    }
 }
 
 .btn-primary-outline{
     color: $primary-color;
-    background-color: $white-color ;
-    border: 1px solid $primary-color ;
+    background-color: $white-color !important;
+    border: 1px solid $primary-color !important;
     border-radius: 4px;
     text-transform: uppercase;
     font-size: 14px;
@@ -97,8 +103,32 @@ $sub-text-color:$primary-color;
 
     &:hover{
         color: $white-color;
-        background-color: $primary-color ;
-        border-color: $primary-color ;
+        background-color: #9e7049 !important;
+        border-color: $primary-color !important;
     }
-} */
+}
+
+.btn-gradient-three{
+    background: $primary-gradient-three;
+    color: $white-color;
+    border: transparent;
+    border-radius: 8px;
+}
+
+.search_btn{
+    width: 100%;
+    text-align: center;
+    background: $primary-gradient-two;
+    margin-top: 20px;
+    padding: 10px;
+    color: $white-color;
+    font-family: 'opensans-medium';
+    border: transparent;
+}
+
+.btn-check:focus+.btn, .btn:focus{
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(253 146 13 / 25%);
+    color: #ffffff;
+}
 
