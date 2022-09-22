@@ -31,7 +31,7 @@
                     <p>{{hotelSearchForm.value.checkIn | date:"EEE, MMM dd"}} - {{hotelSearchForm.value.checkOut | date:"EEE, MMM dd"}}  |  {{hotelSearchForm.value.totalGuest}} Guests</p>
                 </div>
                 <div class="mob-listing-header-right">
-                    <a (click)="backClicked()" >
+                    <a (click)="goToModifySearch()" >
                         <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                     </a>
                 </div>
@@ -485,7 +485,7 @@
                                      <img *ngIf="list.hotelInfo.image == null"  src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg"  alt="{{list.hotelInfo.name}}">
                                 </div>
                                 <div class="hotel-list-text">
-                                    <h6 class="hotel-name"><a href="javascript:;">{{list.hotelInfo.name}}</a></h6>
+                                    <h6 class="hotel-name text-decoration-none"><a href="javascript:;" class="text-decoration-none">{{list.hotelInfo.name}}</a></h6>
                                     <p class="hotel-place">{{list.hotelInfo.address == '' ? list.hotelInfo.city : list.hotelInfo.address}}</p>
                                     <p class="hotel-star">
                                         <i class="fas fa-star " [ngClass]="{'active' : list.hotelInfo.starRating >= 1}"></i>

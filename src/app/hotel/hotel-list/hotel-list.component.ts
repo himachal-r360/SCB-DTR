@@ -342,6 +342,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     let hotelWithoutFilterList = this.hotelWithoutFilterList;
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
+    console.log(hotelListConst , "hotel list ");
 
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
@@ -353,11 +354,13 @@ export class HotelListComponent implements OnInit, OnDestroy {
         })
 
         StarFiltereddata.push(...data);
-
+        console.log(StarFiltereddata , "start filter");
+        
       }
     });
     if (StarFiltereddata.length > 0) {
       this.hotelList = StarFiltereddata;
+      console.log(this.hotelList , "start filter2");
     }
 
     //Star Filter End
@@ -581,6 +584,10 @@ export class HotelListComponent implements OnInit, OnDestroy {
   }
   backClicked() {
     this.location.back();
+  }
+
+  goToModifySearch(){
+    this.router.navigate(['compare-fly']);
   }
 
   showHideFilterMobile(val: string) {
