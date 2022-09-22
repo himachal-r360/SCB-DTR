@@ -312,6 +312,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
+      console.log(res.response)
       if(res.response.hotels)
       {
         if(res.response.hotels.length > 0)
@@ -728,7 +729,7 @@ export class HotelListComponent implements OnInit,OnDestroy {
   showAminitiesList:any = [];
   showAminities(item) {
     this.showAminitiesList = item.hotelInfo.amenity;
-    
+
   }
 
 
