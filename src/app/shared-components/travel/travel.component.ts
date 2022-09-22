@@ -1637,11 +1637,11 @@ this.router.navigateByUrl(url);
   this.redirectPopupTriggerTimestamp=current.getTime();
   this.redirectPopupTrigger=1;
   this.redirectPopup=2;
-  this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+  this.redirectPopupUrl=this.sg['domainPath']+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
    return;
   }
 
-this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+this.document.location.href =this.sg['domainPath']+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
  //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
 
   break;
@@ -1720,10 +1720,10 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
   this.redirectPopupTriggerTimestamp=current.getTime();
   this.redirectPopupTrigger=1;
   this.redirectPopup=2;
-  this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+  this.redirectPopupUrl=this.sg['domainPath']+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
   return;
   }
-   this.document.location.href =environment.ANGULAR_SITE_URL+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+   this.document.location.href =this.sg['domainPath']+'bus/search?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
   
   
   break;
@@ -1802,11 +1802,11 @@ this.document.location.href =environment.MAIN_SITE_URL+'Hotels_lists?cityname='+
   this.redirectPopupTriggerTimestamp=current.getTime();
   this.redirectPopupTrigger=1;
   this.redirectPopup=2;
-  this.redirectPopupUrl=environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+  this.redirectPopupUrl=this.sg['domainPath']+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
   return;
   }
   
-   this.document.location.href =environment.ANGULAR_SITE_URL+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
+   this.document.location.href =this.sg['domainPath']+'train-list?searchFrom='+this.searchArray['searchFrom']+'&searchTo='+this.searchArray['searchTo']+'&fromTravelCode='+this.searchArray['fromTravelCode']+'&toTravelCode='+this.searchArray['toTravelCode']+'&departure='+this.searchArray['departure'];
   
 
  

@@ -27,7 +27,9 @@ const routes: Routes = [
     {
     path:"hotel-booking/retry" ,component:HotelBookingRetryComponent,
 
-  }
+  },{
+    path:"regalia_gold/hotel-list" ,component:HotelListComponent,
+  },
 ]
 
 @NgModule({

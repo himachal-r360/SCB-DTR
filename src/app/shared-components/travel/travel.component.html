@@ -40,7 +40,7 @@
                                             <div class="select_process select_options">
                                                 <div>
                                                     <div class="travelSelect opt_box">
-                                                        <input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly (click)="displayTravel(1)"> <span class="material-icons arrowDn_icon">arrow_drop_down</span>
+                                                        <div (click)="displayTravel(1)"><input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly > <span class="material-icons arrowDn_icon travelInputFlightPop" >arrow_drop_down</span></div>
                                                         <div class="travelList travelListFlightPop" *ngIf="showFlightPassenger">
                                                             <div class="">
                                                                 <ul>
@@ -316,7 +316,7 @@
                                                 <!--  <p class="label_head"><span>Rooms & Guests</span> </p> -->
                                                 <div class="travelSelect opt_box">
                                                     <input type="text" class="form-control travelInput travelInputPop" id="" value="{{hotelInputText}}" readonly (click)="displayTravel(2)">
-                                                    <span class="material-icons">arrow_drop_down</span>
+                                                    <span class="material-icons arrowDn_icon travelInputPop" (click)="displayTravel(2)">arrow_drop_down</span>
                                                     <div *ngIf="submittedHotel && showHotelPassengerError" class="error_msg">
                                                         <span class="error_msg2">Please choose child age</span>
                                                     </div>
