@@ -418,7 +418,7 @@ focusInput(){
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
       
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
-      let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
+      let url = this.sg['domainPath']+"hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this. hotelSearchCallBack(this.hotelSearchForm.value);
       this.router.navigateByUrl(url);
     }
