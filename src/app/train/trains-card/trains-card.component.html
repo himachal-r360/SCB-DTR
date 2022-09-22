@@ -281,90 +281,87 @@
     <!-- Mlite code  -->
     <div class="d-block d-sm-none">
         <div class="bordered_div">
-            <div class="row mt-2">
-                <div class="col-8 pe-0">
-                    <div class="label-name-w">
-                        <span class="irctc-junction-view">{{train.trainName|titlecase}} </span><span class="f-12 px-1"> ({{train.trainNumber}})</span>
-                    </div>
-                </div>
-                <div class="col-4 ps-0">
-                    <!-- <div>
-                    <button class="btn-outline w-70 radius_8 w-m-100 f-12" 
-                    (click)="onAvailable(train,avlClasses[0])">Check Availability</button> 
-                </div> -->
-                    <div class="float-end">
-                        <div class="available-status">
-                            <span class="text-small-gray d-none" style="color:#888888;">Runs on:</span>
-                            <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
-                            <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
-                            <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
-                            <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
-                            <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
-                            <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
-                            <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+            <div (click)="onAvailable(train,avlClasses[0])" >
+                <div class="row mt-2">
+                    <div class="col-8 pe-0">
+                        <div class="label-name-w">
+                            <span class="irctc-junction-view">{{train.trainName|titlecase}} </span><span class="f-12 px-1"> ({{train.trainNumber}})</span>
                         </div>
-
+                    </div>
+                    <div class="col-4 ps-0">
+                        <!-- <div>
+                        <button class="btn-outline w-70 radius_8 w-m-100 f-12" 
+                        (click)="onAvailable(train,avlClasses[0])">Check Availability</button> 
+                    </div> -->
+                        <div class="float-end">
+                            <div class="available-status">
+                                <span class="text-small-gray d-none" style="color:#888888;">Runs on:</span>
+                                <span [ngClass]="{'active': train.runningSun=='Y'}">S</span>
+                                <span [ngClass]="{'active': train.runningMon=='Y'}">M</span>
+                                <span [ngClass]="{'active': train.runningTue=='Y'}">T</span>
+                                <span [ngClass]="{'active': train.runningWed=='Y'}">W</span>
+                                <span [ngClass]="{'active': train.runningThu=='Y'}">T</span>
+                                <span [ngClass]="{'active': train.runningFri=='Y'}">F</span>
+                                <span [ngClass]="{'active': train.runningSat=='Y'}">S</span>
+                            </div>
+    
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <p class="train_time">{{train.departureTime}} <span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
+                    </div>
+                    <div class="col-4 px-0 text-center">
+                        <p class="train_duration">{{commonHelper.trainDuration(train.duration)}}</p>
+                        <!-- <hr  class="m-0" /> -->
+                        <div class="d-flex align-items-center">
+                            <span class="duration_dot"></span>
+                            <hr class="m-0 w-100">
+                            <span class="duration_dot"></span>
+                        </div>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="train_time">{{train.arrivalTime}}<span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
                     </div>
                 </div>
-
+    
+                <!-- <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="trainTimeInfo">
+                            
+                            <div class="fromStn">
+                                <p>{{train.departureTime}} <span class="trainCode"> ({{train.fromStnCode}}) </span> </p>
+                                <p>{{journeyDate |  date:'EEE dd LLL'}}</p>
+                            </div>
+                            <div class="pl-3 text-center">
+                                <hr  class="my-2 w-30-m" />
+                            </div>
+                            <div class="timeShow">
+                                <p>{{commonHelper.trainDuration(train.duration)}}</p>
+                                <p [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal">Show Route</p>
+                            </div>
+                            <div class="pr-3 text-center">
+                                <hr  class="my-2 w-30-m" />w
+                            </div>
+                            <div class="toStn">
+                                <p><span class="trainCode"> ({{train.toStnCode}}) </span> {{train.arrivalTime}}</p>
+                                <p>{{journeyDate |  date:'EEE dd LLL'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  -->
+    
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <p class="train_duration f-12">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
+                    </div>
+                    <div class="col-6 text-right">
+                        <p class="train_duration f-12">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
+                    </div>
+                </div>
             </div>
-            <div class="row mt-3">
-                <div class="col-4">
-                    <p class="train_time">{{train.departureTime}} <span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
-                </div>
-                <div class="col-4 px-0 text-center">
-                    <p class="train_duration">{{commonHelper.trainDuration(train.duration)}}</p>
-                    <!-- <hr  class="m-0" /> -->
-                    <div class="d-flex align-items-center">
-                        <span class="duration_dot"></span>
-                        <hr class="m-0 w-100">
-                        <span class="duration_dot"></span>
-                    </div>
-                </div>
-                <div class="col-4 text-right">
-                    <p class="train_time">{{train.arrivalTime}}<span class="train_time_week">, {{journeyDate |  date:'EEE'}} </span> </p>
-                </div>
-            </div>
-
-
-            <!-- <div class="row mt-3">
-            <div class="col-12">
-                <div class="trainTimeInfo">
-                    
-                    <div class="fromStn">
-                        <p>{{train.departureTime}} <span class="trainCode"> ({{train.fromStnCode}}) </span> </p>
-                        <p>{{journeyDate |  date:'EEE dd LLL'}}</p>
-                    </div>
-                    <div class="pl-3 text-center">
-                        <hr  class="my-2 w-30-m" />
-                    </div>
-                    <div class="timeShow">
-                        <p>{{commonHelper.trainDuration(train.duration)}}</p>
-                        <p [attr.data-bs-target]="'#irctc-jun-data-' + train.trainNumber" (click) = "getSchedule(train.trainNumber)" data-bs-toggle="modal">Show Route</p>
-                    </div>
-                    <div class="pr-3 text-center">
-                        <hr  class="my-2 w-30-m" />w
-                    </div>
-                    <div class="toStn">
-                        <p><span class="trainCode"> ({{train.toStnCode}}) </span> {{train.arrivalTime}}</p>
-                        <p>{{journeyDate |  date:'EEE dd LLL'}}</p>
-                    </div>
-                   
-                </div>
-               
-            </div>
-        </div>  -->
-            <div class="row mt-2">
-                <div class="col-6">
-                    <p class="train_duration f-12">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
-                </div>
-                <div class="col-6 text-right">
-                    <p class="train_duration f-12">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
-                </div>
-            </div>
-
-
-
 
             <div class="row mt-3">
                 <div class="col-6">
