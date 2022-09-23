@@ -12,7 +12,7 @@ declare var $: any;
 @Component({
   selector: 'app-hotel-detail',
   templateUrl: './hotel-detail.component.html',
-  styleUrls: ['./hotel-detail.component.sass']
+  styleUrls: ['./hotel-detail.component.scss']
 })
 export class HotelDetailComponent implements OnInit {
 
@@ -346,8 +346,8 @@ export class HotelDetailComponent implements OnInit {
 
   
 
-  // OpenPopover(event:any)
-  // {
-  //   $(event).child()
-  // }
+  OpenPopover(event:any)
+  {
+    $('.hover-popover').css('display','block');
+  }
 }
