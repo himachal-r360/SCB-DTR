@@ -434,7 +434,7 @@
                                   </form>
                               </div>
                               <div class="ms-2 hotel-Trending-selection">
-                                  <select name="" class="liothers selectpicker" aria-label="Trending Hotels" (change)="hotelSorting($event)">
+                                  <select name="" class="liothers selectpicker fs_13" aria-label="Trending Hotels" (change)="hotelSorting($event)">
                                     <option [selected]="item.active" value="{{item.name}}" *ngFor="let item of priceSortingFilteritems">{{item.sortValue}} {{item.value}}</option>
                                   </select>
                               </div>
@@ -485,8 +485,8 @@
                                      <img *ngIf="list.hotelInfo.image == null"  src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg"  alt="{{list.hotelInfo.name}}">
                                 </div>
                                 <div class="hotel-list-text">
-                                    <h6 class="hotel-name text-decoration-none"><a href="javascript:;" class="text-decoration-none">{{list.hotelInfo.name}}</a></h6>
-                                    <p class="hotel-place">{{list.hotelInfo.address == '' ? list.hotelInfo.city : list.hotelInfo.address}}</p>
+                                    <h6 class="hotel-name text-decoration-none "><a href="javascript:;" >{{list.hotelInfo.name | titlecase}}</a></h6>
+                                    <p class="hotel-place text-dotted">{{list.hotelInfo.address == '' ? list.hotelInfo.city : list.hotelInfo.address}}</p>
                                     <p class="hotel-star">
                                         <i class="fas fa-star " [ngClass]="{'active' : list.hotelInfo.starRating >= 1}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 2}"></i>
@@ -548,7 +548,7 @@
                                         </div>
                                         <div class="hotel-list-info-price">
                                             <h6>
-                                                <strong>₹ {{item.price | number}} </strong>
+                                                <strong class="fs_20">₹ {{item.price | number}} </strong>
                                                 <span class="information-icon" >
                                                     <img src="assets/images/icons/info.png" [ngStyle]="{'visibility': isMobile ?'hidden':'visible'}" class="ms-2 " alt="">
                                                     <div class="hover-popover">
