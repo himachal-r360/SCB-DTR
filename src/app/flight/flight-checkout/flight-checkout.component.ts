@@ -3403,15 +3403,15 @@ saveTravellerArray=[];
         var gender='Male';
 
         switch (this.passengerForm.controls['infant_title' + i]['value']) {
-        case 'Mr':
-        gender='Male';
-        break;
-        case 'Mrs':
-        gender='Female';
-        break;
-        case 'Ms':
-        gender='Female';
-        break;
+        // case 'Mr':
+        // gender='Male';
+        // break;
+        // case 'Mrs':
+        // gender='Female';
+        // break;
+        // case 'Ms':
+        // gender='Female';
+        // break;
         case 'Miss':
         gender='Female';
         break;

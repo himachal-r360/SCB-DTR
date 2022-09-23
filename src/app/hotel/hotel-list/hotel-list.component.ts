@@ -369,22 +369,22 @@ export class HotelListComponent implements OnInit, OnDestroy {
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
     console.log(hotelListConst , "hotel list ");
-
+    var applyStar = false;
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
       var data = [];
       if (z.active) {
-
+        applyStar = true;
         data = this.hotelList.filter(x => {
           return x.hotelInfo.starRating == z.value;
         })
 
         StarFiltereddata.push(...data);
         console.log(StarFiltereddata , "start filter");
-        
+
       }
     });
-    if (StarFiltereddata.length > 0) {
+    if (applyStar) {
       this.hotelList = StarFiltereddata;
       console.log(this.hotelList , "start filter2");
     }
