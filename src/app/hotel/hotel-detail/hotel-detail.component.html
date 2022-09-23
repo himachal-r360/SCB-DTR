@@ -212,7 +212,7 @@
                               <div class="hd-Rooms-area">
                                   <div class="hd-Rooms-top">
                                       <div class="hd-Rooms-title mb-20">
-                                          <h6>Rooms</h6>
+                                          <h6>Select Rooms</h6>
                                           <p>Choose a room with below room types</p>
                                       </div>
                                       <div class="hd-Rooms-details">
@@ -238,12 +238,12 @@
                                                                 <p>{{list}}</p>
                                                               </li>
                                                           </ul>
-                                                          <span class="information-icon hd-cc-Policy">
+                                                          <span class="information-icon hd-cc-Policy" (mouseover)="OpenPopover($event)" >
                                                               Check Cancellation Policy
                                                               <div class="hover-popover">
-                                                                  <a href="" class="popover-close">
+                                                                  <a href="javaScript:voide(0)" (click)="ClosePopover()" class="popover-close">
                                                                       <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                                  </a>
+                                                                  </a> -->
                                                                   <div class="hover-popover-title">
                                                                       <h6>Cancellation Policy</h6>
                                                                       <p>{{item.cancellationPolicy}}</p>
@@ -305,7 +305,7 @@
                             <p *ngIf="SelectedQueryParam.checkIn">{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
                         </div>
                         <div class="mob-listing-header-right">
-                            <a  (click)="backClicked()">
+                            <a  (click)="goToModifySearch()()">
                                 <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                             </a>
                         </div>
@@ -442,7 +442,7 @@
                                     <div class="hd-Rooms-area">
                                         <div class="hd-Rooms-top">
                                             <div class="hd-Rooms-title mb-20">
-                                                <h6>Rooms</h6>
+                                                <h6>Select Rooms</h6>
                                                 <p>Choose a room with below room types</p>
                                             </div>
                                             <div class="hd-Rooms-details">
@@ -470,10 +470,10 @@
                                                                     <p>{{list}}</p>
                                                                   </li>
                                                                 </ul>
-                                                                <span class="information-icon hd-cc-Policy">
+                                                                <span class="information-icon hd-cc-Policy" >
                                                                     Check Cancellation Policy
-                                                                    <div class="hover-popover">
-                                                                        <a href="javascript:;" class="popover-close">
+                                                                    <div class="hover-popover" >
+                                                                        <a href="javaScript:void(0)"(click)="ClosePopover()" class="popover-close" >
                                                                             <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                         </a>
                                                                         <div class="hover-popover-title">
