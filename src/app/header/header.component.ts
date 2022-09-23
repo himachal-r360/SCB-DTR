@@ -927,6 +927,7 @@ closeCookieConsent(value){
 	    this.navbarOpen = !this.navbarOpen;
     }
     menuMobile(val){
+     // alert(val);
       this.navbarOpen = false;
       this.navbarOpenMenu = !this.navbarOpenMenu;
       this.showName = val;
