@@ -54,6 +54,7 @@ export class HotelDetailComponent implements OnInit {
 
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
     isMobile: boolean = true;
+    showPop = true
     customOptions: OwlOptions = {
     loop: false,
     autoplay:false,
@@ -242,9 +243,9 @@ export class HotelDetailComponent implements OnInit {
     }
   }, 300);
     var Request = {docKey:this.DocKey,hotelId:this.PriceSummery.hotelId,partnerName:this.PriceSummery.partnerName}
-    console.log(Request);
+    console.log(Request ,"request");
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
-    // console.log(res);
+    // console.log(res , "responce");
      if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
@@ -333,21 +334,27 @@ export class HotelDetailComponent implements OnInit {
   CloseModal()
   {
     $("#moreAmenities").modal('hide')
+   
   }
 
-  ClosePopover()
+  ClosePopover(i)
   {
-      $('.hover-popover').css('display','none');
+      $('.hover-popover' + i).css('display','none');
+      this.showPop = false;
+
   }    
   goToModifySearch(){
     this.router.navigate(['compare-fly']);
   }
-
-
   
+  openPopOverMob(i){
+    this.showPop = true
+    // $('.hover-popover' + i).addClass('d-block');
+  }
 
-  OpenPopover(event:any)
+
+  OpenPopover(event:any , i:any)
   {
-    $('.hover-popover').css('display','block');
+    $('.hover-popover' + i).css('display','block');
   }
 }
