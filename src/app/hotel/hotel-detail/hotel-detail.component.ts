@@ -346,8 +346,8 @@ export class HotelDetailComponent implements OnInit {
 
   
 
-  // OpenPopover(event:any)
-  // {
-  //   $(event).child()
-  // }
+  OpenPopover(event:any)
+  {
+    $('.hover-popover').css('display','block');
+  }
 }
