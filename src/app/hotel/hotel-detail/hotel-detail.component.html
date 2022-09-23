@@ -24,7 +24,7 @@
                   <div class="hotel-list-item">
                       <div class="hotel-list-left">
                           <div class="hotel-list-text">
-                              <h6 class="hotel-name">{{HotelDetail.hotelName}}</h6>
+                              <h6 class="hotel-name text-decoration-none">{{HotelDetail.hotelName}}</h6>
                               <p class="hotel-place">{{HotelDetail.address=='' ? HotelDetail.city : HotelDetail.address }}</p>
                               <p class="hotel-star" *ngIf="HotelDetail.hotelRatings[0].rating > 0">
                                 <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 1}"></i>
@@ -104,7 +104,7 @@
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                         <ng-template carouselSlide  [id]="'Id_'+i">
                           <div class="item">
-                            <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="">
+                            <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="" >
                         </div>
                           </ng-template>
                        </ng-container>
@@ -241,9 +241,9 @@
                                                           <span class="information-icon hd-cc-Policy" (mouseover)="OpenPopover($event)" >
                                                               Check Cancellation Policy
                                                               <div class="hover-popover">
-                                                                  <a href="javaScript:voide(0)" (click)="ClosePopover()" class="popover-close">
+                                                                  <!-- <a href="javaScript:voide(0)" (click)="ClosePopover()" class="popover-close">
                                                                       <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                                  </a> -->
+                                                                  </a>  -->
                                                                   <div class="hover-popover-title">
                                                                       <h6>Cancellation Policy</h6>
                                                                       <p>{{item.cancellationPolicy}}</p>

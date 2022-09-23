@@ -419,75 +419,6 @@
 
                         </div>
                     </li>
-                    <li class="dropdown" *ngIf="domainName=='INFINIA'" >
-
-                        <a class="nav_link_item" href="javascript:;" >Infinia Benefits </a>
-                        <div class="dropdown-content-list list-travel" >
-                            <div class="row">
-                                <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-                                    <div>
-                                        <div>
-                                            <p><a href="javascript:;" (click)="goToInfinia('infinia-itc-hotel')"   class="list-travel-font">
-                                                Complimentary Night @ ITC Hotels
-                                            </a></p>
-                                            <!-- <p class="points">{{serviceSettings.offer_construct.flight.reward}}X Reward Points | {{serviceSettings.offer_construct.jockey.cashback}}% Cashback</p> -->
-
-                                        </div>
-                                    </div>
-                                    <!-- <div class="list-travel-img mt-4">
-                                      <ng-container *ngFor="let flt of serviceSettings.poweredByPartners.flights">
-                                      <img *ngIf="flt.flag==1" src="{{cdnUrl}}images/smartbuy/partner/48/svg/{{flt.menu}}" alt="{{flt.name}}" />
-                                      </ng-container>
-                                    </div> -->
-                                </div>
-
-                                <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-                                    <div>
-                                        <div>
-                                            <p><a href="javascript:;" (click)="clickUrl('')" class="list-travel-font">1+1 Complimentary Weekend Buffer @ ITC Hotels</a></p>
-                                            <!-- <p class="points">{{serviceSettings.offer_construct.train.reward}}X Reward Points | {{serviceSettings.offer_construct.train.cashback}}% Cashback</p>
-                                            <p class="mb-2 mt-3"><a href="javascript:;" (click)="goTo('train/pnr')">Check PNR Status</a></p> -->
-                                        </div>
-                                    </div>
-                                    <!-- <div class="mt-3">
-                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-5.svg" alt="cleartrip" />
-                                    </div> -->
-
-                                </div>
-                                <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-                                    <div>
-                                        <div>
-                                            <p><a href="javascript:;" (click)="clickUrl('')" class="list-travel-font">Complimentary Clud Marriott Membership</a></p>
-                                            <!-- <p class="points">{{serviceSettings.offer_construct.hotel.reward}}X Reward Points | {{serviceSettings.offer_construct.hotel.cashback}}% Cashback</p> -->
-
-                                        </div>
-                                    </div>
-                                    <!-- <div class="list-travel-img mt-4">
-                                    
-                                      <ng-container *ngFor="let htl of serviceSettings.poweredByPartners.hotels">
-                                      <img *ngIf="htl.flag==1" src="{{cdnUrl}}images/smartbuy/partner/48/svg/{{htl.menu}}" alt="{{htl.name}}" />
-                                      </ng-container>
-
-                                     
-                                    </div> -->
-                                </div>
-                                <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
-                                    <div>
-                                        <div>
-                                            <p><a href="javascript:;" (click)="goTo('')" class="list-travel-font">Know Your Card</a></p>
-                                            <!-- <p class="points">{{serviceSettings.offer_construct.bus.reward}}X Reward Points | {{serviceSettings.offer_construct.bus.cashback}}% Cashback</p> -->
-                                        </div>
-                                    </div>
-                                    <!-- <div class="mt-3">
-                                        <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-7.svg" alt="cleartrip" />
-                                    </div> -->
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </li>
                     <li class="dropdown">
                         <a class="nav_link_item" href="javascript:;">Shop</a>
                         <div class="dropdown-content-list list-shop">
@@ -696,7 +627,7 @@
                         <input class="form-control mr-sm-2 sb_search rg_hdr_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
 
                         <!-- <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox"> -->
-                        <div class=" cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
+                        <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
                             <ul *ngIf="serviceSettings.enableAlgolia">
                                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                                     <a style="width:100%;" class="searchResults_a">
@@ -927,10 +858,10 @@
 
                     <div class="inner_child">
                         <div *ngIf="guestLogin==false && customerLogin==false">
-                            <a class="btn rg_btn-login  my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Login/Signup</a>
+                            <a class="btn rg_btn-login  my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
                         </div>
                         <div *ngIf="guestLogin==true && customerLogin==false">
-                            <a class="btn rg_btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Hi, Guest</a>
+                            <a class="btn rg_btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
                         </div>
 
                         <div class="head_img text-right custmr_details_right" *ngIf="guestLogin==false && customerLogin==true">
@@ -994,9 +925,9 @@
                                         <img src="{{cdnUrl}}/images/smartbuy/icons/card_icn.svg"><span class="btn-text">SWITCH TO</span><i class="fa fa-caret-down hdr_btn_caret" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end privilege_drpdwn_div" aria-labelledby="dropdown-user1">
-                                        <ul class="regalai_switch_list">
+                                        <div class="row">
 
-                                            <li class="" *ngFor="let cardItem of cardList;">
+                                            <div class="col-sm-12" *ngFor="let cardItem of cardList;">
                                                 <div class="hdr_privilege_card">
                                                     <a href="{{mainRedirect}}{{cardItem.program_name | lowercase}}" target="_blank">
                                                         <div class="row cntnt_center">
@@ -1006,7 +937,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 pl-1">
-                                                                <p class="privilege_text_highlight mb-0">{{cardItem.program_name | titlecase }}</p>
+                                                                <p class="privilege_text_highlight mb-0">{{cardItem.program_name}}</p>
                                                                 <p class="privilege_text mb-0">xxx {{cardItem.last4digit}}</p>
                                                             </div>
                                                             <div class="col-sm-2 pl-0">
@@ -1015,9 +946,9 @@
                                                         </div>
                                                     </a>
                                                 </div>
-                                            </li>
+                                            </div>
 
-                                        </ul>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -1180,7 +1111,7 @@
                     </div>
                 </li>
                 <li class="dropdown rg_hdr_menu_li">
-                    <a class="nav_link_item rg_hdr_menu" href="javascript:;">Regalia Gold Benefits</a>
+                    <a class="nav_link_item rg_hdr_menu" href="#">Regalia Gold Benefits</a>
                     <div class="dropdown-content-list list-travel regalia_benefits_drpdwn_div">
                         <!-- Regalia gold benefits dropdown new design -->
                         <div class="row">
@@ -1246,7 +1177,7 @@
                     </div>
                 </li>
                 <li class="dropdown rg_hdr_menu_li">
-                    <a class="nav_link_item rg_hdr_menu" href="javascript:;">Rewards</a>
+                    <a class="nav_link_item rg_hdr_menu" href="#">Rewards</a>
                     <div class="dropdown-content-list list-travel rewards_drpdwn_div">
                         <!-- Rewards dropdown new design -->
                         <div class="row">
@@ -1794,7 +1725,7 @@
                     <div class="before_log_m" *ngIf="guestLogin==true &&  customerLogin==false && payzrestriction==false">
 
                         <div>
-                            <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
+                            <a class="btn btn-login my-2 my-sm-0" href="{{sub_domain_redirection_url}}{{loginUrl}}">Hi, Guest</a>
                         </div>
                     </div>
                     <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
@@ -2121,19 +2052,9 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="brand_list">
-                                        <p>Our Partners</p>
-
-                                        <div class="img_sec">
-
-                                <ng-container *ngFor="let htl of serviceSettings.poweredByPartners.all">
-                                <img  *ngIf="htl.flag==1" src="{{cdnUrl}}images/smartbuy/partner/48/svg/{{htl.img}}" alt="{{htl.name}}" /> 
-                                </ng-container>
-
-                                            
+                                 </div>
                             </div>
-                        </div>
-                    </div>
+                                  
                                 <div class="tab-pane fade" id="shop_m" role="tabpanel" aria-labelledby="shop_m-tab">
                                     <div class="menu_sec ">
                                         <ul class="shop_tab">
@@ -2201,7 +2122,7 @@
 
                                         </ul>
                                     </div>
-                                </div>
+                                
                                 <div class="tab-pane fade" id="voucher_m" role="tabpanel" aria-labelledby="voucher_m-tab">
                                     <div class="menu_sec">
                                         <ul class="voucher_tab">
@@ -2388,14 +2309,14 @@
     <div class="before_log_m" *ngIf="guestLogin==true &&  customerLogin==false && payzrestriction==false">
 
         <div>
-            <a class="m_login_btn" href="{{sub_domain_redirection_url}}{{loginUrl}}">Hi, Guest</a>
+            <a class="m_login_btn" href="{{domainRedirect}}{{loginUrl}}">Hi, Guest</a>
         </div>
     </div>
     <div class="before_log_m" *ngIf="guestLogin==false &&  customerLogin==false  && payzrestriction==false">
 
         <div>
             <!-- <a class="btn btn-login my-2 my-sm-0" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a> -->
-            <a class="m_login_btn" href="{{sub_domain_redirection_url}}{{loginUrl}}">Login/Signup</a>
+            <a class="m_login_btn" href="{{domainRedirect}}{{loginUrl}}">Login/Signup</a>
         </div>
     </div>
 
@@ -2491,14 +2412,14 @@
 </div>
 </div>
 
-<div class="sb-m-search sb-m-search-regalia mt-2" *ngIf="payzrestriction==false">
+<div class="sb-m-search mt-2" *ngIf="payzrestriction==false">
     <div class="search_input_m">
         <!-- <input class="form-control mr-sm-2 sb_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue"> -->
         <div class="m_hdr_search_bar">
             <div class="search_icon"><i class="fa fa-search" aria-hidden="true"></i></div>
             <div class="wdt_90"><input type="text" class="search_input" placeholder="search" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue"></div>
         </div>
-        <div class=" cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
+        <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
             <ul *ngIf="serviceSettings.enableAlgolia">
                 <li *ngFor="let searchOption of searchResults" (click)="onSearchClick(searchOption)">
                     <a style="width:100%;" class="searchResults_a">
@@ -2693,7 +2614,7 @@
 
         </div>
 
-        <div class="menu_footer reg_gld_menu_footer">
+        <!-- <div class="menu_footer">
         <div class="logo_m d-flex">
             <a class="navbar-brand" href="https://www.hdfcbank.com/" *ngIf="is_main==1" target="_blank">
                 <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC Bank">
@@ -2702,7 +2623,7 @@
                 <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%">
             </a>
         </div>
-        <div class="footer_links_m regalia_gold_m_footer_links">
+        <div class="footer_links_m">
             <ul>
                 <li><a href="javascript:;" (click)="clickUrl('aboutus')">About Us</a></li>
                 <li><a href="javascript:;" (click)="clickUrl('faqs')">FAQ's</a></li>
@@ -2711,7 +2632,7 @@
                 <li><a href="javascript:;" (click)="clickUrl('customer_support')"> Customer Support</a></li>
             </ul>
         </div>
-        <div class="m_disclaimer reg_gld_m_disclaimer">
+        <div class="m_disclaimer">
             <p class="title">Disclaimer:</p>
             <p>
                 HDFC Bank SmartBuy is a platform for communication of offers extended by Merchants to HDFC Bank's Customers.
@@ -2727,7 +2648,7 @@
             <p class="">Powered By</p>
             <div><img src="{{cdnUrl}}images/r360_logo_black.svg" alt="r30_logo"></div>
         </div>
-    </div>
+    </div> -->
 
 
     </div>
@@ -3006,8 +2927,8 @@
                 </div>
                 <!-- end of rewards sidebar -->
             </div>
-		<!-- Deals -->
-		    <div *ngIf="showName=='deals_offers'" class="tab-content">
+        <!-- Deals -->
+         <div *ngIf="showName=='deals_offers'" class="tab-content">
                 <!-- Rewards sidebar -->
                 <div class="m_sidebar_header reg-rewards-show reg-rewards-block hide">
                     <div class="m_navigational_link" id="m-nav-reg-link"><span (click)="goBack()"><i class="fa fa-angle-left" aria-hidden="true"></i></span><span>Deals Offers</span></div>
@@ -3038,7 +2959,7 @@
                 </div>
                 <!-- end of rewards sidebar -->
             </div>
-		<!-- Deals Ends -->
+        <!-- Deals Ends -->
             <div *ngIf="showName=='gold_shopping'" class="tab-content">
                 <!-- shopping sidebar -->
                 <div class="m_sidebar_header reg-shop-show reg-shop-block hide">
@@ -3129,7 +3050,7 @@
                     </div>
                 </div>
                 <!-- end of shopping sidebar -->
-            </div>            
+            </div>
             <div *ngIf="showName=='gold_switch'" class="tab-content">
                 <!-- switch to sidebar -->
                 <div class="m_sidebar_header reg-switch-show reg-switch-block hide" *ngIf="cardList.length > 1">
