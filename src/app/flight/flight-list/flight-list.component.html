@@ -275,7 +275,7 @@
                         <div class="flightsfound" [hidden]="loader">
                             <div class="flight-tosearch">
                                 <h6>
-                                    <img src="{{cdnUrl}}/images/icons/flight-listing.png" alt=""> {{fromCityName}} to {{toCityName}}
+                                    <img src="{{cdnUrl}}/images/icons/flight-listing.svg" alt=""> {{fromCityName}} to {{toCityName}}
                                     <!-- <small>Thu, 12 Mar</small> -->
                                     <small>{{departureDate | date:"EEE ,dd MMM"}}</small>
                                 </h6>
@@ -401,7 +401,7 @@
                                                     <div class="flight-listing-time">
                                                         <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} </h6>
                                                         <p>{{list.flights[0].departureAirport}}</p>
-                                                        <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                                                        <img src="{{cdnUrl}}/images/icons/flight-right.svg" alt="">
                                                     </div>
                                                     <div class="flight-listing-time">
                                                         <h6>{{list.flights[list.flights.length-1].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -428,7 +428,7 @@
                                                 <div class="flight-listing-pri">
                                                     <div class="flight-listing-price" *ngIf="list.priceSummary.length > 0">
                                                         <span class="information-icon">
-                                                     <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
+                                                     <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.svg" class="ms-2" alt=""></h6>
                                                         <!-- <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""> -->
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
@@ -466,7 +466,7 @@
                                     </div>
 
                                     <div class="flight-info-box" *ngIf="list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName">
-                                        <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
+                                        <p><img src="{{cdnUrl}}/images/icons/price.svg" alt=""> {{list.priceSummary[0].totalFare|couponDiplay:flightCoupons:list.priceSummary[0].partnerName}}</p>
                                     </div>
                                     <div class="flight-details-box viewfaresbox flight-details-box-hide" id="CompareToFly_{{list.flightKey}}">
                                         <div class="flight-options-box" id="FareDetails_{{list.flightKey}}">
@@ -474,7 +474,7 @@
                                                 <div class="flight-options-list">
                                                     <div class="flight-options-list-left">
                                                         <div class="flight-options-logo">
-                                                            <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="25" height="25">
+                                                            <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.svg" alt="{{item.partnerName}}" width="25" height="25">
                                                             <b class="ml-10">{{item.partnerName}}</b>
                                                         </div>
                                                         <div class="flight-options-text">
@@ -489,7 +489,7 @@
                                                         <div class="flight-options-price d-flex align-items-center">
                                                             <p>&#8377;{{item.totalFare |number}}</p>
                                                             <span class="information-icon">
-                                                        <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
+                                                        <img src="{{cdnUrl}}/images/icons/info.svg" class="ms-2" alt="">
                                                         <div class="hover-popover">
                                                             <div class="hover-popover-title">
                                                                 <h6>Price Breakdown</h6>
@@ -523,7 +523,7 @@
 
                                                 </div>
                                                 <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
-                                                    <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                                    <p><img src="{{cdnUrl}}/images/icons/price.svg" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
                                                 </div>
                                                 <div class="flight-info-box ">
                                                     <ul class="extra-tabs-right-ul">
@@ -973,7 +973,7 @@
                                     <div class="mob-items-book-list-items" *ngFor="let item of list.priceSummary; let j = index">
                                         <div class="mob-book-list-top">
                                             <div class="mob-booking-image">
-                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.png" alt="{{item.partnerName}}" width="40">
+                                                <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.svg" alt="{{item.partnerName}}" width="40">
                                                 <span>{{item.partnerName}}</span>
                                             </div>
                                             <div class="mob-booking-price">
@@ -988,7 +988,7 @@
                                         </div>
 
                                         <div class="name-bottom-bottom" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
-                                            <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                            <p><img src="{{cdnUrl}}/images/icons/price.svg" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
                                         </div>
                                         <div class="mob-book-list-bottom">
                                             <div class="mob-extra">
