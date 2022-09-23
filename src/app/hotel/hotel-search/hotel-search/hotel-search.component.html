@@ -226,7 +226,7 @@
                                                         value="{{item.value.numberOfAdults}}" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4"
                                                         pattern="" inputmode="" formControlName="numberOfAdults">
-                                                    <input type="button" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
+                                                    <input type="button" [disabled]="item.value.numberOfAdults > 3" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -241,7 +241,7 @@
                                                         value="0" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4" value="{{item.value.numberOfChildren}}"
                                                         pattern="" inputmode="" formControlName="numberOfChildren">
-                                                    <input type="button" value="+" class="qty-buttons plus" (click)="increaseCount(i,item,'child')"  id="childBtn_{{i}}">
+                                                    <input type="button" [disabled]="item.value.numberOfChildren > 2" value="+" class="qty-buttons plus" (click)="increaseCount(i,item,'child')"  id="childBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>
