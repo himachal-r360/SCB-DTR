@@ -28,7 +28,7 @@
                 </div>
                 <div class="mob-listing-header-center">
                     <h6 class="text-capitalize">{{hotelSearchForm.value.city}}, {{hotelSearchForm.value.countryName}}</h6>
-                    <p>{{hotelSearchForm.value.checkIn | date:"EEE, MMM dd"}} - {{hotelSearchForm.value.checkOut | date:"EEE, MMM dd"}}  |  {{hotelSearchForm.value.totalGuest}} Guests</p>
+                    <p>{{hotelSearchForm.value.checkIn | date:"EEE, MMM dd"}} - {{hotelSearchForm.value.checkOut | date:"EEE, MMM dd"}}  |  {{hotelSearchForm.value.totalGuest}} Guests12</p>
                 </div>
                 <div class="mob-listing-header-right">
                     <a (click)="goToModifySearch()" >
@@ -119,9 +119,9 @@
                                   </div>
                                   <div class="widget-content mt-10 mb-30 price-widget-content">
                                       <div style="margin:0 0 20px 0">
-                                        <input type="number" min="0" [(ngModel)]="minPrice" [min]="resetMinPrice" id="min_price" class="price-range-field" />
+                                        ₹<input type="number" min="0" [(ngModel)]="minPrice" [min]="resetMinPrice" id="min_price" class="price-range-field" />
                                         <span class="ms-3 me-3">-</span>
-                                        <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                        ₹<input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
                                       </div>
                                       <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (userChangeEnd)="onUserChangeEnd($event)" ></ngx-slider>
                                   </div>
@@ -155,7 +155,7 @@
                                           </li>
                                           </ng-container>
                                       </ul>
-                                      <a href="javascript:;" *ngIf="!showMoreAmenity && amenityList.length>5" (click)="showMoreAmenity = true" class="widget-content-more ml-20">{{amenityList.length - 5}} more</a>
+                                      <a href="javascript:;" *ngIf="!showMoreAmenity && amenityList.length>5" (click)="showMoreAmenity = true" class="widget-content-more ml-20"> + show {{amenityList.length - 5}} more</a>
                                   </div>
                               </div>
                               <hr>
@@ -451,9 +451,9 @@
                                         <div class="accordion-body">
                                             <div class="widget-content mt-10 mb-30 price-widget-content">
                                                 <div style="margin:0 0 20px 0">
-                                                  <input type="number" min="0" [(ngModel)]="minPrice"  id="min_price" class="price-range-field" />
+                                                  ₹<input type="number" min="0" [(ngModel)]="minPrice"  id="min_price" class="price-range-field" />
                                                   <span class="ms-3 me-3">-</span>
-                                                  <input type="number" min="0" [(ngModel)]="maxPrice"  id="max_price" class="price-range-field" />
+                                                  ₹<input type="number" min="0" [(ngModel)]="maxPrice"  id="max_price" class="price-range-field" />
                                                 </div>
                                                 <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (userChangeEnd)="onUserChangeEnd($event)"  ></ngx-slider>
                                             </div>
