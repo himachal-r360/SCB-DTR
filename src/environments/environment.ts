@@ -8,7 +8,7 @@ export const environment = {
   COOKIE_DOMAIN: null,
   LOCALJSON: 'true',
   localInstance: 1,
-  url:"http://offers.smartbuylocal.reward360.us/",
+  url:"http://new.reward360.us/",
   // url:"http://new.reward360.us/",
   //url: "http://new.reward360.us/",
   cdnUrl: 'assets/',
