@@ -61,7 +61,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
         steps: any =2;
         mobileNumber: any;
         showLoader: number = 1;
-        serviceId: string = 'Flight';
+        serviceId: string = 'Hotel';
         isMobile: boolean = true;
         convenience_fee: number = 0;
         fetchOrderId:string;

@@ -145,8 +145,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
   nextIndex = 0;
 
   loadData() {
-   // console.log(this.pageIndex,"this.pageIndex + ")
-   // console.log(this.hotelList.length,"this.hotelList.length")
     if (this.pageIndex >= this.hotelList.length) {
       return false;
     } else {
@@ -164,7 +162,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
-     // console.log(this.hotelList,"this.hotelList");
     }
 
     //$('.scrollToTop').trigger('click');
@@ -215,7 +212,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
     $(window).scroll(function (this) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
-     //   console.log("scroll");
         $('#endOfPage').trigger('click');
       }
     });
@@ -341,6 +337,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
+      console.log(res.response.hotels);
       if (res.response.hotels) {
         if (res.response.hotels.length > 0) {
           this.isResponse = true
@@ -371,6 +368,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     let hotelWithoutFilterList = this.hotelWithoutFilterList;
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
+    console.log(hotelListConst , "hotel list ");
 
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
@@ -382,11 +380,13 @@ export class HotelListComponent implements OnInit, OnDestroy {
         })
 
         StarFiltereddata.push(...data);
-
+        console.log(StarFiltereddata , "start filter");
+        
       }
     });
     if (StarFiltereddata.length > 0) {
       this.hotelList = StarFiltereddata;
+      console.log(this.hotelList , "start filter2");
     }
 
     //Star Filter End
@@ -611,6 +611,10 @@ export class HotelListComponent implements OnInit, OnDestroy {
   }
   backClicked() {
     this.location.back();
+  }
+
+  goToModifySearch(){
+    this.router.navigate(['compare-fly']);
   }
 
   showHideFilterMobile(val: string) {

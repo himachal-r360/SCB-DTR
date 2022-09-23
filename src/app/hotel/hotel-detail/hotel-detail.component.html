@@ -238,10 +238,10 @@
                                                                 <p>{{list}}</p>
                                                               </li>
                                                           </ul>
-                                                          <span class="information-icon hd-cc-Policy">
+                                                          <span class="information-icon hd-cc-Policy" (mouseover)="OpenPopover($event)" >
                                                               Check Cancellation Policy
                                                               <div class="hover-popover">
-                                                                  <a href="" class="popover-close">
+                                                                  <a href="javaScript:voide(0)" (click)="ClosePopover()" class="popover-close">
                                                                       <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                   </a>
                                                                   <div class="hover-popover-title">
@@ -305,7 +305,7 @@
                             <p *ngIf="SelectedQueryParam.checkIn">{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
                         </div>
                         <div class="mob-listing-header-right">
-                            <a  (click)="backClicked()">
+                            <a  (click)="goToModifySearch()()">
                                 <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                             </a>
                         </div>
@@ -470,10 +470,10 @@
                                                                     <p>{{list}}</p>
                                                                   </li>
                                                                 </ul>
-                                                                <span class="information-icon hd-cc-Policy">
+                                                                <span class="information-icon hd-cc-Policy" >
                                                                     Check Cancellation Policy
-                                                                    <div class="hover-popover">
-                                                                        <a href="javascript:;" class="popover-close">
+                                                                    <div class="hover-popover" >
+                                                                        <a href="javaScript:void(0)"(click)="ClosePopover()" class="popover-close" >
                                                                             <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                         </a>
                                                                         <div class="hover-popover-title">
