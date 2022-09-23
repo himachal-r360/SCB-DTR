@@ -4,8 +4,10 @@ import { InfiniaHomeComponent } from './infinia-home/infinia-home.component';
 import { InfiniaItcHotelComponent } from './infinia-itc-hotel/infinia-itc-hotel.component';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
+import { ClubMarriotMembershipComponent } from './club-marriot-membership/club-marriot-membership.component';
 const routes: Routes = [
   {path:"infinia-itc-hotel",component:InfiniaItcHotelComponent},
+  {path:"club-marriott-membership" , component:ClubMarriotMembershipComponent}
   
 ]
 
@@ -13,7 +15,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     InfiniaHomeComponent,
-    InfiniaItcHotelComponent
+    InfiniaItcHotelComponent,
+    ClubMarriotMembershipComponent
   ],
   imports: [
     CommonModule,
