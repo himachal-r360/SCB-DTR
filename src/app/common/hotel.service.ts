@@ -32,6 +32,7 @@ export class HotelService {
 
   getHotelDetail(param :any):Observable<any>{
     let body:any = JSON.stringify(param);
+    console.log(body);
     return this.http.post(this.hotelDetail, body, { headers: this.header });
   }
 
