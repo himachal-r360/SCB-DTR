@@ -6,7 +6,7 @@
                   <ul class="list-inline">
                       <li class="list-inline-item"><a href="javascript:;" routerLink="/" >Home</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/regalia_gold/compare-stay">Travel & Stays</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel & Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item"><span>Hotel Search</span></li>
                   </ul>
@@ -22,7 +22,7 @@
         <div class="col-md-12 p-0" *ngIf="isMobile">
             <div class="mob-listing-header">
                 <div class="mob-listing-header-left">
-                    <a (click)="backClicked()" >
+                    <a href="javascript:void(0)" routerLink="/compare-stay" >
                         <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                     </a>
                 </div>
@@ -31,7 +31,7 @@
                     <p>{{hotelSearchForm.value.checkIn | date:"EEE, MMM dd"}} - {{hotelSearchForm.value.checkOut | date:"EEE, MMM dd"}}  |  {{hotelSearchForm.value.totalGuest}} Guests12</p>
                 </div>
                 <div class="mob-listing-header-right">
-                    <a (click)="goToModifySearch()" >
+                    <a href="javascript:void(0)" routerLink="/compare-stay" >
                         <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                     </a>
                 </div>
