@@ -385,19 +385,19 @@ console.log("hotel "+ JSON.stringify( get_value));
 }
 welcome_benefitsLink(){
      if(this.is_wb_progressbar==false)
-      window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'/milestone';
+      window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'milestone';
      else
       return false;
 }
 milestone_benefitsLink(){
     if(this.is_mb_progressbar==false)
-      window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'/milestone';
+      window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'milestone';
     else
       return false;
 }
 travel_benefitsLink(){
    if(this.display_tb==true)
-         window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'/travel';
+         window.location.href = this.DOMAIN_SETTINGS['sub_domain_redirection_milestone_url']+'travel';
        else
          return false;
 }
