@@ -105,7 +105,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.getSearchValue = localStorage.getItem('hotelSearch')
+    this.getSearchValue = localStorage.getItem(environment.hotelLastSearch)
     if(this.getSearchValue != undefined || this.getSearchValue != null){
       this.getSearchValueLocalStorage();
     }
@@ -385,7 +385,7 @@ focusInput(){
 
   hotelSearchCallBack(param: any) {
     let searchValueAllobj = param;
-    let continueSearch: any = localStorage.getItem('continueSearchForHotel');
+    let continueSearch: any = localStorage.getItem(environment.continueSearchHotel);
     if (continueSearch == null) {
       this.continueSearchHotel = [];
     }
@@ -401,7 +401,7 @@ focusInput(){
       this.continueSearchHotel = this.continueSearchHotel.slice(0, 3);
     }
     this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-    localStorage.setItem('continueSearchForHotel', JSON.stringify(this.continueSearchHotel));
+    localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
   }
 
   searchHotel() {
@@ -436,7 +436,7 @@ focusInput(){
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
-      localStorage.setItem('hotelSearch', JSON.stringify(this.hotelSearchForm.value));
+      localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.hotelSearchCallBack(this.hotelSearchForm.value)
       this.router.navigateByUrl(url);

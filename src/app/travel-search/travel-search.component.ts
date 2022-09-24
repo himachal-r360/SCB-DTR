@@ -1601,6 +1601,8 @@ check_traveller_count(type) {
          if(k!=jsonObject['child_age'].length-1)
           queryParam+=',';
          }
+        }else{
+         queryParam+='0&';
         }
         j++;
         });
@@ -1613,6 +1615,8 @@ check_traveller_count(type) {
       url+='&city='+this.searchHotelForm.value.hotelId+'&country='+this.searchHotelForm.value.countryId+'&countryName='+this.searchHotelForm.value.countryId+'&scr=INR';
       url+='&sct='+this.searchHotelForm.value.countryId+'&hotelName=&latitude=&longitude=&area=&hotelId=&'+queryParam;
       url+='&channel='+device+'&programName='+this.sg['domainName']+'&limit=0&numberOfRooms='+(this.searchHotelForm.value.rooms.length)+'&totalGuest='+totalGuest;
+      
+      
       
       
                if(environment.IS_MAIN==1){
