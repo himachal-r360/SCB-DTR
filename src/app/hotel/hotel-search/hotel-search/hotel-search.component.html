@@ -2,7 +2,7 @@
     <form [formGroup]="hotelSearchForm">
         <div class="hotel-search mt-20">
             <div class="hotel-area" appHotelDropdown>
-                <div class="hotel-area-item" >
+                <div class="hotel-area-item" (click)='focusInput()' >
                     <span class="small-text">City, Hotel or Area</span>
                     <h5 class="large-text text-capitalize ">{{cityName}}</h5>
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
