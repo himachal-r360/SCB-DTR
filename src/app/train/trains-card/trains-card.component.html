@@ -231,7 +231,7 @@
                 <div class="trainTimeInfo">
                     <div class="">
                         <p class="mb-10"><span class="time">{{train.departureTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
-                        <p class="place">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
+                        <p class="place">{{stationsdump[train.fromStnCode]}} <span class="place_code">({{train.fromStnCode}})</span></p>
                     </div>
                     <div>
                         <div class="duration_train">
@@ -242,7 +242,7 @@
                     </div>
                     <div>
                         <p class="mb-10"><span class="time">{{train.arrivalTime}},</span> <span class="day ps-2">{{journeyDate |  date:'EEE dd LLL'}}</span></p>
-                        <p class="place">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
+                        <p class="place">{{stationsdump[train.toStnCode]}} <span class="place_code">({{train.toStnCode}})</span></p>
                     </div>
 
                     <!--  <div class="trainCode">
@@ -355,10 +355,10 @@
     
                 <div class="row mt-2">
                     <div class="col-6">
-                        <p class="train_duration f-12">{{stationsdump[train.fromStnCode]}} ({{train.fromStnCode}})</p>
+                        <p class="train_duration f-12">{{stationsdump[train.fromStnCode]}} <span class="place_code">({{train.fromStnCode}})</span></p>
                     </div>
                     <div class="col-6 text-right">
-                        <p class="train_duration f-12">{{stationsdump[train.toStnCode]}} ({{train.toStnCode}})</p>
+                        <p class="train_duration f-12">{{stationsdump[train.toStnCode]}} <span class="place_code">({{train.toStnCode}})</span></p>
                     </div>
                 </div>
             </div>

@@ -14,6 +14,7 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../environments/environment';
+import { AppConfigService } from '../app-config.service';
 declare var $: any;
 
 
@@ -29,6 +30,8 @@ declare var $: any;
 
 export class HomeComponent implements OnInit {
   cdnUrl: any;
+  DOMAIN_SETTINGS: any;
+  serviceSettings: any;
   continueSearchVal:any;
         continueSearchValBus:any;
         continueSearchValTrain:any;
@@ -154,10 +157,12 @@ export class HomeComponent implements OnInit {
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
-      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
+      private _flightService: FlightService,private appConfigService: AppConfigService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.serviceSettings = this.appConfigService.getConfig();
+     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     if(router.url){
         switch (router.url) {
         case ('/'+this.sg['domainPath']+'compare-fly'):

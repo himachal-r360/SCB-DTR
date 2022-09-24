@@ -1,8 +1,8 @@
 <div class="travel-select-data-area">
     <form [formGroup]="hotelSearchForm">
         <div class="hotel-search mt-20">
-            <div class="hotel-area" appHotelDropdown >
-                <div class="hotel-area-item"  (click)='focusInput()'>
+            <div class="hotel-area" appHotelDropdown>
+                <div class="hotel-area-item" >
                     <span class="small-text">City, Hotel or Area</span>
                     <h5 class="large-text text-capitalize ">{{cityName}}</h5>
                     <span class="small-text hotel-city">{{hotelSearchForm.value.countryName}}</span>
@@ -27,7 +27,7 @@
                                     <div class="hotel-from-name">
                                         <img src="assets/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <!--<p class="d-none">528 Hotels</p>-->
+                                        <p class="d-none">528 Hotels</p>
                                     </div>
                                 </a>
                             </li>
@@ -39,7 +39,7 @@
                                     <div class="hotel-from-name">
                                         <img src="assets/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <!--<p class="d-none">528 Hotels</p>-->
+                                        <p class="d-none">528 Hotels</p>
                                     </div>
                                 </a>
                             </li>
@@ -226,7 +226,7 @@
                                                         value="{{item.value.numberOfAdults}}" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4"
                                                         pattern="" inputmode="" formControlName="numberOfAdults">
-                                                    <input type="button" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
+                                                    <input type="button" [disabled]="item.value.numberOfAdults > 3" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -241,7 +241,7 @@
                                                         value="0" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4" value="{{item.value.numberOfChildren}}"
                                                         pattern="" inputmode="" formControlName="numberOfChildren">
-                                                    <input type="button" value="+" class="qty-buttons plus" (click)="increaseCount(i,item,'child')"  id="childBtn_{{i}}">
+                                                    <input type="button" [disabled]="item.value.numberOfChildren > 2" value="+" class="qty-buttons plus" (click)="increaseCount(i,item,'child')"  id="childBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>

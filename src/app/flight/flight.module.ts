@@ -26,8 +26,8 @@ import { TotalDurationTimePipe } from '../pipes/total-duration-time.pipe';
 import { SafeHtmlPipe } from 'src/app/shared/pipes/safeHtml.pipe';
 import { AirlinesPipe } from '../pipes/airlines.pipe';
 import { MultiAirlinesPipe } from '../pipes/multi_airlines.pipe';
-
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
+
 
 const routes: Routes = [
   {
