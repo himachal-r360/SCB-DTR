@@ -211,7 +211,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
       if(this.nextIndex > this.flightList.length){
       this.nextIndex=this.flightList.length ;
     }
-      for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+      for (let n = this.pageIndex-1; n < this.nextIndex ; n++) {
         const context = {
           item: [this.flightList[n]]
 

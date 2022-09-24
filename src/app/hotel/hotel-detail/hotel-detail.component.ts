@@ -368,7 +368,7 @@ export class HotelDetailComponent implements OnInit {
 
   }    
   goToModifySearch(){
-    this.router.navigate(['compare-fly']);
+    this.router.navigate(['compare-stay']);
   }
   
   openPopOverMob(i){
