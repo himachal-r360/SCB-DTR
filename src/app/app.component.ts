@@ -323,10 +323,10 @@ export class AppComponent implements OnInit {
                 this.menuActiveClass='bus';
                 break;
                 
-                     case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':
+                     case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':case '/flight-checkout':
                 this.menuActiveClass='flight';
                 break;
-                          case '/compare-stay' :  
+                          case '/compare-stay' :  case '/hotel-list' :  case '/hotel-detail' : case '/hotel-checkout' : case '/hotel-booking' :  
                 this.menuActiveClass='hotel';
                 break;
                 

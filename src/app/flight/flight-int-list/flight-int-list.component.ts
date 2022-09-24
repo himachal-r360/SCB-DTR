@@ -127,15 +127,15 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         };
         flight_PopularItems = [
         { name: 'Refundable_Fares', active: false, value: 'Refundable-Fares', count: 0 },
-        { name: 'non_stop', active: false, value: 'non-stop', count: 0 },
+        { name: 'non_stop', active: false, value: 'Non-Stop', count: 0 },
         { name: 'Morning_Departures', active: false, value: 'Morning-Departures', count: 0 },
         { name: 'Meals_Included', active: false, value: 'Meals-Included', count: 0 }
         ]
         flight_Timingsitems = [
-        { name: '0_6', active: false, value: '00-06', image: '1.png' },
-        { name: '6_12', active: false, value: '06-12', image: '2.png' },
-        { name: '12_18', active: false, value: '12-18', image: '3.png' },
-        { name: '18_0', active: false, value: '18-00', image: '4.png' }
+        { name: '0_6', active: false, value: '00-06', image: '1.svg' },
+        { name: '6_12', active: false, value: '06-12', image: '2.svg' },
+        { name: '12_18', active: false, value: '12-18', image: '3.svg' },
+        { name: '18_0', active: false, value: '18-00', image: '4.svg' }
         ]
         stopsFilteritems = [
         { name: 'no_stops', active: false, value: '<p>No <br> stops</p>' },
@@ -171,7 +171,7 @@ export class FlightIntListComponent implements OnInit, AfterViewInit, OnDestroy 
         if(this.nextIndex > this.flightList.length){
         this.nextIndex=this.flightList.length;
         }
-        for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+        for (let n = this.pageIndex-1; n < this.nextIndex ; n++) {
         const context = {
         item: [this.flightList[n]]
         };
@@ -380,7 +380,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = !item.active; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = true; return item; } })
+      this.stopsFilteritems.filter((item: any) => { if (popularItems.active == true && item.name == "no_stops") { item.active = true; return item; }else { item.active = false; return item;} })
     }
     if(!this.isMobile)
     {

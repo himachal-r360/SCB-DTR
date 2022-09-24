@@ -6,7 +6,7 @@
                     <ul class="list-inline">
                         <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
                         <li class="list-inline-item"><span>/</span></li>
-                        <li class="list-inline-item"><a href="javascript:;" routerLink="/bus">Travel & Stays</a></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/regalia_gold/bus">Travel & Stays</a></li>
                         <li class="list-inline-item"><span>/</span></li>
                         <li class="list-inline-item"><span>Bus Search</span></li>
                     </ul>
@@ -177,18 +177,18 @@
                                 <span class="checkmark"></span>
                                 </label>
 
-                                </div>
-                                </mat-expansion-panel>
-                     <mat-expansion-panel [ngClass]="{'brdr_btm_0' : amenities.length < 0 }">
-                        <mat-expansion-panel-header class="h_auto">
-                        Operators
-                        </mat-expansion-panel-header>
-                        <div class="reset_link">
-                            <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
-                         </div>
-                          
-                        <div class="filter_search_div">
-                        <span><i class="fa fa-search" aria-hidden="true"></i>
+                                            </div>
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel [ngClass]="{'brdr_btm_0' : amenities.length < 0 }">
+                                            <mat-expansion-panel-header class="h_auto">
+                                                Operators
+                                            </mat-expansion-panel-header>
+                                            <div class="reset_link">
+                                                <a href="javascript:void(0)" (click)="resetOperFilter()">Reset</a>
+                                            </div>
+
+                                            <div class="filter_search_div">
+                                                <span><i class="fa fa-search" aria-hidden="true"></i>
 
                         <input class="search-sub-filter" #operatorstring  (keyup)="searchboarding('operators',operatorstring.value)" type="text" placeholder="Operators">
                         </span>
@@ -496,7 +496,7 @@
                                     <div class="m_sort_flex_div">
                                         <div class="">
                                             <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-low-high'}">
-                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.png" /></div>
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-l.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
                                             <p class="m_sort_text50">Low to High</p>
@@ -508,7 +508,7 @@
 
                                         <div class="">
                                             <label class="checkbox-cust" [ngClass]="{'selected': sortBy === 'price-high-low'}">
-                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.png" /></div>
+                                        <div class="icons-filter px-1"><img src="{{cdnUrl}}images/icons/price-h.svg" /></div>
                                         <div class="label-filter text-left">
                                             <p class="m_sort_text">Price</p>
                                             <p class="m_sort_text50">High to Low</p>

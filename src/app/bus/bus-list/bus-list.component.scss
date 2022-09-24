@@ -747,7 +747,7 @@ app-header {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        padding: 5px;
+        /*  padding: 5px;*/
         border-radius: 5px;
         background: rgba(29, 134, 255, 0.03);
         border: 1px solid rgba(29, 134, 255, 0.07);
@@ -755,7 +755,7 @@ app-header {
         gap: 10px;
         min-height: 53px;
         img {
-            width: 18px;
+            width: 28px;
             height: 20px;
             object-fit: cover;
         }
@@ -959,7 +959,7 @@ $break-md-tab: 768px;
     .checkbox-cust {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         padding: 10px 0px;
         border: 1px solid rgba(0, 0, 0, 0.1);
         // border-radius: 5px;
@@ -1021,6 +1021,14 @@ $break-md-tab: 768px;
         margin-right: 10px;
         &:checked {
             opacity: 1;
+        }
+    }
+}
+
+@media screen and (max-width:600px) {
+    .mob-sf-sort {
+        .label-filter {
+            width: 100%;
         }
     }
 }
@@ -1261,4 +1269,11 @@ body {
 
 .mob-reset {
     margin-top: 0.5rem!important;
+}
+
+.listing-loader {
+    background: #fff;
+    padding: 10px 10px 0px 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px
 }

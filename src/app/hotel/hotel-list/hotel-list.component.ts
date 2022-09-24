@@ -140,7 +140,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('showFilter') showFilter: ElementRef;
 
-  pageIndex: number = 11;
+  pageIndex: number = 10;
   ITEMS_RENDERED_AT_ONCE = 10;
   nextIndex = 0;
 
@@ -158,7 +158,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
         const context = {
           item: [this.hotelList[n]]
         };
-
+        
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
@@ -170,12 +170,12 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
 
   private intialData() {
-    for (let n = 0; n < this.ITEMS_RENDERED_AT_ONCE; n++) {
+    for (let n = 0; n <= this.ITEMS_RENDERED_AT_ONCE; n++) {
       if (this.hotelList[n] != undefined) {
         const context = {
           item: [this.hotelList[n]]
         };
-
+        
         this.container.createEmbeddedView(this.template, context);
       }
 
@@ -311,7 +311,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
-      console.log(res.response.hotels);
+      
       if (res.response.hotels) {
         if (res.response.hotels.length > 0) {
           this.isResponse = true
@@ -342,7 +342,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     let hotelWithoutFilterList = this.hotelWithoutFilterList;
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
-    console.log(hotelListConst , "hotel list ");
+    
     var applyStar = false;
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
@@ -354,13 +354,13 @@ export class HotelListComponent implements OnInit, OnDestroy {
         })
 
         StarFiltereddata.push(...data);
-        console.log(StarFiltereddata , "start filter");
+        
 
       }
     });
     if (applyStar) {
       this.hotelList = StarFiltereddata;
-      console.log(this.hotelList , "start filter2");
+      
     }
 
     //Star Filter End
@@ -369,11 +369,14 @@ export class HotelListComponent implements OnInit, OnDestroy {
     if (this.hotelList.length > 0) {
       var min_price = this.minPrice;
       var max_price = this.maxPrice;
+      
       var filteredPrice: any[] = [];
       this.hotelList.filter((e: any) => {
         var filtered = e.priceSummary.filter(z => {
           return z.price >= min_price && z.price <= max_price
         });
+        
+        e.priceSummary =filtered;
         if (filtered.length > 0) {
           filteredPrice.push(e);
         }
@@ -505,6 +508,8 @@ export class HotelListComponent implements OnInit, OnDestroy {
     };
     this.resetMinPrice = minPrice;
     this.resetMaxPrice = maxPrice;
+
+      
   }
 
   GetMinAndMaxPriceForFilter() {
@@ -734,3 +739,4 @@ export class HotelListComponent implements OnInit, OnDestroy {
   }
 
 }
+

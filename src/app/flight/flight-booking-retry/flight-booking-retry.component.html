@@ -1,897 +1,806 @@
 <div *ngIf="flightSessionData">
-<div class="flight_mlite_process" *ngIf="REWARD_CUSTOMERID !='0000'">
-  <section class="mob-flights-listing" *ngIf="searchData && isMobile">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 p-0">
-          <div class="mob-listing-header">
-            <div class="mob-listing-header-left">
-              <a href="javascript:;" (click)="triggerBack()">
-                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
-              </a>
-            </div>
-            
-            <div class="mob-listing-header-center" *ngIf="flightSessionData.travel_type =='M'">
-            
-              <h6><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last" >{{ searchDatad.flightfrom }} - {{ searchDatad.flightto }} <span *ngIf="!last">|</span> </span></h6>
-                  
-              <p><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last" >{{ searchDatad.departure | date:"EEE,dd MMM" }} |</span> {{ maxAdults+maxChilds+maxInfants }} Travellers | {{ flightClasses[searchData.flightclass] }}
-              </p>
-            </div>
-            
-            <div class="mob-listing-header-center" *ngIf="flightSessionData.travel_type !='M'">
-              <h6>{{ searchData.fromCity }} - {{ searchData.toCity }} <span
-                  *ngIf="searchData && searchData.flightdefault=='R'"> | {{ searchData.toCity }} -
+    <div class="flight_mlite_process" *ngIf="REWARD_CUSTOMERID !='0000'">
+        <section class="mob-flights-listing" *ngIf="searchData && isMobile">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <div class="mob-listing-header">
+                            <div class="mob-listing-header-left">
+                                <a href="javascript:;" (click)="triggerBack()">
+                                    <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                                </a>
+                            </div>
+
+                            <div class="mob-listing-header-center" *ngIf="flightSessionData.travel_type =='M'">
+
+                                <h6><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last">{{ searchDatad.flightfrom }} - {{ searchDatad.flightto }} <span *ngIf="!last">|</span> </span>
+                                </h6>
+
+                                <p><span *ngFor="let searchDatad of searchData;let searchi = index ;let last = last">{{ searchDatad.departure | date:"EEE,dd MMM" }} |</span> {{ maxAdults+maxChilds+maxInfants }} Travellers | {{ flightClasses[searchData.flightclass]
+                                    }}
+                                </p>
+                            </div>
+
+                            <div class="mob-listing-header-center" *ngIf="flightSessionData.travel_type !='M'">
+                                <h6>{{ searchData.fromCity }} - {{ searchData.toCity }} <span *ngIf="searchData && searchData.flightdefault=='R'"> | {{ searchData.toCity }} -
                   {{ searchData.fromCity }}</span></h6>
-              <p>{{ searchData.departure | date:"EEE,dd MMM" }} <span
-                  *ngIf="searchData && searchData.flightdefault=='R'"> |
-                  {{ searchData.arrival | date:'EEE, dd MMM' }}</span>|
-                {{ maxAdults+maxChilds+maxInfants }} Travellers | {{ flightClasses[searchData.flightclass] }}
-              </p>
-            </div>
-            
-            
-            <div class="mob-listing-header-right">
+                                <p>{{ searchData.departure | date:"EEE,dd MMM" }} <span *ngIf="searchData && searchData.flightdefault=='R'"> |
+                  {{ searchData.arrival | date:'EEE, dd MMM' }}</span>| {{ maxAdults+maxChilds+maxInfants }} Travellers | {{ flightClasses[searchData.flightclass] }}
+                                </p>
+                            </div>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div [ngClass]="{'col-md-7': enableVAS==1, 'col-md-6':enableVAS==0 }">
-          <div class="details-steps-box">
-            <ul class="m-0 details-steps-ul">
-              <li>
-                <a href="javascript:void(0)" class="active1"              >
-                  <!-- steps-done - Class For done steps -->
-                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/flight.svg" alt="" /></span>
-                  <span class="steps-text">Flight Details</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" class="active1"                >
-                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/user.svg" alt="" /></span>
-                  <span class="steps-text">Traveller Details</span>
-                </a>
-              </li>
-              <li *ngIf="enableVAS==1">
-                <a href="javascript:void(0)" class="active1"             >
-                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/meal.svg" alt="" /></span>
-                  <span class="steps-text">Seats & Meals</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" class="active1"       >
-                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/review.svg" alt="" /></span>
-                  <span class="steps-text">Review Booking</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }"
-                  (click)="moveTab(5)">
-                  <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/card.svg" alt="" /></span>
-                  <span class="steps-text">Payment</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-<main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'">
 
-  <!-- <section class="details-steps-area mt-140 mb-40"> -->
-  <section class="flight-details-area mt-10" *ngIf="totalCollectibleAmount>0">
-    <!-- Mlite Sesssion Timer Code -->
-    <div class="d-block d-sm-none">
-      <div class="sidebar-widget session-expires-widget text-center">
-        <p><img src="{{ cdnUrl }}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+                            <div class="mob-listing-header-right">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="details-steps-area mb-40" [ngClass]="{'mt-140': !isMobile , 'mt-4':isMobile }">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div [ngClass]="{'col-md-7': enableVAS==1, 'col-md-6':enableVAS==0 }">
+                        <div class="details-steps-box">
+                            <ul class="m-0 details-steps-ul">
+                                <li>
+                                    <a href="javascript:void(0)" class="active1">
+                                        <!-- steps-done - Class For done steps -->
+                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/flight.svg" alt="" /></span>
+                                        <span class="steps-text">Flight Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="active1">
+                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/user.svg" alt="" /></span>
+                                        <span class="steps-text">Traveller Details</span>
+                                    </a>
+                                </li>
+                                <li *ngIf="enableVAS==1">
+                                    <a href="javascript:void(0)" class="active1">
+                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/meal.svg" alt="" /></span>
+                                        <span class="steps-text">Seats & Meals</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" class="active1">
+                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/review.svg" alt="" /></span>
+                                        <span class="steps-text">Review Booking</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }">
+                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/card.svg" alt="" /></span>
+                                        <span class="steps-text">Payment</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <main class="site-main" *ngIf="REWARD_CUSTOMERID !='0000'">
+
+        <!-- <section class="details-steps-area mt-140 mb-40"> -->
+        <section class="flight-details-area mt-10" *ngIf="totalCollectibleAmount>0">
+            <!-- Mlite Sesssion Timer Code -->
+            <div class="d-block d-sm-none">
+                <div class="sidebar-widget session-expires-widget text-center">
+                    <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
             <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)"></countdown>
             min
           </strong></p>
-      </div>
-    </div>
-    <input *ngIf="searchData && flightSessionData.travel_type !='M'" type="hidden" id="journery_date"
-      value='{{ searchData.departure | date:"YYYY-MM-dd" }}' />
-
-    <input *ngIf="searchData && flightSessionData.travel_type =='M'" type="hidden" id="journery_date"
-      value='{{ searchData[0].departure | date:"YYYY-MM-dd" }}' />
-
-    <div class="container">
-      <div class="row">
-
-        <!--Steps 5-->
-        <div class="col-md-8" *ngIf="steps==5">
-          <div class="booking-process-content" *ngIf="flightOnwardDetails">
-            <div class="booking-title-box">
-              <h4>Choose Payment Mode</h4>
+                </div>
             </div>
+            <input *ngIf="searchData && flightSessionData.travel_type !='M'" type="hidden" id="journery_date" value='{{ searchData.departure | date:"YYYY-MM-dd" }}' />
 
-            <app-payment 
-              (sendCouponEvent)="receiveCouponDetails ($event)" 
-              [remove_Coupon]="remove_Coupon"
-              [passSavedCardsData]="savedCards"
-              [passSessionKey]="randomFlightDetailKey"
-              (sendflexiAmount)='reciveflexiAmount($event)' 
-              [passTotalFare]="totalCollectibleAmount"
-              [passActualFare]="totalCollectibleAmountFromPartnerResponse" 
-              [passConvinenceFee]="convenience_fee"
-              [passServiceId]="serviceId" 
-              [passXSRFTOKEN]="XSRFTOKEN" 
-              [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag"
-              [passREWARD_MOBILE]="REWARD_MOBILE" 
-              [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
-              (sendtotalfare)="recivetotalFare($event)" 
-              (sendPointsPlusEvent)="receivePointsPlus($event)" 
-              [passflexiFare]="sendflexiFare"  
-              [partnerToken]="partnerToken"
-              [isMobile]="isMobile"
-              [retryPay]="0"
-              >
-            </app-payment>
-          </div>
-        </div>
-        <!--Step5 Ends-->
+            <input *ngIf="searchData && flightSessionData.travel_type =='M'" type="hidden" id="journery_date" value='{{ searchData[0].departure | date:"YYYY-MM-dd" }}' />
 
-        <div class="col-md-4" *ngIf="totalCollectibleAmount">
-          <!-- <app-fare-summary></app-fare-summary> -->
-          <div class="default-sidebar">
-            <div class="d-none d-sm-block">
-              <div class="sidebar-widget session-expires-widget">
-                <p><img src="{{ cdnUrl }}/images/icons/sestion.png" class="me-2" alt="">Booking Expires in <strong>
+            <div class="container">
+                <div class="row">
+
+                    <!--Steps 5-->
+                    <div class="col-md-8" *ngIf="steps==5">
+                        <div class="booking-process-content" *ngIf="flightOnwardDetails">
+                            <div class="booking-title-box">
+                                <h4>Choose Payment Mode</h4>
+                            </div>
+
+                            <app-payment (sendCouponEvent)="receiveCouponDetails ($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="randomFlightDetailKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalCollectibleAmount"
+                                [passActualFare]="totalCollectibleAmountFromPartnerResponse" [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE"
+                                [passFlexipayEligibleFlag]="isFlexipayEligibleFlag" (sendtotalfare)="recivetotalFare($event)" (sendPointsPlusEvent)="receivePointsPlus($event)" [passflexiFare]="sendflexiFare" [partnerToken]="partnerToken" [isMobile]="isMobile"
+                                [retryPay]="0">
+                            </app-payment>
+                        </div>
+                    </div>
+                    <!--Step5 Ends-->
+
+                    <div class="col-md-4" *ngIf="totalCollectibleAmount">
+                        <!-- <app-fare-summary></app-fare-summary> -->
+                        <div class="default-sidebar">
+                            <div class="d-none d-sm-block">
+                                <div class="sidebar-widget session-expires-widget">
+                                    <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
                     <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
                     </countdown> min
                   </strong></p>
-              </div>
-              <div class="sidebar-widget fare-summary-widget">
-                <div class="widget-title">
-                  <h4>Fare Summary</h4>
-                  <img *ngIf="selectedOnwardVendor"
-                    src="{{ cdnUrl }}images/flight_partners/{{ selectedOnwardVendor.partnerName }}.png"
-                    alt="{{ selectedOnwardVendor.partnerName }}">
+                                </div>
+                                <div class="sidebar-widget fare-summary-widget">
+                                    <div class="widget-title">
+                                        <h4>Fare Summary</h4>
+                                        <img *ngIf="selectedOnwardVendor" src="{{ cdnUrl }}images/flight_partners/{{ selectedOnwardVendor.partnerName }}.svg" alt="{{ selectedOnwardVendor.partnerName }}">
+                                    </div>
+                                    <div class="widget-content">
+                                        <ul class="widget-list clearfix">
+                                            <li class="fare-list-item">
+                                                <div class="fare-list-box">
+                                                    <div class="fare-list-left">
+                                                        <div (click)="isCollapseShow('BaseFare')">
+                                                            <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
+
+                                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
+
+                                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare</div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="fare-list-right">
+                                                        <p>₹ {{ BaseFare|number }}</p>
+                                                    </div>
+
+                                                </div>
+
+                                                <ng-container *ngIf="flightSessionData.travel_type =='M'">
+                                                    <div *ngIf="AdtBaseFare>0 ">
+                                                        <div class="collapse base_fare_collapse" id="base-collpase">
+                                                            <div class="row ">
+                                                                <div class="col-md-11 offset-md-1">
+
+                                                                    <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                                                        <div class="col-8 fare-list-left">
+                                                                            <p>{{ AdtQuantity }} X Adult(s) </p>
+                                                                        </div>
+                                                                        <div class="col-4 fare-list-right">
+                                                                            <p>₹ {{ AdtBaseFare | number }}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row collapse_row" *ngIf="ChildBaseFare>0">
+                                                                        <div class="col-8 fare-list-left">
+                                                                            <p> {{ ChildQuantity }} X Children</p>
+                                                                        </div>
+                                                                        <div class="col-4 fare-list-right">
+                                                                            <p>₹ {{ ChildBaseFare | number }}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
+                                                                        <div class="col-8 fare-list-left">
+                                                                            <p> {{ InfantQuantity }} X Infant </p>
+                                                                        </div>
+                                                                        <div class="col-4 fare-list-right">
+                                                                            <p>₹ {{ InfantBaseFare | number }}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="flightSessionData.travel_type !='M'">
+                                                    <div *ngIf="AdtBaseFare>0 ">
+                                                        <div class="collapse base_fare_collapse" id="base-collpase">
+                                                            <div class="row ">
+                                                                <div class="col-md-11 offset-md-1">
+
+                                                                    <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                                                        <div class="col-8 fare-list-left">
+                                                                            <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
+                                                                        </div>
+                                                                        <div class="col-4 fare-list-right">
+                                                                            <p>₹ {{ AdtBaseFare | number }}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row collapse_row" *ngIf="ChildBaseFare>0">
+                                                                        <div class="col-8 fare-list-left">
+                                                                            <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
+                                                                        </div>
+                                                                        <div class="col-4 fare-list-right">
+                                                                            <p>₹ {{ ChildBaseFare | number }}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
+                                                                        <div class="col-8 fare-list-left">
+                                                                            <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
+                                                                        </div>
+                                                                        <div class="col-4 fare-list-right">
+                                                                            <p>₹ {{ InfantBaseFare | number }}</p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </ng-container>
+                                            </li>
+                                            <li class="fare-list-item">
+                                                <div class="fare-list-box">
+                                                    <div class="fare-list-left">
+                                                        <div>
+
+                                                            Taxes and Fees
+                                                        </div>
+                                                    </div>
+                                                    <div class="fare-list-right">
+                                                        <p>&#8377; {{ (totalCollectibleAmountFromPartnerResponse-BaseFare)-partnerConvFee |number }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                            <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
+                                                <div class="fare-list-box">
+                                                    <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#baggageSeat-collpase" role="button" aria-expanded="false" aria-controls="baggageSeat-collpase" (click)="isCollapseShow('vas')">
+
+
+                                                        <div>
+                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseVas">
+
+                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseVas"> Baggage/Seat/Meals
+                                                        </div>
+                                                    </div>
+                                                    <div class="fare-list-right">
+                                                        <p>&#8377; {{ vas_amount }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div class="collapse base_fare_collapse" id="baggageSeat-collpase">
+                                                        <div class="row ">
+                                                            <div class="col-md-11 offset-md-1">
+
+                                                                <div class="row collapse_row">
+                                                                    <div class="col-8 fare-list-left">
+                                                                        <p>Baggage</p>
+                                                                    </div>
+                                                                    <div class="col-4 fare-list-right">
+                                                                        <p>₹ 1000</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row collapse_row">
+                                                                    <div class="col-8 fare-list-left">
+                                                                        <p> Seats </p>
+                                                                    </div>
+                                                                    <div class="col-4 fare-list-right">
+                                                                        <p>₹ 700</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row collapse_row">
+                                                                    <div class="col-8 fare-list-left">
+                                                                        <p> Meals </p>
+                                                                    </div>
+                                                                    <div class="col-4 fare-list-right">
+                                                                        <p>₹ 500</p>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+                                            <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
+                                                <div class="fare-list-box">
+                                                    <div class="fare-list-left">
+                                                        <div>
+                                                            {{ selectedOnwardVendor.partnerName }} Convenience Fee
+                                                        </div>
+                                                    </div>
+                                                    <div class="fare-list-right">
+                                                        <p>&#8377; {{ partnerConvFee |number }}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
+                                                <div class="fare-list-box">
+                                                    <div class="fare-list-left">
+                                                        <p>
+                                                            Voucher Amount
+                                                        </p>
+                                                    </div>
+                                                    <div class="fare-list-right">
+                                                        <p>&#8377; {{ voucher_amount |number }}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                                <div class="fare-list-box">
+                                                    <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
+
+                                                        <div>
+                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+
+                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                        </div>
+                                                    </div>
+                                                    <div class="fare-list-right">
+                                                        <p class="text-green">- &#8377; {{ coupon_amount }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div class="collapse base_fare_collapse" id="coupon-collpase">
+                                                        <div class="row ">
+                                                            <div class="col-md-11 offset-md-1">
+
+                                                                <div class="row collapse_row">
+                                                                    <div class="col-5 fare-list-left">
+                                                                        <p>Coupoun Code</p>
+                                                                    </div>
+                                                                    <div class="col-7 fare-list-right">
+                                                                        <p>{{ coupon_code }}</p>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </li>
+
+
+                                            <li class="fare-list-item">
+                                                <div class="fare-list-box pt-30">
+                                                    <div class="fare-list-left">
+                                                        <h6 class="fw_7">Grand Total</h6>
+                                                    </div>
+                                                    <div class="fare-list-right" *ngIf="steps > 3">
+                                                        <h6 class="fw_7">₹ {{ totalCollectibleAmount|number }}</h6>
+                                                        <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount)|number }}/month
+                                                        </p>
+                                                    </div>
+                                                    <div class="fare-list-right" *ngIf="steps < 4">
+                                                        <h6 class="fw_7">₹ {{ (totalCollectibleAmount-partnerConvFee)|number }}</h6>
+                                                        <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @ {{ calculateEMI((totalCollectibleAmount-partnerConvFee))|number }}/month
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="steps==4 && !isMobile">
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="widget-content">
-                  <ul class="widget-list clearfix">
-                    <li class="fare-list-item">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left">
-                          <div (click)="isCollapseShow('BaseFare')">
-                            <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button"
-                              aria-expanded="false" aria-controls="base-collpase">
-
-                              <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
-                                *ngIf="!isCollapseBasefare">
-
-                              <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
-                                *ngIf="isCollapseBasefare"> Base Fare</div>
-
-                          </div>
-                        </div>
-                        <div class="fare-list-right">
-                          <p>₹ {{ BaseFare|number }}</p>
-                        </div>
-
-                      </div>
-
-                      <ng-container *ngIf="flightSessionData.travel_type =='M'">
-                        <div *ngIf="AdtBaseFare>0 ">
-                          <div class="collapse base_fare_collapse" id="base-collpase">
-                            <div class="row ">
-                              <div class="col-md-11 offset-md-1">
-
-                                <div class="row collapse_row" *ngIf="AdtBaseFare>0">
-                                  <div class="col-8 fare-list-left">
-                                    <p>{{ AdtQuantity }} X Adult(s) </p>
-                                  </div>
-                                  <div class="col-4 fare-list-right">
-                                    <p>₹ {{ AdtBaseFare | number }}</p>
-                                  </div>
-                                </div>
-
-                                <div class="row collapse_row" *ngIf="ChildBaseFare>0">
-                                  <div class="col-8 fare-list-left">
-                                    <p> {{ ChildQuantity }} X Children</p>
-                                  </div>
-                                  <div class="col-4 fare-list-right">
-                                    <p>₹ {{ ChildBaseFare | number }}</p>
-                                  </div>
-                                </div>
-
-                                <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
-                                  <div class="col-8 fare-list-left">
-                                    <p> {{ InfantQuantity }} X Infant </p>
-                                  </div>
-                                  <div class="col-4 fare-list-right">
-                                    <p>₹ {{ InfantBaseFare | number }}</p>
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                      </ng-container>
-                      <ng-container *ngIf="flightSessionData.travel_type !='M'">
-                        <div *ngIf="AdtBaseFare>0 ">
-                          <div class="collapse base_fare_collapse" id="base-collpase">
-                            <div class="row ">
-                              <div class="col-md-11 offset-md-1">
-
-                                <div class="row collapse_row" *ngIf="AdtBaseFare>0">
-                                  <div class="col-8 fare-list-left">
-                                    <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
-                                  </div>
-                                  <div class="col-4 fare-list-right">
-                                    <p>₹ {{ AdtBaseFare  | number }}</p>
-                                  </div>
-                                </div>
-
-                                <div class="row collapse_row" *ngIf="ChildBaseFare>0">
-                                  <div class="col-8 fare-list-left">
-                                    <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
-                                  </div>
-                                  <div class="col-4 fare-list-right">
-                                    <p>₹ {{ ChildBaseFare  | number }}</p>
-                                  </div>
-                                </div>
-
-                                <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
-                                  <div class="col-8 fare-list-left">
-                                    <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
-                                  </div>
-                                  <div class="col-4 fare-list-right">
-                                    <p>₹ {{ InfantBaseFare  | number }}</p>
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                      </ng-container>
-                    </li>
-                    <li class="fare-list-item">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left">
-                          <div>
-
-                            Taxes and Fees
-                          </div>
-                        </div>
-                        <div class="fare-list-right">
-                          <p>&#8377; {{ (totalCollectibleAmountFromPartnerResponse-BaseFare)-partnerConvFee |number }}
-                          </p>
-                        </div>
-                      </div>
-                    </li>
-
-
-                    <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"
-                          href="#baggageSeat-collpase" role="button" aria-expanded="false"
-                          aria-controls="baggageSeat-collpase" (click)="isCollapseShow('vas')">
-
-
-                          <div>
-                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseVas">
-
-                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseVas">
-                            Baggage/Seat/Meals
-                          </div>
-                        </div>
-                        <div class="fare-list-right">
-                          <p>&#8377; {{ vas_amount }}</p>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div class="collapse base_fare_collapse" id="baggageSeat-collpase">
-                          <div class="row ">
-                            <div class="col-md-11 offset-md-1">
-
-                              <div class="row collapse_row">
-                                <div class="col-8 fare-list-left">
-                                  <p>Baggage</p>
-                                </div>
-                                <div class="col-4 fare-list-right">
-                                  <p>₹ 1000</p>
-                                </div>
-                              </div>
-
-                              <div class="row collapse_row">
-                                <div class="col-8 fare-list-left">
-                                  <p> Seats </p>
-                                </div>
-                                <div class="col-4 fare-list-right">
-                                  <p>₹ 700</p>
-                                </div>
-                              </div>
-
-                              <div class="row collapse_row">
-                                <div class="col-8 fare-list-left">
-                                  <p> Meals </p>
-                                </div>
-                                <div class="col-4 fare-list-right">
-                                  <p>₹ 500</p>
-                                </div>
-                              </div>
-
-
-
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </li>
-
-                    <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left">
-                          <div>
-                            {{ selectedOnwardVendor.partnerName }} Convenience Fee
-                          </div>
-                        </div>
-                        <div class="fare-list-right">
-                          <p>&#8377; {{ partnerConvFee |number }}</p>
-                        </div>
-                      </div>
-                    </li>
-                      <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left">
-                          <p>
-                            Voucher Amount
-                          </p>
-                        </div>
-                        <div class="fare-list-right">
-                          <p>&#8377; {{ voucher_amount |number }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-                    <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text"
-                          href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase"
-                          (click)="isCollapseShow('discount')">
-
-                          <div>
-                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt=""
-                              *ngIf="!isCollapseDiscount">
-
-                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt=""
-                              *ngIf="isCollapseDiscount"> Discounts
-                          </div>
-                        </div>
-                        <div class="fare-list-right">
-                          <p class="text-green">- &#8377; {{ coupon_amount }}</p>
-                        </div>
-                      </div>
-
-                      <div>
-                        <div class="collapse base_fare_collapse" id="coupon-collpase">
-                          <div class="row ">
-                            <div class="col-md-11 offset-md-1">
-
-                              <div class="row collapse_row">
-                                <div class="col-5 fare-list-left">
-                                  <p>Coupoun Code</p>
-                                </div>
-                                <div class="col-7 fare-list-right">
-                                  <p>{{ coupon_code }}</p>
-                                </div>
-                              </div>
-
-
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </li>
-
-
-                    <li class="fare-list-item">
-                      <div class="fare-list-box pt-30">
-                        <div class="fare-list-left">
-                          <h6 class="fw_7">Grand Total</h6>
-                        </div>
-                        <div class="fare-list-right" *ngIf="steps > 3">
-                          <h6 class="fw_7">₹ {{ totalCollectibleAmount|number }}</h6>
-                          <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                            {{ calculateEMI(totalCollectibleAmount)|number }}/month
-                          </p>
-                        </div>
-                        <div class="fare-list-right" *ngIf="steps < 4">
-                          <h6 class="fw_7">₹ {{ (totalCollectibleAmount-partnerConvFee)|number }}</h6>
-                          <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI
-                            @ {{ calculateEMI((totalCollectibleAmount-partnerConvFee))|number }}/month
-                          </p>
-                        </div>
-                      </div>
-                    </li>
-
-                  </ul>
-                </div>
-              </div>
             </div>
-
-            <div *ngIf="steps==4 && !isMobile">
-              <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey"
-                [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-                [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
-                [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
-                (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
-              </app-coupons>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- ------------------------------
+        </section>
+        <!-- ------------------------------
             >>> Modal bookingprocess
         ---------------------------------->
-  <div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body " style="padding: 25px;" *ngIf="searchData">
-          <div class="bookingprocess-items">
-            <div class="bookingprocess-title text-center mb-30">
-              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-            </div>
-
-            <ng-container *ngIf="flightSessionData.travel_type !='M'">
-              <div class="bookingprocess-content">
-
-                <div class="bookingprocess-flight">
-                  <h6>{{ searchData.fromCity }},{{ searchData.fromContry }} ({{ searchData.flightfrom }})</h6>
-                  <p class="mt-10">{{ searchData.departure | date:'dd.MM.yyyy' }} -
-                    <span>{{ searchData.adults }}
-                      Adult,</span> <span *ngIf="searchData.child != '0'">{{ searchData.child }} Child,</span> <span
-                      *ngIf="searchData.infants != '0'">{{ searchData.infants }} Infants,</span>
-                    {{searchData.flightclass == "B" ? "Business":null || searchData.flightclass
-                                        == "E" ? "Economy":null || searchData.flightclass == "F" ? "First":null || searchData.flightclass == "P" ? "Premium":null}}
-                  </p>
-                  <h6>{{ searchData.toCity }},{{ searchData.toContry }} ({{ searchData.flightto }})</h6>
-                </div>
-
-
-                <div class="bookingprocess-processbar">
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{ loaderValue }}" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                      <span class="title"> &nbsp; </span>
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-            </ng-container>
-            <ng-container *ngIf="flightSessionData.travel_type =='M'">
-              <div class="bookingprocess-content" *ngFor="let searchD of searchData;">
-                <div class="bookingprocess-flight">
-                  <h6>{{ searchD.fromCity }},{{ searchD.fromContry }} ({{ searchD.flightfrom }})</h6>
-                  <p class="mt-10">{{ searchD.departure | date:'dd.MM.yyyy' }} -
-                    <span>{{ searchD.adults }}
-                      Adult,</span> <span *ngIf="searchD.child != '0'">{{ searchD.child }} Child,</span> <span
-                      *ngIf="searchD.infants != '0'">{{ searchD.infants }} Infants,</span>
-                    {{searchD.flightclass == "B" ? "Business":null || searchD.flightclass == "E"
-                                        ? "Economy":null || searchD.flightclass == "F" ? "First":null || searchD.flightclass == "P" ? "Premium":null}}
-                  </p>
-                  <h6>{{ searchD.toCity }},{{ searchD.toContry }} ({{ searchD.flightto }})</h6>
-                </div>
-
-
-                <div class="bookingprocess-processbar">
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{ loaderValue }}" aria-valuemin="0"
-                      aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                      <span class="title"> &nbsp; </span>
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-            </ng-container>
-
-
-            <div class="refresh-text text-center pt-2">
-              <p>Please don't click or refresh the page</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body " style="padding: 25px;">
-          <div class="bookingprocess-items">
-            <div class="bookingprocess-content">
-              An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
-            </div>
-            <div class="refresh-text text-center pt-2">
-              <button type="button" class="btn btn-primary" (click)="triggerBack()">Retry</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Mlite Footer Price Section  -->
-  <div class="d-block d-sm-none">
-    <div class="footer-sticky-mlite">
-      <div>
-        <div class="apply_fare row">
-          <!--  <p *ngIf="steps<5" class="w-75"></p> -->
-          <div class="col-6 text-left">
-            <p *ngIf="steps==4"><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
-                data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
-          </div>
-          <div class="col-6 text-right">
-            <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal"
-                data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
-          </div>
-        </div>
-        <div class="price_sec">
-          <div class="row">
-            <div class="col-5">
-              <div class="">
-                <h6 class="price">₹{{ totalCollectibleAmount|number }}</h6>
-                <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                  {{ calculateEMI(totalCollectibleAmount)|number }}/month
-                </p>
-
-              </div>
-            </div>
-            <div class="col-7">
-   <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()"
-                  *ngIf="steps==5">Pay now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mlite Apply Coupon Popup -->
-  <div class="modal coupon_mlite_popup" id="applyCoupon_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"  *ngIf="steps==4 && isMobile">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Coupon Code</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-          <app-coupons (sendCouponEvent)="receiveCouponDetails($event)" [passSessionKey]="randomFlightDetailKey"
-            [orderReferenceNumber]="orderReferenceNumber" [remove_Coupon]="remove_Coupon"
-            [passTotalFare]="totalCollectibleAmount" [passActualFare]="totalCollectibleAmountFromPartnerResponse"
-            [passConvinenceFee]="convenience_fee" passServiceToken="Flight" [passPartnerToken]="partnerToken"
-            (sendtotalfare)="recivetotalFare($event)" [customerInfo]="customerInfo">
-          </app-coupons>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mlite Fare Summary Popup -->
-  <div class="modal coupon_mlite_popup" id="fareSummary_mlite" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header pb-0">
-          <h5 class="modal-title">Fare Summary</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body pt-0">
-          <div>
-            <img *ngIf="selectedOnwardVendor"
-              src="{{ cdnUrl }}images/flight_partners/{{ selectedOnwardVendor.partnerName }}.png"
-              alt="{{ selectedOnwardVendor.partnerName }}">
-          </div>
-          <div class="widget-content">
-            <ul class="widget-list clearfix">
-              <li class="fare-list-item">
-                <div class="fare-list-box">
-                  <div class="fare-list-left">
-                    <div (click)="isCollapseShow('BaseFare')">
-                      <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button"
-                        aria-expanded="false" aria-controls="base-collpase">
-
-                        <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseBasefare">
-
-                        <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseBasefare">
-                        Base Fare
-                      </div>
-
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p>₹ {{ BaseFare|number }}</p>
-                  </div>
-
-                </div>
-
-                <ng-container *ngIf="flightSessionData.travel_type =='M'">
-                  <div *ngIf="AdtBaseFare>0 ">
-                    <div class="collapse base_fare_collapse" id="base-collpase">
-                      <div class="row ">
-                        <div class="col-md-11 offset-md-1">
-
-                          <div class="row collapse_row" *ngIf="AdtBaseFare>0">
-                            <div class="col-8 fare-list-left">
-                              <p>{{ AdtQuantity }} X Adult(s) </p>
+        <div class="modal bookingprocess" id="infoprocess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;" *ngIf="searchData">
+                        <div class="bookingprocess-items">
+                            <div class="bookingprocess-title text-center mb-30">
+                                <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
                             </div>
-                            <div class="col-4 fare-list-right">
-                              <p>₹ {{ AdtBaseFare  | number }}</p>
-                            </div>
-                          </div>
 
-                          <div class="row collapse_row" *ngIf="ChildBaseFare>0">
-                            <div class="col-8 fare-list-left">
-                              <p> {{ ChildQuantity }} X Children</p>
-                            </div>
-                            <div class="col-4 fare-list-right">
-                              <p>₹ {{ ChildBaseFare | number }}</p>
-                            </div>
-                          </div>
+                            <ng-container *ngIf="flightSessionData.travel_type !='M'">
+                                <div class="bookingprocess-content">
 
-                          <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
-                            <div class="col-8 fare-list-left">
-                              <p>{{ InfantQuantity }} X Infant </p>
-                            </div>
-                            <div class="col-4 fare-list-right">
-                              <p>₹ {{ InfantBaseFare   | number }}</p>
-                            </div>
-                          </div>
+                                    <div class="bookingprocess-flight">
+                                        <h6>{{ searchData.fromCity }},{{ searchData.fromContry }} ({{ searchData.flightfrom }})</h6>
+                                        <p class="mt-10">{{ searchData.departure | date:'dd.MM.yyyy' }} -
+                                            <span>{{ searchData.adults }}
+                      Adult,</span> <span *ngIf="searchData.child != '0'">{{ searchData.child }} Child,</span> <span *ngIf="searchData.infants != '0'">{{ searchData.infants }} Infants,</span> {{searchData.flightclass
+                                            == "B" ? "Business":null || searchData.flightclass == "E" ? "Economy":null || searchData.flightclass == "F" ? "First":null || searchData.flightclass == "P" ? "Premium":null}}
+                                        </p>
+                                        <h6>{{ searchData.toCity }},{{ searchData.toContry }} ({{ searchData.flightto }})</h6>
+                                    </div>
 
+
+                                    <div class="bookingprocess-processbar">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{ loaderValue }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                                                <span class="title"> &nbsp; </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="flightSessionData.travel_type =='M'">
+                                <div class="bookingprocess-content" *ngFor="let searchD of searchData;">
+                                    <div class="bookingprocess-flight">
+                                        <h6>{{ searchD.fromCity }},{{ searchD.fromContry }} ({{ searchD.flightfrom }})</h6>
+                                        <p class="mt-10">{{ searchD.departure | date:'dd.MM.yyyy' }} -
+                                            <span>{{ searchD.adults }}
+                      Adult,</span> <span *ngIf="searchD.child != '0'">{{ searchD.child }} Child,</span> <span *ngIf="searchD.infants != '0'">{{ searchD.infants }} Infants,</span> {{searchD.flightclass == "B"
+                                            ? "Business":null || searchD.flightclass == "E" ? "Economy":null || searchD.flightclass == "F" ? "First":null || searchD.flightclass == "P" ? "Premium":null}}
+                                        </p>
+                                        <h6>{{ searchD.toCity }},{{ searchD.toContry }} ({{ searchD.flightto }})</h6>
+                                    </div>
+
+
+                                    <div class="bookingprocess-processbar">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" attr.aria-valuenow="{{ loaderValue }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                                                <span class="title"> &nbsp; </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </ng-container>
+
+
+                            <div class="refresh-text text-center pt-2">
+                                <p>Please don't click or refresh the page</p>
+                            </div>
                         </div>
-                      </div>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="flightSessionData.travel_type !='M'">
-                  <div *ngIf="AdtBaseFare>0 ">
-                    <div class="collapse base_fare_collapse" id="base-collpase">
-                      <div class="row ">
-                        <div class="col-md-11 offset-md-1">
-
-                          <div class="row collapse_row" *ngIf="AdtBaseFare>0">
-                            <div class="col-8 fare-list-left">
-                              <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
+        <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                            <div class="bookingprocess-content">
+                                An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
                             </div>
-                            <div class="col-4 fare-list-right">
-                              <p>₹ {{ AdtBaseFare  | number }}</p>
+                            <div class="refresh-text text-center pt-2">
+                                <button type="button" class="btn btn-primary" (click)="triggerBack()">Retry</button>
                             </div>
-                          </div>
-
-                          <div class="row collapse_row" *ngIf="ChildBaseFare>0">
-                            <div class="col-8 fare-list-left">
-                              <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
-                            </div>
-                            <div class="col-4 fare-list-right">
-                              <p>₹ {{ ChildBaseFare  | number }}</p>
-                            </div>
-                          </div>
-
-                          <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
-                            <div class="col-8 fare-list-left">
-                              <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
-                            </div>
-                            <div class="col-4 fare-list-right">
-                              <p>₹ {{ InfantBaseFare   | number }}</p>
-                            </div>
-                          </div>
-
                         </div>
-                      </div>
                     </div>
-
-                  </div>
-                </ng-container>
-
-              </li>
-              <li class="fare-list-item">
-                <div class="fare-list-box">
-                  <div class="fare-list-left">
-                    <div>
-                      Taxes and Fees
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p>&#8377; {{ (totalCollectibleAmountFromPartnerResponse-BaseFare)-partnerConvFee |number }}</p>
-                  </div>
                 </div>
-              </li>
+            </div>
+        </div>
 
-              <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
-                <div class="fare-list-box">
-                  <div class="fare-list-left">
-                    <div>
-                      {{ selectedOnwardVendor.partnerName }} Convenience Fee
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p>&#8377; {{ partnerConvFee |number }}</p>
-                  </div>
-                </div>
-              </li>
 
-              <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
-                <div class="fare-list-box">
-                  <div class="fare-list-left">
-                    <div>
-                      <img class="me-2" src="{{ cdnUrl }}/images/icons/add.png" alt="">
-                      Baggage/Seat/Meals
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p>&#8377;{{ vas_amount }}</p>
-                  </div>
-                </div>
-              </li>
 
-              <li class="fare-list-item" *ngIf="coupon_amount>0.00">
-                <div class="fare-list-box">
-                  <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase"
-                    role="button" aria-expanded="false" aria-controls="coupon-collpase"
-                    (click)="isCollapseShow('discount')">
-
-                    <div>
-                      <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.png" alt="" *ngIf="!isCollapseDiscount">
-
-                      <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.png" alt="" *ngIf="isCollapseDiscount">
-                      Discounts
-                    </div>
-                  </div>
-                  <div class="fare-list-right">
-                    <p class="text-green">- &#8377; {{ coupon_amount }}</p>
-                  </div>
-                </div>
-
+        <!-- Mlite Footer Price Section  -->
+        <div class="d-block d-sm-none">
+            <div class="footer-sticky-mlite">
                 <div>
-                  <div class="collapse base_fare_collapse" id="coupon-collpase">
-                    <div class="row ">
-                      <div class="col-md-11 offset-md-1">
-
-                        <div class="row collapse_row">
-                          <div class="col-5 fare-list-left">
-                            <p>Coupoun Code</p>
-                          </div>
-                          <div class="col-7 fare-list-right">
-                            <p>{{ coupon_code }}</p>
-                          </div>
+                    <div class="apply_fare row">
+                        <!--  <p *ngIf="steps<5" class="w-75"></p> -->
+                        <div class="col-6 text-left">
+                            <p *ngIf="steps==4"><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#applyCoupon_mlite">Apply Coupon</a></p>
                         </div>
-
-
-                      </div>
+                        <div class="col-6 text-right">
+                            <p><a href="javascript:;" type="button" class="" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</a></p>
+                        </div>
                     </div>
-                  </div>
+                    <div class="price_sec">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="">
+                                    <h6 class="price">₹{{ totalCollectibleAmount|number }}</h6>
+                                    <p class="emi" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount)|number }}/month
+                                    </p>
 
-                </div>
-
-              </li>
-                      <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
-                      <div class="fare-list-box">
-                        <div class="fare-list-left">
-                          <p>
-                            Voucher Amount
-                          </p>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <a href="javascript:void(0);" class="button-style btn_pay chkout-btn_pay" (click)="continuePayment()" *ngIf="steps==5">Pay now</a>
+                            </div>
                         </div>
-                        <div class="fare-list-right">
-                          <p>&#8377; {{ voucher_amount |number }}</p>
-                        </div>
-                      </div>
-                    </li>
-
-              <li class="fare-list-item">
-                <div class="fare-list-box pt-30">
-                  <div class="fare-list-left">
-                    <h6 class="fw_7">Grand Total </h6>
-                  </div>
-                  <div class="fare-list-right" *ngIf="steps < 4">
-                    <h6 class="fw_7">₹{{ totalCollectibleAmount-partnerConvFee|number }}</h6>
-                    <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @
-                      {{ calculateEMI(totalCollectibleAmount-partnerConvFee)|number }}/month
-                    </p>
-                  </div>
-
-                  <div class="fare-list-right" *ngIf="steps > 3">
-                    <h6 class="fw_7">₹{{ totalCollectibleAmount|number }}</h6>
-                    <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @
-                      {{ calculateEMI(totalCollectibleAmount)|number }}/month
-                    </p>
-                  </div>
-
+                    </div>
                 </div>
-              </li>
-
-            </ul>
-          </div>
-        </div>
-        <!-- <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade bookingprocess" id="bookingprocessExpires" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body " style="padding: 25px;">
-          <div class="bookingprocess-items">
-            <div class="" id="after-expiry">
-              <div class="">
-                <div class="text-center ">
-                  <div><img src="{{ cdnUrl }}images/alert.png" /></div>
-                </div>
-                <div class="session-title text-center ">
-                  <h2>Sorry!</h2>
-                </div>
-                <div class="alert-box-msg  plr50"> This session has expired due to inactivity</div>
-              </div>
-              <div class="">
-                <div class="continue-btn-div">
-                  <button type="button" data-bs-dismiss="modal" class="btn btn-normal btn-animated btn-session-expired"
-                    (click)="triggerBack()"><span>Start over</span></button>
-                </div>
-              </div>
             </div>
-
-
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-</main>
-<div class="modal fade bookingprocess" id="bookingprocessFailed1" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body " style="padding: 25px;">
-        <div class="bookingprocess-items">
-          <div class="bookingprocess-content">
-            An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
-          </div>
-          <div class="refresh-text text-center pt-2">
-            <button type="button" class="btn btn-primary" (click)="goBack()">Retry</button>
-          </div>
+
+        <!-- Mlite Fare Summary Popup -->
+        <div class="modal coupon_mlite_popup" id="fareSummary_mlite" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header pb-0">
+                        <h5 class="modal-title">Fare Summary</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <div>
+                            <img *ngIf="selectedOnwardVendor" src="{{ cdnUrl }}images/flight_partners/{{ selectedOnwardVendor.partnerName }}.svg" alt="{{ selectedOnwardVendor.partnerName }}">
+                        </div>
+                        <div class="widget-content">
+                            <ul class="widget-list clearfix">
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <div (click)="isCollapseShow('BaseFare')">
+                                                <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
+
+                                                    <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
+
+                                                    <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>₹ {{ BaseFare|number }}</p>
+                                        </div>
+
+                                    </div>
+
+                                    <ng-container *ngIf="flightSessionData.travel_type =='M'">
+                                        <div *ngIf="AdtBaseFare>0 ">
+                                            <div class="collapse base_fare_collapse" id="base-collpase">
+                                                <div class="row ">
+                                                    <div class="col-md-11 offset-md-1">
+
+                                                        <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                                            <div class="col-8 fare-list-left">
+                                                                <p>{{ AdtQuantity }} X Adult(s) </p>
+                                                            </div>
+                                                            <div class="col-4 fare-list-right">
+                                                                <p>₹ {{ AdtBaseFare | number }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row collapse_row" *ngIf="ChildBaseFare>0">
+                                                            <div class="col-8 fare-list-left">
+                                                                <p> {{ ChildQuantity }} X Children</p>
+                                                            </div>
+                                                            <div class="col-4 fare-list-right">
+                                                                <p>₹ {{ ChildBaseFare | number }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
+                                                            <div class="col-8 fare-list-left">
+                                                                <p>{{ InfantQuantity }} X Infant </p>
+                                                            </div>
+                                                            <div class="col-4 fare-list-right">
+                                                                <p>₹ {{ InfantBaseFare | number }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="flightSessionData.travel_type !='M'">
+                                        <div *ngIf="AdtBaseFare>0 ">
+                                            <div class="collapse base_fare_collapse" id="base-collpase">
+                                                <div class="row ">
+                                                    <div class="col-md-11 offset-md-1">
+
+                                                        <div class="row collapse_row" *ngIf="AdtBaseFare>0">
+                                                            <div class="col-8 fare-list-left">
+                                                                <p>Adult(s) ({{ AdtQuantity }} X ₹ {{ AdtBaseFare | number }})</p>
+                                                            </div>
+                                                            <div class="col-4 fare-list-right">
+                                                                <p>₹ {{ AdtBaseFare | number }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row collapse_row" *ngIf="ChildBaseFare>0">
+                                                            <div class="col-8 fare-list-left">
+                                                                <p> Children ({{ ChildQuantity }} X ₹ {{ ChildBaseFare | number }})</p>
+                                                            </div>
+                                                            <div class="col-4 fare-list-right">
+                                                                <p>₹ {{ ChildBaseFare | number }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row collapse_row mb-2" *ngIf="InfantBaseFare>0">
+                                                            <div class="col-8 fare-list-left">
+                                                                <p> Infant ({{ InfantQuantity }} X ₹ {{ InfantBaseFare | number }})</p>
+                                                            </div>
+                                                            <div class="col-4 fare-list-right">
+                                                                <p>₹ {{ InfantBaseFare | number }}</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </ng-container>
+
+                                </li>
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <div>
+                                                Taxes and Fees
+                                            </div>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377; {{ (totalCollectibleAmountFromPartnerResponse-BaseFare)-partnerConvFee |number }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="fare-list-item" *ngIf="partnerConvFee>0.00 && steps > 3">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <div>
+                                                {{ selectedOnwardVendor.partnerName }} Convenience Fee
+                                            </div>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377; {{ partnerConvFee |number }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="fare-list-item" *ngIf="enableVAS==1 && vas_amount>0.00">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <div>
+                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/add.png" alt=""> Baggage/Seat/Meals
+                                            </div>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377;{{ vas_amount }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="fare-list-item" *ngIf="coupon_amount>0.00">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
+
+                                            <div>
+                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+
+                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                            </div>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p class="text-green">- &#8377; {{ coupon_amount }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="collapse base_fare_collapse" id="coupon-collpase">
+                                            <div class="row ">
+                                                <div class="col-md-11 offset-md-1">
+
+                                                    <div class="row collapse_row">
+                                                        <div class="col-5 fare-list-left">
+                                                            <p>Coupoun Code</p>
+                                                        </div>
+                                                        <div class="col-7 fare-list-right">
+                                                            <p>{{ coupon_code }}</p>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </li>
+                                <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 3">
+                                    <div class="fare-list-box">
+                                        <div class="fare-list-left">
+                                            <p>
+                                                Voucher Amount
+                                            </p>
+                                        </div>
+                                        <div class="fare-list-right">
+                                            <p>&#8377; {{ voucher_amount |number }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="fare-list-item">
+                                    <div class="fare-list-box pt-30">
+                                        <div class="fare-list-left">
+                                            <h6 class="fw_7">Grand Total </h6>
+                                        </div>
+                                        <div class="fare-list-right" *ngIf="steps < 4">
+                                            <h6 class="fw_7">₹{{ totalCollectibleAmount-partnerConvFee|number }}</h6>
+                                            <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount-partnerConvFee)|number }}/month
+                                            </p>
+                                        </div>
+
+                                        <div class="fare-list-right" *ngIf="steps > 3">
+                                            <h6 class="fw_7">₹{{ totalCollectibleAmount|number }}</h6>
+                                            <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount)|number }}/month
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
-      </div>
+
+
+        <div class="modal fade bookingprocess" id="bookingprocessExpires" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body " style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                            <div class="" id="after-expiry">
+                                <div class="">
+                                    <div class="text-center ">
+                                        <div><img src="{{ cdnUrl }}images/alert.png" /></div>
+                                    </div>
+                                    <div class="session-title text-center ">
+                                        <h2>Sorry!</h2>
+                                    </div>
+                                    <div class="alert-box-msg  plr50"> This session has expired due to inactivity</div>
+                                </div>
+                                <div class="">
+                                    <div class="continue-btn-div">
+                                        <button type="button" data-bs-dismiss="modal" class="btn btn-normal btn-animated btn-session-expired" (click)="triggerBack()"><span>Start over</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <div class="modal fade bookingprocess" id="bookingprocessFailed1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body " style="padding: 25px;">
+                    <div class="bookingprocess-items">
+                        <div class="bookingprocess-content">
+                            An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
+                        </div>
+                        <div class="refresh-text text-center pt-2">
+                            <button type="button" class="btn btn-primary" (click)="goBack()">Retry</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 </div>

@@ -334,7 +334,9 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
 
       }
   }
-  
+  searchTrainTab(){
+    this.showDetails=false;
+  }
    pnr(){ 
     this.showPnr=true;
     this.showSearch=false;
@@ -494,7 +496,7 @@ export class TrainSearchComponent implements OnInit,  OnDestroy {
       localStorage.setItem(environment.trainLastSearch,JSON.stringify(searchValue));
       searchValue.departure = moment(searchValue.departure).format('YYYY-MM-DD');
       let url;
-      url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
+      url = this.sg['domainPath']+"train/search?" + decodeURIComponent(this.ConvertObjToQueryString((searchValue)));
       this.router.navigateByUrl(url);
     }
   }
@@ -622,3 +624,7 @@ export class DialogOverviewExampleDialog {
   }
 
 }
+function searchTrainBtn() {
+  throw new Error('Function not implemented.');
+}
+

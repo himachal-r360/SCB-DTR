@@ -15,9 +15,7 @@ export class HotelDropdownDirective{
           
           this.elRef.nativeElement
           .querySelector('.dropdown')
-          .classList.remove('flight-from-hide')
-          citySearchRef.focus();
-
+          .classList.remove('flight-from-hide');
         }
         else{
           this.elRef.nativeElement

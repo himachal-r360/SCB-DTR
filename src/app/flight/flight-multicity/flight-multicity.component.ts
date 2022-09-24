@@ -74,15 +74,15 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   };
   flight_PopularItems = [
     { name: 'Refundable_Fares', active: false, value: 'Refundable-Fares', count: 0 },
-    { name: 'non_stop', active: false, value: 'non-stop', count: 0 },
+    { name: 'non_stop', active: false, value: 'Non-Stop', count: 0 },
     { name: 'Morning_Departures', active: false, value: 'Morning-Departures', count: 0 },
     { name: 'Meals_Included', active: false, value: 'Meals-Included', count: 0 }
   ]
   flight_Timingsitems = [
-    { name: '0_6', active: false, value: 'Before 6 AM', image: '1.png' },
-    { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.png' },
-    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.png' },
-    { name: '18_0', active: false, value: 'After 6 PM', image: '3.png' }
+    { name: '0_6', active: false, value: 'Before 6 AM', image: '1.svg' },
+    { name: '6_12', active: false, value: '6 AM - 12 PM', image: '2.svg' },
+    { name: '12_18', active: false, value: '12 PM - 6 PM', image: '4.svg' },
+    { name: '18_0', active: false, value: 'After 6 PM', image: '3.svg' }
   ]
   stopsFilteritems = [
     { name: 'no_stops', active: false, value: '<p>Non <br> stop</p>' },
@@ -128,7 +128,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.nextIndex = this.flightList.length;
       }
 
-      for (let n = this.pageIndex; n < this.nextIndex; n++) {
+      for (let n = this.pageIndex-1; n < this.nextIndex; n++) {
         const context = {
           item: [this.flightList[n]]
         };
@@ -193,6 +193,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.isMobile = window.innerWidth < 991 ? true : false;
         this.getQueryParamData();
           this.getAirlinelist();
+this.getAirpotsList();
+this.getAirlinesDump();
            this.getAirpotsNameList();
         this.flightSearch();
        
@@ -234,6 +236,21 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
       let multicitySearchValue = JSON.stringify(flightSearchArr);
       localStorage.setItem('multicityLastSearch',multicitySearchValue)
   }
+  
+      // get airline list
+  getAirlinesDump() {
+    this._flightService.getFlightIcon().subscribe((res: any) => {
+      this.airlinesNameJson = res;
+
+    })
+  }
+   // get airport list
+  getAirpotsList() {
+    this._flightService.getAirportName().subscribe((res: any) => {
+      this.airportsNameJson = res;
+
+    })
+  } 
   continueSearchFlights: any = []
     flightSearchCallBack(param: any) {
     let searchValueAllobj = param;
@@ -1196,7 +1213,7 @@ bookingSummary() {
       this.flight_Timingsitems.filter((item: any) => { if (item.name == "0_6") { item.active = true; return item; } })
     }
     if (popularItems.name == "non_stop") {
-      this.stopsFilteritems.filter((item: any) => { if (item.name == "no_stops") { item.active = !item.active; return item; } })
+       this.stopsFilteritems.filter((item: any) => { if (popularItems.active == true && item.name == "no_stops") { item.active = true; return item; }else { item.active = false; return item;} })
     }
     if (!this.isMobile) {
       this.popularFilterFlightData();

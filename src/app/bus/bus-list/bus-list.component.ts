@@ -100,17 +100,17 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
         departureTimeArr: any = [];
           params: any = [];
         bus_Timingsitems = [
-        { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.png' },
-        { name: '6AM-12PM', active: false, value: '6 AM - 12 PM', image: '2.png' },
-        { name: '12PM-6PM', active: false, value: '12 PM - 6 PM', image: '4.png' },
-        { name: 'AFTER-6PM', active: false, value: 'After 6 PM', image: '3.png' }
+        { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.svg' },
+        { name: '6AM-12PM', active: false, value: '6 AM - 12 PM', image: '2.svg' },
+        { name: '12PM-6PM', active: false, value: '12 PM - 6 PM', image: '4.svg' },
+        { name: 'AFTER-6PM', active: false, value: 'After 6 PM', image: '3.svg' }
         ]
         
         bus_TimingsArrivalitems = [
-        { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.png' },
-        { name: '6AM-12PM', active: false, value: '6 AM - 12 PM', image: '2.png' },
-        { name: '12PM-6PM', active: false, value: '12 PM - 6 PM', image: '4.png' },
-        { name: 'AFTER-6PM', active: false, value: 'After 6 PM', image: '3.png' }
+        { name: 'BEFORE-6AM', active: false, value: 'Before 6 AM', image: '1.svg' },
+        { name: '6AM-12PM', active: false, value: '6 AM - 12 PM', image: '2.svg' },
+        { name: '12PM-6PM', active: false, value: '12 PM - 6 PM', image: '4.svg' },
+        { name: 'AFTER-6PM', active: false, value: 'After 6 PM', image: '3.svg' }
         ]
         availableClasses: any = [];
         allAvailableClasses: any = [];
@@ -140,7 +140,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
              this.nextIndex=this.busList.length;
              }
 
-            for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+            for (let n = this.pageIndex-1; n < this.nextIndex ; n++) {
              const context = {
                 item: [this.busList[n]]
               };

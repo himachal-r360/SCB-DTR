@@ -946,8 +946,8 @@ orderRetry:boolean=false;
 
 isPaynowClicked:boolean=false;
 continuePayment(){
-//console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
-switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+//console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
+switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
         break;
@@ -1053,6 +1053,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         this.adultsArrayM.push(this.passengerAdultFormCount);
 
       var i = Number(this.passengerAdultFormCount);
+      
 
       if (checkboxIndex != -1)
         this.saveAdultTravellerId[checkboxIndex] = i;
@@ -1223,7 +1224,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
         }
       }
     }
-    this.passengerAdultFormCount--;
+  //  this.passengerAdultFormCount--;
     
     this.passengerForm.removeControl('adult_id' + val);
     this.passengerForm.removeControl('adult_title' + val);
@@ -1437,7 +1438,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.child.splice(val, 1);
-    this.passengerChildFormCount--;
+   // this.passengerChildFormCount--;
 
   }
 
@@ -1557,7 +1558,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
 
 
 
-      this.passengerInfantFormCount++;
+      //this.passengerInfantFormCount++;
 
       if (checkboxIndex != -1) {
         $('#travelPassenger_' + checkboxIndex).prop('checked', true);
@@ -1627,7 +1628,7 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.infant.splice(val, 1);
-    this.passengerInfantFormCount--;
+   // this.passengerInfantFormCount--;
 
   }
 
@@ -1661,7 +1662,6 @@ switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
   }
 
 
-  /**--------------------------------------SAVED TRAVELLER ------------------------------------------------------------------------ */
   checksavedtraveller() {
     let checksavedtravConfig = this.serviceSettings.enablesavedTraveller
     if (checksavedtravConfig == 1) {
@@ -2590,7 +2590,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightto']+`</h6>
+        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -2602,7 +2602,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData['flightfrom']+`</h6>
+        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData['flightfrom']+`</h6>
         </div>
         </div>
         </a>
@@ -2709,7 +2709,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -2787,7 +2787,7 @@ saveTravellerFunc(saveTravellerArray){
         <div class="rules-flight-items">
         <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.png" alt="">`+this.searchData[i]['flightto']+`</h6>
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -3199,12 +3199,21 @@ saveTravellerArray=[];
         else
         saveTraveller=0;
       
-      
+      let adult_title='';  let adult_first_name=''; let adult_last_name='';
 
       for (let i = 1; i < (this.passengerAdultFormCount); i++) {
 
         let adult_data = {};
-
+       if(this.passengerForm.controls['adult_title' + i]){
+       
+         if(adult_title==''){
+         adult_title=this.passengerForm.controls['adult_title' + i]['value'];
+         adult_first_name=this.passengerForm.controls['adult_first_name' + i]['value'];
+         adult_last_name=this.passengerForm.controls['adult_last_name' + i]['value'];
+         
+         }
+       
+       
         adult_data['title'] = this.passengerForm.controls['adult_title' + i]['value'];
         adult_data['firstName'] = this.passengerForm.controls['adult_first_name' + i]['value'];
         adult_data['lastName'] = this.passengerForm.controls['adult_last_name' + i]['value'];
@@ -3281,6 +3290,7 @@ saveTravellerArray=[];
         
 
         paxInfoCnt++;
+        }
       }
 
 
@@ -3288,7 +3298,7 @@ saveTravellerArray=[];
       for (let i = 1; i < (this.passengerChildFormCount); i++) {
 
         let child_data = {};
-
+  if(this.passengerForm.controls['child_title' + i]){
         child_data['title'] = this.passengerForm.controls['child_title' + i]['value'];
         child_data['firstName'] = this.passengerForm.controls['child_first_name' + i]['value'];
         child_data['lastName'] = this.passengerForm.controls['child_last_name' + i]['value'];
@@ -3365,12 +3375,13 @@ saveTravellerArray=[];
         
 
         paxInfoCnt++;
+        }
       }
 
       for (let i = 1; i < (this.passengerInfantFormCount); i++) {
 
         let infant_data = {};
-
+  if(this.passengerForm.controls['infant_title' + i]){
         infant_data['title'] = this.passengerForm.controls['infant_title' + i]['value'];
         infant_data['firstName'] = this.passengerForm.controls['infant_first_name' + i]['value'];
         infant_data['lastName'] = this.passengerForm.controls['infant_last_name' + i]['value'];
@@ -3403,15 +3414,15 @@ saveTravellerArray=[];
         var gender='Male';
 
         switch (this.passengerForm.controls['infant_title' + i]['value']) {
-        case 'Mr':
-        gender='Male';
-        break;
-        case 'Mrs':
-        gender='Female';
-        break;
-        case 'Ms':
-        gender='Female';
-        break;
+        // case 'Mr':
+        // gender='Male';
+        // break;
+        // case 'Mrs':
+        // gender='Female';
+        // break;
+        // case 'Ms':
+        // gender='Female';
+        // break;
         case 'Miss':
         gender='Female';
         break;
@@ -3446,6 +3457,7 @@ saveTravellerArray=[];
         }
 
         paxInfoCnt++;
+        }
       }
 
 
@@ -3599,9 +3611,9 @@ saveTravellerArray=[];
       }
 
       this.contactDatails = {
-        "title": this.passengerForm.controls['adult_title1']['value'],
-        "firstName": this.passengerForm.controls['adult_first_name1']['value'],
-        "lastName": this.passengerForm.controls['adult_last_name1']['value'],
+        "title": adult_title,
+        "firstName":adult_first_name,
+        "lastName": adult_last_name,
         "email": this.passengerForm.controls['passengerEmail']['value'],
         "address": "Lavelle Road",
         "mobile": this.passengerForm.controls['passengerMobile']['value'],
@@ -4332,7 +4344,6 @@ orderReferenceNumber:any;
 
   }
 
-  /***----- APPLY COUPON (--parent--) ------***/
   receiveCouponDetails($event) {
 
     if ($event.type == 0) {
@@ -4364,7 +4375,6 @@ orderReferenceNumber:any;
   }
 
 
-  /**----------REMOVE COUPON----------**/
   removeCoupon(coupon_id, coupon_amount) {
     this.coupon_id = '';
     this.coupon_name = '';
