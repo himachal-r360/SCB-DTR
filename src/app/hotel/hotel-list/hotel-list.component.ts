@@ -278,10 +278,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
         if (objKeys[j].indexOf("[" + i + "]") > -1) {
           var objKey = objKeys[j].substring(0, objKeys[j].length - 3);
           var objKeyVal = urlParam[objKeys[j]];
-          
-          
-             console.log(objKey);  console.log(objKeyVal);
-          
           objSearch[objKey] = objKeyVal;
         }
       }
