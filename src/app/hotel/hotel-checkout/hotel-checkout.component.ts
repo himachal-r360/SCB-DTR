@@ -500,7 +500,13 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         this.intialTotalFare= Number(this.selectedHotel.rateBreakdown.total);
         this.totalBaseFare = Number(this.selectedHotel.rateBreakdown.baseFare);
         this.totalTax = Number(this.selectedHotel.rateBreakdown.tax);
-        this.partnerDiscount = Number(this.selectedHotel.rateBreakdown.partnerDiscount);
+        
+        if(this.partnerToken=='Cleartrip'){
+         this.partnerDiscount = Number(this.selectedHotel.rateBreakdown.partnerDiscount);
+        }else{
+         this.partnerDiscount = 0;
+        }
+       
         
          let bookingCode=this.selectedHotel.roomType.bookingCode;
         

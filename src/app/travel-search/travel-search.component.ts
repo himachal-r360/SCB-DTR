@@ -686,9 +686,8 @@ export class TravelSearchComponent implements OnInit {
            var acnt;
             for (let i = this.hotelRoomsChildAge.length; i < updatedChildValue; i++) {
              if(i==0) acnt=2; else acnt=1;
-
                this.hotelRoomsChildAge.push(this.formBuilder.group({
-                    age: ['', Validators.required],
+                    age: ['0', Validators.required],
                 }));
             }
         } else {
@@ -705,9 +704,7 @@ export class TravelSearchComponent implements OnInit {
 
   getChildAges(roomid: number): FormArray {
   
-    return this.getRooms()
-      .at(roomid)
-      .get('child_age') as FormArray;
+    return this.getRooms().at(roomid).get('child_age') as FormArray;
   }
 
    hoteltraveller() {
@@ -1107,11 +1104,14 @@ check_traveller_count(type) {
                
                   var updatedChildValue=controlArray.controls[room].get('hotel_child').value;
                   this.hotelRoomsChildAge= <FormArray> controlArray.controls[room].get('child_age')
-                
                     for (let i = 0; i < childAgeArray.length; i++) {
+                    
+                      if(childAgeArray[i] >0){
                        this.hotelRoomsChildAge.push(this.formBuilder.group({
                             age: [childAgeArray[i], Validators.required],
                         }));
+                       } 
+                        
                     }
              }
             }
@@ -1411,6 +1411,8 @@ check_traveller_count(type) {
 
 
     displayTravelM(type){
+     let body = document.getElementsByTagName('body')[0];
+    body.classList.add("noscroll"); //add the class
       $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-Full" );
     if(type==1)
     this.showFlightPassenger =true;
@@ -1599,6 +1601,8 @@ check_traveller_count(type) {
          if(k!=jsonObject['child_age'].length-1)
           queryParam+=',';
          }
+        }else{
+         queryParam+='0&';
         }
         j++;
         });
@@ -1611,6 +1615,8 @@ check_traveller_count(type) {
       url+='&city='+this.searchHotelForm.value.hotelId+'&country='+this.searchHotelForm.value.countryId+'&countryName='+this.searchHotelForm.value.countryId+'&scr=INR';
       url+='&sct='+this.searchHotelForm.value.countryId+'&hotelName=&latitude=&longitude=&area=&hotelId=&'+queryParam;
       url+='&channel='+device+'&programName='+this.sg['domainName']+'&limit=0&numberOfRooms='+(this.searchHotelForm.value.rooms.length)+'&totalGuest='+totalGuest;
+      
+      
       
       
                if(environment.IS_MAIN==1){
@@ -1969,7 +1975,8 @@ switch(service) {
 
 
   closeSearchBoxHotel(type) {
-
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("noscroll");
     if(type==2){
         this.submittedHotel=true;
         if (this.searchHotelForm.invalid) {
