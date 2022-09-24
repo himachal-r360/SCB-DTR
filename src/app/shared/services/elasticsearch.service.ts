@@ -27,9 +27,9 @@ export class ElasticsearchService {
   }
 
   esSearch(param){
-    /*if(LOCALJSON=='true'){
+    if(LOCALJSON=='true'){
     
-            switch(param['searchDisplayForm']) { 
+      switch(param['searchDisplayForm']) { 
         case 'flights': { 
          return this.http.get('assets/data/esSearch-flights.json').pipe(map((response: any) => response));
         break; 
@@ -51,10 +51,10 @@ export class ElasticsearchService {
         break; 
         }
       }
-    }else{*/
+    }else{
       return this.http.post(this.endpoint+'elastic/search', param, config).pipe(map((response: any) => response));
     
-    //}
+    }
    }
    
 }

@@ -1491,7 +1491,7 @@ onSubmit(service,type) {
   this.searchFlightForm.get('travel').setValue('INT');
   }
 
-console.log(this.searchFlightForm);
+       //console.log(this.searchFlightForm);
 
   if(this.searchFlightForm.invalid || this.dateValidation==true){
   return
@@ -1637,11 +1637,11 @@ this.router.navigateByUrl(url);
   this.redirectPopupTriggerTimestamp=current.getTime();
   this.redirectPopupTrigger=1;
   this.redirectPopup=2;
-  this.redirectPopupUrl=this.sg['domainPath']+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+  this.redirectPopupUrl=this.sg['domainPath']+'hotel-list?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
    return;
   }
 
-this.document.location.href =this.sg['domainPath']+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+this.document.location.href =this.sg['domainPath']+'hotel-list?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
  //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
 
   break;
