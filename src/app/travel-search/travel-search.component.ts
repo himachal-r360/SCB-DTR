@@ -1411,6 +1411,8 @@ check_traveller_count(type) {
 
 
     displayTravelM(type){
+     let body = document.getElementsByTagName('body')[0];
+    body.classList.add("noscroll"); //add the class
       $( ".bottom-sheet-TravelerContainer" ).addClass( "bottom-sheet-TravelerContainer-Full" );
     if(type==1)
     this.showFlightPassenger =true;
@@ -1969,7 +1971,8 @@ switch(service) {
 
 
   closeSearchBoxHotel(type) {
-
+    let body = document.getElementsByTagName('body')[0];
+    body.classList.remove("noscroll");
     if(type==2){
         this.submittedHotel=true;
         if (this.searchHotelForm.invalid) {
