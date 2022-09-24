@@ -283,9 +283,15 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     this.hotelSearchForm['controls']['countryName'].setValue(param._source.countryName);
     this.hotelSearchForm['controls']['country'].setValue(param._source.country);
     this.cityName = this.hotelSearchForm.value.city;
+     $('.hotel-search-list').hide();
     this.checkIn.nativeElement.click()
   }
-
+focusInput(){
+        setTimeout(() => {
+        $('.hotel-search-list').show();
+        $('#citySearchRef').focus();
+        }, 10);
+}
   checkInDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
