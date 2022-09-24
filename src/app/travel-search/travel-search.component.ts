@@ -1594,7 +1594,7 @@ check_traveller_count(type) {
         let totalGuest=0;
         $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
         totalGuest+=(jsonObject['hotel_adult'])+(jsonObject['hotel_child']);
-        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge['+j+']=';
+        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge=';
        if(jsonObject['child_age'].length > 0){
          for (let k = 0; k < jsonObject['child_age'].length; k++) {
          queryParam+=jsonObject['child_age'][k]['age'];
