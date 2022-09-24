@@ -881,14 +881,17 @@ public modeselectTrending= 'All';
     margin:25,
     responsiveClass: true,
     responsive: {
+      
       0: {
         items: 1.8,
+        loop: true,
         nav: false,
         dots: false,
         margin: 10
       },
       600: {
         items: 3,
+        loop: true,
         nav: true,
         dots: true
       },

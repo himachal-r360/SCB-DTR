@@ -19,10 +19,17 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { AmenitiesFilterPipe } from '../pipes/amenities-filter.pipe';
+import { HotelBookingRetryComponent } from './hotel-booking-retry/hotel-booking-retry.component';
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
   {path:"hotel-detail",component:HotelDetailComponent},
-  {path:"hotel-checkout",component:HotelCheckoutComponent}
+  {path:"hotel-checkout",component:HotelCheckoutComponent},
+    {
+    path:"hotel-booking/retry" ,component:HotelBookingRetryComponent,
+
+  },{
+    path:"regalia_gold/hotel-list" ,component:HotelListComponent,
+  },
 ]
 
 @NgModule({
@@ -30,7 +37,7 @@ const routes: Routes = [
     HotelListComponent,
     HotelDetailComponent,
     HotelCheckoutComponent,
-    AmenitiesFilterPipe
+    AmenitiesFilterPipe,HotelBookingRetryComponent
   ],
   imports: [
     CommonModule,

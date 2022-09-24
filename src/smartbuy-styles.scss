@@ -899,7 +899,8 @@ a {
 .traveler-details-info .mat-form-field-wrapper,
 .contact-form .mat-form-field-wrapper,
 .destination_details_train .mat-form-field-wrapper,
-.add_new_traveler .mat-form-field-wrapper, .gst-number-box .mat-form-field-wrapper{
+.add_new_traveler .mat-form-field-wrapper,
+.gst-number-box .mat-form-field-wrapper {
     padding-bottom: 0px;
 }
 
@@ -928,6 +929,10 @@ a {
     font-weight: 700 !important;
 }
 
+.mat-select-panel {
+    font-size: 14px !important;
+}
+
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
     background: rgba(29, 134, 255, 0.1);
 }
@@ -954,19 +959,76 @@ a {
         }
     }
 }
-.mlite_broading_pint_select{
-.mat-select-trigger {
-    position:absolute;
-    top:12px;
-    .mat-select-value {
-        .mat-select-value-text {
-            font-size: 14px;
-            color: #000000;
+
+.mlite_broading_pint_select {
+    .mat-select-trigger {
+        position: absolute;
+        top: 12px;
+        .mat-select-value {
+            .mat-select-value-text {
+                font-size: 14px;
+                color: #000000;
+            }
         }
     }
 }
-}
 
+.tdr_cntnr {
+    .pnr-section {
+        .mat-radio-group {
+            .mat-radio-button.mat-accent.mat-radio-checked {
+                .mat-radio-outer-circle {
+                    border-color: #1d86ff;
+                }
+            }
+            .mat-radio-button.mat-accent {
+                .mat-radio-inner-circle {
+                    background-color: #1d86ff;
+                }
+            }
+            .mat-radio-button {
+                .mat-radio-label {
+                    // margin-left:20px !important;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 19px;
+                    color: #555555;
+                    .mat-radio-label-content {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+        // .filetdr_sort_radio{
+        //     .mat-radio-group{
+        //         .mat-radio-button {
+        //             .mat-radio-label{
+        //                 margin-left:0px !important;
+        //             }
+        //         }
+        //     }
+        // }
+    }
+    .tdr_box {
+        ng::deep .mat-form-field-appearance-legacy {
+            ng::deep .mat-form-field-underline {
+                height: 0px !important;
+            }
+        }
+    }
+    // .mat-form-field{
+    //     .mat-form-field-wrapper{
+    //         .mat-form-field-flex{
+    //             .mat-form-field-infix{
+    //                height:45px;
+    //                 .mat-form-field-label-wrapper{
+    //                     top:-1.5em;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+}
 
 // .train_custom_input{
 //     .mat-form-field-appearance-outline{
@@ -977,12 +1039,28 @@ a {
 //         }
 //     }
 // }
+.mlite_filetdr_inp {
+    .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            .mat-form-field-outline.mat-form-field-outline-thick {
+                .mat-form-field-outline-end {
+                    border-radius: 0px 0px 0px 0px !important;
+                }
+            }
+            .mat-form-field-outline {
+                .mat-form-field-outline-end {
+                    border-radius: 0px 0px 0px 0px !important;
+                }
+            }
+        }
+    }
+}
 
-.caontact_sec_label_highlight{
-    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float{
-        .mat-form-field-label{
-            font-weight:bold;
-            color:#000;
+.mat-form-field-outline-end .caontact_sec_label_highlight {
+    .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float {
+        .mat-form-field-label {
+            font-weight: bold;
+            color: #000;
         }
     }
 }
@@ -1324,17 +1402,19 @@ a {
 }
 
 *::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
     height: 4px;
     background-color: #f5f3f1;
 }
 
 *::-webkit-scrollbar-button {
-    background-color: $primary-color;
+    /*background-color: $primary-color;*/
+    background-color: #999;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: $primary-color;
+    /* background-color: $primary-color;*/
+    background-color: #999;
 }
 
 
@@ -1595,7 +1675,6 @@ ul.travel-select-trip-ul {
     background: transparent;
     border: none;
     cursor: pointer;
-    
 }
 
 .travel-data {
@@ -1667,7 +1746,7 @@ ul.travel-select-trip-ul {
     background: $primary-color;
     color: #fff;
     padding: 24px 40px;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 16px;
     line-height: 27px;
     width: 100%;
@@ -2226,7 +2305,8 @@ ul.travel-select-trip-ul {
 
 .layout-right {
     position: relative;
-    width: calc(100% - 250px);
+    /* width: calc(100% - 250px); */
+    width: 100%;
 }
 
 hr:not([size]) {
@@ -3396,7 +3476,7 @@ button:active {
 }
 
 .information-icon:hover .hover-popover {
-    display: block ;
+    display: block;
 }
 
 .flight-listing-price .information-icon {
@@ -3924,6 +4004,8 @@ table.table-bordered.table-content {
     display: flex;
     align-items: center;
     color: #000000;
+    width:100px;
+    word-break: break-word;
 }
 
 .tabs-depart-total {
@@ -4357,7 +4439,7 @@ table.table-bordered.table-content {
 .home-TrendingRoutes-text h4 {
     font-style: normal;
     font-weight: 600;
-    font-size: 21px;
+    font-size: 20px;
     line-height: 29px;
     color: #000000;
     margin-bottom: 15px;
@@ -6960,6 +7042,11 @@ button.accordion-button .xlsheats {
     height: 100%;
     background: #fff;
     border-radius: 20px 20px 0 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-top: unset;
+    height: 65vh;
 }
 
 .mob-fd-box {
@@ -7043,8 +7130,12 @@ button.accordion-button .xlsheats {
 }
 
 .mob-sf-sort {
-    height: calc(100vh - 200px);
+    height: calc(50vh - 100px);
     overflow: auto;
+}
+
+.form-switch ::selection {
+    background: transparent;
 }
 
 .mob-sf-accordion {
@@ -7117,10 +7208,12 @@ button.accordion-button .xlsheats {
 }
 
 .mob-sf-filters {
-    height: 370px;
+    /*height: 370px;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: auto;*/
     padding: 10px 15px;
+    height: calc(50vh - 100px);
+    overflow: auto;
 }
 
 .mob-reset {
@@ -9240,9 +9333,9 @@ img {
     line-height: 16px;
     color: #555555;
 }
-.hotel-list-info-price
-{
-  width:100%;
+
+.hotel-list-info-price {
+    width: 100%;
 }
 
 .hotel-list-info-price .p-rn {
@@ -9356,6 +9449,7 @@ img {
     font-size: 10px;
     line-height: 14px;
 }
+
 .hotel-amenities .MoreAmenities strong {
     font-weight: 700;
     font-size: 20px;
@@ -9363,6 +9457,7 @@ img {
     color: #1D86FF;
     display: block;
 }
+
 
 /* Hotel details start */
 
@@ -9517,6 +9612,7 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    max-width: 150px;
 }
 
 .hd-Offered-slider .hd-Offered-text h6 {
@@ -9666,7 +9762,7 @@ img {
     line-height: 26px;
     color: #000000;
     padding-left: 19px;
-    background: url(/assets/images/hotel/icon/right.png) no-repeat;
+    background: url(../src/assets/images/hotel/icon/right.png) no-repeat;
     background-position: 0 8px;
 }
 
@@ -9732,7 +9828,7 @@ img {
 
 .hd-processbar .progress .title:after {
     content: "";
-    background: url(/assets/images/hotel/icon/processbar.png) no-repeat;
+    background: url(../src/assets/images/hotel/icon/processbar.png) no-repeat;
     position: absolute;
     background-size: 25px;
     height: 25px;
@@ -10033,17 +10129,15 @@ img {
     .layout-right {
         width: 100%;
     }
-
-.hd-cc-Policy .hover-popover {
-    min-width: 350px;
-    left: -20px;
-    right: 0;
-    top: -196px;
-}
-.hotel-list-thumbe img
-{
-  max-width: 100px;
-}
+    .hd-cc-Policy .hover-popover {
+        min-width: 350px;
+        left: -20px;
+        right: 0;
+        top: -196px;
+    }
+    .hotel-list-thumbe img {
+        max-width: 100px;
+    }
 }
 
 
@@ -13798,46 +13892,61 @@ img {
     }
 }
 
+
 /* No Hotel Start */
-.no-hotels-text a{
+
+.no-hotels-text a {
     background: #1D86FF;
     color: #fff;
-  }
-  /* No Hotel end */
-  .about-hotel
-{
-  font-style: normal;
-  font-size: 12px;
-  line-height: 30px;
-}
-.about-hotel p,.about-hotel span
-{
-  font-style: normal;
-  font-size: 12px;
-  line-height: 30px;
-}
-.hotel-list-text {
-  width: calc(100% - 100px);
-}
-.item.ng-star-inserted {
-  border-radius: 10px;
-  overflow: hidden;
-}
-.hd-rd-big {
-  border-radius: 6px;
-  overflow: hidden;
 }
 
+.about-hotel {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.about-hotel p,
+.about-hotel span {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.about-hotel {
+    font-style: normal;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+.hotel-list-text {
+    width: calc(100% - 100px);
+}
+
+
+/* .item.ng-star-inserted {
+    border-radius: 10px;
+    overflow: hidden;
+} */
+
+.hd-rd-big {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.form-check-input:checked {
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
 
 //infinia css start //
-.club-title h3{
+.club-title h3 {
     font-family: 'opensans-regular';
     font-size: 44px !important;
     font-weight: 300 !important;
     color: #000000 !important;
     font-style: normal !important;
     line-height: 50px !important;
-
 }
 
 .club-title p {
@@ -13853,6 +13962,7 @@ img {
 .club-second-section-img {
     position: relative;
 }
+
 .club-second-section-card {
     background-color: #000000;
     position: absolute;
@@ -13861,9 +13971,8 @@ img {
     border-radius: 8px;
     left: 0;
     top: 95%;
-
-
 }
+
 .club-second-section-title h4 {
     font-family: 'opensans-regular';
     font-style: normal;
@@ -13888,5 +13997,4 @@ img {
     font-weight: 700;
     line-height: 57px;
     color: #000000;
-
 }

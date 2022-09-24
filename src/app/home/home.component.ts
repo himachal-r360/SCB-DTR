@@ -14,6 +14,7 @@ import { StyleManagerService } from 'src/app/shared/services/style-manager.servi
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SimpleGlobal } from 'ng2-simple-global';
 import {environment} from '../../environments/environment';
+import { AppConfigService } from '../app-config.service';
 declare var $: any;
 
 
@@ -29,6 +30,8 @@ declare var $: any;
 
 export class HomeComponent implements OnInit {
   cdnUrl: any;
+  DOMAIN_SETTINGS: any;
+  serviceSettings: any;
   continueSearchVal:any;
         continueSearchValBus:any;
         continueSearchValTrain:any;
@@ -154,10 +157,12 @@ export class HomeComponent implements OnInit {
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
-      private _flightService: FlightService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
+      private _flightService: FlightService,private appConfigService: AppConfigService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.serviceSettings = this.appConfigService.getConfig();
+     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     if(router.url){
         switch (router.url) {
         case ('/'+this.sg['domainPath']+'compare-fly'):
@@ -210,7 +215,7 @@ export class HomeComponent implements OnInit {
       this.continueSearchValTrain = JSON.parse(continueSearchValTrainParse);
 
     }
-    let continueSearchValHotelParse: any = localStorage.getItem('continueSearchForHotel');
+    let continueSearchValHotelParse: any = localStorage.getItem(environment.continueSearchHotel);
     if (continueSearchValHotelParse != null) {
       this.continueSearchValHotel = JSON.parse(continueSearchValHotelParse);
 
@@ -239,15 +244,15 @@ export class HomeComponent implements OnInit {
   
     if(param.fromContry=='IN' && param.toContry=='IN' ){
     if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
-      let url="flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      let url=this.sg['domainPath']+"flight-list?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
     }
     else {
-      let url="flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      let url=this.sg['domainPath']+"flight-roundtrip?"+decodeURIComponent(this.ConvertObjToQueryString(param));
       this.router.navigateByUrl(url);
     }
     }else{
-      let url="flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
+      let url=this.sg['domainPath']+"flight-int?"+decodeURIComponent(this.ConvertObjToQueryString((param)));
           this.router.navigateByUrl(url);
 
        }
@@ -255,17 +260,17 @@ export class HomeComponent implements OnInit {
   }
 
   continueSearchHotel(param:any){
-    let  url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryStringForHotel((param)));
+    let  url = this.sg['domainPath']+"hotel-list?" + decodeURIComponent(this.ConvertObjToQueryStringForHotel((param)));
     this.router.navigateByUrl(url);
  }
 
   continueSearchBus(param:any){
-     let  url = "bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
+     let  url = this.sg['domainPath']+"bus/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
       this.router.navigateByUrl(url);
 
   }
   continueSearchTrain(param:any){
-    let  url = "train/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
+    let  url = this.sg['domainPath']+"train/search?" + decodeURIComponent(this.ConvertObjToQueryString((param)));
       this.router.navigateByUrl(url);
 
   }

@@ -653,8 +653,8 @@ export class TrainsTravellerComponent implements OnInit {
     }
 isPaynowClicked:boolean=false;
 continuePayment(){
-//console.log($(".accordion-button[aria-expanded='true']").attr("id"));return;
-switch ($(".accordion-button[aria-expanded='true']").attr("id")) {
+//console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
+switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
         break;
@@ -1812,15 +1812,24 @@ whatsAppCheck:boolean=false;
 
             if (result == '1') {
                 this.travelInsuranceOpted = true;
-                this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+               /* this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
                 this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
-                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);*/
+
+
+                this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length));
+                this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length));
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
                
             } else {
                 this.travelInsuranceOpted = false;
                 this.travel_ins_charge = 0;
                 this.travel_ins_charge_tax = 0;
-                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+                //this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+
+                this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
+
+
                 
             }
  	 this.createTrainItinerary2();
@@ -1831,7 +1840,9 @@ whatsAppCheck:boolean=false;
 	this.travelInsuranceOpted = false;
 	this.travel_ins_charge = 0;
 	this.travel_ins_charge_tax = 0;
-	this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+	//this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+
+    this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
         
          this.createTrainItinerary2();
         } 
@@ -1843,14 +1854,18 @@ whatsAppCheck:boolean=false;
     
         if (this.passengerForm.controls['travelInsurence']['value'] == true) {
         this.travelInsuranceOpted = true;
-        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
-        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
-        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        // this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length) + 1);
+        // this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length) + 1);
+        // this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        this.travel_ins_charge = 0.42 * (Number(this.travellersArray.length));
+        this.travel_ins_charge_tax = 0.07 * (Number(this.travellersArray.length));
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
         } else {
         this.travelInsuranceOpted = false;
         this.travel_ins_charge = 0;
         this.travel_ins_charge_tax = 0;
-        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        // this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
 
         }
 
@@ -2831,7 +2846,8 @@ this.spinnerService.show();
                 
                 
 		this.adulttravellerlist =  this.travellerlist.filter(function(tra) {
-		return tra.age > 1;
+		// return tra.age > 1;
+        return tra.age > 4;
 		});
 		
 		
@@ -3007,16 +3023,27 @@ this.spinnerService.show();
                 this.travel_ins_charge_tax = 0;
             }
 
-            this.baseFare = this.seacthResult.fareData.baseFare * (Number(this.travellersArray.length) + 1);
-            this.serviceTax = this.seacthResult.fareData.serviceTax * (Number(this.travellersArray.length) + 1);
-            this.reservationCharge = this.seacthResult.fareData.reservationCharge * (Number(this.travellersArray.length) + 1);
-            this.superfastCharge = this.seacthResult.fareData.superfastCharge * (Number(this.travellersArray.length) + 1);
-            this.dynamicFare = this.seacthResult.fareData.dynamicFare * (Number(this.travellersArray.length) + 1);
-            this.travel_ins_charge_tax = this.seacthResult.fareData.travelInsuranceServiceTax * (Number(this.travellersArray.length) + 1);
-            this.wp_charge = this.seacthResult.fareData.wpServiceCharge * (Number(this.travellersArray.length) + 1);
-            this.wp_charge_tax = this.seacthResult.fareData.wpServiceTax * (Number(this.travellersArray.length) + 1);
-            this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
-            this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+            // this.baseFare = this.seacthResult.fareData.baseFare * (Number(this.travellersArray.length) + 1);
+            // this.serviceTax = this.seacthResult.fareData.serviceTax * (Number(this.travellersArray.length) + 1);
+            // this.reservationCharge = this.seacthResult.fareData.reservationCharge * (Number(this.travellersArray.length) + 1);
+            // this.superfastCharge = this.seacthResult.fareData.superfastCharge * (Number(this.travellersArray.length) + 1);
+            // this.dynamicFare = this.seacthResult.fareData.dynamicFare * (Number(this.travellersArray.length) + 1);
+            // this.travel_ins_charge_tax = this.seacthResult.fareData.travelInsuranceServiceTax * (Number(this.travellersArray.length) + 1);
+            // this.wp_charge = this.seacthResult.fareData.wpServiceCharge * (Number(this.travellersArray.length) + 1);
+            // this.wp_charge_tax = this.seacthResult.fareData.wpServiceTax * (Number(this.travellersArray.length) + 1);
+            // this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
+            // this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+
+            this.baseFare = this.seacthResult.fareData.baseFare * (Number(this.travellersArray.length));
+            this.serviceTax = this.seacthResult.fareData.serviceTax * (Number(this.travellersArray.length));
+            this.reservationCharge = this.seacthResult.fareData.reservationCharge * (Number(this.travellersArray.length));
+            this.superfastCharge = this.seacthResult.fareData.superfastCharge * (Number(this.travellersArray.length));
+            this.dynamicFare = this.seacthResult.fareData.dynamicFare * (Number(this.travellersArray.length));
+            this.travel_ins_charge_tax = this.seacthResult.fareData.travelInsuranceServiceTax * (Number(this.travellersArray.length));
+            this.wp_charge = this.seacthResult.fareData.wpServiceCharge * (Number(this.travellersArray.length));
+            this.wp_charge_tax = this.seacthResult.fareData.wpServiceTax * (Number(this.travellersArray.length));
+            this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length));
+            this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length))) + this.convenience_fee + Number(this.travel_ins_charge);
             this.passengerFormCount++;
   
             // console.log('form==>',this.passengerForm);
@@ -3119,7 +3146,7 @@ this.spinnerService.show();
             this.travel_ins_charge_tax = 0;
         }
 
-        this.baseFare = this.seacthResult.fareData.baseFare * (Number(this.travellersArray.length) + 1);
+        /*this.baseFare = this.seacthResult.fareData.baseFare * (Number(this.travellersArray.length) + 1);
         this.serviceTax = this.seacthResult.fareData.serviceTax * (Number(this.travellersArray.length) + 1);
         this.reservationCharge = this.seacthResult.fareData.reservationCharge * (Number(this.travellersArray.length) + 1);
         this.superfastCharge = this.seacthResult.fareData.superfastCharge * (Number(this.travellersArray.length) + 1);
@@ -3128,7 +3155,23 @@ this.spinnerService.show();
         this.wp_charge = this.seacthResult.fareData.wpServiceCharge * (Number(this.travellersArray.length) + 1);
         this.wp_charge_tax = this.seacthResult.fareData.wpServiceTax * (Number(this.travellersArray.length) + 1);
         this.concession = this.seacthResult.fareData.totalConcession * (Number(this.travellersArray.length) + 1);
-        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(this.travellersArray.length) + 1)) + this.convenience_fee + Number(this.travel_ins_charge);*/
+         var traArray_length;
+        if(this.travellersArray.length==0){
+          traArray_length=1;        
+        }else
+          traArray_length=this.travellersArray.length
+
+        this.baseFare = this.seacthResult.fareData.baseFare * (Number(traArray_length));
+        this.serviceTax = this.seacthResult.fareData.serviceTax * (Number(traArray_length));
+        this.reservationCharge = this.seacthResult.fareData.reservationCharge * (Number(traArray_length));
+        this.superfastCharge = this.seacthResult.fareData.superfastCharge * (Number(traArray_length));
+        this.dynamicFare = this.seacthResult.fareData.dynamicFare * (Number(traArray_length));
+        this.travel_ins_charge_tax = this.seacthResult.fareData.travelInsuranceServiceTax * (Number(traArray_length));
+        this.wp_charge = this.seacthResult.fareData.wpServiceCharge * (Number(traArray_length));
+        this.wp_charge_tax = this.seacthResult.fareData.wpServiceTax * (Number(traArray_length));
+        this.concession = this.seacthResult.fareData.totalConcession * (Number(traArray_length));
+        this.totalCollectibleAmount = (this.seacthResult.fareData.totalCollectibleAmount * (Number(traArray_length))) + this.convenience_fee + Number(this.travel_ins_charge);
         this.error = 0;
 
     }
@@ -3566,7 +3609,9 @@ export class ConfirmationDialog {
         var dd = ("0" + this.maxDate.getDate()).slice(-2);
         var yyyy = this.maxDate.getFullYear();
 
-        this.checkDate = this.checkmaxDate(dd, mm, yyyy)
+        this.checkDate = this.checkmaxDate(dd, mm, yyyy);
+                   
+    
 
     }
      ngAfterContentChecked() {

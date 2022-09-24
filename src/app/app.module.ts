@@ -39,6 +39,8 @@ import { HotelModule } from './hotel/hotel.module';
 import { HotelSearchModule } from './hotel/hotel-search/hotel-search.module';
 //import { DatadogService } from './shared/services/datadog.service';
 import {  LOCALE_ID } from '@angular/core';
+import { TdrModule } from './train/tdr/tdr.module';
+
 import "@angular/common/locales/global/en-IN";
 import { InfiniaModule } from './infinia/infinia.module';
 export function appInitializerFn(appConfig: AppConfigService) {
@@ -58,7 +60,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,
     AppRoutingModule,
     FlightModule,BusModule,ListModule,BusSearchModule,TrainSearchModule,
-    TrainModule,TrainsTravellerModule,IrctcregModule,HotelModule,InfiniaModule,
+    TrainModule,TrainsTravellerModule,IrctcregModule,HotelModule,TdrModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
