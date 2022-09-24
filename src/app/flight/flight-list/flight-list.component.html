@@ -289,7 +289,7 @@
                                         <ul class="flight-counts">
                                             <li class="flight-counts-list" id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems" value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
                                                 <p>
-                                                <!--  <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span>  -->{{Items.value}}</p>
+                                                 <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
                                             </li>
 
                                         </ul>
@@ -298,7 +298,7 @@
                             </div>
                             <div class="flight-search-filters">
                                 <div class="flight-search-filters-left">
-                                    <!-- <p *ngIf="flightList">{{flightList.length}} flights found</p> -->
+                                    <p *ngIf="flightList">{{flightList.length}} flights found</p>
                                 </div>
                             </div>
                             <!--<div class="listing-warning-area">
