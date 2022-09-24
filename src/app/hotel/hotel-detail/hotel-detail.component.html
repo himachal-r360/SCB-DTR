@@ -71,7 +71,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="hover-popover-footer">
-                                                      <p>*Partner Convenience Fee is applicable</p>
+                                                      <!-- <p class="d-none">*Partner Convenience Fee is applicable</p> -->
                                                   </div>
                                               </div>
                                           </span>
@@ -221,7 +221,7 @@
                                       </div>
                                       <div class="hd-Rooms-details">
                                           <div class="hd-rd-area">
-                                              <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates">
+                                              <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates;let i = index">
                                                   <div class="hd-rd-left">
                                                       <div class="hd-rd-big">
                                                         <img *ngIf="item.imageInfo.wideAngleImageurl != null" src="{{item.imageInfo.wideAngleImageurl}}" alt="">
@@ -451,7 +451,7 @@
                                             </div>
                                             <div class="hd-Rooms-details">
                                                 <div class="hd-rd-area">
-                                                    <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates">
+                                                    <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates ; let i = index">
                                                         <div class="hd-rd-left">
                                                             <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
                                                               <owl-carousel-o [options]="WideImageCustomOptions" >
@@ -474,10 +474,10 @@
                                                                     <p>{{list}}</p>
                                                                   </li>
                                                                 </ul>
-                                                                <span class="information-icon hd-cc-Policy" >
+                                                                <span class="information-icon hd-cc-Policy" (click)="openPopOverMob(i)" >
                                                                     Check Cancellation Policy
-                                                                    <div class="hover-popover" >
-                                                                        <a href="javaScript:void(0)"(click)="ClosePopover()" class="popover-close" >
+                                                                    <div class="hover-popover" *ngIf="showPop">
+                                                                        <a href="javaScript:void(0)"(click)="ClosePopover(i)" class="popover-close" >
                                                                             <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                         </a>
                                                                         <div class="hover-popover-title">

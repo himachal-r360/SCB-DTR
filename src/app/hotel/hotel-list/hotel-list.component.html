@@ -6,7 +6,7 @@
                   <ul class="list-inline">
                       <li class="list-inline-item"><a href="javascript:;" routerLink="/" >Home</a></li>
                       <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/regalia_gold/compare-stay">Travel & Stays</a></li>
+                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel & Stays</a></li>
                       <li class="list-inline-item"><span>/</span></li>
                       <li class="list-inline-item"><span>Hotel Search</span></li>
                   </ul>
@@ -22,7 +22,7 @@
         <div class="col-md-12 p-0" *ngIf="isMobile">
             <div class="mob-listing-header">
                 <div class="mob-listing-header-left">
-                    <a (click)="backClicked()" >
+                    <a href="javascript:void(0)" routerLink="/compare-stay" >
                         <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
                     </a>
                 </div>
@@ -31,7 +31,7 @@
                     <p>{{hotelSearchForm.value.checkIn | date:"EEE, MMM dd"}} - {{hotelSearchForm.value.checkOut | date:"EEE, MMM dd"}}  |  {{hotelSearchForm.value.totalGuest}} Guests12</p>
                 </div>
                 <div class="mob-listing-header-right">
-                    <a (click)="goToModifySearch()" >
+                    <a href="javascript:void(0)" routerLink="/compare-stay" >
                         <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
                     </a>
                 </div>
@@ -252,8 +252,8 @@
                           <div class="hotel-list-item" *ngFor="let list of item; let i = index" >
                             <div class="hotel-list-left">
                                 <div class="hotel-list-thumbe">
-                                     <img *ngIf="list.hotelInfo.image != null" src="{{list.hotelInfo.image}}" alt="{{list.hotelInfo.name}}">
-                                     <img *ngIf="list.hotelInfo.image == null"  src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg"  alt="{{list.hotelInfo.name}}">
+                                     <img *ngIf="list.hotelInfo.image != null || list.hotelInfo.image != ''" src="{{list.hotelInfo.image}}" >
+                                     <img *ngIf="list.hotelInfo.image == null || list.hotelInfo.image == ''"  src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" >
                                 </div>
                                 <div class="hotel-list-text">
                                     <h6 class="hotel-name text-decoration-none "><a href="javascript:;" >{{list.hotelInfo.name | titlecase}}</a></h6>
@@ -342,7 +342,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="hover-popover-footer">
-                                                            <p>*Partner Convenience Fee is applicable</p>
+                                                            <!-- <p>*Partner Convenience Fee is applicable</p> -->
                                                         </div>
                                                     </div>
                                                 </span>
