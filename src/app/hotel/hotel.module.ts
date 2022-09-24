@@ -29,6 +29,12 @@ const routes: Routes = [
 
   },{
     path:"regalia_gold/hotel-list" ,component:HotelListComponent,
+  },{
+    path:"regalia_gold/hotel-detail" ,component:HotelDetailComponent,
+  },{
+    path:"regalia_gold/hotel-checkout" ,component:HotelCheckoutComponent,
+  },{
+    path:"regalia_gold/hotel-booking/retry" ,component:HotelBookingRetryComponent,
   },
 ]
 
