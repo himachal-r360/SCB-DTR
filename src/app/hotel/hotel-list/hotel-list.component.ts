@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -735,4 +734,4 @@ export class HotelListComponent implements OnInit, OnDestroy {
   }
 
 }
->>>>>>> 439fc99f501276d116e913c69d24afd9273ef94d
+
