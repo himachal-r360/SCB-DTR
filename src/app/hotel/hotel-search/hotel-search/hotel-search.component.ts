@@ -415,6 +415,7 @@ focusInput(){
     var i = 0;
     var isvalid = true;
     rooms.forEach(z => {
+    if(z.numberOfChildren >0){
       if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0'))  && z.numberOfChildren > 0) {
         var id = document.getElementById("error_" + i)
         id.hidden = false;
@@ -424,6 +425,7 @@ focusInput(){
         id.hidden = true;
       }
       i++;
+      }
     });
 
     if (this.hotelSearchForm.invalid) {
