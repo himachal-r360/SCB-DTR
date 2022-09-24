@@ -20,7 +20,7 @@
                         <input type="text" class="w-100" id="citySearchRef" #citySearchRef placeholder="Search City" formControlName="city" [autofocus]="true">
                         <input type="hidden" class="w-100" formControlName="countryName" >
                     </div>
-                    <ul class="hotel-from-data-ul mCustomScrollbar" data-mcs-theme="dark">
+                    <ul class="hotel-from-data-ul" data-mcs-theme="dark">
                         <ng-container *ngFor="let item of queryText">
                             <li class="hotel-from-ul-li"  >
                                 <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
@@ -209,7 +209,7 @@
                             <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile">
                         </a>
                     </div>
-                    <div class="hotel-from-data-ul mCustomScrollbar " [ngClass]="isMobile?'mob-add-travels':''" data-mcs-theme="dark">
+                    <div class="hotel-from-data-ul  " [ngClass]="isMobile?'mob-add-travels':''" data-mcs-theme="dark">
                         <ng-container formArrayName="rooms">
                             <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">

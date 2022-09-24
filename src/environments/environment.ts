@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   LOCALLOGIN: 'true',
   COOKIE_DOMAIN: null,
-  LOCALJSON: 'true',
+  LOCALJSON: 'false',
   localInstance: 1,
   url:"http://new.reward360.us/",
   // url:"http://new.reward360.us/",

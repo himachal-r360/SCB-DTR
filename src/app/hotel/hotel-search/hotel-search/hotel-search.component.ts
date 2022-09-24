@@ -410,6 +410,8 @@ focusInput(){
   }
 
   searchHotel() {
+    console.log(this.hotelSearchForm.value , "hotel search value");
+    
     this.submitted = true;
     var rooms = this.hotelSearchForm.value.rooms;
     var i = 0;
