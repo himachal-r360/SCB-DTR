@@ -684,8 +684,8 @@
                                             <li class="nav-item">
                                                 <a class="nav-link active ccemiTab" (click)="hidecheckoutPay(0)" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true">Credit Card EMI</a>
                                             </li>
-                                            <li class="nav-item dcemiTab" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0">
-                                                <a class="nav-link" id="dc-emi" (click)="hidecheckoutPay(1)" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
+                                            <li class="nav-item dcemiTab" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1)" >
+                                                <a class="nav-link" id="dc-emi"  (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content" id="pills-tabContent">
