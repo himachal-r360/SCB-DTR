@@ -795,7 +795,9 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
     }
   }
   
-  
+    convertToUpperCase($event) {
+    $event.target.value = $event.target.value.toUpperCase();
+  }
   
   
   fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex, ladiesSeat) {
@@ -920,7 +922,7 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
 
       //$(".adult-choose-box"+travellerid+travellerformid).removeClass("travllerDisabled");
       
-      console.log(".adult-choose-box"+travellerid+travellerformid);
+      //console.log(".adult-choose-box"+travellerid+travellerformid);
 
     } else {
      this.passengerSelectedArray[travellerformid]=0;
