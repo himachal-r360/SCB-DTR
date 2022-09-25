@@ -23,6 +23,7 @@ import { CommunicationService } from 'src/app/shared/services/communication.serv
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { commaSeparatorPipe } from 'src/app/shared/pipes/comma-separator.pipe';
 import { CreditCardValidators } from 'angular-cc-library';
+import { trigger } from '@angular/animations';
 declare var $: any;
 
 
@@ -2414,7 +2415,7 @@ export class dcemiDialog {
 	  this.Form1 = Form1;
 	  //pop-up will close after 10 mins(600000) 
 	  
-	  interval(600000).subscribe(x => {
+	  this.sub =  interval(600000).subscribe(x => {
 		    this.dialogClose();
 	  });
 	}
@@ -2440,6 +2441,10 @@ export class dcemiDialog {
 		}
 	}
 	close(){
+
+		let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+		element.click();
+
 		this.dialogDcemi.close();
 	}
 }
