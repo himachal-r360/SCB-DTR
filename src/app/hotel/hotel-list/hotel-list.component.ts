@@ -231,6 +231,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     // this.sub = this.route.url.subscribe(url =>{
     this.isResponse = true;
     this.loader = true;
+      this.resetPopups();
     this.getSearchData();
     if (this.isMobile)
       this.headerHideShow(null);
@@ -287,7 +288,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
       }
     }
     
-    console.log(hotelSearchArr);
     
     this.hotelSearchForm.value.rooms = hotelSearchArr;
    // console.log(this.hotelSearchForm.value);
@@ -317,7 +317,12 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
     localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
   }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   headerHideShow(event: any) {
     this.isMobile = window.innerWidth < 991 ? true : false;
     if (this.isMobile) {

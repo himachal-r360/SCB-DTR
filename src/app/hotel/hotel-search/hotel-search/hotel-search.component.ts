@@ -121,8 +121,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     let modifySearchValue = JSON.parse(this.getSearchValue);
     this.cityName = modifySearchValue.city
     let roomArr = modifySearchValue.rooms;
-    
-    
     if (modifySearchValue != undefined) {
       this.hotelSearchForm = this._fb.group({
         checkIn: [modifySearchValue.checkIn],
@@ -152,9 +150,6 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       this.showTotalCountOfAdult();
       this.showTotalCountsOfChild();
     }
-    
-  //  console.log(this.hotelSearchForm);
-    
   }
   //Increase Child and adult value
   increaseCount(i, item, title) {
@@ -442,9 +437,6 @@ focusInput(){
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
-      
-      //console.log(this.hotelSearchForm.value);return;
-      
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.hotelSearchCallBack(this.hotelSearchForm.value)
@@ -482,3 +474,5 @@ focusInput(){
 
   }
 }
+
+
