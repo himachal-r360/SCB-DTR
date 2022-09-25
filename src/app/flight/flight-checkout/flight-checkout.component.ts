@@ -946,10 +946,11 @@ orderRetry:boolean=false;
 
 isPaynowClicked:boolean=false;
 continuePayment(){
-//console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
+//console.log($(".accordion-button:not(.collapsed)").attr("id"));
 switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
+        console.log('dddd');
         break;
         case 'tab-testPg':
         $('.btn-pay-test').trigger('click');
@@ -961,11 +962,14 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         $('.btn-pay-netbanking').trigger('click');
         break;  
         case 'tab-ccdcCards':
-        if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+        
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected")){
         $('.btn-pay-card').trigger('click');
-
-        if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+        }else if($(".addRupayTab[aria-selected='true']").attr("aria-selected")){
         $('.btn-pay-rupay').trigger('click');
+        }else{
+         $('.btn-pay-rupay').trigger('click');
+        }
 
         break;  
 
@@ -981,8 +985,6 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         $('.btn-pay-test').trigger('click');
         break;  
       }
-
-
 
 }
 

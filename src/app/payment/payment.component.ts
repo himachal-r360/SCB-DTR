@@ -441,6 +441,10 @@ export class PaymentComponent implements OnInit {
         this.pgSettingsDEBITEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].DEBIT_EMI;
         this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
         this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
+        
+        if(!this.pgSettingsCYBER){
+         this.cardData=[];
+        }
 
         const cookieExistPay: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
 
