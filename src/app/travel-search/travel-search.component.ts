@@ -460,15 +460,18 @@ export class TravelSearchComponent implements OnInit {
            case 'hotel': {
       if(field=='departure'){
         this.hotelCheckin = event;
-         this.minDateHotelToMlite=event;
+        
+              const d = new Date(event);
+       d.setDate(d.getDate() + 1);
+        this.minDateHotelToMlite=d;
         this.hotelCheckinMlite = moment(event).format('DD/MM/YYYY');
-        var compare1 = new Date(event).getTime();
+        
+        var compare1 = new Date(d).getTime();
         var compare2 = new Date(this.hotelCheckout).getTime();
         if(compare1 > compare2){
-        this.hotelCheckoutMlite=(moment(event).format('DD/MM/YYYY'));
-        this.hotelCheckout = event;
-        
-        this.searchFlightForm['controls']['hotelCheckout'].setValue(moment(event).format('DD/MM/YYYY'));
+        this.hotelCheckoutMlite=(moment(d).format('DD/MM/YYYY'));
+        this.hotelCheckout = d;
+       // this.searchFlightForm['controls']['hotelCheckout'].setValue(d);
         }
         
       }else{
@@ -1064,17 +1067,23 @@ check_traveller_count(type) {
         this.searchHotelForm['controls']['hotelId'].setValue(this.hotelId);
         this.searchHotelForm['controls']['countryId'].setValue(this.countryId);
         this.searchHotelForm['controls']['roomCount'].setValue(this.roomCount);
+        
+              
+        const d = new Date(lastHotelSearchValue.checkIn);
+        d.setDate(d.getDate() + 1);
+
+        this.minDateHotelToMlite=d;
 
 
-
-        var date8 = new Date(lastHotelSearchValue.checkIn).getTime();
+        var date8 = new Date(d).getTime();
         if(date1 <= date8){
 
         this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.checkIn, 'YYYY-MM-dd', 'en-ES'));
         this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.checkOut, 'YYYY-MM-dd', 'en-ES'));
         this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.checkIn, 'dd/MM/YYYY', 'en-ES'));
          this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.checkOut, 'dd/MM/YYYY', 'en-ES'));
-
+         
+         
 
         this.hotelCheckin = this.hotelpickerDefaultFMlite;
         this.hotelCheckout =  this.hotelpickerDefaultTMlite;
@@ -2165,12 +2174,14 @@ switch(service) {
     }
   }
     if(service=='hotel'){
-      this.minDateHotelToMlite=event.value;
-      var compare1 = new Date(event.value).getTime();
+      const d = new Date(event.value);
+       d.setDate(d.getDate() + 1);
+      this.minDateHotelToMlite=d;
+      var compare1 = new Date(this.minDateHotelToMlite).getTime();
       var compare2 = new Date(this.hotelpickerDefaultTMlite).getTime();
        if(compare1 > compare2){
-        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(event.value, 'dd/MM/YYYY', 'en-ES'));
-        this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(event.value, 'dd/MM/YYYY', 'en-ES'));
+        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(this.minDateHotelToMlite, 'dd/MM/YYYY', 'en-ES'));
+        this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(this.minDateHotelToMlite, 'dd/MM/YYYY', 'en-ES'));
        }
         $("#"+channel+"HotelToPicker").trigger( "click" );
 

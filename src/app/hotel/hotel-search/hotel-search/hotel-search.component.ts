@@ -301,12 +301,12 @@ focusInput(){
   checkInDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
-    
- 
-      var compare1 = new Date(event).getTime();
-       var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
-       const d = new Date(event);
+          const d = new Date(event);
        d.setDate(d.getDate() + 1);
+ 
+       var compare1 = new Date(d).getTime();
+       var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
+ 
        this.minCheckoutDate = d;
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
@@ -468,10 +468,11 @@ focusInput(){
 
     if (field == 'checkin') {
       this.hotelSearchForm['controls']['checkIn'].setValue(event);
-      var compare1 = new Date(event).getTime();
-       var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
-       const d = new Date(event);
+             const d = new Date(event);
        d.setDate(d.getDate() + 1);
+      var compare1 = new Date(d).getTime();
+       var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
+
        this.minCheckoutDate = d;
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
