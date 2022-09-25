@@ -1087,7 +1087,7 @@ check_traveller_count(type) {
       
 
       let localRooms=(lastHotelSearchValue.rooms);
-      
+
 
           const controlArray = <FormArray> this.searchHotelForm.get('rooms');
            for (let room = 0; room < localRooms.length; room++) {
