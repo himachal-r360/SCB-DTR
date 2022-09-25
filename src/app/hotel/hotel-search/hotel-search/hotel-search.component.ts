@@ -321,8 +321,22 @@ focusInput(){
     this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
     this.showHideGuest.nativeElement.style.display = "block";
   }
+  
+  getAgeValue(ageArray,index,age){
+  
+  if(ageArray){
+  if (ageArray.indexOf(',') > -1) { 
+  const myArray = ageArray.split(",");
+  console.log(myArray[index]);  console.log(age);
+  if(age==myArray[index]) return true; else return false;
+  }else{
+  if(age=ageArray) return true; else return false;
+  }
+  }
+  }
 
   onSelectAge(event, item, i) {
+  
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
     let selectAge2: any = document.getElementById('selectAge2_' + i);
