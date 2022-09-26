@@ -330,7 +330,6 @@ export class TrainsTravellerComponent implements OnInit {
     }
 
     ngOnInit() {
-       //  this.titleService.setTitle('Home | IRCTC');
         var datePipe = new DatePipe('en-US');
         this.masterBerth = AppConfig.IRCTC_Berth;
         this.masterFood = AppConfig.IRCTC_Food;
@@ -2420,7 +2419,7 @@ whatsAppCheck:boolean=false;
 
     openmodal(content) {
         this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
-        this.modalService.open(content, { centered: true,size: 'lg' });
+        this.modalService.open(content, { centered: true, size: 'lg' });
       }
 
 

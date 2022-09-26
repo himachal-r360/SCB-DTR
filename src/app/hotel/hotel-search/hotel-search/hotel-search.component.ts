@@ -18,7 +18,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   hotelSearchForm: any;
   hotelList: any;
   cityList: any;
-  totalAdultsCount: number = 1;
+  totalAdultsCount: number = 2;
   totalChildCount: number = 0;
   getSearchValue:any;
   queryText:any;
@@ -87,12 +87,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       area: [''],
       hotelId: [''],
       countryName:['India'],
-      rooms: this._fb.array(
-        [
-          { room: 1, numberOfAdults: '1', numberOfChildren: '0', childrenAge:[0]  }
-        ]
-
-      ),
+      rooms: this._fb.array( [   ] ),
       channel: ['Web'],
       programName: ['SMARTBUY'],
       pageNumber: [0],
@@ -110,6 +105,16 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
     if(this.getSearchValue != undefined || this.getSearchValue != null){
       this.getSearchValueLocalStorage();
+    }else{
+
+        let roomArr= [
+        { room: 1, numberOfAdults: '2', numberOfChildren: '0', childrenAge:[0]  }
+        ]
+        roomArr.forEach((x) => {
+        this.hotelSearchForm.value.rooms = ""
+        this.roomsDetails.push(this.modifyDetails(x));
+        });
+
     }
   }
 
@@ -191,15 +196,10 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren - 1;
-      if(item.value.childrenAge != '')
-      {
-        if(!Array.isArray(item.value.childrenAge))
-        {
-          item.value.childrenAge = item.value.childrenAge.split(',')
-        }
-      }
-      item.value.childrenAge.pop()
+        var lastCommaIndex = item.value.childrenAge.lastIndexOf(",");
+        item.value.childrenAge = item.value.childrenAge.substr(0,lastCommaIndex);
 
+       /*
       if (this.submitted) {
         var rooms = this.hotelSearchForm.value.rooms;
         var j = 0;
@@ -215,6 +215,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
           }
           j++;
         });
+
+
         if (!isvalid) {
           var id1 = document.getElementById("error_AllAge")
           id1.hidden = false;
@@ -223,7 +225,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
           var id1 = document.getElementById("error_AllAge")
           id1.hidden = true;
         }
-      }
+      }*/
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
@@ -250,10 +252,10 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
   showTotalCountsOfChild() {
     let totalOfChild: any;
-    totalOfChild = this.hotelSearchForm.value.rooms
-    this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren)
-      .map((item) => +item.numberOfChildren)
-      .reduce((sum, current) => sum + current);
+    totalOfChild = this.hotelSearchForm.value.rooms;
+
+
+    this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
   }
 
 
@@ -264,7 +266,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   personDetails(): FormGroup {
     return this._fb.group({
         room: [1],
-        numberOfAdults: ['1'],
+        numberOfAdults: ['2'],
         numberOfChildren: ['0'],
         childrenAge:['0']
       })
@@ -329,20 +331,22 @@ focusInput(){
     this.showHideGuest.nativeElement.style.display = "block";
   }
 
-  getAgeValue(ageArray,index,age){
-
-  if(ageArray){
+  getAgeValue(ageArray,index){
+  if(ageArray[index] !=0 && ageArray[index] != undefined && ageArray[index] != null){
   if (ageArray.indexOf(',') > -1) {
   const myArray = ageArray.split(",");
-  console.log(myArray[index]);  console.log(age);
-  if(age==myArray[index]) return true; else return false;
+  return myArray[index];
   }else{
-  if(age=ageArray) return true; else return false;
+  if(Array.isArray(ageArray))
+  return ageArray[index];
+  else
+  return ageArray;
   }
   }
   }
 
   onSelectAge(event, item, i) {
+
 
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
@@ -357,8 +361,10 @@ focusInput(){
     if (selectAge1 != null && selectAge2 != null && selectAge3 != null) {
       ageArr = [selectAge1.value, selectAge2.value, selectAge3.value]
     }
+
     item.value.childrenAge = ageArr;
-    if (this.submitted) {
+
+    /*if (this.submitted) {
       var rooms = this.hotelSearchForm.value.rooms;
       var j = 0;
       var isvalid = true;
@@ -382,7 +388,7 @@ focusInput(){
         id1.hidden = true;
       }
     }
-
+  */
 
   }
 
@@ -449,21 +455,35 @@ focusInput(){
     var i = 0;
     var isvalid = true;
     rooms.forEach(z => {
-      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || (z.childrenAge != ""  && z.childrenAge.find(a=>a =='0')))  && z.numberOfChildren > 0) {
+    if(z.numberOfChildren >0 ){
+    if(Array.isArray(z.childrenAge))
+     var childrenAgeArray = z.childrenAge;
+    else
+    var childrenAgeArray = z.childrenAge.split(',');
+
+        let loopvalid=0;
+        for(let i=0;i<(childrenAgeArray.length);i++){
+        if(childrenAgeArray[i] < 1) loopvalid++;
+        }
+
+     if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
+         var id = document.getElementById("error_" + i)
+        id.hidden = true;
+         isvalid = true;
+        console.log('valid');
+     }else{
         var id = document.getElementById("error_" + i)
         id.hidden = false;
         isvalid = false;
-      } else {
-        var id = document.getElementById("error_" + i)
-        id.hidden = true;
-      }
+     }
       i++;
+      }
     });
+
 
     if (this.hotelSearchForm.invalid) {
       return
-    }
-    else if (!isvalid) {
+    } else if (!isvalid) {
       var id1 = document.getElementById("error_AllAge")
       id1.hidden = false;
       return
