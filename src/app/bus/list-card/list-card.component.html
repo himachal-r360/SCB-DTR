@@ -10,7 +10,7 @@
             <div class="col-md-5 p0-cut">
                 <div class="row">
                     <div class="float-left col-md-4 w-15-r">
-                        <div class="label-name">{{bus.departureTime | date:'HH:mm'}}</div>
+                        <div class="label-name f-bold">{{bus.departureTime | date:'HH:mm'}}</div>
 
                         <div class="label-gray hide-m">{{busHelper.getBoarding(bus.boardingTimes,bus.departureTime| date:'HH:mm')}}</div>
                         <div class="text-left" *ngIf="nextDayFlag">
@@ -23,7 +23,7 @@
                         <div class="label-gray label-pos">{{busHelper.timeDifferMin(bus.arrivalTime,bus.departureTime)}}</div>
                     </div>
                     <div class="float-left col-md-3 offset-md-1  w-15-r ">
-                        <div class="label-name">{{bus.arrivalTime | date:'HH:mm'}}</div>
+                        <div class="label-name f-bold">{{bus.arrivalTime | date:'HH:mm'}}</div>
                         <div class="label-gray hide-m">{{busHelper.getDropping(bus.droppingTimes,bus.arrivalTime| date:'HH:mm')}}</div>
                     </div>
 
@@ -35,7 +35,7 @@
                     <div class="col-md-4 offset-md-2  float-right w-33">
                         <div class="float-left">
                             <div class="label-gray">From</div>
-                            <div class="label-name list-label-name-font"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                            <div class="label-name price_from"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
