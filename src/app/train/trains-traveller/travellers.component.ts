@@ -330,7 +330,6 @@ export class TrainsTravellerComponent implements OnInit {
     }
 
     ngOnInit() {
-       //  this.titleService.setTitle('Home | IRCTC');
         var datePipe = new DatePipe('en-US');
         this.masterBerth = AppConfig.IRCTC_Berth;
         this.masterFood = AppConfig.IRCTC_Food;

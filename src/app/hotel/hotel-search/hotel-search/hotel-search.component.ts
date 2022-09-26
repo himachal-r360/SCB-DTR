@@ -322,15 +322,13 @@ focusInput(){
     this.showHideGuest.nativeElement.style.display = "block";
   }
   
-  getAgeValue(ageArray,index,age){
-  
+  getAgeValue(ageArray,index){
   if(ageArray){
   if (ageArray.indexOf(',') > -1) { 
   const myArray = ageArray.split(",");
-  console.log(myArray[index]);  console.log(age);
-  if(age==myArray[index]) return true; else return false;
+  return myArray[index];
   }else{
-  if(age=ageArray) return true; else return false;
+  return ageArray;
   }
   }
   }

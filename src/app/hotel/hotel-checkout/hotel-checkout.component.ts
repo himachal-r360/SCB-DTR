@@ -306,7 +306,6 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    //this.titleService.setTitle('Home | Hotels');
 
     this.activatedRoute.url.subscribe(url => {
       this.resetPopups();

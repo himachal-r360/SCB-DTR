@@ -255,7 +255,7 @@
                                            
                                             <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}" required class="p-1" style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
-                                                <option value="{{age.value}}" [selected]="getAgeValue(item.value.childrenAge,0,age.value)"  *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                                <option value="{{age.value}}" [selected]="age.value == getAgeValue(item.value.childrenAge,0)"  *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
                                         <div *ngIf="item.value.numberOfChildren > 1" class="ms-2">
@@ -264,7 +264,7 @@
                                             </div>
                                             <select  (change)="onSelectAge($event,item , i)" id="selectAge2_{{i}}" class="p-1"  style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
-                                                <option value="{{age.value}}" [selected]="getAgeValue(item.value.childrenAge,1,age.value)" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                                <option value="{{age.value}}" [selected]="age.value == getAgeValue(item.value.childrenAge,1)" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
                                         <div *ngIf="item.value.numberOfChildren > 2" class="ms-2">
@@ -273,7 +273,7 @@
                                             </div>
                                             <select (change)="onSelectAge($event,item,i)" id="selectAge3_{{i}}" class="p-1"  style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
-                                                <option value="{{age.value}}" [selected]="getAgeValue(item.value.childrenAge,2,age.value)" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                                <option value="{{age.value}}" [selected]="age.value == getAgeValue(item.value.childrenAge,2)" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
 
