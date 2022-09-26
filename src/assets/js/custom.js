@@ -13,10 +13,6 @@ NOTE: This file contains all scripts for the actual Template.
 $(document).ready(function($) {
     // Whole Script Strict Mode Syntax
 	"use strict";
-	
-$(".dropdown").hover(function(){
- $('.list-travel').removeClass("hideDrop");
-});
 
     /*-------------------------------------------------------------
     :: window on scroll
