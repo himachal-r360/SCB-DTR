@@ -120,7 +120,9 @@ getTrainTypes(value: any){
 getStations(value: any,fieldvalue:any,stationdump:any){
         var values = [];
 	for (let val of value) {
-	 values.push({'stationCode':val[fieldvalue],'stationName':stationdump[val[fieldvalue]]+' ('+val[fieldvalue]+')','selected':false});
+    const str = stationdump[val[fieldvalue]]; 
+    const str2 = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); 
+	 values.push({'stationCode':val[fieldvalue],'stationName':str2+' ('+val[fieldvalue].toUpperCase()+')','selected':false});
 	}
 
 

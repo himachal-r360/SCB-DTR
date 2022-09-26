@@ -140,7 +140,7 @@ export class BusNewlistComponent implements OnInit, AfterViewInit, OnDestroy {
              this.nextIndex=this.busList.length;
              }
 
-            for (let n = this.pageIndex; n < this.nextIndex ; n++) {
+            for (let n = this.pageIndex-1; n < this.nextIndex ; n++) {
              const context = {
                 item: [this.busList[n]]
               };
@@ -263,8 +263,6 @@ goback() {
         this.busto = this.searchParam.searchTo;
         this.departure = this.searchParam.departure;
         this.tag = this.searchParam.t;
-        this.fromState=this.searchParam.fromState;
-        this.toState=this.searchParam.toState;
         this.fromState=this.searchParam.fromState;
         this.toState=this.searchParam.toState;
      this.busSearchCallBack(params);

@@ -97,7 +97,7 @@
                                         <div class="hotel_rooms">
                                             <div>
                                                 <p class="label">Room Type</p>
-                                                <p class="value"> {{searchResult.selectedHotel.roomType.roomTitle}}</p>
+                                                <p class="value mt-1 mb-1"> {{searchResult.selectedHotel.roomType.roomTitle}}</p>
                                                 <p class="label"> {{searchData.totalGuest}} Guests</p>
                                             </div>
                                             <div class="v_line">
@@ -116,6 +116,9 @@
                                                 <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
                                                 <p class="label" *ngIf="partnerToken=='Clearrip'"> {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5"></div>
                                         </div>
                                     </div>
                                     <div class="mlite_code d-block d-sm-none">
@@ -212,7 +215,7 @@
                                                     <div class="mb-20">
                                                         <p class="hotel_name">Cancellation Policy</p>
                                                     </div>
-                                                    <div>
+                                                    <div class="policy_no_gap">
                                                         <p class="hotel_address">{{searchResult.selectedHotel.cancellationPolicy}}</p>
                                                     </div>
                                                 </div>
@@ -443,6 +446,9 @@
                       <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.hasError('required','gstNumber')">
                         Please enter gst number.
                       </mat-error>
+                      <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.hasError('minlength','gstNumber')">
+                        Please enter valid gst number.
+                      </mat-error>
                       <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.hasError('pattern','gstNumber')">
                         Please enter valid gst number.
                       </mat-error>
@@ -640,8 +646,9 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                           
 
-                                            <!-- <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
+                                             <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div class="fare-list-font">
@@ -652,7 +659,7 @@
                             <p>&#8377; {{ partnerDiscount |number }}</p>
                           </div>
                         </div>
-                      </li>-->
+                      </li>
                                             <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 1">
                                                 <div class="fare-list-box">
                                                     <div class="fare-list-left">
@@ -836,7 +843,7 @@
                                 </div>
                             </li>
 
-                            <!-- <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
+                             <li class="fare-list-item" *ngIf="partnerDiscount>0.00">
                         <div class="fare-list-box">
                           <div class="fare-list-left">
                             <div class="fare-list-font">
@@ -847,7 +854,7 @@
                             <p>&#8377; {{ partnerDiscount |number }}</p>
                           </div>
                         </div>
-                      </li>-->
+                      </li>
                             <li class="fare-list-item" *ngIf="voucher_amount>0.00 && steps > 1">
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">

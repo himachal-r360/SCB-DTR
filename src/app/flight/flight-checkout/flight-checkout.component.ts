@@ -946,10 +946,11 @@ orderRetry:boolean=false;
 
 isPaynowClicked:boolean=false;
 continuePayment(){
-//console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
+//console.log($(".accordion-button:not(.collapsed)").attr("id"));
 switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
+        console.log('dddd');
         break;
         case 'tab-testPg':
         $('.btn-pay-test').trigger('click');
@@ -961,11 +962,14 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         $('.btn-pay-netbanking').trigger('click');
         break;  
         case 'tab-ccdcCards':
-        if($(".addCardTab[aria-selected='true']").attr("aria-selected"))
+        
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected")){
         $('.btn-pay-card').trigger('click');
-
-        if($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
+        }else if($(".addRupayTab[aria-selected='true']").attr("aria-selected")){
         $('.btn-pay-rupay').trigger('click');
+        }else{
+         $('.btn-pay-rupay').trigger('click');
+        }
 
         break;  
 
@@ -981,8 +985,6 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         $('.btn-pay-test').trigger('click');
         break;  
       }
-
-
 
 }
 
@@ -1053,6 +1055,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         this.adultsArrayM.push(this.passengerAdultFormCount);
 
       var i = Number(this.passengerAdultFormCount);
+      
 
       if (checkboxIndex != -1)
         this.saveAdultTravellerId[checkboxIndex] = i;
@@ -1223,7 +1226,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         }
       }
     }
-    this.passengerAdultFormCount--;
+  //  this.passengerAdultFormCount--;
     
     this.passengerForm.removeControl('adult_id' + val);
     this.passengerForm.removeControl('adult_title' + val);
@@ -1437,7 +1440,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.child.splice(val, 1);
-    this.passengerChildFormCount--;
+   // this.passengerChildFormCount--;
 
   }
 
@@ -1557,7 +1560,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-      this.passengerInfantFormCount++;
+      //this.passengerInfantFormCount++;
 
       if (checkboxIndex != -1) {
         $('#travelPassenger_' + checkboxIndex).prop('checked', true);
@@ -1627,7 +1630,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.infant.splice(val, 1);
-    this.passengerInfantFormCount--;
+   // this.passengerInfantFormCount--;
 
   }
 
@@ -1661,7 +1664,6 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
   }
 
 
-  /**--------------------------------------SAVED TRAVELLER ------------------------------------------------------------------------ */
   checksavedtraveller() {
     let checksavedtravConfig = this.serviceSettings.enablesavedTraveller
     if (checksavedtravConfig == 1) {
@@ -3199,12 +3201,21 @@ saveTravellerArray=[];
         else
         saveTraveller=0;
       
-      
+      let adult_title='';  let adult_first_name=''; let adult_last_name='';
 
       for (let i = 1; i < (this.passengerAdultFormCount); i++) {
 
         let adult_data = {};
-
+       if(this.passengerForm.controls['adult_title' + i]){
+       
+         if(adult_title==''){
+         adult_title=this.passengerForm.controls['adult_title' + i]['value'];
+         adult_first_name=this.passengerForm.controls['adult_first_name' + i]['value'];
+         adult_last_name=this.passengerForm.controls['adult_last_name' + i]['value'];
+         
+         }
+       
+       
         adult_data['title'] = this.passengerForm.controls['adult_title' + i]['value'];
         adult_data['firstName'] = this.passengerForm.controls['adult_first_name' + i]['value'];
         adult_data['lastName'] = this.passengerForm.controls['adult_last_name' + i]['value'];
@@ -3281,6 +3292,7 @@ saveTravellerArray=[];
         
 
         paxInfoCnt++;
+        }
       }
 
 
@@ -3288,7 +3300,7 @@ saveTravellerArray=[];
       for (let i = 1; i < (this.passengerChildFormCount); i++) {
 
         let child_data = {};
-
+  if(this.passengerForm.controls['child_title' + i]){
         child_data['title'] = this.passengerForm.controls['child_title' + i]['value'];
         child_data['firstName'] = this.passengerForm.controls['child_first_name' + i]['value'];
         child_data['lastName'] = this.passengerForm.controls['child_last_name' + i]['value'];
@@ -3365,12 +3377,13 @@ saveTravellerArray=[];
         
 
         paxInfoCnt++;
+        }
       }
 
       for (let i = 1; i < (this.passengerInfantFormCount); i++) {
 
         let infant_data = {};
-
+  if(this.passengerForm.controls['infant_title' + i]){
         infant_data['title'] = this.passengerForm.controls['infant_title' + i]['value'];
         infant_data['firstName'] = this.passengerForm.controls['infant_first_name' + i]['value'];
         infant_data['lastName'] = this.passengerForm.controls['infant_last_name' + i]['value'];
@@ -3403,15 +3416,15 @@ saveTravellerArray=[];
         var gender='Male';
 
         switch (this.passengerForm.controls['infant_title' + i]['value']) {
-        case 'Mr':
-        gender='Male';
-        break;
-        case 'Mrs':
-        gender='Female';
-        break;
-        case 'Ms':
-        gender='Female';
-        break;
+        // case 'Mr':
+        // gender='Male';
+        // break;
+        // case 'Mrs':
+        // gender='Female';
+        // break;
+        // case 'Ms':
+        // gender='Female';
+        // break;
         case 'Miss':
         gender='Female';
         break;
@@ -3446,6 +3459,7 @@ saveTravellerArray=[];
         }
 
         paxInfoCnt++;
+        }
       }
 
 
@@ -3599,9 +3613,9 @@ saveTravellerArray=[];
       }
 
       this.contactDatails = {
-        "title": this.passengerForm.controls['adult_title1']['value'],
-        "firstName": this.passengerForm.controls['adult_first_name1']['value'],
-        "lastName": this.passengerForm.controls['adult_last_name1']['value'],
+        "title": adult_title,
+        "firstName":adult_first_name,
+        "lastName": adult_last_name,
         "email": this.passengerForm.controls['passengerEmail']['value'],
         "address": "Lavelle Road",
         "mobile": this.passengerForm.controls['passengerMobile']['value'],
@@ -4332,7 +4346,6 @@ orderReferenceNumber:any;
 
   }
 
-  /***----- APPLY COUPON (--parent--) ------***/
   receiveCouponDetails($event) {
 
     if ($event.type == 0) {
@@ -4364,7 +4377,6 @@ orderReferenceNumber:any;
   }
 
 
-  /**----------REMOVE COUPON----------**/
   removeCoupon(coupon_id, coupon_amount) {
     this.coupon_id = '';
     this.coupon_name = '';

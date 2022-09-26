@@ -125,8 +125,8 @@
     </div>
 </div>
 <div class="container payment_cnt" *ngIf='voucherDiv && hasError==false'>
-    <div class="row">
-        <div class="col-md-6 col-12"><img src="{{cdnUrl}}images/smartbuy/icons/payment/voucher.svg" alt="Voucher"> Have a Voucher?</div>
+    <div class="row d-flex align-items-center">
+        <div class="col-md-6 col-12 "><img src="{{cdnUrl}}images/smartbuy/icons/payment/voucher.svg" alt="Voucher" class="pe-2"> <span class="text_highlight_bold">Have a Voucher?</span></div>
         <div class="col-md-6 col-12 text-sm-end text-start">
             <div (click)="voucherForm()" *ngIf="!voucherapplyform" class="voucher_apply">Apply Voucher</div>
         </div>
@@ -197,8 +197,8 @@
     </div>
 </div>
 <div class="container payment_cnt" *ngIf="addcardDiv && hasError==false">
-    <div class="row">
-        <div class="col-md-6 col-12"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.svg" alt="Voucher"> Add a card to redeem points</div>
+    <div class="row d-flex align-items-center">
+        <div class="col-md-6 col-12"><img src="{{cdnUrl}}images/smartbuy/icons/payment/new_card.svg" alt="Voucher" class="pe-2"><span class="text_highlight_bold"> Add a card to redeem points </span></div>
         <div class="col-md-6 col-12 text-sm-end text-start">
             <div (click)="addCardform()" *ngIf="!voucheraddform" class="voucher_apply">Add Card</div>
         </div>
@@ -213,7 +213,7 @@
 
                     <div class="row">
                         <div class="col-sm-4 col-12 ">
-                            <div class="row two-inputs m-0">
+                            <div class="row m-0">
 
                                 <div class=" p-0">
                                     <input class="cus-input" type="text" formControlName="last4digit" placeholder="1234" autocomplete="nope" (keypress)="numberInput($event);AvoidSpace($event)" name="first4digit" maxlength="4">

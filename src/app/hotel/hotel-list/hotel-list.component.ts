@@ -162,6 +162,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
+
     }
 
     //$('.scrollToTop').trigger('click');
@@ -237,14 +238,9 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.searchHotel();
     // });
   }
-  resetPopups() {
 
-    $(".modal").hide();
-    $("body").removeAttr("style");
-    $(".modal-backdrop").remove();
-  }
-  getSearchData(){
-   // console.log(this.route.snapshot.queryParams)
+  getSearchData() {
+    // console.log(this.route.snapshot.queryParams)
     const urlParam = this.route.snapshot.queryParams;
     this.searchData = urlParam;
     this.hotelSearchForm.get('checkIn').setValue(this.searchData.checkIn);
@@ -276,8 +272,10 @@ export class HotelListComponent implements OnInit, OnDestroy {
     {
       var objKeys = Object.keys(urlParam); // get all object Keys
       var objSearch = {};
+      
+   
+      
       for (var j = 0; j < objKeys.length; j++) {
-
         if (objKeys[j].indexOf("[" + i + "]") > -1) {
           var objKey = objKeys[j].substring(0, objKeys[j].length - 3);
           var objKeyVal = urlParam[objKeys[j]];
@@ -289,6 +287,8 @@ export class HotelListComponent implements OnInit, OnDestroy {
         hotelSearchArr.push(objSearch); // Add object in array.
       }
     }
+    
+    
     this.hotelSearchForm.value.rooms = hotelSearchArr;
    // console.log(this.hotelSearchForm.value);
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
@@ -317,7 +317,12 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
     localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
   }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   headerHideShow(event: any) {
     this.isMobile = window.innerWidth < 991 ? true : false;
     if (this.isMobile) {
@@ -369,22 +374,22 @@ export class HotelListComponent implements OnInit, OnDestroy {
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
     console.log(hotelListConst , "hotel list ");
-
+    var applyStar = false;
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
       var data = [];
       if (z.active) {
-
+        applyStar = true;
         data = this.hotelList.filter(x => {
           return x.hotelInfo.starRating == z.value;
         })
 
         StarFiltereddata.push(...data);
         console.log(StarFiltereddata , "start filter");
-        
+
       }
     });
-    if (StarFiltereddata.length > 0) {
+    if (applyStar) {
       this.hotelList = StarFiltereddata;
       console.log(this.hotelList , "start filter2");
     }
@@ -592,7 +597,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
 
   BookingSummery(hotelkey: string, hotel: any, selectedPartner: any) {
- // console.log(hotel);
     let hotelDetailsArr: any = {
       "docKey": this.docKey,
       "hotelkey": hotelkey,

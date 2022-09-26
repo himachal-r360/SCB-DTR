@@ -518,7 +518,8 @@
                         <div class="form-group flex_basis">
                             <p class="label_head"><span>Rooms & Guests</span> </p>
                             <div class="travelSelect opt_box">
-                                <input type="text" class="form-control travelInput travelInputPop" id="" value="{{hotelInputText}}" readonly (click)="displayTravel(2)"><span class="material-icons arrowDn_icon_m">expand_more</span>
+                                <input type="text" class="form-control travelInput travelInputPop" id="" value="{{hotelInputText}}" readonly (click)="displayTravel(2)">
+                                <span class="material-icons arrowDn_icon_m travelInputPop"  (click)="displayTravel(2)">expand_more</span>
                                 <div *ngIf="submittedHotel && showHotelPassengerError" class="error_msg">
                                     <span class="error_msg2">Please choose child age</span>
                                 </div>
@@ -661,7 +662,12 @@
                                     </div>
                                 </div>
                                 <div class="travelSelect opt_box">
+<<<<<<< HEAD
                                     <input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly (click)="displayTravel(1)"> <span (click)="displayTravel(1)" class="material-icons arrowDn_icon">expand_more</span>
+=======
+                                    <div (click)="displayTravel(1)">
+                                    <input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly > <span class="material-icons arrowDn_icon travelInputFlightPop">expand_more</span></div>
+>>>>>>> 978c24306462e78d7e7e011de69c69b96a20d6d5
                                     <div class="travelList travelListFlightPop" *ngIf="showFlightPassenger">
                                         <div class="">
                                             <ul>
@@ -699,6 +705,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="opt_box">
 
@@ -1343,7 +1350,7 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <mat-calendar [minDate]="minDateHotelToMlite" (selectedChange)="onSelectMliteDate($event,'hotel','arrival')" [selected]="arrival"></mat-calendar>
+                                                        <mat-calendar [minDate]="minDateHotelToMlite" (selectedChange)="onSelectMliteDate($event,'hotel','arrival')" [selected]="hotelCheckout"></mat-calendar>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <div class="select_city d-block mb-15">
