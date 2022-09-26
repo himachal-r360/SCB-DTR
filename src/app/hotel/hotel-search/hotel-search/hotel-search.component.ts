@@ -24,6 +24,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   queryText:any;
   submitted:boolean = false;
   latestDate = new Date();
+  minCheckoutDate = new Date();
   cityName = 'New Delhi';
   continueSearchHotel;
   searchEvent;
@@ -99,13 +100,14 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       numberOfRooms: [1],
       totalGuest:[]
     });
-
+    this.minCheckoutDate.setDate( this.minCheckoutDate.getDate() + 1 );
 
   }
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ?  true : false;
-    this.getSearchValue = localStorage.getItem(environment.hotelLastSearch)
+    this.getSearchValue = localStorage.getItem(environment.hotelLastSearch);
+
     if(this.getSearchValue != undefined || this.getSearchValue != null){
       this.getSearchValueLocalStorage();
     }
@@ -149,6 +151,10 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       });
       this.showTotalCountOfAdult();
       this.showTotalCountsOfChild();
+        const d = new Date(modifySearchValue.checkIn);
+       d.setDate(d.getDate() + 1);
+       this.minCheckoutDate = d;
+      
     }
   }
   //Increase Child and adult value
@@ -295,6 +301,18 @@ focusInput(){
   checkInDate(event){
     event = event.target.value;
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
+          const d = new Date(event);
+       d.setDate(d.getDate() + 1);
+ 
+       var compare1 = new Date(d).getTime();
+       var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
+ 
+       this.minCheckoutDate = d;
+      if (compare1 > compare2) {
+        this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
+        this.hotelSearchForm['controls']['checkOut'].setValue(moment(this.minCheckoutDate).format('YYYY-MM-DD'));
+      }
+
     this.checkOut.nativeElement.click();
   }
 
@@ -303,8 +321,22 @@ focusInput(){
     this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
     this.showHideGuest.nativeElement.style.display = "block";
   }
+  
+  getAgeValue(ageArray,index,age){
+  
+  if(ageArray){
+  if (ageArray.indexOf(',') > -1) { 
+  const myArray = ageArray.split(",");
+  console.log(myArray[index]);  console.log(age);
+  if(age==myArray[index]) return true; else return false;
+  }else{
+  if(age=ageArray) return true; else return false;
+  }
+  }
+  }
 
   onSelectAge(event, item, i) {
+  
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
     let selectAge2: any = document.getElementById('selectAge2_' + i);
@@ -437,9 +469,6 @@ focusInput(){
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
-      
-      //console.log(this.hotelSearchForm.value);return;
-      
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.hotelSearchCallBack(this.hotelSearchForm.value)
@@ -452,13 +481,16 @@ focusInput(){
   onSelectMliteDate(event, field) {
 
     if (field == 'checkin') {
-
       this.hotelSearchForm['controls']['checkIn'].setValue(event);
-      var compare1 = new Date(event).getTime();
-      var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
+             const d = new Date(event);
+       d.setDate(d.getDate() + 1);
+      var compare1 = new Date(d).getTime();
+       var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
+
+       this.minCheckoutDate = d;
       if (compare1 > compare2) {
-        this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
-        this.hotelSearchForm['controls']['checkOut'].setValue(moment(event).format('YYYY-MM-DD'));
+        this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
+        this.hotelSearchForm['controls']['checkOut'].setValue(moment(this.minCheckoutDate).format('YYYY-MM-DD'));
       }
     } else {
       this.hotelSearchForm['controls']['checkOut'].setValue(moment(event).format('YYYY-MM-DD'));
@@ -471,9 +503,12 @@ focusInput(){
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
+    
       $('#flight_arrival_mlite').modal('show');
       $('#flight_departure_mlite').modal('hide');
     }
 
   }
 }
+
+

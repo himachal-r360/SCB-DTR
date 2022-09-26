@@ -20,6 +20,8 @@ import { CouponsModule } from 'src/app/coupons/coupons.module';
 import { PaymentModule } from 'src/app/payment/payment.module';
 import { AmenitiesFilterPipe } from '../pipes/amenities-filter.pipe';
 import { HotelBookingRetryComponent } from './hotel-booking-retry/hotel-booking-retry.component';
+
+
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
   {path:"hotel-detail",component:HotelDetailComponent},

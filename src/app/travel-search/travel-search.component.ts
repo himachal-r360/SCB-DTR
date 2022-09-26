@@ -460,15 +460,18 @@ export class TravelSearchComponent implements OnInit {
            case 'hotel': {
       if(field=='departure'){
         this.hotelCheckin = event;
-         this.minDateHotelToMlite=event;
+        
+              const d = new Date(event);
+       d.setDate(d.getDate() + 1);
+        this.minDateHotelToMlite=d;
         this.hotelCheckinMlite = moment(event).format('DD/MM/YYYY');
-        var compare1 = new Date(event).getTime();
+        
+        var compare1 = new Date(d).getTime();
         var compare2 = new Date(this.hotelCheckout).getTime();
         if(compare1 > compare2){
-        this.hotelCheckoutMlite=(moment(event).format('DD/MM/YYYY'));
-        this.hotelCheckout = event;
-        
-        this.searchFlightForm['controls']['hotelCheckout'].setValue(moment(event).format('DD/MM/YYYY'));
+        this.hotelCheckoutMlite=(moment(d).format('DD/MM/YYYY'));
+        this.hotelCheckout = d;
+       // this.searchFlightForm['controls']['hotelCheckout'].setValue(d);
         }
         
       }else{
@@ -1064,17 +1067,23 @@ check_traveller_count(type) {
         this.searchHotelForm['controls']['hotelId'].setValue(this.hotelId);
         this.searchHotelForm['controls']['countryId'].setValue(this.countryId);
         this.searchHotelForm['controls']['roomCount'].setValue(this.roomCount);
+        
+              
+        const d = new Date(lastHotelSearchValue.checkIn);
+        d.setDate(d.getDate() + 1);
+
+        this.minDateHotelToMlite=d;
 
 
-
-        var date8 = new Date(lastHotelSearchValue.checkIn).getTime();
+        var date8 = new Date(d).getTime();
         if(date1 <= date8){
 
         this.hotelpickerDefaultFMlite=new Date(datePipe.transform(lastHotelSearchValue.checkIn, 'YYYY-MM-dd', 'en-ES'));
         this.hotelpickerDefaultTMlite=new Date(datePipe.transform(lastHotelSearchValue.checkOut, 'YYYY-MM-dd', 'en-ES'));
         this.searchHotelForm['controls']['hotelCheckin'].setValue(datePipe.transform(lastHotelSearchValue.checkIn, 'dd/MM/YYYY', 'en-ES'));
          this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(lastHotelSearchValue.checkOut, 'dd/MM/YYYY', 'en-ES'));
-
+         
+         
 
         this.hotelCheckin = this.hotelpickerDefaultFMlite;
         this.hotelCheckout =  this.hotelpickerDefaultTMlite;
@@ -1087,7 +1096,7 @@ check_traveller_count(type) {
       
 
       let localRooms=(lastHotelSearchValue.rooms);
-      
+
 
           const controlArray = <FormArray> this.searchHotelForm.get('rooms');
            for (let room = 0; room < localRooms.length; room++) {
@@ -1476,7 +1485,7 @@ check_traveller_count(type) {
         this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
       }
       this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
+     // localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
   }
   sameCityValidation = false;
     isMobile:boolean= false;
@@ -1534,8 +1543,8 @@ check_traveller_count(type) {
 
         this.flightSearchCallBack(searchValue);
 
-        localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
-        localStorage.setItem('isMulticitySearch','false');
+      //  localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
+       // localStorage.setItem('isMulticitySearch','false');
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
         if(searchValue.arrival)
@@ -1674,34 +1683,10 @@ check_traveller_count(type) {
         departure:xss(uDate),
         cdeparture:xss(cDate),
         };
-
        
 
-        this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
-        var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
-        const cookieExists: boolean = this.cookieService.check('busSearchN');
-        if(cookieExists){       
-        var getValue= JSON.parse(this.cookieService.get( 'busSearchN'));
-        cookieArray = getValue.filter(a => { return  a['cookieKey'] != searchKey;     });
-        if(cookieArray.length > 2)
-        cookieArray.shift();
-        cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }else{
-         cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }
-        localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
+       // localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
 
-        this.cookieService.delete('busSearchN');
-        if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
-        const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
-        if(cookieExistsConsent){  
-        var coval= this.cookieService.get(this.serviceSettings.cookieName);
-        if(coval=='1')
-        this.cookieService.set( 'busSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict'); 
-        }
-        }else{
-         this.cookieService.set( 'busSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict');
-        }
           $(".close-bottomsheet").trigger( "click" );
 
         delete this.searchArray["cdeparture"];
@@ -1761,31 +1746,10 @@ check_traveller_count(type) {
         cdeparture:xss(cDate),
         trainQuota:xss(this.searchTrainForm.controls.trainQuota.value),
         };
-        this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
-        var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
-        const cookieExists: boolean = this.cookieService.check('irctcSearchN');
-        if(cookieExists){       
-        var getValue= JSON.parse(this.cookieService.get( 'irctcSearchN'));
-        cookieArray = getValue.filter(a => { return  a['cookieKey'] != searchKey;     });
-        if(cookieArray.length > 2)
-        cookieArray.shift();
-        cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }else{
-         cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }
-        localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
 
-        this.cookieService.delete('irctcSearchN');
-        if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
-        const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
-        if(cookieExistsConsent){  
-        var coval= this.cookieService.get(this.serviceSettings.cookieName);
-        if(coval=='1')
-        this.cookieService.set( 'irctcSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict'); 
-        }
-        }else{
-         this.cookieService.set( 'irctcSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict');
-        }
+       // localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
+
+
           $(".close-bottomsheet").trigger( "click" );
         delete this.searchArray["cdeparture"];
         
@@ -1989,6 +1953,9 @@ switch(service) {
           }
 
         }
+        
+        document.getElementById("searchHotelForm").scrollIntoView({ behavior: 'smooth' });
+        
     }
 
 
@@ -2165,12 +2132,14 @@ switch(service) {
     }
   }
     if(service=='hotel'){
-      this.minDateHotelToMlite=event.value;
-      var compare1 = new Date(event.value).getTime();
+      const d = new Date(event.value);
+       d.setDate(d.getDate() + 1);
+      this.minDateHotelToMlite=d;
+      var compare1 = new Date(this.minDateHotelToMlite).getTime();
       var compare2 = new Date(this.hotelpickerDefaultTMlite).getTime();
        if(compare1 > compare2){
-        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(event.value, 'dd/MM/YYYY', 'en-ES'));
-        this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(event.value, 'dd/MM/YYYY', 'en-ES'));
+        this.hotelpickerDefaultTMlite=new Date(datePipe.transform(this.minDateHotelToMlite, 'dd/MM/YYYY', 'en-ES'));
+        this.searchHotelForm['controls']['hotelCheckout'].setValue(datePipe.transform(this.minDateHotelToMlite, 'dd/MM/YYYY', 'en-ES'));
        }
         $("#"+channel+"HotelToPicker").trigger( "click" );
 

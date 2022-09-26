@@ -482,7 +482,10 @@ export class HeaderComponent implements OnInit {
     this.viewMoreBox = true;
     this.viewLessBox = false;
   }
+enableDrop(){
+ $('.list-travel').removeClass("hideDrop");
 
+}
   
   toastClose(pushpopid){
     document.getElementById('toast_'+pushpopid).style.display = 'none'
