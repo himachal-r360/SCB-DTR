@@ -455,13 +455,13 @@ focusInput(){
     var i = 0;
     var isvalid = true;
     rooms.forEach(z => {
+    if(z.numberOfChildren >0 ){
     if(Array.isArray(z.childrenAge))
      var childrenAgeArray = z.childrenAge;
     else
     var childrenAgeArray = z.childrenAge.split(',');
     
         let loopvalid=0;
-
         for(let i=0;i<(childrenAgeArray.length);i++){
         if(childrenAgeArray[i] < 1) loopvalid++;
         }
@@ -469,6 +469,7 @@ focusInput(){
      if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
          var id = document.getElementById("error_" + i)
         id.hidden = true;
+         isvalid = true;
         console.log('valid');
      }else{
         var id = document.getElementById("error_" + i)
@@ -476,7 +477,9 @@ focusInput(){
         isvalid = false;
      }
       i++;
+      }
     });
+    
 
     if (this.hotelSearchForm.invalid) {
       return
