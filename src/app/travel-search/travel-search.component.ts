@@ -1485,7 +1485,7 @@ check_traveller_count(type) {
         this.continueSearchFlights=this.continueSearchFlights.slice(0,3);
       }
       this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
-      localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
+     // localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
   }
   sameCityValidation = false;
     isMobile:boolean= false;
@@ -1543,8 +1543,8 @@ check_traveller_count(type) {
 
         this.flightSearchCallBack(searchValue);
 
-        localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
-        localStorage.setItem('isMulticitySearch','false');
+      //  localStorage.setItem(environment.flightLastSearch,JSON.stringify(searchValue));
+       // localStorage.setItem('isMulticitySearch','false');
         searchValue.departure=moment(searchValue.departure).format('YYYY-MM-DD');
 
         if(searchValue.arrival)
@@ -1603,7 +1603,7 @@ check_traveller_count(type) {
         let totalGuest=0;
         $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
         totalGuest+=(jsonObject['hotel_adult'])+(jsonObject['hotel_child']);
-        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge['+j+']=';
+        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge=';
        if(jsonObject['child_age'].length > 0){
          for (let k = 0; k < jsonObject['child_age'].length; k++) {
          queryParam+=jsonObject['child_age'][k]['age'];
@@ -1683,34 +1683,10 @@ check_traveller_count(type) {
         departure:xss(uDate),
         cdeparture:xss(cDate),
         };
-
        
 
-        this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
-        var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
-        const cookieExists: boolean = this.cookieService.check('busSearchN');
-        if(cookieExists){       
-        var getValue= JSON.parse(this.cookieService.get( 'busSearchN'));
-        cookieArray = getValue.filter(a => { return  a['cookieKey'] != searchKey;     });
-        if(cookieArray.length > 2)
-        cookieArray.shift();
-        cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }else{
-         cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }
-        localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
+       // localStorage.setItem(environment.busLastSearch, JSON.stringify(this.searchArray));
 
-        this.cookieService.delete('busSearchN');
-        if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
-        const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
-        if(cookieExistsConsent){  
-        var coval= this.cookieService.get(this.serviceSettings.cookieName);
-        if(coval=='1')
-        this.cookieService.set( 'busSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict'); 
-        }
-        }else{
-         this.cookieService.set( 'busSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict');
-        }
           $(".close-bottomsheet").trigger( "click" );
 
         delete this.searchArray["cdeparture"];
@@ -1770,31 +1746,10 @@ check_traveller_count(type) {
         cdeparture:xss(cDate),
         trainQuota:xss(this.searchTrainForm.controls.trainQuota.value),
         };
-        this.expiredDate.setDate( this.expiredDate.getDate() + 30 );
-        var searchKey=this.searchArray.fromTravelCode+this.searchArray.toTravelCode+cookieDate;
-        const cookieExists: boolean = this.cookieService.check('irctcSearchN');
-        if(cookieExists){       
-        var getValue= JSON.parse(this.cookieService.get( 'irctcSearchN'));
-        cookieArray = getValue.filter(a => { return  a['cookieKey'] != searchKey;     });
-        if(cookieArray.length > 2)
-        cookieArray.shift();
-        cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }else{
-         cookieArray.push({cookieKey:searchKey,cookieValue : this.searchArray});
-        }
-        localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
 
-        this.cookieService.delete('irctcSearchN');
-        if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
-        const cookieExistsConsent: boolean = this.cookieService.check(this.serviceSettings.cookieName);
-        if(cookieExistsConsent){  
-        var coval= this.cookieService.get(this.serviceSettings.cookieName);
-        if(coval=='1')
-        this.cookieService.set( 'irctcSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict'); 
-        }
-        }else{
-         this.cookieService.set( 'irctcSearchN', JSON.stringify(cookieArray),  this.expiredDate,'/','',true,'Strict');
-        }
+       // localStorage.setItem(environment.trainLastSearch, JSON.stringify(this.searchArray));
+
+
           $(".close-bottomsheet").trigger( "click" );
         delete this.searchArray["cdeparture"];
         
@@ -1998,6 +1953,9 @@ switch(service) {
           }
 
         }
+        
+        document.getElementById("searchHotelForm").scrollIntoView({ behavior: 'smooth' });
+        
     }
 
 

@@ -412,18 +412,22 @@
                                         <div class="newCardsAddSection" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
 
                                             <div class="tab_btn_payments">
-                                                <ul class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
+                                                <!-- <ul class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
                                                     <li class="nav-item" *ngIf="pgSettingsCYBER " >
                                                         <a class="nav-link addCardTab" [ngClass]="{'active': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true">Visa / MasterCard / Diners</a>
                                                     </li>
                                                     <li class="nav-item" *ngIf="pgSettingsHDFCPG ">
                                                         <a class="nav-link addRupayTab"  [ngClass]="{'active': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false">Rupay</a>
                                                     </li>
-                                                </ul>
+                                                </ul> -->
+                                                <mat-radio-group aria-label="" class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
+                                                    <mat-radio-button class="addCardTab" checked [ngClass]="{'active': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true" value="addCard">Visa / MasterCard / Diners</mat-radio-button>
+                                                    <mat-radio-button class="addRupayTab" [ngClass]="{'active': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false" value="rupayCard">Rupay</mat-radio-button>
+                                                </mat-radio-group> 
                                                 <div class="tab-content pt-0" id="pills-tabContent">
                                                     <div class="tab-pane fade  " [ngClass]="{'active show': pgSettingsCYBER   }" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
                                                         <div>
-                                                            <div class="common_title">
+                                                            <div class="common_title d-none">
                                                                 <span class="">Add Visa / MasterCard / Diners</span>
                                                             </div>
                                                             <div>
@@ -437,8 +441,8 @@
                                                                     <div class="contact-form">
                                                                         <div class="new-card-info-2 xs-mti-50">
                                                                             <div class="">
-                                                                                <div class="col-12">
-                                                                                    <div class="col-12 p-0">
+                                                                                <div class="row g-3">
+                                                                                    <div class="col-12 ">
                                                                                         <mat-form-field appearance="outline" class="w-100">
                                                                                             <mat-label>Card Number</mat-label>
                                                                                             <input matInput placeholder="" formControlName="cardnumber" name="cardnumber" id="cardnumber" maxlength="19" [cleave]="{creditCard: true,delimiter:'-'}" autocomplete="off" type="tel">
@@ -455,7 +459,6 @@
                                                                                         </div>
 
                                                                                     </div>
-                                                                                    <div class="row">
                                                                                         <div class="col-6  col-xl-6">
                                                                                             <mat-form-field class="w-100" appearance="outline">
                                                                                                 <mat-label>Expiry Month</mat-label>
@@ -481,8 +484,6 @@
                                                                                                 <small *ngIf="creditForm.controls.expiryYear.errors.pattern">Please enter a valid data</small>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                    <div class="row">
                                                                                         <div class="col-6 col-md-4">
                                                                                             <mat-form-field class="w-100" appearance="outline">
                                                                                                 <mat-label>CVV</mat-label>
@@ -505,7 +506,6 @@
                                                                                                 <small *ngIf="creditForm.controls.nameoncard.errors.required">Card Holder Name is required</small>
                                                                                             </div>
                                                                                         </div>
-                                                                                    </div>
 
                                                                                 </div>
 
@@ -563,7 +563,7 @@
                                                     </div>
                                                     <div class="tab-pane fade" id="pills-rupayCard" [ngClass]="{'active show': pgSettingsHDFCPG && !pgSettingsCYBER   }" role="tabpanel" aria-labelledby="rupayCard" *ngIf="pgSettingsHDFCPG ">
                                                         <div>
-                                                            <div class="common_title">
+                                                            <div class="common_title d-none">
                                                                 <span class="">Rupay Card</span>
                                                             </div>
                                                             <form [formGroup]="hdfcPgForm" >
@@ -699,6 +699,11 @@
                                                 <a class="nav-link" id="dc-emi"  (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
                                             </li>
                                         </ul>
+                                        <!-- <mat-radio-group aria-label="" class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
+                                            <mat-radio-button class="ccemiTab" checked (click)="hidecheckoutPay(0)" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true" value="cc-emi">Credit Card EMI</mat-radio-button>
+                                            <mat-radio-button class="dc-emi" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1); pgSelect('DEBIT_EMI')" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false" value="dc-emi">Debit Card EMI</mat-radio-button>
+                                        </mat-radio-group>  -->
+                                        <!--  <mat-radio-button class="dc-emi" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1);" (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false" value="dc-emi">Debit Card EMI</mat-radio-button> -->
                                         <div class="tab-content" id="pills-tabContent">
                                             <div class="tab-pane fade show active" id="pills-cc-emi" role="tabpanel" aria-labelledby="cc-emi">
                                                 <div>

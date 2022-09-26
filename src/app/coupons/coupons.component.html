@@ -18,9 +18,9 @@
                 <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error error_msg">Please enter Promo Code.</span>
                 </span>
                 <span class="promo-error pl-2 pl-md-0 error_msg" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
-                <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">
+                <!-- <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">
                    <span *ngIf="!couponError && coupon_amount >0"> Congratulations! Promo discount of <br/> ₹{{coupon_amount | number : '1.2-2'}} applied successfully.</span>
-                </p>
+                </p> -->
              </div>
           </div>
           <ng-container *ngIf="SHOWCAPTCHA">
@@ -59,7 +59,11 @@
                                <span class="promo-error pl-2 pl-md-0" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
                            </div>
                          </div> -->
-                      <p>{{coupon.coupon_description}} </p>
+                         <p class="text-green" *ngIf="!couponError && coupon_amount > 0"> 
+                          <!--  <img src="{{cdnUrl}}images/icons/couponsuccess.svg" > -->
+                           <span *ngIf="!couponError && coupon_amount >0"> Congratulations! Promo discount of <br/> ₹{{coupon_amount | number : '1.2-2'}} applied successfully.</span>
+                        </p>
+                      <p >{{coupon.coupon_description}} </p>
                    </label>
                 </div>
              </div>

@@ -5,7 +5,11 @@
                 <div class="col-md-12 p-0">
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
-                            <a href="javascript:;" (click)="triggerBack()">
+                            <a href="javascript:;" *ngIf="steps==1" (click)="triggerBack()">
+                                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                            </a>
+                            
+                        <a href="javascript:;"  *ngIf="steps==2"  (click)="moveTab(1)">
                                 <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
                             </a>
                         </div>
