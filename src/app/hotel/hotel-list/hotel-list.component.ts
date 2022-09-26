@@ -13,7 +13,7 @@ declare var $: any;
 @Component({
   selector: 'app-hotel-list',
   templateUrl: './hotel-list.component.html',
-  styleUrls: ['./hotel-list.component.sass', './hotel-list.component.css']
+  styleUrls: ['./hotel-list.component.scss']
 })
 export class HotelListComponent implements OnInit, OnDestroy {
   hotelSearchForm: any;
