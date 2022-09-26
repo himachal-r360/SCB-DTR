@@ -189,14 +189,21 @@
                                                 <div class="col-md-3 col-4">
                                                     <p *ngIf="baggageInfoOnwardMulti[searchi][i].checkIn;then checkIn_content else checkIn_blank">
                                                     </p>
-                                                    <ng-template #checkIn_content><p>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}</p>
+
+                                                
+                                                       <ng-template #checkIn_content><p>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}</p>
                                                     </ng-template>
-                                                    <ng-template #checkIn_blank><p>NA</p></ng-template>
+                                                    <ng-template #checkIn_blank><p>NA</p></ng-template> 
+                                                    
+                                                    
                                                 </div>
                                                 <div class="col-md-3 col-4">
                                                     <p *ngIf="baggageInfoOnwardMulti[searchi][i].cabin ;then cabin_content else cabin_blank"></p>
-                                                    <ng-template #cabin_content><p>{{ baggageInfoOnwardMulti[searchi][i].cabin }}</p></ng-template>
-                                                    <ng-template #cabin_blank><p>NA</p></ng-template>
+                                                    
+                                                       <ng-template #cabin_content><p>{{ baggageInfoOnwardMulti[searchi][i].cabin }}</p></ng-template>
+                                                    <ng-template #cabin_blank><p>NA</p></ng-template> 
+                                                    
+                                                    
                                                 </div>
 
                                             </div>
@@ -422,11 +429,13 @@
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                <ng-template #checkIn_content><p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
+                                                
+                                                <ng-template #checkIn_content> <p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
                                                 <ng-template #checkIn_blank><p>NA</p></ng-template>
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
+
                                                 <ng-template #cabin_content><p>{{ baggageInfoOnward[i].cabin }}</p></ng-template>
                                                 <ng-template #cabin_blank><p>NA</p></ng-template>
                                             </div>
@@ -612,12 +621,15 @@
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoReturn[i].checkIn;then checkIn_content else checkIn_blank"></p>
+
                                                 <ng-template #checkIn_content><p>{{ baggageInfoReturn[i].checkIn }}</p></ng-template>
                                                 <ng-template #checkIn_blank><p>NA</p></ng-template>
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoReturn[i].cabin ;then cabin_content else cabin_blank"></p>
-                                                <ng-template #cabin_content>{{ baggageInfoReturn[i].cabin }}</ng-template>
+                                            
+                                                <ng-template #cabin_content><p>{{ baggageInfoReturn[i].cabin }}</p></ng-template>
+
                                                 <ng-template #cabin_blank><p>NA</p></ng-template>
                                             </div>
 
@@ -3591,108 +3603,129 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn-primary-outline" (click)="gstReset()">Reset</button>
-                                        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
+                                        <button type="button" class="btn btn-primary-outline gst_btn" (click)="gstReset()">Reset</button>
+                                        <button type="button" class="btn btn-primary gst_btn" (click)="modal.close()">Close</button>
                                     </div>
                                 </ng-template>
 
-                                <div class="row" *ngIf="gstSelected">
-                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="row g-3" *ngIf="gstSelected">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-12">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>GST Number</mat-label>
                                             <input matInput placeholder="" formControlName="gstNumber" name="gstNumber" id="gstNumber" minlength="15" maxlength="15" autocomplete="off" (keypress)="AvoidSpace($event)" (keypress)="specialcharInputAddress($event)" (keyup)="convertToUpperCase($event);">
 
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
-                                            </mat-error>
-                                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('minlength','gstNumber')">
-                        Please enter valid gst number.
-                      </mat-error>
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
-                                            </mat-error>
                                         </mat-form-field>
 
-                                        <!-- <span *ngIf="submitted && passengerForm.controls[gstNumber]['errors']">
-                      <mat-error class="error_flight"
-                        *ngIf="passengerForm.hasError('required','infant_pax_nationality'+traveller)">
-                        Select nationality</mat-error>
-                    </span> -->
+                                        <span *ngIf="submitted && passengerForm.controls.gstNumber.errors" class="error">
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstNumber')">
+                        Please enter gst number.
+                      </mat-error>
+                               <mat-error class="error_bus" *ngIf="passengerForm.hasError('minlength','gstNumber')">
+                        Please enter valid gst number.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstNumber')">
+                        Please enter valid gst number.
+                      </mat-error>
+                    </span>
 
                                     </div>
-                                </div>
+                                    <!-- </div>
 
-                                <div class="row" *ngIf="gstSelected">
-                                    <div class="col-lg-4 col-md-4 col-6">
+                <div class="row" *ngIf="gstSelected"> -->
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Business Name</mat-label>
                                             <input matInput placeholder="Business Name" formControlName="gstBusinessName" name="gstBusinessName" id="gstBusinessName" maxlength="30" autocomplete="off" (keypress)="specialcharInputAddress($event)">
 
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstBusinessName')">
-                                                Please enter business name.
-                                            </mat-error>
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
-                                            </mat-error>
                                         </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls.gstBusinessName.errors" class="error">
+                      <mat-error class="error_bus"
+                        *ngIf="passengerForm.hasError('required','gstBusinessName')">Please enter business name.
+                      </mat-error>
+                      <mat-error class="error_bus"
+                        *ngIf="passengerForm.hasError('pattern','gstBusinessName')">Please enter valid name.
+                      </mat-error>
+                    </span>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-6">
+                                    <div class="col-lg-6 col-md-6 col-12">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Business Address</mat-label>
                                             <input matInput placeholder="Business Address" formControlName="gstAddress" name="gstAddress" id="gstAddress" maxlength="100" (keypress)="specialcharInputAddress($event)" autocomplete="off">
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstAddress')">Please enter business address.
-                                            </mat-error>
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('pattern','gstAddress')">Please enter valid address.No special characters allowed except / - ,</mat-error>
                                         </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls.gstAddress.errors" class="error">
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstAddress')">
+                        Please enter business address.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstAddress')">
+                        Please enter valid address.No special characters allowed except / - ,</mat-error>
+                    </span>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-6">
+                                    <div class="col-lg-6 col-md-4 col-12">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Pincode</mat-label>
                                             <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstPincode')">Please enter pincode.
-                                            </mat-error>
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('minlength','gstPincode')">Please enter 6 digits [0-9] pincode.
-                                            </mat-error>
+
                                         </mat-form-field>
+                                        <span *ngIf="submitted && passengerForm.controls.gstPincode.errors" class="error">
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstPincode')">
+                        Please enter pincode.
+                      </mat-error>
+                      <mat-error class="error_bus" *ngIf="passengerForm.hasError('minlength','gstPincode')">
+                        Please enter 6 digits [0-9] pincode.
+                      </mat-error>
+                    </span>
                                     </div>
-                                </div>
-                                <div class="row" *ngIf="gstSelected">
-                                    <div class="col-lg-4 col-md-4 col-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>City / Town</mat-label>
-                                            <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity" autocomplete="nope">
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstCity')">Please enter city name.
-                                            </mat-error>
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('pattern','gstCity')">Please enter valid city name. </mat-error>
-                                        </mat-form-field>
-                                    </div>
+                                    <ng-container *ngIf="gstSelected">
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>City / Town</mat-label>
+                                                <input matInput placeholder="" formControlName="gstCity" name="gstCity" id="gstCity" autocomplete="nope">
 
-                                    <div class="col-lg-4 col-md-4 col-6">
-                                        <mat-form-field appearance="outline" class="w-100">
-                                            <mat-label>State</mat-label>
-                                            <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value="{{ state }}">
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstState')">Please enter state name.
-                                            </mat-error>
-                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('pattern','gstState')">Please enter valid state name.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
+                                            </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls.gstCity.errors" class="error">
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstCity')">
+                          Please enter city name.
+                        </mat-error>
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstCity')">
+                          Please enter valid city name. </mat-error>
+                      </span>
+                                        </div>
 
-                                    <div class="othertraveller" *ngIf="enablesavedTraveller==1 && gstSelected">
-                                        <ul class="add-search-ul d-block">
-                                            <li class="custom-check-box">
-                                                <div class="custom-controls-stacked">
-                                                    <label class="custom-control material-checkbox">
-                            <input type="checkbox" class="material-control-input" formControlName="saveGST"
-                              name="saveGST" id="saveGST" [checked]="checked">
-                            <span class="material-control-indicator"></span>
-                            <span class="description fs_12 text-black">Add these details to
-                              GST list. </span>
-                            <span class="description fs_12">You won't have to fill gst info on your next visit</span>
-                          </label>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>State</mat-label>
+                                                <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value="{{ state }}">
+
+                                            </mat-form-field>
+                                            <span *ngIf="submitted && passengerForm.controls.gstState.errors" class="error">
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
+                          Please enter state name.
+                        </mat-error>
+                        <mat-error class="error_bus" *ngIf="passengerForm.hasError('pattern','gstState')">
+                          Please enter valid state name.
+                        </mat-error>
+                      </span>
+                                        </div>
+
+                                        <div class="othertraveller" *ngIf="gstSelected">
+                                            <ul class="add-search-ul d-block">
+                                                <li class="custom-check-box">
+                                                    <div class="custom-controls-stacked">
+                                                        <label class="custom-control material-checkbox">
+                              <input type="checkbox" class="material-control-input" formControlName="saveGST"
+                                name="saveGST" id="saveGST" [checked]="checked">
+                              <span class="material-control-indicator"></span>
+                              <span class="description fs_12 text-black">Add these details to
+                                GST list. </span>
+                              <span class="description fs_12">You won't have to fill gst info on your next visit</span>
+                            </label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
 
 
+                                    </ng-container>
                                 </div>
                             </div>
                         </div>
@@ -4641,6 +4674,7 @@
                                                             <div class="col-md-3">
                                                                 <p *ngIf="baggageInfoOnwardMulti[searchi][i].checkIn;then checkIn_content else checkIn_blank">
                                                                 </p>
+
                                                                 <ng-template #checkIn_content><p>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}</p>
                                                                 </ng-template>
                                                                 <ng-template #checkIn_blank><p>NA</p></ng-template>
@@ -4648,6 +4682,7 @@
                                                             <div class="col-md-3">
                                                                 <p *ngIf="baggageInfoOnwardMulti[searchi][i].cabin ;then cabin_content else cabin_blank">
                                                                 </p>
+
                                                                 <ng-template #cabin_content><p>{{ baggageInfoOnwardMulti[searchi][i].cabin }}</p>
                                                                 </ng-template>
                                                                 <ng-template #cabin_blank><p>NA</p></ng-template>
@@ -4930,11 +4965,13 @@
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
+
                                                                     <ng-template #checkIn_content><p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
                                                                     <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
+
                                                                     <ng-template #cabin_content><p>{{ baggageInfoOnward[i].cabin }}</p></ng-template>
                                                                     <ng-template #cabin_blank><p>NA</p></ng-template>
                                                                 </div>
@@ -5032,13 +5069,17 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
+
                                                         <ng-template #checkIn_content><p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
+
                                                         <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
+
                                                         <ng-template #cabin_content><p>{{ baggageInfoOnward[i].cabin }}</p></ng-template>
                                                         <ng-template #cabin_blank><p>NA</p></ng-template>
+
                                                     </div>
 
                                                 </div>
@@ -5251,6 +5292,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <p *ngIf="baggageInfoReturn[i].checkIn;then checkIn_content else checkIn_blank"></p>
+
                                                     <ng-template #checkIn_content><p>{{ baggageInfoReturn[i].checkIn }}</p></ng-template>
                                                     <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                 </div>
