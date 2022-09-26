@@ -340,7 +340,6 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.titleService.setTitle('Home | RedBus');
 
     this.activatedRoute.url.subscribe(url => {
       this.buttonSubmitted = false;
@@ -795,7 +794,9 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
     }
   }
   
-  
+    convertToUpperCase($event) {
+    $event.target.value = $event.target.value.toUpperCase();
+  }
   
   
   fillupTravellerDetailOnCheck($event, data, travellerformid, travellerid, travellerIndex, ladiesSeat) {
@@ -920,7 +921,7 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
 
       //$(".adult-choose-box"+travellerid+travellerformid).removeClass("travllerDisabled");
       
-      console.log(".adult-choose-box"+travellerid+travellerformid);
+      //console.log(".adult-choose-box"+travellerid+travellerformid);
 
     } else {
      this.passengerSelectedArray[travellerformid]=0;
@@ -1550,41 +1551,45 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
 
   isPaynowClicked: boolean = false;
   continuePayment() {
-    //console.log($(".accordion-button:not(.collapsed)").attr("id"));return;
-    switch ($(".accordion-button:not(.collapsed)").attr("id")) {
-      case 'tab-savedCards':
+//console.log($(".accordion-button:not(.collapsed)").attr("id"));
+switch ($(".accordion-button:not(.collapsed)").attr("id")) {
+        case 'tab-savedCards':
         $('.btn-pay-saved-card').trigger('click');
+        console.log('dddd');
         break;
-      case 'tab-testPg':
+        case 'tab-testPg':
         $('.btn-pay-test').trigger('click');
-        break;
-      case 'tab-payzapp':
+        break;   
+        case 'tab-payzapp':
         $('.btn-pay-payz').trigger('click');
-        break;
-      case 'tab-netBanking':
+        break;  
+        case 'tab-netBanking':
         $('.btn-pay-netbanking').trigger('click');
-        break;
-      case 'tab-ccdcCards':
-        if ($(".addCardTab[aria-selected='true']").attr("aria-selected"))
-          $('.btn-pay-card').trigger('click');
+        break;  
+        case 'tab-ccdcCards':
+        
+        if($(".addCardTab[aria-selected='true']").attr("aria-selected")){
+        $('.btn-pay-card').trigger('click');
+        }else if($(".addRupayTab[aria-selected='true']").attr("aria-selected")){
+        $('.btn-pay-rupay').trigger('click');
+        }else{
+         $('.btn-pay-rupay').trigger('click');
+        }
 
-        if ($(".addRupayTab[aria-selected='true']").attr("aria-selected"))
-          $('.btn-pay-rupay').trigger('click');
+        break;  
 
-        break;
-
-      case 'tab-emi':
-        if ($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
-          $('.btn-pay-emi-cc').trigger('click');
-
-
-        break;
-
-
-      case 'tab-testPg':
+        case 'tab-emi': 
+        if($(".ccemiTab[aria-selected='true']").attr("aria-selected"))
+        $('.btn-pay-emi-cc').trigger('click');
+         
+         
+        break;  
+          
+          
+         case 'tab-testPg': 
         $('.btn-pay-test').trigger('click');
-        break;
-    }
+        break;  
+      }
 
   }
 

@@ -134,8 +134,8 @@
                                         <div class="Booking-Flight-name">
                                             <div class="Booking-Flight-name-left">
                                                 <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
-                                                <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                                <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                                <span class="plane_name mr-10">{{ flights.airlineName }}</span>
+                                                <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                             </div>
                                             <div class="Booking-Flight-name-right">
                                                 <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{ cdnUrl }}/images/icons/info.png" width="10px" alt=""></p>-->
@@ -183,20 +183,20 @@
                                             <div class="row">
                                                 <div class="col-md-2 col-4">
                                                     <p>
-                                                        {{ baggageInfoOnwardMulti[searchi][i].flightName }}<br>{{ baggageInfoOnwardMulti[searchi][i].flightNo }}
+                                                        {{ baggageInfoOnwardMulti[searchi][i].flightName }} {{ baggageInfoOnwardMulti[searchi][i].flightNo }}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-3 col-4">
                                                     <p *ngIf="baggageInfoOnwardMulti[searchi][i].checkIn;then checkIn_content else checkIn_blank">
                                                     </p>
-                                                    <ng-template #checkIn_content>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}
+                                                    <ng-template #checkIn_content><p>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}</p>
                                                     </ng-template>
-                                                    <ng-template #checkIn_blank>NA</ng-template>
+                                                    <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                 </div>
                                                 <div class="col-md-3 col-4">
                                                     <p *ngIf="baggageInfoOnwardMulti[searchi][i].cabin ;then cabin_content else cabin_blank"></p>
-                                                    <ng-template #cabin_content>{{ baggageInfoOnwardMulti[searchi][i].cabin }}</ng-template>
-                                                    <ng-template #cabin_blank>NA</ng-template>
+                                                    <ng-template #cabin_content><p>{{ baggageInfoOnwardMulti[searchi][i].cabin }}</p></ng-template>
+                                                    <ng-template #cabin_blank><p>NA</p></ng-template>
                                                 </div>
 
                                             </div>
@@ -208,7 +208,7 @@
                                             <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                         </div>
                                     </div>
-                                    <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
+                                    <div class="change-planestext-center " *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
                                         <h6>Change of planes・{{ dateOnwardHourMulti[searchi][i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                     </div>
                                 </div>
@@ -370,8 +370,8 @@
                                     <div class="Booking-Flight-name">
                                         <div class="Booking-Flight-name-left">
                                             <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
-                                            <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                            <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                            <span class="plane_name  mr-10">{{ flights.airlineName }}</span>
+                                            <span class="plane_number">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                         </div>
                                         <div class="Booking-Flight-name-right">
                                             <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{ cdnUrl }}/images/icons/info.png" width="10px" alt=""></p>-->
@@ -418,17 +418,17 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2 col-4">
-                                                <p>{{ baggageInfoOnward[i].flightName }}<br>{{ baggageInfoOnward[i].flightNo }}</p>
+                                                <p>{{ baggageInfoOnward[i].flightName }} {{ baggageInfoOnward[i].flightNo }}</p>
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                <ng-template #checkIn_content>{{ baggageInfoOnward[i].checkIn }}</ng-template>
-                                                <ng-template #checkIn_blank>NA</ng-template>
+                                                <ng-template #checkIn_content><p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
+                                                <ng-template #checkIn_blank><p>NA</p></ng-template>
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
-                                                <ng-template #cabin_content>{{ baggageInfoOnward[i].cabin }}</ng-template>
-                                                <ng-template #cabin_blank>NA</ng-template>
+                                                <ng-template #cabin_content><p>{{ baggageInfoOnward[i].cabin }}</p></ng-template>
+                                                <ng-template #cabin_blank><p>NA</p></ng-template>
                                             </div>
 
                                         </div>
@@ -442,7 +442,7 @@
                                 </div>
 
 
-                                <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                <div class="change-planes text-center" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
                                     <h6>Change of planes・{{ dateOnwardHour[i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                 </div>
                             </div>
@@ -559,8 +559,8 @@
                                     <div class="Booking-Flight-name">
                                         <div class="Booking-Flight-name-left">
                                             <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
-                                            <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                            <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                            <span class="plane_name  mr-10">{{ flights.airlineName }}</span>
+                                            <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                         </div>
                                         <div class="Booking-Flight-name-right">
                                             <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{ cdnUrl }}/images/icons/info.png" width="10px" alt=""></p>-->
@@ -608,17 +608,17 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2 col-4">
-                                                <p>{{ baggageInfoReturn[i].flightName }}<br>{{ baggageInfoReturn[i].flightNo }}</p>
+                                                <p>{{ baggageInfoReturn[i].flightName }} {{ baggageInfoReturn[i].flightNo }}</p>
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoReturn[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                <ng-template #checkIn_content>{{ baggageInfoReturn[i].checkIn }}</ng-template>
-                                                <ng-template #checkIn_blank>NA</ng-template>
+                                                <ng-template #checkIn_content><p>{{ baggageInfoReturn[i].checkIn }}</p></ng-template>
+                                                <ng-template #checkIn_blank><p>NA</p></ng-template>
                                             </div>
                                             <div class="col-md-3 col-4">
                                                 <p *ngIf="baggageInfoReturn[i].cabin ;then cabin_content else cabin_blank"></p>
                                                 <ng-template #cabin_content>{{ baggageInfoReturn[i].cabin }}</ng-template>
-                                                <ng-template #cabin_blank>NA</ng-template>
+                                                <ng-template #cabin_blank><p>NA</p></ng-template>
                                             </div>
 
                                         </div>
@@ -630,7 +630,7 @@
                                         <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                     </div>
                                 </div>
-                                <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                                <div class="change-planes text-center" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
                                     <h6>Change of planes・{{ dateReturnHour[i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                 </div>
                             </div>
@@ -3591,8 +3591,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-center">
-                                        <button type="button" class="btn btn-primary-outline w-25" (click)="gstReset()">Reset</button>
-                                        <button type="button" class="btn btn-primary w-25" (click)="modal.close()">Close</button>
+                                        <button type="button" class="btn btn-primary-outline" (click)="gstReset()">Reset</button>
+                                        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
                                     </div>
                                 </ng-template>
 
@@ -3604,6 +3604,9 @@
 
                                             <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
                                             </mat-error>
+                                                            <mat-error class="error_flight" *ngIf="passengerForm.hasError('minlength','gstNumber')">
+                        Please enter valid gst number.
+                      </mat-error>
                                             <mat-error class="error_flight" *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
                                             </mat-error>
                                         </mat-form-field>
@@ -4587,8 +4590,8 @@
                                                     <div class="Booking-Flight-name">
                                                         <div class="Booking-Flight-name-left">
                                                             <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline }}"></i>
-                                                            <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                                            <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                                            <span class="plane_name  mr-10">{{ flights.airlineName }}</span>
+                                                            <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                                         </div>
                                                         <div class="Booking-Flight-name-right">
                                                             <p>{{ flightClasses[searchData.flightclass] }}</p>
@@ -4632,22 +4635,22 @@
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <p>
-                                                                    {{ baggageInfoOnwardMulti[searchi][i].flightName }}<br>{{ baggageInfoOnwardMulti[searchi][i].flightNo }}
+                                                                    {{ baggageInfoOnwardMulti[searchi][i].flightName }} {{ baggageInfoOnwardMulti[searchi][i].flightNo }}
                                                                 </p>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <p *ngIf="baggageInfoOnwardMulti[searchi][i].checkIn;then checkIn_content else checkIn_blank">
                                                                 </p>
-                                                                <ng-template #checkIn_content>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}
+                                                                <ng-template #checkIn_content><p>{{ baggageInfoOnwardMulti[searchi][i].checkIn }}</p>
                                                                 </ng-template>
-                                                                <ng-template #checkIn_blank>NA</ng-template>
+                                                                <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <p *ngIf="baggageInfoOnwardMulti[searchi][i].cabin ;then cabin_content else cabin_blank">
                                                                 </p>
-                                                                <ng-template #cabin_content>{{ baggageInfoOnwardMulti[searchi][i].cabin }}
+                                                                <ng-template #cabin_content><p>{{ baggageInfoOnwardMulti[searchi][i].cabin }}</p>
                                                                 </ng-template>
-                                                                <ng-template #cabin_blank>NA</ng-template>
+                                                                <ng-template #cabin_blank><p>NA</p></ng-template>
                                                             </div>
 
                                                         </div>
@@ -4659,7 +4662,7 @@
                                                         <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                                     </div>
                                                 </div>
-                                                <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                                <div class="change-planes text-center" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
                                                     <h6>Change of planes・{{ dateOnwardHourMulti[searchi][i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                                 </div>
 
@@ -4875,8 +4878,8 @@
                                                         <div class="Booking-Flight-name">
                                                             <div class="Booking-Flight-name-left">
                                                                 <i class=" mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
-                                                                <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                                                <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                                                <span class="plane_name  mr-10">{{ flights.airlineName }}</span>
+                                                                <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                                             </div>
                                                             <div class="Booking-Flight-name-right">
                                                                 <p>{{ flightClasses[searchData.flightclass] }}</p>
@@ -4923,17 +4926,17 @@
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-2">
-                                                                    <p>{{ baggageInfoOnward[i].flightName }}<br>{{ baggageInfoOnward[i].flightNo }}</p>
+                                                                    <p>{{ baggageInfoOnward[i].flightName }} {{ baggageInfoOnward[i].flightNo }}</p>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                                    <ng-template #checkIn_content>{{ baggageInfoOnward[i].checkIn }}</ng-template>
-                                                                    <ng-template #checkIn_blank>NA</ng-template>
+                                                                    <ng-template #checkIn_content><p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
+                                                                    <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                                 </div>
                                                                 <div class="col-md-3">
                                                                     <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
-                                                                    <ng-template #cabin_content>{{ baggageInfoOnward[i].cabin }}</ng-template>
-                                                                    <ng-template #cabin_blank>NA</ng-template>
+                                                                    <ng-template #cabin_content><p>{{ baggageInfoOnward[i].cabin }}</p></ng-template>
+                                                                    <ng-template #cabin_blank><p>NA</p></ng-template>
                                                                 </div>
 
                                                             </div>
@@ -4945,7 +4948,7 @@
                                                             <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                                         </div>
                                                     </div>
-                                                    <div class="change-planes" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                                    <div class="change-planes text-center" *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[i+1]">
                                                         <h6>Change of planes・{{ dateOnwardHourMulti[searchi][i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                                     </div>
                                                 </div>
@@ -4977,8 +4980,8 @@
                                             <div class="Booking-Flight-name">
                                                 <div class="Booking-Flight-name-left">
                                                     <i class=" mr-10 free-flow air-logo intAirLogo size-28  x{{flights.airline}}"></i>
-                                                    <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                                    <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                                    <span class="plane_name  mr-10">{{ flights.airlineName }}</span>
+                                                    <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                                 </div>
                                                 <div class="Booking-Flight-name-right">
                                                     <p>{{ flightClasses[searchData.flightclass] }}</p>
@@ -5025,17 +5028,17 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">
-                                                        <p>{{ baggageInfoOnward[i].flightName }}<br>{{ baggageInfoOnward[i].flightNo }}</p>
+                                                        <p>{{ baggageInfoOnward[i].flightName }} {{ baggageInfoOnward[i].flightNo }}</p>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <p *ngIf="baggageInfoOnward[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                        <ng-template #checkIn_content>{{ baggageInfoOnward[i].checkIn }}</ng-template>
-                                                        <ng-template #checkIn_blank>NA</ng-template>
+                                                        <ng-template #checkIn_content><p>{{ baggageInfoOnward[i].checkIn }}</p></ng-template>
+                                                        <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <p *ngIf="baggageInfoOnward[i].cabin ;then cabin_content else cabin_blank"></p>
-                                                        <ng-template #cabin_content>{{ baggageInfoOnward[i].cabin }}</ng-template>
-                                                        <ng-template #cabin_blank>NA</ng-template>
+                                                        <ng-template #cabin_content><p>{{ baggageInfoOnward[i].cabin }}</p></ng-template>
+                                                        <ng-template #cabin_blank><p>NA</p></ng-template>
                                                     </div>
 
                                                 </div>
@@ -5047,7 +5050,7 @@
                                                 <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                             </div>
                                         </div>
-                                        <div class="change-planes" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
+                                        <div class="change-planes text-center" *ngIf="dateOnwardHour[i] && airportsNameJson && flightOnwardDetails[i+1]">
                                             <h6>Change of planes・{{ dateOnwardHour[i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                         </div>
                                     </div>
@@ -5197,8 +5200,8 @@
                                         <div class="Booking-Flight-name">
                                             <div class="Booking-Flight-name-left">
                                                 <i class="mr-10 free-flow air-logo intAirLogo size-28  x{{ flights.airline }}"></i>
-                                                <span class="fw_7  mr-10">{{ flights.airlineName }}</span>
-                                                <span class="opacity_05 ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
+                                                <span class="plane_name  mr-10">{{ flights.airlineName }}</span>
+                                                <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                             </div>
                                             <div class="Booking-Flight-name-right">
                                                 <p>{{ flightClasses[searchData.flightclass] }}</p>
@@ -5244,17 +5247,17 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-2">
-                                                    <p>{{ baggageInfoReturn[i].flightName }}<br>{{ baggageInfoReturn[i].flightNo }}</p>
+                                                    <p>{{ baggageInfoReturn[i].flightName }} {{ baggageInfoReturn[i].flightNo }}</p>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <p *ngIf="baggageInfoReturn[i].checkIn;then checkIn_content else checkIn_blank"></p>
-                                                    <ng-template #checkIn_content>{{ baggageInfoReturn[i].checkIn }}</ng-template>
-                                                    <ng-template #checkIn_blank>NA</ng-template>
+                                                    <ng-template #checkIn_content><p>{{ baggageInfoReturn[i].checkIn }}</p></ng-template>
+                                                    <ng-template #checkIn_blank><p>NA</p></ng-template>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <p *ngIf="baggageInfoReturn[i].cabin ;then cabin_content else cabin_blank"></p>
-                                                    <ng-template #cabin_content>{{ baggageInfoReturn[i].cabin }}</ng-template>
-                                                    <ng-template #cabin_blank>NA</ng-template>
+                                                    <ng-template #cabin_content><p>{{ baggageInfoReturn[i].cabin }}</p></ng-template>
+                                                    <ng-template #cabin_blank><p>NA</p></ng-template>
                                                 </div>
 
                                             </div>
@@ -5266,7 +5269,7 @@
                                             <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                         </div>
                                     </div>
-                                    <div class="change-planes" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
+                                    <div class="change-planes text-center" *ngIf="dateReturnHour[i] && airportsNameJson && flightReturnDetails[i+1]">
                                         <h6>Change of planes・{{ dateReturnHour[i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                     </div>
                                 </div>

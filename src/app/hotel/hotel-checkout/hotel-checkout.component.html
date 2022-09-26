@@ -5,7 +5,11 @@
                 <div class="col-md-12 p-0">
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
-                            <a href="javascript:;" (click)="triggerBack()">
+                            <a href="javascript:;" *ngIf="steps==1" (click)="triggerBack()">
+                                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                            </a>
+                            
+                        <a href="javascript:;"  *ngIf="steps==2"  (click)="moveTab(1)">
                                 <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
                             </a>
                         </div>
@@ -97,7 +101,7 @@
                                         <div class="hotel_rooms">
                                             <div>
                                                 <p class="label">Room Type</p>
-                                                <p class="value"> {{searchResult.selectedHotel.roomType.roomTitle}}</p>
+                                                <p class="value mt-1 mb-1"> {{searchResult.selectedHotel.roomType.roomTitle}}</p>
                                                 <p class="label"> {{searchData.totalGuest}} Guests</p>
                                             </div>
                                             <div class="v_line">
@@ -116,6 +120,9 @@
                                                 <p class="value"> {{ searchData.checkOut | date:"dd MMM YYYY" }}</p>
                                                 <p class="label" *ngIf="partnerToken=='Clearrip'"> {{ searchData.checkOut | date:"EEE" }}, {{ searchData.checkOut+' '+searchResult.hotel_detail.checkOut | date:"H a" }}</p>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5"></div>
                                         </div>
                                     </div>
                                     <div class="mlite_code d-block d-sm-none">
@@ -212,7 +219,7 @@
                                                     <div class="mb-20">
                                                         <p class="hotel_name">Cancellation Policy</p>
                                                     </div>
-                                                    <div>
+                                                    <div class="policy_no_gap">
                                                         <p class="hotel_address">{{searchResult.selectedHotel.cancellationPolicy}}</p>
                                                     </div>
                                                 </div>
@@ -442,6 +449,9 @@
                                         <span *ngIf="submitted && passengerForm.controls.gstNumber.errors" class="error">
                       <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.hasError('required','gstNumber')">
                         Please enter gst number.
+                      </mat-error>
+                      <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.hasError('minlength','gstNumber')">
+                        Please enter valid gst number.
                       </mat-error>
                       <mat-error class="error_bus_contectDetails" *ngIf="passengerForm.hasError('pattern','gstNumber')">
                         Please enter valid gst number.

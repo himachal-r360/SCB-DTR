@@ -109,7 +109,7 @@
             <div class="row amenities-list" *ngIf="showDropping">
                 <ul class="amenities-container">
 
-                    <table class="table table-borderless">
+                    <table class="table table-borderless bording_table">
                         <thead>
                             <tr class="can-header">
                                 <th scope="col">Boarding Points</th>
@@ -130,7 +130,7 @@
                                     </tr>
                                 </table>
                             </td>
-                            <td>
+                            <td style="padding: .75em .75em .75em 0.48em;">
                                 <table>
                                     <tr *ngFor="let droppingtim of droppingtimes">
                                         <span><i class="material-icons time-circle">panorama_fish_eye</i>
@@ -459,7 +459,7 @@
                     <div *ngIf="totalFareBus">
                         <div class="row mb-10" *ngFor="let seats of seatdetails">
                             <div class="gray-medium col-7" *ngIf="seats">
-                                <p class="price_seat"> {{seats.totalseats}} seats @ {{seats.fare | number:'1.2-2'}} </p>
+                                <p class="price_seat"> {{seats.totalseats}} seat(s) @ {{seats.fare | number:'1.2-2'}} </p>
                             </div>
                             <div class="black-medium col-5 text-right">
                                 <div class="fareTotal">

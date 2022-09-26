@@ -1571,9 +1571,9 @@
                             </p>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" (click)="gstReset()">Reset</button>
-                        <button type="button" class="btn btn-primary" (click)="modal.close()">Close</button>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-primary-outline gst_btn" (click)="gstReset()">Reset</button>
+                        <button type="button" class="btn btn-primary gst_btn" (click)="modal.close()">Close</button>
                     </div>
                 </ng-template>
 
@@ -1586,6 +1586,8 @@
 
                         </mat-form-field>
                         <mat-error class="error-flight-checkout train_gst_err_msg" *ngIf="passengerForm.hasError('required','gstNumber')">Please enter gst number.
+                        </mat-error>
+                            <mat-error class="error-flight-checkout train_gst_err_msg" *ngIf="passengerForm.hasError('minlength','gstNumber')">Please enter valid gst number.
                         </mat-error>
                         <mat-error class="error-flight-checkout train_gst_err_msg" *ngIf="passengerForm.hasError('pattern','gstNumber')">Please enter valid gst number.
                         </mat-error>

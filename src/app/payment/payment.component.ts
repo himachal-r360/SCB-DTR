@@ -23,6 +23,7 @@ import { CommunicationService } from 'src/app/shared/services/communication.serv
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { commaSeparatorPipe } from 'src/app/shared/pipes/comma-separator.pipe';
 import { CreditCardValidators } from 'angular-cc-library';
+import { trigger } from '@angular/animations';
 declare var $: any;
 
 
@@ -440,6 +441,10 @@ export class PaymentComponent implements OnInit {
         this.pgSettingsDEBITEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].DEBIT_EMI;
         this.pgSettingsUPI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].UPI;
         this.pgSettingFlexipayEMI = this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].FLEXI_PAY;
+        
+        if(!this.pgSettingsCYBER){
+         this.cardData=[];
+        }
 
         const cookieExistPay: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
 
@@ -634,6 +639,10 @@ export class PaymentComponent implements OnInit {
 
 
                 }else{
+
+				let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+				element.click();
+
                 var message="You are not eligible for Debit Card EMI payment";
                 alert(message);
                 }
@@ -2414,7 +2423,7 @@ export class dcemiDialog {
 	  this.Form1 = Form1;
 	  //pop-up will close after 10 mins(600000) 
 	  
-	  interval(600000).subscribe(x => {
+	  this.sub =  interval(600000).subscribe(x => {
 		    this.dialogClose();
 	  });
 	}
@@ -2440,6 +2449,10 @@ export class dcemiDialog {
 		}
 	}
 	close(){
+
+		let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+		element.click();
+
 		this.dialogDcemi.close();
 	}
 }
