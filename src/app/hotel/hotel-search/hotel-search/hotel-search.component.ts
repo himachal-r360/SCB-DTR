@@ -154,7 +154,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         const d = new Date(modifySearchValue.checkIn);
        d.setDate(d.getDate() + 1);
        this.minCheckoutDate = d;
-      
+
     }
   }
   //Increase Child and adult value
@@ -191,6 +191,13 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     let childBtn: any = document.getElementById('childBtn_' + i);
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren - 1;
+      if(item.value.childrenAge != '')
+      {
+        if(!Array.isArray(item.value.childrenAge))
+        {
+          item.value.childrenAge = item.value.childrenAge.split(',')
+        }
+      }
       item.value.childrenAge.pop()
 
       if (this.submitted) {
@@ -198,7 +205,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         var j = 0;
         var isvalid = true;
         rooms.forEach(z => {
-          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0')) && z.numberOfChildren > 0) {
+          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || (z.childrenAge == "" && z.childrenAge.find(a=>a =='0'))) && z.numberOfChildren > 0) {
             var id = document.getElementById("error_" + j)
             id.hidden = false;
             isvalid = false;
@@ -303,10 +310,10 @@ focusInput(){
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
           const d = new Date(event);
        d.setDate(d.getDate() + 1);
- 
+
        var compare1 = new Date(d).getTime();
        var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
- 
+
        this.minCheckoutDate = d;
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
@@ -321,11 +328,11 @@ focusInput(){
     this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
     this.showHideGuest.nativeElement.style.display = "block";
   }
-  
+
   getAgeValue(ageArray,index,age){
-  
+
   if(ageArray){
-  if (ageArray.indexOf(',') > -1) { 
+  if (ageArray.indexOf(',') > -1) {
   const myArray = ageArray.split(",");
   console.log(myArray[index]);  console.log(age);
   if(age==myArray[index]) return true; else return false;
@@ -336,7 +343,7 @@ focusInput(){
   }
 
   onSelectAge(event, item, i) {
-  
+
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
     let selectAge2: any = document.getElementById('selectAge2_' + i);
@@ -442,7 +449,7 @@ focusInput(){
     var i = 0;
     var isvalid = true;
     rooms.forEach(z => {
-      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0'))  && z.numberOfChildren > 0) {
+      if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || (z.childrenAge != ""  && z.childrenAge.find(a=>a =='0')))  && z.numberOfChildren > 0) {
         var id = document.getElementById("error_" + i)
         id.hidden = false;
         isvalid = false;
@@ -503,7 +510,6 @@ focusInput(){
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
-    
       $('#flight_arrival_mlite').modal('show');
       $('#flight_departure_mlite').modal('hide');
     }
