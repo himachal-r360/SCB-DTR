@@ -35,7 +35,7 @@
                     <div class="col-md-4 offset-md-2  float-right w-33">
                         <div class="float-left">
                             <div class="label-gray">From</div>
-                            <div class="label-name"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
+                            <div class="label-name list-label-name-font"> ₹ {{bus.fareDetails[0].baseFare | commaSeparator}}</div>
                         </div>
                     </div>
                     <div class="col-md-6 text-right">
@@ -584,7 +584,7 @@
     <!-- <button class="bus-cashback" *ngIf="show_earnpoints">{{show_earnpoints_text}}</button> -->
 </div>
 
- 
+
 
 <div class="seat-layout-m" *ngIf="searchParam.tripId == bus.id" [ngClass]="{'active': showDetails}">
 
@@ -622,7 +622,7 @@
                 </div>
             </div>
         </div>
-       
+
         <ng-template #listngMlite>
             <div id="tab-seats-m">
                 <mat-tab-group mat-align-tabs="center" animationDuration="0ms" style="padding:0px;margin-top:10px;">
@@ -801,7 +801,7 @@
                                 </div>
                                 <div class="col-6" *ngIf="seatdetails.length > 0">
                                     <!-- <span class="blue_link float-end" (click)="openBottomSheet()">Fare Summary</span> -->
-                                    <span class="blue_link float-end" data-bs-toggle="modal"  data-bs-target="#fareSummary_mlite" >Fare Summary</span>
+                                    <span class="blue_link float-end" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</span>
                                 </div>
                             </div>
                             <hr class="my-2 row">
@@ -829,7 +829,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="fare-break" [ngClass]="{'active': showFare}" *ngIf="seatdetails.length > 0" >
+                        <div class="fare-break" [ngClass]="{'active': showFare}" *ngIf="seatdetails.length > 0">
                             {{seatdetails|json}}
                             <h6>Fare Breakup {{seatdetails.length}}</h6>
                             <div *ngFor="let seats of seatdetails">
@@ -853,10 +853,10 @@
                             </div>
                         </div>
 
-  
+
 
                     </mat-tab>
- 
+
 
                     <span *ngIf="pricesplit.length > 1">
     <span>
@@ -972,9 +972,9 @@
 </span>
 </span>
 </mat-tab-group>
-            </div>
-                                         
-        </ng-template>
+</div>
+
+</ng-template>
 </div>
 
 <!-- <mat-tab-group animationDuration="0ms">
@@ -1231,56 +1231,56 @@
 
 <!-- Mlite Fare Summary Popup -->
 <div *ngIf="searchParam.tripId == bus.id" class="modal coupon_mlite_popup" id="fareSummary_mlite" tabindex="-1" aria-labelledby="fareSummary_mliteLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header pb-0">
-            <h5 class="modal-title">Fare Summary</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body pt-0">
-        <div >
-            <div class="widget-content" *ngIf="seatdetails.length > 0">
-                <ul class="widget-list clearfix"  *ngFor="let seats of seatdetails">
-
-                    <li class="fare-list-item" *ngIf="seats">
-                        <div class="fare-list-box">
-                            <div class="fare-list-left">
-                                <p class="fare-list-font"> {{seats.totalseats}} Seat(s) @ {{seats.baseFare | number:'1.2-2'}} </p>
-                            </div>
-                            <div class="fare-list-right">
-                                <p class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="fare-list-item" *ngIf="seats">
-                        <div class="fare-list-box">
-                            <div class="fare-list-left">
-                                <p class="fare-list-font">Seat no(s): {{seats.selseats}} </p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="fare-list-item" *ngIf="totServtax > 0">
-                        <div class="fare-list-box" >
-                            <div class="fare-list-left">
-                                <p class="fare-list-font">Taxes</p>
-                            </div>
-                            <div class="fare-list-right">
-                                <p class="text-right">₹ {{totServtax | number:'1.2-2'}}</p>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h5 class="modal-title">Fare Summary</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-        </div>
-        
-        </div>
-        <!-- <div class="modal-footer">
+            <div class="modal-body pt-0">
+                <div>
+                    <div class="widget-content" *ngIf="seatdetails.length > 0">
+                        <ul class="widget-list clearfix" *ngFor="let seats of seatdetails">
+
+                            <li class="fare-list-item" *ngIf="seats">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p class="fare-list-font"> {{seats.totalseats}} Seat(s) @ {{seats.baseFare | number:'1.2-2'}} </p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="seats">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p class="fare-list-font">Seat no(s): {{seats.selseats}} </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="fare-list-item" *ngIf="totServtax > 0">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p class="fare-list-font">Taxes</p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-right">₹ {{totServtax | number:'1.2-2'}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div> -->
+        </div>
     </div>
-</div>
 </div>
 
 
