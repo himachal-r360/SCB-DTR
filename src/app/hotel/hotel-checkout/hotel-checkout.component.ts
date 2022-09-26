@@ -568,7 +568,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   bookingSessionExpires(e: CountdownEvent) {
     if (e.action == 'done') {
-      $('#bookingprocessExpires').modal('show');
+      this.triggerBack();
+   // $('#bookingprocessExpires').modal('show');
     }
   }
   
