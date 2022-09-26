@@ -3461,7 +3461,7 @@
                                     <ul class="add-search-ul d-block">
                                         <li class="custom-check-box">
                                             <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox">
+                                                <label class="custom-control material-checkbox pt-1">
                           <input type="checkbox" class="material-control-input" formControlName="saveTraveller"
                             name="saveTraveller" id="saveTraveller" [checked]="checked">
                           <span class="material-control-indicator"></span>
@@ -3699,7 +3699,7 @@
                                             <ul class="add-search-ul d-block">
                                                 <li class="custom-check-box">
                                                     <div class="custom-controls-stacked">
-                                                        <label class="custom-control material-checkbox">
+                                                        <label class="custom-control material-checkbox pt-1">
                               <input type="checkbox" class="material-control-input" formControlName="saveGST"
                                 name="saveGST" id="saveGST" [checked]="checked">
                               <span class="material-control-indicator"></span>
@@ -5914,15 +5914,15 @@
                                         <li class="fare-list-item">
                                             <div class="fare-list-box pt-30">
                                                 <div class="fare-list-left">
-                                                    <h6 class="fw_7">Grand Total</h6>
+                                                    <h6 class="fw_7 f-bold">Grand Total</h6>
                                                 </div>
                                                 <div class="fare-list-right" *ngIf="steps > 3">
-                                                    <h6 class="fw_7">₹ {{ totalCollectibleAmount|number }}</h6>
+                                                    <h6 class="fw_7 f-bold">₹ {{ totalCollectibleAmount|number }}</h6>
                                                     <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount)|number }}/month
                                                     </p>
                                                 </div>
                                                 <div class="fare-list-right" *ngIf="steps < 4">
-                                                    <h6 class="fw_7">₹ {{ (totalCollectibleAmount-partnerConvFee)|number }}</h6>
+                                                    <h6 class="fw_7 f-bold">₹ {{ (totalCollectibleAmount-partnerConvFee)|number }}</h6>
                                                     <p class="opacity_05" *ngIf="(totalCollectibleAmount-partnerConvFee) > EMIAvailableLimit">EMI @ {{ calculateEMI((totalCollectibleAmount-partnerConvFee))|number }}/month
                                                     </p>
                                                 </div>
@@ -6339,16 +6339,16 @@
                             <li class="fare-list-item">
                                 <div class="fare-list-box pt-30">
                                     <div class="fare-list-left">
-                                        <h6 class="fw_7">Grand Total </h6>
+                                        <h6 class="fw_7 f-bold">Grand Total </h6>
                                     </div>
                                     <div class="fare-list-right" *ngIf="steps < 4">
-                                        <h6 class="fw_7">₹{{ totalCollectibleAmount-partnerConvFee|number }}</h6>
+                                        <h6 class="fw_7 f-bold">₹{{ totalCollectibleAmount-partnerConvFee|number }}</h6>
                                         <p class="opacity_05" *ngIf="totalCollectibleAmount-partnerConvFee > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount-partnerConvFee)|number }}/month
                                         </p>
                                     </div>
 
                                     <div class="fare-list-right" *ngIf="steps > 3">
-                                        <h6 class="fw_7">₹{{ totalCollectibleAmount|number }}</h6>
+                                        <h6 class="fw_7 f-bold">₹{{ totalCollectibleAmount|number }}</h6>
                                         <p class="opacity_05" *ngIf="TotalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalCollectibleAmount)|number }}/month
                                         </p>
                                     </div>
