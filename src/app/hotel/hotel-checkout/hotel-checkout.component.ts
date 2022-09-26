@@ -155,6 +155,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
   coupon_amount: number = 0;
   continueStatus: boolean = false;
   patternName = /^\S[a-z A-Z]+$/;
+  patternName1 = /^[a-zA-Z]+$/;
   emailPattern = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
   patternNameLastName = /^\S[a-z A-Z]*$/;
   AvoidSpace($event) {
@@ -320,8 +321,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         const jobGroup: FormGroup = new FormGroup({});
         jobGroup.addControl('passengerId' , new FormControl());
         jobGroup.addControl('passengerTitle', new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(15)]));
-        jobGroup.addControl('passengerFirstName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
-        jobGroup.addControl('passengerLastName', new FormControl('', [Validators.required, Validators.pattern(this.patternName), Validators.minLength(2), Validators.maxLength(26)]));
+        jobGroup.addControl('passengerFirstName', new FormControl('', [Validators.required, Validators.pattern(this.patternName1), Validators.minLength(2), Validators.maxLength(26)]));
+        jobGroup.addControl('passengerLastName', new FormControl('', [Validators.required, Validators.pattern(this.patternName1), Validators.minLength(2), Validators.maxLength(26)]));
         jobGroup.addControl('passengerMobile', new FormControl(this.REWARD_MOBILE, [Validators.required, Validators.pattern("^[0-9]*$"), Validators.minLength(10)]));
         jobGroup.addControl('passengerEmail', new FormControl(this.REWARD_EMAILID, [Validators.required, Validators.pattern(this.emailPattern)]));
         jobGroup.addControl('passengerAgree', new FormControl('', [Validators.required, Validators.pattern('true')]));
