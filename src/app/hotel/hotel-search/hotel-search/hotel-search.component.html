@@ -12,7 +12,7 @@
                     <div class="mob-title" *ngIf="isMobile">
                         <h3>City, Hotel or Area</h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
-                            <img src="assets/images/icons/close.png" alt="" class="close-mobile">
+                            <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile">
                         </a>
                     </div>
                     <div class="hotel-from-data-search">
@@ -26,9 +26,9 @@
                             <li class="hotel-from-ul-li"  >
                                 <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
                                     <div class="hotel-from-name">
-                                        <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                        <img src="{{cdnUrl}}/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <p class="d-none">528 Hotels</p>
+                                        <!--<p class="d-none">528 Hotels</p>-->
                                     </div>
                                 </a>
                             </li>
@@ -38,9 +38,9 @@
                             <li class="hotel-from-ul-li"  >
                                 <a href="javaScript:void(0)" class="hotel-from-ul-li-a" (click)="onSelectCity(item)">
                                     <div class="hotel-from-name">
-                                        <img src="assets/images/hotel/icon/hotel.png" alt="">
+                                        <img src="{{cdnUrl}}/images/hotel/icon/hotel.png" alt="">
                                         <h6>{{item._source.full_content}}</h6>
-                                        <p class="d-none">528 Hotels</p>
+                                        <!--<p class="d-none">528 Hotels</p>-->
                                     </div>
                                 </a>
                             </li>
@@ -78,7 +78,7 @@
                     <span class="hotel-city small-text"  *ngIf="hotelSearchForm.value.checkOut">{{hotelSearchForm.value.checkOut|date:'EEEE'}}</span>
                     <div class="hotel-date" >
                         <mat-form-field [hidden]="isMobile" style="visibility:hidden;position: absolute;right: 0;bottom: 0;">
-                            <input matInput [matDatepicker]="picker2" [min]="hotelSearchForm.value.checkIn" formControlName="checkOut" (dateChange)="checkOutDate($event)" >
+                            <input matInput [matDatepicker]="picker2" [min]="minCheckoutDate" formControlName="checkOut" (dateChange)="checkOutDate($event)" >
                             <mat-datepicker-toggle matSuffix [for]="picker2">
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
@@ -154,7 +154,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <mat-calendar   [minDate]="hotelSearchForm.value.checkIn"
+                            <mat-calendar   [minDate]="minCheckoutDate"
                                 (selectedChange)="onSelectMliteDate($event,'checkout')"
                                 [selected]="hotelSearchForm.value.checkOut"></mat-calendar> 
                         </div>
@@ -252,9 +252,10 @@
                                             <div class="Travellers-name mb-1">
                                                 <h6>Child 1</h6>
                                             </div>
+                                           
                                             <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}" required class="p-1" style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
-                                                <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[0] ? true : null"  *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                                <option value="{{age.value}}" [selected]="getAgeValue(item.value.childrenAge,0,age.value)"  *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
                                         <div *ngIf="item.value.numberOfChildren > 1" class="ms-2">
@@ -263,7 +264,7 @@
                                             </div>
                                             <select  (change)="onSelectAge($event,item , i)" id="selectAge2_{{i}}" class="p-1"  style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
-                                                <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[1] ? true : null" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                                <option value="{{age.value}}" [selected]="getAgeValue(item.value.childrenAge,1,age.value)" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
                                         <div *ngIf="item.value.numberOfChildren > 2" class="ms-2">
@@ -272,7 +273,7 @@
                                             </div>
                                             <select (change)="onSelectAge($event,item,i)" id="selectAge3_{{i}}" class="p-1"  style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
-                                                <option value="{{age.value}}" [attr.selected]="age.value == item.value.childrenAge[2] ? true : null" *ngFor="let age of childAgeArr">{{age.value}}</option>
+                                                <option value="{{age.value}}" [selected]="getAgeValue(item.value.childrenAge,2,age.value)" *ngFor="let age of childAgeArr">{{age.value}}</option>
                                             </select>
                                         </div>
 
@@ -313,13 +314,13 @@
                 <li>
                     <div class="OTA-Partner-list">
                         <input type="checkbox" name="" id="">
-                        <img src="assets/images/flights/1.png" alt="" />
+                        <img src="{{cdnUrl}}/images/flights/1.png" alt="" />
                     </div>
                 </li>
                 <li>
                     <div class="OTA-Partner-list">
                         <input type="checkbox" name="" id="" checked>
-                        <img src="assets/images/flights/2.png" alt="" />
+                        <img src="{{cdnUrl}}/images/flights/2.png" alt="" />
                     </div>
                 </li>
             </ul>
@@ -346,25 +347,25 @@
                         <li>
                             <div class="mob-OTA-Partner-list">
                                 <input type="checkbox" name="" id="">
-                                <img src="assets/images/flights/1.png" alt="" />
+                                <img src="{{cdnUrl}}/images/flights/1.png" alt="" />
                             </div>
                         </li>
                         <li>
                             <div class="mob-OTA-Partner-list">
                                 <input type="checkbox" name="" id="" checked>
-                                <img src="assets/images/flights/2.png" alt="" />
+                                <img src="{{cdnUrl}}/images/flights/2.png" alt="" />
                             </div>
                         </li>
                         <li>
                             <div class="mob-OTA-Partner-list">
                                 <input type="checkbox" name="" id="">
-                                <img src="assets/images/flights/4.png" alt="" />
+                                <img src="{{cdnUrl}}/images/flights/4.png" alt="" />
                             </div>
                         </li>
                         <li>
                             <div class="mob-OTA-Partner-list">
                                 <input type="checkbox" name="" id="">
-                                <img src="assets/images/flights/3.png" alt="" />
+                                <img src="{{cdnUrl}}/images/flights/3.png" alt="" />
                             </div>
                         </li>
                     </ul>

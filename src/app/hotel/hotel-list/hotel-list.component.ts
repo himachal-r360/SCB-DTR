@@ -140,7 +140,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
   @ViewChild('showFilter') showFilter: ElementRef;
 
-  pageIndex: number = 10;
+  pageIndex: number = 11;
   ITEMS_RENDERED_AT_ONCE = 10;
   nextIndex = 0;
 
@@ -158,7 +158,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
         const context = {
           item: [this.hotelList[n]]
         };
-        
+
         this.container.createEmbeddedView(this.template, context);
       }
       this.pageIndex += this.ITEMS_RENDERED_AT_ONCE;
@@ -170,12 +170,12 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
 
   private intialData() {
-    for (let n = 0; n <= this.ITEMS_RENDERED_AT_ONCE; n++) {
+    for (let n = 0; n < this.ITEMS_RENDERED_AT_ONCE; n++) {
       if (this.hotelList[n] != undefined) {
         const context = {
           item: [this.hotelList[n]]
         };
-        
+
         this.container.createEmbeddedView(this.template, context);
       }
 
@@ -231,6 +231,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     // this.sub = this.route.url.subscribe(url =>{
     this.isResponse = true;
     this.loader = true;
+      this.resetPopups();
     this.getSearchData();
     if (this.isMobile)
       this.headerHideShow(null);
@@ -271,8 +272,10 @@ export class HotelListComponent implements OnInit, OnDestroy {
     {
       var objKeys = Object.keys(urlParam); // get all object Keys
       var objSearch = {};
+      
+   
+      
       for (var j = 0; j < objKeys.length; j++) {
-
         if (objKeys[j].indexOf("[" + i + "]") > -1) {
           var objKey = objKeys[j].substring(0, objKeys[j].length - 3);
           var objKeyVal = urlParam[objKeys[j]];
@@ -284,14 +287,42 @@ export class HotelListComponent implements OnInit, OnDestroy {
         hotelSearchArr.push(objSearch); // Add object in array.
       }
     }
-    this.hotelSearchData = hotelSearchArr;
-    this.hotelSearchForm.value.rooms = this.hotelSearchData;
-
-    // this.selectedTripData = this.searchData[0];
-    // this.TotalPassenger = parseInt(this.selectedTripData.adults) + parseInt(this.selectedTripData.infants) + parseInt(this.selectedTripData.child);
+    
+    
+    this.hotelSearchForm.value.rooms = hotelSearchArr;
+   // console.log(this.hotelSearchForm.value);
+      localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
+     this. hotelSearchCallBack(this.hotelSearchForm.value);
 
   }
+  
+    continueSearchHotel;
+    hotelSearchCallBack(param: any) {
+    let searchValueAllobj = param;
+    let continueSearch: any = localStorage.getItem(environment.continueSearchHotel);
+    if (continueSearch == null) {
+      this.continueSearchHotel = [];
+    }
+    if (continueSearch != null && continueSearch.length > 0) {
+      this.continueSearchHotel = JSON.parse(continueSearch);
+      this.continueSearchHotel = this.continueSearchHotel.filter((item: any) => {
+        if (item.city != searchValueAllobj.city) {
+          return item;
+        }
+      })
+    }
+    if (this.continueSearchHotel.length > 3) {
+      this.continueSearchHotel = this.continueSearchHotel.slice(0, 3);
+    }
+    this.continueSearchHotel.unshift(searchValueAllobj);// unshift/push - add an element to the beginning/end of an array
+    localStorage.setItem(environment.continueSearchHotel, JSON.stringify(this.continueSearchHotel));
+  }
+  resetPopups() {
 
+    $(".modal").hide();
+    $("body").removeAttr("style");
+    $(".modal-backdrop").remove();
+  }
   headerHideShow(event: any) {
     this.isMobile = window.innerWidth < 991 ? true : false;
     if (this.isMobile) {
@@ -311,7 +342,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
-      
+      console.log(res.response.hotels);
       if (res.response.hotels) {
         if (res.response.hotels.length > 0) {
           this.isResponse = true
@@ -342,7 +373,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
     let hotelWithoutFilterList = this.hotelWithoutFilterList;
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
-    
+    console.log(hotelListConst , "hotel list ");
     var applyStar = false;
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
@@ -354,13 +385,13 @@ export class HotelListComponent implements OnInit, OnDestroy {
         })
 
         StarFiltereddata.push(...data);
-        
+        console.log(StarFiltereddata , "start filter");
 
       }
     });
     if (applyStar) {
       this.hotelList = StarFiltereddata;
-      
+      console.log(this.hotelList , "start filter2");
     }
 
     //Star Filter End
@@ -369,14 +400,11 @@ export class HotelListComponent implements OnInit, OnDestroy {
     if (this.hotelList.length > 0) {
       var min_price = this.minPrice;
       var max_price = this.maxPrice;
-      
       var filteredPrice: any[] = [];
       this.hotelList.filter((e: any) => {
         var filtered = e.priceSummary.filter(z => {
           return z.price >= min_price && z.price <= max_price
         });
-        
-        e.priceSummary =filtered;
         if (filtered.length > 0) {
           filteredPrice.push(e);
         }
@@ -508,8 +536,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
     };
     this.resetMinPrice = minPrice;
     this.resetMaxPrice = maxPrice;
-
-      
   }
 
   GetMinAndMaxPriceForFilter() {
@@ -739,4 +765,3 @@ export class HotelListComponent implements OnInit, OnDestroy {
   }
 
 }
-

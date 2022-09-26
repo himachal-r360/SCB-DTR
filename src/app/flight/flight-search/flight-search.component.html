@@ -19,7 +19,7 @@
                 <li>
                     <div class="Travellers-dropdown ms-3" appDropdown>
                         <div class="Travellers-dropdown-title">
-                            <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down"></i>
+                            <h5>0{{totalPassenger}} Passengers <i class="fas fa-caret-down ps-4"></i>
                             </h5>
                         </div>
                         <ul class="Travellers-dropdown-data flight-from-hide dropdown" id="openTravellers"
@@ -322,9 +322,9 @@
                                     <div class="select-root-departure departure-date">
                                         <span class="select-roottitle">DEPARTURE</span>
                                         <h5 class=" ">{{departureDate | date:'dd MMM' }}</h5>
-
+                                     
                                         <span class="select-roottitle d-block w-100 " style="font-size: 15px;"
-                                            *ngIf="departureDate=='' ||departureDate==undefined"></span>
+                                            *ngIf="departureDate=='' ||departureDate==undefined">Select Depart</span>
                                         <span class="select-roottitle"
                                             *ngIf="departureDate!='' ||departureDate!=undefined">{{departureDate|date:'EEEE'
                                             }}</span>
@@ -355,7 +355,8 @@
                                             {{arrivalDate | date:'dd MMM' }}</h5>
 
                                         <span class="select-roottitle d-block w-100" style="font-size:15px ;"
-                                            *ngIf="(arrivalDate!='' && arrivalDate!='null') || arrivalDate==undefined || navItemActive == 'One Way'">
+                                            *ngIf="arrivalDate=='' || arrivalDate==undefined ">
+                                             Select Return
                                             </span>
                                         <span class="select-roottitle"
                                             *ngIf="(arrivalDate!='' && arrivalDate!='null') ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
@@ -482,7 +483,7 @@
 
                                         <span class="select-roottitle d-block w-100"
                                             *ngIf="arrivalDate=='' || arrivalDate==undefined || navItemActive == 'One Way'">
-                                            Select Return</span>
+                                           </span>
                                         <span class="select-roottitle"
                                             *ngIf="arrivalDate!='' ||arrivalDate!=undefined|| navItemActive != 'One Way'">{{arrivalDate
                                             | date:'EEEE' }}</span>

@@ -265,8 +265,6 @@ goback() {
         this.tag = this.searchParam.t;
         this.fromState=this.searchParam.fromState;
         this.toState=this.searchParam.toState;
-        this.fromState=this.searchParam.fromState;
-        this.toState=this.searchParam.toState;
      this.busSearchCallBack(params);
       localStorage.setItem(environment.busLastSearch,JSON.stringify(params));
         }

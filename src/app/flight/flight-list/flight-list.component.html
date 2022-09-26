@@ -6,7 +6,7 @@
                     <ul class="list-inline">
                         <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
                         <li class="list-inline-item"><span>/</span></li>
-                        <li class="list-inline-item"><a href="javascript:;" routerLink="/regalia_gold/compare-fly">Travel & Stays</a></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-fly">Travel & Stays</a></li>
                         <li class="list-inline-item"><span>/</span></li>
                         <li class="list-inline-item"><span>Flight Search</span></li>
                     </ul>
@@ -289,7 +289,10 @@
                                         <ul class="flight-counts">
                                             <li class="flight-counts-list" id="{{Items.name}}" *ngFor="let Items of toggleStopsFilteritems" value="{{Items.value}}" (click)="searchNonStop(Items)" [ngClass]="{'active': Items.active}">
                                                 <p>
-                                                 <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span> {{Items.value}}</p>
+                                                 <span *ngIf="Items.name=='no_stops'">{{nonStopCount}}</span>
+                                                 <span *ngIf="Items.name=='All_Flights' && Items.active">{{flightList.length}}</span>
+                                                 {{Items.value}}
+                                                </p>
                                             </li>
 
                                         </ul>

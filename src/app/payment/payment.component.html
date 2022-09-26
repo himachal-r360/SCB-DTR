@@ -142,7 +142,7 @@
                             </li>
 
                             <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false }" data-bs-toggle="tab" role="tab">
+                                <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false ,'active': pgSettingsHDFCPG && isLoggedIn && !pgSettingsCYBER  && cardData.length ==0 && payzrestriction==false  }" data-bs-toggle="tab" role="tab">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                 </a>
                             </li>
@@ -380,37 +380,48 @@
 
 
                         <!-- Credt/Debit Card Section Starts -->
-                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false }" role="tabpanel" aria-labelledby="tab-ccdcCards"
+                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false ,'active show': pgSettingsHDFCPG && isLoggedIn && !pgSettingsCYBER  && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
                             *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
 
                             <div class="panel-heading">
                                 <div class="" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                    <a id="tab-ccdcCards" class="accordion-button" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length==0 && payzrestriction==false,'collapsed':payzrestriction==true  }" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane"
-                                        data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards">
+                                    <a  *ngIf="(pgSettingsCYBER || pgSettingsHDFCPG) && isLoggedIn && cardData.length==0 && payzrestriction==false" id="tab-ccdcCards" class="accordion-button active show" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane"
+                                         data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards"  >
                                         <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                     </a>
+                                    
+                                     <a  *ngIf="(pgSettingsCYBER || pgSettingsHDFCPG) && isLoggedIn && cardData.length > 0 && payzrestriction ==false" id="tab-ccdcCards" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane"
+                                         data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards"  >
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
+                                    </a>
+                                     <a  *ngIf="payzrestriction ==true" id="tab-ccdcCards" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane"
+                                         data-bs-target="#collapse-ccdcCards" aria-expanded="false" aria-controls="collapse-ccdcCards"  >
+                                        <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
+                                    </a>
+                                 
+                    
                                 </div>
                             </div>
-                            <div id="collapse-ccdcCards" class="accordion-collapse collapse" [ngClass]="{'show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false,'collapsed':payzrestriction==true  }" role="tabpanel" aria-labelledby="heading-ccdcCards"
+                            <div id="collapse-ccdcCards" class="accordion-collapse collapse" [ngClass]="{'show': (pgSettingsHDFCPG || pgSettingsCYBER) && isLoggedIn && cardData.length ==0 && payzrestriction==false,'collapsed':payzrestriction==true }" role="tabpanel" aria-labelledby="heading-ccdcCards"
                                 data-bs-parent="#content">
                                 <div class="card-body p-0">
                                     <div>
-                                        <div class="common_title">
+                                        <div class="common_title" *ngIf="pgSettingsCYBER && pgSettingsHDFCPG ">
                                             <span class="">Pay Using Debit/Credit Cards</span>
                                         </div>
                                         <div class="newCardsAddSection" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
 
                                             <div class="tab_btn_payments">
                                                 <ul class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link active addCardTab" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true">Visa / MasterCard / Diners</a>
+                                                    <li class="nav-item" *ngIf="pgSettingsCYBER " >
+                                                        <a class="nav-link addCardTab" [ngClass]="{'active': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true">Visa / MasterCard / Diners</a>
                                                     </li>
-                                                    <li class="nav-item">
-                                                        <a class="nav-link addRupayTab" id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false">Rupay</a>
+                                                    <li class="nav-item" *ngIf="pgSettingsHDFCPG ">
+                                                        <a class="nav-link addRupayTab"  [ngClass]="{'active': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false">Rupay</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content pt-0" id="pills-tabContent">
-                                                    <div class="tab-pane fade show active" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
+                                                    <div class="tab-pane fade  " [ngClass]="{'active show': pgSettingsCYBER   }" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
                                                         <div>
                                                             <div class="common_title">
                                                                 <span class="">Add Visa / MasterCard / Diners</span>
@@ -550,12 +561,12 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                    <div class="tab-pane fade" id="pills-rupayCard" role="tabpanel" aria-labelledby="rupayCard">
+                                                    <div class="tab-pane fade" id="pills-rupayCard" [ngClass]="{'active show': pgSettingsHDFCPG && !pgSettingsCYBER   }" role="tabpanel" aria-labelledby="rupayCard" *ngIf="pgSettingsHDFCPG ">
                                                         <div>
                                                             <div class="common_title">
                                                                 <span class="">Rupay Card</span>
                                                             </div>
-                                                            <form [formGroup]="hdfcPgForm" *ngIf="pgSettingsHDFCPG">
+                                                            <form [formGroup]="hdfcPgForm" >
                                                                 <div id="RupaySectionPath" [ngClass]="{'show':  !pgSettingsCYBER && pgSettingsHDFCPG }">
                                                                     <div class="RupayCardSection">
                                                                         <div class="rupay-info">
@@ -684,8 +695,8 @@
                                             <li class="nav-item">
                                                 <a class="nav-link active ccemiTab" (click)="hidecheckoutPay(0)" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true">Credit Card EMI</a>
                                             </li>
-                                            <li class="nav-item dcemiTab" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0">
-                                                <a class="nav-link" id="dc-emi" (click)="hidecheckoutPay(1)" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
+                                            <li class="nav-item dcemiTab" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1)" >
+                                                <a class="nav-link" id="dc-emi"  (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content" id="pills-tabContent">
