@@ -181,6 +181,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   passengerChildFormCount: number = 1;
   passengerInfantFormCount: number = 1;
   currentId: any;
+  isExpanded: boolean = false;
+  isGstExpanded: boolean = false;
   dateInputMask = createMask<Date>({
     alias: 'datetime',
     inputFormat: 'dd/mm/yyyy',
@@ -237,7 +239,6 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isAdultExpanded: boolean = false;
   isChildExpanded: boolean = false;
   isInfantExpanded: boolean = false;
-  isGstExpanded: boolean = false;
   enablesavedTraveller: number = 0;
   enableGST: any;
   travellerlist: any;
@@ -1659,8 +1660,9 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
   }
 
 
-  openmodal(content) {
-    this.modalService.open(content, { centered: true });
+    openmodal(content) {
+      this.isExpanded = false; this.isAdultExpanded = false; this.isInfantExpanded = false;
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
 

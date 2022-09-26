@@ -1456,7 +1456,12 @@ this.continueSearchFlights.unshift(searchValueAllobj);// unshift/push - add an e
 localStorage.setItem(environment.continueFlightSearch,JSON.stringify(this.continueSearchFlights));
 }
 sameCityValidation = false;
-onSubmit(service,type) {
+
+    isMobile:boolean= false;
+  
+  
+  onSubmit(service,type) {
+   this.isMobile = window.innerWidth < 991 ?  true : false;
   var xss = require("xss");
  var cookieArray=[]; var datePipe =new DatePipe('en-US');   var uDate; var uDateR; var cDate;var cDateR;var cookieDate;
  
@@ -1619,30 +1624,44 @@ this.router.navigateByUrl(url);
   localStorage.setItem('HotelRecentSearch', btoa(JSON.stringify(search_values_setCookieHotel)));
 // Recent search ends
 
-  let queryParam:string='';  var j=1
-  $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
-  queryParam+='numberOfAdults'+j+'='+(jsonObject['hotel_adult'])+'&numberOfChildren'+j+'='+(jsonObject['hotel_child'])+'&';
+ 
+        let queryParam:string='';  var j=0;
+        let totalGuest=0;
+        $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
+        totalGuest+=(jsonObject['hotel_adult'])+(jsonObject['hotel_child']);
+        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge['+j+']=';
+       if(jsonObject['child_age'].length > 0){
+         for (let k = 0; k < jsonObject['child_age'].length; k++) {
+         queryParam+=jsonObject['child_age'][k]['age'];
+         if(k!=jsonObject['child_age'].length-1)
+          queryParam+=',';
+         }
+        }
+        j++;
+        });
+        
+        let device= this.isMobile ? 'Mobile' : 'Web';
 
- if(jsonObject['child_age'].length > 0){
-   for (let k = 0; k < jsonObject['child_age'].length; k++) {
-   queryParam+='room'+j+'Child'+(k+1)+'='+jsonObject['child_age'][k]['age']+'&';
-   }
-  }
-  j++;
-  });
 
 
-         if(environment.IS_MAIN==1){
-  const current = new Date();
-  this.redirectPopupTriggerTimestamp=current.getTime();
-  this.redirectPopupTrigger=1;
-  this.redirectPopup=2;
-  this.redirectPopupUrl=this.sg['domainPath']+'hotel-list?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
-   return;
-  }
+      let url=this.sg['domainPath']+'hotel-list?checkIn='+uDate+'&checkOut='+uDateR+'&noOfRooms='+(this.searchHotelForm.value.rooms.length);
+      url+='&city='+this.searchHotelForm.value.hotelId+'&country='+this.searchHotelForm.value.countryId+'&countryName='+this.searchHotelForm.value.countryId+'&scr=INR';
+      url+='&sct='+this.searchHotelForm.value.countryId+'&hotelName=&latitude=&longitude=&area=&hotelId=&'+queryParam;
+      url+='&channel='+device+'&programName='+this.sg['domainName']+'&limit=0&numberOfRooms='+(this.searchHotelForm.value.rooms.length)+'&totalGuest='+totalGuest;
+      
+      
+               if(environment.IS_MAIN==1){
+        const current = new Date();
+        this.redirectPopupTriggerTimestamp=current.getTime();
+        this.redirectPopupTrigger=1;
+        this.redirectPopup=2;
+        this.redirectPopupUrl=environment.MAIN_SITE_URL+'Hotels_lists?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
+         return;
+        }
+        // this.document.location.href =this.sg['domainPath']+url;
 
-this.document.location.href =this.sg['domainPath']+'hotel-list?cityname='+this.searchArray.hotelName+'&city_id='+this.searchArray.hotelId+'&country='+this.searchArray.countryId+'&hotel_name=&lattitude=&longitude=&hotel_id=&area=&label_name=&checkin='+cDate+'&checkout='+cDateR+'&num_rooms='+this.searchArray.roomCount+'&'+queryParam+'t=ZWFybg==&hotel_search_done=1&hotel_modify=0';
- //  console.log(JSON.stringify(this.searchHotelForm.value, null, 4));
+
+ this.router.navigateByUrl(url);
 
   break;
   }

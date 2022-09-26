@@ -178,32 +178,32 @@
                                       </div>
 
 
-                                        <div class="owl-slider grid-7 hd-Offered-slider">
-                                          <owl-carousel-o [options]="customOptions">
-                                        <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
-                                          <ng-template carouselSlide>
-                                            <div class="box-item">
-                                              <div class="hd-Offered-thumbe">
-                                                  <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
-                                              </div>
-                                              <div class="hd-Offered-text">
-                                                  <h6>{{Facilities[item].name}}</h6>
-                                              </div>
-                                          </div>
-                                            </ng-template>
-                                         </ng-container>
+                                        <div class="owl-slider grid-7 hd-Offered-slider"   >
+                                                <owl-carousel-o [options]="customOptions">
+                                                    <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
+                                                        <ng-template carouselSlide>
+                                                            <div class="box-item">
+                                                                <div class="hd-Offered-thumbe">
+                                                                    <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
+                                                                </div>
+                                                                <div class="hd-Offered-text">
+                                                                    <h6>{{Facilities[item].name}}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </ng-template>
+                                                    </ng-container>
 
-                                          <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
-                                         <div class="box-item box-item-text">
-                                          <div class="hd-Offered-text">
-                                              <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
-                                                  <p>{{hotelAmenity.length - 6}}+</p>
-                                                  <span>More Amenities</span>
-                                              </a>
-                                          </div>
-                                      </div>
-                                    </ng-template>
-                                        </owl-carousel-o>
+                                                    <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
+                                                        <div class="box-item box-item-text">
+                                                            <div class="hd-Offered-text">
+                                                                <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
+                                                                    <p>{{hotelAmenity.length - 6}}+</p>
+                                                                    <span>More Amenities</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </owl-carousel-o>
 
                                         </div>
 
@@ -408,7 +408,7 @@
                                         </div>
                                         <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
                                             <div class="Overview-bottom-title mb-20">
-                                                <h6>Facilities Offered</h6>
+                                                <h6>Facilities Offered</h6> 
                                             </div>
                                             <div class="owl-slider grid-7 hd-Offered-slider">
                                               <owl-carousel-o [options]="MobilecustomOptions">
