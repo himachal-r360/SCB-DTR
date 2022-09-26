@@ -980,7 +980,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
   
   
   itineraryProcess(){
-  
        var gender; 
        switch (this.passengerForm.controls['passengerTitle']['value']) {
         case 'Mr':
@@ -1059,7 +1058,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         },
          "gst": this.gstDetails,
         "discountAmount": 0,
-        "hotelId": this.searchResult.Hotelkey,
+        "hotelId": this.searchResult.PriceSummery.hotelId,
         "mobileCountryCode": 91,
         "noOfRooms": this.searchData.numberOfRooms,
         "operator": "",
@@ -1082,7 +1081,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         this.loaderValue = 10;
         }
         }, 700);
-
 
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryParam))
