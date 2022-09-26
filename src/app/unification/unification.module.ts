@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { BannersComponent } from './../shared-components/banners/banners.component';
 import { BenefitsComponent } from './benefits/benefits.component';
 import { UnificationHomeComponent } from './unification-home/unification-home.component';
 import { SharedComponentsModule } from '../shared-components/shared-components.module';
+import { CustomReuseStrategy } from '../route-reuse-strategy';
 
 
 const routes: Routes = [
@@ -27,9 +28,17 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedComponentsModule,
-    RouterModule.forChild(routes)
+    /* RouterModule.forChild(routes) */
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled',
+      onSameUrlNavigation: 'reload'
+    }),
   ],
 exports: [RouterModule],
-providers: [ ],
+providers:[ {
+  provide: RouteReuseStrategy,
+  useClass: CustomReuseStrategy,
+}],
 })
 export class UnificationModule { }
