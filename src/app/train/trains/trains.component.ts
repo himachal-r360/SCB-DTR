@@ -187,7 +187,6 @@ arrivalTimeFilter: any[]= [{'filterCode':'BEFORE-6AM' ,'filterValue':'Before 6AM
    
 
   ngOnInit() {
-     this.titleService.setTitle('Home | IRCTC');
        this.isMobile = window.innerWidth < 991 ?  true : false;
      this.activatedRoute.url.subscribe(url =>{
         this.resetPopups();

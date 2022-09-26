@@ -428,7 +428,7 @@
                 <h3 class="">Travel & Stay Bookings made easy</h3>
             </div>
             <div class="travel_sec_flex ">
-                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 2}" (mouseenter)="showBlock(2)" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                <div class="card_book flight_block" [ngClass]="{'card_bookunblock flight_unblock': showBlockno == 2}" (mouseenter)="showBlock(2)" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                     <div>
                         <p class="main_text">Flights</p>
                     </div>
@@ -443,7 +443,7 @@
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.flight.cashback}}% cashback and {{serviceSettings.offer_construct.flight.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 2}"> <app-travel-search searchDisplayForm="flight"  webView="1"   showType="1"  popular="0" tab="0"  ></app-travel-search></span>
                 </div>
-                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 1}" (mouseenter)="showBlock(1)" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                <div class="card_book stay_block" [ngClass]="{'card_bookunblock stay_unblock': showBlockno == 1}" (mouseenter)="showBlock(1)" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                     <div>
                         <p class="main_text">Stays</p>
                     </div>
@@ -464,7 +464,7 @@
                     <p class="tag_desc"><i class="fa fa-tag"></i>Up to {{serviceSettings.offer_construct.hotel.cashback}}% cashback and {{serviceSettings.offer_construct.hotel.reward}}X reward points</p>
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 1}"><app-travel-search searchDisplayForm="hotel"  webView="1" showType="1"  popular="0" tab="0"  ></app-travel-search></span>
                 </div>
-                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 3}" (mouseenter)="showBlock(3)" *ngIf="DOMAIN_SETTINGS.BUS==1">
+                <div class="card_book bus_block" [ngClass]="{'card_bookunblock bus_unblock': showBlockno == 3}" (mouseenter)="showBlock(3)" *ngIf="DOMAIN_SETTINGS.BUS==1">
                     <div>
                         <p class="main_text">Bus</p>
                     </div>
@@ -481,7 +481,7 @@
 
                     <span class="box_hidden" [ngClass]="{'box_visible': showBlockno == 3}"> <app-travel-search searchDisplayForm="bus" webView="1"  showType="1"  popular="0" tab="0"  ></app-travel-search></span>
                 </div>
-                <div class="card_book" [ngClass]="{'card_bookunblock': showBlockno == 4}" (mouseenter)="showBlock(4)" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
+                <div class="card_book train_block" [ngClass]="{'card_bookunblock train_unblock': showBlockno == 4}" (mouseenter)="showBlock(4)" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
                     <div>
                         <p class="main_text">Train</p>
                     </div>
