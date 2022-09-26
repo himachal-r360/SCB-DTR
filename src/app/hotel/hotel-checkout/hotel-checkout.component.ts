@@ -120,13 +120,14 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         isCollapseVas: boolean = false;
         isCollapse: boolean = false;
         passengerSelectedArray:any={};
+        statesdump:any=[];
         totalAdult:number = 0;
         totalChild:number = 0;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog,  private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
-
+      this.statesdump = require('src/assets/data/states.json');
     this.serviceSettings = this.appConfigService.getConfig();
     if (this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['HOTEL'] != 1) {
       this.router.navigate(['/**']);

@@ -3663,7 +3663,7 @@
                                     <div class="col-lg-6 col-md-4 col-12">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Pincode</mat-label>
-                                            <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
+                                            <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)"  minlength="6" maxlength="6" autocomplete="nope">
 
                                         </mat-form-field>
                                         <span *ngIf="submitted && passengerForm.controls.gstPincode.errors" class="error">
@@ -3694,8 +3694,12 @@
                                         <div class="col-lg-6 col-md-6 col-12">
                                             <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>State</mat-label>
-                                                <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value="{{ state }}">
-
+                                                <!-- <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value="{{ state }}"> -->
+                                                <mat-select formControlName="gstState" name="gstState">
+                                                    <mat-option *ngFor="let type of statesdump" [value]=type.state>
+                                                        {{type.statevalue}}
+                                                    </mat-option>
+                                                </mat-select> 
                                             </mat-form-field>
                                             <span *ngIf="submitted && passengerForm.controls.gstState.errors" class="error">
                         <mat-error class="error_bus" *ngIf="passengerForm.hasError('required','gstState')">
