@@ -639,6 +639,10 @@ export class PaymentComponent implements OnInit {
 
 
                 }else{
+
+				let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+				element.click();
+
                 var message="You are not eligible for Debit Card EMI payment";
                 alert(message);
                 }
