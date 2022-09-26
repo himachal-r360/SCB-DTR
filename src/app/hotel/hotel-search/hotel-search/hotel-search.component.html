@@ -1,6 +1,6 @@
 
 <div class="travel-select-data-area">
-    <form [formGroup]="hotelSearchForm">
+    <form [formGroup]="hotelSearchForm"  *ngIf="hotelSearchForm" >
         <div class="hotel-search mt-20">
             <div class="hotel-area" appHotelDropdown>
                 <div class="hotel-area-item" (click)='focusInput()' >
@@ -252,7 +252,6 @@
                                             <div class="Travellers-name mb-1">
                                                 <h6>Child 1</h6>
                                             </div>
-                                           
                                             <select  (change)="onSelectAge($event,item, i)" id="selectAge1_{{i}}" required class="p-1" style="margin: 1px;">
                                                 <option value="0" selected>Age</option>
                                                 <option value="{{age.value}}" [selected]="age.value == getAgeValue(item.value.childrenAge,0)"  *ngFor="let age of childAgeArr">{{age.value}}</option>
