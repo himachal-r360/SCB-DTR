@@ -7,7 +7,9 @@ import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { ClubMarriotMembershipComponent } from './club-marriot-membership/club-marriot-membership.component';
 const routes: Routes = [
   {path:"infinia-itc-hotel",component:InfiniaItcHotelComponent},
-  {path:"club-marriott-membership" , component:ClubMarriotMembershipComponent}
+  {path:"club-marriott-membership" , component:ClubMarriotMembershipComponent},
+  {path:"infinia-gateway" , component:InfiniaHomeComponent},
+
   
 ]
 

@@ -60,7 +60,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,
     AppRoutingModule,
     FlightModule,BusModule,ListModule,BusSearchModule,TrainSearchModule,
-    TrainModule,TrainsTravellerModule,IrctcregModule,HotelModule,TdrModule,
+    TrainModule,TrainsTravellerModule,IrctcregModule,HotelModule,TdrModule,InfiniaModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
