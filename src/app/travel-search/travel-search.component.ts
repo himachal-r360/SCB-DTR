@@ -407,12 +407,16 @@ export class TravelSearchComponent implements OnInit {
         
                case 'hotel': {
         if(field=='departure'){
+         this.mliteChecout=false;
         $('#hotel_arrival_mlite').modal('hide');
         $('#hotel_departure_mlite').modal('show');
         }else{
  
-        $('#hotel_arrival_mlite').modal('show');
+        this.mliteChecout=true;
+        setTimeout(() => {
+         $('#hotel_arrival_mlite').modal('show');
         $('#hotel_departure_mlite').modal('hide');
+        }, 30);
         }
         break;
         }
@@ -2151,6 +2155,14 @@ switch(service) {
 
 
   }
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#hotel_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
+  
+  
 
    searchAutoComplete($event,service,field,device) {
        let keycode = $event.which;

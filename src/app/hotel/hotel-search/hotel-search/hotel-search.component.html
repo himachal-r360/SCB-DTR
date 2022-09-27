@@ -145,16 +145,15 @@
                     </div>
                 </div>
             </div>
-            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="isMobile" >
+            <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="isMobile && mliteChecout" >
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Select Check-Out Date</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close"  (click)="closeCheckout()"      aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <mat-calendar  [startAt]="startAt"     [minDate]="minCheckoutDate"
+                            <mat-calendar   [minDate]="minCheckoutDate"
                                 (selectedChange)="onSelectMliteDate($event,'checkout')"
                                 [selected]="hotelSearchForm.value.checkOut"></mat-calendar>
                         </div>

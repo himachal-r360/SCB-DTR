@@ -70,7 +70,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
 
 
-
+  startAt;
   constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute,private sg: SimpleGlobal) {
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
@@ -96,7 +96,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       totalGuest:[]
     });
     this.minCheckoutDate.setDate( this.minCheckoutDate.getDate() + 1 );
-
+   
   }
 
   ngOnInit(): void {
@@ -525,9 +525,6 @@ focusInput(){
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
       
-      
-      
-      
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.hotelSearchCallBack(this.hotelSearchForm.value)
@@ -536,7 +533,6 @@ focusInput(){
 
   }
 
-startAt;
   onSelectMliteDate(event, field) {
 
     if (field == 'checkin') {
@@ -545,17 +541,8 @@ startAt;
        d.setDate(d.getDate() + 1);
       var compare1 = new Date(d).getTime();
        var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
-
        this.minCheckoutDate = d;
-       
-       
-           let today = new Date();
-    let month = today.getMonth() + 3; //in three months
-    let year = today.getUTCFullYear();
-    let day = today.getDay();
-
-    this.startAt = new Date(d);
-       
+  
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
         this.hotelSearchForm['controls']['checkOut'].setValue(moment(this.minCheckoutDate).format('YYYY-MM-DD'));
@@ -566,13 +553,25 @@ startAt;
 
 
   }
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#flight_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
+  
   openMliteDatePicker(field, rtype) {
     if (field == 'checkin') {
+        this.mliteChecout=false;
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
+        this.mliteChecout=true;
+     setTimeout(() => {
       $('#flight_arrival_mlite').modal('show');
       $('#flight_departure_mlite').modal('hide');
+      }, 30);
+
     }
 
   }
