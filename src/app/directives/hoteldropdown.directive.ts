@@ -8,7 +8,6 @@ export class HotelDropdownDirective{
    
     @HostListener('document:click', ['$event']) toggleOpen(event: Event) {
       var element = event?.target as HTMLElement
-      let citySearchRef = document.getElementById('citySearchRef');
       // debugger;
         if((this.elRef.nativeElement.contains(event.target) || element.classList.contains('delete-room') ) && !element.classList.contains('close-mobile') )
         {

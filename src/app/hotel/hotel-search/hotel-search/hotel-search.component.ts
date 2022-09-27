@@ -197,35 +197,48 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren - 1;
         var lastCommaIndex = item.value.childrenAge.lastIndexOf(",");
+        if(lastCommaIndex !=-1)
         item.value.childrenAge = item.value.childrenAge.substr(0,lastCommaIndex);
 
-       /*
-      if (this.submitted) {
-        var rooms = this.hotelSearchForm.value.rooms;
-        var j = 0;
-        var isvalid = true;
+    if (this.submitted) {
+      var rooms = this.hotelSearchForm.value.rooms;
+      var j = 0;
+      var isvalid = true;
         rooms.forEach(z => {
-          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || (z.childrenAge == "" && z.childrenAge.find(a=>a =='0'))) && z.numberOfChildren > 0) {
-            var id = document.getElementById("error_" + j)
-            id.hidden = false;
-            isvalid = false;
-          } else {
-            var id = document.getElementById("error_" + j)
-            id.hidden = true;
-          }
-          j++;
+        if(z.numberOfChildren >0 ){
+        if(Array.isArray(z.childrenAge))
+        var childrenAgeArray = z.childrenAge;
+        else
+        var childrenAgeArray = z.childrenAge.split(',');
+
+        let loopvalid=0;
+        for(let i=0;i<(childrenAgeArray.length);i++){
+        if(childrenAgeArray[i] < 1) loopvalid++;
+        }
+
+        if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
+        var id = document.getElementById("error_" + j)
+        id.hidden = true;
+        isvalid = true;
+        }else{
+        var id = document.getElementById("error_" + j)
+        id.hidden = false;
+        isvalid = false;
+        }
+        j++;
+        }
         });
-
-
-        if (!isvalid) {
-          var id1 = document.getElementById("error_AllAge")
-          id1.hidden = false;
-        }
-        else {
-          var id1 = document.getElementById("error_AllAge")
-          id1.hidden = true;
-        }
-      }*/
+      if (!isvalid) {
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = false;
+      }
+      else {
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = true;
+      }
+    }
+    
+    
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
@@ -349,7 +362,6 @@ focusInput(){
 
   onSelectAge(event, item, i) {
 
-
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
     let selectAge2: any = document.getElementById('selectAge2_' + i);
@@ -366,21 +378,34 @@ focusInput(){
 
     item.value.childrenAge = ageArr;
 
-    /*if (this.submitted) {
+    if (this.submitted) {
       var rooms = this.hotelSearchForm.value.rooms;
       var j = 0;
       var isvalid = true;
-      rooms.forEach(z => {
-        if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0')) && z.numberOfChildren > 0) {
-          var id = document.getElementById("error_" + j)
-          id.hidden = false;
-          isvalid = false;
-        } else {
-          var id = document.getElementById("error_" + j)
-          id.hidden = true;
+        rooms.forEach(z => {
+        if(z.numberOfChildren >0 ){
+        if(Array.isArray(z.childrenAge))
+        var childrenAgeArray = z.childrenAge;
+        else
+        var childrenAgeArray = z.childrenAge.split(',');
+
+        let loopvalid=0;
+        for(let i=0;i<(childrenAgeArray.length);i++){
+        if(childrenAgeArray[i] < 1) loopvalid++;
+        }
+
+        if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
+        var id = document.getElementById("error_" + j)
+        id.hidden = true;
+        isvalid = true;
+        }else{
+        var id = document.getElementById("error_" + j)
+        id.hidden = false;
+        isvalid = false;
         }
         j++;
-      });
+        }
+        });
       if (!isvalid) {
         var id1 = document.getElementById("error_AllAge")
         id1.hidden = false;
@@ -390,7 +415,7 @@ focusInput(){
         id1.hidden = true;
       }
     }
-  */
+  
 
   }
 
@@ -472,7 +497,6 @@ focusInput(){
          var id = document.getElementById("error_" + i)
         id.hidden = true;
          isvalid = true;
-        console.log('valid');
      }else{
         var id = document.getElementById("error_" + i)
         id.hidden = false;
