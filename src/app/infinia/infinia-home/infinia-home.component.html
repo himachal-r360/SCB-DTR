@@ -22,22 +22,22 @@
                     <div class="welcome-tabs-box">
                         <ul class="nav-tabs-ul list-unstyled">
                             <li>
-                                <a href="#WelcomeBenefits" class="active">Welcome Benefits</a>
+                                <a  (click)="scrollToElement(WelcomeBenefits)"  class="active">Welcome Benefits</a>
                             </li>
                             <li>
-                                <a href="#LifestyleBenefits">Lifestyle Benefits</a>
+                                <a  (click)="scrollToElement(LifestyleBenefits)">Lifestyle Benefits</a>
                             </li>
                             <li>
-                                <a href="#TravelBenefits">Travel Benefits</a>
+                                <a  (click)="scrollToElement(TravelBenefits)" >Travel Benefits</a>
                             </li>
                             <li>
-                                <a href="#DiningBenefits">Dining Benefits</a>
+                                <a  (click)="scrollToElement(DiningBenefits)">Dining Benefits</a>
                             </li>
                             <li>
-                                <a href="#CoreRewardPoints">Core Reward Points</a>
+                                <a  (click)="scrollToElement(CoreRewardPoints)">Core Reward Points</a>
                             </li>
                             <li>
-                                <a href="#AdditionalBenefits">Additional Benefits</a>
+                                <a  (click)="scrollToElement(AdditionalBenefits)">Additional Benefits</a>
                             </li>
                         </ul>
                     </div>
@@ -50,7 +50,7 @@
 
 
     <!-- Welcome-Benefits start -->
-    <section id="WelcomeBenefits" class="Welcome-Benefits-area mt-5 mb-5">
+    <section id="WelcomeBenefits" class="Welcome-Benefits-area mt-5 mb-5" #WelcomeBenefits>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -61,17 +61,17 @@
                         <div class="common-table-title">
                             <ul class="list-unstyled ">
                                 <li>
-                                    <a href="javascript:void(0); " class="common-table-title-active"
-                                        data-bind="Membership">Complimentary Club Marriott Membership </a>
+                                    <a href="javascript:void(0); " class="common-table-title-active" (click)="showHideMember()"
+                                        data-bind="Membership" id="activeMember">Complimentary Club Marriott Membership </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" data-bind="Points"> Welcome Bonus Reward Points </a>
+                                    <a href="javascript:void(0);" id="activePoint" data-bind="Points" (click)="showHidePoints()"> Welcome Bonus Reward Points </a>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="">
-                            <div id="Membership" class="common-table-list common-table-list-active">
+                            <div id="Membership" class="common-table-list common-table-list-active" >
                                 <div class="common-table-list-box mt-4">
                                     <div class="text-center pb-4">
                                         <p>Complimentary Club Marriott membership for first year that offers up to 20%
@@ -137,10 +137,10 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-10">
                                             <div class="Process-item">
-                                                <h6 class="Process-item-title">Process to Redeem Welcome Benefits</h6>
-                                                <div class="Benefits-datas">
-                                                    <ul>
-                                                        <li>
+                                                <h6 class="Process-item-title" (click)="welcomeBenefit('1')">Process to Redeem Welcome Benefits</h6>
+                                                <div class="Benefits-datas d-none">
+                                                    <ul class="list-disc">
+                                                        <li >
                                                             <p>Go to Infinia Benefit section and refer tab “ Club
                                                                 Marriott Membership” </p>
                                                         </li>
@@ -164,7 +164,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="Points" class="common-table-list">
+                            <div id="Points" class="common-table-list"  >
                                 <div class="common-table-list-box mt-4">
                                     <div class="row justify-content-center benefits-box pt-4">
 
@@ -192,7 +192,7 @@
     <!-- Welcome-Benefits end -->
 
     <!-- Lifestyle-Benefits start -->
-    <section id="LifestyleBenefits" class="lifestyle-Benefits-area pt-5 pb-5">
+    <section id="LifestyleBenefits" class="lifestyle-Benefits-area pt-5 pb-5" #LifestyleBenefits>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -204,13 +204,13 @@
                             <ul class="list-unstyled ">
                                 <li>
                                     <a href="javascript:void(0); " class="common-table-title-active"
-                                        data-bind="Unlimited">Unlimited Golf Access </a>
+                                        data-bind="Unlimited" id="golfActive" (click)="showHideGolf('Unlimited')">Unlimited Golf Access </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" data-bind="support"> Premium Concierge support </a>
+                                    <a href="javascript:void(0);" id="supportActive" data-bind="support" (click)="showHideGolf('Premium')"> Premium Concierge support </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" data-bind="Priority"> Priority Customer service </a>
+                                    <a href="javascript:void(0);" id="PriorityActive" data-bind="Priority" (click)="showHideGolf('Priority')"> Priority Customer service </a>
                                 </li>
                             </ul>
                         </div>
@@ -245,8 +245,8 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-10">
                                             <div class="Process-item">
-                                                <h6 class="Process-item-title">Process to Redeem Welcome Benefits</h6>
-                                                <div class="Benefits-datas">
+                                                <h6 class="Process-item-title" (click)="welcomeBenefit('2')">Process to Redeem Welcome Benefits</h6>
+                                                <div class="Benefits-datas d-none">
                                                     <ul>
                                                         <li>
                                                             <p>Please call the concierge at 1800 118 887 | 022 42320226
@@ -384,7 +384,7 @@
 
 
     <!-- Travel-Benefits start -->
-    <section id="TravelBenefits" class="Travel-Benefits-area pt-5 pb-5">
+    <section id="TravelBenefits" class="Travel-Benefits-area pt-5 pb-5" #TravelBenefits>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -395,11 +395,11 @@
                         <div class="common-table-title">
                             <ul class="list-unstyled ">
                                 <li>
-                                    <a href="javascript:void(0); " class="common-table-title-active"
-                                        data-bind="ITCHotels">Complimentary Nights @ ITC Hotels </a>
+                                    <a href="javascript:void(0); " id="ITCHotelsActive" class="common-table-title-active"
+                                        data-bind="ITCHotels" (click)="hideShowTravelBenefit('Complimentary')">Complimentary Nights @ ITC Hotels </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" data-bind="UnlimitedAccess"> Unlimited Lounge Access
+                                    <a href="javascript:void(0);"  id="UnlimitedAccessActive" data-bind="UnlimitedAccess" (click)="hideShowTravelBenefit('Unlimited')"> Unlimited Lounge Access
                                     </a>
                                 </li>
                             </ul>
@@ -459,8 +459,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-10">
                                     <div class="Process-item">
-                                        <h6 class="Process-item-title">Process to Book</h6>
-                                        <div class="Benefits-datas">
+                                        <h6 class="Process-item-title" (click)="welcomeBenefit('3')">Process to Book</h6>
+                                        <div class="Benefits-datas d-none">
                                             <ul>
                                                 <li>
                                                     <p>Click here for list of participating hotels </p>
@@ -507,7 +507,7 @@
 
 
     <!-- Dining-Benefits start -->
-    <section id="DiningBenefits" class="Dining-Benefits-area pt-5 pb-5">
+    <section id="DiningBenefits" class="Dining-Benefits-area pt-5 pb-5" #DiningBenefits>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -519,11 +519,11 @@
                             <ul class="list-unstyled ">
                                 <li>
                                     <a href="javascript:void(0); " class="common-table-title-active"
-                                        data-bind="DineoutComplimentary">1+1 Complimentary weekend buffet @ ITC Hotel
+                                        data-bind="DineoutComplimentary" id="DineoutComplimentaryActive" (click)="hideShowDiningBenefit('1')">1+1 Complimentary weekend buffet @ ITC Hotel
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" data-bind="Dineoutmembership"> Complimentary Dineout
+                                    <a href="javascript:void(0);" id="DineoutmembershipActive" data-bind="Dineoutmembership" (click)="hideShowDiningBenefit('2')"> Complimentary Dineout
                                         passport membership </a>
                                 </li>
                             </ul>
@@ -548,8 +548,8 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-8">
                                             <div class="Process-item">
-                                                <h6 class="Process-item-title">Process to Avail</h6>
-                                                <div class="Benefits-datas ">
+                                                <h6 class="Process-item-title" (click)="welcomeBenefit('4')">Process to Avail</h6>
+                                                <div class="Benefits-datas d-none">
                                                     <div class="Benefits-grid-2">
                                                         <div class="Benefits-datas-list">
                                                             <h6>01</h6>
@@ -692,7 +692,7 @@
 
 
     <!-- CoreReward-Benefits start -->
-    <section id="CoreRewardPoints" class="CoreReward-Benefits-area pt-5 pb-5">
+    <section id="CoreRewardPoints" class="CoreReward-Benefits-area pt-5 pb-5" #CoreRewardPoints>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -703,11 +703,11 @@
                         <div class="common-table-title">
                             <ul class="list-unstyled ">
                                 <li>
-                                    <a href="javascript:void(0); " class="common-table-title-active"
-                                        data-bind="RewardAccrual">Reward Points Accrual</a>
+                                    <a href="javascript:void(0); " id="RewardAccrualActive"   class="common-table-title-active"
+                                        data-bind="RewardAccrual" (click)="hideShowCoreReward('1')">Reward Points Accrual</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0);" data-bind="RewardRedemption"> Reward Points Redemption
+                                    <a href="javascript:void(0);" id="RewardRedemptionActive" data-bind="RewardRedemption" (click)="hideShowCoreReward('2')"> Reward Points Redemption
                                     </a>
                                 </li>
                             </ul>
@@ -813,7 +813,7 @@
     <!-- CoreReward-Benefits end -->
 
     <!-- Additional-Benefits start -->
-    <section id="AdditionalBenefits" class="Additional-Benefits-area pt-5 pb-5">
+    <section id="AdditionalBenefits" class="Additional-Benefits-area pt-5 pb-5" #AdditionalBenefits>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
