@@ -157,20 +157,7 @@
                                           <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
                                           <p *ngIf="PriceSummery.partnerName!='Cleartrip'">CHECK-IN 12PM | CHECK-OUT 12AM</p>
                                       </div>
-                                      <div class="Overview-details about-hotel" innerHtml="{{HotelDetail.description}}">
-                                          <!-- <ul>
-                                              <li><p><strong>Services</strong>: 24x7 power back up, 24 Hour Power Supply, Lift, Wheelchair accessible elevator, Waiting area, Room Service (24 Hours Available), Special occasion arrangement, Hot water available, Dry cleaning, Room/Rooms reserved for special need guests, Wheelchair accessible ramp, Wake up service/Alarm clock, Ironing Service, Hot water available 24x7, Luggage storage, Concierge, Babysitting or child care, Business center, Wheelchair, Separate Smoking Area, Laundry facilities.</p></li>
-                                              <li><p><strong>Languages Spoken by Hotel Staff</strong>: English, Hindi</p></li>
-                                              <li><p><strong>Payments Modes Accepted</strong>: Cash, Debit Card, Credit Card, Net-Banking, Visa, American Express, Security deposit, Mastercard</p></li>
-                                              <li><p><strong>Parking & Transportation</strong>: 2 Wheeler, 4 Wheeler, Valet Parking, Travel counter, Bus Parking, Outdoor Parking, Bike Rental (Chargeable), Scooty Rental (Chargeable), Cycle Rental (Chargeable), Car rental (Chargeable), Airport//Railway station pickup available (Chargeable), Airport/Railway station drop (chargeable)</p></li>
-                                              <li><p><strong>Activities - Indoor & Outdoor</strong>: Spa, Outdoor Pool, Kids Pool, Outdoor Pool (all year), Gym, Swimming pool, Kids Play Area</p></li>
-                                              <li><p><strong>General</strong>: TV In Room, Towels, Sofa, Living Area, Restaurant with Dining Menu, Restaurant, Poolside Bar, Pool view, Garden view, Bar, Gardens, Family Rooms, Non-smoking Rooms, Beach Nearby, Conference Room, Jacuzzi</p></li>
-                                              <li><p><strong>Safety & Security</strong>: First Aid Kit, CCTV, Fire Extinguisher, CCTV camera installed inside/outside hotel premises, 24-Hour Security, Smoke Detectors, Doctor on Call, CCTV camera installed on each floor</p></li>
-                                              <li><p><strong>Media & Entertainment</strong>: Flat-screen TV</p></li>
-                                              <li><p><strong>Not Allowed</strong>: Pets</p></li>
-                                              <li><p><strong>Suitable For</strong>: Large Groups, Family, Families with Children, Couples,</p></li>
-                                          </ul> -->
-                                      </div>
+                                      <div class="Overview-details about-hotel" [innerHTML]="HotelDetail.description"></div>
                                   </div>
                                   <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
                                       <div class="Overview-bottom-title mb-20">
@@ -236,7 +223,7 @@
                                                   </div>
                                                   <!-- web cancellation  -->
                                                   <div class="hd-rd-right">
-                                                      <div class="hd-rdetails-left">
+                                                      <div class="hd-rdetails-left position-relative">
                                                           <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
                                                           <ul class="hd-rd-Facilities">
                                                               <li *ngFor="let list of item.roomAmenities">
@@ -468,7 +455,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="hd-rd-right">
-                                                            <div class="hd-rdetails-left">
+                                                            <div class="hd-rdetails-left position-relative">
                                                                 <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
                                                                 <ul class="hd-rd-Facilities">
                                                                   <li *ngFor="let list of item.roomAmenities">

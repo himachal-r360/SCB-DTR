@@ -205,6 +205,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       var j = 0;
       var isvalid = true;
         rooms.forEach(z => {
+       
+        
         if(z.numberOfChildren >0 ){
         if(Array.isArray(z.childrenAge))
         var childrenAgeArray = z.childrenAge;
@@ -226,6 +228,9 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         isvalid = false;
         }
         j++;
+        }else{
+        $('#error_0').hide();
+        isvalid = false;
         }
         });
       if (!isvalid) {
