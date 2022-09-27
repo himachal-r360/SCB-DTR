@@ -54,7 +54,6 @@ export class HotelDetailComponent implements OnInit {
 
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
     isMobile: boolean = true;
-    showPop = true
     customOptions: OwlOptions = {
     loop: false,
     autoplay:false,
@@ -243,7 +242,6 @@ export class HotelDetailComponent implements OnInit {
     }
   }, 300);
     var Request = {docKey:this.DocKey,hotelId:this.PriceSummery.hotelId,partnerName:this.PriceSummery.partnerName}
-    console.log(Request ,"request");
     this.sub = this._hotelService.getHotelDetail(Request).subscribe((res: any) => {
     // console.log(res , "responce");
      if(res && res.response && res.response[" hotelInfo"]){
@@ -361,24 +359,18 @@ export class HotelDetailComponent implements OnInit {
    
   }
 
-  ClosePopover(i)
-  {
-      $('.hover-popover' + i).css('display','none');
-      this.showPop = false;
-
-  }    
+   
   goToModifySearch(){
     this.router.navigate(['compare-stay']);
   }
   
-  openPopOverMob(i){
-    this.showPop = true
-    // $('.hover-popover' + i).addClass('d-block');
+
+  showCancellationDetail(i){
+    $('#showCancellation_' + i).addClass('d-block');
   }
 
-
-  OpenPopover(event:any , i:any)
-  {
-    $('.hover-popover' + i).css('display','block');
+  closeCancellation(i){
+    $('#showCancellation_' + i).addClass('d-none');
+    
   }
 }

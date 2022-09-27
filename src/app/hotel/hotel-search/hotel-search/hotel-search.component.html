@@ -199,15 +199,15 @@
             <div class="hotel-room" appHotelDropdown>
                 <div class="hotel-room-item" >
                     <span class="small-text">Rooms & Guests</span>
-                    <h5 class="large-text">{{this.hotelSearchForm.value.rooms.length}} <small class="fs_14 fw_4">Rooms</small>, {{totalAdultsCount}} <small
-                            class="fs_14 fw_4">Adults</small>, {{totalChildCount}} <small class="fs_14 fw_4">Child</small>  </h5>
+                    <h5 class="large-text">{{this.hotelSearchForm.value.rooms.length}} <small class="fs_14 fw_4">Rooms</small>, {{totalAdultsCount| number}} <small
+                            class="fs_14 fw_4">Adults</small>, {{totalChildCount | number}} <small class="fs_14 fw_4">Child</small>  </h5>
                     <span class="small-text"></span>
                 </div>
                 <div class="hotel-room-select pt-20 pb-20 dropdown flight-from-hide "  [ngClass]="isMobile?'mob-filter-travellers preferred-airline-hide':''" #showHideGuest>
                     <div class="mob-title" *ngIf="isMobile">
                         <h3>Rooms & Guests </h3>
                         <a href="javaScript:void(0)" class="mob-close close-mobile" >
-                            <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile">
+                            <img src="{{cdnUrl}}/images/icons/close.png" alt="" class="close-mobile"   >
                         </a>
                     </div>
                     <div class="hotel-from-data-ul  " [ngClass]="isMobile?'mob-add-travels':''" data-mcs-theme="dark">
@@ -215,7 +215,7 @@
                             <ng-container *ngFor="let item of roomsDetails.controls; let i = index ">
                                 <ng-container [formGroupName]="i">
                                     <div class="hotel-from-data-ul-list">
-                                        <p class="fw_7 fs_14 d-flex mb-2">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto pointer" (click)="removeDetails(i)">Delete</a></p>
+                                        <p class="fw_7 fs_14 d-flex mb-2">Room {{i + 1}} <a *ngIf="i > 0"  class="text-color ms-auto pointer delete-room" (click)="removeDetails(i)">Delete</a></p>
                                         <div class="Travellers-passengers-data mb-2">
                                             <div class="Travellers-name">
                                                 <h6>Adults</h6>
@@ -223,11 +223,11 @@
                                             <div class="Travellers-qty">
                                                 <div class="quantity buttons_added">
                                                     <input type="button" value="-" class="qty-buttons minus" (click)="decreaseCount(i,item,'adult')" [disabled]="item.value.numberOfAdults <= 1 ? true:false">
-                                                    <input type="number" step="1" min="1" max="4" name="quantity"
+                                                    <input type="number" readonly step="1" min="1" max="4" name="quantity"
                                                         value="{{item.value.numberOfAdults}}" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4"
                                                         pattern="" inputmode="" formControlName="numberOfAdults">
-                                                    <input type="button" [disabled]="item.value.numberOfAdults > 3" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
+                                                    <input type="button"  [disabled]="item.value.numberOfAdults > 3" value="+" class="qty-buttons plus"  (click)="increaseCount(i,item,'adult')"  id="adultBtn_{{i}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -238,7 +238,7 @@
                                             <div class="Travellers-qty">
                                                 <div class="quantity buttons_added">
                                                     <input type="button" value="-" class="qty-buttons minus" (click)="decreaseCount(i,item,'child')" [disabled]="item.value.numberOfChildren < 1 ? true:false">
-                                                    <input type="number" step="1" min="0" max="3" name="quantity"
+                                                    <input type="number" readonly step="1" min="0" max="3" name="quantity"
                                                         value="0" title="Qty"
                                                         class="input-text qty text quantity_adult1_events" size="4" value="{{item.value.numberOfChildren}}"
                                                         pattern="" inputmode="" formControlName="numberOfChildren">
@@ -297,8 +297,7 @@
                 </div>
             </div>
             <div class="hotel-search-btns">
-                <a href="javaScript:void(0)"  data-bs-toggle="modal" data-bs-target="#itinerary" class="hotel-search-btn"
-                    (click)="searchHotel()">Search</a>
+                <a href="javaScript:void(0)"  class="hotel-search-btn"              (click)="searchHotel()">Search</a>
             </div>
 
         </div>

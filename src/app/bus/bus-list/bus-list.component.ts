@@ -550,8 +550,8 @@ goback() {
   }
   
    /* selected: any = "Rating"; */
- selectedOption: any = "Price (Low to High)";
- selectedOptionNew: any = "price-low-high";
+ selectedOption: any = "Rating";
+ selectedOptionNew: any = "rating";
       showSortbuy: boolean = false;
   option:string='';
  orderBy(option) {
