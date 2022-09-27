@@ -154,7 +154,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <mat-calendar   [minDate]="minCheckoutDate"
+                            <mat-calendar  [startAt]="startAt"     [minDate]="minCheckoutDate"
                                 (selectedChange)="onSelectMliteDate($event,'checkout')"
                                 [selected]="hotelSearchForm.value.checkOut"></mat-calendar>
                         </div>
@@ -297,7 +297,7 @@
                 </div>
             </div>
             <div class="hotel-search-btns">
-                <a href="javaScript:void(0)"  class="hotel-search-btn"              (click)="searchHotel()">Search</a>
+                <a href="javaScript:void(0)"  class="hotel-search-btn"     (click)="searchHotel()">Search</a>
             </div>
 
         </div>

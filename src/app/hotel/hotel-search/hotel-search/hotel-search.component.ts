@@ -502,10 +502,12 @@ focusInput(){
         id.hidden = false;
         isvalid = false;
      }
-      i++;
+    
+      }else{
+      this.hotelSearchForm.value.rooms[i]['childrenAge']='';
       }
+        i++;
     });
-
 
     if (this.hotelSearchForm.invalid) {
       return
@@ -522,6 +524,10 @@ focusInput(){
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
+      
+      
+      
+      
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.hotelSearchCallBack(this.hotelSearchForm.value)
@@ -530,7 +536,7 @@ focusInput(){
 
   }
 
-
+startAt;
   onSelectMliteDate(event, field) {
 
     if (field == 'checkin') {
@@ -541,6 +547,15 @@ focusInput(){
        var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
 
        this.minCheckoutDate = d;
+       
+       
+           let today = new Date();
+    let month = today.getMonth() + 3; //in three months
+    let year = today.getUTCFullYear();
+    let day = today.getDay();
+
+    this.startAt = new Date(d);
+       
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
         this.hotelSearchForm['controls']['checkOut'].setValue(moment(this.minCheckoutDate).format('YYYY-MM-DD'));
