@@ -366,11 +366,14 @@ export class HotelDetailComponent implements OnInit {
   
 
   showCancellationDetail(i){
-    $('#showCancellation_' + i).addClass('d-block');
+  $('#showCancellation_' + i).show();
   }
 
   closeCancellation(i){
-    $('#showCancellation_' + i).addClass('d-none');
+         setTimeout(() => {
+           $('#showCancellation_' + i).hide();
+        }, 10);
+   // $('#showCancellation_' + i).addClass('d-none');
     
   }
 }
