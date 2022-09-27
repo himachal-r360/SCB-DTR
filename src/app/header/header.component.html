@@ -50,7 +50,7 @@
                             <a class="navbar-brand" href="https://www.hdfcbank.com/" *ngIf="is_main==1" target="_blank">
                                 <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC BaWhatsnk">
                             </a>
-                            <a class="navbar-brand" href="{{domainRedirect}}{{domainPath}}">
+                            <a class="navbar-brand" href="{{sub_domain_redirection_url}}">
                                 <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" class="smartbuy_logo">
                             </a>
                         </div>
@@ -1907,14 +1907,14 @@
                     </div>
                     <div class="menu_body">
                         <div>
-                            <ul>
-                                <li *ngIf="payzrestriction==false">
+                            <ul> 
+                                <li *ngIf="payzrestriction==false"> 
                                     <a href="javascript:;" (click)="goTo('foryou')" class="menu_name" [ngClass]="menuActiveClass=='foryou' || menuActiveClass==''  ? 'active' : ''">
                                         <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/foru.svg" alt="" class="svg_icn_menu"> For You </span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;" class="menu_name" (click)="menuMobile('shop')">
+                                    <a href="javascript:;" class="menu_name"  [ngClass]="menuActiveClass=='shop-by-cat'   ? 'active' : ''" (click)="menuMobile('shop')">
                                         <span><img src="{{cdnUrl}}images/smartbuy/icons/mobile/menu/shop.svg" alt="" class="svg_icn_menu"> Shop by Category</span><span class="float-right"><span class="material-icons">chevron_right</span></span>
                                     </a>
                                 </li>

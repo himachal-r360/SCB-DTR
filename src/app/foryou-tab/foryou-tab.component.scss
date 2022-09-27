@@ -80,6 +80,8 @@ h3 {
     color: #1a2038;
     margin-bottom: 10px;
     margin-right: 15px;
+    height: 43px;
+    font-family: 'opensans-light';
     @media screen and (max-width: 575.98px) {
         font-size: 20px;
     }
@@ -911,49 +913,22 @@ margin-top:-7px;
         display: none;
         transition: .7s ease-in-out;
     }
-    .icns  span img {
+    .icns span img {
         padding: 0px 5px;
     }
-    .power_by_f{
+    .power_by_f {
         display: inline-flex;
         align-items: center;
         flex-direction: column;
     }
-    .icns_pwr{
+    .icns_pwr {
         display: inline-flex;
         align-items: end;
         flex-wrap: wrap;
         justify-content: center;
-        gap:0px 5px;
+        gap: 0px 5px;
     }
-    &:nth-child(2) {
-        background: #f7faff url('../../assets/images/smartbuy/travel/stay_s.png');
-        border: 1px solid #ddd;
-        background-size: auto;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-    &:nth-child(1) {
-        background: #f7faff url('../../assets/images/smartbuy/travel/flight_s.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border: 1px solid #ddd;
-    }
-    &:nth-child(3) {
-        background: #f7faff url('../../assets/images/smartbuy/travel/bus_s.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border: 1px solid #ddd;
-    }
-    &:nth-child(4) {
-        background: #f7faff url('../../assets/images/smartbuy/travel/train_s.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border: 1px solid #ddd;
-    }
+    
     .tag_desc {
         font-size: 12px;
         font-weight: 600;
@@ -962,6 +937,34 @@ margin-top:-7px;
             margin-right: 4px;
         }
     }
+}
+.stay_block {
+    background: #f7faff url('../../assets/images/smartbuy/travel/stay_s.png');
+    border: 1px solid #ddd;
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.flight_block {
+    background: #f7faff url('../../assets/images/smartbuy/travel/flight_s.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #ddd;
+}
+.bus_block {
+    background: #f7faff url('../../assets/images/smartbuy/travel/bus_s.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #ddd;
+}
+.train_block {
+    background: #f7faff url('../../assets/images/smartbuy/travel/train_s.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #ddd;
 }
 
 .card_bookunblock {
@@ -982,19 +985,18 @@ margin-top:-7px;
     .icns {
         display: inline;
     } */
-    .power_by_f{
+    .power_by_f {
         display: inline-flex;
         align-items: center;
         flex-direction: row;
     }
-    .icns_pwr{
+    .icns_pwr {
         display: inline-flex;
         align-items: end;
         flex-wrap: wrap;
         justify-content: center;
-        gap:0px 5px;
+        gap: 0px 5px;
     }
-    
     /* .icns span img {
         padding-left: 15px;
     } */
@@ -1004,26 +1006,27 @@ margin-top:-7px;
     .tag_desc {
         margin: 15px 0px;
     }
-    &:nth-child(4) {
-        background: $white-color url('../../assets/images/smartbuy/travel/train_l.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-    &:nth-child(2) {
-        background: $white-color url('../../assets/images/smartbuy/travel/stay_l.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-    &:nth-child(1) {
-        background: $white-color url('../../assets/images/smartbuy/travel/flight_l.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-    &:nth-child(3) {
-        background: $white-color url('../../assets/images/smartbuy/travel/bus_l.png');
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
+    
+}
+.train_unblock {
+    background: $white-color url('../../assets/images/smartbuy/travel/train_l.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.stay_unblock {
+    background: $white-color url('../../assets/images/smartbuy/travel/stay_l.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.bus_unblock {
+    background: $white-color url('../../assets/images/smartbuy/travel/bus_l.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.flight_unblock {
+    background: $white-color url('../../assets/images/smartbuy/travel/flight_l.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .card_book_m {
@@ -1212,7 +1215,7 @@ margin-top:-7px;
     font-weight: 600;
     -webkit-appearance: none;
     position: relative;
-   /*  -webkit-appearance: menulist; */
+    /*  -webkit-appearance: menulist; */
     @media screen and (max-width: 320px) {
         font-size: 12px;
     }
@@ -1493,7 +1496,8 @@ margin-top:-7px;
     background-size: cover;
     border-radius: 8px;
 }
-.single_banner{
+
+.single_banner {
     height: 287px;
     width: 100%;
     border-radius: 8px;
@@ -1520,7 +1524,6 @@ margin-top:-7px;
     border-radius: 8px;
     background-color: $white-color;
     height: 300px;
-
     @media screen and (max-width: 1024px) {
         height: 200px;
     }
@@ -1611,7 +1614,7 @@ margin-top:-7px;
         p.date_info {
             text-align: left;
             // padding-left: 0px;
-            margin-top: 0px;
+            margin-top: 5px;
             display: block;
             padding: 0;
             @media screen and (max-width: 566px) {
@@ -1777,7 +1780,7 @@ margin-top:-7px;
     }
 }
 
-.re_small_img{
+.re_small_img {
     height: auto;
     border-radius: 8px;
     @media screen and (min-width: 1200px) and (max-width: 1366px) {
@@ -1788,7 +1791,7 @@ margin-top:-7px;
         width: 100%;
         height: 102px;
     }
-   /*  @media screen and (min-width: 1600px) and (max-width: 1899px) {
+    /*  @media screen and (min-width: 1600px) and (max-width: 1899px) {
         height: 342px;
     }
     @media screen and (min-width: 1900px) and (max-width: 2560px) {
@@ -2050,6 +2053,9 @@ margin-top:-7px;
         }
         @media screen and (min-width: 1600px) {
             height: auto;
+        }
+        img {
+            border-radius: 8px;
         }
     }
     .card_foryou_long {
@@ -2542,8 +2548,8 @@ margin-top:-7px;
 }
 
 .gifImage {
-    width: 70px !important;
-    height: 70px !important;
+   /* width: 70px !important;
+    height: 70px !important;*/
     object-fit: contain;
     border-radius: 50px;
 }
@@ -2739,11 +2745,13 @@ margin-top:-7px;
 
 
 /* Only Safari Browser Support Code */
-@media not all and (min-resolution:.001dpcm)
-{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
-    .top_emi_sec { 
-        display: grid;
-        grid-template: auto / repeat(4,1fr);
-        gap: 20px;
+
+@media not all and (min-resolution:.001dpcm) {
+    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+        .top_emi_sec {
+            display: grid;
+            grid-template: auto / repeat(4, 1fr);
+            gap: 20px;
+        }
     }
-}}
+}

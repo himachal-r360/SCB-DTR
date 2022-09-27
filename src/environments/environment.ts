@@ -132,14 +132,14 @@ export const environment = {
     "CORPORATE": "corporate/bus",
     "BUSINESS": "business/bus"
   },
-  "flightLastSearch":"flightLastSearches",
+    "flightLastSearch":"flightLastSearches",
   "continueFlightSearch":"continueFlightSearch",
   "continueSearchBus":"continueSearchBuses",
   "busLastSearch":"busLastSearches",
   "continueSearchTrain":"continueSearchTrains",
   "trainLastSearch":"trainLastSearches",
-  "continueSearchHotel":"continueSearchHotels",
-  "hotelLastSearch":"hotelSearch",
+  "continueSearchHotel":"continueSearchHot",
+  "hotelLastSearch":"hotelLastSh",
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 
 

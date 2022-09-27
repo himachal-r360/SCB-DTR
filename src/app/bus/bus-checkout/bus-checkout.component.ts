@@ -340,7 +340,6 @@ export class BusCheckoutComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.titleService.setTitle('Home | RedBus');
 
     this.activatedRoute.url.subscribe(url => {
       this.buttonSubmitted = false;

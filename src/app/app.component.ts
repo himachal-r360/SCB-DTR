@@ -234,10 +234,7 @@ export class AppComponent implements OnInit {
 
   onEvents() {
   
-  
-     $(".dropdown").hover(function(){
- $('.list-travel').removeClass("hideDrop");
-});
+
      this.checkOrientation();
         if(this.serviceSettings.COOKIE_CONSENT_ENABLED){
         switch(this.serviceSettings.COOKIE_CONSENT_TYPE) { 
@@ -312,9 +309,7 @@ export class AppComponent implements OnInit {
         var pageUrl=event.urlAfterRedirects.split('?')[0];
         if(isDesktopDevice){
          this.mobileClassName='';
-         /* console.log(pageUrl); */
                 switch (pageUrl) {
-               
                 case '/foryou' :
                 this.menuActiveClass='foryou';
                 break;
@@ -340,7 +335,20 @@ export class AppComponent implements OnInit {
           }   
   
         }else{
+               switch (pageUrl) {
+                case '/foryou' :
+                this.menuActiveClass='foryou';
+                break;
+                case '/bus/search': 
+                case '/bus/checkout' :
+                 case '/bus': case '/compare-fly': case '/multicity': case '/flight-list': case '/flight-roundtrip': case '/flight-int': case '/flight-multicity':case '/flight-checkout':                                  case '/compare-stay' :  case '/hotel-list' :  case '/hotel-detail' : case '/hotel-checkout' : case '/hotel-booking' :               case '/train':  case '/train/pnr': case '/train/search' : case '/train/checkout' :
+                this.menuActiveClass='shop-by-cat';
+                break;
+                default:
+                  this.menuActiveClass='foryou';
+                break;
 
+          }   
         
        }
      
