@@ -407,12 +407,16 @@ export class TravelSearchComponent implements OnInit {
         
                case 'hotel': {
         if(field=='departure'){
+         this.mliteChecout=false;
         $('#hotel_arrival_mlite').modal('hide');
         $('#hotel_departure_mlite').modal('show');
         }else{
  
-        $('#hotel_arrival_mlite').modal('show');
+        this.mliteChecout=true;
+        setTimeout(() => {
+         $('#hotel_arrival_mlite').modal('show');
         $('#hotel_departure_mlite').modal('hide');
+        }, 30);
         }
         break;
         }
@@ -1409,6 +1413,7 @@ check_traveller_count(type) {
 
 
   displayTravel(type){
+    console.log(type);
     this.showFlightPassenger = true;
     this.showHotelPassenger = true;
   }
@@ -1608,15 +1613,19 @@ check_traveller_count(type) {
         $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
         totalGuest+=(jsonObject['hotel_adult'])+(jsonObject['hotel_child']);
         queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge['+j+']=';
+        
+        
        if(jsonObject['child_age'].length > 0){
          for (let k = 0; k < jsonObject['child_age'].length; k++) {
          queryParam+=jsonObject['child_age'][k]['age'];
          if(k!=jsonObject['child_age'].length-1)
           queryParam+=',';
          }
+          queryParam+='&';
         }else{
          queryParam+='0&';
         }
+        
         j++;
         });
         
@@ -1641,6 +1650,8 @@ check_traveller_count(type) {
          return;
         }
         
+        
+     //   console.log(url);return;
 
  this.router.navigateByUrl(url);
 
@@ -2151,6 +2162,14 @@ switch(service) {
 
 
   }
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#hotel_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
+  
+  
 
    searchAutoComplete($event,service,field,device) {
        let keycode = $event.which;

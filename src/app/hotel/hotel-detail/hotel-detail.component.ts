@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
@@ -14,7 +14,7 @@ declare var $: any;
   templateUrl: './hotel-detail.component.html',
   styleUrls: ['./hotel-detail.component.scss']
 })
-export class HotelDetailComponent implements OnInit {
+export class HotelDetailComponent implements OnInit ,AfterViewInit {
 
   GoogleAPI_Key = environment.GOOGLEMAP_API;
   GOOGLE_MAP_URL:any;
@@ -51,8 +51,9 @@ export class HotelDetailComponent implements OnInit {
     'projector':{name:'Projector',value:'projector',image:'assets/images/hotel/amenities/54X54/Projector.svg'},
     'restaurant':{name:'Restaurant',value:'restaurant',image:'assets/images/hotel/amenities/54X54/restaurant-svgrepo-com-1.svg'},
   }
-
+  syncedSecondary = true;
   @ViewChild('WideImageOwl', { static: false }) WideImageOwl: any;
+  @ViewChild('ThumbNailImageOwl', { static: false }) ThumbNailImageOwl: any;
     isMobile: boolean = true;
     customOptions: OwlOptions = {
     loop: false,
@@ -80,7 +81,7 @@ export class HotelDetailComponent implements OnInit {
     },
     nav: false
   }
-  WideImageCustomOptions: OwlOptions = {
+  WideImageCustomOptions: OwlOptions = ({
     loop: false,
     autoplay:true,
     mouseDrag: true,
@@ -107,7 +108,8 @@ export class HotelDetailComponent implements OnInit {
     nav: false,
     navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
 
-  }
+  })
+  
   ThumbNailImageCustomOptions: OwlOptions = {
     loop: true,
     autoplay:true,
@@ -134,7 +136,7 @@ export class HotelDetailComponent implements OnInit {
     },
     nav: true,
     navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-
+    
   }
   MobileThumbNailImageCustomOptions: OwlOptions = {
     loop: true,
@@ -224,6 +226,7 @@ export class HotelDetailComponent implements OnInit {
       this.headerHideShow(null);
       this.GetHotelDetails();
     });
+    
   }
   resetPopups() {
 
@@ -314,6 +317,7 @@ export class HotelDetailComponent implements OnInit {
   onImageClick(index:number)
   {
     this.WideImageOwl.to('Id_'+index);
+    
   }
   backClicked(){
   this.resetPopups();
@@ -366,11 +370,97 @@ export class HotelDetailComponent implements OnInit {
   
 
   showCancellationDetail(i){
-    $('#showCancellation_' + i).addClass('d-block');
+  $('#showCancellation_' + i).show();
   }
 
   closeCancellation(i){
-    $('#showCancellation_' + i).addClass('d-none');
+         setTimeout(() => {
+           $('#showCancellation_' + i).hide();
+        }, 10);
+   // $('#showCancellation_' + i).addClass('d-none');
     
+  }
+
+  ngAfterViewInit(): void {
+  //   let bigimage=this.WideImageOwl;
+  //   // bigimage.$owlChild.$owl.on("changed.owl.carousel", (event: any) => {
+  //   //   this.syncPosition(event);
+  //   // });
+
+  //   let thumbs=this.ThumbNailImageOwl;
+    
+  //   thumbs.on("click", ".owl-item", function(e) {
+  //     e.preventDefault();
+  //     var number = $(this).index();
+  //     bigimage.data("owl.carousel").to(number, 300, true);
+  //   });
+
+
+  //   thumbs
+  //   .on("initialized.owl.carousel", function() {
+  //   thumbs
+  //     .find(".owl-item")
+  //     .eq(0)
+  //     .addClass("current");
+  // })
+  //     .owlCarousel({
+  //     items: 4,
+  //     dots: true,
+  //     nav: true,
+  //     navText: [
+  //       '<i class="fa fa-arrow-left" aria-hidden="true"></i>',
+  //       '<i class="fa fa-arrow-right" aria-hidden="true"></i>'
+  //     ],
+  //     smartSpeed: 200,
+  //     slideSpeed: 500,
+  //     slideBy: 4,
+  //     responsiveRefreshRate: 100
+  //   })
+  //   .on("changed.owl.carousel", this.syncPosition2);
+  // }
+
+
+  // syncPosition(el) {
+ 
+  //   var count = el.item.count - 1;
+  //   var current = Math.round(el.item.index - el.item.count / 2 - 0.5);
+
+  //   if (current < 0) {
+  //     current = count;
+  //   }
+  //   if (current > count) {
+  //     current = 0;
+  //   }
+  //   let thumbs=this.ThumbNailImageOwl;
+  //   //to this
+  //   thumbs
+  //     .find(".owl-item")
+  //     .removeClass("current")
+  //     .eq(current)
+  //     .addClass("current");
+  //   var onscreen = thumbs.find(".owl-item.active").length - 1;
+  //   var start = thumbs
+  //   .find(".owl-item.active")
+  //   .first()
+  //   .index();
+  //   var end = thumbs
+  //   .find(".owl-item.active")
+  //   .last()
+  //   .index();
+
+  //   if (current > end) {
+  //     thumbs.data("owl.carousel").to(current, 100, true);
+  //   }
+  //   if (current < start) {
+  //     thumbs.data("owl.carousel").to(current - onscreen, 100, true);
+  //   }
+  // }
+  
+  // syncPosition2(el) {
+  //   let bigimage=this.WideImageOwl;
+  //   if (this.syncedSecondary) {
+  //     var number = el.item.index;
+  //     bigimage.data("owl.carousel").to(number, 100, true);
+  //   }
   }
 }

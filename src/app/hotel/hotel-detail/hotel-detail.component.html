@@ -114,8 +114,8 @@
                        </ng-container>
                     </owl-carousel-o>
                   </div>
-                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0">
-                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl>
+                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0" >
+                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl >
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                         <ng-template carouselSlide >
                           <div class="item" (click)="onImageClick(i)">
@@ -246,7 +246,7 @@
                                                           <span class="information-icon hd-cc-Policy"  (click)="showCancellationDetail(i)">
                                                               Check Cancellation Policy
                                                               <div class="hover-popover" id="showCancellation_{{i}}">
-                                                                  <a href="javaScript:voide(0)" (click)="closeCancellation(i)" class="popover-close">
+                                                                  <a href="javascript:;" (click)="closeCancellation(i)" class="popover-close">
                                                                       <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                   </a> 
                                                                   <div class="hover-popover-title">
