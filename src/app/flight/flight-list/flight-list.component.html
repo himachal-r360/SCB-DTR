@@ -526,11 +526,11 @@
                                                     </div>
 
                                                 </div>
-                                                <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                                <!-- <div class="flight-info-box" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
                                                     <p><img src="{{cdnUrl}}/images/icons/price.svg" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
-                                                </div>
+                                                </div> -->
                                                 <div class="flight-info-box ">
-                                                    <ul class="extra-tabs-right-ul">
+                                                    <ul class="">
                                                         <!-- <li class="ms-0">
                                                     <p>
                                                         <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
@@ -557,6 +557,13 @@
                                                         </div>
                                                     </div>
                                                 </li>-->
+                                                <li>
+                                                    <div class="">
+                                                        <div class="" *ngIf="item.totalFare|couponDiplay:flightCoupons:item.partnerName">
+                                                            <p><img src="{{cdnUrl}}/images/icons/price.svg" alt=""> {{item.totalFare|couponDiplay:flightCoupons:item.partnerName}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                                     </ul>
                                                     <a href="javascript:void(0)" class="flight-details-click viewflight_details" id="viewflight_details_{{list.flightKey}}_{{j}}" (click)="HideShowCompareToFly(list.flightKey,'flight-details',j)">Flight Details <i class="fa fa-angle-down ml-10"></i></a>
                                                     <a href="javascript:void(0)" class="flight-details-click d-none hideflight_details" id="hideflight_details_{{list.flightKey}}_{{j}}" (click)="hideFarebutton(list.flightKey,'flight-details',j)">Flight Details <i class="fa fa-angle-up ml-10"></i></a>
