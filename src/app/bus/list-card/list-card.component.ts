@@ -515,9 +515,11 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
  }
+ rotate: boolean = false;
  showBusDetails(amenities,id,mobile){
- this.showAmenities = false;
+ this.showAmenities = true;
  $('#collapseExample_'+id).toggle();
+ this.rotate = !this.rotate;
   this.onAmenities(amenities, id, mobile);
  }
  
