@@ -114,8 +114,8 @@
                        </ng-container>
                     </owl-carousel-o>
                   </div>
-                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0">
-                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl>
+                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0" >
+                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl >
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                         <ng-template carouselSlide >
                           <div class="item" (click)="onImageClick(i)">
