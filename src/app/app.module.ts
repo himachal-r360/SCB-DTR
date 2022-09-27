@@ -43,6 +43,7 @@ import { TdrModule } from './train/tdr/tdr.module';
 
 import "@angular/common/locales/global/en-IN";
 import { InfiniaModule } from './infinia/infinia.module';
+import { UnificationModule } from './unification/unification.module';
 export function appInitializerFn(appConfig: AppConfigService) {
    return () => appConfig.loadAppConfig();
 }
@@ -73,7 +74,7 @@ export function appInitializerFn(appConfig: AppConfigService) {
     BrowserAnimationsModule,HotelSearchModule,
     MaterialModule,
     DirectiveModule,
-    CarouselModule,RegaliaGoldModule,
+    CarouselModule,RegaliaGoldModule,UnificationModule,
     ToastrModule.forRoot()
 
 

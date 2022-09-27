@@ -1413,6 +1413,7 @@ check_traveller_count(type) {
 
 
   displayTravel(type){
+    console.log(type);
     this.showFlightPassenger = true;
     this.showHotelPassenger = true;
   }
