@@ -253,7 +253,11 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   showTotalCountsOfChild() {
     let totalOfChild: any;
     totalOfChild = this.hotelSearchForm.value.rooms;
-    this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
+    this.totalChildCount =0;
+       for(let i=0;i<(totalOfChild.length);i++){
+       this.totalChildCount+=totalOfChild[i]['numberOfChildren'];
+        }
+   // this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
   }
 
 
