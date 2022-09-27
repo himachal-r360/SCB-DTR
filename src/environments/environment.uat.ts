@@ -137,8 +137,8 @@ API_URL:{
   "busLastSearch":"busLastSearches",
   "continueSearchTrain":"continueSearchTrains",
   "trainLastSearch":"trainLastSearches",
-  "continueSearchHotel":"continueSearchHotr",
-  "hotelLastSearch":"hotelLastShr",
+  "continueSearchHotel":"continueHotelSearch",
+  "hotelLastSearch":"hotelLastSearching",
 
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
   
