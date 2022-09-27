@@ -342,7 +342,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
     this.Country = this.hotelSearchForm.value.countryName;
     this.sub = this._hotelService.getHotelList(this.hotelSearchForm.value).subscribe((res: any) => {
       this.loader = false;
-      console.log(res.response.hotels);
       if (res.response.hotels) {
         if (res.response.hotels.length > 0) {
           this.isResponse = true
@@ -373,7 +372,6 @@ export class HotelListComponent implements OnInit, OnDestroy {
     let hotelWithoutFilterList = this.hotelWithoutFilterList;
     const hotelListConst = hotelWithoutFilterList.map((b: any) => ({ ...b }));
     this.hotelList = hotelListConst;
-    console.log(hotelListConst , "hotel list ");
     var applyStar = false;
     var StarFiltereddata = [];
     this.starFiltersList.forEach(z => {
@@ -385,13 +383,12 @@ export class HotelListComponent implements OnInit, OnDestroy {
         })
 
         StarFiltereddata.push(...data);
-        console.log(StarFiltereddata , "start filter");
 
       }
     });
     if (applyStar) {
       this.hotelList = StarFiltereddata;
-      console.log(this.hotelList , "start filter2");
+      
     }
 
     //Star Filter End

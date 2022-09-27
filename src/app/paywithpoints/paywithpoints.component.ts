@@ -1096,7 +1096,8 @@ export class ConfirmationDialog {
     this.checkApply(this.infiniaPts,this.conv_amount);
   }
   checkApply(infiniaPts,conv_amount){
-    this.orderamount=5000;              ///NEED TO MAKE THIS DYNAMIC
+    // this.orderamount=5000;              ///NEED TO MAKE THIS DYNAMIC
+    
     this.totalorderpts=Number(this.orderamount)/Number(this.points_percentage);
 
       var customername=this.dData['customername'];
@@ -1152,6 +1153,7 @@ export class ConfirmationDialog {
                                 break;
                         }
                         if(status['apply']==true){
+
                           if(monthly_trn_limit>total_count){
                             if(monthly_trn_value>total_transvalue){
                               this.status['apply']=true;
@@ -1164,6 +1166,7 @@ export class ConfirmationDialog {
                             this.status['apply']=false;
                             this.status['message']="Sorry, you have reached the maximum number of points redemption transaction for this month.";
                           }
+
                         }
                     }else{
                       this.status['apply']=false;
@@ -1250,6 +1253,7 @@ export class ConfirmationDialog {
       }else{
         this.applicable=1;
       }
+
   }
   payWithPoints(){
     //this.switchTab(3); return false;

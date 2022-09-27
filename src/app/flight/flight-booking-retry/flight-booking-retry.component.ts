@@ -144,7 +144,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
             if (customerInfo["org_session"] == 1) {
               // console.log(customerInfo)
               
-              console.log(this.fetchOrderId);
+            
                 var getOrder = {
                 "order_ref_num": this.fetchOrderId,
                 }
@@ -153,16 +153,16 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
                 postData: this.EncrDecr.set(JSON.stringify(getOrder))
                 };
                 this.rest.getOrderDetail(getOrderParam).subscribe(results => { 
-                console.log(results);
+          
                 if (results.result) {
                 let result = JSON.parse(this.EncrDecr.get(results.result));
-               console.log(result);
-              if (customerInfo["guestLogin"] == true) {
+            
+             /* if (customerInfo["guestLogin"] == true) {
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
                 this.IsDcemiEligibleFlag = true;
                 this.isFlexipayEligibleFlag = true;
-              } else {
+              } else {*/
                 this.flightSessionData=result.flightSessionData;
                 this.searchData = (this.flightSessionData.queryFlightData);
                 this.searchDataOrg = this.searchData ;
@@ -323,7 +323,7 @@ export class FlightBookingRetryComponent implements OnInit, OnDestroy {
 
                   })
                 }
-              }
+             // }
               }
               });
             

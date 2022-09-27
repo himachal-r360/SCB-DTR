@@ -109,12 +109,12 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                 this.rest.getOrderDetail(getOrderParam).subscribe(results => { 
                 if (results.result) {
                 let result = JSON.parse(this.EncrDecr.get(results.result));
-              if (customerInfo["guestLogin"] == true) {
+             /* if (customerInfo["guestLogin"] == true) {
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
                 this.IsDcemiEligibleFlag = true;
                 this.isFlexipayEligibleFlag = true;
-              } else {
+              } else {*/
                 this.fareData=result.fare;     
                 this.checkoutData=result;
                 this.searchHotelKey=result.search_input.session_hotels_key;
@@ -206,7 +206,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
 
                   })
                 }
-              }
+              //}
               }
               });
             
