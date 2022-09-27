@@ -372,6 +372,12 @@ export class HotelDetailComponent implements OnInit ,AfterViewInit {
   showCancellationDetail(i){
   $('#showCancellation_' + i).show();
   }
+  
+  cancellationPolicy:any;
+  showCancellationDetailMobile(item){
+    this.cancellationPolicy=item.cancellationPolicy;
+   $('#showCancellation').modal('show');
+  }
 
   closeCancellation(i){
          setTimeout(() => {
