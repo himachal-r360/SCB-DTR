@@ -10,7 +10,7 @@ export class HotelDropdownDirective{
       var element = event?.target as HTMLElement
       let citySearchRef = document.getElementById('citySearchRef');
       // debugger;
-        if(this.elRef.nativeElement.contains(event.target) && !element.classList.contains('close-mobile'))
+        if((this.elRef.nativeElement.contains(event.target) || element.classList.contains('delete-room') ) && !element.classList.contains('close-mobile') )
         {
           
           this.elRef.nativeElement

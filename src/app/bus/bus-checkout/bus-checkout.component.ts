@@ -718,8 +718,8 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
   bookingSessionExpires(e: CountdownEvent) {
 
     if (e.action == 'done') {
-
-      $('#bookingprocessExpires').modal('show');
+      this.triggerBack();
+     // $('#bookingprocessExpires').modal('show');
     }
 
 

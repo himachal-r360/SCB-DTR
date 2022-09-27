@@ -315,6 +315,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   steps: any = 1;
 
   travelerDetails: any = {};
+  statesdump:any=[];
   checked: any = false;
   whatsAppCheck: boolean = true;
   gstNumber: any
@@ -335,7 +336,7 @@ orderRetry:boolean=false;
       this.enableGST = this.serviceSettings.enableSavedGST;
       this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
       this.flightClasses = this.serviceSettings.flightClasses;
-
+      this.statesdump = require('src/assets/data/states.json');
       this.getAirpotsList();
       this.getAirLineList();
       this.getCountryList();

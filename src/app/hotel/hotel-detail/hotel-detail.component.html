@@ -102,7 +102,7 @@
                        </ng-container>
                     </owl-carousel-o>
                   </div>
-              
+
                   <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
                     <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
@@ -154,7 +154,7 @@
                                   <div class="Overview-top">
                                       <div class="Overview-title">
                                           <h6>About</h6>
-                                          <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p> 
+                                          <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
                                           <p *ngIf="PriceSummery.partnerName!='Cleartrip'">CHECK-IN 12PM | CHECK-OUT 12AM</p>
                                       </div>
                                       <div class="Overview-details about-hotel" innerHtml="{{HotelDetail.description}}">
@@ -319,7 +319,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="hd-gallery mb-20">
-                    
+
                      <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
                           <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
                             <ng-container>
@@ -331,7 +331,7 @@
                              </ng-container>
                           </owl-carousel-o>
                         </div>
-                    
+
                         <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
                           <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
                             <ng-container *ngFor="let image of HotelDetail.images; let i = index">
@@ -408,7 +408,7 @@
                                         </div>
                                         <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
                                             <div class="Overview-bottom-title mb-20">
-                                                <h6>Facilities Offered</h6> 
+                                                <h6>Facilities Offered</h6>
                                             </div>
                                             <div class="owl-slider grid-7 hd-Offered-slider">
                                               <owl-carousel-o [options]="MobilecustomOptions">
@@ -474,7 +474,7 @@
                                                                     <p>{{list}}</p>
                                                                   </li>
                                                                 </ul>
-                                                                <span class="information-icon hd-cc-Policy" (click)="openPopOverMob(i)" >
+                                                                <span class="information-icon hd-cc-Policy" (mouseover)="openPopOverMob(i)" >
                                                                     Check Cancellation Policy
                                                                     <div class="hover-popover" *ngIf="showPop">
                                                                         <a href="javaScript:void(0)"(click)="ClosePopover(i)" class="popover-close" >

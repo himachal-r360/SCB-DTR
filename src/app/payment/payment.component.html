@@ -141,11 +141,15 @@
                                 </a>
                             </li>
 
+
                             <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false ,'active': pgSettingsHDFCPG && isLoggedIn && !pgSettingsCYBER  && cardData.length ==0 && payzrestriction==false  }" data-bs-toggle="tab" role="tab">
+                                <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': (pgSettingsCYBER ||pgSettingsHDFCPG ) && isLoggedIn && cardData.length ==0 && payzrestriction==false }" data-bs-toggle="tab" role="tab">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                 </a>
                             </li>
+              
+                            
+                            
                             <li class="nav-item" *ngIf="pgSettingsNETBANKING">
                                 <a id="tab-netBanking" href="#pane-netBanking" class="nav-link" data-bs-toggle="tab" role="tab">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">HDFC Net Banking</span>
@@ -380,7 +384,7 @@
 
 
                         <!-- Credt/Debit Card Section Starts -->
-                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false ,'active show': pgSettingsHDFCPG && isLoggedIn && !pgSettingsCYBER  && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
+                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': ( pgSettingsCYBER || pgSettingsHDFCPG) && isLoggedIn && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
                             *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
 
                             <div class="panel-heading">

@@ -106,7 +106,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     if(this.getSearchValue != undefined || this.getSearchValue != null){
       this.getSearchValueLocalStorage();
     }else{
-    
+
         let roomArr= [
         { room: 1, numberOfAdults: '2', numberOfChildren: '0', childrenAge:[0]  }
         ]
@@ -114,7 +114,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         this.hotelSearchForm.value.rooms = ""
         this.roomsDetails.push(this.modifyDetails(x));
         });
-    
+
     }
   }
 
@@ -159,7 +159,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         const d = new Date(modifySearchValue.checkIn);
        d.setDate(d.getDate() + 1);
        this.minCheckoutDate = d;
-      
+
     }
   }
   //Increase Child and adult value
@@ -205,7 +205,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         var j = 0;
         var isvalid = true;
         rooms.forEach(z => {
-          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0')) && z.numberOfChildren > 0) {
+          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || (z.childrenAge == "" && z.childrenAge.find(a=>a =='0'))) && z.numberOfChildren > 0) {
             var id = document.getElementById("error_" + j)
             id.hidden = false;
             isvalid = false;
@@ -215,8 +215,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
           }
           j++;
         });
-        
-        
+
+
         if (!isvalid) {
           var id1 = document.getElementById("error_AllAge")
           id1.hidden = false;
@@ -253,9 +253,11 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   showTotalCountsOfChild() {
     let totalOfChild: any;
     totalOfChild = this.hotelSearchForm.value.rooms;
-    
-    
-    this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
+    this.totalChildCount =0;
+       for(let i=0;i<(totalOfChild.length);i++){
+       this.totalChildCount+=totalOfChild[i]['numberOfChildren'];
+        }
+   // this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
   }
 
 
@@ -312,10 +314,10 @@ focusInput(){
     this.hotelSearchForm.value.checkIn = moment(event).format('YYYY-MM-DD');
           const d = new Date(event);
        d.setDate(d.getDate() + 1);
- 
+
        var compare1 = new Date(d).getTime();
        var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
- 
+
        this.minCheckoutDate = d;
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
@@ -330,10 +332,10 @@ focusInput(){
     this.hotelSearchForm.value.checkOut = moment(event).format('YYYY-MM-DD');
     this.showHideGuest.nativeElement.style.display = "block";
   }
-  
+
   getAgeValue(ageArray,index){
   if(ageArray[index] !=0 && ageArray[index] != undefined && ageArray[index] != null){
-  if (ageArray.indexOf(',') > -1) { 
+  if (ageArray.indexOf(',') > -1) {
   const myArray = ageArray.split(",");
   return myArray[index];
   }else{
@@ -347,7 +349,7 @@ focusInput(){
 
   onSelectAge(event, item, i) {
 
-  
+
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
     let selectAge2: any = document.getElementById('selectAge2_' + i);
@@ -361,9 +363,9 @@ focusInput(){
     if (selectAge1 != null && selectAge2 != null && selectAge3 != null) {
       ageArr = [selectAge1.value, selectAge2.value, selectAge3.value]
     }
-    
+
     item.value.childrenAge = ageArr;
-    
+
     /*if (this.submitted) {
       var rooms = this.hotelSearchForm.value.rooms;
       var j = 0;
@@ -455,20 +457,21 @@ focusInput(){
     var i = 0;
     var isvalid = true;
     rooms.forEach(z => {
+    if(z.numberOfChildren >0 ){
     if(Array.isArray(z.childrenAge))
      var childrenAgeArray = z.childrenAge;
     else
     var childrenAgeArray = z.childrenAge.split(',');
-    
-        let loopvalid=0;
 
+        let loopvalid=0;
         for(let i=0;i<(childrenAgeArray.length);i++){
         if(childrenAgeArray[i] < 1) loopvalid++;
         }
-    
+
      if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
          var id = document.getElementById("error_" + i)
         id.hidden = true;
+         isvalid = true;
         console.log('valid');
      }else{
         var id = document.getElementById("error_" + i)
@@ -476,7 +479,9 @@ focusInput(){
         isvalid = false;
      }
       i++;
+      }
     });
+
 
     if (this.hotelSearchForm.invalid) {
       return
@@ -527,7 +532,6 @@ focusInput(){
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
-    
       $('#flight_arrival_mlite').modal('show');
       $('#flight_departure_mlite').modal('hide');
     }
