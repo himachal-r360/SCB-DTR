@@ -493,7 +493,7 @@
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 3}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 4}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 5}"></i>
-                                        <span class="hotel-star-tag">{{list.hotelInfo.starRating}}/5</span>
+                                        <span class="hotel-star-tag">{{list.hotelInfo.starRating | number}}/5</span>
                                     </p>
                                     <ul class="hotel-amenities">
                                         <ng-container *ngFor="let image of Facilities | amenitiesFilter:list.hotelInfo.amenity | slice: 0:5 ">
