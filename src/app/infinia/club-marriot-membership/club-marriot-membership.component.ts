@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-club-marriot-membership',
   templateUrl: './club-marriot-membership.component.html',
-  styleUrls: ['./club-marriot-membership.component.sass']
+  styleUrls: ['./club-marriot-membership.component.scss']
 })
 export class ClubMarriotMembershipComponent implements OnInit {
   membership = [
@@ -13,6 +14,38 @@ export class ClubMarriotMembershipComponent implements OnInit {
     { title: "Marriott Certificates", offerMsg: 'One certificate each for upgrade to next category room and 30% off on Best available rate on base category of room', img: "assets/images/club-merriot/Rectangle 10017.png" }
 
   ]
+
+  inClud = [
+    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"./assets/images/infinia/experiences/experiences1.png"},
+    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"./assets/images/infinia/experiences/experiences1.png"}
+  ]
+
+  customOptions: OwlOptions = {
+    loop: false,
+    autoplay:false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    margin: 10,
+    // navText: ['', ''],
+    responsive: {
+      0: {
+        items: 8
+      },
+      400: {
+        items: 8
+      },
+      740: {
+        items: 8
+      },
+      940: {
+        items: 8
+      }
+    },
+    nav: false
+  }
   
 
   constructor() { }
