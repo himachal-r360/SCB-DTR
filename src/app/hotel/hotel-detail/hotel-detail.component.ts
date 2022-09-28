@@ -250,6 +250,9 @@ export class HotelDetailComponent implements OnInit ,AfterViewInit {
      if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
+     
+     if(!this.HotelDetail.description)
+     this.selectedTab = 'Rooms';
 
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);

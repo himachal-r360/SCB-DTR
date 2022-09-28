@@ -1321,7 +1321,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     "hotelid": this.searchResult.Hotelkey,
     "hotelname": this.searchResult.hotel_detail.hotelName,
     "hoteladdress": this.searchResult.hotel_detail.address,
-    "hotelImageUrl": this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'],
+    "hotelImageUrl": this.searchResult.hotel_detail.images.length >0 ? this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'] : this.cdnUrl+'/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg',
     "room_type_id": this.selectedHotel.roomType.roomTypeId,
     "room_type_code": this.selectedHotel.roomType.roomTypeCode,
     "room_dec": this.selectedHotel.roomType.roomDescription,

@@ -186,8 +186,18 @@ export class PaymentComponent implements OnInit {
         this.showcalcsection = false;
         }
         });
-        this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
+        
+     
+        if(this.pgSettingsEMI)
+         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
+         else
+          this.emiArray=[];
+        
+        if(this.pgSettingsDEBITEMI) 
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+        else
+         this.emiDebitArray=[];
+        
         this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
         };
 
@@ -196,14 +206,14 @@ export class PaymentComponent implements OnInit {
         this.REWARD_MOBILE=p;
         };
 
-
+    emiArray:any[];
         ServiceToken:any;  
         @Input() partnerToken;   
          @Input() retryPay; 
         MAIN_SITE_URL:string;
         monthArray:any[];
         yearArray:any[];
-        emiArray:any[];
+    
         emiInterst:any[];
         emiDebitArray:any[];
         emiDebitInterst:any[];
@@ -455,8 +465,11 @@ export class PaymentComponent implements OnInit {
 
 
         this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
+        
+        if(this.pgSettingsEMI)
         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
-
+       else
+         this.emiArray=[];
 
         if(AppConfig.EMI_FROM_API==0){
         this.emiInterst=AppConfig.emiInterst;
@@ -479,8 +492,10 @@ export class PaymentComponent implements OnInit {
         this.flexiPayNewcalcArr = this.commonHelper.flexipayIntcalc(this.flexipayPGvalue);
         this.showFlexiValue = this.payTotalFare;
 
-
+        if(this.pgSettingsDEBITEMI)
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+        else
+          this.emiDebitArray=[];
 
         if(AppConfig.EMI_FROM_API==0){
         this.emiDebitInterst=AppConfig.emiDebitInterst;
