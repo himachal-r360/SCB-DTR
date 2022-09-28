@@ -114,8 +114,8 @@
                        </ng-container>
                     </owl-carousel-o>
                   </div>
-                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0">
-                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl>
+                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0" >
+                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl >
                       <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                         <ng-template carouselSlide >
                           <div class="item" (click)="onImageClick(i)">
@@ -157,20 +157,7 @@
                                           <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
                                           <p *ngIf="PriceSummery.partnerName!='Cleartrip'">CHECK-IN 12PM | CHECK-OUT 12AM</p>
                                       </div>
-                                      <div class="Overview-details about-hotel" innerHtml="{{HotelDetail.description}}">
-                                          <!-- <ul>
-                                              <li><p><strong>Services</strong>: 24x7 power back up, 24 Hour Power Supply, Lift, Wheelchair accessible elevator, Waiting area, Room Service (24 Hours Available), Special occasion arrangement, Hot water available, Dry cleaning, Room/Rooms reserved for special need guests, Wheelchair accessible ramp, Wake up service/Alarm clock, Ironing Service, Hot water available 24x7, Luggage storage, Concierge, Babysitting or child care, Business center, Wheelchair, Separate Smoking Area, Laundry facilities.</p></li>
-                                              <li><p><strong>Languages Spoken by Hotel Staff</strong>: English, Hindi</p></li>
-                                              <li><p><strong>Payments Modes Accepted</strong>: Cash, Debit Card, Credit Card, Net-Banking, Visa, American Express, Security deposit, Mastercard</p></li>
-                                              <li><p><strong>Parking & Transportation</strong>: 2 Wheeler, 4 Wheeler, Valet Parking, Travel counter, Bus Parking, Outdoor Parking, Bike Rental (Chargeable), Scooty Rental (Chargeable), Cycle Rental (Chargeable), Car rental (Chargeable), Airport//Railway station pickup available (Chargeable), Airport/Railway station drop (chargeable)</p></li>
-                                              <li><p><strong>Activities - Indoor & Outdoor</strong>: Spa, Outdoor Pool, Kids Pool, Outdoor Pool (all year), Gym, Swimming pool, Kids Play Area</p></li>
-                                              <li><p><strong>General</strong>: TV In Room, Towels, Sofa, Living Area, Restaurant with Dining Menu, Restaurant, Poolside Bar, Pool view, Garden view, Bar, Gardens, Family Rooms, Non-smoking Rooms, Beach Nearby, Conference Room, Jacuzzi</p></li>
-                                              <li><p><strong>Safety & Security</strong>: First Aid Kit, CCTV, Fire Extinguisher, CCTV camera installed inside/outside hotel premises, 24-Hour Security, Smoke Detectors, Doctor on Call, CCTV camera installed on each floor</p></li>
-                                              <li><p><strong>Media & Entertainment</strong>: Flat-screen TV</p></li>
-                                              <li><p><strong>Not Allowed</strong>: Pets</p></li>
-                                              <li><p><strong>Suitable For</strong>: Large Groups, Family, Families with Children, Couples,</p></li>
-                                          </ul> -->
-                                      </div>
+                                      <div class="Overview-details about-hotel" [innerHTML]="HotelDetail.description"></div>
                                   </div>
                                   <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
                                       <div class="Overview-bottom-title mb-20">
@@ -236,24 +223,26 @@
                                                   </div>
                                                   <!-- web cancellation  -->
                                                   <div class="hd-rd-right">
-                                                      <div class="hd-rdetails-left">
+                                                      <div class="hd-rdetails-left position-relative">
                                                           <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
                                                           <ul class="hd-rd-Facilities">
                                                               <li *ngFor="let list of item.roomAmenities">
                                                                 <p>{{list}}</p>
                                                               </li>
                                                           </ul>
-                                                          <span class="information-icon hd-cc-Policy"  (click)="showCancellationDetail(i)">
-                                                              Check Cancellation Policy
-                                                              <div class="hover-popover" id="showCancellation_{{i}}">
-                                                                  <a href="javaScript:voide(0)" (click)="closeCancellation(i)" class="popover-close">
+                                                          <div class="information-icon hd-cc-Policy" >
+                                                           <div class="hover-popover" id="showCancellation_{{i}}" >
+                                                                  <!-- <a href="javascript:;" (click)="closeCancellation(i)" class="popover-close">
                                                                       <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                                  </a> 
+                                                                  </a> -->
                                                                   <div class="hover-popover-title">
                                                                       <h6>Cancellation Policy</h6>
                                                                       <p>{{item.cancellationPolicy}}</p>
                                                                   </div>
                                                               </div>
+                                                            </div>  
+                                                          <span class="information-icon hd-cc-Policy"  (mouseenter)="showCancellationDetail(i)"  (mouseleave)="closeCancellation(i)">
+                                                              Check Cancellation Policy
                                                           </span>
                                                       </div>
                                                       <div class="hd-rdetails-right">
@@ -468,24 +457,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="hd-rd-right">
-                                                            <div class="hd-rdetails-left">
+                                                            <div class="hd-rdetails-left position-relative">
                                                                 <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
                                                                 <ul class="hd-rd-Facilities">
                                                                   <li *ngFor="let list of item.roomAmenities">
                                                                     <p>{{list}}</p>
                                                                   </li>
                                                                 </ul>
-                                                                <span class="information-icon hd-cc-Policy" (click)="showCancellationDetail(i)" >
+                                                                <span class="information-icon hd-cc-Policy" (click)="showCancellationDetailMobile(item)" >
                                                                     Check Cancellation Policy
-                                                                    <div class="hover-popover" id="showCancellation_{{i}}">
-                                                                        <a href="javaScript:void(0)"(click)="closeCancellation(i)" class="popover-close" >
-                                                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                                        </a>
-                                                                        <div class="hover-popover-title">
-                                                                            <h6>Cancellation Policy</h6>
-                                                                            <p>{{item.cancellationPolicy}}</p>
-                                                                        </div>
-                                                                    </div>
                                                                 </span>
                                                             </div>
                                                             <div class="hd-rdetails-right">
@@ -610,4 +590,21 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade bookingprocess" id="showCancellation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+           <div class="modal-header">
+                    <b class="modal-title">Cancellation Policy</b>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body " style="padding: 25px;">
+                <div class="bookingprocess-items">
+                    <div class="p-15" [innerHTML]="cancellationPolicy"></div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

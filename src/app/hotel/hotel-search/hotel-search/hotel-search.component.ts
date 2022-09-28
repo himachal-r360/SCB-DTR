@@ -205,6 +205,8 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       var j = 0;
       var isvalid = true;
         rooms.forEach(z => {
+       
+        
         if(z.numberOfChildren >0 ){
         if(Array.isArray(z.childrenAge))
         var childrenAgeArray = z.childrenAge;
@@ -226,6 +228,9 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
         isvalid = false;
         }
         j++;
+        }else{
+        $('#error_0').hide();
+        isvalid = false;
         }
         });
       if (!isvalid) {
@@ -268,7 +273,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     totalOfChild = this.hotelSearchForm.value.rooms;
     this.totalChildCount =0;
        for(let i=0;i<(totalOfChild.length);i++){
-       this.totalChildCount+=totalOfChild[i]['numberOfChildren'];
+       this.totalChildCount+= Number(totalOfChild[i]['numberOfChildren']);
         }
    // this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
   }

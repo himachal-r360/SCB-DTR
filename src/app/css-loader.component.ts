@@ -21,12 +21,12 @@ export class CssLoaderComponent {
          this.cssPath = `smartbuy.css`;
 	break;
 	case ('infinia'):
-	 this.cssPath = `smartbuy.css`;
+	 this.cssPath = `infinia.css`;
 	break;
 	case ('regalia'):
 	 this.cssPath = `smartbuy.css`;
 	break;
-         case ('regalia_gold'):
+    case ('regalia_gold'):
 	 this.cssPath = `regalia_gold.css`;
 	break;
 	case ('corporate'):
