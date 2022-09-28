@@ -840,7 +840,7 @@
                                 <div class="select-root-icons" (click)="swapMulticity(i)">
                                     <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                 </div>
-                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}" (click)='focusInput(i,"to")'>
+                                <div class="select-root-right select-root-right1" appDropdown #toCityDiv id="toCityDiv_{{i}}" (click)='focusInput(i,"to")'>
                                     <span class="select-roottitle">TO</span>
                                     <h5 class="fw_6 text-dotted" *ngIf="item.value.toCountryFullName">{{(item.value.toCity|slice:0:10) + ","}} {{(item.value.toCountryFullName.length > 8)? (item.value.toCountryFullName | slice:0:10)+'..':(item.value.toCountryFullName)}}</h5>
                                     <span class="select-roottitle text-dotted" *ngIf="item.value.flightto != ''">{{item.value.flightto + "," }} {{( item.value.toAirportName.length > 20)? (item.value.toAirportName | slice:0:25)+'..':(item.value.toAirportName)}} </span>
