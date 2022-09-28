@@ -99,18 +99,19 @@ export class InfiniaHomeComponent implements OnInit {
     }
   }
 
+  
   welcomeBenefit(title){
-    if(title == title){
-      $('.Benefits-datas').toggleClass('d-none');
-      $('.Process-item-title').toggleClass('Process-item-active' )
+    if(title){
+      $('#redeemWelcome'+title).toggleClass('d-none');
+      $('#addActiveToggle'+title).toggleClass('Process-item-active' )
     }
 
   }
 
-navTitle = 'WelcomeBenefits';
-  scrollToElement(element , title): void {
+  navTitle = 'WelcomeBenefits';
+  scrollToElement(element, title): void {
     this.navTitle = title
-    element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 
 
