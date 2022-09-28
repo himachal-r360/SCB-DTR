@@ -96,7 +96,7 @@
                         <ng-container >
                           <ng-template carouselSlide  [id]="'Id_0'">
                             <div class="item">
-                               <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid" alt="">
+                               <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid radius_8" alt="">
                           </div>
                             </ng-template>
                          </ng-container>
@@ -108,7 +108,7 @@
                         <ng-container *ngFor="let image of HotelDetail.images; let i = index">
                           <ng-template carouselSlide  [id]="'Id_'+i">
                             <div class="item">
-                              <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="" >
+                              <img src="{{image.wideAngleImageUrl}}" class="img-fluid radius_8" alt="" >
                           </div>
                             </ng-template>
                          </ng-container>
@@ -230,8 +230,9 @@
                                                                   <p>{{list}}</p>
                                                                 </li>
                                                             </ul>
-                                                            <div class="information-icon hd-cc-Policy" >
-                                                             <div class="hover-popover" id="showCancellation_{{i}}" >
+                                                            <span class="information-icon hd-cc-Policy"  (mouseenter)="showCancellationDetail(i)"  (mouseleave)="closeCancellation(i)">
+                                                                Check Cancellation Policy
+                                                                <div class="hover-popover" id="showCancellation_{{i}}" >
                                                                     <!-- <a href="javascript:;" (click)="closeCancellation(i)" class="popover-close">
                                                                         <img src="{{cdnUrl}}/images/icons/close.png" alt="">
                                                                     </a> -->
@@ -240,10 +241,21 @@
                                                                         <p>{{item.cancellationPolicy}}</p>
                                                                     </div>
                                                                 </div>
+                                                            </span>
+                                                            <!-- <div class="" >
+                                                             <div class="hover-popover" id="showCancellation_{{i}}" >
+                                                                    <a href="javascript:;" (click)="closeCancellation(i)" class="popover-close">
+                                                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                                    </a>
+                                                                    <div class="hover-popover-title">
+                                                                        <h6>Cancellation Policy</h6>
+                                                                        <p>{{item.cancellationPolicy}}</p>
+                                                                    </div>
+                                                                </div>
                                                               </div>  
                                                             <span class="information-icon hd-cc-Policy"  (mouseenter)="showCancellationDetail(i)"  (mouseleave)="closeCancellation(i)">
                                                                 Check Cancellation Policy
-                                                            </span>
+                                                            </span> -->
                                                         </div>
                                                         <div class="hd-rdetails-right">
                                                             <h6>₹{{item.rateBreakdown.total | number}}</h6>
