@@ -791,7 +791,7 @@
                 <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container [formGroupName]="i">
                         <div class="col-lg-6">
-                            <div class="select-root-area">
+                            <div class="select-root-area select-root-area1">
                                 <div class="select-root-left" appDropdown (click)='focusInput(i,"from")'>
                                     <span class="select-roottitle">FROM</span>
                                     <!-- <h5 class="fw_6 ">{{item.value.fromCity}}<span *ngIf="!isMobile && item.value.fromCountryFullName != ''">, {{item.value.fromCountryFullName}}</span> -->
@@ -894,7 +894,7 @@
                                                 <span class="select-roottitle">DEPARTURE</span>
                                                 <h5 class=" ">{{item.value.departure | date:'dd MMM' }}</h5>
 
-                                                <span class="select-roottitle d-block w-100" *ngIf="item.value.departure=='' ||item.value.departure==undefined"></span>
+                                                <span class="select-roottitle d-block w-100" *ngIf="item.value.departure=='' ||item.value.departure==undefined">Select Depart</span>
                                                 <span class="select-roottitle" *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                                                     }}</span>
 
