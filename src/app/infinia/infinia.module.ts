@@ -5,6 +5,7 @@ import { InfiniaItcHotelComponent } from './infinia-itc-hotel/infinia-itc-hotel.
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { ClubMarriotMembershipComponent } from './club-marriot-membership/club-marriot-membership.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 const routes: Routes = [
   {path:"infinia-itc-hotel",component:InfiniaItcHotelComponent},
   {path:"club-marriott-membership" , component:ClubMarriotMembershipComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
       anchorScrolling: 'enabled',
       onSameUrlNavigation: 'reload'
     }),
+    CarouselModule
   ],
   exports: [RouterModule],
   providers:[ {

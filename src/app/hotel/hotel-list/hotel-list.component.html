@@ -485,7 +485,7 @@
                                      <img *ngIf="list.hotelInfo.image == null || list.hotelInfo.image == ''"  src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" >
                                 </div>
                                 <div class="hotel-list-text">
-                                    <h6 class="hotel-name text-decoration-none "><a href="javascript:;" >{{list.hotelInfo.name | titlecase}}</a></h6>
+                                    <h6 class="hotel-name text-decoration-none "><a href="javascript:;" [innerHTML]="list.hotelInfo.name | safeHtml"></a></h6>
                                     <p class="hotel-place text-dotted">{{list.hotelInfo.address == '' ? list.hotelInfo.city : list.hotelInfo.address}}</p>
                                     <p class="hotel-star">
                                         <i class="fas fa-star " [ngClass]="{'active' : list.hotelInfo.starRating >= 1}"></i>
