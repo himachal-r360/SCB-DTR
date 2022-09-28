@@ -4294,6 +4294,7 @@ orderReferenceNumber:any;
     if(page<5){
     this.totalCollectibleAmount=this.totalCollectibleAmount-this.coupon_amount;
     this.coupon_amount=0;
+    this.voucher_amount = 0;
     }
 
     if(page<4){

@@ -77,8 +77,8 @@
                                 <div>
                                     <div class="hotel_details">
                                         <div class="img_hr">
-                                            <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
-                                            <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                            <img *ngIf="searchResult.hotel_detail.images.length && searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
+                                            <img *ngIf="searchResult.hotel_detail.images.length ==0" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
 
                                         </div>
                                         <div class="name_hr">

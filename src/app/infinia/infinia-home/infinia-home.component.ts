@@ -107,11 +107,13 @@ export class InfiniaHomeComponent implements OnInit {
 
   }
 
-
-  scrollToElement($element): void {
-    console.log($element);
-    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+navTitle = 'WelcomeBenefits';
+  scrollToElement(element , title): void {
+    this.navTitle = title
+    element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
+
+
   
 
 

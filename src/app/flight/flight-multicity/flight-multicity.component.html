@@ -558,7 +558,7 @@
                                                                         <div class="extra-tabs-details-bottom">
                                                                             <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                                 <div class="tabs-depart-one">
-                                                                                    <p class="depart-one-image">
+                                                                                    <p class="depart-one-image  d-flex align-items-center">
                                                                                         <i class=" me-2 free-flow air-logo intAirLogo size-28 x{{details.airline}}"></i> {{details.airline}} {{details.flightNumber}}</p>
                                                                                     <div class="tabs-depart-left float-none justify-content-between w-100">
                                                                                         <div class="tabs-depart-times">
@@ -1028,7 +1028,7 @@
                                                                 <div class="extra-tabs-details-bottom ">
                                                                     <div class="tabs-depart-box" *ngFor="let details of list.flights;let i=index;">
                                                                         <div class="tabs-depart-one">
-                                                                            <p class="depart-one-image">
+                                                                            <p class="depart-one-image  d-flex align-items-center">
                                                                                 <i class=" me-2 free-flow air-logo intAirLogo size-28 x{{list.flights[i].airline}}"></i> {{list.flights[i].airline}} {{list.flights[i].flightNumber}}</p>
                                                                             <!-- <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p> -->
                                                                             <div class="tabs-depart-left float-none justify-content-between w-100">
@@ -1533,9 +1533,9 @@
                                                                     </ng-container>
                                                                 </ul>
 
-                                                                <div class="d-flex justify-content-between mt-2">
+                                                                <div class="mb-4 mt-2">
                                                                     <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreAirline()" *ngIf="!show_airline_more && airlines && airlines.length>5">+{{airlines.length-5}} more</a>
-                                                                    <a href="javascript:void(0)" class="widget-content-more ms-auto" (click)="resetAirlineFlightsFilter()">Reset</a>
+                                                                    <a href="javascript:void(0)" class="widget-content-more float-end" (click)="resetAirlineFlightsFilter()">Reset</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1598,10 +1598,10 @@
 
                                                                 </ul>
 
-                                                                <div class="d-flex justify-content-between mt-2">
+                                                                <div class="mb-4 mt-2">
                                                                     <a href="javascript:void(0)" class="widget-content-more ml-20" (click)="showmoreLayover()" *ngIf="!show_layover_more && layOverFilterArr && layOverFilterArr.length>5">+{{layOverFilterArr.length-5}} more</a>
                                                                     <!-- <a href="#" class="widget-content-more ml-20">+2 more</a> -->
-                                                                    <a class="widget-content-more ms-auto" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
+                                                                    <a class="widget-content-more float-end" href="javascript:void(0)" (click)="resetLayOverFilter()">Reset</a>
                                                                 </div>
                                                             </div>
                                                         </div>
