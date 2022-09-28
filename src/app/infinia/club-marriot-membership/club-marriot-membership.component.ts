@@ -16,8 +16,9 @@ export class ClubMarriotMembershipComponent implements OnInit {
   ]
 
   inClud = [
-    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"./assets/images/infinia/experiences/experiences1.png"},
-    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"./assets/images/infinia/experiences/experiences1.png"}
+    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"assets/images/infinia/experiences/experiences1.png"},
+    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"assets/images/infinia/experiences/experiences1.png"},
+    {title:"Weekends at Marriot" , desc:"Unwind and relax with a short gateway over the weekend" ,img:"assets/images/infinia/experiences/experiences1.png"}
   ]
 
   customOptions: OwlOptions = {
@@ -29,22 +30,22 @@ export class ClubMarriotMembershipComponent implements OnInit {
     dots: false,
     navSpeed: 700,
     margin: 10,
-    // navText: ['', ''],
+    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
     responsive: {
       0: {
-        items: 8
+        items: 1
       },
       400: {
-        items: 8
+        items: 1
       },
       740: {
-        items: 8
+        items: 1
       },
       940: {
-        items: 8
+        items: 1
       }
     },
-    nav: false
+    nav: true
   }
   
 
