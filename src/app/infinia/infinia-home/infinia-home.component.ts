@@ -108,9 +108,8 @@ export class InfiniaHomeComponent implements OnInit {
   }
 
 
-  scrollToElement($element): void {
-    console.log($element);
-    $element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  scrollToElement(element): void {
+    element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
   }
   
 
