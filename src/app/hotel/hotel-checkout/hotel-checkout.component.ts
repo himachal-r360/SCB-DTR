@@ -1227,6 +1227,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     if (page < 2) {
       this.totalFare = this.intialTotalFare;
       this.coupon_amount = 0;
+       this.voucher_amount = 0;
     }
 
 
