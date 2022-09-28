@@ -286,10 +286,13 @@
                                     <hr>
                                 </ng-container>
                             </ng-container>
-                            <div class="Add-room">
-                                <a href="javaScript:void(0)" class="" (click)="addDetails()"  [hidden]="roomsDetails.length > 3" >Add Room</a>
-                            </div>
                         </ng-container>
+                    </div>
+                    <div class="Add-room " *ngIf="isMobile">
+                        <a href="javaScript:void(0)" class="" (click)="addDetails()"  [hidden]="roomsDetails.length > 3" >Add Room</a>
+                    </div>
+                    <div class="Add-room " *ngIf="!isMobile">
+                        <a href="javaScript:void(0)" class="" (click)="addDetails()"  [hidden]="roomsDetails.length > 3" >Add Room</a>
                     </div>
                 </div>
                 <div class="error_msg w-35" hidden id="error_AllAge">
