@@ -459,6 +459,9 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       }, 50);
     this.syncData();
     });
+  if(this.partnerToken!='Cleartrip'){
+    this.checkAvailability();
+  }
     
   }
 
@@ -891,12 +894,15 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     } else {
     
 
-    
-        if(this.partnerToken=='Cleartrip'){
-         this.itineraryProcess();
-        }else{
-        /********Check Availablity***********/
-                $('#infoprocess').modal('show');
+       this.itineraryProcess();
+
+        
+    }
+
+  }
+  checkAvailability(){
+    let checkAvailablity;
+         $('#infoprocess').modal('show');
         this.loaderValue = 10;
         const myInterval1 = setInterval(() => {
         this.loaderValue = this.loaderValue + 10;
@@ -904,9 +910,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         this.loaderValue = 10;
         }
         }, 700);
-    
-        
-          let rooms:any=[];
+
+              let rooms:any=[];
                 
         for(let i=0;i<(this.searchData.rooms.length);i++){
          rooms.push({
@@ -919,9 +924,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "bookingCode": this.selectedHotel.roomType.bookingCode
         });
         }
-        
-       
-        let checkAvailablity;
         checkAvailablity={
         "checkIn": this.searchResult.hotel_detail.checkIn,
         "checkOut": this.searchResult.hotel_detail.checkOut,
@@ -956,7 +958,11 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
          let response = JSON.parse(this.EncrDecr.get(results.result));
          if(response && response.response && response.response.mmtTxnKey &&  response.response.mmtTxnKey !=''){
          this.mmtTxnKey=response.response.mmtTxnKey;
-          this.itineraryProcess();
+         // console.log(response.response.rooms[0].rateInfo[0].chargeableRateInfo);
+          this.totalBaseFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.baseFare;
+          this.partnerDiscount=response.response.rooms[0].rateInfo[0].chargeableRateInfo.partnerDiscount;
+          this.totalTax=response.response.rooms[0].rateInfo[0].chargeableRateInfo.tax;
+          this.totalFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.total;
          }else{
           clearInterval(myInterval1);
         setTimeout(() => {
@@ -973,12 +979,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         $('#bookingprocessFailed').modal('show');
         }, 20);
         }
-        
-        
-        }
-        
-    }
-
   }
   
   
@@ -1036,7 +1036,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
         
         this.itineraryParam ={
-        "bookingAmount":this.selectedHotel.rateBreakdown.total,
+        "bookingAmount":this.totalFare,
         "bookingCode": this.selectedHotel.roomType.bookingCode,
         "checkIn": this.searchData.checkIn,
         "checkOut": this.searchData.checkOut,
@@ -1084,6 +1084,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         this.loaderValue = 10;
         }
         }, 700);
+
 
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryParam))
