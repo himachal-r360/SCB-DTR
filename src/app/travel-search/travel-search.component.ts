@@ -251,7 +251,7 @@ export class TravelSearchComponent implements OnInit {
 	{"_source":{ "city": "Kolkata", "full_content": "Kolkata, West Bengal, India","country" :"IN"}} ,
 	{"_source":{ "city": "Hyderabad", "full_content": "Hyderabad, Andhra Pradesh,  India","country" :"IN"}} ,
 	{"_source":{ "city": "Jaipur", "full_content": "Jaipur, Rajasthan, India","country" :"IN"}},
-	{"_source":{ "city": "Cochin", "full_content": "Cochin, Kerala, India","country" :"IN"}},
+	{"_source":{ "city": "Kochi", "full_content": "Kochi, Kerala, India","country" :"IN"}},
 	{"_source":{ "city": "London", "full_content": "London, Greater London, United Kingdom","country" :"GB"}} ,
 	{"_source":{ "city": "Dubai", "full_content": "Dubai, Dubai Emirate, United Arab Emirates","country" :"AE"}} ,
 	{"_source":{ "city": "Singapore", "full_content": "Singapore, Singapore","country" :"SG"}} ,
