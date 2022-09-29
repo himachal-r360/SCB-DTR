@@ -170,7 +170,7 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
 
   private intialData() {
-    for (let n = 0; n < this.ITEMS_RENDERED_AT_ONCE; n++) {
+    for (let n = 0; n <= this.ITEMS_RENDERED_AT_ONCE; n++) {
       if (this.hotelList[n] != undefined) {
         const context = {
           item: [this.hotelList[n]]
