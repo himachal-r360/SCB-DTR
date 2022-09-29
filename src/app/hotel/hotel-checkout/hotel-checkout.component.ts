@@ -960,7 +960,12 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
          this.mmtTxnKey=response.response.mmtTxnKey;
          // console.log(response.response.rooms[0].rateInfo[0].chargeableRateInfo);
           this.totalBaseFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.baseFare;
-          this.partnerDiscount=response.response.rooms[0].rateInfo[0].chargeableRateInfo.partnerDiscount;
+          if(this.partnerToken =='Cleartrip'){
+            this.partnerDiscount=response.response.rooms[0].rateInfo[0].chargeableRateInfo.partnerDiscount;
+          }else{
+            this.partnerDiscount=0;
+          }
+          
           this.totalTax=response.response.rooms[0].rateInfo[0].chargeableRateInfo.tax;
           this.totalFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.total;
          }else{
