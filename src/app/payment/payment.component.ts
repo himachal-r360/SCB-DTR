@@ -2474,12 +2474,9 @@ export class dcemiDialog {
 	}
 	close(){
 
-              if(this.pgSettingsEMI && this.emiArray.length > 0 ){
           	let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
 		element.click();
-               }else{
                
-               }
 		this.dialogDcemi.close();
 	}
 }
