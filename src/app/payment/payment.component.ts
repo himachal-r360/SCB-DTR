@@ -613,6 +613,15 @@ export class PaymentComponent implements OnInit {
 	
 	}
 	
+	pgSelectGuest(){
+	
+	  if(this.customerInfo["guestLogin"]==true){
+	   if(!this.pgSettingsEMI && this.emiArray.length ==0 &&  this.pgSettingsDEBITEMI && this.emiDebitArray.length >0)
+	   this.pgSelect('DEBIT_EMI');
+	  }
+	
+	}
+	
 	pgSelect(pgType){
                 //console.log(pgType);
                 if(pgType=='DEBIT_EMI' && this.customerInfo["guestLogin"]==true){
@@ -2465,9 +2474,12 @@ export class dcemiDialog {
 	}
 	close(){
 
-		let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+              if(this.pgSettingsEMI && this.emiArray.length > 0 ){
+          	let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
 		element.click();
-
+               }else{
+               
+               }
 		this.dialogDcemi.close();
 	}
 }
