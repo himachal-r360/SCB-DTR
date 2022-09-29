@@ -233,7 +233,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   // $(".seat-layout").hide();
   // $(".amenities-list").hide();
   this.busamenities = [];
-  //this.showAmenities = !this.showAmenities; 
+  this.showAmenities = !this.showAmenities; 
   if (mobile) {
    this.showAmenities = false;
   } else {
