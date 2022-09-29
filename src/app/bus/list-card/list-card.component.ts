@@ -230,7 +230,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onAmenities(allamenities: any, bus_id, mobile) {
-  // $(".seat-layout").hide();
+//   $(".seat-layout").hide();
   // $(".amenities-list").hide();
   this.busamenities = [];
   this.showAmenities = !this.showAmenities; 
