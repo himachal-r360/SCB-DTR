@@ -2498,11 +2498,17 @@ export class dcemiDialog {
 	}
 	close(){
 
+<<<<<<< HEAD
 
 		let elementCyber: HTMLElement = document.getElementById('tab-ccdcCards') as HTMLElement; 
 		elementCyber.click();
         
 
+=======
+          	let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+		element.click();
+               
+>>>>>>> 591914e75f2d4381584d959360cd725bf34084a2
 		this.dialogDcemi.close();
 	}
 }
