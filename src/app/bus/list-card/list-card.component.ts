@@ -237,7 +237,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
   if (mobile) {
    this.showAmenities = false;
   } else {
-   this.showAmenities = !this.showAmenities;
+   this.showAmenities = true;
    this.rtcseatcall = false;
   }
   this.showDropping = false;
