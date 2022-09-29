@@ -449,18 +449,28 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   openMliteDatePicker(field, rtype) {
 
     if (rtype == 1) {
+        this.mliteChecout=false;
       this.navItemActive = "Round Trip"
+        this.mliteChecout=true;
+      
     }
 
     if (field == 'departure') {
+            this.mliteChecout=false;
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
-      $('#flight_arrival_mlite').modal('show');
+        this.mliteChecout=true;
+        
+             setTimeout(() => {
+       $('#flight_arrival_mlite').modal('show');
+      }, 100);
+    
       $('#flight_departure_mlite').modal('hide');
     }
 
   }
+  
 
   openMulticityMliteDatePicker(index:number) {
 
@@ -986,7 +996,12 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.childVal=this.flightData.value.child;
       this.infantsVal=this.flightData.value.infants;
   }
-
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#flight_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
   swap() {
     var FromData = { flightFrom: this.flightData.value.flightfrom, fromAirpotName: this.flightData.value.fromAirportName, fromCityName: this.flightData.value.fromCity, fromContry: this.flightData.value.fromContry,fromCountryFullName: this.flightData.value.fromCountryFullName }
 
