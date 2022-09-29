@@ -327,8 +327,8 @@ goback() {
     fromTravelCode: this.fromBusCode,
     toTravelCode: this.toBusCode,
     departure: this.departureDate,
-       fromState:this.fromState,
-   toState:this.toState
+    fromState:this.fromState,
+    toState:this.toState
    };
    this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
     queryParams: this.searchParamPreviousDay
@@ -341,7 +341,9 @@ goback() {
     searchTo: this.busto,
     fromTravelCode: this.fromBusCode,
     toTravelCode: this.toBusCode,
-    departure: this.departureDate
+    departure: this.departureDate,
+    fromState:this.fromState,
+    toState:this.toState
    };
    this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
     queryParams: this.searchParamPreviousDay
