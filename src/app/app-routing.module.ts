@@ -41,6 +41,9 @@ const routes: Routes = [
     {
     path:"regalia_gold/compare-stay" , component:HomeComponent
   },
+  {
+    path:"infinia/compare-stay" , component:HomeComponent
+  },
     {
     path:"regalia_gold/bus" , component:HomeComponent
   },
