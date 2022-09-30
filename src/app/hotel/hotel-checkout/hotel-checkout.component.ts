@@ -125,6 +125,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         totalChild:number = 0;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
+          pgSettingsEMI:number=0;
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog,  private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
       this.statesdump = require('src/assets/data/states.json');
@@ -133,6 +134,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.router.navigate(['/**']);
     }
     this.domainName = this.sg['domainName'];
+    this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
+    
     this.assetPath = this.sg['assetPath'];
     this.appConfig = appConfig;
     this.domainPath = this.sg['domainPath'];
@@ -248,6 +251,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.coupon_amount = this.indexCoupon.coupon_amount;
       // this.coupon_amount = 200;
       if (this.flexiDiscount == undefined) this.flexiDiscount = 0;
+      
+     
 
       this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount))- Number(this.voucher_amount);
       this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
@@ -965,7 +970,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
           }else{
             this.partnerDiscount=0;
           }
-          
+           this.intialTotalFare= Number(response.response.rooms[0].rateInfo[0].chargeableRateInfo.total);
           this.totalTax=response.response.rooms[0].rateInfo[0].chargeableRateInfo.tax;
           this.totalFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.total;
          }else{

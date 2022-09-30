@@ -727,7 +727,7 @@
                                                     </div>
                                                     <div class="fare-list-right">
                                                         <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                                                        <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                                        <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                                         </p>
                                                     </div>
 
@@ -778,7 +778,7 @@
                         <div class="col-5">
                             <div class="">
                                 <h6 class="price">₹{{ totalFare |number }} </h6>
-                                <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                 </p>
                             </div>
                         </div>
@@ -922,7 +922,7 @@
                                     </div>
                                     <div class="fare-list-right">
                                         <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                                        <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                        <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                         </p>
                                     </div>
 
