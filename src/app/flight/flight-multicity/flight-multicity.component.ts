@@ -128,7 +128,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.nextIndex = this.flightList.length;
       }
 
-      for (let n = this.pageIndex-1; n < this.nextIndex; n++) {
+      for (let n = this.pageIndex; n < this.nextIndex; n++) {
         const context = {
           item: [this.flightList[n]]
         };
@@ -192,11 +192,12 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.selectedTrip = 0;
         this.isMobile = window.innerWidth < 991 ? true : false;
         this.getQueryParamData();
-          this.getAirlinelist();
+         
 this.getAirpotsList();
 this.getAirlinesDump();
            this.getAirpotsNameList();
         this.flightSearch();
+        // this.getAirlinelist();
        
   }
   ngAfterViewInit(): void {
@@ -293,14 +294,18 @@ this.getAirlinesDump();
         this.flightListWithOutFilter = this.flightList;
         this.DocKey = res.response.docKey;
       
+      
         if (this.flightList.length > 0) {
-           this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
-           this.maxPrice =Math.max.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+          //  this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+          //  this.maxPrice =Math.max.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+          this.GetMinAndMaxPriceForFilter();
            this.sliderRange(this, this.minPrice, this.maxPrice);
          }
         // console.log(this.flightList,"this.flightList");
          this.loader = false;
+         this.getAirlinelist()
          this.popularFilterFlightData();
+
          this.serverIssue=0; 
       }
       else{
@@ -524,6 +529,8 @@ bookingSummary() {
   }
 
   getAirlinelist() {
+    
+    
     let airlineNameArr = [];
     let airlinePartnerArr = [];
     let layOverArr = [];
@@ -534,11 +541,14 @@ bookingSummary() {
       let priceSummaryList = this.flightList[j].priceSummary;
       let priceSummary;
 
+
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
 
         if (h < singleFlightList.length) {
+          
+          
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             if (this.airportsNameJson != null) {
               if(this.airportsNameJson[singleFlightList[h].arrivalAirport] != undefined)
@@ -1186,6 +1196,7 @@ bookingSummary() {
           }
         });
         flightList = filteredLayovers;
+        
       }
     }
     return flightList;

@@ -97,7 +97,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   isClosed: boolean = true;
   isFromorNot: boolean = false;
   searchData: any;
-  flightClassVal: any;
+  flightClassVal: any='E';
   showTravellerBlock = false;
   isDisabled = false;
   windowItem = window;
@@ -108,6 +108,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   multicityFormArr:FormArray;
   multicitySearchData:any=[];
   minDateArray:any = [];
+  startAt:any=[];
+  mliteChecoutMulti:any=[];
   private lastKeypress = 0;
   private queryText = '';
   flightFromOptions: any[];
@@ -128,7 +130,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     fromAirportName: ['', [Validators.required]],
     toAirportName: ['', [Validators.required]],
     flightclass: ['E'],
-    flightdefault: [],
+    flightdefault: ['O'],
     departure: ['', [Validators.required]],
     arrival: ['',],
     adults: ['1', [Validators.required]],
@@ -219,6 +221,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
         }
      }
+        this.mliteChecoutMulti[0]=false;
+        this.mliteChecoutMulti[1]=false;
+        this.mliteChecoutMulti[2]=false;
+        this.mliteChecoutMulti[3]=false;
+        this.mliteChecoutMulti[4]=false;
 
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
@@ -251,6 +258,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
     if(this.minDateArray.length -1 > i)
     {
+      this.startAt[i+1]== new Date(date);
       this.minDateArray[i+1] = new Date(date);
     }
 
@@ -259,17 +267,37 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.minDateR=date;
   }
   currentMobilePeriodClicked(datePicker: any, item , i) {
+  
     let date = datePicker;
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
+    this.startAt[i] = date;
     this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
-     if(this.minDateArray.length -1 > i)
+    if(this.multicityFormArr.controls.length -1 > i){
+      for(var j = i+1; j< this.multicityFormArr.controls.length;j++)
+      {
+        this.multicityFormArr.controls[j].get('departure').setValue('')
+      }
+    }
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+    if(this.minDateArray.length -1 > i)
     {
+     this.startAt[i+1]== new Date(date);
       this.minDateArray[i+1] = new Date(date);
     }
+
+
     // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.minDateR=date;
+  
 
   }
+  
+  closeCheckoutMulticity(i){
+    $('#flight_departure_mlite'+i).modal('hide');
+    this.mliteChecoutMulti[i]=false;
+  }
+  
   currentPeriodArrivalClicked(datePicker: any) {
 
   }
@@ -471,10 +499,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   }
   
-
+ 
   openMulticityMliteDatePicker(index:number) {
-
-      $('#flight_departure_mlite'+index).modal('show');
+   this.mliteChecoutMulti[index]=true;
+   
+     setTimeout(() => {
+       $('#flight_departure_mlite'+index).modal('show');
+      }, 100);
+    
 
   }
 
@@ -570,7 +602,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         var adaults = 1;
         var child = 0;
         var infants = 0;
-        var Flightclass = '';
+        var Flightclass = 'E';
         this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray;
         var isOldDate = false;
         data.forEach((z)=>{
@@ -725,6 +757,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   flightSearch() {
    // debugger;
     this.submitted = true;
+    
+    
+   // console.log(this.flightData.value);return;
+    
     if (this.flightData.value.departure != "" && this.flightData.value.departure != undefined) {
       this.dateValidation = false;
     }
@@ -748,6 +784,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightData.get('travel').setValue('DOM');
     } else {
       this.flightData.get('travel').setValue('INT');
+    }
+    
+    if(!this.flightData.value.flightclass){
+    this.flightData.value.flightclas='E';
     }
 
     if (this.flightData.invalid || this.dateValidation == true) {
@@ -1064,6 +1104,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   getClassVal(val: any) {
+
     this.flightData.value.flightclass = val;
     this.flightData.get('flightclass').setValue(val);
     this.flightClassVal = val;

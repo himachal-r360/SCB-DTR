@@ -629,145 +629,146 @@
                     <mat-tab label="All ({{bus.availableSeats}})">
 
                         <div class="seat_layover">
-                            <div class="bus_seats_view">
-                                <div *ngIf="seatTypeMliteData">
-                                    <div class="layout">
-                                        <div>
-                                            <img src="{{cdnUrl}}images/icons/close.png" alt="close" class="close_seatInfo" (click)="seatTypeClose()">
+                            <div class="container">
+                                <div class="bus_seats_view">
+                                    <div class="seat_type_info_mlite" *ngIf="seatTypeMliteData">
+                                        <div class="layout">
+                                            <div>
+                                                <img src="{{cdnUrl}}images/icons/close.png" alt="close" class="close_seatInfo" (click)="seatTypeClose()">
+                                            </div>
+                                            <div class="">
+                                                <div class="seat_type_info_m">
+                                                    <div class="bus_driver">
+                                                        <div>
+                                                            <div class="label text-left">Seat Types</div>
+                                                        </div>
+                                                        <div>
+                                                            <!-- <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="seat_info">
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
+                                                        <div class="check_status_txt">Available
+                                                        </div>
+                                                    </div>
+                                                    <div class="seat_info">
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_v.svg" width="38px" class="check_status_img"></div>
+                                                        <div class="check_status_txt">Sleeper
+                                                        </div>
+                                                    </div>
+                                                    <div class="seat_info">
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
+                                                        <div class="check_status_txt">Booked By Others
+                                                        </div>
+                                                    </div>
+                                                    <div class="seat_info">
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
+                                                        <div class="check_status_txt"> Selected By You</div>
+                                                    </div>
+                                                    <div class="seat_info">
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats_m.svg" class="check_status_img" width="75px"></div>
+                                                        <div class="check_status_txt"> Available only for female passenger</div>
+                                                    </div>
+
+                                                    <div class="seat_info">
+                                                        <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img" width="66px"></div>
+                                                        <div class="check_status_txt">Available for male passenger
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="">
-                                            <div class="seat_type_info_m">
+                                    </div>
+                                    <div class="lower_deck_m" *ngIf="Lowerdecks.length">
+                                        <div class="layout">
+
+                                            <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
+
+
+                                            <div class="margin-auto content">
+                                                <div class="bus_driver">
+                                                    <div  *ngIf="Upperdecks.length">
+                                                        <div class="label text-left"  >Lower Berth</div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <table class="cabin fuselage">
+                                                        <tr class="row-no" *ngFor="let LD of Lowerdecks ">
+                                                            <td *ngIf="LD && LD.length==0" align="right">&nbsp;&nbsp;</td>
+                                                            <td *ngFor="let seat of LD" align="right">
+                                                                <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;</span>
+                                                                <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
+                                                        <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"   >
+                                                        
+                                                        <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
+                                                        
+                                                        
+                                                        <ng-template #other_content><div class="ms-{{seat.seattype}}"></div></ng-template>
+                                                    
+                                                        </a>
+                                    </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+
+                                                </div>
+                                                <!--<div class="text-center my-3" id="toggle">
+                                                        <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
+                                                            <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
+                                                        </mat-button-toggle-group>
+                                                    </div>-->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="upper_deck_m" *ngIf="Upperdecks.length">
+                                        <div class="layout">
+
+                                            <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
+
+
+                                            <div class="margin-auto content">
                                                 <div class="bus_driver">
                                                     <div>
-                                                        <div class="label text-left">Seat Types</div>
+                                                        <div class="label text-left">Upper Berth</div>
                                                     </div>
                                                     <div>
-                                                        <!-- <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div> -->
+                                                        <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
                                                     </div>
                                                 </div>
-                                                <div class="seat_info">
-                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/available_seats.svg" class="check_status_img"></div>
-                                                    <div class="check_status_txt">Available
-                                                    </div>
-                                                </div>
-                                                <div class="seat_info">
-                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/sleeper_v.svg" width="38px" class="check_status_img"></div>
-                                                    <div class="check_status_txt">Sleeper
-                                                    </div>
-                                                </div>
-                                                <div class="seat_info">
-                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/others_seats.svg" class="check_status_img"></div>
-                                                    <div class="check_status_txt">Booked By Others
-                                                    </div>
-                                                </div>
-                                                <div class="seat_info">
-                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/selected_seats.svg" class="check_status_img"></div>
-                                                    <div class="check_status_txt"> Selected By You</div>
-                                                </div>
-                                                <div class="seat_info">
-                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/ladies_seats_m.svg" class="check_status_img" width="75px"></div>
-                                                    <div class="check_status_txt"> Available only for female passenger</div>
-                                                </div>
+                                                <div class="">
 
-                                                <div class="seat_info">
-                                                    <div class="check_status_img_div"><img src="{{cdnUrl}}images/icons/male_seats.svg" class="check_status_img" width="66px"></div>
-                                                    <div class="check_status_txt">Available for male passenger
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="" *ngIf="Lowerdecks.length">
-                                    <div class="layout">
-
-                                        <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
-
-
-                                        <div class="margin-auto content">
-                                            <div class="bus_driver">
-                                                <div  *ngIf="Upperdecks.length">
-                                                    <div class="label text-left"  >Lower Berth</div>
-                                                </div>
-                                                <div>
-                                                    <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
-                                                </div>
-                                            </div>
-                                            <div class="">
-                                                <table class="cabin fuselage">
-                                                    <tr class="row-no" *ngFor="let LD of Lowerdecks ">
-                                                        <td *ngIf="LD && LD.length==0" align="right">&nbsp;&nbsp;</td>
-                                                        <td *ngFor="let seat of LD" align="right">
-                                                            <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;</span>
-                                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
-                                                    <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"   >
+                                                    <table class="cabin fuselage">
+                                                        <tr class="row-no" *ngFor="let UD of Upperdecks ">
+                                                            <td *ngIf="UD && UD.length==0" align="right">&nbsp;&nbsp;</td>
+                                                            <td *ngFor="let seat of UD" align="right">
+                                                                <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;</span>
+                                                                <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
+                                                        <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"    >
+                                                        <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
+                                                        <ng-template #other_content>    <div class="ms-{{seat.seattype}}"></div></ng-template>
                                                     
-                                                       <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
-                                                       
-                                                    
-                                                    <ng-template #other_content><div class="ms-{{seat.seattype}}"></div></ng-template>
-                                                
-                                                    </a>
-                                </span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
+                                                        </a>
+                                                        </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- <span class="pos-rear">REAR</span> -->
+                                                </div>
+                                                <!--<div class="text-center my-3" id="toggle">
+                                                        <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
+                                                            <mat-button-toggle value="upper">upper</mat-button-toggle>
+                                                        </mat-button-toggle-group>
+                                                    </div>-->
 
                                             </div>
-                                            <!--<div class="text-center my-3" id="toggle">
-                                                    <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
-                                                        <mat-button-toggle value="lower" checked>Lower</mat-button-toggle>
-                                                    </mat-button-toggle-group>
-                                                </div>-->
-
                                         </div>
                                     </div>
                                 </div>
-                                <div class="" *ngIf="Upperdecks.length">
-                                    <div class="layout">
-
-                                        <!-- <div class="info text-gary" *ngIf="showError" [ngClass]="{'errorred':showError}">Please select seat(s)</div> -->
-
-
-                                        <div class="margin-auto content">
-                                            <div class="bus_driver">
-                                                <div>
-                                                    <div class="label text-left">Upper Berth</div>
-                                                </div>
-                                                <div>
-                                                    <div class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></div>
-                                                </div>
-                                            </div>
-                                            <div class="">
-
-                                                <table class="cabin fuselage">
-                                                    <tr class="row-no" *ngFor="let UD of Upperdecks ">
-                                                        <td *ngIf="UD && UD.length==0" align="right">&nbsp;&nbsp;</td>
-                                                        <td *ngFor="let seat of UD" align="right">
-                                                            <span *ngIf="seat && seat.length==0" class="seat ">&nbsp;&nbsp;</span>
-                                                            <span *ngIf="seat && seat.length>0" class="seat {{seat.seattype}}-m"> 
-                                                    <a  (click)="seat.available == true && selectseat(seat,bus.id,bus.maxSeatsPerTicket,mobile=true)"    >
-                                                       <div class="ms-{{seat.newseattype}}" *ngIf="selectedseats.indexOf(seat) != -1;else other_content"></div>
-                                                    <ng-template #other_content>    <div class="ms-{{seat.seattype}}"></div></ng-template>
-                                                
-                                                    </a>
-                                                    </span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <!-- <span class="pos-rear">REAR</span> -->
-                                            </div>
-                                            <!--<div class="text-center my-3" id="toggle">
-                                                    <mat-button-toggle-group #group="matButtonToggleGroup" *ngIf="totalUpperDeck" [value]="selecteddeck" (change)="onValChange(group.value)" name="fontStyle" aria-label="Font Style">
-                                                        <mat-button-toggle value="upper">upper</mat-button-toggle>
-                                                    </mat-button-toggle-group>
-                                                </div>-->
-
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
 

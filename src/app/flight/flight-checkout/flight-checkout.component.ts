@@ -1565,7 +1565,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-      //this.passengerInfantFormCount++;
+      this.passengerInfantFormCount++;
 
       if (checkboxIndex != -1) {
         $('#travelPassenger_' + checkboxIndex).prop('checked', true);
