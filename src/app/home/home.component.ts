@@ -205,6 +205,9 @@ export class HomeComponent implements OnInit {
     let continueSearchValLs: any = localStorage.getItem(environment.continueFlightSearch);
     if (continueSearchValLs != null) {
       this.continueSearchVal = JSON.parse(continueSearchValLs);
+      
+      
+      console.log(this.continueSearchVal);
     }
     let continueSearchValBusParse: any = localStorage.getItem(environment.continueSearchBus);
     if (continueSearchValBusParse != null) {
@@ -239,8 +242,19 @@ export class HomeComponent implements OnInit {
       }
     return str.join("&");
   }
+  
+  continueSearchMulti(param:any){
+  
+  
+  let url=this.sg['domainPath']+"flight-multicity?"+decodeURIComponent(this.ConvertObjToQueryString(param));
+      this.router.navigateByUrl(url);
+  
+  }
+  
+
 
   continueSearch(param:any){
+  
   
     if(param.fromContry=='IN' && param.toContry=='IN' ){
     if(param.arrival == "" || param.arrival == undefined || param.arrival == null ){
