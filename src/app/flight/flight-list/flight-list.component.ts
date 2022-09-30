@@ -155,7 +155,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
   priceSortingFilteritems = [
-    { name: 'P_L_H', active: false, value: 'Low to High', image: './assets/images/icons/price-l.svg', activeImage: './assets/images/icons/active_lth.svg', sortValue: 'Price' },
+    { name: 'P_L_H', active: true, value: 'Low to High', image: './assets/images/icons/price-l.svg', activeImage: './assets/images/icons/active_lth.svg', sortValue: 'Price' },
     { name: 'P_H_L', active: false, value: 'High to Low', image: './assets/images/icons/price-h.svg', activeImage: './assets/images/icons/active_htl.svg', sortValue: 'Price' },
     { name: 'D_Short', active: false, value: 'Shortest', image: './assets/images/icons/clock.svg', activeImage: './assets/images/icons/active_duration.svg', sortValue: 'Duration' },
     { name: 'D_Long', active: false, value: 'Longest', image: './assets/images/icons/clock.svg', activeImage: './assets/images/icons/active_duration.svg', sortValue: 'Duration' },
@@ -184,7 +184,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.nextIndex = this.flightList.length;
       }
 
-      for (let n = this.pageIndex-1; n < this.nextIndex; n++) {
+      for (let n = this.pageIndex; n < this.nextIndex; n++) {
         const context = {
           item: [this.flightList[n]]
         };
@@ -714,7 +714,6 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Layover Filter Flights
     this.flightList = this.layoverFilterFlights(this.flightList);
-
 
 
     this.container.clear();
