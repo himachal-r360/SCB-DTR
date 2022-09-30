@@ -296,8 +296,9 @@ this.getAirlinesDump();
       
       
         if (this.flightList.length > 0) {
-           this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
-           this.maxPrice =Math.max.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+          //  this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+          //  this.maxPrice =Math.max.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
+          this.GetMinAndMaxPriceForFilter();
            this.sliderRange(this, this.minPrice, this.maxPrice);
          }
         // console.log(this.flightList,"this.flightList");
