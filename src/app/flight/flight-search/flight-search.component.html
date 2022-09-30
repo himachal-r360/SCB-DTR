@@ -1108,36 +1108,18 @@
                                     <img src="{{cdnUrl}}/images/icons/close_01.png" alt="">
                                 </a>
                             </div>
-                            <div class="modal bottom_mlite_popup" id="flight_departure_mlite{{i}}" tabindex="-1" aria-hidden="true">
+                            <div class="modal bottom_mlite_popup" id="flight_departure_mlite{{i}}" tabindex="-1" aria-hidden="true" *ngIf="mliteChecoutMulti[i]">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Select Departure Date</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h5 class="modal-title">Select Departure Date </h5>
+                                            <button type="button" class="btn-close" (click)="closeCheckoutMulticity(i)"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <mat-calendar [minDate]="minDateArray[i]" (selectedChange)="currentMobilePeriodClicked($event , item ,i)" [selected]="item.value.departure"></mat-calendar>
+                                            <mat-calendar [startAt]="startAt[i]" [minDate]="minDateArray[i]" (selectedChange)="currentMobilePeriodClicked($event , item ,i)" [selected]="item.value.departure"></mat-calendar>
                                         </div>
                                         <div class="modal-footer">
-                                            <!-- <div class="select_city d-block mb-15 flex-fill">
-                                              <div class="row">
-                                                  <div class="col-6 ">
-                                                      <div class="input_box  date_input_box">
-                                                          <label
-                                                              (click)="openMliteDatePicker('departure',0)">
-                                                              <span>Departure</span>
-                                                              <div class="form-group flex_basis dep_m_cal"
-                                                                  *ngIf="item.value.departure">
-                                                                  <b>{{item.value.departure | date:'dd MMM' }} ,
-                                                                  </b><span> {{item.value.departure | date:'EEEE'
-                                                                      }}</span>
-                                                              </div>
-                                                          </label>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>-->
-                                            <button type="button" class="w-100 btn btn-primary" data-bs-dismiss="modal">
+                                          <button type="button" class="w-100 btn btn-primary" (click)="closeCheckoutMulticity(i)">
                                               Done</button>
                                         </div>
                                     </div>

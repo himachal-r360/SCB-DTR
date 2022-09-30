@@ -108,6 +108,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   multicityFormArr:FormArray;
   multicitySearchData:any=[];
   minDateArray:any = [];
+  startAt:any=[];
+  mliteChecoutMulti:any=[];
   private lastKeypress = 0;
   private queryText = '';
   flightFromOptions: any[];
@@ -219,6 +221,11 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
         }
      }
+        this.mliteChecoutMulti[0]=false;
+        this.mliteChecoutMulti[1]=false;
+        this.mliteChecoutMulti[2]=false;
+        this.mliteChecoutMulti[3]=false;
+        this.mliteChecoutMulti[4]=false;
 
       this._flightService.showHeader(true);
       this.displayPartners = this.isViewPartner == "false" ? false : true;
@@ -251,6 +258,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
     if(this.minDateArray.length -1 > i)
     {
+      this.startAt[i+1]== new Date(date);
       this.minDateArray[i+1] = new Date(date);
     }
 
@@ -259,17 +267,37 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     this.minDateR=date;
   }
   currentMobilePeriodClicked(datePicker: any, item , i) {
+  
     let date = datePicker;
     date = moment(date).format('YYYY-MM-DD')
     item.value.departure = date;
+    this.startAt[i] = date;
     this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
-     if(this.minDateArray.length -1 > i)
+    if(this.multicityFormArr.controls.length -1 > i){
+      for(var j = i+1; j< this.multicityFormArr.controls.length;j++)
+      {
+        this.multicityFormArr.controls[j].get('departure').setValue('')
+      }
+    }
+    this.multicityFormArr.controls[i].get('departure').setValue(item.value.departure)
+    if(this.minDateArray.length -1 > i)
     {
+     this.startAt[i+1]== new Date(date);
       this.minDateArray[i+1] = new Date(date);
     }
+
+
     // this.multicityForm.get('departure'+ (item.multiCityArrCount - 1)).setValue(item.departure);
+    this.minDateR=date;
+  
 
   }
+  
+  closeCheckoutMulticity(i){
+    $('#flight_departure_mlite'+i).modal('hide');
+    this.mliteChecoutMulti[i]=false;
+  }
+  
   currentPeriodArrivalClicked(datePicker: any) {
 
   }
@@ -471,10 +499,14 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   }
   
-
+ 
   openMulticityMliteDatePicker(index:number) {
-
-      $('#flight_departure_mlite'+index).modal('show');
+   this.mliteChecoutMulti[index]=true;
+   
+     setTimeout(() => {
+       $('#flight_departure_mlite'+index).modal('show');
+      }, 100);
+    
 
   }
 
