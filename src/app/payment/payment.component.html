@@ -1032,8 +1032,9 @@
                                                                             <p class="py-2">One time password has been sent to your mobile number registered with HDFC Bank</p>
                                                                             <h6 class="payTitle">Enter OTP</h6>
                                                                             <div class="row py-3">
-                                                                                <div class="col-6 col-md-3">
-                                                                                    <mat-form-field>
+                                                                                <div class="col-6 col-md-8">
+                                                                                    <mat-form-field class="w-100" appearance="outline">
+                                                                                        <mat-label>OTP</mat-label>
                                                                                         <input matInput placeholder="OTP" (keypress)="numberInput($event)" formControlName="otpnumber" name="otpnumber" id="otpnumber" maxlength="6" autocomplete="off">
                                                                                     </mat-form-field>
 
@@ -1042,9 +1043,9 @@
                                                                                     </div>
                                                                                     <div class="error" *ngIf="submittedDebitEMIOTPFrom && DCEMIError !=''">{{DCEMIError}}</div>
                                                                                 </div>
-                                                                                <div class="col-6 col-md-3">
+                                                                                <div class="col-6 col-md-8">
                                                                                     <ng-container *ngIf="enable_dcemi2; else old_validateDebitEmiOTP">
-                                                                                        <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
+                                                                                        <button class="btn btn-primary w-100 mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
                                                                                     </ng-container>
                                                                                     <ng-template #old_validateDebitEmiOTP>
                                                                                         <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP()">SUBMIT</button>

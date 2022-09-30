@@ -1688,7 +1688,7 @@ this.rest.validateOTPDCEMI(postvalidateParams).subscribe(results => {
      this.DCEMIError='';
      }else{
      this.DCEMIConfirmResponse='';
-     this.DCEMIError=result.errorMessage;
+     this.DCEMIError=result.message;
      this.showDebitEMIOtp=true;
      this.showDebitEMI=false;
      this.showDebitEMIOtpConfirmation=false;
