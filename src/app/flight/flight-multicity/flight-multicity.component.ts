@@ -192,11 +192,12 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
         this.selectedTrip = 0;
         this.isMobile = window.innerWidth < 991 ? true : false;
         this.getQueryParamData();
-          this.getAirlinelist();
+         
 this.getAirpotsList();
 this.getAirlinesDump();
            this.getAirpotsNameList();
         this.flightSearch();
+        // this.getAirlinelist();
        
   }
   ngAfterViewInit(): void {
@@ -292,6 +293,7 @@ this.getAirlinesDump();
         });
         this.flightListWithOutFilter = this.flightList;
         this.DocKey = res.response.docKey;
+      console.log(this.flightList , "flightlist");
       
         if (this.flightList.length > 0) {
            this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
@@ -300,7 +302,9 @@ this.getAirlinesDump();
          }
         // console.log(this.flightList,"this.flightList");
          this.loader = false;
+         this.getAirlinelist()
          this.popularFilterFlightData();
+
          this.serverIssue=0; 
       }
       else{
@@ -524,21 +528,26 @@ bookingSummary() {
   }
 
   getAirlinelist() {
+    console.log("getAirlinelist");
+    
     let airlineNameArr = [];
     let airlinePartnerArr = [];
     let layOverArr = [];
-
+console.log(this.flightList , "flight");
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
       singleFlightList = this.flightList[j].flights;
       let priceSummaryList = this.flightList[j].priceSummary;
       let priceSummary;
 
+
       for (let h = 0; h < singleFlightList.length; h++) {
         let airlineName = singleFlightList[h].airlineName
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
 
         if (h < singleFlightList.length) {
+          console.log(layOverArr , "layOverArr");
+          
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             if (this.airportsNameJson != null) {
               if(this.airportsNameJson[singleFlightList[h].arrivalAirport] != undefined)
@@ -1186,6 +1195,7 @@ bookingSummary() {
           }
         });
         flightList = filteredLayovers;
+        
       }
     }
     return flightList;
