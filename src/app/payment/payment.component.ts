@@ -1570,6 +1570,10 @@ validateDebitEmi(){
 	}else{
 	this.DCEMIapplicationId='';
 	this.DCEMIError=cresults.errorMessage;
+    if(cresults.errorMessage==null || cresults.errorMessage==""){
+        this.DCEMIError=cresults.message;
+    }
+
 	this.showDebitEMIOtp=false;
 	this.showDebitEMI=true;
 	this.showDebitEMIOtpConfirmation=false;
