@@ -328,7 +328,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
 orderRetry:boolean=false;
-
+ domainName: any;
+    pgSettingsEMI:number=0;
   constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -337,6 +338,8 @@ orderRetry:boolean=false;
       this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
       this.flightClasses = this.serviceSettings.flightClasses;
       this.statesdump = require('src/assets/data/states.json');
+      this.domainName = this.sg['domainName'];
+        this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
       this.getAirpotsList();
       this.getAirLineList();
       this.getCountryList();

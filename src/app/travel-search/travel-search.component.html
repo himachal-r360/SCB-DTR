@@ -1704,12 +1704,14 @@
                                         </label>
 
 
-                                        <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true">
+                                        <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="mliteChecoutF" >
+                                        
+                                       
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Select Return Date</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" (click)="closeCheckoutF()"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <mat-calendar [minDate]="minDateFlightToMlite" (selectedChange)="onSelectMliteDate($event,'flight','arrival')" [selected]="arrival"></mat-calendar>

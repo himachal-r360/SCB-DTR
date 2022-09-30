@@ -706,7 +706,7 @@ if(this.seacthResult != null && this.seacthResult.seatdetails.length > 0) {
     let url;
     this.resetPopups();
     
-    url = "bus/search?searchFrom="+this.seacthResult.searchFrom+"&searchTo="+this.seacthResult.searchTo+"&fromTravelCode="+this.seacthResult.fromTravelCode+"&toTravelCode="+this.seacthResult.toTravelCode+"&fromState="+this.seacthResult.toTravelCode+"&toState="+this.seacthResult.toState+"&departure="+this.seacthResult.departure;
+    url = "bus/search?searchFrom="+this.seacthResult.searchFrom+"&searchTo="+this.seacthResult.searchTo+"&fromTravelCode="+this.seacthResult.fromTravelCode+"&toTravelCode="+this.seacthResult.toTravelCode+"&fromState="+this.seacthResult.fromState+"&toState="+this.seacthResult.toState+"&departure="+this.seacthResult.departure;
     
    
     this.router.navigateByUrl(url);
@@ -1789,6 +1789,8 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
       fromTravelCode: this.seacthResult.fromTravelCode,
       toTravelCode: this.seacthResult.toTravelCode,
       departure: this.seacthResult.departure,
+      fromState :this.seacthResult.fromState,
+      toState :this.seacthResult.toState,
     };
     this.router.navigate([this.sg['domainPath'] + '/bus/search/'], {
       queryParams: this.searchArray
@@ -1806,6 +1808,8 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
       fromTravelCode: this.seacthResult.fromTravelCode,
       toTravelCode: this.seacthResult.toTravelCode,
       departure: this.seacthResult.departure,
+      fromState :this.seacthResult.fromState,
+      toState :this.seacthResult.toState,
     };
 
 
@@ -1878,6 +1882,8 @@ export class ConfirmationDialog {
         fromTravelCode: this.data.backSearchData.fromTravelCode,
         toTravelCode: this.data.backSearchData.toTravelCode,
         departure: this.data.backSearchData.departure,
+        fromState :this.data.backSearchData.fromState,
+        toState :this.data.backSearchData.toState,
       };
       this.router.navigate([this.sg['domainPath'] + '/bus/search/'], {
         queryParams: this.searchArray

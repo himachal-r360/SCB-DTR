@@ -430,12 +430,12 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true">
+                                <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="isMobile && mliteChecout" >
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Select Return Date</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" (click)="closeCheckout()" ></button>
                                             </div>
                                             <div class="modal-body">
                                                 <mat-calendar [minDate]="minDateR" (selectedChange)="onSelectMliteDate($event,'arrival')" [selected]="arrivalDate"></mat-calendar>
@@ -791,7 +791,7 @@
                 <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container [formGroupName]="i">
                         <div class="col-lg-6">
-                            <div class="select-root-area">
+                            <div class="select-root-area select-root-area1">
                                 <div class="select-root-left" appDropdown (click)='focusInput(i,"from")'>
                                     <span class="select-roottitle">FROM</span>
                                     <!-- <h5 class="fw_6 ">{{item.value.fromCity}}<span *ngIf="!isMobile && item.value.fromCountryFullName != ''">, {{item.value.fromCountryFullName}}</span> -->
@@ -840,7 +840,7 @@
                                 <div class="select-root-icons" (click)="swapMulticity(i)">
                                     <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
                                 </div>
-                                <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv_{{i}}" (click)='focusInput(i,"to")'>
+                                <div class="select-root-right select-root-right1" appDropdown #toCityDiv id="toCityDiv_{{i}}" (click)='focusInput(i,"to")'>
                                     <span class="select-roottitle">TO</span>
                                     <h5 class="fw_6 text-dotted" *ngIf="item.value.toCountryFullName">{{(item.value.toCity|slice:0:10) + ","}} {{(item.value.toCountryFullName.length > 8)? (item.value.toCountryFullName | slice:0:10)+'..':(item.value.toCountryFullName)}}</h5>
                                     <span class="select-roottitle text-dotted" *ngIf="item.value.flightto != ''">{{item.value.flightto + "," }} {{( item.value.toAirportName.length > 20)? (item.value.toAirportName | slice:0:25)+'..':(item.value.toAirportName)}} </span>
@@ -894,7 +894,7 @@
                                                 <span class="select-roottitle">DEPARTURE</span>
                                                 <h5 class=" ">{{item.value.departure | date:'dd MMM' }}</h5>
 
-                                                <span class="select-roottitle d-block w-100" *ngIf="item.value.departure=='' ||item.value.departure==undefined"></span>
+                                                <span class="select-roottitle d-block w-100" *ngIf="item.value.departure=='' ||item.value.departure==undefined">Select Depart</span>
                                                 <span class="select-roottitle" *ngIf="item.value.departure!='' ||item.value.departure!=undefined">{{item.value.departure|date:'EEEE'
                                                     }}</span>
 
@@ -1097,7 +1097,7 @@
                                 <p class="multi-city-list-form-text">Departure</p>
                                 <h5 class="multi-city-list-name single-datepicker">{{item.value.departure | date:'dd MMM' }}</h5>
                                 <p class="multi-city-list-fullname">{{item.value.departure | date:'EEEE' }}</p>
-                                <i class="far fa-calendar-alt single-datepicker me-3 fs_22" style="position: absolute;right: 0;top: 30px;"></i>
+                                <i class="far fa-calendar-alt single-datepicker me-3 fs_22" style="position: absolute;right: 0;top: 17px;"></i>
                                 <span class="select-roottitle d-block w-100" *ngIf="item.value.departure=='' ||item.value.departure==undefined">Departure</span>
 
                                 <div class="mt-30" *ngIf="submitted && item.get('departure').errors && item.get('departure').hasError('required')">

@@ -51,7 +51,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     {"_source":{"full_content":"Kolkata, West Bengal, India","city":"Kolkata","countryName":"India","country":"IN"}},
     {"_source":{"full_content":"Hyderabad, Andhra Pradesh, India","city":"Hyderabad","countryName":"India","country":"IN"}},
     {"_source":{"full_content":"Jaipur, Rajasthan, India","city":"Jaipur","countryName":"India","country":"IN"}},
-    {"_source":{"full_content":"Cochin, Kerala, India","city":"Cochin","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Kochi, Kerala, India","city":"Kochi","countryName":"India","country":"IN"}},
     {"_source":{"full_content":"London, Greater London, United Kingdom","city":"London","countryName":"United Kingdom","country":"UK"}},
     {"_source":{"full_content":"Dubai, Dubai Emirate, United Arab Emirates","city":"Dubai","countryName":" United Arab Emirates","country":"AE"}},
     {"_source":{"full_content":"Bangkok, Bangkok Province, Thailand","city":"Bangkok","countryName":" Thailand","country":"TH"}},

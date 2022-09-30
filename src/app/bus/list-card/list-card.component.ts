@@ -230,14 +230,14 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onAmenities(allamenities: any, bus_id, mobile) {
-  // $(".seat-layout").hide();
+//   $(".seat-layout").hide();
   // $(".amenities-list").hide();
   this.busamenities = [];
-  //this.showAmenities = !this.showAmenities; 
+  this.showAmenities = !this.showAmenities; 
   if (mobile) {
    this.showAmenities = false;
   } else {
-   this.showAmenities = !this.showAmenities;
+   this.showAmenities = true;
    this.rtcseatcall = false;
   }
   this.showDropping = false;
@@ -500,6 +500,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     fromTravelCode: this.activatedRoute.snapshot.queryParamMap.get('fromTravelCode'),
     toTravelCode: this.activatedRoute.snapshot.queryParamMap.get('toTravelCode'),
     departure: this.activatedRoute.snapshot.queryParamMap.get('departure'),
+    fromState: this.activatedRoute.snapshot.queryParamMap.get('fromState'),
+    toState:this.activatedRoute.snapshot.queryParamMap.get('toState')
    };
    this.router.navigate(['/bus/search/'], {
     queryParams: this.searchArray
@@ -742,6 +744,7 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
      fromState: xss(this.params.queryParamMap.get('fromState')),
      toState: xss(this.params.queryParamMap.get('toState')),
      departure: xss(this.params.queryParamMap.get('departure')),
+     
      busdetails: busdetails,
      seatResponse:this.seatResponse
     };
@@ -815,6 +818,8 @@ export class ConfirmationDialog {
     fromTravelCode: this.activatedRoute.snapshot.queryParamMap.get('fromTravelCode'),
     toTravelCode: this.activatedRoute.snapshot.queryParamMap.get('toTravelCode'),
     departure: this.activatedRoute.snapshot.queryParamMap.get('departure'),
+    fromState: this.activatedRoute.snapshot.queryParamMap.get('fromState'),
+    toState:this.activatedRoute.snapshot.queryParamMap.get('toState')
    };
    this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
     queryParams: this.searchArray
