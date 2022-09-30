@@ -51,7 +51,7 @@ export class TravelSearchComponent implements OnInit {
         
          hotelCheckinMlite: any;
         hotelCheckoutMlite:any;
-
+ mliteChecoutF:boolean=false;
         cdnUrl: any;
         siteUrl:any;
         date: {year: number, month: number};
@@ -397,8 +397,11 @@ export class TravelSearchComponent implements OnInit {
         $('#flight_departure_mlite').modal('show');
         }else{
         if(this.showFlightReturn){
- 
-        $('#flight_arrival_mlite').modal('show');
+        this.mliteChecoutF=true;
+              setTimeout(() => {
+       $('#flight_arrival_mlite').modal('show');
+      }, 100);
+      console.log(this.mliteChecoutF);
         $('#flight_departure_mlite').modal('hide');
         }
         }
@@ -435,6 +438,13 @@ export class TravelSearchComponent implements OnInit {
    }
    
    
+    
+  closeCheckoutF(){
+    $('#flight_arrival_mlite').modal('hide');
+   this.mliteChecoutF=false;
+  }
+   
+  arrivalD:any;
   onSelectMliteDate(event,type,field){
         
    
@@ -444,18 +454,24 @@ export class TravelSearchComponent implements OnInit {
         this.departure = event;
         this.departureMlite = moment(event).format('DD/MM/YYYY');
         this.minDateFlightToMlite=event;
+        
+        this.mliteChecoutF=false;
         if( this.showFlightReturn==true){
         var compare1 = new Date(event).getTime();
-        var compare2 = new Date(this.arrival).getTime();
+        var compare2 = new Date(this.arrivalD).getTime();
+        
         if(compare1 > compare2){
         this.arrivalMlite=(moment(event).format('DD/MM/YYYY'));
         this.arrival = event;
+        this.arrivalD=event;
         this.searchFlightForm['controls']['arrival'].setValue(moment(event).format('DD/MM/YYYY'));
         }
-       } 
+       }
         
       }else{
+      
        this.arrival = event;
+        this.arrivalD=event;
        this.arrivalMlite = moment(event).format('DD/MM/YYYY');
     }
      break;
@@ -732,12 +748,14 @@ export class TravelSearchComponent implements OnInit {
   selectTripType(event){
   if(event=='R'){
   this.showFlightReturn=true;
+  this.mliteChecoutF=true;
     this.searchFlightForm.controls["arrival"].setValidators(Validators.required);
     this.searchFlightForm.controls["arrival"].updateValueAndValidity();
   }else
   if(event=='M'){
     this.router.navigateByUrl('/multicity');
   }else{
+  this.mliteChecoutF=false;
   this.showFlightReturn=false;
   this.arrival=null;
    this.searchFlightForm.controls["arrival"].setValue('');

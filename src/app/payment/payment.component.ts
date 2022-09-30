@@ -619,6 +619,14 @@ export class PaymentComponent implements OnInit {
 	   if(!this.pgSettingsEMI && this.emiArray.length ==0 &&  this.pgSettingsDEBITEMI && this.emiDebitArray.length >0)
 	   this.pgSelect('DEBIT_EMI');
 	  }
+
+	  if(this.pgSettingsEMI && this.emiArray.length > 0) {
+
+		let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+		element.click();
+
+	  }
+
 	
 	}
 	
@@ -635,6 +643,7 @@ export class PaymentComponent implements OnInit {
                 data: {
                 customerInfo: this.customerInfo
                 },
+				disableClose: true,
                 scrollStrategy: this.overlay.scrollStrategies.noop()
                 });
 
@@ -1561,6 +1570,10 @@ validateDebitEmi(){
 	}else{
 	this.DCEMIapplicationId='';
 	this.DCEMIError=cresults.errorMessage;
+    if(cresults.errorMessage==null || cresults.errorMessage==""){
+        this.DCEMIError=cresults.message;
+    }
+
 	this.showDebitEMIOtp=false;
 	this.showDebitEMI=true;
 	this.showDebitEMIOtpConfirmation=false;
@@ -2435,9 +2448,24 @@ export class dcemiDialog {
 	Form1: FormGroup;
 	submitted:Boolean = false;
 	sub:any;
-	constructor(public dialogDcemi: MatDialogRef < dcemiDialog > ,@Inject(MAT_DIALOG_DATA) public data: any) {
+	serviceSettings : any;
+	pgSettingsEMI:number=0;
+	domainName:string;
+
+		serviceId:string;
+		@Input() set passServiceId(p: string){  
+		this.serviceId=p;
+		};
+
+	
+	constructor(public dialogDcemi: MatDialogRef < dcemiDialog > ,@Inject(MAT_DIALOG_DATA) public data: any,private appConfigService:AppConfigService,private sg: SimpleGlobal) {
 	  this.customerInfo=data.customerInfo;
+	  this.serviceSettings=this.appConfigService.getConfig();
+	  this.domainName=this.sg['domainName'];
+	  
 	}
+	
+
 	ngOnInit() {
 	  this.REWARD_EMAILID = this.customerInfo["email"];
 	  this.REWARD_MOBILE = Number(this.customerInfo["mobile"]);
@@ -2474,9 +2502,11 @@ export class dcemiDialog {
 	}
 	close(){
 
-          	let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
-		element.click();
-               
+
+		let elementCyber: HTMLElement = document.getElementById('tab-ccdcCards') as HTMLElement; 
+		elementCyber.click();
+        
+
 		this.dialogDcemi.close();
 	}
 }

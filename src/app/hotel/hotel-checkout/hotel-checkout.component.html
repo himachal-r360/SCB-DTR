@@ -257,6 +257,7 @@
                                                     <mat-option value=""> Select </mat-option>
                                                     <mat-option value="Mr"> Mr </mat-option>
                                                     <mat-option value="Mrs">Mrs</mat-option>
+                                                      <mat-option value="Ms">Ms</mat-option>
                                                 </mat-select>
 
                                             </mat-form-field>
@@ -726,7 +727,7 @@
                                                     </div>
                                                     <div class="fare-list-right">
                                                         <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                                                        <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                                        <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                                         </p>
                                                     </div>
 
@@ -777,7 +778,7 @@
                         <div class="col-5">
                             <div class="">
                                 <h6 class="price">₹{{ totalFare |number }} </h6>
-                                <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                 </p>
                             </div>
                         </div>
@@ -921,7 +922,7 @@
                                     </div>
                                     <div class="fare-list-right">
                                         <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                                        <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                        <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                         </p>
                                     </div>
 

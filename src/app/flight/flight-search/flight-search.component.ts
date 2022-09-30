@@ -97,7 +97,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   isClosed: boolean = true;
   isFromorNot: boolean = false;
   searchData: any;
-  flightClassVal: any;
+  flightClassVal: any='E';
   showTravellerBlock = false;
   isDisabled = false;
   windowItem = window;
@@ -128,7 +128,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
     fromAirportName: ['', [Validators.required]],
     toAirportName: ['', [Validators.required]],
     flightclass: ['E'],
-    flightdefault: [],
+    flightdefault: ['O'],
     departure: ['', [Validators.required]],
     arrival: ['',],
     adults: ['1', [Validators.required]],
@@ -449,18 +449,28 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   openMliteDatePicker(field, rtype) {
 
     if (rtype == 1) {
+        this.mliteChecout=false;
       this.navItemActive = "Round Trip"
+        this.mliteChecout=true;
+      
     }
 
     if (field == 'departure') {
+            this.mliteChecout=false;
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
-      $('#flight_arrival_mlite').modal('show');
+        this.mliteChecout=true;
+        
+             setTimeout(() => {
+       $('#flight_arrival_mlite').modal('show');
+      }, 100);
+    
       $('#flight_departure_mlite').modal('hide');
     }
 
   }
+  
 
   openMulticityMliteDatePicker(index:number) {
 
@@ -560,7 +570,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         var adaults = 1;
         var child = 0;
         var infants = 0;
-        var Flightclass = '';
+        var Flightclass = 'E';
         this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray;
         var isOldDate = false;
         data.forEach((z)=>{
@@ -715,6 +725,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   flightSearch() {
    // debugger;
     this.submitted = true;
+    
+    
+   // console.log(this.flightData.value);return;
+    
     if (this.flightData.value.departure != "" && this.flightData.value.departure != undefined) {
       this.dateValidation = false;
     }
@@ -738,6 +752,10 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.flightData.get('travel').setValue('DOM');
     } else {
       this.flightData.get('travel').setValue('INT');
+    }
+    
+    if(!this.flightData.value.flightclass){
+    this.flightData.value.flightclas='E';
     }
 
     if (this.flightData.invalid || this.dateValidation == true) {
@@ -986,7 +1004,12 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       this.childVal=this.flightData.value.child;
       this.infantsVal=this.flightData.value.infants;
   }
-
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#flight_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
   swap() {
     var FromData = { flightFrom: this.flightData.value.flightfrom, fromAirpotName: this.flightData.value.fromAirportName, fromCityName: this.flightData.value.fromCity, fromContry: this.flightData.value.fromContry,fromCountryFullName: this.flightData.value.fromCountryFullName }
 
@@ -1049,6 +1072,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   getClassVal(val: any) {
+
     this.flightData.value.flightclass = val;
     this.flightData.get('flightclass').setValue(val);
     this.flightClassVal = val;
