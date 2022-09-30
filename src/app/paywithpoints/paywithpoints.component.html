@@ -190,7 +190,7 @@
                 <div class="text-right">
 
                     <button type="button" class="btn  my-3 voucher_apply" (click)="applyVoucherCancel()">Cancel</button>
-                    <button type="submit" class="btn btn-primary my-3 " (click)="applyVoucher()"><a href="javascript:;">Apply</a></button>
+                    <button type="submit" class="btn btn-primary my-3 payment_add_btn " (click)="applyVoucher()"><a href="javascript:;">Apply</a></button>
                 </div>
             </div>
         </form>
@@ -248,7 +248,7 @@
 
                         <div class="voucher-code-entry date-section col-sm-4 col-12">
 
-                            <input id="dob" [inputMask]="dateInputMask" [textMask]="mask" autocomplete="off" placeholder="dd/mm/yyyy" formControlName="dob">
+                            <input type="date" id="dob" [inputMask]="dateInputMask" [textMask]="mask" autocomplete="off" placeholder="dd/mm/yyyy" formControlName="dob">
                             <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
                                 <small *ngIf="voucherForm1.hasError('pattern','dob') || voucherForm1.hasError('younger','dob')  || voucherForm1.hasError('invalidDate','dob')">Please enter a valid date.</small>
@@ -273,7 +273,7 @@
                     <div class="col-sm-6">
                         <div class="text-right">
                             <button type="button" class="btn  my-3 voucher_apply" (click)="addCardCancel()">Cancel</button>
-                            <button type="submit" class="btn btn-primary my-3 w-25">Add</button>
+                            <button type="submit" class="btn btn-primary my-3 payment_add_btn">Add</button>
                         </div>
                     </div>
                 </div>
