@@ -293,7 +293,7 @@ this.getAirlinesDump();
         });
         this.flightListWithOutFilter = this.flightList;
         this.DocKey = res.response.docKey;
-      console.log(this.flightList , "flightlist");
+      
       
         if (this.flightList.length > 0) {
            this.minPrice = Math.min.apply(Math, this.flightList.map(function(o) {  return o.priceSummary[0]['totalFare'];        }));
@@ -528,12 +528,12 @@ bookingSummary() {
   }
 
   getAirlinelist() {
-    console.log("getAirlinelist");
+    
     
     let airlineNameArr = [];
     let airlinePartnerArr = [];
     let layOverArr = [];
-console.log(this.flightList , "flight");
+
     for (let j = 0; j < this.flightList.length; j++) {
       let singleFlightList = [];
       singleFlightList = this.flightList[j].flights;
@@ -546,7 +546,7 @@ console.log(this.flightList , "flight");
         let arrivalAirportCode = singleFlightList[h].arrivalAirport
 
         if (h < singleFlightList.length) {
-          console.log(layOverArr , "layOverArr");
+          
           
           if (layOverArr.filter((d: any) => { if (d.arrivalAirportCode == arrivalAirportCode && d.price <= priceSummaryList[0].totalFare) { return d; } }).length < 1) {
             if (this.airportsNameJson != null) {
