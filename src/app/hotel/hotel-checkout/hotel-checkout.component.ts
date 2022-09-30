@@ -462,7 +462,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         }
 
       }, 50);
-    this.syncData();
+this.syncData();
+    
     });
   if(this.partnerToken!='Cleartrip'){
     this.checkAvailability();
@@ -957,9 +958,9 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         postData: this.EncrDecr.set(JSON.stringify(checkAvailablity))
         };
         
-        
+        $("#infoprocess").modal('show');
         this.rest.checkAvailabilityHotel(requestParams).subscribe(results => {
-        $('#infoprocess').modal('hide');
+        
          let response = JSON.parse(this.EncrDecr.get(results.result));
          if(response && response.response && response.response.mmtTxnKey &&  response.response.mmtTxnKey !=''){
          this.mmtTxnKey=response.response.mmtTxnKey;
@@ -981,6 +982,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }, 20);
          
          }
+         $('#infoprocess').modal('hide');
 
         }), (err: HttpErrorResponse) => {
         clearInterval(myInterval1);
