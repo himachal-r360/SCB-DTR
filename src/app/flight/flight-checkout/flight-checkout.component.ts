@@ -2874,7 +2874,7 @@ saveTravellerFunc(saveTravellerArray){
         }
 
         if (data[i] && data[i].Tnc) {  
-        this.cancellationPolicyOnward+= `<div class="imp-Information mt-30"><h6>Terms & Conditions</h6><div class="imp-Information-list"><ul class="imp-Information-list">`;
+        this.cancellationPolicyOnward+= `<div class="imp-Information mt-30"><h6>Terms & Conditions</h6><div><ul class="imp-Information-list">`;
          let tnc_data = [];
          $.each(data[i].Tnc, function (key, value) {
         tnc_data.push(value);
