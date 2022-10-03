@@ -44,6 +44,14 @@
                     <p>{{coupon.coupon_description}} </p>
                 </div>
                 </div>  -->
+                <div class="promo-msg">
+                  <p class="text-green"> <img src="{{cdnUrl}}images/icons/couponsuccess.svg" *ngIf="!couponError && coupon_amount >0">
+                    <span *ngIf="!couponError && coupon_amount >0"> Congratulations! Promo discount of ₹{{coupon_amount | number : '1.2-2'}} applied successfully.</span></p>
+                    <span *ngIf="(submittedpromoCode && promoForm.controls.promoCode.errors)" class="promo-error">
+                  <span *ngIf="promoForm.controls.promoCode.errors.required" class="promo-error">Please enter Promo Code.</span>
+                    </span>
+                    <span class="promo-error pl-2 pl-md-0" *ngIf="couponError!='' || autoApplyError==1"> {{couponError}}</span>
+                </div>
              <div *ngFor="let coupon of couponOptions;let i = index">
                 <div class="form-check couponcode-list couponcode-list-{{coupon.coupon_code}}">
                    <input class="form-check-input" type="radio" name="promo" id="promo-{{coupon.coupon_code}}"   (change)="applyCoupon(coupon)">
