@@ -133,7 +133,6 @@ public modeselectTrending= 'All';
   constructor(private spinnerService: NgxSpinnerService,public _styleManager: StyleManagerService,public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, private appConfigService: AppConfigService, private pay: PayService, private commonHelper: CommonHelper, private cookieService: CookieService, private _travelBottomSheet: MatBottomSheet, private activatedRoute: ActivatedRoute, private router: Router,  private _flightService: FlightService,private fb: FormBuilder) 
   {
      this._flightService.showHeader(true);
-   
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl;
     this.cdnDealUrl = environment.cdnDealUrl;
@@ -295,7 +294,10 @@ public modeselectTrending= 'All';
           if (this.customerInfo['ccustomer'] && this.customerInfo['ccustomer'].points_available && (this.customerInfo['ccustomer'].points_available != undefined || this.customerInfo['ccustomer'].points_available != null)){
             this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
             this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
-            this.card_no=this.customerInfo['ccustomer'].first4digit.substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
+            if(this.customerInfo['ccustomer'].first4digit !=undefined)
+              this.card_no=this.customerInfo['ccustomer'].first4digit.substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
+            else
+              this.card_no=" ******** "+this.customerInfo['ccustomer'].last4digit;
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
             //this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available)).toLocaleString('en-IN');
             this.IsPointsCardDetails=false;
