@@ -4,7 +4,7 @@ pipeline {
         stage ('Build') {
             steps {
                 echo "Build AngularUI4.0 Module"
-                sh 'node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build   --aot --build-optimizer --vendor-chunk=true --baseHref=/v1/'
+                //sh 'node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build   --aot --build-optimizer --vendor-chunk=true --baseHref=/v1/'
                 mail to: "devops@reward360.co",
                 subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - ${currentBuild.currentResult}!",
                 body: "Build Is Created: ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL} \n\n -------------------------------------------------- \n\n"
