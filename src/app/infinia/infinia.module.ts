@@ -7,9 +7,9 @@ import { CustomReuseStrategy } from '../route-reuse-strategy';
 import { ClubMarriotMembershipComponent } from './club-marriot-membership/club-marriot-membership.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 const routes: Routes = [
-  {path:"infinia-itc-hotel",component:InfiniaItcHotelComponent},
-  {path:"club-marriott-membership" , component:ClubMarriotMembershipComponent},
-  {path:"infinia-gateway" , component:InfiniaHomeComponent},
+  {path:"infinia/infinia-itc-hotel",component:InfiniaItcHotelComponent},
+  {path:"infinia/club-marriott-membership" , component:ClubMarriotMembershipComponent},
+  {path:"infinia/infinia-gateway" , component:InfiniaHomeComponent},
 
   
 ]
