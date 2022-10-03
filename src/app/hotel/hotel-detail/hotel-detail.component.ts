@@ -370,10 +370,12 @@ export class HotelDetailComponent implements OnInit ,AfterViewInit {
   
 
   showCancellationDetail(i){
-    $('#showCancellation_' + i).addClass('d-block');
+    $('#showCancellation_' + i).removeClass('d-none');
+    $('#showCancellation_' + i).toggleClass('d-block');
   }
 
   closeCancellation(i){
+    $('#showCancellation_' + i).remove('d-block');
     $('#showCancellation_' + i).addClass('d-none');
     
   }
