@@ -1525,15 +1525,16 @@ validateDebitEmi(){
 	this.DCEMItenure=$("input[name='payDebitemi-sub']:checked").val();
 	this.DCEMISelectedAmount = this.emiDebitArray.filter(
 	emi => emi.key === this.DCEMItenure);
-	
+
 	var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));
-	// console.log(tmppassData1)
 	
 	var finalFare;
 	if(this.serviceId=='RedBus'){
-	finalFare=tmppassData1['total_price'];
-	}else{
-	finalFare=tmppassData1['fareData']['totalFare'];
+		finalFare=tmppassData1['total_price'];
+	}else if(this.serviceId== 'Flight'){
+		finalFare = tmppassData1['flightDetails']['fare']['totalFare'];
+	} else {
+		finalFare=tmppassData1['fareData']['totalFare'];
 	}
 	// console.log(finalFare)
 	
