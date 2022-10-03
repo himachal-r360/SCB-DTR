@@ -86,6 +86,6 @@ pipeline {
                     body: '''${SCRIPT, template="groovy_fail_html.template"}'''
                 }
             }
-        }*/
-    }
+        }
+    }*/
 }
