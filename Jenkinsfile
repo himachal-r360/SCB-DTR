@@ -14,7 +14,7 @@ pipeline {
                 body: "Build Is Created: ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL} \n\n -------------------------------------------------- \n\n"
             }
         }
- /*       stage('SonarQube analysis') {
+        stage('SonarQube analysis') {
             steps {
                 echo 'SonarQube analysis...'
                 script {
@@ -87,5 +87,5 @@ pipeline {
                 }
             }
         }
-    }*/
+    }
 }
