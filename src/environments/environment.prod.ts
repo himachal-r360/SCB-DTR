@@ -139,7 +139,7 @@ API_URL:{
   "trainLastSearch":"trainLastSearchesi",
   "continueSearchHotel":"continueHotelFi",
   "hotelLastSearch":"hotelLastSearchFi",
-
+"multicityLastSearch":"multicityLastSearch",
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 };
 
