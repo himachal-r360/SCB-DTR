@@ -361,6 +361,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  // $('.seat-layout').removeClass('active');
  // this.showSeatLayout=false;
   this.loading = true;
+  this.rotate = false;
   this.showAmenities = false;
   this.showCancellation = false;
   this.showDropping = false;

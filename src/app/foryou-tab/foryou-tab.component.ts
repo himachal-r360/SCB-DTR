@@ -1039,15 +1039,15 @@ public modeselectTrending= 'All';
             document.getElementById('unlockCardPopup').click();
             this.IsPointsCardDetails=false;
             this.IsPointsCardDetailsModel=true;
-            this.angForm.reset();
             this.spinnerService.show();  
             this.customeravailablepoints=res.points_available;
             if(res.first4digit !=undefined)
-              this.card_no=res.first4digit.substr(0,4)+" ******** "+res.last4digit;
+              this.card_no=res.first4digit.substr(0,4)+" ******** "+this.angForm.controls['last_4_digit'].value;
             else 
-              this.card_no=" ******** "+res.last4digit;
+              this.card_no=" ******** "+this.angForm.controls['last_4_digit'].value;
             this.current_available_points=res.current_available_points;
             this.last_stmt_points=res.last_stmt_points;
+            this.angForm.reset();
           }else{
                this.IsCardError=false;
                this.CardErrorMsg=res.message;
