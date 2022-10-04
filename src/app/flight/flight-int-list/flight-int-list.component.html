@@ -41,11 +41,12 @@
                     <div class="flight-partners">
                         <p>Compare &amp; Fly with our flight partners</p>
                         <ul class="list-inline ms-3">
-                            <li class="list-inline-item" *ngFor="let service of enableFlightServices">
-                                <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.svg" alt="{{service.name}}">
+                            <li class="list-inline-item flight_partner_box" *ngFor="let service of enableFlightServices">
+                                <div class="flight_partner_box_div"><img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.svg" alt="{{service.name}}"></div>
                             </li>
 
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -429,7 +430,7 @@
                                                         <span class="information-icon">
                                                      <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <div class="hover-popover">
-                                                            <div class="hover-popover-title">
+                                                            <div class="hover-popover-title text-left">
                                                                 <h6>Price Breakdown</h6>
                                                             </div>
                                                             <div class="hover-popover-content">
@@ -547,7 +548,7 @@
                                                             <span class="information-icon">
                                                         <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                         <div class="hover-popover">
-                                                            <div class="hover-popover-title">
+                                                            <div class="hover-popover-title text-left">
                                                                 <h6>Price Breakdown</h6>
                                                             </div>
                                                             <div class="hover-popover-content">

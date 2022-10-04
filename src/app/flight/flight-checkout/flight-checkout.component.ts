@@ -2640,7 +2640,7 @@ saveTravellerFunc(saveTravellerArray){
          for(var i=0;i<this.baggageInfoOnward.length;i++){ 
          this.baggageInfo+= `<tr >
         <td>
-        <p class="opacity_05">`+this.baggageInfoOnward[i].flightName+`<br>`+this.baggageInfoOnward[i].flightNo+`</p>
+        <p class="">`+this.baggageInfoOnward[i].flightName+`<br>`+this.baggageInfoOnward[i].flightNo+`</p>
         </td>
         <td>
         <p >`+this.baggageInfoOnward[i].checkIn+`</p>
@@ -2674,7 +2674,7 @@ saveTravellerFunc(saveTravellerArray){
          for(var i=0;i<this.baggageInfoReturn.length;i++){ 
          this.baggageInfo+= `<tr >
         <td>
-        <p class="opacity_05">`+this.baggageInfoReturn[i].flightName+`<br>`+this.baggageInfoReturn[i].flightNo+`</p>
+        <p class="">`+this.baggageInfoReturn[i].flightName+`<br>`+this.baggageInfoReturn[i].flightNo+`</p>
         </td>
         <td>
         <p >`+this.baggageInfoReturn[i].checkIn+`</p>
@@ -2747,7 +2747,7 @@ saveTravellerFunc(saveTravellerArray){
          for(var j=0;j<this.baggageInfoOnwardMulti[i].length;j++){ 
          this.baggageInfo+= `<tr >
         <td>
-        <p class="opacity_05">`+this.baggageInfoOnwardMulti[i][j].flightName+`<br>`+this.baggageInfoOnwardMulti[i][j].flightNo+`</p>
+        <p class="">`+this.baggageInfoOnwardMulti[i][j].flightName+`<br>`+this.baggageInfoOnwardMulti[i][j].flightNo+`</p>
         </td>
         <td>
         <p >`+this.baggageInfoOnwardMulti[i][j].checkIn+`</p>
@@ -2829,14 +2829,14 @@ saveTravellerFunc(saveTravellerArray){
         let sp_data = cancellation_data[i].split('Rs.');
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05"> `+sp_data[0]+` </td>
+        <td class=""> `+sp_data[0]+` </td>
         <td >₹ `+sp_data[1]+`</td>
         </tr>`;
         }
         }
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td class="">EaseMyTrip Service fee</td>
         <td>₹ `+data[i].EMTFee+`</td>
         </tr>
         </tbody>
@@ -2859,14 +2859,14 @@ saveTravellerFunc(saveTravellerArray){
         let rd_data = reschedule_data[i].split('Rs.');
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05"> `+rd_data[0]+` </td>
+        <td class=""> `+rd_data[0]+` </td>
         <td >₹ `+rd_data[1]+`</td>
         </tr>`;
         }
         }   
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td class="">EaseMyTrip Service fee</td>
         <td>₹ `+data[i].EMTFee+`</td>
         </tr>
         </tbody>
@@ -2874,7 +2874,7 @@ saveTravellerFunc(saveTravellerArray){
         }
 
         if (data[i] && data[i].Tnc) {  
-        this.cancellationPolicyOnward+= `<div class="imp-Information mt-30"><h6>Terms & Conditions</h6><div class="imp-Information-list"><ul class="imp-Information-list">`;
+        this.cancellationPolicyOnward+= `<div class="imp-Information mt-30"><h6>Terms & Conditions</h6><div><ul class="imp-Information-list">`;
          let tnc_data = [];
          $.each(data[i].Tnc, function (key, value) {
         tnc_data.push(value);

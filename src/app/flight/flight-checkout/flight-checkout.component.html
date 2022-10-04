@@ -215,7 +215,7 @@
                                             <span *ngIf="!airlinesNameJson[flights.operatingAirline]">{{ flights.operatingAirline }}</span>
                                         </div>
                                     </div>
-                                    <div class="change-planestext-center " *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
+                                    <div class="change-planes text-center " *ngIf="dateOnwardHourMulti[searchi][i] && airportsNameJson && flightOnwardDetails[searchi]['flights'][i+1]">
                                         <h6>Change of planes・{{ dateOnwardHourMulti[searchi][i] | durationTime }} Layover in {{ airportsNameJson[flights.arrivalAirport].airport_name }} </h6>
                                     </div>
                                 </div>
@@ -800,7 +800,7 @@
                     <form [formGroup]="passengerForm" name="passengerForm" accessible-form>
                         <div class="booking-process-content">
                             <div class="booking-title-box">
-                                <h4>Traveller Details <span>{{ travelerDetails.adults }} Adults</span><span *ngIf="travelerDetails.child > 0">, {{ travelerDetails.child }} Child,</span> <span *ngIf="travelerDetails.infants > 0">, {{ travelerDetails.infants }} infant</span>
+                                <h4>Traveller Details <span>{{ travelerDetails.adults }} Adults</span><span *ngIf="travelerDetails.child > 0" class="px-0 mx-0">, {{ travelerDetails.child }} Child</span><span *ngIf="travelerDetails.infants > 0" class="px-0 mx-0">, {{ travelerDetails.infants }} infant</span>
                                 </h4>
                             </div>
                             <div class="booking-inner-box traveller-person-box">
@@ -919,8 +919,8 @@
                                                                         <div class="col-xl-3 col-lg-3 col-md-6">
                                                                             <div class="">
                                                                                 <mat-form-field appearance="outline" class="w-100">
-                                                                                    <mat-label>Date Of Birth</mat-label>
-                                                                                    <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                    <mat-label>Date of Birth</mat-label>
+                                                                                    <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                                 </mat-form-field>
                                                                                 <span *ngIf="submitted && passengerForm.controls['adult_dob'+saveAdultTravellerId[passenger.id]] && passengerForm.controls['adult_dob'+saveAdultTravellerId[passenger.id]]['errors']">
@@ -1154,8 +1154,8 @@
                                                                                 <div class="form-group">
                                                                                     <div>
                                                                                         <mat-form-field appearance="outline" class="w-100">
-                                                                                            <mat-label>Date Of Birth</mat-label>
-                                                                                            <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                            <mat-label>Date of Birth</mat-label>
+                                                                                            <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ saveAdultTravellerId[passenger.id] }}" placeholder="Date of Birth" name="dateOfBirth">
                                                                                         </mat-form-field>
                                                                                         <span *ngIf="submitted && passengerForm.controls['adult_dob'+saveAdultTravellerId[passenger.id]] && passengerForm.controls['adult_dob'+saveAdultTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
@@ -1374,8 +1374,8 @@
                                                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                                                     <div class="">
                                                                         <mat-form-field appearance="outline" class="w-100">
-                                                                            <mat-label>Date Of Birth</mat-label>
-                                                                            <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ traveller }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                            <mat-label>Date of Birth</mat-label>
+                                                                            <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ traveller }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                         </mat-form-field>
                                                                         <span *ngIf="submitted && passengerForm.controls['adult_dob'+traveller] && passengerForm.controls['adult_dob'+traveller]['errors']">
@@ -1577,8 +1577,8 @@
                                                                                             <div class="col-12">
                                                                                                 <div class="form-group">
                                                                                                     <mat-form-field appearance="outline" class="w-100">
-                                                                                                        <mat-label>Date Of Birth</mat-label>
-                                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ traveller }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                                        <mat-label>Date of Birth</mat-label>
+                                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="adult_dob{{ traveller }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                                                         <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','adult_dob'+traveller)">
                                                                                                             Please enter dob</mat-error>
@@ -1833,8 +1833,8 @@
                                                                             <div class="form-group">
                                                                                 <div>
                                                                                     <mat-form-field appearance="outline" class="w-100">
-                                                                                        <mat-label>Date Of Birth</mat-label>
-                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                        <mat-label>Date of Birth</mat-label>
+                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                                     </mat-form-field>
                                                                                     <span *ngIf="submitted && passengerForm.controls['child_dob'+saveChildTravellerId[passenger.id]] && passengerForm.controls['child_dob'+saveChildTravellerId[passenger.id]]['errors']">
@@ -2063,8 +2063,8 @@
                                                                                 <div class="form-group">
                                                                                     <div>
                                                                                         <mat-form-field appearance="outline" class="w-100">
-                                                                                            <mat-label>Date Of Birth</mat-label>
-                                                                                            <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                            <mat-label>Date of Birth</mat-label>
+                                                                                            <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ saveChildTravellerId[passenger.id] }}" placeholder="Date of Birth" name="dateOfBirth">
                                                                                         </mat-form-field>
                                                                                         <span *ngIf="submitted && passengerForm.controls['child_dob'+saveChildTravellerId[passenger.id]] && passengerForm.controls['child_dob'+saveChildTravellerId[passenger.id]]['errors']">
                                                 <mat-error class="error_flight"
@@ -2280,8 +2280,8 @@
                                                                     <div class="form-group">
                                                                         <div>
                                                                             <mat-form-field appearance="outline" class="w-100">
-                                                                                <mat-label>Date Of Birth</mat-label>
-                                                                                <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ traveller }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                <mat-label>Date of Birth</mat-label>
+                                                                                <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ traveller }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                             </mat-form-field>
                                                                             <span *ngIf="submitted   && passengerForm.controls['child_dob'+traveller] && passengerForm.controls['child_dob'+traveller]['errors']">
@@ -2473,8 +2473,8 @@
                                                                                             <div class="col-12">
                                                                                                 <div class="form-group">
                                                                                                     <mat-form-field appearance="outline" class="w-100">
-                                                                                                        <mat-label>Date Of Birth</mat-label>
-                                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ traveller }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                                        <mat-label>Date of Birth</mat-label>
+                                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="child_dob{{ traveller }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                                                         <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','child_dob'+traveller)">
                                                                                                             Please enter dob</mat-error>
@@ -2721,8 +2721,8 @@
                                                                         <div class="col-xl-3 col-lg-3 col-md-6">
                                                                             <div class="form-group">
                                                                                 <mat-form-field appearance="outline" class="w-100">
-                                                                                    <mat-label>Date Of Birth</mat-label>
-                                                                                    <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ saveInfantTravellerId[passenger.id] }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                    <mat-label>Date of Birth</mat-label>
+                                                                                    <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ saveInfantTravellerId[passenger.id] }}" placeholder="Date of Birth" name="dateOfBirth">
 
 
                                                                                 </mat-form-field>
@@ -2936,8 +2936,8 @@
                                                                             <div class="col-xl-3 col-lg-3 col-md-6">
                                                                                 <div class="form-group">
                                                                                     <mat-form-field appearance="outline" class="w-100">
-                                                                                        <mat-label>Date Of Birth</mat-label>
-                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ saveInfantTravellerId[passenger.id] }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                        <mat-label>Date of Birth</mat-label>
+                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ saveInfantTravellerId[passenger.id] }}" placeholder="Date of Birth" name="dateOfBirth">
 
 
                                                                                     </mat-form-field>
@@ -3138,8 +3138,8 @@
                                                                 <div class="col-xl-3 col-lg-3 col-md-6">
                                                                     <div class="form-group">
                                                                         <mat-form-field appearance="outline" class="w-100">
-                                                                            <mat-label>Date Of Birth</mat-label>
-                                                                            <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ traveller }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                            <mat-label>Date of Birth</mat-label>
+                                                                            <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ traveller }}" placeholder="Date of Birth" name="dateOfBirth">
                                                                         </mat-form-field>
                                                                         <span *ngIf="submitted  && passengerForm.controls['infant_dob'+traveller] && passengerForm.controls['infant_dob'+traveller]['errors']">
                                       <mat-error class="error_flight"
@@ -3320,8 +3320,8 @@
                                                                                             <div class="col-12">
                                                                                                 <div class="form-group">
                                                                                                     <mat-form-field appearance="outline" class="w-100">
-                                                                                                        <mat-label>Date Of Birth</mat-label>
-                                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ traveller }}" placeholder="Date Of Birth" name="dateOfBirth">
+                                                                                                        <mat-label>Date 0f Birth</mat-label>
+                                                                                                        <input matInput [inputMask]="dateInputMask" formControlName="infant_dob{{ traveller }}" placeholder="Date of Birth" name="dateOfBirth">
 
                                                                                                         <mat-error class="error_flight" *ngIf="passengerForm.hasError('required','infant_dob'+traveller)">
                                                                                                             Please enter dob</mat-error>
@@ -3473,13 +3473,13 @@
                                     <ul class="add-search-ul d-block">
                                         <li class="custom-check-box">
                                             <div class="custom-controls-stacked">
-                                                <label class="custom-control material-checkbox pt-1">
+                                                <label class="custom-control material-checkbox pb-1">
                           <input type="checkbox" class="material-control-input" formControlName="saveTraveller"
                             name="saveTraveller" id="saveTraveller" [checked]="checked">
                           <span class="material-control-indicator"></span>
                           <span class="description fs_12 text-black">Add these travellers to
                             Travellers list. </span>
-                          <span class="description fs_12">You won't have to fill traveller info on
+                          <span class="description fs_12 px-1">You won't have to fill traveller info on
                             your next visit</span>
                         </label>
                                             </div>
@@ -3522,7 +3522,7 @@
                                 <div class="contact-whatsapp">
                                     <div class="contact-whatsapp-info me-2">
                                         <span>Send my booking information through</span>
-                                        <img src="{{ cdnUrl }}/images/icons/whatsapp.png" class="ms-2" alt="">
+                                        <img src="{{ cdnUrl }}/images/icons/whatsapp.svg" class="ms-2" alt="">
                                         <span class="fw_7">WhatsApp</span>
                                     </div>
                                     <div class="form-check form-switch m-0 ">
@@ -3715,7 +3715,7 @@
                                             <ul class="add-search-ul d-block">
                                                 <li class="custom-check-box">
                                                     <div class="custom-controls-stacked">
-                                                        <label class="custom-control material-checkbox pt-1">
+                                                        <label class="custom-control material-checkbox pb-1">
                               <input type="checkbox" class="material-control-input" formControlName="saveGST"
                                 name="saveGST" id="saveGST" [checked]="checked">
                               <span class="material-control-indicator"></span>
@@ -5361,7 +5361,7 @@
                                 <div class="contact-whatsapp">
                                     <div class="contact-whatsapp-info me-2">
                                         <span>Send my booking information through</span>
-                                        <img src="{{ cdnUrl }}/images/icons/whatsapp.png" class="ms-2" alt="">
+                                        <img src="{{ cdnUrl }}/images/icons/whatsapp.svg" class="ms-2" alt="">
                                         <span class="fw_7">WhatsApp</span>
                                     </div>
                                     <div class="form-check form-switch m-0 ">
