@@ -115,7 +115,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   flightFromOptions: any[];
   flightToOptions: any[];
   defaultFlightOptions: any[];
-  multicityLastSearch = localStorage.getItem('multicityLastSearch');
+  multicityLastSearch = localStorage.getItem(environment.multicityLastSearch);
   searchFlightFromHeader: string = "Popular Searches";
   searchFlightToHeader: string = "Popular Searches";
   flightData: any = this._fb.group({
@@ -207,7 +207,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         case ('/'+this.sg['domainPath']+'multicity'):
          this.navItemActive = 'Multicity';
         localStorage.setItem('isMulticitySearch','true');
-        var multicity = localStorage.getItem('multicityLastSearch');
+        var multicity = localStorage.getItem(environment.multicityLastSearch);
         if(multicity != null && multicity != ''  )
         {
         this.callMutlicityFunc = false;
@@ -585,7 +585,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   flightFromInput: any;
   setSearchFilterData() {
     let lastSearch: any = localStorage.getItem(environment.flightLastSearch);
-      var multicity = localStorage.getItem('multicityLastSearch');
+      var multicity = localStorage.getItem(environment.multicityLastSearch);
       var isMulticity =   localStorage.getItem('isMulticitySearch');
       if(multicity != null && multicity != ''  )
       {
@@ -639,6 +639,60 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.isDisplayModifiedMulticity = true;
         }
 
+      }else{
+      var multicity1:any=[];
+      multicity1.push({"flightfrom":"DEL","flightto":"BOM","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"New Delhi","toCity":"Mumbai","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Indira Gandhi Airport","toAirportName":"Chatrapati Shivaji Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
+      
+            multicity1.push({"flightfrom":"BOM","flightto":"BLR","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"Mumbai","toCity":"Bangalore","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Chatrapati Shivaji Airport","toAirportName":"Kempegowda International Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
+      
+       var data1 =(multicity1);
+       
+       
+        this.multicityForm = this._fb.group({
+          multicityFormArr: this._fb.array([])
+        })
+        var adaults = 1;
+        var child = 0;
+        var infants = 0;
+        var Flightclass = 'E';
+        this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray;
+        var isOldDate = false;
+        data1.forEach((z)=>{
+          if(new Date(z.departure).setHours(0,0,0,0) < (new Date()).setHours(0,0,0,0))
+          {
+            isOldDate = true;
+          }
+          if(isOldDate)
+          {
+            z.departure = '';
+          }
+          
+          this.multicityFormArr.push(this.multiCityArrAddItemsDefault(z));
+          adaults = z.adults;
+          child = z.child;
+          infants = z.infants;
+          Flightclass= z.flightclass;
+          this.minDateArray.push(new Date(z.departure))
+        });
+        this.flightClassVal = Flightclass;
+        this.adultsVal = adaults;
+        this.childVal = child;
+        this.infantsVal = infants;
+        this.totalPassenger = parseInt(this.adultsVal) + parseInt(this.childVal) + parseInt(this.infantsVal);
+        this.flightData.value.infants = infants;
+        this.flightData.value.child = child;
+        this.flightData.value.adaults = adaults;
+        this.flightData.value.flightclass = Flightclass;
+        this.flightData.get('adults').setValue(adaults);
+        this.flightData.get('child').setValue(child);
+        this.flightData.get('infants').setValue(infants);
+        this.flightData.get('flightclass').setValue(Flightclass);
+        if(this.modifySearch)
+        {
+          this.isDisplayModifiedMulticity = true;
+        }
+
+      
       }
        if (lastSearch != null || lastSearch != undefined) {
         lastSearch = JSON.parse(lastSearch)
@@ -1132,7 +1186,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
     if (this.navItemActive == 'Multicity') {
       localStorage.setItem('isMulticitySearch','true');
-      var multicity = localStorage.getItem('multicityLastSearch');
+      var multicity = localStorage.getItem(environment.multicityLastSearch);
       if(multicity != null && multicity != ''  )
       {
         this.callMutlicityFunc = false;
@@ -1265,7 +1319,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
         z.flightclass = this.flightData.value.flightclass;
       });
       let multicitySearchValue = JSON.stringify(this.multicityFormArr.value);
-      localStorage.setItem('multicityLastSearch',multicitySearchValue)
+      localStorage.setItem(environment.multicityLastSearch,multicitySearchValue)
       url = this.sg['domainPath']+"flight-multicity?" + decodeURIComponent(this.ConvertObjToQueryStringMutlticity(this.multicityFormArr.value))
       this.router.navigateByUrl(url)
     }
