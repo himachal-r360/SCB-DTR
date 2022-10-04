@@ -10,7 +10,7 @@
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
                                             <img src="{{cdnUrl}}/images/icons/flight.svg" alt=""> Flights
-                                        </a> 
+                                        </a>
                                     </li>
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('train')" [ngClass]="navItemActive == 'train'? 'active':'' ">
@@ -52,58 +52,58 @@
             <div class="row">
                 <!-- continue search website view  -->
                 <ng-container *ngIf="isMobile == false">
-                  <ng-container *ngFor="let continue of continueSearchVal; let i = index">
-                    <div class="col-md-3"  *ngIf="continue.fromCity && continue.toCity && continue.departure &&  i<4" >
-                        <a href="javascript:void(0)"(click)="continueSearch(continue)">
-                            <div class="Continuesearch-items ">
-                                <div class="Continuesearch-items-text">
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue.fromCity}}</h6>
-                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                    <ng-container *ngFor="let continue of continueSearchVal; let i = index">
+                        <div class="col-md-3" *ngIf="continue.fromCity && continue.toCity && continue.departure &&  i<4">
+                            <a href="javascript:void(0)" (click)="continueSearch(continue)">
+                                <div class="Continuesearch-items ">
+                                    <div class="Continuesearch-items-text">
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue.fromCity}}</h6>
+                                            <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                        </div>
+                                        <div class="Continuesearch-image">
+                                            <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
+                                            <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
+                                        </div>
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue.toCity}}</h6>
+                                            <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
+                                        </div>
                                     </div>
-                                    <div class="Continuesearch-image">
-                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
-                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
-                                    </div>
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue.toCity}}</h6>
-                                        <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
-                                    </div>
-                                </div>
-                                <div class="Continuesearch-items-actions">
-                                    <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+                                    <div class="Continuesearch-items-actions">
+                                        <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
 
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="col-md-3"  *ngIf="continue['fromCity[0]'] && continue['toCity[0]'] && continue['departure[0]'] &&  i<4" >
-                        <a href="javascript:void(0)"(click)="continueSearchMulti(continue)">
-                            <div class="Continuesearch-items ">
-                                <div class="Continuesearch-items-text">
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue['fromCity[0]']}}</h6>
-                                        <p>{{continue['departure[0]']|date:"EEE ,dd MMM"}}</p>
-                                    </div>
-                                    <div class="Continuesearch-image">
-                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
-                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
-                                    </div>
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue['toCity[0]'] }}</h6>
-                                        <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                     </div>
                                 </div>
-                                <div class="Continuesearch-items-actions">
-                                    <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+                            </a>
+                        </div>
 
+                        <div class="col-md-3" *ngIf="continue['fromCity[0]'] && continue['toCity[0]'] && continue['departure[0]'] &&  i<4">
+                            <a href="javascript:void(0)" (click)="continueSearchMulti(continue)">
+                                <div class="Continuesearch-items ">
+                                    <div class="Continuesearch-items-text">
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue['fromCity[0]']}}</h6>
+                                            <p>{{continue['departure[0]']|date:"EEE ,dd MMM"}}</p>
+                                        </div>
+                                        <div class="Continuesearch-image">
+                                            <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
+                                            <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
+                                        </div>
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue['toCity[0]'] }}</h6>
+                                            <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="Continuesearch-items-actions">
+                                        <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                    
-                     </ng-container>
+                            </a>
+                        </div>
+
+                    </ng-container>
                 </ng-container>
                 <!-- continue search mobile view  -->
                 <div class="box-item" *ngIf="isMobile == true">
@@ -141,7 +141,7 @@
     <section class="ContinueSearch-area mb-50" *ngIf="navItemActive=='hotel' && continueSearchValHotel && continueSearchValHotel.length>0">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 ">
                     <div class="home-ContinueSearch-text">
                         <h4>Continue Your Search</h4>
                     </div>
@@ -150,24 +150,24 @@
             <div class="row">
                 <!-- continue search website view  -->
                 <ng-container *ngIf="isMobile == false">
-                  <ng-container *ngFor="let continue of continueSearchValHotel; let i = index">
-                    <div class="col-md-3" *ngIf="continue.city && continue.checkIn && continue.checkOut && i<4">
-                        <a href="javascript:void(0)"  (click)="continueSearchHotel(continue)">
-                            <div class="Continuesearch-items ">
-                                <div class="Continuesearch-items-text">
-                                    <div class="Continuesearch-name">
-                                        <h6 class="text-capitalize">{{continue.city}}</h6>
-                                        <p>{{continue.checkIn|date:"EEE, dd MMM YY"}} - {{continue.checkOut|date:"EEE, dd MMM YY"}} </p>
+                    <ng-container *ngFor="let continue of continueSearchValHotel; let i = index">
+                        <div class="col-md-3" *ngIf="continue.city && continue.checkIn && continue.checkOut && i<4">
+                            <a href="javascript:void(0)" (click)="continueSearchHotel(continue)">
+                                <div class="Continuesearch-items ">
+                                    <div class="Continuesearch-items-text">
+                                        <div class="Continuesearch-name Continuesearch-name-new">
+                                            <h6 class="text-capitalize">{{continue.city}}</h6>
+                                            <p>{{continue.checkIn|date:"EEE, dd MMM YY"}} - {{continue.checkOut|date:"EEE, dd MMM YY"}} </p>
+                                        </div>
+                                    </div>
+                                    <div class="Continuesearch-items-actions">
+                                        <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+
                                     </div>
                                 </div>
-                                <div class="Continuesearch-items-actions">
-                                    <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
-
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                     </ng-container>
+                            </a>
+                        </div>
+                    </ng-container>
                 </ng-container>
                 <!-- continue search mobile view  -->
                 <div class="box-item" *ngIf="isMobile == true">
@@ -207,31 +207,31 @@
             <div class="row">
                 <!-- continue search website view  -->
                 <ng-container *ngIf="isMobile == false">
-                 <ng-container *ngFor="let continue of continueSearchValBus; let i = index">
-                    <div class="col-md-3" *ngIf="continue.searchFrom && continue.searchTo && continue.departure && i<4">
-                        <a href="javascript:void(0)"  (click)="continueSearchBus(continue)">
-                            <div class="Continuesearch-items ">
-                                <div class="Continuesearch-items-text">
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue.searchFrom}}</h6>
-                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                    <ng-container *ngFor="let continue of continueSearchValBus; let i = index">
+                        <div class="col-md-3" *ngIf="continue.searchFrom && continue.searchTo && continue.departure && i<4">
+                            <a href="javascript:void(0)" (click)="continueSearchBus(continue)">
+                                <div class="Continuesearch-items ">
+                                    <div class="Continuesearch-items-text">
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue.searchFrom}}</h6>
+                                            <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                        </div>
+                                        <div class="Continuesearch-image">
+                                            <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
+                                            <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
+                                        </div>
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue.searchTo}}</h6>
+                                        </div>
                                     </div>
-                                    <div class="Continuesearch-image">
-                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
-                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
-                                    </div>
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue.searchTo}}</h6>
-                                    </div>
-                                </div>
-                                <div class="Continuesearch-items-actions">
-                                    <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+                                    <div class="Continuesearch-items-actions">
+                                        <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
 
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                     </ng-container>
+                            </a>
+                        </div>
+                    </ng-container>
                 </ng-container>
                 <!-- continue search mobile view  -->
                 <div class="box-item m_box_item" *ngIf="isMobile == true">
@@ -278,30 +278,30 @@
             <div class="row">
                 <!-- continue search website view  -->
                 <ng-container *ngIf="isMobile == false">
-                 <ng-container *ngFor="let continue of continueSearchValTrain; let i = index">
-                    <div class="col-md-3"  *ngIf="i<4">
-                        <a href="javascript:void(0)" *ngIf="continue.searchFrom && continue.searchTo && continue.departure && i<4" (click)="continueSearchTrain(continue)">
-                            <div class="Continuesearch-items ">
-                                <div class="Continuesearch-items-text">
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue.searchFrom}}</h6>
-                                        <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                    <ng-container *ngFor="let continue of continueSearchValTrain; let i = index">
+                        <div class="col-md-3" *ngIf="i<4">
+                            <a href="javascript:void(0)" *ngIf="continue.searchFrom && continue.searchTo && continue.departure && i<4" (click)="continueSearchTrain(continue)">
+                                <div class="Continuesearch-items ">
+                                    <div class="Continuesearch-items-text">
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue.searchFrom}}</h6>
+                                            <p>{{continue.departure|date:"EEE ,dd MMM"}}</p>
+                                        </div>
+                                        <div class="Continuesearch-image">
+                                            <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
+                                            <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
+                                        </div>
+                                        <div class="Continuesearch-name">
+                                            <h6>{{continue.searchTo}}</h6>
+                                        </div>
                                     </div>
-                                    <div class="Continuesearch-image">
-                                        <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
-                                        <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
-                                    </div>
-                                    <div class="Continuesearch-name">
-                                        <h6>{{continue.searchTo}}</h6>
-                                    </div>
-                                </div>
-                                <div class="Continuesearch-items-actions">
-                                    <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+                                    <div class="Continuesearch-items-actions">
+                                        <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
 
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
                     </ng-container>
                 </ng-container>
                 <!-- continue search mobile view  -->
