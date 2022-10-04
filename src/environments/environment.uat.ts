@@ -131,14 +131,14 @@ API_URL:{
     "BUSINESS":"business/bus"  ,
     "REGALIA_GOLD":"regalia/bus",     
   },
-    "flightLastSearch":"flightLastSearches",
-  "continueFlightSearch":"continueFlightSearch",
-  "continueSearchBus":"continueSearchBuses",
-  "busLastSearch":"busLastSearches",
-  "continueSearchTrain":"continueSearchTrains",
-  "trainLastSearch":"trainLastSearches",
-  "continueSearchHotel":"continueSearchHot",
-  "hotelLastSearch":"hotelLastSh",
+    "flightLastSearch":"flightLastSearchi",
+  "continueFlightSearch":"continueFlightSearchi",
+  "continueSearchBus":"continueSearchBusesi",
+  "busLastSearch":"busLastSearchesi",
+  "continueSearchTrain":"continueSearchTrainsi",
+  "trainLastSearch":"trainLastSearchesi",
+  "continueSearchHotel":"continueHotelFi",
+  "hotelLastSearch":"hotelLastSearchFi",
 
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
   

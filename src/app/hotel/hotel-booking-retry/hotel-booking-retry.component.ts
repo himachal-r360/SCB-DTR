@@ -109,17 +109,17 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                 this.rest.getOrderDetail(getOrderParam).subscribe(results => { 
                 if (results.result) {
                 let result = JSON.parse(this.EncrDecr.get(results.result));
-              if (customerInfo["guestLogin"] == true) {
+             /* if (customerInfo["guestLogin"] == true) {
                 this.REWARD_CUSTOMERID = customerInfo["id"];
                 this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
                 this.IsDcemiEligibleFlag = true;
                 this.isFlexipayEligibleFlag = true;
-              } else {
+              } else {*/
                 this.fareData=result.fare;     
                 this.checkoutData=result;
                 this.searchHotelKey=result.search_input.session_hotels_key;
                 this.partnerToken = result.partnerToken;
-                this.totalFare = Number(result.fare.total_amount);
+                
                 this.intialTotalFare= Number(result.fare.total_amount);
                 this.totalBaseFare = Number(result.fare.totalBaseFare);
                 this.totalTax = Number(result.fare.total_tax);
@@ -129,6 +129,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                 this.coupon_code=result.fare.couponcode;
                 this.coupon_amount=result.fare.discount;
                 this.voucher_amount=result.fare.voucher_amount;
+                this.totalFare = Number(result.fare.total_amount)-Number(this.voucher_amount)-Number(this.coupon_amount);
                 this.searchData=result.hotelSessionData.queryHotelData;
                 sessionStorage.setItem(this.searchHotelKey + '-clientTransactionId', this.provisionalBookingId);
                 sessionStorage.setItem(this.searchHotelKey + '-orderReferenceNumber', this.orderReferenceNumber);
@@ -205,7 +206,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
 
                   })
                 }
-              }
+              //}
               }
               });
             

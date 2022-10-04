@@ -18,22 +18,22 @@ export class CssLoaderComponent {
 
 	switch (unification[1]) {
 	case ('diners'):
-         this.cssPath = `smartbuy.css`;
+         this.cssPath = `diners.css`;
 	break;
 	case ('infinia'):
-	 this.cssPath = `smartbuy.css`;
+	 this.cssPath = `infinia.css`;
 	break;
 	case ('regalia'):
 	 this.cssPath = `smartbuy.css`;
 	break;
-         case ('regalia_gold'):
+    case ('regalia_gold'):
 	 this.cssPath = `regalia_gold.css`;
 	break;
 	case ('corporate'):
-	 this.cssPath = `smartbuy.css`;
+	 this.cssPath = `corporate.css`;
 	break;
 	case ('business'):
-	 this.cssPath = `smartbuy.css`;
+	 this.cssPath = `business.css`;
 	break;
 	default:
 	this.cssPath = '';

@@ -40,9 +40,9 @@
         <div class="col-md-12" *ngIf="isMobile && isResponse">
             <div class="mob-listing-fiters">
                 <h6 *ngIf="hotelList">{{hotelList.length}} Hotels Found</h6>
-                <a href="javaScript:void(0);" class="showfilters" (click)="showHideFilterMobile('show')">
-                    <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                    <span>Sort/Filters</span>
+                <a href="javaScript:void(0);" class="showfilters d-flex align-items-center" (click)="showHideFilterMobile('show')">
+                    <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                    <span class="ms-2">Sort/Filters</span>
                 </a>
             </div>
         </div>
@@ -197,9 +197,9 @@
                                   </div>
                                   <div class="widget-content mt-10 mb-30 price-widget-content">
                                       <div style="margin:0 0 20px 0">
-                                        <input type="number" min="0" [(ngModel)]="minPrice" [min]="resetMinPrice" id="min_price" class="price-range-field" />
+                                        ₹ <input type="number" min="0" [(ngModel)]="minPrice" [min]="resetMinPrice" id="min_price" class="price-range-field" />
                                         <span class="ms-3 me-3">-</span>
-                                        <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                        ₹ <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
                                       </div>
                                       <!-- <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider> -->
                                       <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (userChangeEnd)="onUserChangeEnd($event)" ></ngx-slider>
@@ -485,7 +485,7 @@
                                      <img *ngIf="list.hotelInfo.image == null || list.hotelInfo.image == ''"  src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" >
                                 </div>
                                 <div class="hotel-list-text">
-                                    <h6 class="hotel-name text-decoration-none "><a href="javascript:;" >{{list.hotelInfo.name | titlecase}}</a></h6>
+                                    <h6 class="hotel-name text-decoration-none "><a href="javascript:;" [innerHTML]="list.hotelInfo.name | safeHtml"></a></h6>
                                     <p class="hotel-place text-dotted">{{list.hotelInfo.address == '' ? list.hotelInfo.city : list.hotelInfo.address}}</p>
                                     <p class="hotel-star">
                                         <i class="fas fa-star " [ngClass]="{'active' : list.hotelInfo.starRating >= 1}"></i>
@@ -493,13 +493,13 @@
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 3}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 4}"></i>
                                         <i class="fas fa-star" [ngClass]="{'active' : list.hotelInfo.starRating >= 5}"></i>
-                                        <span class="hotel-star-tag">{{list.hotelInfo.starRating}}/5</span>
+                                        <span class="hotel-star-tag">{{list.hotelInfo.starRating | number}}/5</span>
                                     </p>
                                     <ul class="hotel-amenities">
-                                        <ng-container *ngFor="let image of Facilities | amenitiesFilter:list.hotelInfo.amenity | slice: 0:3 ">
+                                        <ng-container *ngFor="let image of Facilities | amenitiesFilter:list.hotelInfo.amenity | slice: 0:5 ">
                                             <li>
-                                                <img src="{{image.image}}"  *ngIf="list.hotelInfo.amenity[image.value] == '1'" alt="" >
-                                                <span  *ngIf="list.hotelInfo.amenity[image.value] == '1'">{{image.name}}</span>
+                                                <img src="{{image.image}}"  *ngIf="list.hotelInfo.amenity[image.value] == '1'" alt="{{image.name}}" title="{{image.name}}" >
+                                                <!--<span  *ngIf="list.hotelInfo.amenity[image.value] == '1'">{{image.name}}</span>-->
                                             </li>
                                            
                                             
@@ -520,7 +520,7 @@
                                                             <div class="amenitiesmodal-title">
                                                                 <h6>Amenities</h6>
                                                                 <a href="javaScript:void(0)" class="modal-close" (click)="closeAmenityModel()">
-                                                                    <img src="./assets/images/icons/close.png" alt="" >
+                                                                    <img src="{{cdnUrl}}/images/icons/close.png" alt="" >
                                                                 </a>
                                                             </div>
                                                             <div class="amenitiesmodal-content">
@@ -548,8 +548,8 @@
                                         </div>
                                         <div class="hotel-list-info-price">
                                             <h6>
-                                                <div class="price_hr">₹ {{item.price | number}} </div>
-                                                <span class="information-icon" >
+                                                <div class="price_hr">₹ {{item.price | number}} 
+                                               <!--<span class="information-icon" >
                                                     <img src="assets/images/icons/info.png" [ngStyle]="{'visibility': isMobile ?'hidden':'visible'}" class="ms-2 " alt="">
                                                     <div class="hover-popover">
                                                         <div class="hover-popover-title">
@@ -571,10 +571,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="hover-popover-footer">
-                                                            <!-- <p>*Partner Convenience Fee is applicable</p> -->
+                                                           <p>*Partner Convenience Fee is applicable</p>
                                                         </div>
                                                     </div>
-                                                </span>
+                                                </span>-->
+                                                </div>
                                             </h6>
                                             <p class="p-rn">Per Room/Night</p>
                                         </div>
@@ -709,9 +710,9 @@
                                         <div class="accordion-body">
                                             <div class="widget-content mt-10 mb-30 price-widget-content">
                                                 <div style="margin:0 0 20px 0">
-                                                  <input type="number" min="0" [(ngModel)]="minPrice"  id="min_price" class="price-range-field" />
+                                                  ₹ <input type="number" min="0" [(ngModel)]="minPrice"  id="min_price" class="price-range-field" />
                                                   <span class="ms-3 me-3">-</span>
-                                                  <input type="number" min="0" [(ngModel)]="maxPrice"  id="max_price" class="price-range-field" />
+                                                  ₹ <input type="number" min="0" [(ngModel)]="maxPrice"  id="max_price" class="price-range-field" />
                                                 </div>
                                                 <!-- <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider> -->
                                                 <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (userChangeEnd)="onUserChangeEnd($event)"  ></ngx-slider>

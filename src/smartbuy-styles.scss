@@ -884,8 +884,7 @@ a {
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
     .btn-primary{
-        font-size: 13px;
-        padding: 10px 18px;
+        font-size: 13px !important;
     }
 }}
 
@@ -908,6 +907,9 @@ a {
             font-size: 14px;
             line-height: 19px;
             color: #000000;
+            @media (max-width: 600px) {
+                margin: 5px 0;
+            }
             .mat-radio-label-content {
                 margin-right: 20px;
             }
@@ -1725,11 +1727,14 @@ ul.travel-select-trip-ul {
 
 .liothers {
     // color: #000000;
+    font-family:'opensans-medium';
     color: #555;
     font-weight: 600;
     background: transparent;
     border: none;
     cursor: pointer;
+    font-size:13px;
+
 }
 
 .travel-data {
@@ -1747,6 +1752,13 @@ ul.travel-select-trip-ul {
     padding: 0px 15px;
     gap: 15px;
     height: 100%;
+    @media screen and (max-width:600px){
+        height:auto;
+    }
+}
+
+.select-root-area1 {
+  height: 100%;
 }
 
 .select-root-area .select-roottitle {
@@ -1754,6 +1766,7 @@ ul.travel-select-trip-ul {
     color: #7f7f7f;
     /*  text-transform: uppercase;*/
 }
+
 
 .select-root-left {
     width: 52%;
@@ -1767,7 +1780,9 @@ ul.travel-select-trip-ul {
     padding: 0 0 0 30px;
     height: 100%;
 }
-
+.select-root-right1 {
+  padding: 0px !important;
+}
 .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) {
     width: 100%;
 }
@@ -1919,7 +1934,7 @@ ul.travel-select-trip-ul {
 .add-search-ul .custom-check-box .custom-control.material-checkbox .material-control-indicator {
     width: 16px;
     height: 16px;
-    top: 8px;
+    /*top: 8px;*/
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
 }
@@ -2672,7 +2687,7 @@ html .ui-button.ui-state-disabled:active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: 34px;
+    margin-left: 40px;
     /* margin-bottom: 10px; */
 }
 
@@ -2934,6 +2949,7 @@ html .ui-button.ui-state-disabled:active {
     font-size: 14px;
     line-height: 19px;
     color: #000000;
+    font-family: 'opensans-bold';
 }
 
 .round-ff-price p {
@@ -2972,6 +2988,7 @@ html .ui-button.ui-state-disabled:active {
     font-size: 20px;
     line-height: 24px;
     color: #000000;
+    font-family: 'opensans-bold';
 }
 
 .fixedright-price span {
@@ -3141,6 +3158,7 @@ button.btn.dropdown-toggle.btn-light {
     text-align: center;
     -moz-appearance: textfield;
     appearance: textfield;
+    padding: 0px 5px;
 }
 
 input[type=number] {
@@ -3692,7 +3710,7 @@ button:active {
 }
 
 .tabletitle-area {
-    background: #F2F2F2;
+    background: #e3e2e2;
     border-radius: 2px;
     padding: 7px 15px;
     margin-bottom: 15px;
@@ -4483,6 +4501,15 @@ table.table-bordered.table-content {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    .Continuesearch-image{
+        text-align:center;
+    }
+}
+.Continuesearch-items-text > div{
+    width:33%;
+    @media screen and (max-width:600px){
+        width:auto;
+    }
 }
 
 .Continuesearch-items-actions {
@@ -4497,7 +4524,7 @@ table.table-bordered.table-content {
     line-height: 22px;
     color: $primary-color;
     white-space: nowrap;
-    width: 90px;
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     @media screen and (max-width: 600px) {
@@ -4710,7 +4737,7 @@ table.table-bordered.table-content {
 .imp-Information-list li p {
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 22px;
     color: #000000;
 }
@@ -8622,11 +8649,17 @@ img {
     a {
         .rules-flight-items {
             opacity: 0.5;
+            background: rgba(136, 136, 136, 0.05);
+            border: 1px solid rgba(136, 136, 136, 0.1);
+            border-radius:5px;
         }
     }
     a.active {
         .rules-flight-items {
             opacity: 1;
+            background: rgba(29, 134, 255, 0.05);
+            border: 1px solid rgba(29, 134, 255, 0.1);
+            border-radius:5px;
         }
     }
 }
@@ -9653,6 +9686,7 @@ img {
     font-size: 25px;
     line-height: 34px;
     color: #000000;
+    margin-bottom: 20px;
 }
 
 .Overview-title p {
@@ -9856,6 +9890,7 @@ img {
     font-size: 14px;
     line-height: 26px;
     color: #1D86FF;
+    cursor: pointer;
 }
 .hd-cc-Policy:hover .hover-popover{
     display: none;
@@ -9894,8 +9929,7 @@ img {
     min-width: 467px;
     left: -150px;
     right: 0;
-    // top: -115px;
-    top: -150px;
+    bottom: 30px;
 }
 
 .hd-cc-Policy .hover-popover-title p {
@@ -10224,7 +10258,7 @@ img {
         min-width: 350px;
         left: -20px;
         right: 0;
-        top: -196px;
+        top: -128px;
     }
     .hotel-list-thumbe img {
         max-width: 100px;
@@ -14122,7 +14156,12 @@ img {
 .btn-primary {
     text-transform: none !important;
 }
-
+#big .owl-carousel.owl-drag .owl-item {
+    max-height: 380px;
+}
+.thumbs-item{
+    height: 60px;
+}
 .experiences-slider-area .owl-nav {
     position: absolute !important;
     right: 25px !important;
@@ -14143,13 +14182,13 @@ img {
     left: -52px !important;
 }
 .experiences-slider-area .owl-prev i {
-    background: url("/assets/images/infinia/icon/slider-left.png") no-repeat !important;
+    background: url("../src/assets/images/infinia/icon/slider-left.png") no-repeat !important;
     height: 24px !important;
     width: 24px !important;
     font-size: 0 !important;
 }
 .experiences-slider-area .owl-next i {
-    background: url("/assets/images/infinia/icon/slider-right.png") no-repeat !important;
+    background: url("../src/assets/images/infinia/icon/slider-right.png") no-repeat !important;
     height: 24px !important;
     width: 24px !important;
     font-size: 0 !important;
@@ -14161,4 +14200,8 @@ img {
 }
 .Benefits-datas ul li {
     list-style-type: disc;
+}
+
+#mob-big .owl-carousel.owl-drag .owl-item {
+    max-height: 235px;
 }

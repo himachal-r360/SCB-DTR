@@ -120,18 +120,22 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         isCollapseVas: boolean = false;
         isCollapse: boolean = false;
         passengerSelectedArray:any={};
+        statesdump:any=[];
         totalAdult:number = 0;
         totalChild:number = 0;
         EMI_interest: number = 16;
         EMIAvailableLimit: number = 3000;
+          pgSettingsEMI:number=0;
   constructor(private el: ElementRef,public _irctc: IrctcApiService,private _flightService: FlightService, @Inject(APP_CONFIG) appConfig: any, public rest: RestapiService, private EncrDecr: EncrDecrService, private http: HttpClient, private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
     private sg: SimpleGlobal, @Inject(DOCUMENT) private document: any, public commonHelper: CommonHelper, private location: Location, private dialog: MatDialog,  private router: Router, private _decimalPipe: DecimalPipe, private spinnerService: NgxSpinnerService, private titleService: Title, private appConfigService: AppConfigService, private modalService: NgbModal) {
-
+      this.statesdump = require('src/assets/data/states.json');
     this.serviceSettings = this.appConfigService.getConfig();
     if (this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']]['HOTEL'] != 1) {
       this.router.navigate(['/**']);
     }
     this.domainName = this.sg['domainName'];
+    this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
+    
     this.assetPath = this.sg['assetPath'];
     this.appConfig = appConfig;
     this.domainPath = this.sg['domainPath'];
@@ -247,6 +251,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
       this.coupon_amount = this.indexCoupon.coupon_amount;
       // this.coupon_amount = 200;
       if (this.flexiDiscount == undefined) this.flexiDiscount = 0;
+      
+     
 
       this.totalFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount) + Number(this.flexiDiscount))- Number(this.voucher_amount);
       this.sendflexiFare = (Number(this.intialTotalFare) + Number(this.convenience_fee)) - (Number(this.coupon_amount))- Number(this.voucher_amount);
@@ -456,8 +462,12 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
         }
 
       }, 50);
-    this.syncData();
+this.syncData();
+    
     });
+  if(this.partnerToken!='Cleartrip'){
+    this.checkAvailability();
+  }
     
   }
 
@@ -568,7 +578,8 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
 
   bookingSessionExpires(e: CountdownEvent) {
     if (e.action == 'done') {
-      $('#bookingprocessExpires').modal('show');
+      this.triggerBack();
+   // $('#bookingprocessExpires').modal('show');
     }
   }
   
@@ -889,12 +900,15 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
     } else {
     
 
-    
-        if(this.partnerToken=='Cleartrip'){
-         this.itineraryProcess();
-        }else{
-        /********Check Availablity***********/
-                $('#infoprocess').modal('show');
+       this.itineraryProcess();
+
+        
+    }
+
+  }
+  checkAvailability(){
+    let checkAvailablity;
+         $('#infoprocess').modal('show');
         this.loaderValue = 10;
         const myInterval1 = setInterval(() => {
         this.loaderValue = this.loaderValue + 10;
@@ -902,9 +916,8 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         this.loaderValue = 10;
         }
         }, 700);
-    
-        
-          let rooms:any=[];
+
+              let rooms:any=[];
                 
         for(let i=0;i<(this.searchData.rooms.length);i++){
          rooms.push({
@@ -917,9 +930,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         "bookingCode": this.selectedHotel.roomType.bookingCode
         });
         }
-        
-       
-        let checkAvailablity;
         checkAvailablity={
         "checkIn": this.searchResult.hotel_detail.checkIn,
         "checkOut": this.searchResult.hotel_detail.checkOut,
@@ -948,13 +958,22 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         postData: this.EncrDecr.set(JSON.stringify(checkAvailablity))
         };
         
-        
+        $("#infoprocess").modal('show');
         this.rest.checkAvailabilityHotel(requestParams).subscribe(results => {
-        $('#infoprocess').modal('hide');
+        
          let response = JSON.parse(this.EncrDecr.get(results.result));
          if(response && response.response && response.response.mmtTxnKey &&  response.response.mmtTxnKey !=''){
          this.mmtTxnKey=response.response.mmtTxnKey;
-          this.itineraryProcess();
+         // console.log(response.response.rooms[0].rateInfo[0].chargeableRateInfo);
+          this.totalBaseFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.baseFare;
+          if(this.partnerToken =='Cleartrip'){
+            this.partnerDiscount=response.response.rooms[0].rateInfo[0].chargeableRateInfo.partnerDiscount;
+          }else{
+            this.partnerDiscount=0;
+          }
+           this.intialTotalFare= Number(response.response.rooms[0].rateInfo[0].chargeableRateInfo.total);
+          this.totalTax=response.response.rooms[0].rateInfo[0].chargeableRateInfo.tax;
+          this.totalFare=response.response.rooms[0].rateInfo[0].chargeableRateInfo.total;
          }else{
           clearInterval(myInterval1);
         setTimeout(() => {
@@ -963,6 +982,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }, 20);
          
          }
+         $('#infoprocess').modal('hide');
 
         }), (err: HttpErrorResponse) => {
         clearInterval(myInterval1);
@@ -971,12 +991,6 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         $('#bookingprocessFailed').modal('show');
         }, 20);
         }
-        
-        
-        }
-        
-    }
-
   }
   
   
@@ -1034,7 +1048,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }
         
         this.itineraryParam ={
-        "bookingAmount":this.selectedHotel.rateBreakdown.total,
+        "bookingAmount":this.totalFare,
         "bookingCode": this.selectedHotel.roomType.bookingCode,
         "checkIn": this.searchData.checkIn,
         "checkOut": this.searchData.checkOut,
@@ -1082,6 +1096,7 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         this.loaderValue = 10;
         }
         }, 700);
+
 
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryParam))
@@ -1225,6 +1240,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     if (page < 2) {
       this.totalFare = this.intialTotalFare;
       this.coupon_amount = 0;
+       this.voucher_amount = 0;
     }
 
 
@@ -1318,7 +1334,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     "hotelid": this.searchResult.Hotelkey,
     "hotelname": this.searchResult.hotel_detail.hotelName,
     "hoteladdress": this.searchResult.hotel_detail.address,
-    "hotelImageUrl": this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'],
+    "hotelImageUrl": this.searchResult.hotel_detail.images.length >0 ? this.searchResult.hotel_detail.images[0]['wideAngleImageUrl'] : this.cdnUrl+'/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg',
     "room_type_id": this.selectedHotel.roomType.roomTypeId,
     "room_type_code": this.selectedHotel.roomType.roomTypeCode,
     "room_dec": this.selectedHotel.roomType.roomDescription,

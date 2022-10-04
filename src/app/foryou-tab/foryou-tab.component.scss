@@ -82,6 +82,7 @@ h3 {
     margin-right: 15px;
     height: 43px;
     font-family: 'opensans-light';
+    font-size:43px;
     @media screen and (max-width: 575.98px) {
         font-size: 20px;
     }
@@ -790,6 +791,7 @@ margin-top:-7px;
 
 .cancel_btn {
     color: #1D86FF;
+    font-size:14px;
 }
 
 .card-container-rel {
@@ -1116,8 +1118,11 @@ margin-top:-7px;
         @include flex;
         padding: 10px;
         img {
-            width: auto;
-            padding: 10px;
+            /* width: auto;
+            padding: 10px; */
+            width: 120px;
+            padding: 10px 15px;
+            height: 65px;
         }
     }
 }
@@ -1526,6 +1531,7 @@ margin-top:-7px;
     height: 300px;
     @media screen and (max-width: 1024px) {
         height: 200px;
+        overflow-y: auto;
     }
     @media screen and (min-width: 1200px) and (max-width: 1366px) {
         height: 266px;
@@ -1548,6 +1554,10 @@ margin-top:-7px;
         position: relative;
         background-color: #f2f8fb;
         border-radius: 8px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 15px;
         /* background-color: #F2F8FB;
         .js_child {
             position: absolute;
@@ -1556,6 +1566,18 @@ margin-top:-7px;
             top: 20%;
             max-width: 65%;
         } */
+        .content_div_left{
+            flex-basis: 30%;
+            width: 100%;
+            height: 100%;
+        }
+        .content_div_right{
+            flex-basis: 70%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
         @media screen and (max-width: 566px) {
             min-height: 110px;
         }

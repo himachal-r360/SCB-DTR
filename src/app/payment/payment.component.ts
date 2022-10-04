@@ -186,8 +186,18 @@ export class PaymentComponent implements OnInit {
         this.showcalcsection = false;
         }
         });
-        this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
+        
+     
+        if(this.pgSettingsEMI)
+         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
+         else
+          this.emiArray=[];
+        
+        if(this.pgSettingsDEBITEMI) 
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+        else
+         this.emiDebitArray=[];
+        
         this.flexipayArr=this.commonHelper.flexipayIntcalc(this.payTotalFare);
         };
 
@@ -196,14 +206,14 @@ export class PaymentComponent implements OnInit {
         this.REWARD_MOBILE=p;
         };
 
-
+    emiArray:any[];
         ServiceToken:any;  
         @Input() partnerToken;   
          @Input() retryPay; 
         MAIN_SITE_URL:string;
         monthArray:any[];
         yearArray:any[];
-        emiArray:any[];
+    
         emiInterst:any[];
         emiDebitArray:any[];
         emiDebitInterst:any[];
@@ -455,8 +465,11 @@ export class PaymentComponent implements OnInit {
 
 
         this.monthArray=Array.from(new Array(Number(12)),(val,index)=>index);
+        
+        if(this.pgSettingsEMI)
         this.emiArray=this.commonHelper.emiLogic(this.payTotalFare);
-
+       else
+         this.emiArray=[];
 
         if(AppConfig.EMI_FROM_API==0){
         this.emiInterst=AppConfig.emiInterst;
@@ -479,8 +492,10 @@ export class PaymentComponent implements OnInit {
         this.flexiPayNewcalcArr = this.commonHelper.flexipayIntcalc(this.flexipayPGvalue);
         this.showFlexiValue = this.payTotalFare;
 
-
+        if(this.pgSettingsDEBITEMI)
         this.emiDebitArray=this.commonHelper.emiDebitLogic(this.payTotalFare);
+        else
+          this.emiDebitArray=[];
 
         if(AppConfig.EMI_FROM_API==0){
         this.emiDebitInterst=AppConfig.emiDebitInterst;
@@ -598,6 +613,23 @@ export class PaymentComponent implements OnInit {
 	
 	}
 	
+	pgSelectGuest(){
+	
+	  if(this.customerInfo["guestLogin"]==true){
+	   if(!this.pgSettingsEMI && this.emiArray.length ==0 &&  this.pgSettingsDEBITEMI && this.emiDebitArray.length >0)
+	   this.pgSelect('DEBIT_EMI');
+	  }
+
+	  if(this.pgSettingsEMI && this.emiArray.length > 0) {
+
+		let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
+		element.click();
+
+	  }
+
+	
+	}
+	
 	pgSelect(pgType){
                 //console.log(pgType);
                 if(pgType=='DEBIT_EMI' && this.customerInfo["guestLogin"]==true){
@@ -611,6 +643,7 @@ export class PaymentComponent implements OnInit {
                 data: {
                 customerInfo: this.customerInfo
                 },
+				disableClose: true,
                 scrollStrategy: this.overlay.scrollStrategies.noop()
                 });
 
@@ -1492,15 +1525,16 @@ validateDebitEmi(){
 	this.DCEMItenure=$("input[name='payDebitemi-sub']:checked").val();
 	this.DCEMISelectedAmount = this.emiDebitArray.filter(
 	emi => emi.key === this.DCEMItenure);
-	
+
 	var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));
-	// console.log(tmppassData1)
 	
 	var finalFare;
 	if(this.serviceId=='RedBus'){
-	finalFare=tmppassData1['total_price'];
-	}else{
-	finalFare=tmppassData1['fareData']['totalFare'];
+		finalFare=tmppassData1['total_price'];
+	}else if(this.serviceId== 'Flight'){
+		finalFare = tmppassData1['flightDetails']['fare']['totalFare'];
+	} else {
+		finalFare=tmppassData1['fareData']['totalFare'];
 	}
 	// console.log(finalFare)
 	
@@ -1537,6 +1571,10 @@ validateDebitEmi(){
 	}else{
 	this.DCEMIapplicationId='';
 	this.DCEMIError=cresults.errorMessage;
+    if(cresults.errorMessage==null || cresults.errorMessage==""){
+        this.DCEMIError=cresults.message;
+    }
+
 	this.showDebitEMIOtp=false;
 	this.showDebitEMI=true;
 	this.showDebitEMIOtpConfirmation=false;
@@ -1651,7 +1689,7 @@ this.rest.validateOTPDCEMI(postvalidateParams).subscribe(results => {
      this.DCEMIError='';
      }else{
      this.DCEMIConfirmResponse='';
-     this.DCEMIError=result.errorMessage;
+     this.DCEMIError=result.message;
      this.showDebitEMIOtp=true;
      this.showDebitEMI=false;
      this.showDebitEMIOtpConfirmation=false;
@@ -2411,9 +2449,24 @@ export class dcemiDialog {
 	Form1: FormGroup;
 	submitted:Boolean = false;
 	sub:any;
-	constructor(public dialogDcemi: MatDialogRef < dcemiDialog > ,@Inject(MAT_DIALOG_DATA) public data: any) {
+	serviceSettings : any;
+	pgSettingsEMI:number=0;
+	domainName:string;
+
+		serviceId:string;
+		@Input() set passServiceId(p: string){  
+		this.serviceId=p;
+		};
+
+	
+	constructor(public dialogDcemi: MatDialogRef < dcemiDialog > ,@Inject(MAT_DIALOG_DATA) public data: any,private appConfigService:AppConfigService,private sg: SimpleGlobal) {
 	  this.customerInfo=data.customerInfo;
+	  this.serviceSettings=this.appConfigService.getConfig();
+	  this.domainName=this.sg['domainName'];
+	  
 	}
+	
+
 	ngOnInit() {
 	  this.REWARD_EMAILID = this.customerInfo["email"];
 	  this.REWARD_MOBILE = Number(this.customerInfo["mobile"]);
@@ -2450,8 +2503,10 @@ export class dcemiDialog {
 	}
 	close(){
 
-		let element: HTMLElement = document.getElementById('cc-emi') as HTMLElement; 
-		element.click();
+
+		let elementCyber: HTMLElement = document.getElementById('tab-ccdcCards') as HTMLElement; 
+		elementCyber.click();
+        
 
 		this.dialogDcemi.close();
 	}

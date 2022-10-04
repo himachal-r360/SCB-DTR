@@ -8,6 +8,7 @@ import { RegaliaGoldModule } from './regalia-gold/regalia-gold.module';
 import { SharedComponentsModule } from './shared-components/shared-components.module';
 import { Error404PageComponent } from './shared/pages/error404-page/error404-page.component';
 import { HotelListComponent } from './hotel/hotel-list/hotel-list.component';
+import { UnificationModule } from './unification/unification.module';
 const routes: Routes = [
   { path: '', loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule) },
   {
@@ -40,6 +41,9 @@ const routes: Routes = [
     {
     path:"regalia_gold/compare-stay" , component:HomeComponent
   },
+  {
+    path:"infinia/compare-stay" , component:HomeComponent
+  },
     {
     path:"regalia_gold/bus" , component:HomeComponent
   },
@@ -66,10 +70,15 @@ const routes: Routes = [
     loadChildren: () => import('./hotel/hotel.module').then(m => m.HotelModule)
   },
 
-  {
+  /* {
 
     path: 'infinia',
     loadChildren: () => import('./infinia/infinia.module').then(m => m.InfiniaModule)
+  }, */
+  {
+
+    path: 'infinia',
+    loadChildren: () => import('./unification/unification.module').then(m => m.UnificationModule)
   },
 
   {
@@ -92,6 +101,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RegaliaGoldModule,
+    UnificationModule,
     SharedComponentsModule,
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',

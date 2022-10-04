@@ -1,30 +1,369 @@
 <section class="bradcome-area mt-110 mb-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="bradcome-list">
-                  <ul class="list-inline">
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel &amp; Stays</a></li>
-                      <li class="list-inline-item"><span>/</span></li>
-                      <li class="list-inline-item" *ngIf="HotelDetail"><span>{{HotelDetail.hotelName}}</span></li>
-                  </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="bradcome-list">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/">Home</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item"><a href="javascript:;" routerLink="/compare-stay">Travel &amp; Stays</a></li>
+                        <li class="list-inline-item"><span>/</span></li>
+                        <li class="list-inline-item" *ngIf="HotelDetail"><span>{{HotelDetail.hotelName}}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+  <section class="travel-area mt-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hd-title-area">
+                    <div class="hotel-list-item">
+                        <div class="hotel-list-left">
+                            <div class="hotel-list-text">
+                                <h6 class="hotel-name text-decoration-none">{{HotelDetail.hotelName}}</h6>
+                                <p class="hotel-place">{{HotelDetail.address=='' ? HotelDetail.city : HotelDetail.address }}</p>
+                                <p class="hotel-star" *ngIf="HotelDetail.hotelRatings[0].rating > 0">
+                                  <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 1}"></i>
+                                  <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 2}"></i>
+                                  <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 3}"></i>
+                                  <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 4}"></i>
+                                  <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 5}"></i>
+                                  <span class="hotel-star-tag">{{HotelDetail.hotelRatings[0].rating}}/5</span>
+                              </p>
+                            </div>
+                        </div>
+                        <div class="hotel-list-right">
+                            <div class="hotel-list-info">
+                                <div class="hotel-list-info-item">
+                                    <div class="hotel-list-info-thume">
+                                        <img src="{{cdnUrl}}/images/flight_partners/small-no/{{PriceSummery.partnerName}}.png" alt="">
+                                    </div>
+                                    <div class="hotel-list-info-price">
+                                        <h6>
+                                            <strong>₹{{HotelDetail.roomRates[0].rateBreakdown.total|number}}</strong>
+                                            <span class="information-icon">
+                                                <img src="assets/images/icons/info.png" class="ms-2 " alt="">
+                                                <div class="hover-popover">
+                                                    <div class="hover-popover-title text-left">
+                                                        <h6>Price Breakdown</h6>
+                                                    </div>
+                                                    <div class="hover-popover-content">
+                                                        <div class="hover-popover-content-list">
+                                                            <p>Base Fare</p>
+                                                            <p>₹{{HotelDetail.roomRates[0].rateBreakdown.baseFare | number}}</p>
+                                                        </div>
+                                                        <div class="hover-popover-content-list">
+                                                            <p>Tax</p>
+                                                            <p>₹{{HotelDetail.roomRates[0].rateBreakdown.tax|number}}</p>
+                                                        </div>
+                                        <div class="hover-popover-content-list" *ngIf="PriceSummery.partnerName=='Cleartrip' && HotelDetail.roomRates[0].rateBreakdown.partnerDiscount>0">
+                                                            <p>Partner Discount</p>
+                                                            <p>₹{{HotelDetail.roomRates[0].rateBreakdown.partnerDiscount|number}}</p>
+                                                        </div>
+                                                        <hr class="m-0">
+                                                        <div class="hover-popover-content-list popover-total">
+                                                            <p>Total</p>
+                                                            <p>₹{{HotelDetail.roomRates[0].rateBreakdown.total|number}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="hover-popover-footer">
+                                                        <!-- <p class="d-none">*Partner Convenience Fee is applicable</p> -->
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </h6>
+                                        <p class="p-rn">Inclusive of taxes</p>
+                                    </div>
+                                    <div class="hotel-list-info-Book">
+                                        <a href="javascript:;" (click)="onSectionChange('hdRooms','Rooms')"  class="button-style">Select Room</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="hd-gallery">
+                   <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
+                      <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                        <ng-container >
+                          <ng-template carouselSlide  [id]="'Id_0'">
+                            <div class="item">
+                               <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid radius_8" alt="">
+                          </div>
+                            </ng-template>
+                         </ng-container>
+                      </owl-carousel-o>
+                    </div>
+  
+                    <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
+                      <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                        <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                          <ng-template carouselSlide  [id]="'Id_'+i">
+                            <div class="item">
+                              <img src="{{image.wideAngleImageUrl}}" class="img-fluid radius_8" (error)="onImgError($event)"  >
+                          </div>
+                            </ng-template>
+                         </ng-container>
+                      </owl-carousel-o>
+                    </div>
+                    <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0" >
+                      <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl >
+                        <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                          <ng-template carouselSlide >
+                            <div class="item" (click)="onImageClick(i)">
+                              <img src="{{image.thumbnailImageUrl}}" class="img-fluid thumbs-item" alt="" >
+                          </div>
+                            </ng-template>
+                         </ng-container>
+                      </owl-carousel-o>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="hd-map">
+                    <iframe class="d-flex" [src]="GOOGLE_MAP_URL" width="100%" height="440"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-40">
+            <div class="col-12">
+                <div class="hd-tabs-area">
+                    <ul class="list-unstyled hd-tabs">
+                        <li *ngIf="HotelDetail.description">
+                            <a href="javascript:void(0)" (click)="onSectionChange('hdOverview','Overview')" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}" data-bind="hdOverview">Overview</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="onSectionChange('hdRooms','Rooms')" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"  data-bind="hdRooms"> Rooms</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="onSectionChange('hdAmenities','Amenities')" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}" data-bind="hdAmenities"> Amenities</a>
+                        </li>
+                    </ul>
+                    <div class="hd-tabs-details">
+                        <div id="hdOverview" class="hd-details-area hd-tabs-details-active" *ngIf="HotelDetail.description">
+                            <div class="hd-details-body">
+                                <div class="Overview-area" >
+                                    <div class="Overview-top" >
+                                        <div class="Overview-title">
+                                            <h6>About</h6>
+                                            <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
+                                            <p *ngIf="PriceSummery.partnerName!='Cleartrip'">CHECK-IN 12PM | CHECK-OUT 12AM</p>
+                                        </div>
+                                        <div class="Overview-details about-hotel" [innerHTML]="HotelDetail.description | safeHtml"></div>
+                                    </div>
+                                    <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
+                                        <div class="Overview-bottom-title mb-20">
+                                            <h6>Facilities Offered</h6>
+                                        </div>
+  
+  
+                                          <div class="owl-slider  hd-Offered-slider"  [ngClass]="hotelAmenity.length > 3 ? 'grid-7':'amenityWidth'" >
+                                                  <owl-carousel-o [options]="customOptions">
+                                                      <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
+                                                          <ng-template carouselSlide>
+                                                              <div class="box-item">
+                                                                  <div class="hd-Offered-thumbe">
+                                                                      <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
+                                                                  </div>
+                                                                  <div class="hd-Offered-text">
+                                                                      <h6>{{Facilities[item].name}}</h6>
+                                                                  </div>
+                                                              </div>
+                                                          </ng-template>
+                                                      </ng-container>
+  
+                                                      <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
+                                                          <div class="box-item box-item-text">
+                                                              <div class="hd-Offered-text">
+                                                                  <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
+                                                                      <p>{{hotelAmenity.length - 6}}+</p>
+                                                                      <span>More Amenities</span>
+                                                                  </a>
+                                                              </div>
+                                                          </div>
+                                                      </ng-template>
+                                                  </owl-carousel-o>
+  
+                                          </div>
+  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="hdRooms" class="hd-details-area  hd-tabs-details-active">
+                            <div class="hd-details-body">
+                                <div class="hd-Rooms-area">
+                                    <div class="hd-Rooms-top">
+                                        <div class="hd-Rooms-title mb-20">
+                                            <h6>Select Rooms</h6>
+                                            <p>Choose a room with below room types</p>
+                                        </div>
+                                        <div class="hd-Rooms-details">
+                                            <div class="hd-rd-area">
+                                                <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates;let i = index">
+                                                    <div class="hd-rd-left">
+                                                        <div class="hd-rd-big">
+                                                          <img *ngIf="item.imageInfo.wideAngleImageurl != null" src="{{item.imageInfo.wideAngleImageurl}}" alt="">
+                                                          <img *ngIf="item.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                                        </div>
+                                                        <!-- <div class="hd-rd-thumbs">
+                                                            <div class="hd-rd-item">
+                                                              <img *ngIf="item.imageInfo.thumbnailImageUrl != null" src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
+                                                              <img *ngIf="item.imageInfo.thumbnailImageUrl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    <!-- web cancellation  -->
+                                                    <div class="hd-rd-right">
+                                                        <div class="hd-rdetails-left position-relative">
+                                                            <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
+                                                            <ul class="hd-rd-Facilities">
+                                                                <li *ngFor="let list of item.roomAmenities">
+                                                                  <p>{{list}}</p>
+                                                                </li>
+                                                            </ul>
+                                                            <span class="information-icon hd-cc-Policy"  (mouseenter)="showCancellationDetail(i)"  (mouseleave)="closeCancellation(i)">
+                                                                Check Cancellation Policy
+                                                                <div class="hover-popover" id="showCancellation_{{i}}" >
+                                                                    <!-- <a href="javascript:;" (click)="closeCancellation(i)" class="popover-close">
+                                                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                                    </a> -->
+                                                                    <div class="hover-popover-title text-left">
+                                                                        <h6>Cancellation Policy</h6>
+                                                                        <p>{{item.cancellationPolicy}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                            <!-- <div class="" >
+                                                             <div class="hover-popover" id="showCancellation_{{i}}" >
+                                                                    <a href="javascript:;" (click)="closeCancellation(i)" class="popover-close">
+                                                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                                    </a>
+                                                                    <div class="hover-popover-title">
+                                                                        <h6>Cancellation Policy</h6>
+                                                                        <p>{{item.cancellationPolicy}}</p>
+                                                                    </div>
+                                                                </div>
+                                                              </div>  
+                                                            <span class="information-icon hd-cc-Policy"  (mouseenter)="showCancellationDetail(i)"  (mouseleave)="closeCancellation(i)">
+                                                                Check Cancellation Policy
+                                                            </span> -->
+                                                        </div>
+                                                        <div class="hd-rdetails-right">
+                                                            <h6>₹{{item.rateBreakdown.total | number}}</h6>
+                                                            <p>Inclusive of taxes</p>
+                                                            <a href="javascript:;" class="button-style"  (click)="onBooking(item)">Book Now</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="hdAmenities" class="hd-details-area  hd-tabs-details-active">
+                            <div class="hd-details-body">
+                                <div class="Amenities-area">
+                                    <div class="Amenities-top">
+                                        <div class="Amenities-title">
+                                            <h6>Amenities</h6>
+                                        </div>
+                                        <div class="Amenities-details">
+                                            <ul>
+                                                <li *ngFor="let Amenity of HotelDetail.hotelAmenities">
+                                                  <p><strong>{{Amenity.category}}</strong>: {{Amenity.amenity.toString()}}</p></li>
+  
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+        <!-- mob-travel-area -->
+        <section class="mob-travel-area d-lg-block d-block" *ngIf="HotelDetail && isMobile">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-12 p-0">
+                      <div class="mob-listing-header">
+                          <div class="mob-listing-header-left">
+                              <a (click)="backClicked()" >
+                                  <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                              </a>
+                          </div>
+                          <div class="mob-listing-header-center">
+                              <h6>{{SelectedQueryParam.city +', '+ SelectedQueryParam.countryName}}</h6>
+                              <p *ngIf="SelectedQueryParam.checkIn">{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
+                          </div>
+                          <div class="mob-listing-header-right">
+                              <a  routerLink="/compare-stay">
+                                  <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
+                              </a>
+                          </div>
+                      </div>
+                  </div>
               </div>
-          </div>
-      </div>
-  </div>
-</section>
-
-<section class="travel-area mt-10 d-lg-block d-none" *ngIf="HotelDetail && !isMobile">
-  <div class="container">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="hd-title-area">
-                  <div class="hotel-list-item">
-                      <div class="hotel-list-left">
-                          <div class="hotel-list-text">
-                              <h6 class="hotel-name text-decoration-none">{{HotelDetail.hotelName}}</h6>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="hd-gallery mb-20">
+  
+                       <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
+                            <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                              <ng-container>
+                                <ng-template carouselSlide  [id]="'Id_0'">
+                                  <div class="item">
+                                      <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid" alt="">
+                                </div>
+                                  </ng-template>
+                               </ng-container>
+                            </owl-carousel-o>
+                          </div>
+  
+                          <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
+                            <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
+                              <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                                <ng-template carouselSlide  [id]="'Id_'+i">
+                                  <div class="item">
+                                    <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="">
+                                </div>
+                                  </ng-template>
+                               </ng-container>
+                            </owl-carousel-o>
+                          </div>
+                          <div id="mob-thumbs" class="owl-carousel owl-theme mt-10" *ngIf="HotelDetail.images.length >0">
+                            <owl-carousel-o [options]="MobileThumbNailImageCustomOptions" #ThumbNailImageOwl>
+                              <ng-container *ngFor="let image of HotelDetail.images; let i = index">
+                                <ng-template carouselSlide >
+                                  <div class="item" (click)="onImageClick(i)">
+                                    <img src="{{image.thumbnailImageUrl}}" class="img-fluid thumbs-item" alt="">
+                                </div>
+                                  </ng-template>
+                               </ng-container>
+                            </owl-carousel-o>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="d-flex justify-content-between">
+                          <div class="hotel-list-text me-3">
+                              <h6 class="hotel-name">{{HotelDetail.hotelName}}</h6>
                               <p class="hotel-place">{{HotelDetail.address=='' ? HotelDetail.city : HotelDetail.address }}</p>
                               <p class="hotel-star" *ngIf="HotelDetail.hotelRatings[0].rating > 0">
                                 <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 1}"></i>
@@ -35,231 +374,122 @@
                                 <span class="hotel-star-tag">{{HotelDetail.hotelRatings[0].rating}}/5</span>
                             </p>
                           </div>
+                          <div class="hd-map" style="width: 150px; height: 80px;">
+                              <iframe class="d-flex" [src]="GOOGLE_MAP_URL" width="100%" height="80px"></iframe>
+                          </div>
                       </div>
-                      <div class="hotel-list-right">
-                          <div class="hotel-list-info">
-                              <div class="hotel-list-info-item">
-                                  <div class="hotel-list-info-thume">
-                                      <img src="{{cdnUrl}}/images/flight_partners/small-no/{{PriceSummery.partnerName}}.png" alt="">
-                                  </div>
-                                  <div class="hotel-list-info-price">
-                                      <h6>
-                                          <strong>₹{{HotelDetail.roomRates[0].rateBreakdown.total|number}}</strong>
-                                          <span class="information-icon">
-                                              <img src="assets/images/icons/info.png" class="ms-2 " alt="">
-                                              <div class="hover-popover">
-                                                  <div class="hover-popover-title">
-                                                      <h6>Price Breakdown</h6>
-                                                  </div>
-                                                  <div class="hover-popover-content">
-                                                      <div class="hover-popover-content-list">
-                                                          <p>Base Fare</p>
-                                                          <p>₹{{HotelDetail.roomRates[0].rateBreakdown.baseFare | number}}</p>
-                                                      </div>
-                                                      <div class="hover-popover-content-list">
-                                                          <p>Tax</p>
-                                                          <p>₹{{HotelDetail.roomRates[0].rateBreakdown.tax|number}}</p>
-                                                      </div>
-                                      <div class="hover-popover-content-list" *ngIf="PriceSummery.partnerName=='Cleartrip' && HotelDetail.roomRates[0].rateBreakdown.partnerDiscount>0">
-                                                          <p>Partner Discount</p>
-                                                          <p>₹{{HotelDetail.roomRates[0].rateBreakdown.partnerDiscount|number}}</p>
-                                                      </div>
-                                                      <hr class="m-0">
-                                                      <div class="hover-popover-content-list popover-total">
-                                                          <p>Total</p>
-                                                          <p>₹{{HotelDetail.roomRates[0].rateBreakdown.total|number}}</p>
-                                                      </div>
-                                                  </div>
-                                                  <div class="hover-popover-footer">
-                                                      <!-- <p class="d-none">*Partner Convenience Fee is applicable</p> -->
-                                                  </div>
+                  </div>
+              </div>
+  
+              <div class="row mt-20">
+                  <div class="col-12">
+                      <div class="hd-tabs-area mob-hd-tabs-area">
+                          <ul class="list-unstyled hd-tabs">
+                              <li>
+                                  <a href="javascript:void(0)" (click)="onSectionChange('hdOverview','Overview')" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}">Overview</a>
+                              </li>
+                              <li>
+                                  <a  href="javascript:void(0)" (click)="onSectionChange('hdRooms','Rooms')" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"> Rooms</a>
+                              </li>
+                              <li>
+                                  <a href="javascript:void(0)" (click)="onSectionChange('hdAmenities','Amenities')" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}"> Amenities</a>
+                              </li>
+                          </ul>
+                          <div class="hd-tabs-details">
+                              <div id="hdOverview" class="hd-details-area hd-tabs-details-active">
+                                  <div class="hd-details-body">
+                                      <div class="Overview-area">
+                                          <div class="Overview-top">
+                                              <div class="Overview-title">
+                                                  <h6>About</h6>
+                                                  <p *ngIf="checkin != undefined">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
                                               </div>
-                                          </span>
-                                      </h6>
-                                      <p class="p-rn">Inclusive of taxes</p>
-                                  </div>
-                                  <div class="hotel-list-info-Book">
-                                      <a href="javascript:;" (click)="onSectionChange('hdRooms','Rooms')"  class="button-style">Select Room</a>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-9">
-              <div class="hd-gallery">
-                 <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
-                    <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
-                      <ng-container >
-                        <ng-template carouselSlide  [id]="'Id_0'">
-                          <div class="item">
-                             <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid" alt="">
-                        </div>
-                          </ng-template>
-                       </ng-container>
-                    </owl-carousel-o>
-                  </div>
-
-                  <div id="big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
-                    <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
-                      <ng-container *ngFor="let image of HotelDetail.images; let i = index">
-                        <ng-template carouselSlide  [id]="'Id_'+i">
-                          <div class="item">
-                            <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="" >
-                        </div>
-                          </ng-template>
-                       </ng-container>
-                    </owl-carousel-o>
-                  </div>
-                  <div id="thumbs" class="owl-carousel owl-theme mt-10"  *ngIf="HotelDetail.images.length >0" >
-                    <owl-carousel-o [options]="ThumbNailImageCustomOptions" #ThumbNailImageOwl >
-                      <ng-container *ngFor="let image of HotelDetail.images; let i = index">
-                        <ng-template carouselSlide >
-                          <div class="item" (click)="onImageClick(i)">
-                            <img src="{{image.thumbnailImageUrl}}" class="img-fluid" alt="">
-                        </div>
-                          </ng-template>
-                       </ng-container>
-                    </owl-carousel-o>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-3">
-              <div class="hd-map">
-                  <iframe class="d-flex" [src]="GOOGLE_MAP_URL" width="100%" height="440"></iframe>
-              </div>
-          </div>
-      </div>
-      <div class="row mt-40">
-          <div class="col-12">
-              <div class="hd-tabs-area">
-                  <ul class="list-unstyled hd-tabs">
-                      <li>
-                          <a href="javascript:void(0)" (click)="onSectionChange('hdOverview','Overview')" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}" data-bind="hdOverview">Overview</a>
-                      </li>
-                      <li>
-                          <a href="javascript:void(0)" (click)="onSectionChange('hdRooms','Rooms')" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"  data-bind="hdRooms"> Rooms</a>
-                      </li>
-                      <li>
-                          <a href="javascript:void(0)" (click)="onSectionChange('hdAmenities','Amenities')" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}" data-bind="hdAmenities"> Amenities</a>
-                      </li>
-                  </ul>
-                  <div class="hd-tabs-details">
-                      <div id="hdOverview" class="hd-details-area hd-tabs-details-active">
-                          <div class="hd-details-body">
-                              <div class="Overview-area">
-                                  <div class="Overview-top">
-                                      <div class="Overview-title">
-                                          <h6>About</h6>
-                                          <p *ngIf="PriceSummery.partnerName=='Cleartrip'">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
-                                          <p *ngIf="PriceSummery.partnerName!='Cleartrip'">CHECK-IN 12PM | CHECK-OUT 12AM</p>
-                                      </div>
-                                      <div class="Overview-details about-hotel" innerHtml="{{HotelDetail.description}}">
-                                          <!-- <ul>
-                                              <li><p><strong>Services</strong>: 24x7 power back up, 24 Hour Power Supply, Lift, Wheelchair accessible elevator, Waiting area, Room Service (24 Hours Available), Special occasion arrangement, Hot water available, Dry cleaning, Room/Rooms reserved for special need guests, Wheelchair accessible ramp, Wake up service/Alarm clock, Ironing Service, Hot water available 24x7, Luggage storage, Concierge, Babysitting or child care, Business center, Wheelchair, Separate Smoking Area, Laundry facilities.</p></li>
-                                              <li><p><strong>Languages Spoken by Hotel Staff</strong>: English, Hindi</p></li>
-                                              <li><p><strong>Payments Modes Accepted</strong>: Cash, Debit Card, Credit Card, Net-Banking, Visa, American Express, Security deposit, Mastercard</p></li>
-                                              <li><p><strong>Parking & Transportation</strong>: 2 Wheeler, 4 Wheeler, Valet Parking, Travel counter, Bus Parking, Outdoor Parking, Bike Rental (Chargeable), Scooty Rental (Chargeable), Cycle Rental (Chargeable), Car rental (Chargeable), Airport//Railway station pickup available (Chargeable), Airport/Railway station drop (chargeable)</p></li>
-                                              <li><p><strong>Activities - Indoor & Outdoor</strong>: Spa, Outdoor Pool, Kids Pool, Outdoor Pool (all year), Gym, Swimming pool, Kids Play Area</p></li>
-                                              <li><p><strong>General</strong>: TV In Room, Towels, Sofa, Living Area, Restaurant with Dining Menu, Restaurant, Poolside Bar, Pool view, Garden view, Bar, Gardens, Family Rooms, Non-smoking Rooms, Beach Nearby, Conference Room, Jacuzzi</p></li>
-                                              <li><p><strong>Safety & Security</strong>: First Aid Kit, CCTV, Fire Extinguisher, CCTV camera installed inside/outside hotel premises, 24-Hour Security, Smoke Detectors, Doctor on Call, CCTV camera installed on each floor</p></li>
-                                              <li><p><strong>Media & Entertainment</strong>: Flat-screen TV</p></li>
-                                              <li><p><strong>Not Allowed</strong>: Pets</p></li>
-                                              <li><p><strong>Suitable For</strong>: Large Groups, Family, Families with Children, Couples,</p></li>
-                                          </ul> -->
-                                      </div>
-                                  </div>
-                                  <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
-                                      <div class="Overview-bottom-title mb-20">
-                                          <h6>Facilities Offered</h6>
-                                      </div>
-
-
-                                        <div class="owl-slider  hd-Offered-slider"  [ngClass]="hotelAmenity.length > 3 ? 'grid-7':'amenityWidth'" >
-                                                <owl-carousel-o [options]="customOptions">
-                                                    <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
-                                                        <ng-template carouselSlide>
-                                                            <div class="box-item">
-                                                                <div class="hd-Offered-thumbe">
-                                                                    <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
-                                                                </div>
-                                                                <div class="hd-Offered-text">
-                                                                    <h6>{{Facilities[item].name}}</h6>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                                    </ng-container>
-
-                                                    <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
-                                                        <div class="box-item box-item-text">
-                                                            <div class="hd-Offered-text">
-                                                                <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
-                                                                    <p>{{hotelAmenity.length - 6}}+</p>
-                                                                    <span>More Amenities</span>
-                                                                </a>
-                                                            </div>
+                                              <div class="Overview-details" innerHtml="{{HotelDetail.description}}">
+  
+                                              </div>
+                                          </div>
+                                          <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
+                                              <div class="Overview-bottom-title mb-20">
+                                                  <h6>Facilities Offered</h6>
+                                              </div>
+                                              <div class="owl-slider grid-7 hd-Offered-slider">
+                                                <owl-carousel-o [options]="MobilecustomOptions">
+                                                  <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
+                                                    <ng-template carouselSlide>
+                                                      <div class="box-item">
+                                                        <div class="hd-Offered-thumbe">
+                                                            <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
                                                         </div>
-                                                    </ng-template>
-                                                </owl-carousel-o>
-
-                                        </div>
-
+                                                        <div class="hd-Offered-text">
+                                                            <h6>{{Facilities[item].name}}</h6>
+                                                        </div>
+                                                    </div>
+                                                      </ng-template>
+                                                   </ng-container>
+  
+                                                    <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
+                                                   <div class="box-item box-item-text">
+                                                    <div class="hd-Offered-text">
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
+                                                            <p>{{hotelAmenity.length - 6}}+</p>
+                                                            <span>More Amenities</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                              </ng-template>
+                                                  </owl-carousel-o>
+                                              </div>
+                                          </div>
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </div>
-                      <div id="hdRooms" class="hd-details-area  hd-tabs-details-active">
-                          <div class="hd-details-body">
-                              <div class="hd-Rooms-area">
-                                  <div class="hd-Rooms-top">
-                                      <div class="hd-Rooms-title mb-20">
-                                          <h6>Select Rooms</h6>
-                                          <p>Choose a room with below room types</p>
-                                      </div>
-                                      <div class="hd-Rooms-details">
-                                          <div class="hd-rd-area">
-                                              <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates;let i = index">
-                                                  <div class="hd-rd-left">
-                                                      <div class="hd-rd-big">
-                                                        <img *ngIf="item.imageInfo.wideAngleImageurl != null" src="{{item.imageInfo.wideAngleImageurl}}" alt="">
-                                                        <img *ngIf="item.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
-                                                      </div>
-                                                      <!-- <div class="hd-rd-thumbs">
-                                                          <div class="hd-rd-item">
-                                                            <img *ngIf="item.imageInfo.thumbnailImageUrl != null" src="{{item.imageInfo.thumbnailImageUrl}}" alt="">
-                                                            <img *ngIf="item.imageInfo.thumbnailImageUrl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                              <div id="hdRooms" class="hd-details-area hd-tabs-details-active">
+                                  <div class="hd-details-body">
+                                      <div class="hd-Rooms-area">
+                                          <div class="hd-Rooms-top">
+                                              <div class="hd-Rooms-title mb-20">
+                                                  <h6>Select Rooms</h6>
+                                                  <p>Choose a room with below room types</p>
+                                              </div>
+                                              <div class="hd-Rooms-details">
+                                                  <div class="hd-rd-area">
+                                                      <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates ; let i = index">
+                                                          <div class="hd-rd-left">
+                                                              <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
+                                                                <owl-carousel-o [options]="WideImageCustomOptions" >
+                                                                  <ng-container>
+                                                                    <ng-template carouselSlide >
+                                                                      <div class="item">
+                                                                        <img src="{{item.imageInfo.wideAngleImageurl}}" class="img-fluid" alt="">
+                                                                    </div>
+                                                                      </ng-template>
+                                                                   </ng-container>
+                                                                </owl-carousel-o>
+  
+                                                              </div>
                                                           </div>
-                                                      </div> -->
-                                                  </div>
-                                                  <!-- web cancellation  -->
-                                                  <div class="hd-rd-right">
-                                                      <div class="hd-rdetails-left">
-                                                          <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
-                                                          <ul class="hd-rd-Facilities">
-                                                              <li *ngFor="let list of item.roomAmenities">
-                                                                <p>{{list}}</p>
-                                                              </li>
-                                                          </ul>
-                                                          <span class="information-icon hd-cc-Policy"  (click)="showCancellationDetail(i)">
-                                                              Check Cancellation Policy
-                                                              <div class="hover-popover" id="showCancellation_{{i}}">
-                                                                  <a href="javaScript:voide(0)" (click)="closeCancellation(i)" class="popover-close">
-                                                                      <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                                  </a> 
-                                                                  <div class="hover-popover-title">
-                                                                      <h6>Cancellation Policy</h6>
-                                                                      <p>{{item.cancellationPolicy}}</p>
+                                                          <div class="hd-rd-right">
+                                                              <div class="hd-rdetails-left position-relative">
+                                                                  <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
+                                                                  <ul class="hd-rd-Facilities">
+                                                                    <li *ngFor="let list of item.roomAmenities">
+                                                                      <p>{{list}}</p>
+                                                                    </li>
+                                                                  </ul>
+                                                                  <span class="information-icon hd-cc-Policy" (click)="showCancellationDetailMobile(item)" >
+                                                                      Check Cancellation Policy
+                                                                  </span>
+                                                              </div>
+                                                              <div class="hd-rdetails-right">
+                                                                  <div class="hd-rdetails-right-price">
+                                                                      <h6>₹{{item.rateBreakdown.total | number}}</h6>
+                                                                      <p>Inclusive of taxes</p>
+                                                                  </div>
+                                                                  <div class="hd-rdetails-right-btn">
+                                                                      <a href="javascript:;" class="button-style" (click)="onBooking(item)">Book Now</a>
                                                                   </div>
                                                               </div>
-                                                          </span>
-                                                      </div>
-                                                      <div class="hd-rdetails-right">
-                                                          <h6>₹{{item.rateBreakdown.total | number}}</h6>
-                                                          <p>Inclusive of taxes</p>
-                                                          <a href="javascript:;" class="button-style"  (click)="onBooking(item)">Book Now</a>
+                                                          </div>
                                                       </div>
                                                   </div>
                                               </div>
@@ -267,21 +497,20 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
-                      </div>
-                      <div id="hdAmenities" class="hd-details-area  hd-tabs-details-active">
-                          <div class="hd-details-body">
-                              <div class="Amenities-area">
-                                  <div class="Amenities-top">
-                                      <div class="Amenities-title">
-                                          <h6>Amenities</h6>
-                                      </div>
-                                      <div class="Amenities-details">
-                                          <ul>
-                                              <li *ngFor="let Amenity of HotelDetail.hotelAmenities">
-                                                <p><strong>{{Amenity.category}}</strong>: {{Amenity.amenity.toString()}}</p></li>
-
-                                          </ul>
+                              <div id="hdAmenities" class="hd-details-area hd-tabs-details-active">
+                                  <div class="hd-details-body">
+                                      <div class="Amenities-area">
+                                          <div class="Amenities-top">
+                                              <div class="Amenities-title">
+                                                  <h6>Amenities</h6>
+                                              </div>
+                                              <div class="Amenities-details">
+                                                  <ul>
+                                                    <li *ngFor="let Amenity of HotelDetail.hotelAmenities">
+                                                      <p><strong>{{Amenity.category}}</strong>: {{Amenity.amenity.toString()}}</p></li>
+                                                  </ul>
+                                              </div>
+                                          </div>
                                       </div>
                                   </div>
                               </div>
@@ -290,324 +519,105 @@
                   </div>
               </div>
           </div>
-      </div>
-  </div>
-</section>
-
-      <!-- mob-travel-area -->
-      <section class="mob-travel-area d-lg-block d-block" *ngIf="HotelDetail && isMobile">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 p-0">
-                    <div class="mob-listing-header">
-                        <div class="mob-listing-header-left">
-                            <a (click)="backClicked()" >
-                                <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
-                            </a>
-                        </div>
-                        <div class="mob-listing-header-center">
-                            <h6>{{SelectedQueryParam.city +', '+ SelectedQueryParam.countryName}}</h6>
-                            <p *ngIf="SelectedQueryParam.checkIn">{{SelectedQueryParam.checkIn | date:'EEE, MMM dd'}} - {{SelectedQueryParam.checkOut | date:'EEE, MMM dd'}}  |  {{SelectedQueryParam.totalGuest}} Guests</p>
-                        </div>
-                        <div class="mob-listing-header-right">
-                            <a  routerLink="/compare-stay">
-                                <img src="{{cdnUrl}}/images/icons/edit.png" alt="" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="hd-gallery mb-20">
-
-                     <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length ==0">
-                          <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
-                            <ng-container>
-                              <ng-template carouselSlide  [id]="'Id_0'">
-                                <div class="item">
-                                    <img src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage.jpg"  class="img-fluid" alt="">
-                              </div>
-                                </ng-template>
-                             </ng-container>
-                          </owl-carousel-o>
-                        </div>
-
-                        <div id="mob-big" class="owl-carousel owl-theme" *ngIf="HotelDetail.images.length >0">
-                          <owl-carousel-o [options]="WideImageCustomOptions" #WideImageOwl >
-                            <ng-container *ngFor="let image of HotelDetail.images; let i = index">
-                              <ng-template carouselSlide  [id]="'Id_'+i">
-                                <div class="item">
-                                  <img src="{{image.wideAngleImageUrl}}" class="img-fluid" alt="">
-                              </div>
-                                </ng-template>
-                             </ng-container>
-                          </owl-carousel-o>
-                        </div>
-                        <div id="mob-thumbs" class="owl-carousel owl-theme mt-10" *ngIf="HotelDetail.images.length >0">
-                          <owl-carousel-o [options]="MobileThumbNailImageCustomOptions" #ThumbNailImageOwl>
-                            <ng-container *ngFor="let image of HotelDetail.images; let i = index">
-                              <ng-template carouselSlide >
-                                <div class="item" (click)="onImageClick(i)">
-                                  <img src="{{image.thumbnailImageUrl}}" class="img-fluid" alt="">
-                              </div>
-                                </ng-template>
-                             </ng-container>
-                          </owl-carousel-o>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="d-flex justify-content-between">
-                        <div class="hotel-list-text me-3">
-                            <h6 class="hotel-name">{{HotelDetail.hotelName}}</h6>
-                            <p class="hotel-place">{{HotelDetail.address=='' ? HotelDetail.city : HotelDetail.address }}</p>
-                            <p class="hotel-star" *ngIf="HotelDetail.hotelRatings[0].rating > 0">
-                              <i class="fas fa-star " [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 1}"></i>
-                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 2}"></i>
-                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 3}"></i>
-                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 4}"></i>
-                              <i class="fas fa-star" [ngClass]="{'active' : HotelDetail.hotelRatings[0].rating >= 5}"></i>
-                              <span class="hotel-star-tag">{{HotelDetail.hotelRatings[0].rating}}/5</span>
-                          </p>
-                        </div>
-                        <div class="hd-map" style="width: 150px; height: 80px;">
-                            <iframe class="d-flex" [src]="GOOGLE_MAP_URL" width="100%" height="80px"></iframe>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-20">
-                <div class="col-12">
-                    <div class="hd-tabs-area mob-hd-tabs-area">
-                        <ul class="list-unstyled hd-tabs">
-                            <li>
-                                <a href="javascript:void(0)" (click)="onSectionChange('hdOverview','Overview')" [ngClass]="{'hd-tabs-active':selectedTab == 'Overview'}">Overview</a>
-                            </li>
-                            <li>
-                                <a  href="javascript:void(0)" (click)="onSectionChange('hdRooms','Rooms')" [ngClass]="{'hd-tabs-active':selectedTab == 'Rooms'}"> Rooms</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" (click)="onSectionChange('hdAmenities','Amenities')" [ngClass]="{'hd-tabs-active':selectedTab == 'Amenities'}"> Amenities</a>
-                            </li>
-                        </ul>
-                        <div class="hd-tabs-details">
-                            <div id="hdOverview" class="hd-details-area hd-tabs-details-active">
-                                <div class="hd-details-body">
-                                    <div class="Overview-area">
-                                        <div class="Overview-top">
-                                            <div class="Overview-title">
-                                                <h6>About</h6>
-                                                <p *ngIf="checkin != undefined">CHECK-IN {{checkin | date:'hh a'}} | CHECK-OUT {{checkout | date:'hh a'}}</p>
-                                            </div>
-                                            <div class="Overview-details" innerHtml="{{HotelDetail.description}}">
-
-                                            </div>
-                                        </div>
-                                        <div class="Overview-bottom mt-10" *ngIf="hotelAmenity.length > 0">
-                                            <div class="Overview-bottom-title mb-20">
-                                                <h6>Facilities Offered</h6>
-                                            </div>
-                                            <div class="owl-slider grid-7 hd-Offered-slider">
-                                              <owl-carousel-o [options]="MobilecustomOptions">
-                                                <ng-container *ngFor="let item of hotelAmenity | slice:0:6 ; let i = index">
-                                                  <ng-template carouselSlide>
-                                                    <div class="box-item">
-                                                      <div class="hd-Offered-thumbe">
-                                                          <img src="{{Facilities[item].image}}" class="img-fluid" alt="">
-                                                      </div>
-                                                      <div class="hd-Offered-text">
-                                                          <h6>{{Facilities[item].name}}</h6>
-                                                      </div>
-                                                  </div>
-                                                    </ng-template>
-                                                 </ng-container>
-
-                                                  <ng-template carouselSlide *ngIf="hotelAmenity.length > 6">
-                                                 <div class="box-item box-item-text">
-                                                  <div class="hd-Offered-text">
-                                                      <a href="#" data-bs-toggle="modal" data-bs-target="#moreAmenities">
-                                                          <p>{{hotelAmenity.length - 6}}+</p>
-                                                          <span>More Amenities</span>
-                                                      </a>
-                                                  </div>
-                                              </div>
-                                            </ng-template>
-                                                </owl-carousel-o>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+      </section>
+  
+  
+     <!-- ------------------------------
+              >>> Modal More Amenities
+          ---------------------------------->
+          <div class="modal amenities-modal" id="moreAmenities">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body" style="padding: 25px;">
+                        <div class="amenitiesmodal-items">
+                            <div class="amenitiesmodal-title">
+                                <h6>Amenities</h6>
+                                <a href="javascript:;" class="modal-close" (click)="CloseModal()">
+                                    <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                </a>
                             </div>
-                            <div id="hdRooms" class="hd-details-area hd-tabs-details-active">
-                                <div class="hd-details-body">
-                                    <div class="hd-Rooms-area">
-                                        <div class="hd-Rooms-top">
-                                            <div class="hd-Rooms-title mb-20">
-                                                <h6>Select Rooms</h6>
-                                                <p>Choose a room with below room types</p>
-                                            </div>
-                                            <div class="hd-Rooms-details">
-                                                <div class="hd-rd-area">
-                                                    <div class="hd-rd-list" *ngFor="let item of HotelDetail.roomRates ; let i = index">
-                                                        <div class="hd-rd-left">
-                                                            <div id="hd-rd-big" class="owl-carousel owl-theme room-big hd-rd-big-left">
-                                                              <owl-carousel-o [options]="WideImageCustomOptions" >
-                                                                <ng-container>
-                                                                  <ng-template carouselSlide >
-                                                                    <div class="item">
-                                                                      <img src="{{item.imageInfo.wideAngleImageurl}}" class="img-fluid" alt="">
-                                                                  </div>
-                                                                    </ng-template>
-                                                                 </ng-container>
-                                                              </owl-carousel-o>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="hd-rd-right">
-                                                            <div class="hd-rdetails-left">
-                                                                <h6 class="hd-rd-title">{{item.roomType.roomTitle}}</h6>
-                                                                <ul class="hd-rd-Facilities">
-                                                                  <li *ngFor="let list of item.roomAmenities">
-                                                                    <p>{{list}}</p>
-                                                                  </li>
-                                                                </ul>
-                                                                <span class="information-icon hd-cc-Policy" (click)="showCancellationDetail(i)" >
-                                                                    Check Cancellation Policy
-                                                                    <div class="hover-popover" id="showCancellation_{{i}}">
-                                                                        <a href="javaScript:void(0)"(click)="closeCancellation(i)" class="popover-close" >
-                                                                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                                                                        </a>
-                                                                        <div class="hover-popover-title">
-                                                                            <h6>Cancellation Policy</h6>
-                                                                            <p>{{item.cancellationPolicy}}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </span>
-                                                            </div>
-                                                            <div class="hd-rdetails-right">
-                                                                <div class="hd-rdetails-right-price">
-                                                                    <h6>₹{{item.rateBreakdown.total | number}}</h6>
-                                                                    <p>Inclusive of taxes</p>
-                                                                </div>
-                                                                <div class="hd-rdetails-right-btn">
-                                                                    <a href="javascript:;" class="button-style" (click)="onBooking(item)">Book Now</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="hdAmenities" class="hd-details-area hd-tabs-details-active">
-                                <div class="hd-details-body">
-                                    <div class="Amenities-area">
-                                        <div class="Amenities-top">
-                                            <div class="Amenities-title">
-                                                <h6>Amenities</h6>
-                                            </div>
-                                            <div class="Amenities-details">
-                                                <ul>
-                                                  <li *ngFor="let Amenity of HotelDetail.hotelAmenities">
-                                                    <p><strong>{{Amenity.category}}</strong>: {{Amenity.amenity.toString()}}</p></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="amenitiesmodal-content">
+                                <ul class="amenitiesmodal-ul">
+                                    <li *ngFor="let item of hotelAmenity"><p>{{Facilities[item].name}}</p></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-
-   <!-- ------------------------------
-            >>> Modal More Amenities
-        ---------------------------------->
-        <div class="modal amenities-modal" id="moreAmenities">
-          <div class="modal-dialog modal-lg modal-dialog-centered">
-              <div class="modal-content">
-                  <div class="modal-body" style="padding: 25px;">
-                      <div class="amenitiesmodal-items">
-                          <div class="amenitiesmodal-title">
-                              <h6>Amenities</h6>
-                              <a href="javascript:;" class="modal-close" (click)="CloseModal()">
-                                  <img src="{{cdnUrl}}/images/icons/close.png" alt="">
-                              </a>
-                          </div>
-                          <div class="amenitiesmodal-content">
-                              <ul class="amenitiesmodal-ul">
-                                  <li *ngFor="let item of hotelAmenity"><p>{{Facilities[item].name}}</p></li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-<!-- ------------------------------
-            >>> Modal bookingprocess
-        ---------------------------------->
-        <div class="modal bookingprocess" id="bookingprocess" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                  <div class="modal-body" style="padding: 25px;">
-                      <div class="bookingprocess-items">
-                          <div class="bookingprocess-title text-center mb-30">
-                              <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
-                          </div>
-                          <div class="bookingprocess-content">
-                              <div class="bookingprocess-hotel">
-                                  <div class="bookingprocess-hotel-title">
-                                      <h6>{{SelectedQueryParam.city}}, {{SelectedQueryParam.countryName}}</h6>
-                                  </div>
-                                  <div class="bookingprocess-hotel-content">
-                                      <p>{{SelectedQueryParam.checkIn | date:'dd.MM.yyyy'}} - {{SelectedQueryParam.checkOut | date:'dd.MM.yyyy'}} </p>
-                                      <p>{{TotalAdult}} Adults, {{TotalChild}} Child</p>
-                                      <p>{{SelectedQueryParam.numberOfRooms}}  Room</p>
-                                  </div>
-                              </div>
-                              <div class="bookingprocess-processbar hd-processbar">
-                                  <div class="progress">
-                                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
-                                          <span class="title"> &nbsp; </span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="refresh-text text-center pt-2">
-                              <p>Please don't click or refresh the page</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
-  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body " style="padding: 25px;">
-        <div class="bookingprocess-items">
-          <div class="bookingprocess-content">
-            An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
-          </div>
-          <div class="refresh-text text-center pt-2">
-            <button type="button" class="btn btn-primary" (click)="backClicked()">Retry</button>
+  <!-- ------------------------------
+              >>> Modal bookingprocess
+          ---------------------------------->
+          <div class="modal bookingprocess" id="bookingprocess" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body" style="padding: 25px;">
+                        <div class="bookingprocess-items">
+                            <div class="bookingprocess-title text-center mb-30">
+                                <h5><strong>We are processing your booking. <br> Please wait...</strong></h5>
+                            </div>
+                            <div class="bookingprocess-content">
+                                <div class="bookingprocess-hotel">
+                                    <div class="bookingprocess-hotel-title">
+                                        <h6>{{SelectedQueryParam.city}}, {{SelectedQueryParam.countryName}}</h6>
+                                    </div>
+                                    <div class="bookingprocess-hotel-content">
+                                        <p>{{SelectedQueryParam.checkIn | date:'dd.MM.yyyy'}} - {{SelectedQueryParam.checkOut | date:'dd.MM.yyyy'}} </p>
+                                        <p>{{TotalAdult}} Adults, {{TotalChild}} Child</p>
+                                        <p>{{SelectedQueryParam.numberOfRooms}}  Room</p>
+                                    </div>
+                                </div>
+                                <div class="bookingprocess-processbar hd-processbar">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'max-width':loaderValue +'%'}">
+                                            <span class="title"> &nbsp; </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="refresh-text text-center pt-2">
+                                <p>Please don't click or refresh the page</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <div class="modal fade bookingprocess" id="bookingprocessFailed" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body " style="padding: 25px;">
+          <div class="bookingprocess-items">
+            <div class="bookingprocess-content">
+              An Error occurred during fetching details. Do Not Worry! <br><br> Click on Retry
+            </div>
+            <div class="refresh-text text-center pt-2">
+              <button type="button" class="btn btn-primary" (click)="backClicked()">Retry</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  
+  <div class="modal fade bookingprocess" id="showCancellation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+             <div class="modal-header">
+                      <b class="modal-title">Cancellation Policy</b>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+              <div class="modal-body " style="padding: 25px;">
+                  <div class="bookingprocess-items">
+                      <div class="p-15" [innerHTML]="cancellationPolicy"></div>
+                     
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  

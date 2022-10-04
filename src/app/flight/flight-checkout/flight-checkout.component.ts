@@ -315,6 +315,7 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   steps: any = 1;
 
   travelerDetails: any = {};
+  statesdump:any=[];
   checked: any = false;
   whatsAppCheck: boolean = true;
   gstNumber: any
@@ -327,7 +328,8 @@ export class FlightCheckoutComponent implements OnInit, OnDestroy {
   isCollapseVas: boolean = false;
   isCollapse: boolean = false;
 orderRetry:boolean=false;
-
+ domainName: any;
+    pgSettingsEMI:number=0;
   constructor(private el: ElementRef,private ref: ChangeDetectorRef, public _irctc: IrctcApiService, private _fb: FormBuilder, private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService, private modalService: NgbModal, @Inject(DOCUMENT) private document: any) {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -335,7 +337,9 @@ orderRetry:boolean=false;
       this.enableGST = this.serviceSettings.enableSavedGST;
       this.enablesavedTraveller = this.serviceSettings.enablesavedTraveller;
       this.flightClasses = this.serviceSettings.flightClasses;
-
+      this.statesdump = require('src/assets/data/states.json');
+      this.domainName = this.sg['domainName'];
+        this.pgSettingsEMI=this.serviceSettings.PAYSETTINGS[this.domainName][this.serviceId].EMI;
       this.getAirpotsList();
       this.getAirLineList();
       this.getCountryList();
@@ -1561,7 +1565,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-      //this.passengerInfantFormCount++;
+      this.passengerInfantFormCount++;
 
       if (checkboxIndex != -1) {
         $('#travelPassenger_' + checkboxIndex).prop('checked', true);
@@ -2636,7 +2640,7 @@ saveTravellerFunc(saveTravellerArray){
          for(var i=0;i<this.baggageInfoOnward.length;i++){ 
          this.baggageInfo+= `<tr >
         <td>
-        <p class="opacity_05">`+this.baggageInfoOnward[i].flightName+`<br>`+this.baggageInfoOnward[i].flightNo+`</p>
+        <p class="">`+this.baggageInfoOnward[i].flightName+`<br>`+this.baggageInfoOnward[i].flightNo+`</p>
         </td>
         <td>
         <p >`+this.baggageInfoOnward[i].checkIn+`</p>
@@ -2670,7 +2674,7 @@ saveTravellerFunc(saveTravellerArray){
          for(var i=0;i<this.baggageInfoReturn.length;i++){ 
          this.baggageInfo+= `<tr >
         <td>
-        <p class="opacity_05">`+this.baggageInfoReturn[i].flightName+`<br>`+this.baggageInfoReturn[i].flightNo+`</p>
+        <p class="">`+this.baggageInfoReturn[i].flightName+`<br>`+this.baggageInfoReturn[i].flightNo+`</p>
         </td>
         <td>
         <p >`+this.baggageInfoReturn[i].checkIn+`</p>
@@ -2743,7 +2747,7 @@ saveTravellerFunc(saveTravellerArray){
          for(var j=0;j<this.baggageInfoOnwardMulti[i].length;j++){ 
          this.baggageInfo+= `<tr >
         <td>
-        <p class="opacity_05">`+this.baggageInfoOnwardMulti[i][j].flightName+`<br>`+this.baggageInfoOnwardMulti[i][j].flightNo+`</p>
+        <p class="">`+this.baggageInfoOnwardMulti[i][j].flightName+`<br>`+this.baggageInfoOnwardMulti[i][j].flightNo+`</p>
         </td>
         <td>
         <p >`+this.baggageInfoOnwardMulti[i][j].checkIn+`</p>
@@ -2825,14 +2829,14 @@ saveTravellerFunc(saveTravellerArray){
         let sp_data = cancellation_data[i].split('Rs.');
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05"> `+sp_data[0]+` </td>
+        <td class=""> `+sp_data[0]+` </td>
         <td >₹ `+sp_data[1]+`</td>
         </tr>`;
         }
         }
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td class="">EaseMyTrip Service fee</td>
         <td>₹ `+data[i].EMTFee+`</td>
         </tr>
         </tbody>
@@ -2855,14 +2859,14 @@ saveTravellerFunc(saveTravellerArray){
         let rd_data = reschedule_data[i].split('Rs.');
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05"> `+rd_data[0]+` </td>
+        <td class=""> `+rd_data[0]+` </td>
         <td >₹ `+rd_data[1]+`</td>
         </tr>`;
         }
         }   
 
         this.cancellationPolicyOnward+= `<tr>
-        <td class="opacity_05">EaseMyTrip Service fee</td>
+        <td class="">EaseMyTrip Service fee</td>
         <td>₹ `+data[i].EMTFee+`</td>
         </tr>
         </tbody>
@@ -2870,7 +2874,7 @@ saveTravellerFunc(saveTravellerArray){
         }
 
         if (data[i] && data[i].Tnc) {  
-        this.cancellationPolicyOnward+= `<div class="imp-Information mt-30"><h6>Terms & Conditions</h6><div class="imp-Information-list"><ul class="imp-Information-list">`;
+        this.cancellationPolicyOnward+= `<div class="imp-Information mt-30"><h6>Terms & Conditions</h6><div><ul class="imp-Information-list">`;
          let tnc_data = [];
          $.each(data[i].Tnc, function (key, value) {
         tnc_data.push(value);
@@ -4293,6 +4297,7 @@ orderReferenceNumber:any;
     if(page<5){
     this.totalCollectibleAmount=this.totalCollectibleAmount-this.coupon_amount;
     this.coupon_amount=0;
+    this.voucher_amount = 0;
     }
 
     if(page<4){

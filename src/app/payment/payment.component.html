@@ -141,18 +141,22 @@
                                 </a>
                             </li>
 
+
                             <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
-                                <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false ,'active': pgSettingsHDFCPG && isLoggedIn && !pgSettingsCYBER  && cardData.length ==0 && payzrestriction==false  }" data-bs-toggle="tab" role="tab">
+                                <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': (pgSettingsCYBER ||pgSettingsHDFCPG ) && isLoggedIn && cardData.length ==0 && payzrestriction==false }" data-bs-toggle="tab" role="tab">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
                                 </a>
                             </li>
+              
+                            
+                            
                             <li class="nav-item" *ngIf="pgSettingsNETBANKING">
                                 <a id="tab-netBanking" href="#pane-netBanking" class="nav-link" data-bs-toggle="tab" role="tab">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">HDFC Net Banking</span>
                                 </a>
                             </li>
-                            <li class="nav-item" *ngIf="pgSettingsEMI && emiArray.length >0">
-                                <a id="tab-emi" href="#pane-emi" class="nav-link" data-bs-toggle="tab" role="tab">
+                            <li class="nav-item" *ngIf="(pgSettingsEMI && emiArray.length >0) || (IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0)">
+                                <a id="tab-emi" href="#pane-emi" class="nav-link" data-bs-toggle="tab" role="tab" (click)="pgSelectGuest();">
                                     <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
                                 </a>
                             </li>
@@ -380,7 +384,7 @@
 
 
                         <!-- Credt/Debit Card Section Starts -->
-                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': pgSettingsCYBER && isLoggedIn && cardData.length ==0 && payzrestriction==false ,'active show': pgSettingsHDFCPG && isLoggedIn && !pgSettingsCYBER  && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
+                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': ( pgSettingsCYBER || pgSettingsHDFCPG) && isLoggedIn && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
                             *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
 
                             <div class="panel-heading">
@@ -421,8 +425,8 @@
                                                     </li>
                                                 </ul> -->
                                                 <mat-radio-group aria-label="" class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
-                                                    <mat-radio-button class="addCardTab" checked [ngClass]="{'active': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true" value="addCard">Visa / MasterCard / Diners</mat-radio-button>
-                                                    <mat-radio-button class="addRupayTab" [ngClass]="{'active': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false" value="rupayCard">Rupay</mat-radio-button>
+                                                    <mat-radio-button class="addCardTab" checked [ngClass]="{'active': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true" value="addCard" *ngIf="pgSettingsCYBER">Visa / MasterCard / Diners</mat-radio-button>
+                                                    <mat-radio-button class="addRupayTab" [ngClass]="{'active': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false" value="rupayCard" *ngIf="pgSettingsHDFCPG">Rupay</mat-radio-button>
                                                 </mat-radio-group> 
                                                 <div class="tab-content pt-0" id="pills-tabContent">
                                                     <div class="tab-pane fade  " [ngClass]="{'active show': pgSettingsCYBER   }" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
@@ -679,10 +683,10 @@
 
 
                         <!-- EMI Section Starts -->
-                        <div id="pane-emi" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" role="tabpanel" aria-labelledby="tab-emi" *ngIf="pgSettingsEMI && emiArray.length >0">
+                        <div id="pane-emi" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" role="tabpanel" aria-labelledby="tab-emi" *ngIf="(pgSettingsEMI && emiArray.length >0) || (IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0)">
                             <div class="panel-heading">
-                                <div class="" *ngIf="pgSettingsEMI && emiArray.length >0">
-                                    <a id="tab-emi" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-emi" aria-expanded="false" aria-controls="collapse-emi">
+                                <div class="" *ngIf="(pgSettingsEMI && emiArray.length >0) || (IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0)">
+                                    <a id="tab-emi" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-emi" aria-expanded="false" aria-controls="collapse-emi" (click)="pgSelectGuest();">
                                         <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
 
                                     </a>
@@ -692,12 +696,28 @@
                                 <div class="card-body p-0">
                                     <div class="tab_btn_payments">
                                         <ul class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
-                                            <li class="nav-item">
+                                         
+                                         <ng-container *ngIf="(pgSettingsEMI && emiArray.length >0)">
+                                        
+                                            <li class="nav-item" *ngIf="(pgSettingsEMI && emiArray.length >0)" >
                                                 <a class="nav-link active ccemiTab" (click)="hidecheckoutPay(0)" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true">Credit Card EMI</a>
                                             </li>
-                                            <li class="nav-item dcemiTab" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1)" >
-                                                <a class="nav-link" id="dc-emi"  (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
+                                            <li class="nav-item " *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1)" >
+                                                <a class="nav-link dcemiTab" id="dc-emi"  (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false">Debit Card EMI</a>
                                             </li>
+                                            </ng-container>
+                                            
+                                     <ng-container *ngIf="(!pgSettingsEMI && emiArray.length ==0) && IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0">
+                                        
+                                            <li class="nav-item" *ngIf="(pgSettingsEMI && emiArray.length >0)" >
+                                                <a class="nav-link ccemiTab" (click)="hidecheckoutPay(0)" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="false">Credit Card EMI</a>
+                                            </li>
+                                            <li class="nav-item " *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1)" >
+                                                <a class="nav-link active dcemiTab"  id="dc-emi"  (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="true">Debit Card EMI</a>
+                                            </li>
+                                            </ng-container>
+                                            
+                                            
                                         </ul>
                                         <!-- <mat-radio-group aria-label="" class="nav nav-justified nav-pills" id="pills-tab" role="tablist">
                                             <mat-radio-button class="ccemiTab" checked (click)="hidecheckoutPay(0)" id="cc-emi" data-bs-toggle="pill" href="#pills-cc-emi" role="tab" aria-controls="pills-cc-emi" aria-selected="true" value="cc-emi">Credit Card EMI</mat-radio-button>
@@ -705,7 +725,7 @@
                                         </mat-radio-group>  -->
                                         <!--  <mat-radio-button class="dc-emi" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0" (click)="hidecheckoutPay(1);" (click)="pgSelect('DEBIT_EMI');" data-bs-toggle="pill" href="#pills-dc-emi" role="tab" aria-controls="pills-dc-emi" aria-selected="false" value="dc-emi">Debit Card EMI</mat-radio-button> -->
                                         <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="pills-cc-emi" role="tabpanel" aria-labelledby="cc-emi">
+                                            <div class="tab-pane fade" [ngClass]="{'show active': pgSettingsEMI && emiArray.length >0 }" id="pills-cc-emi" role="tabpanel" aria-labelledby="cc-emi">
                                                 <div>
                                                     <!-- Credit Card EMI Start-->
                                                     <div class="payEmiSection">
@@ -803,7 +823,7 @@
                                                     <!--Credit Card EMI End-->
                                                 </div>
                                             </div>
-                                            <div class="tab-pane fade" id="pills-dc-emi" role="tabpanel" aria-labelledby="dc-emi">
+                                            <div class="tab-pane fade" id="pills-dc-emi"  [ngClass]="{'show active': !pgSettingsEMI && emiArray.length ==0 && IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0 }" role="tabpanel" aria-labelledby="dc-emi">
                                                 <div>
                                                     <!-- Debit Card EMI Start-->
                                                     <div class="payEmiSection" *ngIf="IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0">
@@ -812,8 +832,7 @@
                                                             <span class="">Pay With Debit Card EMI</span>
                                                         </div>
 
-                                                        <div id="payDebitEmiOption" class="collapse" [ngClass]="{'show':  !pgSettingsCYBER && !pgSettingsHDFCPG && 
-                                                        !pgSettingsEMI && pgSettingsDEBITEMI && emiDebitArray.length >0 }" data-bs-parent="#allPayments" name="paymentModule">
+                                                        <div id="payDebitEmiOption" class="" [ngClass]="{'show':  !pgSettingsEMI && pgSettingsDEBITEMI && emiDebitArray.length >0 }" data-bs-parent="#allPayments" name="paymentModule">
 
                                                             <div class="pay-emi-info" id="pay-dcemi-info">
                                                                 <ng-container *ngIf="enable_dcemi2; else old_dcemi_check_existing_customer">
@@ -1013,8 +1032,9 @@
                                                                             <p class="py-2">One time password has been sent to your mobile number registered with HDFC Bank</p>
                                                                             <h6 class="payTitle">Enter OTP</h6>
                                                                             <div class="row py-3">
-                                                                                <div class="col-6 col-md-3">
-                                                                                    <mat-form-field>
+                                                                                <div class="col-6 col-md-8">
+                                                                                    <mat-form-field class="w-100" appearance="outline">
+                                                                                        <mat-label>OTP</mat-label>
                                                                                         <input matInput placeholder="OTP" (keypress)="numberInput($event)" formControlName="otpnumber" name="otpnumber" id="otpnumber" maxlength="6" autocomplete="off">
                                                                                     </mat-form-field>
 
@@ -1023,9 +1043,9 @@
                                                                                     </div>
                                                                                     <div class="error" *ngIf="submittedDebitEMIOTPFrom && DCEMIError !=''">{{DCEMIError}}</div>
                                                                                 </div>
-                                                                                <div class="col-6 col-md-3">
+                                                                                <div class="col-6 col-md-8">
                                                                                     <ng-container *ngIf="enable_dcemi2; else old_validateDebitEmiOTP">
-                                                                                        <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
+                                                                                        <button class="btn btn-primary w-100 mt-2" (click)="validateDebitEmiOTP_new()">SUBMIT</button>
                                                                                     </ng-container>
                                                                                     <ng-template #old_validateDebitEmiOTP>
                                                                                         <button class="btn btn-paynow mt-2" (click)="validateDebitEmiOTP()">SUBMIT</button>
@@ -1788,7 +1808,7 @@
 </div>
 
 
-<div class="modal fade pop_code" id="payinfo1" tabindex="-1" role="dialog" aria-labelledby="payinfo1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade pop_code" id="payinfo1" tabindex="-1" role="dialog" aria-labelledby="payinfo1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered tokenise_popup" role="document">
         <div class="modal-content">
             <div class="modal-header pb-2 pr-0">
@@ -1811,7 +1831,36 @@
 
         </div>
     </div>
-</div>
+</div> -->
+
+<div class="modal fade tokenPop_code" id="payinfo1" tabindex="-1" role="dialog" aria-labelledby="payinfo1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered tokenise_popup" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id=""></h5>
+          <button type="button" class="btn-close close-popupd" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-10">
+            <div class="text-center">
+                <img src="" alt="" class="img-fluid secure_img infocardimg mb-20" width="50%">
+                <p class="title_visa pb-10">Please Tokenise & Save <span class="infocardtype"></span> card.</p>
+                <p class="desc_visa">As per RBI guidelines, We will securely save your card through Tokenisation.</p>
+            </div>
+            <div class="text_points">
+                <p>How will this help?</p>
+                <ul>
+                    <li>Prevents your card from unauthorized use</li>
+                    <li class="infocardtext"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer border-0">
+         <!--  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-running-dots" [fullScreen]="true">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>

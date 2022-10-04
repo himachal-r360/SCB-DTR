@@ -40,7 +40,7 @@
               <img src="{{cdnUrl}}/images/train_tickets.svg" class="train_img">
             </div>
           </div>
-          <div class="col-md-10">
+          <!-- <div class="col-md-10">
             <div class="row">
               <div class="col-md-4">
                 <span class="gray_text">Order ID <span class="number_highlight">{{data.order_ref_num}}</span></span>
@@ -53,7 +53,6 @@
               </div>
               <div class="col-md-12 mt-2 mb-2">
                 <span class="highlight_text">#{{data.train_no}}</span>
-                <!-- <span class="gray_text px-1">#{{12310}}</span> -->
               </div>
             </div>
             <div class="row mt-2 mb-2">
@@ -85,7 +84,43 @@
               </div>
               </div>
             </div>
+          </div> -->
+
+
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-12">
+                <span class="gray_text">PNR Number <span class="blue_text_link ms-1">{{data.pnr_no}}</span></span>
+              </div>
+            </div>
+            <div class="row  mt-3 mb-3">
+              <div class="col-md-4">
+                <span class="gray_text">Train No : <span class="number_highlight">{{data.train_no}}</span></span>
+              </div>
+              <div class="col-md-4">
+                <span class="gray_text">Journey Date : <span class="number_highlight">{{data.journey_date | date:'mediumDate'}}</span></span>
+              </div>
+              <div class="col-md-4 status_filed">
+                <span class="gray_text status_filed_label">TDR Reason :</span>
+                <div class="number_highlight status_filed_text">{{data.reason}}</div>
+              </div>
+            </div>
+            <div class="row  mt-3 mb-3">
+              <div class="col-md-4">
+                <span class="gray_text">From : <span class="number_highlight">{{data.from_station}}</span></span>
+              </div>
+              <div class="col-md-4">
+                <span class="gray_text">TDR Filing Date : <span class="number_highlight">{{data.tdr_fileddate | date:'mediumDate'}}</span></span>
+              </div>
+              <div class="col-md-4 status_filed">
+                <span class="gray_text status_filed_label">TDR Status :</span>
+                <div class="number_highlight status_filed_text">{{data.tdrstatus}}</div>
+              </div>
+            </div>
           </div>
+
+
+
         </div>
       </div>
     </div>
@@ -96,7 +131,7 @@
         <div class="row tdr_train_details" *ngFor="let data of tdrHistoryData">
           <div class="col-md-12">
             <div class="tdr_box">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-6">
                   <p class="blue_text_link">{{data.order_ref_num}}</p>
                 </div>
@@ -162,6 +197,69 @@
                   <p class="black_text">{{data.reason}}</p>
                 </div>
                 </div>
+              </div> -->
+
+
+
+
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <span class="gray_text">PNR Number <span class="blue_text_link ms-1">{{data.pnr_no}}</span></span>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-5">
+                    <span class="gray_text">Train No :</span>
+                  </div>
+                  <div class="col-7">
+                    <span class="black_text">{{data.train_no}}</span>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-5">
+                    <span class="gray_text">From :</span>
+                  </div>
+                  <div class="col-7">
+                    <span class="black_text">{{data.from_station}}</span>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-5">
+                    <span class="gray_text">Journey Date :</span>
+                  </div>
+                  <div class="col-7">
+                    <span class="black_text">{{data.journey_date | date:'mediumDate'}}</span>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-5">
+                    <span class="gray_text pe-0">TDR Filing Date : </span>
+                  </div>
+                  <div class="col-7">
+                    <span class="black_text">{{data.tdr_fileddate | date:'mediumDate'}}</span>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-5 pe-0">
+                    <span class="gray_text">TDR Reason :</span>
+                  </div>
+                  <div class="col-7">
+                    <span class="black_text">{{data.reason}}</span>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-5 pe-0">
+                    <span class="gray_text">TDR Status :</span>
+                  </div>
+                  <div class="col-7">
+                    <span class="black_text">{{data.tdrstatus}}</span>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

@@ -13,7 +13,7 @@ declare var $: any;
 @Component({
   selector: 'app-hotel-list',
   templateUrl: './hotel-list.component.html',
-  styleUrls: ['./hotel-list.component.scss', './hotel-list.component.css']
+  styleUrls: ['./hotel-list.component.scss']
 })
 export class HotelListComponent implements OnInit, OnDestroy {
   hotelSearchForm: any;
@@ -747,8 +747,8 @@ export class HotelListComponent implements OnInit, OnDestroy {
       return prev + next;
 
     });
-    if (obj > 3) {
-      obj = obj - 3;
+    if (obj > 5) {
+      obj = obj - 5;
       retVal = obj + "+";
     }
 

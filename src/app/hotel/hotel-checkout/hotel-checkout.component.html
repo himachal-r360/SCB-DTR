@@ -77,8 +77,8 @@
                                 <div>
                                     <div class="hotel_details">
                                         <div class="img_hr">
-                                            <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
-                                            <img *ngIf="searchResult.hotel_detail.images[0]['wideAngleImageUrl']== null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                            <img *ngIf="searchResult.hotel_detail.images.length && searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
+                                            <img *ngIf="searchResult.hotel_detail.images.length ==0" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
 
                                         </div>
                                         <div class="name_hr">
@@ -257,6 +257,7 @@
                                                     <mat-option value=""> Select </mat-option>
                                                     <mat-option value="Mr"> Mr </mat-option>
                                                     <mat-option value="Mrs">Mrs</mat-option>
+                                                      <mat-option value="Ms">Ms</mat-option>
                                                 </mat-select>
 
                                             </mat-form-field>
@@ -278,8 +279,7 @@
                             *ngIf="passengerForm.hasError('required','passengerFirstName')">
                             Please enter first name</mat-error>
                           <mat-error class="error_bus_contectDetails"
-                            *ngIf="passengerForm.hasError('pattern','passengerFirstName')">
-                            Please enter valid first name</mat-error>
+                            *ngIf="passengerForm.hasError('pattern','passengerFirstName')">Please enter only alphabets</mat-error>
                           <mat-error class="error_bus_contectDetails"
                             *ngIf="passengerForm.hasError('minlength','passengerFirstName')">
                             Please enter atleast 2 character</mat-error>
@@ -298,10 +298,9 @@
                                             <span *ngIf="submitted && passengerForm.controls['passengerLastName'] && passengerForm.controls['passengerLastName']['errors']">
                           <mat-error class="error_bus_contectDetails"
                             *ngIf="passengerForm.hasError('required','passengerLastName')">
-                            Please enter first name</mat-error>
+                            Please enter last name</mat-error>
                           <mat-error class="error_bus_contectDetails"
-                            *ngIf="passengerForm.hasError('pattern','passengerLastName')">
-                            Please enter valid first name</mat-error>
+                            *ngIf="passengerForm.hasError('pattern','passengerLastName')">Please enter only alphabets</mat-error>
                           <mat-error class="error_bus_contectDetails"
                             *ngIf="passengerForm.hasError('minlength','passengerLastName')">
                             Please enter atleast 2 character</mat-error>
@@ -346,7 +345,7 @@
                                     <div class="contact-whatsapp mt-20" *ngIf="whatsappFeature==1">
                                         <div class="contact-whatsapp-info me-2">
                                             <span>Send my booking information through</span>
-                                            <img src="{{ cdnUrl }}/images/icons/whatsapp.png" class="ms-2" alt="">
+                                            <img src="{{ cdnUrl }}/images/icons/whatsapp.svg" class="ms-2" alt="">
                                             <span class="fw_7">WhatsApp</span>
                                         </div>
                                         <div class="form-check form-switch m-0" *ngIf="whatsappFeature==1">
@@ -493,7 +492,7 @@
                                     <div class="col-lg-6 col-md-4 col-12">
                                         <mat-form-field appearance="outline" class="w-100">
                                             <mat-label>Pincode</mat-label>
-                                            <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)" (keyup)="getCityResidence($event)" minlength="6" maxlength="6" autocomplete="nope">
+                                            <input matInput placeholder="Pincode" formControlName="gstPincode" name="gstPincode" id="gstPincode" (keypress)="AvoidSpace($event);numberInput($event)"  minlength="6" maxlength="6" autocomplete="nope">
 
                                         </mat-form-field>
                                         <span *ngIf="submitted && passengerForm.controls.gstPincode.errors" class="error">
@@ -524,7 +523,13 @@
                                         <div class="col-lg-6 col-md-6 col-12">
                                             <mat-form-field appearance="outline" class="w-100">
                                                 <mat-label>State</mat-label>
-                                                <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value="{{ state }}">
+                                                <!-- <input matInput placeholder="State" formControlName="gstState" name="gstState" id="gstState" (keypress)="flInput($event)" maxlength="20" autocomplete="off" [(ngModel)]="state" readonly="stateCheck" value="{{ state }}"> -->
+
+                                                <mat-select formControlName="gstState" name="gstState">
+                                                    <mat-option *ngFor="let type of statesdump" [value]=type.state>
+                                                        {{type.statevalue}}
+                                                    </mat-option>
+                                                </mat-select> 
 
                                             </mat-form-field>
                                             <span *ngIf="submitted && passengerForm.controls.gstState.errors" class="error">
@@ -722,7 +727,7 @@
                                                     </div>
                                                     <div class="fare-list-right">
                                                         <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                                                        <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                                        <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                                         </p>
                                                     </div>
 
@@ -773,7 +778,7 @@
                         <div class="col-5">
                             <div class="">
                                 <h6 class="price">₹{{ totalFare |number }} </h6>
-                                <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                 </p>
                             </div>
                         </div>
@@ -917,7 +922,7 @@
                                     </div>
                                     <div class="fare-list-right">
                                         <h6 class="fw_7">₹ {{ totalFare|number }}</h6>
-                                        <p class="opacity_05" *ngIf="totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
+                                        <p class="opacity_05" *ngIf="pgSettingsEMI && totalFare > EMIAvailableLimit">EMI @ {{ calculateEMI(totalFare)|number }}/month
                                         </p>
                                     </div>
 

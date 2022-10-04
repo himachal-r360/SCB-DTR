@@ -520,9 +520,6 @@
                             <div class="travelSelect opt_box">
                                 <input type="text" class="form-control travelInput travelInputPop" id="" value="{{hotelInputText}}" readonly (click)="displayTravel(2)">
                                 <span class="material-icons arrowDn_icon_m travelInputPop" (click)="displayTravel(2)">expand_more</span>
-                                <div *ngIf="submittedHotel && showHotelPassengerError" class="error_msg">
-                                    <span class="error_msg2">Please choose child age</span>
-                                </div>
                                 <div class="travelList travelListHotelPop" *ngIf="showHotelPassenger">
                                     <div class="dropdown-menu travelllerList" style="display:block;">
                                         <div class="child-dropdown-pre">
@@ -597,10 +594,14 @@
                                             <button class="btn btn-primary" (click)="closeTavelPopup()">Apply</button>
                                         </div>
                                     </div>
+                              
                                 </div>
                             </div>
+                                 <div *ngIf="submittedHotel && showHotelPassengerError" class="error_msg">
+                                    <span class="error_msg2">Please choose child age</span>
+                                </div>
                         </div>
-
+      
                     </div>
                     <div class="d-flex  justify-content-between pt-25">
                         <div class="form-group flex_basis">
@@ -1338,12 +1339,12 @@
 
 
 
-                                        <div class="modal bottom_mlite_popup" id="hotel_arrival_mlite" tabindex="-1" aria-hidden="true">
+                                        <div class="modal bottom_mlite_popup" id="hotel_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="mliteChecout" >
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Select Check-Out Date</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" (click)="closeCheckout()" ></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <mat-calendar [minDate]="minDateHotelToMlite" (selectedChange)="onSelectMliteDate($event,'hotel','arrival')" [selected]="hotelCheckout"></mat-calendar>
@@ -1703,12 +1704,14 @@
                                         </label>
 
 
-                                        <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true">
+                                        <div class="modal bottom_mlite_popup" id="flight_arrival_mlite" tabindex="-1" aria-hidden="true" *ngIf="mliteChecoutF" >
+                                        
+                                       
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">Select Return Date</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close" (click)="closeCheckoutF()"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <mat-calendar [minDate]="minDateFlightToMlite" (selectedChange)="onSelectMliteDate($event,'flight','arrival')" [selected]="arrival"></mat-calendar>

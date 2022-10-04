@@ -51,7 +51,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     {"_source":{"full_content":"Kolkata, West Bengal, India","city":"Kolkata","countryName":"India","country":"IN"}},
     {"_source":{"full_content":"Hyderabad, Andhra Pradesh, India","city":"Hyderabad","countryName":"India","country":"IN"}},
     {"_source":{"full_content":"Jaipur, Rajasthan, India","city":"Jaipur","countryName":"India","country":"IN"}},
-    {"_source":{"full_content":"Cochin, Kerala, India","city":"Cochin","countryName":"India","country":"IN"}},
+    {"_source":{"full_content":"Kochi, Kerala, India","city":"Kochi","countryName":"India","country":"IN"}},
     {"_source":{"full_content":"London, Greater London, United Kingdom","city":"London","countryName":"United Kingdom","country":"UK"}},
     {"_source":{"full_content":"Dubai, Dubai Emirate, United Arab Emirates","city":"Dubai","countryName":" United Arab Emirates","country":"AE"}},
     {"_source":{"full_content":"Bangkok, Bangkok Province, Thailand","city":"Bangkok","countryName":" Thailand","country":"TH"}},
@@ -70,7 +70,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
 
 
 
-
+  startAt;
   constructor(private _fb: FormBuilder, private _hotelService: HotelService , private router:Router , private route:ActivatedRoute,private sg: SimpleGlobal) {
    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.hotelSearchForm = this._fb.group({
@@ -96,7 +96,7 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
       totalGuest:[]
     });
     this.minCheckoutDate.setDate( this.minCheckoutDate.getDate() + 1 );
-
+   
   }
 
   ngOnInit(): void {
@@ -197,35 +197,53 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
     if (title == "child") {
       item.value.numberOfChildren = +item.value.numberOfChildren - 1;
         var lastCommaIndex = item.value.childrenAge.lastIndexOf(",");
+        if(lastCommaIndex !=-1)
         item.value.childrenAge = item.value.childrenAge.substr(0,lastCommaIndex);
 
-       /*
-      if (this.submitted) {
-        var rooms = this.hotelSearchForm.value.rooms;
-        var j = 0;
-        var isvalid = true;
+    if (this.submitted) {
+      var rooms = this.hotelSearchForm.value.rooms;
+      var j = 0;
+      var isvalid = true;
         rooms.forEach(z => {
-          if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || (z.childrenAge == "" && z.childrenAge.find(a=>a =='0'))) && z.numberOfChildren > 0) {
-            var id = document.getElementById("error_" + j)
-            id.hidden = false;
-            isvalid = false;
-          } else {
-            var id = document.getElementById("error_" + j)
-            id.hidden = true;
-          }
-          j++;
+       
+        
+        if(z.numberOfChildren >0 ){
+        if(Array.isArray(z.childrenAge))
+        var childrenAgeArray = z.childrenAge;
+        else
+        var childrenAgeArray = z.childrenAge.split(',');
+
+        let loopvalid=0;
+        for(let i=0;i<(childrenAgeArray.length);i++){
+        if(childrenAgeArray[i] < 1) loopvalid++;
+        }
+
+        if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
+        var id = document.getElementById("error_" + j)
+        id.hidden = true;
+        isvalid = true;
+        }else{
+        var id = document.getElementById("error_" + j)
+        id.hidden = false;
+        isvalid = false;
+        }
+        j++;
+        }else{
+        $('#error_0').hide();
+        isvalid = false;
+        }
         });
-
-
-        if (!isvalid) {
-          var id1 = document.getElementById("error_AllAge")
-          id1.hidden = false;
-        }
-        else {
-          var id1 = document.getElementById("error_AllAge")
-          id1.hidden = true;
-        }
-      }*/
+      if (!isvalid) {
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = false;
+      }
+      else {
+        var id1 = document.getElementById("error_AllAge")
+        id1.hidden = true;
+      }
+    }
+    
+    
     }
     else {
       item.value.numberOfAdults = +item.value.numberOfAdults - 1;
@@ -253,9 +271,11 @@ export class HotelSearchComponent implements OnInit ,AfterViewInit{
   showTotalCountsOfChild() {
     let totalOfChild: any;
     totalOfChild = this.hotelSearchForm.value.rooms;
-
-
-    this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
+    this.totalChildCount =0;
+       for(let i=0;i<(totalOfChild.length);i++){
+       this.totalChildCount+= Number(totalOfChild[i]['numberOfChildren']);
+        }
+   // this.totalChildCount = totalOfChild.filter((item) => item.numberOfChildren).map((item) => +item.numberOfChildren).reduce((sum, current) => sum + current);
   }
 
 
@@ -347,7 +367,6 @@ focusInput(){
 
   onSelectAge(event, item, i) {
 
-
     let ageArr: any = [];
     let selectAge1: any = document.getElementById('selectAge1_' + i);
     let selectAge2: any = document.getElementById('selectAge2_' + i);
@@ -364,21 +383,34 @@ focusInput(){
 
     item.value.childrenAge = ageArr;
 
-    /*if (this.submitted) {
+    if (this.submitted) {
       var rooms = this.hotelSearchForm.value.rooms;
       var j = 0;
       var isvalid = true;
-      rooms.forEach(z => {
-        if ((z.numberOfChildren != z.childrenAge.length || z.childrenAge == "0" || z.childrenAge.find(a=>a =='0')) && z.numberOfChildren > 0) {
-          var id = document.getElementById("error_" + j)
-          id.hidden = false;
-          isvalid = false;
-        } else {
-          var id = document.getElementById("error_" + j)
-          id.hidden = true;
+        rooms.forEach(z => {
+        if(z.numberOfChildren >0 ){
+        if(Array.isArray(z.childrenAge))
+        var childrenAgeArray = z.childrenAge;
+        else
+        var childrenAgeArray = z.childrenAge.split(',');
+
+        let loopvalid=0;
+        for(let i=0;i<(childrenAgeArray.length);i++){
+        if(childrenAgeArray[i] < 1) loopvalid++;
+        }
+
+        if(childrenAgeArray.length > 0 && z.numberOfChildren  == childrenAgeArray.length && loopvalid == 0 ){
+        var id = document.getElementById("error_" + j)
+        id.hidden = true;
+        isvalid = true;
+        }else{
+        var id = document.getElementById("error_" + j)
+        id.hidden = false;
+        isvalid = false;
         }
         j++;
-      });
+        }
+        });
       if (!isvalid) {
         var id1 = document.getElementById("error_AllAge")
         id1.hidden = false;
@@ -388,7 +420,7 @@ focusInput(){
         id1.hidden = true;
       }
     }
-  */
+  
 
   }
 
@@ -470,16 +502,17 @@ focusInput(){
          var id = document.getElementById("error_" + i)
         id.hidden = true;
          isvalid = true;
-        console.log('valid');
      }else{
         var id = document.getElementById("error_" + i)
         id.hidden = false;
         isvalid = false;
      }
-      i++;
+    
+      }else{
+      this.hotelSearchForm.value.rooms[i]['childrenAge']='';
       }
+        i++;
     });
-
 
     if (this.hotelSearchForm.invalid) {
       return
@@ -496,6 +529,7 @@ focusInput(){
       this.hotelSearchForm.value.numberOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.noOfRooms = this.hotelSearchForm.value.rooms.length;
       this.hotelSearchForm.value.totalGuest = this.totalAdultsCount + this.totalChildCount;
+      
       localStorage.setItem(environment.hotelLastSearch, JSON.stringify(this.hotelSearchForm.value));
       let url = "hotel-list?" + decodeURIComponent(this.ConvertObjToQueryString(this.hotelSearchForm.value));
       this.hotelSearchCallBack(this.hotelSearchForm.value)
@@ -503,7 +537,6 @@ focusInput(){
     }
 
   }
-
 
   onSelectMliteDate(event, field) {
 
@@ -513,8 +546,8 @@ focusInput(){
        d.setDate(d.getDate() + 1);
       var compare1 = new Date(d).getTime();
        var compare2 = new Date(this.hotelSearchForm.value.checkOut).getTime();
-
        this.minCheckoutDate = d;
+  
       if (compare1 > compare2) {
         this.hotelSearchForm.value.checkOut = moment(this.minCheckoutDate).format('YYYY-MM-DD');
         this.hotelSearchForm['controls']['checkOut'].setValue(moment(this.minCheckoutDate).format('YYYY-MM-DD'));
@@ -525,13 +558,25 @@ focusInput(){
 
 
   }
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#flight_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
+  
   openMliteDatePicker(field, rtype) {
     if (field == 'checkin') {
+        this.mliteChecout=false;
       $('#flight_arrival_mlite').modal('hide');
       $('#flight_departure_mlite').modal('show');
     } else {
+        this.mliteChecout=true;
+     setTimeout(() => {
       $('#flight_arrival_mlite').modal('show');
       $('#flight_departure_mlite').modal('hide');
+      }, 30);
+
     }
 
   }

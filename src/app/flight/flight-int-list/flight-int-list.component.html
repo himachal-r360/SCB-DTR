@@ -41,11 +41,12 @@
                     <div class="flight-partners">
                         <p>Compare &amp; Fly with our flight partners</p>
                         <ul class="list-inline ms-3">
-                            <li class="list-inline-item" *ngFor="let service of enableFlightServices">
-                                <img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.svg" alt="{{service.name}}">
+                            <li class="list-inline-item flight_partner_box" *ngFor="let service of enableFlightServices">
+                                <div class="flight_partner_box_div"><img src="{{cdnUrl}}/images/flight_partners/{{service.name}}.svg" alt="{{service.name}}"></div>
                             </li>
 
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -150,9 +151,9 @@
                                     </div>
                                     <div class="widget-content mt-10 mb-30 price-widget-content">
                                         <div class="price-widget-content-flx">
-                                            <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                            ₹ <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
                                             <span class="ms-3 me-3">-</span>
-                                            <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                            ₹ <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
                                         </div>
                                         <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
 
@@ -429,7 +430,7 @@
                                                         <span class="information-icon">
                                                      <h6>&#8377; {{list.priceSummary[0].totalFare|number}} <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt=""></h6>
                                                         <div class="hover-popover">
-                                                            <div class="hover-popover-title">
+                                                            <div class="hover-popover-title text-left">
                                                                 <h6>Price Breakdown</h6>
                                                             </div>
                                                             <div class="hover-popover-content">
@@ -547,7 +548,7 @@
                                                             <span class="information-icon">
                                                         <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
                                                         <div class="hover-popover">
-                                                            <div class="hover-popover-title">
+                                                            <div class="hover-popover-title text-left">
                                                                 <h6>Price Breakdown</h6>
                                                             </div>
                                                             <div class="hover-popover-content">
@@ -1003,9 +1004,9 @@
             <div class="col-md-12 mt-70" *ngIf="!loader && serverIssue==0 ">
                 <div class="mob-listing-fiters">
                     <h6>{{flightList.length}} Flights Found</h6>
-                    <a href="javascript:void(0)" (click)="openMobileFilterSection()">
-                        <img src="{{cdnUrl}}/images/icons/filter.png" alt="">
-                        <span>Sort/Filters</span>
+                    <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center">
+                        <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                        <span class="ms-2">Sort/Filters</span>
                     </a>
                 </div>
             </div>
@@ -1776,9 +1777,9 @@
 
                                                         <div class="widget-content mt-10 mb-30 price-widget-content">
                                                             <div style="margin:0 0 20px 0">
-                                                                <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
+                                                                ₹ <input type="number" min="0" [(ngModel)]="minPrice" [max]="resetMaxPrice" id="min_price" class="price-range-field" />
                                                                 <span class="ms-3 me-3">-</span>
-                                                                <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
+                                                                ₹ <input type="number" min="0" [(ngModel)]="maxPrice" [max]="resetMaxPrice" id="max_price" class="price-range-field" />
                                                             </div>
                                                             <ngx-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (valueChange)="onMinValueChange($event)" (highValueChange)="onMaxValueChange($event)"></ngx-slider>
                                                         </div>

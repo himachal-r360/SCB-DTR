@@ -250,6 +250,9 @@ export class HotelDetailComponent implements OnInit ,AfterViewInit {
      if(res && res.response && res.response[" hotelInfo"]){
      this.HotelDetail = res.response[" hotelInfo"];
      let CurrentDate = new Date();
+     
+     if(!this.HotelDetail.description)
+     this.selectedTab = 'Rooms';
 
      this.checkin = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkIn);
      this.checkout = new Date(CurrentDate.getFullYear()+'-'+(CurrentDate.getMonth()+1)+'-'+CurrentDate.getDate()+' ' +this.HotelDetail.checkOut);
@@ -370,15 +373,27 @@ export class HotelDetailComponent implements OnInit ,AfterViewInit {
   
 
   showCancellationDetail(i){
-    $('#showCancellation_' + i).removeClass('d-none');
-    $('#showCancellation_' + i).toggleClass('d-block');
+  $('#showCancellation_' + i).show();
+  }
+  
+  cancellationPolicy:any;
+  showCancellationDetailMobile(item){
+    this.cancellationPolicy=item.cancellationPolicy;
+   $('#showCancellation').modal('show');
   }
 
   closeCancellation(i){
-    $('#showCancellation_' + i).remove('d-block');
-    $('#showCancellation_' + i).addClass('d-none');
+         setTimeout(() => {
+           $('#showCancellation_' + i).hide();
+        }, 10);
+   // $('#showCancellation_' + i).addClass('d-none');
     
   }
+  
+  onImgError(event){
+ event.target.src = this.cdnUrl+'/images/hotel/noImage/makemytrip_hotel_noimage.jpg'
+//Do other stuff with the event.target
+}
 
   ngAfterViewInit(): void {
 

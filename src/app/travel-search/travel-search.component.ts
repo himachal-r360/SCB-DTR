@@ -51,7 +51,7 @@ export class TravelSearchComponent implements OnInit {
         
          hotelCheckinMlite: any;
         hotelCheckoutMlite:any;
-
+ mliteChecoutF:boolean=false;
         cdnUrl: any;
         siteUrl:any;
         date: {year: number, month: number};
@@ -251,7 +251,7 @@ export class TravelSearchComponent implements OnInit {
 	{"_source":{ "city": "Kolkata", "full_content": "Kolkata, West Bengal, India","country" :"IN"}} ,
 	{"_source":{ "city": "Hyderabad", "full_content": "Hyderabad, Andhra Pradesh,  India","country" :"IN"}} ,
 	{"_source":{ "city": "Jaipur", "full_content": "Jaipur, Rajasthan, India","country" :"IN"}},
-	{"_source":{ "city": "Cochin", "full_content": "Cochin, Kerala, India","country" :"IN"}},
+	{"_source":{ "city": "Kochi", "full_content": "Kochi, Kerala, India","country" :"IN"}},
 	{"_source":{ "city": "London", "full_content": "London, Greater London, United Kingdom","country" :"GB"}} ,
 	{"_source":{ "city": "Dubai", "full_content": "Dubai, Dubai Emirate, United Arab Emirates","country" :"AE"}} ,
 	{"_source":{ "city": "Singapore", "full_content": "Singapore, Singapore","country" :"SG"}} ,
@@ -397,8 +397,11 @@ export class TravelSearchComponent implements OnInit {
         $('#flight_departure_mlite').modal('show');
         }else{
         if(this.showFlightReturn){
- 
-        $('#flight_arrival_mlite').modal('show');
+        this.mliteChecoutF=true;
+              setTimeout(() => {
+       $('#flight_arrival_mlite').modal('show');
+      }, 100);
+      console.log(this.mliteChecoutF);
         $('#flight_departure_mlite').modal('hide');
         }
         }
@@ -407,12 +410,16 @@ export class TravelSearchComponent implements OnInit {
         
                case 'hotel': {
         if(field=='departure'){
+         this.mliteChecout=false;
         $('#hotel_arrival_mlite').modal('hide');
         $('#hotel_departure_mlite').modal('show');
         }else{
  
-        $('#hotel_arrival_mlite').modal('show');
+        this.mliteChecout=true;
+        setTimeout(() => {
+         $('#hotel_arrival_mlite').modal('show');
         $('#hotel_departure_mlite').modal('hide');
+        }, 30);
         }
         break;
         }
@@ -431,6 +438,13 @@ export class TravelSearchComponent implements OnInit {
    }
    
    
+    
+  closeCheckoutF(){
+    $('#flight_arrival_mlite').modal('hide');
+   this.mliteChecoutF=false;
+  }
+   
+  arrivalD:any;
   onSelectMliteDate(event,type,field){
         
    
@@ -440,18 +454,24 @@ export class TravelSearchComponent implements OnInit {
         this.departure = event;
         this.departureMlite = moment(event).format('DD/MM/YYYY');
         this.minDateFlightToMlite=event;
+        
+        this.mliteChecoutF=false;
         if( this.showFlightReturn==true){
         var compare1 = new Date(event).getTime();
-        var compare2 = new Date(this.arrival).getTime();
+        var compare2 = new Date(this.arrivalD).getTime();
+        
         if(compare1 > compare2){
         this.arrivalMlite=(moment(event).format('DD/MM/YYYY'));
         this.arrival = event;
+        this.arrivalD=event;
         this.searchFlightForm['controls']['arrival'].setValue(moment(event).format('DD/MM/YYYY'));
         }
-       } 
+       }
         
       }else{
+      
        this.arrival = event;
+        this.arrivalD=event;
        this.arrivalMlite = moment(event).format('DD/MM/YYYY');
     }
      break;
@@ -690,7 +710,7 @@ export class TravelSearchComponent implements OnInit {
             for (let i = this.hotelRoomsChildAge.length; i < updatedChildValue; i++) {
              if(i==0) acnt=2; else acnt=1;
                this.hotelRoomsChildAge.push(this.formBuilder.group({
-                    age: ['0', Validators.required],
+                    age: ['0', [Validators.required, Validators.min(1)]],
                 }));
             }
         } else {
@@ -728,12 +748,14 @@ export class TravelSearchComponent implements OnInit {
   selectTripType(event){
   if(event=='R'){
   this.showFlightReturn=true;
+  this.mliteChecoutF=true;
     this.searchFlightForm.controls["arrival"].setValidators(Validators.required);
     this.searchFlightForm.controls["arrival"].updateValueAndValidity();
   }else
   if(event=='M'){
     this.router.navigateByUrl('/multicity');
   }else{
+  this.mliteChecoutF=false;
   this.showFlightReturn=false;
   this.arrival=null;
    this.searchFlightForm.controls["arrival"].setValue('');
@@ -1409,6 +1431,7 @@ check_traveller_count(type) {
 
 
   displayTravel(type){
+    console.log(type);
     this.showFlightPassenger = true;
     this.showHotelPassenger = true;
   }
@@ -1584,6 +1607,10 @@ check_traveller_count(type) {
           }
         return;
         }
+        
+        
+   
+        
         let myDate =this.searchHotelForm.value.hotelCheckin;
         uDate=datePipe.transform(myDate, 'yyyy-MM-dd', 'en-ES');
         cDate=datePipe.transform(myDate, 'dd LLL yyy', 'en-ES');
@@ -1603,16 +1630,20 @@ check_traveller_count(type) {
         let totalGuest=0;
         $.each(this.searchHotelForm.controls.rooms.value, function(index,jsonObject){
         totalGuest+=(jsonObject['hotel_adult'])+(jsonObject['hotel_child']);
-        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge=';
+        queryParam+='room['+j+']=1&numberOfAdults['+j+']='+(jsonObject['hotel_adult'])+'&numberOfChildren['+j+']='+(jsonObject['hotel_child'])+'&childrenAge['+j+']=';
+        
+        
        if(jsonObject['child_age'].length > 0){
          for (let k = 0; k < jsonObject['child_age'].length; k++) {
          queryParam+=jsonObject['child_age'][k]['age'];
          if(k!=jsonObject['child_age'].length-1)
           queryParam+=',';
          }
+          queryParam+='&';
         }else{
          queryParam+='0&';
         }
+        
         j++;
         });
         
@@ -1625,7 +1656,7 @@ check_traveller_count(type) {
       url+='&sct='+this.searchHotelForm.value.countryId+'&hotelName=&latitude=&longitude=&area=&hotelId=&'+queryParam;
       url+='&channel='+device+'&programName='+this.sg['domainName']+'&limit=0&numberOfRooms='+(this.searchHotelForm.value.rooms.length)+'&totalGuest='+totalGuest;
       
-      
+        //   console.log(url);return;
       
       
                if(environment.IS_MAIN==1){
@@ -1637,6 +1668,8 @@ check_traveller_count(type) {
          return;
         }
         
+        
+     //   console.log(url);return;
 
  this.router.navigateByUrl(url);
 
@@ -2147,6 +2180,14 @@ switch(service) {
 
 
   }
+  mliteChecout:boolean=false;
+  closeCheckout(){
+    $('#hotel_arrival_mlite').modal('hide');
+   this.mliteChecout=false;
+  }
+  
+  
+  
 
    searchAutoComplete($event,service,field,device) {
        let keycode = $event.which;

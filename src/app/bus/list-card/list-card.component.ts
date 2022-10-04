@@ -230,14 +230,14 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  }
 
  onAmenities(allamenities: any, bus_id, mobile) {
-  // $(".seat-layout").hide();
+//   $(".seat-layout").hide();
   // $(".amenities-list").hide();
   this.busamenities = [];
-  //this.showAmenities = !this.showAmenities; 
+  this.showAmenities = !this.showAmenities; 
   if (mobile) {
    this.showAmenities = false;
   } else {
-   this.showAmenities = !this.showAmenities;
+   this.showAmenities = true;
    this.rtcseatcall = false;
   }
   this.showDropping = false;
@@ -361,6 +361,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  // $('.seat-layout').removeClass('active');
  // this.showSeatLayout=false;
   this.loading = true;
+  this.rotate = false;
   this.showAmenities = false;
   this.showCancellation = false;
   this.showDropping = false;
@@ -500,6 +501,8 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     fromTravelCode: this.activatedRoute.snapshot.queryParamMap.get('fromTravelCode'),
     toTravelCode: this.activatedRoute.snapshot.queryParamMap.get('toTravelCode'),
     departure: this.activatedRoute.snapshot.queryParamMap.get('departure'),
+    fromState: this.activatedRoute.snapshot.queryParamMap.get('fromState'),
+    toState:this.activatedRoute.snapshot.queryParamMap.get('toState')
    };
    this.router.navigate(['/bus/search/'], {
     queryParams: this.searchArray
@@ -515,9 +518,11 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    }
 
  }
+ rotate: boolean = false;
  showBusDetails(amenities,id,mobile){
- this.showAmenities = false;
+ this.showAmenities = true;
  $('#collapseExample_'+id).toggle();
+ this.rotate = !this.rotate;
   this.onAmenities(amenities, id, mobile);
  }
  
@@ -740,6 +745,7 @@ this.show_earnpoints_text=this.commonHelper.get_service_earn_points(String(cardT
      fromState: xss(this.params.queryParamMap.get('fromState')),
      toState: xss(this.params.queryParamMap.get('toState')),
      departure: xss(this.params.queryParamMap.get('departure')),
+     
      busdetails: busdetails,
      seatResponse:this.seatResponse
     };
@@ -813,6 +819,8 @@ export class ConfirmationDialog {
     fromTravelCode: this.activatedRoute.snapshot.queryParamMap.get('fromTravelCode'),
     toTravelCode: this.activatedRoute.snapshot.queryParamMap.get('toTravelCode'),
     departure: this.activatedRoute.snapshot.queryParamMap.get('departure'),
+    fromState: this.activatedRoute.snapshot.queryParamMap.get('fromState'),
+    toState:this.activatedRoute.snapshot.queryParamMap.get('toState')
    };
    this.router.navigate([this.sg['domainPath']+'/bus/search/'], {
     queryParams: this.searchArray
