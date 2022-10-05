@@ -10,7 +10,7 @@ pipeline {
                 body: "Build Is Created: ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL} \n\n -------------------------------------------------- \n\n"
             }
         }
-        stage('SonarQube analysis') {
+    /*    stage('SonarQube analysis') {
             steps {
                 echo 'SonarQube analysis...'
                 script {
@@ -35,7 +35,7 @@ pipeline {
                     )
                 }
             }
-        }
+        }*/
         stage ('Deploy') {
             steps {
                 script {
@@ -78,7 +78,7 @@ pipeline {
                     subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - ${currentBuild.currentResult}!",
                     body: '''${SCRIPT, template="groovy_html.template"}'''
                 }
-                failure {
+       /*         failure {
                     echo "AngularUI4.0 Module Is Not Deployed on UAT Appserver."
                     emailext attachLog: true,
                     compressLog: true,
@@ -86,7 +86,7 @@ pipeline {
                     subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} Deployment Failed- ${currentBuild.currentResult}!",
                     body: '''${SCRIPT, template="groovy_fail_html.template"}'''
                 }
-            }
+            }*/
         }
     }
 }
