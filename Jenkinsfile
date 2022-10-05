@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-       /* stage ('Build') {
+        stage ('Build') {
             steps {
                 echo "Build AngularUI4.0 Module"
                 sh 'node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build   --aot --build-optimizer --vendor-chunk=true --baseHref=/v1/'
@@ -9,8 +9,8 @@ pipeline {
                 subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - ${currentBuild.currentResult}!",
                 body: "Build Is Created: ${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL} \n\n -------------------------------------------------- \n\n"
             }
-        }*/
-    /*    stage('SonarQube analysis') {
+        }
+        stage('SonarQube analysis') {
             steps {
                 echo 'SonarQube analysis...'
                 script {
@@ -35,7 +35,7 @@ pipeline {
                     )
                 }
             }
-        }*/
+        }
         stage ('Deploy') {
             steps {
                 script {
@@ -63,7 +63,7 @@ pipeline {
                         echo "Removing old files from v1 folder"
                         sshCommand remote: remote, command: 'rm /var/www/html/smartbuy3.0/front_end/public/v1/*.*'
                         echo "Copying data in v1"
-                        sshCommand remote: remote, command: 'rsync -avzr --no-perms --no-owner /var/lib/jenkins/workspace/HDFC-SMARTBUY-FRONTEND-PIPELINE-ANGULARUI4.0/dist/ apache@10.80.2.72:/var/www/html/smartbuy3.0/front_end/public/v1/ --exclude=assets --exclude=.htaccess'
+                        sh 'rsync -avzr --no-perms --no-owner /var/lib/jenkins/workspace/HDFC-SMARTBUY-FRONTEND-PIPELINE-ANGULARUI4.0/dist/ apache@10.80.2.72:/var/www/html/smartbuy3.0/front_end/public/v1/ --exclude=assets --exclude=.htaccess'
 
                         echo "Deployment of AngularUI4.0 module has been done"
                     }
@@ -78,14 +78,14 @@ pipeline {
                     subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - ${currentBuild.currentResult}!",
                     body: '''${SCRIPT, template="groovy_html.template"}'''
                 }
-       /*         failure {
+                failure {
                     echo "AngularUI4.0 Module Is Not Deployed on UAT Appserver."
                     emailext attachLog: true,
                     compressLog: true,
                     to: "devops@reward360.co, tamil.selvan@reward360.co, joseph.ugin@reward360.co, sumit.kumar@reward360.co",
                     subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} Deployment Failed- ${currentBuild.currentResult}!",
                     body: '''${SCRIPT, template="groovy_fail_html.template"}'''
-                }*/
+                }
             }
         }
     }
