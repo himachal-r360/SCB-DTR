@@ -646,9 +646,9 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
-        // var datePipe = new DatePipe('en-US'); 
-        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
-        var dobStr = dob;
+        var datePipe = new DatePipe('en-US'); 
+        var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
+        console.log(dobStr);
         this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
@@ -658,7 +658,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
-        "DOB": dob,
+        "DOB": dobStr,
         // "bin": first9digit,
         "partner_id": 42,
         "services_id": this.serviceId,
