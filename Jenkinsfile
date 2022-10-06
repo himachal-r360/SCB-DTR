@@ -60,6 +60,11 @@ pipeline {
                         echo "Deploying the AngularUI4.0 Module"
                         sh 'rsync -avzr --no-perms --no-owner /var/lib/jenkins/workspace/HDFC-SMARTBUY-FRONTEND-PIPELINE-ANGULARUI4.0/ apache@10.80.2.72:/var/www/html/smartbuy3.0/angularui4.0/ --exclude=application/logs --exclude=.git --exclude=application/config/database.php --exclude=application/config/mongo_db.php --exclude=.env --exclude=config --exclude=storage'
 
+                        echo "Removing old files from v1 folder"
+                        sshCommand remote: remote, command: 'rm /var/www/html/smartbuy3.0/front_end/public/v1/*.*'
+                        echo "Copying data in v1"
+                        sh 'rsync -avzr --no-perms --no-owner /var/lib/jenkins/workspace/HDFC-SMARTBUY-FRONTEND-PIPELINE-ANGULARUI4.0/dist/ apache@10.80.2.72:/var/www/html/smartbuy3.0/front_end/public/v1/ --exclude=assets --exclude=.htaccess'
+
                         echo "Deployment of AngularUI4.0 module has been done"
                     }
                 }

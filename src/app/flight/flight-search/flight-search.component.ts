@@ -189,7 +189,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
   }
  ngAfterContentChecked() {
-    this.cd.detectChanges();
+   // this.cd.detectChanges();
      }
   public Error = (controlName: string, errorName: string) => {
     return this.flightData.controls[controlName].hasError(errorName);
@@ -639,14 +639,18 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
           this.isDisplayModifiedMulticity = true;
         }
 
-      }else{
+      }
+      
+      console.log(multicity);
+      
+       if(multicity == null   ){
       var multicity1:any=[];
       multicity1.push({"flightfrom":"DEL","flightto":"BOM","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"New Delhi","toCity":"Mumbai","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Indira Gandhi Airport","toAirportName":"Chatrapati Shivaji Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
       
             multicity1.push({"flightfrom":"BOM","flightto":"BLR","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"Mumbai","toCity":"Bangalore","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Chatrapati Shivaji Airport","toAirportName":"Kempegowda International Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
       
        var data1 =(multicity1);
-       
+       this.multicitySearchData = data1;
        
         this.multicityForm = this._fb.group({
           multicityFormArr: this._fb.array([])

@@ -716,6 +716,9 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.flightList = this.layoverFilterFlights(this.flightList);
 
 
+  this.pageIndex = 10;
+  this.nextIndex = 0;
+
     this.container.clear();
     this.intialData();
 
