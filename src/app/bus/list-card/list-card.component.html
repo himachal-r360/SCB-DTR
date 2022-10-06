@@ -1305,15 +1305,22 @@
                 </li>
             </ul>
             <div class="tab-content clearfix">
-                <div class="tab-pane active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+                <div class="tab-pane active mlite_amenities_padng" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
 
-                    <div class=" px-5 py-3">
+                    <div class="py-3">
                         <ul class="amenities-m">
-                            <li *ngIf="busamenities.length <= 0" class="m_amenities_notfound">No Amenities Found</li>
                             <li *ngFor="let amen of busamenities">
                                 <i><img src="{{cdnUrl}}images/icons/{{amen|removespace}}.svg"></i>{{amen}}
                             </li>
+                            <li><i><img src="{{cdnUrl}}images/icons/emergencycontactnumber.svg"></i>Emergency Contact Number </li>
+                            <li><i><img src="{{cdnUrl}}images/icons/emergencycontactnumber.svg"></i>Emergency Contact Number </li>
+                            <li><i><img src="{{cdnUrl}}images/icons/chargingpoint.svg"></i>Charging Point </li>
                         </ul>
+
+                        <ul class="no-amenities-m"  *ngIf="busamenities.length <= 0">
+                            <li class="m_amenities_notfound">No Amenities Found</li>
+                        </ul>
+
                     </div>
                 </div>
                 <div class="tab-pane" id="policy" role="tabpanel" aria-labelledby="policy-tab">
