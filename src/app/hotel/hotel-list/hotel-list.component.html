@@ -46,6 +46,14 @@
                 </a>
             </div>
         </div>
+
+        <div class="col-md-12">
+            <div class="filter_search_div" *ngIf="isMobile && isResponse">
+                <span><i class="fa fa-search" aria-hidden="true"></i>
+                <input class="search-sub-filter " name="search"[(ngModel)]="SearchText" (input)="onSearchInput()" type="text" placeholder="Search by Hotel name"></span>
+            </div>
+        </div>
+
           <div class="col-md-12" *ngIf="!isMobile">
               <div class="travel-box">
                   <div class="travel-select-data-area">
