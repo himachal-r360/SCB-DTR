@@ -713,7 +713,9 @@ list-component:last-child {
         -webkit-transform: translateX(0px);
     }
 }
-
+.mlite_amenities_padng{
+    padding:15px;
+}
 .amenities-m {
     width: 100%;
     padding-left: 0;
@@ -729,7 +731,7 @@ list-component:last-child {
         // box-shadow: 0 1px 0 0 #f9f9f9;
         background-color: $color-white;
         list-style-type: none;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 1.5;
         padding: 10px;
         margin-bottom: 1px;
@@ -743,15 +745,28 @@ list-component:last-child {
             svg {
                 width: 32px;
             }
+            img{
+                @media screen and (max-width:600px){
+                    width:17px !important;
+                    max-width:17px;
+                }
+            }
         }
     }
     @media screen and (max-width:600px) {
-        overflow-y: unset;
+        // overflow-y: unset;
+        // display: unset;
+        // li {
+        //     justify-content: center;
+        // }
+    }
+}
+.no-amenities-m{
+   overflow-y: unset;
         display: unset;
         li {
             justify-content: center;
-        }
-    }
+        } 
 }
 
 .cancellation {
