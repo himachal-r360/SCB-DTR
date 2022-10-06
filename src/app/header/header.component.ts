@@ -444,7 +444,6 @@ export class HeaderComponent implements OnInit {
         queryText: this.queryTextSearch
         };
          this.es.esSearch(searchParam).subscribe(res => {
-         console.log('f');
          if( res.hits.hits.length == 0){ 
          this.topSearch=true;
          }
@@ -861,7 +860,6 @@ closeCookieConsent(value){
         let queryText: any = userSaid[0];
 
         annyang.abort();
-
         this.voiceText = queryText;
         this.receiveVoiceSearchResults(queryText);
         this.ngZone.run(() => this.voiceActiveSectionListening = false);
@@ -874,7 +872,6 @@ closeCookieConsent(value){
         this.voiceActiveSectionError = false;
         this.voiceActiveSectionSuccess = false;
         this.voiceText = undefined;
-
         if (annyang) {
       
         let commands = {
@@ -887,7 +884,7 @@ closeCookieConsent(value){
       
         annyang.start({ autoRestart: false });
         }else{
-             $('.mic-span').hide();
+           //  $('.mic-span').hide();
         }
         }
 

@@ -2979,7 +2979,7 @@
                                     <ng-template #start>
                                         <ng-container *ngIf="voiceActiveSectionListening; else beginning">
                                             <a (click)="startVoiceRecognition()">
-                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic-l.svg" alt="mic" class="micicon" ></span>
                                             </a>
                                         </ng-container>
                                         <ng-template #beginning>
@@ -2988,6 +2988,9 @@
                                     </ng-template>
                                 </ng-container>
                                 <ng-template #failure>
+                                 <a (click)="startVoiceRecognition()">
+                                                <span><img src="{{cdnUrl}}images/smartbuy/icons/icn-mic.svg" alt="mic" class="micicon" ></span>
+                                            </a>
                                 </ng-template>
                             </ng-template>
                         </ng-template>
