@@ -74,20 +74,23 @@ const routes: Routes = [
     loadChildren: () => import('./infinia/infinia.module').then(m => m.InfiniaModule)
   }, */
   {
-
     path: 'infinia',
     loadChildren: () => import('./unification/unification.module').then(m => m.UnificationModule)
   },
 
   {
+    path: 'diners',
+    loadChildren: () => import('./unification/unification.module').then(m => m.UnificationModule)
+  },
 
+  {
     path: 'foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },
+
   {
     path: 'regalia_gold',
     loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
-
 
   },
 
