@@ -30,8 +30,6 @@ const routes: Routes = [
     path:"train/pnr" , component:HomeComponent
   },
 
-
-
     {
     path:"regalia_gold/compare-fly" , component:HomeComponent
   },
