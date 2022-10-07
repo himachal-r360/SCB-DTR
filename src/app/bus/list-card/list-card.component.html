@@ -942,6 +942,86 @@
 </div>
 </div>
 
+<div class="footer_error" *ngIf="mlite_seatError">
+    <div class="error_bg">
+        <div>
+            <i class="material-icons">warning</i>
+        </div>
+        <div>
+            <p>Please select seat(s)</p>
+        </div>
+    </div>
+</div>
+<!-- Mlite Error Msg -->
+<div class="footer_error" *ngIf="mlite_passengerError">
+    <div class="error_bg">
+        <div>
+            <i class="material-icons">warning</i>
+        </div>
+        <div>
+            <p>You can only add upto 6 travelers at a time.</p>
+        </div>
+    </div>
+</div>
+<div class="fixed-f bg-white">
+    <div class="row">
+        <div class="col-6" (click)="openAmentiesmlite()">
+            <span class="blue_link float-start">Amenities & more</span>
+        </div>
+        <div class="col-6" *ngIf="seatdetails.length > 0">
+            <!-- <span class="blue_link float-end" (click)="openBottomSheet()">Fare Summary</span> -->
+            <span class="blue_link float-end" data-bs-toggle="modal" data-bs-target="#fareSummary_mlite">Fare Summary</span>
+        </div>
+    </div>
+    <hr class="my-2 row">
+    <div class="row">
+        <div class="col-4" (click)="openBottomSheet()">
+            <div class="xl-text"><span *ngIf="totalfare > 0; else zero1"> ₹{{totalfare | number:'1.2'}}</span>
+                <ng-template #zero1> ₹{{totalfare | number:'1.2'}}</ng-template>
+            </div>
+            <div class="xs-text" *ngIf="seatdetails.length == 0">
+                <span>Select Seats</span>
+            </div>
+            <div (click)="openBottomSheet()" *ngIf="seatdetails.length > 0">
+
+                <div class="xs-text li-h">
+                    <span *ngFor="let seats of seatdetails;let lastRow=last;">{{seats.selseats}}<span *ngIf="!lastRow">,</span>
+                    </span>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-8" (click)="openBoardingDroping(bus.id,bus,rowvalue)">
+            <button class="btn-primary w-100">CONTINUE</button>
+        </div>
+    </div>
+</div>
+<div class="fare-break" [ngClass]="{'active': showFare}" *ngIf="seatdetails.length > 0">
+    {{seatdetails|json}}
+    <h6>Fare Breakup {{seatdetails.length}}</h6>
+    <div *ngFor="let seats of seatdetails">
+        <div class="row" *ngIf="seats">
+            <div class="col-6">
+                <div> {{seats.totalseats}} Seat(s) @ {{seats.baseFare | number:'1.2-2'}} </div>
+                <div>Seat no(s): {{seats.selseats}} </div>
+            </div>
+            <div class="col-6">
+                <div class="text-right"> ₹ {{seats.totalbaseFare | number:'1.2-2'}} </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="totServtax > 0">
+        <div class="col-6">
+            <div>Taxes</div>
+        </div>
+        <div class="col-6">
+            <div class="text-right">₹ {{totServtax | number:'1.2-2'}}</div>
+        </div>
+    </div>
+</div>
+
 </mat-tab>
 <!-- <div class="seat-info-m"  *ngIf="seatinfo1">
         <div class="row m-0 p-2">
@@ -1260,6 +1340,18 @@
                                     </div>
                                 </div>
                             </li>
+                            <!-- <li class="fare-list-item" *ngIf="totServtax > 0">
+                                <div class="fare-list-box">
+                                    <div class="fare-list-left">
+                                        <p class="fare-list-font">Taxes</p>
+                                    </div>
+                                    <div class="fare-list-right">
+                                        <p class="text-right">₹ {{totServtax | number:'1.2-2'}}</p>
+                                    </div>
+                                </div>
+                            </li> -->
+                        </ul>
+                        <ul>
                             <li class="fare-list-item" *ngIf="totServtax > 0">
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">
