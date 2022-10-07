@@ -17,6 +17,9 @@ const routes: Routes = [
     path: "infinia", component: UnificationHomeComponent,
   },
   {
+    path: "diners", component: UnificationHomeComponent,
+  },
+  {
     path: "infinia/know-your-card", component: BenefitsComponent
   },
   { path: "infinia/infinia-itc-hotel", component: InfiniaItcHotelComponent },

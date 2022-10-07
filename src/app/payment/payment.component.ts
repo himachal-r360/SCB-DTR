@@ -1914,11 +1914,9 @@ checkNonSpcOfferforHDFCcards(){
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
 								message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 							}
 							//open spc modal
 							
@@ -2025,16 +2023,12 @@ var checkCyberValue = searchValue.indexOf(5);
 				if(response.available==true){ 
 					var message = "";
 					var couponType = response.couponType;
-					//console.log(this.coupon_amount);
-					// response.couponAmount = 2000;
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
 								message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 							}
 							//open spc modal
 							const dialogSPC = this.dialog.open(spcDialog, {
@@ -2184,10 +2178,8 @@ checkNonSpcOfferforSaveCard(){
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 								message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
 							}
 							//open spc modal
@@ -2289,11 +2281,9 @@ checkNonSpcOfferforSaveCard(){
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
 								 message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 							}
 							//open spc modal
 							const dialogSPC = this.dialog.open(spcDialog, {

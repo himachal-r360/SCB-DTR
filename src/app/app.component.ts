@@ -186,6 +186,8 @@ export class AppComponent implements OnInit {
     }
     });
     
+
+    
         this.getVouchersList =this.serviceSettings.voucher_lists;
         if(this.DOMAIN_SETTINGS['OFFER']){
         this.rest.getDealsOffers().subscribe(response => {
