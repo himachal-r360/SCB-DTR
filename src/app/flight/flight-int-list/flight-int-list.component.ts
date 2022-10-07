@@ -750,7 +750,8 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
 
       //Partner Filter
     this.flightList = this.unique(this.partnerFilterFlights(this.flightList));
-   
+     this.pageIndex = 10;
+  this.nextIndex = 0;
 
      this.container.clear();
      this.intialData();

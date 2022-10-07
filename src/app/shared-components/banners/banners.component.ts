@@ -78,6 +78,7 @@ export class BannersComponent implements OnInit {
   cookie_redirectUrl: boolean = false;
   cookie_redirectNavigation: boolean = false;
  domainRedirect: string;
+domainname:string;
 busUrl: any;
 topBanner: any = [];
   topBannerSbRecommands: any = [];
@@ -89,6 +90,7 @@ topBanner: any = [];
     
       if(this.sg['customerInfo']){
        var customer_cookie;
+	this.domainname = this.sg['domainName'].replace("_", " ");
         if(this.sg['customerInfo'].customer_cookie == 1)customer_cookie = 1;
         
         if(customer_cookie == 1){

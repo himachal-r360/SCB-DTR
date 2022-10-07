@@ -106,6 +106,7 @@ otperrormsg :any;
  resendOTPdiv:Boolean=true;
  domainRedirect:string;
  domainPath:string;
+ partnerId:number;
 dateInputMask = createMask<Date>({
     alias: 'datetime',
     inputFormat: 'dd/mm/yyyy',
@@ -168,6 +169,9 @@ dateInputMask = createMask<Date>({
         }
         
         ngOnChanges(changes: SimpleChanges): void {
+          let service_id = this.serviceId.toLowerCase();
+          let partnername = this.Partnertoken.toLowerCase();        
+          this.partnerId = this.serviceSettings['partners'][service_id][partnername];
         this.orderamount= Number(this.payTotalFare);
         this.setSlider();
         }
@@ -480,7 +484,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
                 "bin":this.cardaddForm1.controls['first4digit'].value,
                 "clientToken":this.sg['domainName'].toUpperCase(),
                 "services_id":this.serviceId,
-                "partner_id":42,
+                "partner_id":this.partnerId,
                 "modal":"DIGITAL",
                 "noopt": 1,
                 "savecard":1,
@@ -646,9 +650,9 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
-        // var datePipe = new DatePipe('en-US'); 
-        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
-        var dobStr = dob;
+        // var dobsplit =dob.split('/');
+        // var dobStr = dobsplit[1]+'/'+dobsplit[0]+'/'+dobsplit[2];
+        var dobStr= dob;
         this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
@@ -658,9 +662,9 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
-        "DOB": dob,
+        "DOB": dobStr,
         // "bin": first9digit,
-        "partner_id": 42,
+        "partner_id": this.partnerId,
         "services_id": this.serviceId,
         "total_amount": this.payTotalFare,
         "applyvouchercode": this.applyvouchercode,
@@ -733,7 +737,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
            //"bin":this.cardaddForm1.controls['first4digit'].value,
            "clientToken":this.sg['domainName'].toUpperCase(),
            "services_id":this.serviceId,
-           "partner_id":42,
+           "partner_id":this.partnerId,
            "modal":"DIGITAL",
            "noopt": 1,
            "savecard":1,
@@ -774,7 +778,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         "bin":first9digit,
         "clientToken":this.sg['domainName'].toUpperCase(),
         "services_id":this.serviceId,
-        "partner_id":42,
+        "partner_id":this.partnerId,
         "modal":"DIGITAL",
         "noopt": 1,
         "savecard":1,
@@ -836,7 +840,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
            "type":"available_points",
            "clientToken":this.sg['domainName'].toUpperCase(),
            "services_id":this.serviceId,
-           "partner_id":42,
+           "partner_id":this.partnerId,
            "modal":"DIGITAL",
            "noopt": 1,
            "savecard":savecard,

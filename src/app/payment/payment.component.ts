@@ -356,9 +356,12 @@ export class PaymentComponent implements OnInit {
         enableNONSPCForCoupon:any;
         ispgAllowed:boolean = false;
         allowPGOnRemoveCoupon:boolean = false;
-		
+		partnerId:number;
 		
 	ngOnChanges(){
+        let service_id = this.serviceId.toLowerCase();
+          let partnername = this.partnerToken.toLowerCase();        
+          this.partnerId = this.serviceSettings['partners'][service_id][partnername];
         this.remove_Coupon_id = this.remove_Coupon;
         if(this.remove_Coupon){
         this.coupon_name = "";

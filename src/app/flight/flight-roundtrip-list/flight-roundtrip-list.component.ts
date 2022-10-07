@@ -983,10 +983,14 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
       this.returnContainer.clear();
       if(this.flightList.length > 0)
       {
+        this.pageIndex = 10;
+  this.nextIndex = 0;
+      
         this.intialData();
       }
       if(this.ReturnflightList.length > 0)
-      {
+      {  this.pageIndexR = 10;
+  this.nextIndexR = 0;
         this.intialReturnData();
       }
 
