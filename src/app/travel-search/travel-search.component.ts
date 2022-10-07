@@ -746,6 +746,7 @@ export class TravelSearchComponent implements OnInit {
   }
 
   selectTripType(event){
+
   if(event=='R'){
   this.showFlightReturn=true;
   this.mliteChecoutF=true;
@@ -753,8 +754,10 @@ export class TravelSearchComponent implements OnInit {
     this.searchFlightForm.controls["arrival"].updateValueAndValidity();
   }else
   if(event=='M'){
+    localStorage.setItem('isMulticitySearch','true');
     this.router.navigateByUrl('/multicity');
   }else{
+    localStorage.setItem('isMulticitySearch','false');
   this.mliteChecoutF=false;
   this.showFlightReturn=false;
   this.arrival=null;
