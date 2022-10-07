@@ -3083,10 +3083,10 @@
                             <div class="back_nav" *ngIf="showName=='shop'">
                                 <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Shop by Category</span>
                             </div>
-                            <div class="back_nav" *ngIf="showMenu && showName=='privileges'">
+                            <div class="back_nav" *ngIf="payzrestriction==false && showMenu && showName=='privileges'">
                                 <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Privileges</span>
                             </div>
-                            <div class="back_nav" *ngIf="showName=='deals'">
+                            <div class="back_nav" *ngIf="payzrestriction==false && showName=='deals'">
                                 <span (click)="goBack()"><span class="material-icons">chevron_left</span></span> <span class="ms-2">Deals & Offers</span>
                             </div>
                         </div>
@@ -3098,12 +3098,12 @@
                                             <img src="{{cdnUrl}}images/smartbuy/icons/mobile/travel.svg" class="img-fluid" alt="Travel">
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item"  *ngIf="payzrestriction==false">
                                         <a class="nav-link" id="shop_m-tab" data-bs-toggle="pill" href="#shop_m" role="tab" aria-controls="shop_m" aria-selected="false">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/mobile/shop.svg" class="img-fluid" alt="Shop">
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item"  *ngIf="payzrestriction==false">
                                         <a class="nav-link" id="voucher_m-tab" data-bs-toggle="pill" href="#voucher_m" role="tab" aria-controls="voucher_m" aria-selected="false">
                                             <img src="{{cdnUrl}}images/smartbuy/icons/mobile/voucher.svg" class="img-fluid" alt="Vouchers">
                                         </a>
@@ -3164,49 +3164,11 @@
                                             <p>Our Partners</p>
                 
                                             <div class="img_sec">
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/emt.svg">
-                
+                                               <ng-container *ngFor="let htl of serviceSettings.poweredByPartners.all">
+                                                <div *ngIf="htl.flag==1">
+                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/{{htl.img}}">
                                                 </div>
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/cleartrip.svg">
-                
-                                                </div>
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/Yatra.svg">
-                
-                                                </div>
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/goibibo.svg">
-                
-                                                </div>
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/redbus.svg">
-                
-                                                </div>
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/irctc.svg">
-                
-                                                </div>
-                
-                                                <div>
-                
-                                                    <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/mmt.svg">
-                
-                                                </div>
-                
+                                                </ng-container>
                                             </div>
                                         </div>
                                     </div>

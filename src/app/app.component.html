@@ -1,5 +1,5 @@
 <div class="imptop " *ngIf="importantMessage && !isMobile">&nbsp;</div>
 <app-header  [showMobileHeader]="showHeader" [mobileClassName]="mobileClassName" [importantMessageText]="importantMessage" [getVouchersList]="getVouchersList" [dealsoffers]="dealsoffers" [menuActiveClass]="menuActiveClass"></app-header>
-<div class="flex-grow-1"><router-outlet ></router-outlet></div>
+<div class="flex-grow-1" [ngClass]="{ 'move-top': payzrestriction }"><router-outlet ></router-outlet></div>
 <app-footer class="hide-header-m"></app-footer>
 

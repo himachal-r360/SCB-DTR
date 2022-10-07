@@ -33,7 +33,7 @@ export interface DialogData {
 
 
 export class AppComponent implements OnInit {
-
+ payzrestriction:boolean=false;
         isOnline: boolean;
         public assetPath:string; 
         public domainName:string; 
@@ -185,6 +185,15 @@ export class AppComponent implements OnInit {
             this.importantMessage='';
     }
     });
+    
+                const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+                if(cookieExistsp){  
+                    this.payzrestriction=true;
+                }else{
+                     this.payzrestriction=false;
+                } 
+    
+    
     
         this.getVouchersList =this.serviceSettings.voucher_lists;
         if(this.DOMAIN_SETTINGS['OFFER']){
