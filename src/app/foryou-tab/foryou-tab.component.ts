@@ -49,6 +49,7 @@ export class ForyouTabComponent implements OnInit, OnDestroy {
 public modeselectDealCat = 'All';
 public modeselectDealSubCat= 'All';
 public modeselectTrending= 'All';
+ payzrestriction:boolean=false;
   date: { year: number, month: number };
   serviceSettings: any;
   navigation = 'arrows';
@@ -148,6 +149,14 @@ public modeselectTrending= 'All';
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
+    
+        
+        const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+        if(cookieExistsp){  
+            this.payzrestriction=true;
+        }else{
+             this.payzrestriction=false;
+        } 
     
     // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
      //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);

@@ -517,7 +517,7 @@
                                                                         </div>
                                                                         <div class="new-card-footer mb-4">
 
-                                                                            <div *ngIf="!pgSettingsCYBERToken && pgSettingsCYBER && isLoggedIn">
+                                                                            <div *ngIf="!pgSettingsCYBERToken && pgSettingsCYBER && isLoggedIn && !guestLogin">
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input" type="checkbox" name="savecard" id="savecard">
                                                                                     <label class="form-check-label xs-check-font" for="savecard">
@@ -528,7 +528,7 @@
                                                                             </div>
 
 
-                                                                            <div *ngIf="pgSettingsCYBER && pgSettingsCYBERToken && isLoggedIn">
+                                                                            <div *ngIf="pgSettingsCYBER && pgSettingsCYBERToken && isLoggedIn && !guestLogin">
                                                                                 <div class="form-check">
 
                                                                                     <input class="form-check-input" type="checkbox" name="tokenization" id="tokenization" value="1" (change)="checkInfo1($event)">
@@ -540,7 +540,7 @@
                                                                                 <input type="hidden" name="savecard" id="savecard">
                                                                                 <span style="font-size:12px;margin-bottom:20px;display: block;">(To avoid re-entering card details for every transaction. Delete saved cards anytime from Manage A/c → Payments)</span>
                                                                             </div>
-                                                                            <div>
+                                                                            <div class="mt-10">
                                                                                 <div class="form-check">
                                                                                     <input class="form-check-input" type="checkbox" formControlName="termscondition" name="termscondition" id="termscondition_newCard">
                                                                                     <label class="form-check-label xs-check-font" for="termscondition_newCard">

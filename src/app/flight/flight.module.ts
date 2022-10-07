@@ -27,7 +27,7 @@ import { SafeHtmlPipe } from 'src/app/shared/pipes/safeHtml.pipe';
 import { AirlinesPipe } from '../pipes/airlines.pipe';
 import { MultiAirlinesPipe } from '../pipes/multi_airlines.pipe';
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 const routes: Routes = [
   {
@@ -87,7 +87,7 @@ const routes: Routes = [
 
   ],
   imports: [
-        CommonModule,
+        CommonModule,NgxSpinnerModule,
         FormsModule,
         InputMaskModule,
         ReactiveFormsModule,

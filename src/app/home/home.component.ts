@@ -1,4 +1,5 @@
 import { JsonpClientBackend } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 import {
   Component,
   ElementRef,
@@ -29,6 +30,7 @@ declare var $: any;
 
 
 export class HomeComponent implements OnInit {
+ payzrestriction:boolean=false;
   cdnUrl: any;
   DOMAIN_SETTINGS: any;
   serviceSettings: any;
@@ -157,7 +159,7 @@ export class HomeComponent implements OnInit {
   constructor(
     public _styleManager: StyleManagerService,
       public router: Router,
-      private _flightService: FlightService,private appConfigService: AppConfigService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef
+      private _flightService: FlightService,private appConfigService: AppConfigService,private ngZone:NgZone,private sg: SimpleGlobal,private elementRef: ElementRef,private cookieService: CookieService
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
@@ -223,6 +225,16 @@ export class HomeComponent implements OnInit {
       this.continueSearchValHotel = JSON.parse(continueSearchValHotelParse);
 
     }
+    
+    
+        const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+        if(cookieExistsp){  
+            this.payzrestriction=true;
+        }else{
+             this.payzrestriction=false;
+        } 
+    
+    
 
 
   }
