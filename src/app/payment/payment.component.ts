@@ -1772,7 +1772,19 @@ validateDebitEmiOTP_new(){
 			 });
 
              this.payNow(11);
-         }else{
+         }else if(result.status==false && result.availableOTPAttempt==0){
+
+			this.showDebitEMIOtp=true;
+			this.showDebitEMI=false;
+			this.DCEMIError='';
+			this.DebitEMIConfirmFrom.setValue({
+			   termscondition: true,
+			   termscondition1: true
+			});
+
+			this.payNow(11);
+		 }
+		 else{
              this.DCEMIConfirmResponse='';
              this.DCEMIError=result.message;
              this.showDebitEMIOtp=true;
