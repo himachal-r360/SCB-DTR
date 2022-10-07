@@ -59,7 +59,7 @@ let urlToSplit =this.location.path();
 
   getBuses(param): Observable<any> {
     if(LOCALJSON=='true')
-    return this.http.get('assets/data/busListResponse-RTC.json?version='+new Date().getTime());
+    return this.http.get('assets/data/busListResponse.json?version='+new Date().getTime());
     else
     return this.http.post(this.endpoint+'BusSearchNew', param, config).pipe(map((response: any) => response));
   }

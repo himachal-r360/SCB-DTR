@@ -842,13 +842,14 @@ goback() {
   this.busFilterlengthZero = false;
   if(filteredValues.length ==0 ) this.busFilterlengthZero = true; 
 
-  this.allAvailableClasses = this.availableClasses = this.busHelper.getBusTypesFilterNew(this.allAvailableClasses, filteredValues, this.filterClasses);
-  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, filteredValues, this.filterOperators);
-  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, filteredValues, 'boardingTimes', this.filterboardingpoints);
-  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, filteredValues, 'droppingTimes', this.filterdroppingpoints);
-  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, filteredValues, this.filteramenities);
+  this.allAvailableClasses = this.availableClasses = this.busHelper.getBusTypesFilterNew(this.allAvailableClasses, this.busListWithOutFilter, this.filterClasses);
+  // this.availableClasses = this.busHelper.getBusTypesFilter(this.busListWithOutFilter, this.filterClasses);
+  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, this.busListWithOutFilter, this.filterOperators);
+  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, this.busListWithOutFilter, 'boardingTimes', this.filterboardingpoints);
+  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, this.busListWithOutFilter, 'droppingTimes', this.filterdroppingpoints);
+  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, this.busListWithOutFilter, this.filteramenities);
   
-  var rtcfromlist = filteredValues.filter(e => e.rtc === true);
+  var rtcfromlist = this.busListWithOutFilter.filter(e => e.rtc === true);
   var allrtc = this.busHelper.getrtc(rtcfromlist);
   for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
    var totalavail = 0;
@@ -870,12 +871,12 @@ goback() {
    this.filterboardingpoints.splice(index, 1);
   }
 
-  var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
-  this.availableClasses = this.busHelper.getBusTypesFilter(filteredValues, this.filterClasses);
-  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, filteredValues, this.filterOperators);
-  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, filteredValues, 'droppingTimes', this.filterdroppingpoints);
-  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, filteredValues, this.filteramenities);
-  var rtcfromlist = filteredValues.filter(e => e.rtc === true);
+ // var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
+  this.availableClasses = this.busHelper.getBusTypesFilter(this.busListWithOutFilter, this.filterClasses);
+  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, this.busListWithOutFilter, this.filterOperators);
+  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, this.busListWithOutFilter, 'droppingTimes', this.filterdroppingpoints);
+  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, this.busListWithOutFilter, this.filteramenities);
+  var rtcfromlist = this.busListWithOutFilter.filter(e => e.rtc === true);
   var allrtc = this.busHelper.getrtc(rtcfromlist);
   for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
    var totalavail = 0;
@@ -897,12 +898,12 @@ goback() {
    this.filterdroppingpoints.splice(index, 1);
   }
 
-  var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
-  this.availableClasses = this.busHelper.getBusTypesFilter(filteredValues, this.filterClasses);
-  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, filteredValues, this.filterOperators);
-  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, filteredValues, 'boardingTimes', this.filterboardingpoints);
-  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, filteredValues, this.filteramenities);
-  var rtcfromlist = filteredValues.filter(e => e.rtc === true);
+ // var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
+  this.availableClasses = this.busHelper.getBusTypesFilter(this.busListWithOutFilter, this.filterClasses);
+  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, this.busListWithOutFilter, this.filterOperators);
+  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, this.busListWithOutFilter, 'boardingTimes', this.filterboardingpoints);
+  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, this.busListWithOutFilter, this.filteramenities);
+  var rtcfromlist = this.busListWithOutFilter.filter(e => e.rtc === true);
   var allrtc = this.busHelper.getrtc(rtcfromlist);
   for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
    var totalavail = 0;
@@ -923,20 +924,20 @@ goback() {
    this.filterOperators.splice(index, 1);
   }
 
-  var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
+ // var filteredValues = this.busfilter.transform(this.busList, this.minPrice, this.maxPrice, this.filterDeparture, this.filterArrival, this.filterboardingpoints, this.filterdroppingpoints, this.filterClasses, this.filterOperators, this.filteramenities, this.sortBy);
 
   
-  this.availableClasses = this.busHelper.getBusTypesFilter(filteredValues, this.filterClasses);
+  this.availableClasses = this.busHelper.getBusTypesFilter(this.busListWithOutFilter, this.filterClasses);
 
 
-  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, filteredValues, 'boardingTimes', this.filterboardingpoints);
+  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, this.busListWithOutFilter, 'boardingTimes', this.filterboardingpoints);
 
 
-  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, filteredValues, 'droppingTimes', this.filterdroppingpoints);
-  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, filteredValues, this.filteramenities);
+  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, this.busListWithOutFilter, 'droppingTimes', this.filterdroppingpoints);
+  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, this.busListWithOutFilter, this.filteramenities);
 
 
-  var rtcfromlist = filteredValues.filter(e => e.rtc === true);
+  var rtcfromlist = this.busListWithOutFilter.filter(e => e.rtc === true);
   var allrtc = this.busHelper.getrtc(rtcfromlist);
   for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
    var totalavail = 0;
@@ -966,12 +967,12 @@ goback() {
   this.busFilterlengthZero = false;
   if(filteredValues.length ==0 ) this.busFilterlengthZero = true; 
 
-  this.allAvailableClasses = this.availableClasses = this.busHelper.getBusTypesFilter(filteredValues, this.filterClasses);
-  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, filteredValues, this.filterOperators);
-  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, filteredValues, 'boardingTimes', this.filterboardingpoints);
-  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, filteredValues, 'droppingTimes', this.filterdroppingpoints);
-  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, filteredValues, this.filteramenities);
-  var rtcfromlist = filteredValues.filter(e => e.rtc === true);
+  this.allAvailableClasses = this.availableClasses = this.busHelper.getBusTypesFilter(this.busListWithOutFilter, this.filterClasses);
+  this.operators = this.busHelper.getBusOperatorsFilter(this.alloperators, this.busListWithOutFilter, this.filterOperators);
+  this.boardingpoints = this.busHelper.getBoardingpointsFilter(this.allboardingpoints, this.busListWithOutFilter, 'boardingTimes', this.filterboardingpoints);
+  this.droppingpoints = this.busHelper.getBoardingpointsFilter(this.alldroppingpoints, this.busListWithOutFilter, 'droppingTimes', this.filterdroppingpoints);
+  this.amenities = this.busHelper.getamenitiesFilter(this.allamenities, this.busListWithOutFilter, this.filteramenities);
+  var rtcfromlist = this.busListWithOutFilter.filter(e => e.rtc === true);
   var allrtc = this.busHelper.getrtc(rtcfromlist);
   for (const rtc of Object.keys(allrtc).map(itm => allrtc[itm])) {
    var totalavail = 0;
