@@ -1626,7 +1626,7 @@
                                                                 <form [formGroup]="flexipayverifationform">
                                                                     <div class="w-opt-conformation-screen">
                                                                         <div class="row  w-opt-total-amount my-2">
-                                                                            <div class="col-md-8">
+                                                                            <div class="col-md-12">
                                                                                 <p class="py-2">Transaction Summary</p>
                                                                                 <div class="amount-section">
                                                                                     <div class="row">
@@ -1650,7 +1650,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="clearfix"></div>
-                                                                            <div class="col-md-8">
+                                                                            <div class="col-md-12">
                                                                                 <p class="py-2">Your Details</p>
                                                                                 <div class="address-section ">
                                                                                     <div class="name-info mb-20">
@@ -1672,12 +1672,22 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="row ">
+                                                                            
                                                                             <div class="col-md-12 ">
-                                                                                <p> <label class="checkbox xs-check-font">I hereby expressly acknowledge and confirm that I have carefully gone through <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Common/Campaign/PDFs/July%202020/Draft-Customer-Terms-Conditions-Pay-later.pdf" target="_blank">  HDFC Bank FlexiPay Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxxxxx{{validateOTPresp.validateOTPData.customerLast6DigitAcountNumber}}</span> for EMI under Standing Instruction mode.
-                                                                      <input type="checkbox" name="terms" id="" formControlName="terms">
+                                                                                <div class="form-check ps-0">
+                                                                                    <p>
+                                                                                    <label class="checkbox form-check-label xs-check-font">
+                                                                                        <input class="form-check-input" type="checkbox" name="terms" id="" formControlName="terms">
+                                                                                        I hereby expressly acknowledge and confirm that I have carefully gone through <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Common/Campaign/PDFs/July%202020/Draft-Customer-Terms-Conditions-Pay-later.pdf" target="_blank">  HDFC Bank FlexiPay Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxxxxx{{validateOTPresp.validateOTPData.customerLast6DigitAcountNumber}}</span> for EMI under Standing Instruction mode.
+                                                                                                <span class="checkmark"></span>
+                                                                                            </label></p>
+                                                                                </div>
+
+                                                                                <!-- <p> <label class="checkbox xs-check-font form-check-label"><input type="checkbox" name="terms" id="" formControlName="terms" class="form-check-input">I hereby expressly acknowledge and confirm that I have carefully gone through <a href="https://www.hdfcbank.com/content/bbp/repositories/723fb80a-2dde-42a3-9793-7ae1be57c87f/?path=/Common/Campaign/PDFs/July%202020/Draft-Customer-Terms-Conditions-Pay-later.pdf" target="_blank">  HDFC Bank FlexiPay Terms &amp; Conditions </a>(which I have fully understood) and hereby record my agreement and consent to abide by the aforesaid terms and conditions and hereby authorize the Bank to debit my account  <span>xxxxxxxxxx{{validateOTPresp.validateOTPData.customerLast6DigitAcountNumber}}</span> for EMI under Standing Instruction mode.
+                                                                      
                                                                       <span class="checkmark"></span>
                                                                     </label>
-                                                                                </p>
+                                                                                </p> -->
 
                                                                                 <div *ngIf="flexipayfinalSubmit && flexipayverifationform.get('terms').invalid" class="flexi_Error mb-2">
                                                                                     <span *ngIf="flexipayverifationform.get('terms').errors.required || flexipayverifationform.get('terms').errors.pattern">Please accept terms & condition.</span>
