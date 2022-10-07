@@ -21,7 +21,6 @@ import { PaymentModule } from 'src/app/payment/payment.module';
 import { AmenitiesFilterPipe } from '../pipes/amenities-filter.pipe';
 import { HotelBookingRetryComponent } from './hotel-booking-retry/hotel-booking-retry.component';
 import { SafeHtmlPipe } from '../pipes/safe-html.pipe';
-
 const routes: Routes = [
   {path:"hotel-list",component:HotelListComponent},
   {path:"hotel-detail",component:HotelDetailComponent},

@@ -12,7 +12,7 @@ import * as moment from 'moment';
 import { DOCUMENT, NgStyle, DecimalPipe, DatePipe } from '@angular/common';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { stringify } from '@angular/compiler/src/util';
-
+import { NgxSpinnerService } from "ngx-spinner";
 declare var $: any;
 
 @Component({
@@ -69,7 +69,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
         superPnr:string;
           fareData: any = [];
 
-  constructor(private el: ElementRef,private ref: ChangeDetectorRef,   private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,  @Inject(DOCUMENT) private document: any) {
+  constructor(private spinnerService: NgxSpinnerService,private el: ElementRef,private ref: ChangeDetectorRef,   private _flightService: FlightService, private route: ActivatedRoute, private router: Router, private sg: SimpleGlobal, private appConfigService: AppConfigService, private EncrDecr: EncrDecrService, public rest: RestapiService,  @Inject(DOCUMENT) private document: any) {
     this.route.url.subscribe(url => {
       this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
       this.serviceSettings = this.appConfigService.getConfig();
@@ -93,6 +93,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
 
       /*** SESSION */
       setTimeout(() => {
+       this.spinnerService.show();
         //Check Laravel Seesion
         if (this.sg['customerInfo']) {
           this.customerInfo = this.sg['customerInfo'];
@@ -171,7 +172,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                   });
                 }
 
-
+              if (customerInfo["guestLogin"] != true) {
                 var saveCardPostParam = {
                   "customerid": customerInfo["id"],
                   "programName": this.sg['domainName']
@@ -187,6 +188,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
                   let newCardArr = [];
                   this.savedCards = data;
                 });
+               } 
 
                 //check flexipay eligible
                 if (this.serviceSettings.PAYSETTINGS[this.sg['domainName']][this.serviceId].FLEXI_PAY == 1) {
@@ -241,6 +243,7 @@ export class HotelBookingRetryComponent implements OnInit, OnDestroy {
         this.REWARD_TITLE = customerInfo["title"];
         this.REWARD_CUSTOMERNAME = customerInfo["firstname"] + " " + customerInfo["lastname"];
         this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
+         this.spinnerService.hide();
  }        
 
 isPaynowClicked:boolean=false;
