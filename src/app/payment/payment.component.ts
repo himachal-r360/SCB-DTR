@@ -85,7 +85,7 @@ export class PaymentComponent implements OnInit {
         domainRedirect: string;
         minamount= AppConfig.flexiMinMax.minimumAmount;
         maxamount = AppConfig.flexiMinMax.maximumAmount;
-        enable_dcemi2 = AppConfig.enable_dcemi2;
+        enable_dcemi2 :boolean=false;;
         @Input() set passSavedCardsData(p: any[]){
         if(p.length>0){
         this.cardData=p;
@@ -382,6 +382,7 @@ export class PaymentComponent implements OnInit {
                 this.siteKey=this.serviceSettings.SITEKEY;
                 this.ServiceToken =this.serviceId;
                 this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
+				this.enable_dcemi2 = this.serviceSettings.enable_dcemi2;
 		
 		this.spinnerService.show();
 		      setTimeout(() => {
@@ -1535,7 +1536,10 @@ validateDebitEmi(){
 	if(this.serviceId=='RedBus'){
 		finalFare=tmppassData1['total_price'];
 	}else if(this.serviceId== 'Flight'){
-		finalFare = tmppassData1['flightDetails']['fare']['totalFare'];
+		finalFare = tmppassData1['flightDetails']['fare']['totalFare']-tmppassData1['flightDetails']['fare']['discount'];
+	}else if(this.serviceId== 'Hotel'){
+			finalFare = tmppassData1['fare']['totalFare']-tmppassData1['fare']['discount'];
+		
 	} else {
 		finalFare=tmppassData1['fareData']['totalFare'];
 	}
@@ -1657,9 +1661,14 @@ let otpnumber=this.DebitEMIOTPFrom.controls['otpnumber'].value;
 var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));
 var finalFare;
 if(this.serviceId=='RedBus'){
-finalFare=tmppassData1['total_price'];
-}else{
-finalFare=tmppassData1['fareData']['totalFare'];
+	finalFare=tmppassData1['total_price'];
+}else if(this.serviceId== 'Flight'){
+	finalFare = tmppassData1['flightDetails']['fare']['totalFare']-tmppassData1['flightDetails']['fare']['discount'];
+}else if(this.serviceId== 'Hotel'){
+		finalFare = tmppassData1['fare']['totalFare']-tmppassData1['fare']['discount'];
+	
+} else {
+	finalFare=tmppassData1['fareData']['totalFare'];
 }
 // Validate OTP for DC EMI
 //console.log("applicationID"+this.DCEMIapplicationId);
@@ -1756,6 +1765,12 @@ validateDebitEmiOTP_new(){
              this.DCEMIError='';
              //this.dcemiOtpResponse = result.validateOTPData;
              //this.DebitEMIConfirmFrom.status="VALID";
+			
+			 this.DebitEMIConfirmFrom.setValue({
+				termscondition: true,
+				termscondition1: true
+			 });
+
              this.payNow(11);
          }else{
              this.DCEMIConfirmResponse='';
