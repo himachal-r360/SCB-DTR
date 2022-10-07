@@ -647,7 +647,8 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
       var multicity1:any=[];
       multicity1.push({"flightfrom":"DEL","flightto":"BOM","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"New Delhi","toCity":"Mumbai","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Indira Gandhi Airport","toAirportName":"Chatrapati Shivaji Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
       
-            multicity1.push({"flightfrom":"BOM","flightto":"BLR","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"Mumbai","toCity":"Bangalore","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Chatrapati Shivaji Airport","toAirportName":"Kempegowda International Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
+      multicity1.push({"flightfrom":"BOM","flightto":"BLR","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"Mumbai","toCity":"Bangalore","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Chatrapati Shivaji Airport","toAirportName":"Kempegowda International Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
+      multicity1.push({"flightfrom":"BLR","flightto":"MAA","adults":"1","child":"0","infants":"0","channel":"Web","travel":"DOM","departure":"","fromCity":"Bangalore","toCity":"Chennai","fromContry":"IN","toContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","fromAirportName":"Kempegowda International Airport","toAirportName":"Chennai International Airport","flightclass":"E","defaultType":"M","sortBy":"asc","isSelected":false,"selectedFlight":null});
       
        var data1 =(multicity1);
        this.multicitySearchData = data1;
@@ -1298,8 +1299,13 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   }
 
   addNewCitySearchInput() {
+   
     this.multicityFormArr = this.multicityForm.get('multicityFormArr') as FormArray;
     this.multicityFormArr.push(this.multiCityArrAddItems());
+    if(this.multicityFormArr['controls'].length > this.multiCityAddCount){
+      this.multicityFormArr['controls'].pop();
+    }
+
   }
 
   removeMutlicityInput(index:number)  {
