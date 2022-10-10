@@ -641,7 +641,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
 
       }
       
-      console.log(multicity);
+      //console.log(multicity);
       
        if(multicity == null   ){
       var multicity1:any=[];

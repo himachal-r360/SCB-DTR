@@ -43,6 +43,26 @@ API_URL:{
  'BUSINESS': '//offers-smartbuyuat.reward360.in/business/api/',
   },
   
+  
+    DEFAULT_ENTRY:'home',
+  HOME_SITE_URL: {
+    'SMARTBUY': '//offers-smartbuyuat.reward360.in/v3/',
+    'DINERS': '',
+    'INFINIA': '',
+    'REGALIA': '',
+    'CORPORATE': '',
+    'BUSINESS': '',
+  },
+
+  FLIGHT_SITE_URL: {
+    'SMARTBUY': '//offers-smartbuyuat.reward360.in/v3/flights/',
+    'DINERS': '',
+    'INFINIA': '',
+    'REGALIA': '',
+    'CORPORATE': '',
+    'BUSINESS': '',
+  },
+  
   BUS_SITE_URL:{
  'SMARTBUY': 'https://offers-smartbuyuat.reward360.in/lite/',
  'DINERS': 'https://offers-smartbuyuat.reward360.in/lite/diners/',
@@ -131,8 +151,8 @@ API_URL:{
     "BUSINESS":"business/bus"  ,
     "REGALIA_GOLD":"regalia/bus",     
   },
-    "flightLastSearch":"flightLastSearchin",
-  "continueFlightSearch":"continueFlightSearchin",
+    "flightLastSearch":"flightLastSearchinn",
+  "continueFlightSearch":"continueFlightSearchinn",
   "continueSearchBus":"continueSearchBusesi",
   "busLastSearch":"busLastSearchesi",
   "continueSearchTrain":"continueSearchTrainsi",
