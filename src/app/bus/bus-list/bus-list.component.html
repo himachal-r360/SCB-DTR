@@ -393,10 +393,10 @@
                 </div>
             </div>
             <!-- <div class="col-md-12 mt-70 flight_found_sec" *ngIf="!loader && serverIssue==0"> -->
-                <div class="col-md-12 mt-70 flight_found_sec">
+                <div class="col-md-12 mt-70 flight_found_sec" *ngIf="busList && !loader">
                 <div class="mob-listing-fiters">
                     <h6>
-                        <p *ngIf="busList">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p>
+                        <p *ngIf="busList && !loader">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p>
                     </h6>
                     <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
                         <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">

@@ -92,7 +92,6 @@
                                         </div>
                                         <div class="Continuesearch-name">
                                             <h6>{{continue['toCity[0]'] }}</h6>
-                                            <p *ngIf="continue.arrival">{{continue.arrival|date:"EEE ,dd MMM"}}</p>
                                         </div>
                                     </div>
                                     <div class="Continuesearch-items-actions">
@@ -109,7 +108,8 @@
                 <div class="box-item" *ngIf="isMobile == true">
                     <owl-carousel-o [options]="customOptions">
                         <ng-container *ngFor="let continue of continueSearchVal; let i = index">
-                            <ng-template carouselSlide [id]="continue.id" *ngIf="i<4">
+                        
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="continue.fromCity && continue.toCity && continue.departure &&  i<4">
                                 <a href="javascript:void(0)" (click)="continueSearch(continue)">
                                     <div class="Continuesearch-items ">
                                         <div class="Continuesearch-items-text">
@@ -131,6 +131,30 @@
                                     </div>
                                 </a>
                             </ng-template>
+                            
+                             <ng-template carouselSlide [id]="continue.id" *ngIf="continue['fromCity[0]'] && continue['toCity[0]'] && continue['departure[0]'] &&  i<4">
+                                <a href="javascript:void(0)" (click)="continueSearchMulti(continue)">
+                                    <div class="Continuesearch-items ">
+                                        <div class="Continuesearch-items-text">
+                                            <div class="Continuesearch-name">
+                                               <h6>{{continue['fromCity[0]']}}</h6>
+                                            <p>{{continue['departure[0]']|date:"EEE ,dd MMM"}}</p>
+                                            </div>
+                                            <div class="Continuesearch-image">
+                                                <img *ngIf="!continue.arrival" src="{{cdnUrl}}/images/icons/next-active.svg" alt="">
+                                                <img *ngIf="continue.arrival" src="{{cdnUrl}}/images/icons/round.svg" alt="">
+                                            </div>
+                                            <div class="Continuesearch-name">
+                                                <h6>{{continue['toCity[0]'] }}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="Continuesearch-items-actions">
+                                            <img src="{{cdnUrl}}/images/icons/next.svg" alt="">
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-template>
+                            
                         </ng-container>
                     </owl-carousel-o>
                 </div>
