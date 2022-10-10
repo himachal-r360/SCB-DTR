@@ -503,7 +503,7 @@
 
                 </div>
 
-                <div class="m-rate-count">{{bus.total_rating_count | number}} Ratings </div>
+                <div class="m-rate-count" *ngIf="bus.total_rating_count > 0" >{{bus.total_rating_count | number}} Ratings </div>
             </div>
         </div>
 
@@ -847,7 +847,7 @@
 <div class="" *ngIf="Upperdecks.length">
     <div class="layout">
         <div class="margin-auto content">
-            <div class="label  text-right float-left w-50"  *ngIf="Upperdecks.length">Lower Berth</div>
+            <div class="label  text-right float-left w-50"  *ngIf="Upperdecks.length">Upper Berth</div>
             <label class="img-right float-right wi-50"><img src="{{cdnUrl}}images/icons/icon_steering.svg"></label>
             <div class="">
 
