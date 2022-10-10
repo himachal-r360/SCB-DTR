@@ -39,9 +39,6 @@ const routes: Routes = [
     {
     path:"regalia_gold/compare-stay" , component:HomeComponent
   },
-  {
-    path:"infinia/compare-stay" , component:HomeComponent
-  },
     {
     path:"regalia_gold/bus" , component:HomeComponent
   },
@@ -51,6 +48,17 @@ const routes: Routes = [
       {
     path:"regalia_gold/train/pnr" , component:HomeComponent
   },
+
+  {
+    path:"infinia/compare-fly" , component:HomeComponent
+  },
+    {
+    path:"infinia/multicity" , component:HomeComponent
+  },
+    {
+    path:"infinia/compare-stay" , component:HomeComponent
+  },
+    
 
 
     {
@@ -88,11 +96,14 @@ const routes: Routes = [
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },
 
-  {
+  /* {
     path: 'regalia_gold',
     loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
-
   },
+  {
+    path: 'infinia',
+    loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
+  }, */
 
   //{ path: '404', component: Error404PageComponent },
   // otherwise redirect to 404
