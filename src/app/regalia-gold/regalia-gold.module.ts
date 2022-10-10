@@ -8,9 +8,9 @@ import { BannersComponent } from '../shared-components/banners/banners.component
 
 
 const routes: Routes = [
-  {
+  /* {
     path:"regalia_gold" ,component:RegaliaGoldHomeComponent,
-  },
+  }, */
   {
     path:"regalia_gold/know-your-card" ,component:RegaliaGoldBenefitsComponent
   },
