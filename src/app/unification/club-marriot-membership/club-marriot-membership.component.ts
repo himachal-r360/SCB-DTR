@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { AppConfigService } from 'src/app/app-config.service';
 import { environment } from 'src/environments/environment';
+import { DOCUMENT } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-club-marriot-membership',
@@ -57,7 +60,7 @@ export class ClubMarriotMembershipComponent implements OnInit {
   cdnDealUrl: any;
   siteUrl: any;
 
-  constructor(private sg: SimpleGlobal, private appConfigService: AppConfigService) { 
+  constructor(private sg: SimpleGlobal, private appConfigService: AppConfigService,@Inject(DOCUMENT) private document: any) { 
     this.serviceSettings = this.appConfigService.getConfig();
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.cdnDealUrl = environment.cdnDealUrl;
@@ -65,6 +68,16 @@ export class ClubMarriotMembershipComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+     var customerInfo = this.sg['customerInfo'];
+     console.log(environment);
+     console.log(customerInfo);
+      if (customerInfo["org_session"] == 1) {
+      }else{
+        if (environment.localInstance == 0) {
+          this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
+        }  
+      }
   }
 
 }
