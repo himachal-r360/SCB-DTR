@@ -7,7 +7,7 @@
                         <div class="mob-listing-header">
                             <div class="mob-listing-header-left">
                                 <a href="javascript:;" (click)="triggerBack()">
-                                    <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                                    <img src="{{cdnUrl}}images/icons/left.png" alt="" />
                                 </a>
                             </div>
 
@@ -47,31 +47,31 @@
                                 <li>
                                     <a href="javascript:void(0)" class="active1">
                                         <!-- steps-done - Class For done steps -->
-                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/flight.svg" alt="" /></span>
+                                        <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/flight.svg" alt="" /></span>
                                         <span class="steps-text">Flight Details</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)" class="active1">
-                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/user.svg" alt="" /></span>
+                                        <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/user.svg" alt="" /></span>
                                         <span class="steps-text">Traveller Details</span>
                                     </a>
                                 </li>
                                 <li *ngIf="enableVAS==1">
                                     <a href="javascript:void(0)" class="active1">
-                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/meal.svg" alt="" /></span>
+                                        <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/meal.svg" alt="" /></span>
                                         <span class="steps-text">Seats & Meals</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)" class="active1">
-                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/review.svg" alt="" /></span>
+                                        <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/review.svg" alt="" /></span>
                                         <span class="steps-text">Review Booking</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 5 , 'active':steps==5  }">
-                                        <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/card.svg" alt="" /></span>
+                                        <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/card.svg" alt="" /></span>
                                         <span class="steps-text">Payment</span>
                                     </a>
                                 </li>
@@ -89,7 +89,7 @@
             <!-- Mlite Sesssion Timer Code -->
             <div class="d-block d-sm-none">
                 <div class="sidebar-widget session-expires-widget text-center">
-                    <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
+                    <p><img src="{{cdnUrl}}images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
             <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)"></countdown>
             min
           </strong></p>
@@ -123,7 +123,7 @@
                         <div class="default-sidebar">
                             <div class="d-none d-sm-block">
                                 <div class="sidebar-widget session-expires-widget">
-                                    <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
+                                    <p><img src="{{cdnUrl}}images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
                     <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
                     </countdown> min
                   </strong></p>
@@ -141,9 +141,9 @@
                                                         <div (click)="isCollapseShow('BaseFare')">
                                                             <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
 
-                                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
+                                                                <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
 
-                                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare</div>
+                                                                <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare</div>
 
                                                         </div>
                                                     </div>
@@ -254,9 +254,9 @@
 
 
                                                         <div>
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseVas">
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseVas">
 
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseVas"> Baggage/Seat/Meals
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseVas"> Baggage/Seat/Meals
                                                         </div>
                                                     </div>
                                                     <div class="fare-list-right">
@@ -336,9 +336,9 @@
                                                     <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                                         <div>
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                                         </div>
                                                     </div>
                                                     <div class="fare-list-right">
@@ -546,9 +546,9 @@
                                             <div (click)="isCollapseShow('BaseFare')">
                                                 <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
 
-                                                    <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
+                                                    <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
 
-                                                    <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare
+                                                    <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare
                                                 </div>
 
                                             </div>
@@ -669,7 +669,7 @@
                                     <div class="fare-list-box">
                                         <div class="fare-list-left">
                                             <div>
-                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/add.png" alt=""> Baggage/Seat/Meals
+                                                <img class="me-2" src="{{cdnUrl}}images/icons/add.png" alt=""> Baggage/Seat/Meals
                                             </div>
                                         </div>
                                         <div class="fare-list-right">
@@ -683,9 +683,9 @@
                                         <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                             <div>
-                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+                                                <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                             </div>
                                         </div>
                                         <div class="fare-list-right">

@@ -515,7 +515,7 @@
 
                                                     <div class="quantity buttons_added">
                                                         <input type="button" (click)="decreaseAdult()" value="-" class="qty-buttons minus">
-                                                        <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern=""
+                                                        <input type="number" readonly step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern=""
                                                             inputmode="" [(ngModel)]="flightData.value.adults">
                                                         <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent" class="qty-buttons plus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
@@ -534,7 +534,7 @@
                                                 <div class="Travellers-qty">
                                                     <div class="quantity buttons_added">
                                                         <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus">
-                                                        <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child" [(ngModel)]="flightData.value.child">
+                                                        <input type="number" readonly step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child" [(ngModel)]="flightData.value.child">
                                                         <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
                                                       <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
@@ -552,7 +552,7 @@
                                                 <div class="Travellers-qty">
                                                     <div class="quantity buttons_added">
                                                         <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus">
-                                                        <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants" inputmode="">
+                                                        <input type="number" readonly step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants" inputmode="">
                                                         <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus" id="checkInfantsStatus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
                                                       <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
