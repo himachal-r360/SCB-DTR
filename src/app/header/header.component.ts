@@ -793,7 +793,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train/checkout") || event.url.includes("hotel/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("hotel/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")||event.url.includes("club-marriott-membership")) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
