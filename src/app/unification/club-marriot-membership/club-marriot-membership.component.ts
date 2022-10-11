@@ -79,5 +79,7 @@ export class ClubMarriotMembershipComponent implements OnInit {
         }  
       }
   }
-
+  enrol_membership(){
+     console.log('enrol_membership');
+  }
 }
