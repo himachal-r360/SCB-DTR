@@ -509,13 +509,11 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    });
  }
 
+ showMAmenties:boolean=false;
  openAmentiesmlite()
  {
-   var filterDiv = document.getElementById('Mobileamenities');
-   if(filterDiv)
-   {
-     filterDiv.style.display = 'block';
-   }
+   this.showMAmenties=true;
+   setTimeout(function () { $('#Mobileamenities').show(); }.bind(this), 100);
 
  }
  rotate: boolean = false;
@@ -528,6 +526,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  
  closeAmenitiesmlite()
  {
+   this.showMAmenties=false;
    var filterDiv = document.getElementById('Mobileamenities');
    if(filterDiv)
    {

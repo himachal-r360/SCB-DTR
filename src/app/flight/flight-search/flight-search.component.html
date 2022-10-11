@@ -33,7 +33,7 @@
                                         <div class="quantity buttons_added">
                                             <input type="button" (click)="decreaseAdult()" value="-" class="qty-buttons minus">
                                             <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern=""
-                                                inputmode="" [(ngModel)]="flightData.value.adults">
+                                                inputmode="" [(ngModel)]="flightData.value.adults" readonly>
                                             <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent" class="qty-buttons plus">
                                         </div>
                                     </div>
@@ -48,7 +48,7 @@
                                     <div class="Travellers-qty">
                                         <div class="quantity buttons_added">
                                             <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus">
-                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child" [(ngModel)]="flightData.value.child">
+                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child" [(ngModel)]="flightData.value.child" readonly>
                                             <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                     <div class="Travellers-qty">
                                         <div class="quantity buttons_added">
                                             <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus">
-                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants" inputmode="">
+                                            <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants" inputmode="" readonly>
                                             <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus" id="checkInfantsStatus">
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@
                                 <div class="mob-title" *ngIf="isMobile">
                                     <h3>Select From City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
-                                        <img src="{{cdnUrl}}/images/icons/close.png" (click)="onClose()" class="close-mobile" alt="" />
+                                        <img src="{{cdnUrl}}images/icons/close.png" (click)="onClose()" class="close-mobile" alt="" />
                                     </a>
                                 </div>
 
@@ -186,7 +186,7 @@
                         </div>
 
                         <div class="select-root-icons" (click)="swap()">
-                            <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
+                            <img src="{{cdnUrl}}images/icons/twoway.png" alt="">
                         </div>
                         <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" (click)='focusInput(-1,"to")'>
                             <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
@@ -210,7 +210,7 @@
                                 <div class="mob-title" *ngIf="isMobile">
                                     <h3>Select To City</h3>
                                     <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile">
-                                        <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                        <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                     </a>
                                 </div>
                                 <div class="mob-search" *ngIf="isMobile">
@@ -492,7 +492,7 @@
                                             {{flightData.value.infants}} Infant</span></h5>
                                 </div>
                                 <div class="mob-travellers-class-box-right">
-                                    <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
+                                    <img src="{{cdnUrl}}images/icons/down.png" class="ms-1" alt="">
                                 </div>
                             </div>
 
@@ -500,7 +500,7 @@
                                 <div class="mob-title">
                                     <h3>Select Travellers & Class</h3>
                                     <a class="mob-close mob-preferred-airline-close" (click)="closeTravllerBlock()">
-                                        <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                        <img src="{{cdnUrl}}images/icons/close.png" alt="">
                                     </a>
                                 </div>
                                 <div class="mob-add-travels">
@@ -515,7 +515,7 @@
 
                                                     <div class="quantity buttons_added">
                                                         <input type="button" (click)="decreaseAdult()" value="-" class="qty-buttons minus">
-                                                        <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern=""
+                                                        <input type="number" readonly step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" formControlName="adults" size="4" pattern=""
                                                             inputmode="" [(ngModel)]="flightData.value.adults">
                                                         <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent" class="qty-buttons plus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
@@ -534,7 +534,7 @@
                                                 <div class="Travellers-qty">
                                                     <div class="quantity buttons_added">
                                                         <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus">
-                                                        <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child" [(ngModel)]="flightData.value.child">
+                                                        <input type="number" readonly step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" formControlName="child" [(ngModel)]="flightData.value.child">
                                                         <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
                                                       <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
@@ -552,7 +552,7 @@
                                                 <div class="Travellers-qty">
                                                     <div class="quantity buttons_added">
                                                         <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus">
-                                                        <input type="number" step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants" inputmode="">
+                                                        <input type="number" readonly step="1" min="0" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" formControlName="infants" [(ngModel)]="flightData.value.infants" inputmode="">
                                                         <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus" id="checkInfantsStatus">
                                                         <!-- <input type="button" value="-" class="qty-buttons minus">
                                                       <input type="number" step="1" min="1" max="6" name="quantity" value="0" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
@@ -616,12 +616,12 @@
           <div class="add-search-content">
               <div class="Preferred-area" appDropdown>
                   <h5 class="Preferred-title">Preferred Airline <img
-                          src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
+                          src="{{cdnUrl}}images/icons/down.png" class="ms-1" alt=""></h5>
                   <div class="Preferred-data  flight-from-hide dropdown">
                       <div class="mob-title" *ngIf="isMobile">
                           <h3>Preferred Airline</h3>
                           <a href="#" class="mob-close mob-preferred-close close-mobile">
-                              <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile"
+                              <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile"
                                   alt="" />
                           </a>
                       </div>
@@ -671,7 +671,7 @@
               <li *ngFor="let service of enableFlightServices">
                   <div class="OTA-Partner-list">
                       <input type="checkbox" name="" id="">
-                      <img src="{{cdnUrl}}/images/flight_partners/small-no/{{service.name}}.png" alt="{{service.name}}" />
+                      <img src="{{cdnUrl}}images/flight_partners/small-no/{{service.name}}.png" alt="{{service.name}}" />
                   </div>
               </li>
 
@@ -681,7 +681,7 @@
         <!-- Mobile Preferred-OTA-Partner -->
         <!--<div class="mob-Preferred-OTA-Partner-area"  *ngIf="isMobile && displayPartners">
           <div class="mob-Preferred-area" (click)="showPartner()">
-              <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt=""></h5>
+              <h5 class="mob-Preferred-title">Preferred OTA Partner<img src="{{cdnUrl}}images/icons/down.png" class="ms-1" alt=""></h5>
           </div>
 
           <div class="mob-OTA-box" [ngClass]="isShowPartner == true?'d-block':'d-none'">
@@ -689,7 +689,7 @@
                   <div class="mob-title">
                       <h3>Select Preferred OTA Partner</h3>
                       <a href="javascript:void(0)" class="mob-close mob-OTA-close" >
-                          <img src="{{cdnUrl}}/images/icons/close.png" alt="" (click)="hidePartner()">
+                          <img src="{{cdnUrl}}images/icons/close.png" alt="" (click)="hidePartner()">
                       </a>
                   </div>
                   <div class="mob-OTA-listed">
@@ -697,25 +697,25 @@
                           <li>
                               <div class="mob-OTA-Partner-list">
                                   <input type="checkbox" name="" id="">
-                                  <img src="{{cdnUrl}}/images/flights/1.png" alt="" />
+                                  <img src="{{cdnUrl}}images/flights/1.png" alt="" />
                               </div>
                           </li>
                           <li>
                               <div class="mob-OTA-Partner-list">
                                   <input type="checkbox" name="" id="" checked>
-                                  <img src="{{cdnUrl}}/images/flights/2.png" alt="" />
+                                  <img src="{{cdnUrl}}images/flights/2.png" alt="" />
                               </div>
                           </li>
                           <li>
                               <div class="mob-OTA-Partner-list">
                                   <input type="checkbox" name="" id="">
-                                  <img src="{{cdnUrl}}/images/flights/4.png" alt="" />
+                                  <img src="{{cdnUrl}}images/flights/4.png" alt="" />
                               </div>
                           </li>
                           <li>
                               <div class="mob-OTA-Partner-list">
                                   <input type="checkbox" name="" id="">
-                                  <img src="{{cdnUrl}}/images/flights/3.png" alt="" />
+                                  <img src="{{cdnUrl}}images/flights/3.png" alt="" />
                               </div>
                           </li>
                       </ul>
@@ -838,7 +838,7 @@
                                 </div>
 
                                 <div class="select-root-icons" (click)="swapMulticity(i)">
-                                    <img src="{{cdnUrl}}/images/icons/twoway.png" alt="">
+                                    <img src="{{cdnUrl}}images/icons/twoway.png" alt="">
                                 </div>
                                 <div class="select-root-right select-root-right1" appDropdown #toCityDiv id="toCityDiv_{{i}}" (click)='focusInput(i,"to")'>
                                     <span class="select-roottitle">TO</span>
@@ -931,7 +931,7 @@
                                 <div class="root-search close-multi-city-add">
                                     <button type="button" class="searchbn" (click)="searchMulticityFlight()" *ngIf="i == 0">Search</button>
                                     <a href="javascript:void(0);" class="multi-city-close-btn" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
-                                        <img src="{{cdnUrl}}/images/icons/close_01.png" alt="">
+                                        <img src="{{cdnUrl}}images/icons/close_01.png" alt="">
                                     </a>
                                 </div>
 
@@ -978,7 +978,7 @@
                                         <div class="mob-title">
                                             <h3>Select From City</h3>
                                             <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile" (click)="onClose()">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="">
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="">
                                             </a>
                                         </div>
                                         <div class="mob-search">
@@ -1046,7 +1046,7 @@
                                         <div class="mob-title">
                                             <h3>Select To City</h3>
                                             <a href="javascript:void(0)" class="mob-close mob-ff-from-close close-mobile" (click)="onClose()">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="">
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="">
                                             </a>
                                         </div>
                                         <div class="mob-search" *ngIf="isMobile">
@@ -1105,7 +1105,7 @@
                                 </div>
 
                                 <a href="javascript:void(0)" class="mult-mobile-close" *ngIf="i > 1" (click)="removeMutlicityInput(i)">
-                                    <img src="{{cdnUrl}}/images/icons/close_01.png" alt="">
+                                    <img src="{{cdnUrl}}images/icons/close_01.png" alt="">
                                 </a>
                             </div>
                             <div class="modal bottom_mlite_popup" id="flight_departure_mlite{{i}}" tabindex="-1" aria-hidden="true" *ngIf="mliteChecoutMulti[i]">
@@ -1147,7 +1147,7 @@
                                   {{flightData.value.infants}} Infant</span></h5>
                         </div>
                         <div class="mob-travellers-class-box-right">
-                            <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
+                            <img src="{{cdnUrl}}images/icons/down.png" class="ms-1" alt="">
                         </div>
                     </div>
 
@@ -1155,7 +1155,7 @@
                         <div class="mob-title">
                             <h3>Select Travellers & Class</h3>
                             <a class="mob-close mob-preferred-airline-close" (click)="closeTravllerBlock()">
-                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                <img src="{{cdnUrl}}images/icons/close.png" alt="">
                             </a>
                         </div>
                         <div class="mob-add-travels">
@@ -1171,7 +1171,7 @@
                                             <div class="quantity buttons_added">
                                                 <input type="button" (click)="decreaseAdult()" value="-" class="qty-buttons minus">
 
-                                                <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" [value]="adultsVal">
+                                                <input type="number" step="1" oninput="if(this.value.length > 1) this.value = this.value.substring(0,1)" min="1" max="9" name="quantity" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" [value]="adultsVal" readonly>
 
                                                 <input type="button" (click)="increaseAdult()" value="+" [disabled]="disableParent" class="qty-buttons plus">
 
@@ -1188,7 +1188,7 @@
                                         <div class="Travellers-qty">
                                             <div class="quantity buttons_added">
                                                 <input type="button" (click)="decreaseChild()" value="-" class="qty-buttons minus">
-                                                <input type="number" step="1" min="0" max="6" name="quantity" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" [value]="childVal">
+                                                <input type="number" step="1" min="0" max="6" readonly name="quantity" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="" [value]="childVal">
                                                 <input type="button" (click)="increaseChild()" [disabled]="disablechildren" value="+" class="qty-buttons plus">
 
                                             </div>
@@ -1204,7 +1204,7 @@
                                         <div class="Travellers-qty">
                                             <div class="quantity buttons_added">
                                                 <input type="button" (click)="decreaseInfant()" value="-" class="qty-buttons minus">
-                                                <input type="number" step="1" min="0" max="6" name="quantity" [value]="infantsVal" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
+                                                <input type="number" step="1" min="0" max="6" readonly name="quantity" [value]="infantsVal" title="Qty" class="input-text qty text quantity_adult1_events" size="4" pattern="" inputmode="">
                                                 <input type="button" (click)="increaseInfant()" [disabled]="disableinfants" value="+" class="qty-buttons plus">
 
                                             </div>

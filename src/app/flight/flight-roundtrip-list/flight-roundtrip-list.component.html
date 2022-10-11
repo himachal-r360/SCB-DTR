@@ -21,7 +21,7 @@
         <div class="no_flights_sec">
             <div>
                 <p class="title">Yikes! No flight found</p>
-                <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                <img src="{{cdnUrl}}images/flights/no_flights.svg" alt="no_flights">
                 <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
                 <div>
                     <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
@@ -91,7 +91,7 @@
                                             <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                             <div class="flighttiming-content flight-departing">
                                                 <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="FlightTimingsFilterFlightData(timingsItems)">
-                                                    <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                     <p [innerHTML]="timingsItems.value"></p>
                                                 </div>
                                             </div>
@@ -99,7 +99,7 @@
                                             <p class="flighttimings-text">Returning flight ({{flightTimingto}}-{{flightTimingfrom}})</p>
                                             <div class="flighttiming-content flight-departing">
                                                 <div class="flighttiming-list" *ngFor="let timingsItems of flight_return_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
-                                                    <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                     <p [innerHTML]="timingsItems.value"></p>
                                                 </div>
                                             </div>
@@ -271,7 +271,7 @@
                                     <div class="col-md-6">
                                         <div class="round-flight-listing round-from-box" [hidden]="loader">
                                             <div class="round-from">
-                                                <h6><img src="{{cdnUrl}}/images/icons/flight-listing.svg" alt="" class="pe-2"> {{fromCityName}} to {{toCityName}}</h6>
+                                                <h6><img src="{{cdnUrl}}images/icons/flight-listing.svg" alt="" class="pe-2"> {{fromCityName}} to {{toCityName}}</h6>
                                                 <p>{{departureDate | date:"EEE ,dd MMM" }}</p>
                                             </div>
                                             <div class="round-from-filters">
@@ -308,7 +308,7 @@
                                                     <div class="no_flights_sec">
                                                         <div>
                                                             <p class="title">Yikes! No flight found</p>
-                                                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                                            <img src="{{cdnUrl}}images/flights/no_flights.svg" alt="no_flights">
                                                             <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
                                                             <div>
                                                                 <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
@@ -335,7 +335,7 @@
                                                                     <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
                                                                 </div>
                                                                 <div class="round-content-time" *ngIf="flightList">
-                                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                                     <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}} |
                                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
                                                                         <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span></p>
@@ -350,8 +350,8 @@
                                                                 </div>
                                                                 <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
                                                                     <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
-                                                                    <div class="partner_logo_div"><img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1"></div>
-                                                                    <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                                    <div class="partner_logo_div"><img src="{{cdnUrl}}images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1"></div>
+                                                                    <!-- <img src="{{cdnUrl}}images/flights/1.png" alt=""> -->
                                                                     <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more <i class="fas fa-chevron-down ps-1"></i> </a>
                                                                     <a href="javascript:void(0)" class="moreview" style="cursor: default;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
                                                                 </div>
@@ -363,8 +363,8 @@
                                                                     <div class="round-options-list-top">
                                                                         <div class="round-list-image-box">
                                                                             <div class="round-list-image">
-                                                                                <img src="{{cdnUrl}}/images/flight_partners/small-no/{{item.partnerName}}.png" alt="{{item.partnerName}}" class="pt-1 pb-1">
-                                                                                <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                                                <img src="{{cdnUrl}}images/flight_partners/small-no/{{item.partnerName}}.png" alt="{{item.partnerName}}" class="pt-1 pb-1">
+                                                                                <!-- <img src="{{cdnUrl}}images/flights/1.png" alt=""> -->
                                                                             </div>
                                                                             <div class="flight-options-text">
                                                                                 <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -375,7 +375,7 @@
                                                                             <div class="flight-options-price d-flex align-items-center">
                                                                                 <p>&#8377;{{item.totalFare |number}}</p>
                                                                                 <span class="information-icon">
-                                                                  <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
+                                                                  <img src="{{cdnUrl}}images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title text-left">
                                                                           <h6>Price Breakdown</h6>
@@ -412,7 +412,7 @@
                                                                             <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
-                                                                      <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
+                                                                      <img src="{{cdnUrl}}images/icons/details/1.png" alt="">
                                                                   </p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
@@ -421,7 +421,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}images/icons/details/2.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Meals Selection</p>
@@ -429,7 +429,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}images/icons/details/3.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Seats Selection</p>
@@ -440,7 +440,7 @@
                                                                         </div>
                                                                         <a href="javascript:void(0);" (click)="DisplayDetail(list.flightKey,list.flights,item,$event,'onward')" class="round-flight-details-click">
                                                           Flight Details
-                                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="">
+                                                          <img src="{{cdnUrl}}images/icons/down.png" class="ms-1" alt="">
                                                         </a>
                                                                     </div>
 
@@ -458,7 +458,7 @@
                                     <div class="col-md-6">
                                         <div class="round-flight-listing round-from-box" [hidden]="loader">
                                             <div class="round-from">
-                                                <h6><img src="{{cdnUrl}}/images/icons/flight-listing_landing.svg" alt="" class="pe-2"> {{toCityName}} to {{fromCityName}} </h6>
+                                                <h6><img src="{{cdnUrl}}images/icons/flight-listing_landing.svg" alt="" class="pe-2"> {{toCityName}} to {{fromCityName}} </h6>
                                                 <p>{{returnDate | date:"EEE ,dd MMM" }}</p>
                                             </div>
                                             <div class="round-from-filters">
@@ -496,7 +496,7 @@
                                                 <div class="no_flights_sec">
                                                     <div>
                                                         <p class="title">Yikes! No flight found</p>
-                                                        <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                                        <img src="{{cdnUrl}}images/flights/no_flights.svg" alt="no_flights">
                                                         <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
                                                         <div>
                                                             <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
@@ -522,7 +522,7 @@
                                                                     <i class="free-flow air-logo intAirLogo size-28 x{{list.flights | airlines}}"></i>
                                                                 </div>
                                                                 <div class="round-content-time">
-                                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
+                                                                    <h6>{{list.flights[0].departureDateTime | date:'HH:mm'}} <img src="{{cdnUrl}}images/icons/flight-right.png" alt=""> {{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
                                                                     <p>{{list.flights[0].airline}} {{list.flights[0].flightNumber}} |
                                                                         <span *ngIf="list.priceSummary[0].refundStatus == 1">Refundable</span>
                                                                         <span *ngIf="list.priceSummary[0].refundStatus != 1">Non-Refundable</span>
@@ -538,8 +538,8 @@
                                                                 </div>
                                                                 <div class="round-content-price" *ngIf="list.priceSummary.length > 0">
                                                                     <h6>₹ {{list.priceSummary[0].totalFare | number}}</h6>
-                                                                    <div class="partner_logo_div"><img src="{{cdnUrl}}/images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1"></div>
-                                                                    <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                                    <div class="partner_logo_div"><img src="{{cdnUrl}}images/flight_partners/small-no/{{list.priceSummary[0].partnerName}}.png" alt="{{list.priceSummary[0].partnerName}}" class="pt-1 pb-1"></div>
+                                                                    <!-- <img src="{{cdnUrl}}images/flights/1.png" alt=""> -->
                                                                     <a href="javascript:void(0)" class="moreview" *ngIf="(list.priceSummary | filterUnique) > 0">+{{list.priceSummary | filterUnique}} more <i class="fas fa-chevron-down ps-1"></i> </a>
                                                                     <a href="javascript:void(0)" class="moreview" style="cursor:default ;" *ngIf="!(list.priceSummary.length > 1)">&nbsp; </a>
                                                                 </div>
@@ -551,8 +551,8 @@
                                                                     <div class="round-options-list-top">
                                                                         <div class="round-list-image-box">
                                                                             <div class="round-list-image">
-                                                                                <img src="{{cdnUrl}}/images/flight_partners/small-no/{{item.partnerName}}.png" alt="{{item.partnerName}}" class="pt-1 pb-1">
-                                                                                <!-- <img src="{{cdnUrl}}/images/flights/1.png" alt=""> -->
+                                                                                <img src="{{cdnUrl}}images/flight_partners/small-no/{{item.partnerName}}.png" alt="{{item.partnerName}}" class="pt-1 pb-1">
+                                                                                <!-- <img src="{{cdnUrl}}images/flights/1.png" alt=""> -->
                                                                             </div>
                                                                             <div class="flight-options-text">
                                                                                 <p class="text-green" *ngIf="item.refundStatus == 1">Refundable</p>
@@ -563,7 +563,7 @@
                                                                             <div class="flight-options-price d-flex align-items-center">
                                                                                 <p>&#8377;{{item.totalFare |number}}</p>
                                                                                 <span class="information-icon">
-                                                                  <img src="{{cdnUrl}}/images/icons/info.png" class="ms-2" alt="">
+                                                                  <img src="{{cdnUrl}}images/icons/info.png" class="ms-2" alt="">
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-title text-left">
                                                                           <h6>Price Breakdown</h6>
@@ -599,7 +599,7 @@
                                                                             <!--<ul class="extra-tabs-right-ul">
                                                               <li class="ms-0">
                                                                   <p>
-                                                                      <img src="{{cdnUrl}}/images/icons/details/1.png" alt="">
+                                                                      <img src="{{cdnUrl}}images/icons/details/1.png" alt="">
                                                                   </p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
@@ -608,7 +608,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="{{cdnUrl}}/images/icons/details/2.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}images/icons/details/2.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Meals Selection</p>
@@ -616,7 +616,7 @@
                                                                   </div>
                                                               </li>
                                                               <li>
-                                                                  <p><img src="{{cdnUrl}}/images/icons/details/3.png" alt=""></p>
+                                                                  <p><img src="{{cdnUrl}}images/icons/details/3.png" alt=""></p>
                                                                   <div class="hover-popover">
                                                                       <div class="hover-popover-content">
                                                                           <p>Seats Selection</p>
@@ -627,7 +627,7 @@
                                                                         </div>
                                                                         <a href="javascript:void(0);" class="round-flight-details-click" (click)="DisplayDetail(list.flightKey,list.flights,item,$event,'return')">
                                                           Flight Details
-                                                          <img src="{{cdnUrl}}/images/icons/down.png" class="ms-1" alt="" >
+                                                          <img src="{{cdnUrl}}images/icons/down.png" class="ms-1" alt="" >
                                                       </a>
                                                                     </div>
                                                                 </div>
@@ -658,7 +658,7 @@
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
                             <a href="javascript:;" routerLink="/compare-fly">
-                                <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                                <img src="{{cdnUrl}}images/icons/left.png" alt="" />
                             </a>
                         </div>
                         <div class="mob-listing-header-center">
@@ -672,7 +672,7 @@
                         </div>
                         <div class="mob-listing-header-right">
                             <a href="javascript:;" routerLink="/compare-fly">
-                                <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
+                                <img src="{{cdnUrl}}images/icons/edit.svg" alt="" />
                             </a>
                         </div>
                     </div>
@@ -681,7 +681,7 @@
                     <div class="mob-listing-fiters">
                         <h6>{{flightList.length + ReturnflightList.length}} Flights Found</h6>
                         <a href="javascript:void(0)" class="showfilters" (click)="openMobileFilterSection()">
-                            <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                            <img src="{{cdnUrl}}images/icons/filter.svg" alt="">
                             <span class="mx-2">Sort/Filters</span>
                         </a>
                     </div>
@@ -715,7 +715,7 @@
                     <div class="no_flights_sec">
                         <div>
                             <p class="title">Yikes! No flight found</p>
-                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                            <img src="{{cdnUrl}}images/flights/no_flights.svg" alt="no_flights">
                             <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
                             <div>
                                 <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
@@ -728,7 +728,7 @@
                         <div class="row g-0">
                             <div class="col-6">
                                 <div class="mob-fr-list-title" [hidden]="loader">
-                                    <h6><img src="{{cdnUrl}}/images/icons/flight-listing.svg" alt=""> {{fromCityName}} To {{toCityName}}</h6>
+                                    <h6><img src="{{cdnUrl}}images/icons/flight-listing.svg" alt=""> {{fromCityName}} To {{toCityName}}</h6>
                                 </div>
                                 <div class="accordion accordion-flush" id="accordionFlushOnward">
                                     <ng-container #itemsContainer></ng-container>
@@ -737,7 +737,7 @@
                                     <div class="no_flights_sec">
                                         <div>
                                             <p class="title">Yikes! No flight found</p>
-                                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                            <img src="{{cdnUrl}}images/flights/no_flights.svg" alt="no_flights">
                                             <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
                                             <div>
                                                 <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
@@ -765,7 +765,7 @@
                                                                 <p>{{list.flights[0].departureAirport}}</p>
                                                             </div>
                                                             <div class="name-bottom-top-center">
-                                                                <img src="{{cdnUrl}}/images/icons/mob-flight.svg" alt="" />
+                                                                <img src="{{cdnUrl}}images/icons/mob-flight.svg" alt="" />
                                                             </div>
                                                             <div class="name-bottom-top-right">
                                                                 <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}} </h6>
@@ -782,7 +782,7 @@
                                                         <div class="mob-items-book-list-items">
                                                             <div class="mob-book-list-top">
                                                                 <div class="mob-booking-image">
-                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.svg" alt="{{list.priceSummary[0].partnerName}}" width="20">
+                                                                    <img src="{{cdnUrl}}images/flight_partners/small/{{list.priceSummary[0].partnerName}}.svg" alt="{{list.priceSummary[0].partnerName}}" width="20">
                                                                 </div>
                                                                 <div class="mob-booking-price">
                                                                     <h6>₹ {{list.priceSummary[0].totalFare |number}}</h6>
@@ -794,7 +794,7 @@
                                                             </div>
                                                         </div>
                                                         <!--  <div class="name-bottom-bottom">
-                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                              <p><img src="{{cdnUrl}}images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
                                           </div>-->
                                                     </div>
                                                 </div>
@@ -803,7 +803,7 @@
                                                         <div class="mob-items-book-list-items mob-items-book-list-itemso" id="mob-items-book-list-itemso_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
                                                             <div class="mob-book-list-top">
                                                                 <div class="mob-booking-image">
-                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.svg" alt="{{item.partnerName}}" width="20" />
+                                                                    <img src="{{cdnUrl}}images/flight_partners/small/{{item.partnerName}}.svg" alt="{{item.partnerName}}" width="20" />
                                                                 </div>
                                                                 <div class="mob-booking-price">
                                                                     <h6>₹ {{item.totalFare |number}}</h6>
@@ -816,18 +816,18 @@
                                                                 <div class="mob-extra">
                                                                     <!--<ul>
                                                       <li>
-                                                          <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                                          <img src="{{cdnUrl}}images/icons/details/1.png" alt="" />
                                                       </li>
                                                       <li>
-                                                          <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                                          <img src="{{cdnUrl}}images/icons/details/2.png" alt="" />
                                                       </li>
                                                       <li>
-                                                          <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                                          <img src="{{cdnUrl}}images/icons/details/3.png" alt="" />
                                                       </li>
                                                   </ul>-->
                                                                 </div>
                                                                 <div class="mob-details">
-                                                                    <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.svg" alt="" /> </a>
+                                                                    <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}images/icons/mob-down.svg" alt="" /> </a>
                                                                 </div>
                                                             </div>
 
@@ -843,7 +843,7 @@
                                                         <div class="mob-title">
                                                             <h3>Flight Details</h3>
                                                             <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/close.png" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="mob-fd-filters">
@@ -1163,7 +1163,7 @@
 
                                 </div>
                                 <div class="mob-fr-list-title" [hidden]="loader">
-                                    <h6><img src="{{cdnUrl}}/images/icons/flight-listing.svg" alt=""> {{toCityName}} To {{fromCityName}}</h6>
+                                    <h6><img src="{{cdnUrl}}images/icons/flight-listing.svg" alt=""> {{toCityName}} To {{fromCityName}}</h6>
                                 </div>
                                 <div class="accordion accordion-flush" id="accordionFlushReturn">
                                     <ng-container #itemsReturnContainer></ng-container>
@@ -1172,7 +1172,7 @@
                                     <div class="no_flights_sec">
                                         <div>
                                             <p class="title">Yikes! No flight found</p>
-                                            <img src="{{cdnUrl}}/images/flights/no_flights.svg" alt="no_flights">
+                                            <img src="{{cdnUrl}}images/flights/no_flights.svg" alt="no_flights">
                                             <p class="text_info">Sorry! We couldn’t find the results for you under the stipulated time. <br/> Our Partner servers seem to be busy. Please try after a couple of minutes.</p>
                                             <div>
                                                 <button class="btn btn-primary my-3 search_btn" (click)="goSearch()"> Search Again</button>
@@ -1200,7 +1200,7 @@
                                                                 <p>{{list.flights[0].departureAirport}}</p>
                                                             </div>
                                                             <div class="name-bottom-top-center">
-                                                                <img src="{{cdnUrl}}/images/icons/mob-flight.svg" alt="" />
+                                                                <img src="{{cdnUrl}}images/icons/mob-flight.svg" alt="" />
                                                             </div>
                                                             <div class="name-bottom-top-right">
                                                                 <h6>{{list.flights[0].arrivalDateTime | date:'HH:mm'}}</h6>
@@ -1217,7 +1217,7 @@
                                                         <div class="mob-items-book-list-items">
                                                             <div class="mob-book-list-top">
                                                                 <div class="mob-booking-image">
-                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{list.priceSummary[0].partnerName}}.svg" alt="{{list.priceSummary[0].partnerName}}" width="20">
+                                                                    <img src="{{cdnUrl}}images/flight_partners/small/{{list.priceSummary[0].partnerName}}.svg" alt="{{list.priceSummary[0].partnerName}}" width="20">
                                                                 </div>
                                                                 <div class="mob-booking-price">
                                                                     <h6>₹ {{list.priceSummary[0].totalFare|number}}</h6>
@@ -1229,7 +1229,7 @@
                                                             </div>
                                                         </div>
                                                         <!-- <div class="name-bottom-bottom">
-                                              <p><img src="{{cdnUrl}}/images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
+                                              <p><img src="{{cdnUrl}}images/icons/price.png" alt=""> Use SBFLY and get FLAT Rs.500 discount</p>
                                           </div>-->
                                                     </div>
                                                 </div>
@@ -1238,7 +1238,7 @@
                                                         <div class="mob-items-book-list-items mob-items-book-list-itemsr" id="mob-items-book-list-itemsr_{{list.flightKey}}_{{item.partnerName}}" *ngIf="item.splrtFareFlight==false">
                                                             <div class="mob-book-list-top">
                                                                 <div class="mob-booking-image">
-                                                                    <img src="{{cdnUrl}}/images/flight_partners/small/{{item.partnerName}}.svg" alt="{{item.partnerName}}" width="20" />
+                                                                    <img src="{{cdnUrl}}images/flight_partners/small/{{item.partnerName}}.svg" alt="{{item.partnerName}}" width="20" />
                                                                 </div>
                                                                 <div class="mob-booking-price">
                                                                     <h6>₹{{item.totalFare |number}}</h6>
@@ -1251,18 +1251,18 @@
                                                                 <div class="mob-extra">
                                                                     <!--<ul>
                                                       <li>
-                                                          <img src="{{cdnUrl}}/images/icons/details/1.png" alt="" />
+                                                          <img src="{{cdnUrl}}images/icons/details/1.png" alt="" />
                                                       </li>
                                                       <li>
-                                                          <img src="{{cdnUrl}}/images/icons/details/2.png" alt="" />
+                                                          <img src="{{cdnUrl}}images/icons/details/2.png" alt="" />
                                                       </li>
                                                       <li>
-                                                          <img src="{{cdnUrl}}/images/icons/details/3.png" alt="" />
+                                                          <img src="{{cdnUrl}}images/icons/details/3.png" alt="" />
                                                       </li>
                                                   </ul>-->
                                                                 </div>
                                                                 <div class="mob-details">
-                                                                    <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}/images/icons/mob-down.svg" alt="" /> </a>
+                                                                    <a href="javascript:void(0)" class="mob-fd-show" (click)="openFlightDetailMobile(list.flightKey,'flightdetail')">Flight Details <img src="{{cdnUrl}}images/icons/mob-down.svg" alt="" /> </a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1277,7 +1277,7 @@
                                                         <div class="mob-title">
                                                             <h3>Flight Details</h3>
                                                             <a href="javascript:void(0)" (click)="closeFlightDetailMobile(list.flightKey)" class="mob-close mob-ff-from-close">
-                                                                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/close.png" alt="">
                                                             </a>
                                                         </div>
                                                         <div class="mob-fd-filters">
@@ -1602,7 +1602,7 @@
             </div>
             <div class="modal-body pt-0">
                 <div>
-                    <img src="{{cdnUrl}}/images/flight_partners/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
+                    <img src="{{cdnUrl}}images/flight_partners/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
                 </div>
                 <div class="widget-content">
                     <ul class="widget-list clearfix">
@@ -1610,7 +1610,7 @@
                             <div class="fare-list-box">
                                 <div class="fare-list-left">
                                     <span>
-                                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> Base Fare
+                                        <img class="me-2" src="{{cdnUrl}}images/icons/add.png" alt=""> Base Fare
                                     </span>
                                 </div>
                                 <div class="fare-list-right">
@@ -1622,7 +1622,7 @@
                             <div class="fare-list-box">
                                 <div class="fare-list-left">
                                     <span>
-                                        <img class="me-2" src="{{cdnUrl}}/images/icons/add.png" alt=""> Taxes and Fees
+                                        <img class="me-2" src="{{cdnUrl}}images/icons/add.png" alt=""> Taxes and Fees
                                     </span>
                                 </div>
                                 <div class="fare-list-right">
@@ -1661,7 +1661,7 @@
       <div class="mob-title">
           <h3>Flight Details</h3>
           <a href="#" class="mob-close mob-ff-from-close">
-              <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+              <img src="{{cdnUrl}}images/icons/close.png" alt="">
           </a>
       </div>
       <div class="mob-fd-filters">
@@ -1686,7 +1686,7 @@
                                   <div class="extra-tabs-details-bottom p-0">
                                       <div class="tabs-depart-box">
                                           <div class="tabs-depart-one">
-                                              <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                              <p class="depart-one-image"><img src="{{cdnUrl}}images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                               <div class="tabs-depart-left">
                                                   <div class="tabs-depart-times">
                                                       <h5 class="mb-1 fw_7">08:05</h5>
@@ -1721,7 +1721,7 @@
                                               <p>Change of planes・3h 0m Layover in Nagpur</p>
                                           </div>
                                           <div class="tabs-depart-three">
-                                              <p class="depart-one-image"><img src="{{cdnUrl}}/images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
+                                              <p class="depart-one-image"><img src="{{cdnUrl}}images/flights/flight-1.png" width="22px" class="me-2" alt="">IndiGo 6E 5334</p>
                                               <div class="tabs-depart-left">
                                                   <div class="tabs-depart-times">
                                                       <h5 class="mb-1 fw_7">08:05</h5>
@@ -1834,24 +1834,24 @@
                                   <div class="rules-flight">
                                       <div class="rules-flight-items">
                                           <div class="rules-flight-thumbe">
-                                              <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
+                                              <img src="{{cdnUrl}}images/flights/flight-1.png" alt="">
                                           </div>
                                           <div class="rules-flight-content">
                                               <h6>
                                                   BOM
-                                                  <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                                                  <img src="{{cdnUrl}}images/icons/flight-right.png" alt="">
                                                   NAG
                                               </h6>
                                           </div>
                                       </div>
                                       <div class="rules-flight-items opacity_05">
                                           <div class="rules-flight-thumbe">
-                                              <img src="{{cdnUrl}}/images/flights/flight-1.png" alt="">
+                                              <img src="{{cdnUrl}}images/flights/flight-1.png" alt="">
                                           </div>
                                           <div class="rules-flight-content">
                                               <h6>
                                                   NAG
-                                                  <img src="{{cdnUrl}}/images/icons/flight-right.png" alt="">
+                                                  <img src="{{cdnUrl}}images/icons/flight-right.png" alt="">
                                                   HYD
                                               </h6>
                                           </div>
@@ -2000,7 +2000,7 @@
         <div class="mob-title">
             <h3>Sort & Filters</h3>
             <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
-                <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                <img src="{{cdnUrl}}images/icons/close.png" alt="">
             </a>
         </div>
         <div class="mob-sf-tabs">
@@ -2069,14 +2069,14 @@
                                             <p class="flighttimings-text">Departing flight ({{flightTimingfrom}}-{{flightTimingto}})</p>
                                             <div class="flighttiming-content flight-departing">
                                                 <div class="flighttiming-list" *ngFor="let timingsItems of flight_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="FlightTimingsFilterFlightData(timingsItems)">
-                                                    <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                     <p [innerHTML]="timingsItems.value"></p>
                                                 </div>
                                             </div>
                                             <p class="flighttimings-text">Returning flight ({{flightTimingto}}-{{flightTimingfrom}})</p>
                                             <div class="flighttiming-content flight-departing">
                                                 <div class="flighttiming-list" *ngFor="let timingsItems of flight_return_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="FlightTimingsRetrunFilterFlightData(timingsItems)">
-                                                    <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                     <p [innerHTML]="timingsItems.value"></p>
                                                 </div>
                                             </div>
@@ -2277,7 +2277,7 @@
                                         <p> {{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}}</p>
                                     </div>
                                     <div class="round-ff-time">
-                                        <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="{{cdnUrl}}/images/icons/flight-right.svg" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                        <h6>{{onwardSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}} <img src="{{cdnUrl}}images/icons/flight-right.svg" alt=""> {{onwardSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
                                         <p>{{onwardSelectedFlight.flights[0].airline}} {{onwardSelectedFlight.flights[0].flightNumber}} | <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
                                             <span *ngIf="onwardSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
                                         </p>
@@ -2306,7 +2306,7 @@
                                         <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}}</p>
                                     </div>
                                     <div class="round-ff-time">
-                                        <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="{{cdnUrl}}/images/icons/flight-right.svg" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
+                                        <h6>{{returnSelectedFlight.flights[0].departureDateTime| date:'HH:mm'}}<img src="{{cdnUrl}}images/icons/flight-right.svg" alt=""> {{returnSelectedFlight.flights[0].arrivalDateTime| date:'HH:mm'}}</h6>
                                         <p>{{returnSelectedFlight.flights[0].airline}} {{returnSelectedFlight.flights[0].flightNumber}} |
                                             <span *ngIf="returnSelectedFlight.priceSummery.refundStatus != 1">Non-refundable</span>
                                             <span *ngIf="returnSelectedFlight.priceSummery.refundStatus == 1">Refundable</span>
@@ -2334,7 +2334,7 @@
                     <div class="flight-fixed-right" *ngIf="isReturnSelected">
                         <div class="fixedright-content">
                             <div class="fixedright-image">
-                                <img src="{{cdnUrl}}/images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png" class="pt-1 pb-1" alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
+                                <img src="{{cdnUrl}}images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png" class="pt-1 pb-1" alt="{{onwardSelectedFlight.priceSummery.partnerName}}">
                             </div>
                             <div class="fixedright-price">
                                 <h6>
@@ -2399,7 +2399,7 @@
                             </ul>
                             <div class="ff-close-box">
                                 <a href="javascript:void(0);" class="ff-close" (click)="CloseDetail()">
-                                    <img src="{{cdnUrl}}/images/icons/close_01.png" alt="" />
+                                    <img src="{{cdnUrl}}images/icons/close_01.png" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -2500,7 +2500,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2555,7 +2555,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2614,7 +2614,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2675,7 +2675,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}images/flights/flight-1.png" width="15px" alt="" />{{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2741,7 +2741,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}images/flights/flight-1.png" width="15px" alt="" /> {{fromCityName}} to {{toCityName}}, {{departureDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2796,7 +2796,7 @@
                                           <div class="ff-extra-grid-list">
                                               <div class="extra-tabs-details-top">
                                                   <div class="extra-tabs-left">
-                                                      <p><img src="{{cdnUrl}}/images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
+                                                      <p><img src="{{cdnUrl}}images/flights/flight-1.png" width="15px" alt="" /> {{toCityName}} to {{fromCityName}}, {{returnDate | date:"dd MMM" }}</p>
                                                   </div>
                                                   <div class="extra-tabs-right"></div>
                                               </div>
@@ -2871,7 +2871,7 @@
                             <span>Round-Trip</span>
                         </div>
                         <div class="fr-faresummary">
-                            <img src="{{cdnUrl}}/images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}" class="mt-1 mb-1">
+                            <img src="{{cdnUrl}}images/flight_partners/small-no/{{onwardSelectedFlight.priceSummery.partnerName}}.png" alt="{{onwardSelectedFlight.priceSummery.partnerName}}" class="mt-1 mb-1">
                         </div>
                     </div>
                     <div class="mob-ff-name">
