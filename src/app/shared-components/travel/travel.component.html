@@ -40,34 +40,34 @@
                                             <div class="select_process select_options">
                                                 <div>
                                                     <div class="travelSelect opt_box">
-                                                        <div (click)="displayTravel(1)"><input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly > <span class="material-icons arrowDn_icon travelInputFlightPop" >arrow_drop_down</span></div>
+                                                        <div (click)="displayTravel(1)" class="d-flex"><input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly > <span class="material-icons arrowDn_icon travelInputFlightPop" >arrow_drop_down</span></div>
                                                         <div class="travelList travelListFlightPop" *ngIf="showFlightPassenger">
                                                             <div class="">
                                                                 <ul>
                                                                     <li>
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row adult">
-                                                                                <p class="col-md-7"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
-                                                                                <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('adult','minus')">-</span><input class="count" readonly value="{{adult_label}}" id="adult_label"><input type="hidden"
-                                                                                        value="{{adult_cnt}}" id="adult" name="adult" formControlName="adult"><span class="cursor-pointer plus" (click)="flightPassengers('adult','plus')">+</span></p>
+                                                                                <p class="col-md-6"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('adult','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input class="count count_input_value" readonly value="{{adult_label}}" id="adult_label"><input type="hidden"
+                                                                                        value="{{adult_cnt}}" id="adult" name="adult" formControlName="adult"><span class="cursor-pointer plus" (click)="flightPassengers('adult','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                             </div>
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row children">
-                                                                                <p class="col-md-7"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
-                                                                                <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')">-</span><input readonly class="count" value="{{child_label}}" id="child_label"><input type="hidden"
-                                                                                        value="{{child_cnt}}" id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')">+</span></p>
+                                                                                <p class="col-md-6"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{child_label}}" id="child_label"><input type="hidden"
+                                                                                        value="{{child_cnt}}" id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                             </div>
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row infants">
-                                                                                <p class="col-md-7"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
-                                                                                <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('infant','minus')">-</span><input readonly class="count" value="{{infant_label}}" id="infant_label"><input type="hidden"
-                                                                                        value="{{infant_cnt}}" id="infant" name="infant" formControlName="infant"><span class="cursor-pointer plus" (click)="flightPassengers('infant','plus')">+</span></p>
+                                                                                <p class="col-md-6"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('infant','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{infant_label}}" id="infant_label"><input type="hidden"
+                                                                                        value="{{infant_cnt}}" id="infant" name="infant" formControlName="infant"><span class="cursor-pointer plus" (click)="flightPassengers('infant','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                             </div>
                                                                         </a>
                                                                     </li>
@@ -81,7 +81,7 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div class="select_class_dropdown">
+                                                    <div class="select_class_dropdown customised_class_select">
                                                         <mat-form-field class="flgt-mat-slct">
                                                             <mat-select name="flightclass" class=" w-100" formControlName="flightclass" (ngModelChange)="selectClass($event)">
                                                                 <mat-option value="E" selected>Economy Class</mat-option>
@@ -311,7 +311,7 @@
                             <div class="class_sel">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="select_options mt-30">
+                                        <div class="select_options mt-25">
                                             <div class="form-group">
                                                 <!--  <p class="label_head"><span>Rooms & Guests</span> </p> -->
                                                 <div class="travelSelect opt_box">
@@ -328,9 +328,9 @@
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row">
                                                                                 <p class="col-md-6"><span><b>Rooms</b></span></p>
-                                                                                <p class="col-md-6 text-end"><span class="cursor-pointer" (click)="roomOperation('minus')">-</span>
-                                                                                    <input readonly class="count" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
-                                                                                    <span class="cursor-pointer" (click)="roomOperation('add')">+</span>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomOperation('minus')"><input type="button" value="-" class="qty-buttons minus"></span>
+                                                                                    <input readonly class="count count_input_value" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
+                                                                                    <span class="cursor-pointer" (click)="roomOperation('add')"><input type="button" value="+" class="qty-buttons plus"></span>
                                                                                 </p>
                                                                             </div>
                                                                         </a>
@@ -344,8 +344,8 @@
                                                                                 <a href="javascript:void(0);">
                                                                                     <div class="row">
                                                                                         <p class="col-md-6"><span><b>Adults</b></span><small>12 years &amp; above</small></p>
-                                                                                        <p class="col-md-6 text-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')">-</span><input readonly class="count" name="hotel_adult" formControlName="hotel_adult">
-                                                                                            <span class="cursor-pointer hplus" (click)="roomAdultOperation(i,'add')">+</span>
+                                                                                        <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_adult" formControlName="hotel_adult">
+                                                                                            <span class="cursor-pointer hplus" (click)="roomAdultOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span>
                                                                                         </p>
                                                                                     </div>
                                                                                 </a>
@@ -354,8 +354,8 @@
                                                                                 <a href="javascript:void(0);">
                                                                                     <div class="row">
                                                                                         <p class="col-md-6"><span><b>Children</b></span><small>2-11 years old</small></p>
-                                                                                        <p class="col-md-6 text-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')">-</span><input readonly class="count" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer"
-                                                                                                (click)="roomChildOperation(i,'add')">+</span></p>
+                                                                                        <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer"
+                                                                                                (click)="roomChildOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                                     </div>
                                                                                 </a>
                                                                             </li>
@@ -391,7 +391,7 @@
                                                                 </div>
 
                                                             </div>
-                                                            <div class="px-2">
+                                                            <div class="px-2 py-2 text-center">
                                                                 <button class="btn btn-primary" (click)="closeTavelPopup()">Apply</button>
                                                             </div>
                                                         </div>
@@ -704,7 +704,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="select_class_dropdown">
+                                                <div class="select_class_dropdown customised_class_select">
                                                     <mat-form-field class="flgt-mat-slct">
                                                         <mat-select name="flightclass" class=" w-100" formControlName="flightclass" (ngModelChange)="selectClass($event)">
                                                             <mat-option value="E" selected>Economy Class</mat-option>
