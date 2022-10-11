@@ -739,7 +739,10 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
   }
 
-
+  onImgError(event){
+ event.target.src = this.cdnUrl+'images/hotel/noImage/makemytrip_hotel_noimage.jpg'
+//Do other stuff with the event.target
+}
   amenityCount(data) {
     let retVal = "";
     let obj: any = Object.values(data)

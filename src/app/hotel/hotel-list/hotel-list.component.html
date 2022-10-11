@@ -489,7 +489,7 @@
                           <div class="hotel-list-item" *ngFor="let list of item; let i = index" >
                             <div class="hotel-list-left">
                                 <div class="hotel-list-thumbe">
-                                     <img *ngIf="list.hotelInfo.image != null || list.hotelInfo.image != ''" src="{{list.hotelInfo.image}}" >
+                                     <img *ngIf="list.hotelInfo.image != null || list.hotelInfo.image != ''" src="{{list.hotelInfo.image}}" (error)="onImgError($event)">
                                      <img *ngIf="list.hotelInfo.image == null || list.hotelInfo.image == ''"  src="{{cdnUrl}}images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" >
                                 </div>
                                 <div class="hotel-list-text">
