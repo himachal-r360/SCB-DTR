@@ -104,8 +104,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
 
-  pageIndex: number = 2001;
-  ITEMS_RENDERED_AT_ONCE = 2000;
+  pageIndex: number = 11;
+  ITEMS_RENDERED_AT_ONCE = 10;
   nextIndex = 0;
 
   FilterSectorArray:any = [];
@@ -164,11 +164,11 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   ];
     
     
-  /*  $(window).scroll(function (this) {
+ $(window).scroll(function (this) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
       }
-    });*/
+    });
   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
@@ -795,6 +795,8 @@ bookingSummary() {
     this.flightList = this.layoverFilterFlights(this.flightList);
 
     if (this.container) {
+         this.pageIndex = 10;
+  this.nextIndex = 0;
       this.container.clear();
       this.intialData();
     }

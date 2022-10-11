@@ -3922,12 +3922,13 @@
 
                         <div class="after_log_m">
                             <div class="inner_m_item">
-                                <div class="icn" *ngIf="serviceSettings.notifications==1">
+                                <div class="icn" *ngIf="serviceSettings.notifications==1 && payzrestriction==false">
                                     <!-- <span [ngClass]="(pushcount)>0  ? 'm-number_count' : ''"></span> -->
                                     <p class="mb-0 pt-1 push_icon" (click)="enablePushClick(2)">
                                         <span [ngClass]="(pushcount)>0 && notificationball ? 'm-number_count' : ''"></span>
                                         <img src="{{cdnUrl}}images/smartbuy/icons/icn-bell.svg" alt="profile" class="Notification m_bell">
-                                        <!-- <span class="tooltiptext">Tap to enable push on notifications</span></p> -->
+                                        <!-- <span class="tooltiptext">Tap to enable push on notifications</span> -->
+                                        </p>
                                 </div>
                             </div>
                             <div class="inner_m_item" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
