@@ -207,7 +207,6 @@ export class PaymentComponent implements OnInit {
         };
 
     emiArray:any[];
-        ServiceToken:any;  
         @Input() partnerToken;   
          @Input() retryPay; 
         MAIN_SITE_URL:string;
@@ -380,7 +379,6 @@ export class PaymentComponent implements OnInit {
                 this.showNONSPCsuccessModal = this.serviceSettings.showNONSPCsuccessModal;
                 this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
                 this.siteKey=this.serviceSettings.SITEKEY;
-                this.ServiceToken =this.serviceId;
                 this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
 				this.enable_dcemi2 = this.serviceSettings.enable_dcemi2;
 		
@@ -1903,7 +1901,7 @@ checkNonSpcOfferforHDFCcards(){
 		var request = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
@@ -2020,7 +2018,7 @@ var checkCyberValue = searchValue.indexOf(5);
 		var request1 = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare- this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
@@ -2178,7 +2176,7 @@ checkNonSpcOfferforSaveCard(){
 		var request = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
@@ -2281,7 +2279,7 @@ checkNonSpcOfferforSaveCard(){
 		var request1 = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": this.payActualFare,
 			"convenienceFee": this.convinenceFee,
