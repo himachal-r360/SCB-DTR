@@ -154,16 +154,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     { name: 'All_Flights', active: true, value: 'All Flights' },
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
-  priceSortingFilteritems = [
-    { name: 'P_L_H', active: true, value: 'Low to High', image: './assets/images/icons/price-l.svg', activeImage: './assets/images/icons/active_lth.svg', sortValue: 'Price' },
-    { name: 'P_H_L', active: false, value: 'High to Low', image: './assets/images/icons/price-h.svg', activeImage: './assets/images/icons/active_htl.svg', sortValue: 'Price' },
-    { name: 'D_Short', active: false, value: 'Shortest', image: './assets/images/icons/clock.svg', activeImage: './assets/images/icons/active_duration.svg', sortValue: 'Duration' },
-    { name: 'D_Long', active: false, value: 'Longest', image: './assets/images/icons/clock.svg', activeImage: './assets/images/icons/active_duration.svg', sortValue: 'Duration' },
-    { name: 'D_E', active: false, value: 'Earliest', image: './assets/images/icons/Departure.svg', activeImage: './assets/images/icons/active_departure.svg', sortValue: 'Departure' },
-    { name: 'D_L', active: false, value: 'Latest', image: './assets/images/icons/Departure.svg', activeImage: './assets/images/icons/active_departure.svg', sortValue: 'Departure' },
-    { name: 'A_E', active: false, value: 'Earliest', image: './assets/images/icons/Arrival.svg', activeImage: './assets/images/icons/active_arrival.svg', sortValue: 'Arrival' },
-    { name: 'A_L', active: false, value: 'Latest', image: './assets/images/icons/Arrival.svg', activeImage: './assets/images/icons/active_arrival.svg', sortValue: 'Arrival' },
-  ]
+  priceSortingFilteritems = [  ];
 
   cdnUrl: any;
 
@@ -215,6 +206,20 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public rest: RestapiService, private EncrDecr: EncrDecrService, private appConfigService: AppConfigService, public _styleManager: StyleManagerService, private _flightService: FlightService, public route: ActivatedRoute, private router: Router, private location: Location, private sg: SimpleGlobal, private scroll: ViewportScroller) {
     this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
+    
+    
+      this.priceSortingFilteritems = [
+    { name: 'P_L_H', active: true, value: 'Low to High', image: this.cdnUrl+'images/icons/price-l.svg', activeImage: this.cdnUrl+'images/icons/active_lth.svg', sortValue: 'Price' },
+    { name: 'P_H_L', active: false, value: 'High to Low', image: this.cdnUrl+'images/icons/price-h.svg', activeImage: this.cdnUrl+'images/icons/active_htl.svg', sortValue: 'Price' },
+    { name: 'D_Short', active: false, value: 'Shortest', image: this.cdnUrl+'images/icons/clock.svg', activeImage: this.cdnUrl+'images/icons/active_duration.svg', sortValue: 'Duration' },
+    { name: 'D_Long', active: false, value: 'Longest', image: this.cdnUrl+'images/icons/clock.svg', activeImage: this.cdnUrl+'images/icons/active_duration.svg', sortValue: 'Duration' },
+    { name: 'D_E', active: false, value: 'Earliest', image: this.cdnUrl+'images/icons/Departure.svg', activeImage: this.cdnUrl+'images/icons/active_departure.svg', sortValue: 'Departure' },
+    { name: 'D_L', active: false, value: 'Latest', image: this.cdnUrl+'images/icons/Departure.svg', activeImage: this.cdnUrl+'images/icons/active_departure.svg', sortValue: 'Departure' },
+    { name: 'A_E', active: false, value: 'Earliest', image: this.cdnUrl+'images/icons/Arrival.svg', activeImage: this.cdnUrl+'images/icons/active_arrival.svg', sortValue: 'Arrival' },
+    { name: 'A_L', active: false, value: 'Latest', image: this.cdnUrl+'images/icons/Arrival.svg', activeImage: this.cdnUrl+'images/icons/active_arrival.svg', sortValue: 'Arrival' },
+  ]
+    
+    
     this.serviceSettings = this.appConfigService.getConfig();
     this.enableFlightServices = this.serviceSettings.poweredByPartners['flights'];
     this._styleManager.setScript('custom', `assets/js/custom.js`);

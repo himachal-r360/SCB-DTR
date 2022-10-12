@@ -992,7 +992,10 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }, 20);
         }
   }
-  
+    onImgError(event){
+ event.target.src = this.cdnUrl+'images/hotel/noImage/makemytrip_hotel_noimage.jpg'
+//Do other stuff with the event.target
+}
   
   itineraryProcess(){
        var gender; 

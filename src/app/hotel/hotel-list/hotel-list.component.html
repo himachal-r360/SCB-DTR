@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" *ngIf="isMobile && isResponse">
+        <div class="col-md-12" *ngIf="isMobile && isResponse && !loader">
             <div class="mob-listing-fiters">
                 <h6 *ngIf="hotelList">{{hotelList.length}} Hotels Found</h6>
                 <a href="javaScript:void(0);" class="showfilters d-flex align-items-center" (click)="showHideFilterMobile('show')">
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-12" *ngIf="!loader">
             <div class="filter_search_div" *ngIf="isMobile && isResponse">
                 <span><i class="fa fa-search" aria-hidden="true"></i>
                 <input class="search-sub-filter " name="search"[(ngModel)]="SearchText" (input)="onSearchInput()" type="text" placeholder="Search by Hotel name"></span>
@@ -433,7 +433,7 @@
                                   <p>{{CheckInDate | date:'EEE, MMM dd'}} - {{CheckoutDate | date:'EEE, MMM dd'}}</p>
                               </div>
                           </div>
-                          <div class="hotel-search-right">
+                          <div class="hotel-search-right" *ngIf="!loader">
                               <div class="hotel-search-form">
                                   <form action="">
                                       <div class="hotel-listingsearch">
@@ -489,7 +489,7 @@
                           <div class="hotel-list-item" *ngFor="let list of item; let i = index" >
                             <div class="hotel-list-left">
                                 <div class="hotel-list-thumbe">
-                                     <img *ngIf="list.hotelInfo.image != null || list.hotelInfo.image != ''" src="{{list.hotelInfo.image}}" >
+                                     <img *ngIf="list.hotelInfo.image != null || list.hotelInfo.image != ''" src="{{list.hotelInfo.image}}" (error)="onImgError($event)">
                                      <img *ngIf="list.hotelInfo.image == null || list.hotelInfo.image == ''"  src="{{cdnUrl}}images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" >
                                 </div>
                                 <div class="hotel-list-text">

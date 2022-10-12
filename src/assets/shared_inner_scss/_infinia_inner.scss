@@ -179,6 +179,7 @@ a.list-travel-font {
                 background: $white-color;
                 .card_img {
                     filter: invert(35%) sepia(71%) saturate(683%) hue-rotate(169deg) brightness(90%) contrast(91%);
+                    transition-duration: 1ms;
                     
                 }
             }
@@ -283,6 +284,7 @@ a.list-travel-font {
                 background: #FFFFFF;
                 .card_img {
                     filter: invert(35%) sepia(71%) saturate(683%) hue-rotate(169deg) brightness(90%) contrast(91%); 
+                    transition-duration: 1ms;
                 }
             }
             .travel_highlight {
@@ -345,6 +347,9 @@ a.list-travel-font {
     }
     .offers_link {
         color: #fff !important;
+        &:hover{
+            color:$primary-color !important;
+        }
     }
     .right_custName {
         color: #FFFFFF !important;
@@ -397,7 +402,7 @@ a.list-travel-font {
 
 /*  Infinia mlite header css */
 .m_hdr_search_bar {
-    background: #FFFFFF09;
+    background: #FFFFFF20;
     .search_icon {
         color: #fff;
         opacity: 0.35;
@@ -1323,9 +1328,32 @@ a.list-travel-font {
         }
     }
 }
-
+.room_no {
+    background-color: $primary-bg-color;
+}
+.select_options {
+    .travelSelect {
+        .travelInput {
+            &:focus {
+                box-shadow: 0 0 0 .25rem rgba(0, 56, 108, .25) !important;
+            }
+        }
+    }
+}
+@media only screen and (max-width:600px) {
+    .mlite-tab-travel {
+        .nav-pills-travel {
+            a.nav-link.active,
+            .nav-pills .show>.nav-link {
+                color: $primary-color !important;
+                border-bottom: 3px solid $primary-color;
+            }
+        }
+    }
+}
 
 /* override Angular css */
 ::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
-    background: rgba(206, 141, 91, 0.08) !important;
+    // background: rgba(206, 141, 91, 0.08) !important;
+    background:$primary-bg-color !important;
 }
