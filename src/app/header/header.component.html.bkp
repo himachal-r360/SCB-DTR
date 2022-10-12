@@ -413,6 +413,7 @@
                                     <div>
                                         <div>
                                             <p><a href="javascript:;" (click)="goTo('bus')" class="list-travel-font">Bus</a></p>
+                                            g
                                             <p class="points">{{serviceSettings.offer_construct.bus.reward}}X Reward Points | {{serviceSettings.offer_construct.bus.cashback}}% Cashback</p>
                                         </div>
                                     </div>
@@ -1251,39 +1252,16 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="hdr_travel">
-                                    <a href="javascript:;" (click)="clickUrl('credit_payment')">
-                                        <div class="row cntnt_center">
-                                            <div class="col-sm-2">
-                                                <div class="circular_div">
-                                                    <img src="{{cdnUrl}}images/smartbuy/icons/hdr_refresh_icn.svg" class="circular_div_img card_img">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="travel_highlight">Points To Cash</p>
-                                            </div>
-                                            <div class="col-sm-2 text-left">
-                                                <i class="fa fa-arrow-circle-right travel_arw_icn" aria-hidden="true"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end of rewards dropdown new design -->
-                    </div>
-                </li>
-                <li class="hdr_menu_li" *ngIf="DOMAIN_SETTINGS.AIRMILES==1">
-                    <a class="nav_link_item hdr_menu" href="javascript:;" (click)="clickUrl('airmiles')">Miles Transfer</a>
-                </li>
-                <li class="dropdown hdr_menu_li">
-                    <a class="nav_link_item hdr_menu" href="javascript:;">Shopping</a>
-                    <div class="dropdown-content-list list-shop shopping_drpdwn_div">
-                        <!-- <h5>E-Commerce</h5> -->
-                        <div class="row mb-4">
-                            <!-- <div class="col-sm-4">
+                            </li>
+                            <li class="hdr_menu_li" *ngIf="DOMAIN_SETTINGS.AIRMILES==1">
+                                <a class="nav_link_item hdr_menu" href="javascript:;" (click)="clickUrl('miles_transfer')">Miles Transfer</a>
+                            </li>
+                            <li class="dropdown hdr_menu_li">
+                                <a class="nav_link_item hdr_menu" href="javascript:;">Shopping</a>
+                                <div class="dropdown-content-list list-shop shopping_drpdwn_div">
+                                    <!-- <h5>E-Commerce</h5> -->
+                                    <div class="row mb-4">
+                                        <!-- <div class="col-sm-4">
                                             <div class="content_show" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                                                 <a href="javascript:;" (click)="redirectUrlpopup('amazon',0,'amazon')">
                                                     <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/shop/amazon.svg" alt="amazon">
@@ -4198,7 +4176,7 @@
         </div>
         <div class="subMenu_body">
             <div *ngIf="showName=='shop'">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" *ngIf="payzrestriction==false">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" *ngIf="payzrestriction==false">>
                     <li class="nav-item">
                         <a class="nav-link active" id="travel_m-tab" data-bs-toggle="pill" href="#travel_m" role="tab" aria-controls="travel_m" aria-selected="true">
                             <img src="{{cdnUrl}}images/smartbuy/icons/mobile/travel.svg" class="img-fluid" alt="Travel">
