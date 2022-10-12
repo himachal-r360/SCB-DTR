@@ -13,6 +13,7 @@ import { createMask } from '@ngneat/input-mask';
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-banners',
   templateUrl: './banners.component.html',
@@ -32,11 +33,7 @@ export class BannersComponent implements OnInit {
     this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     this.busUrl = environment.BUS_SITE_URL[this.sg['domainName']];
  }
-  public mask = {
-    guide: true,
-    showMask : true,
-    mask: [/\d/, /\d/, '/', /\d/, /\d/, '/',/\d/, /\d/,/\d/, /\d/]
-  };
+
   DOMAIN_SETTINGS: any;
   angForm: FormGroup;
   mainBanners:any[];
@@ -85,6 +82,19 @@ topBanner: any = [];
   topBannerSub: any = [];
   topBannerRecentSearch: any = [];
   circle_box: Boolean = true;
+
+  dateInputMask = createMask<Date>({
+     alias: 'datetime',
+    // outputFormat: 'ddmmyyyy',
+     inputFormat: 'dd/mm/yyyy',
+    parser: (value: string) => {
+      const values = value.split('/');
+      const year = +values[2];
+      const month = +values[1] - 1;
+      const date = +values[0];
+      return new Date(year, month, date);
+    },
+  });
 
   ngOnInit(): void {
     

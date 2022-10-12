@@ -9,7 +9,6 @@ import {ForyouTabRoutes } from './foryou-tab.routes';
 import { RedirectPopupModule } from '../redirect-popup/redirect-popup.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MaterialModule} from '../material.module';
-import { TextMaskModule } from 'angular2-text-mask';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputMaskModule } from '@ngneat/input-mask';
 
@@ -22,7 +21,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     MatFormFieldModule,MaterialModule,
     RouterModule.forChild(ForyouTabRoutes),
     ReactiveFormsModule,
-    TextMaskModule,
     InputMaskModule
   ],
   declarations: [ForyouTabComponent, TravelSheetBottomComponent],

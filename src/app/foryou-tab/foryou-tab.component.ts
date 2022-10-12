@@ -114,15 +114,12 @@ public modeselectTrending= 'All';
   IsPointsCardDetailsModel:boolean=false;
   IsCardError:boolean=true;
   CardErrorMsg:any;
-   t: Inputmask.Options;
 
   dateInputMask = createMask<Date>({
      alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
      inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
-      debugger;
-      console.log(value);
       const values = value.split('/');
       const year = +values[2];
       const month = +values[1] - 1;
