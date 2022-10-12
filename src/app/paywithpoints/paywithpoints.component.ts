@@ -1,7 +1,7 @@
 import { Component, OnInit,OnChanges,SimpleChanges, Inject, Input, Output, forwardRef, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators,ValidatorFn, NG_VALUE_ACCESSOR, ControlValueAccessor  } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Options } from 'ng5-slider';
+import { Options } from '@angular-slider/ngx-slider';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { HttpClient, HttpHeaders, HttpErrorResponse , HttpParams} from '@angular/common/http';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
@@ -193,14 +193,14 @@ dateInputMask = createMask<Date>({
 dateValidator(control: FormControl): { [s: string]: boolean } {
 
   if (control.value) {
-    // const date = moment(control.value).format("DD/MM/YYYY");
+     const date = moment(control.value).format("DD/MM/YYYY");
 
-    // const today = moment().format("DD/MM/YYYY");
-    // if (moment(date).isAfter(today) ) {
-    //   return { 'invalidDate': true }
-    // }
+     const today = moment().format("DD/MM/YYYY");
+     if (moment(date).isAfter(today) ) {
+       return { 'invalidDate': true }
+     }
 
-    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+    /*const regex = /^\d{2}\/\d{2}\/\d{4}$/;
    let dateStr = control.value;
    
     if (dateStr.match(regex) === null) {
@@ -219,7 +219,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
     if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) {
       
       return { 'invalidDate': true }
-    }
+    }*/
   }
   return null;
 }

@@ -1296,7 +1296,7 @@ closeCookieConsent(value){
      }
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
-      $('.sb_head .list-travel').addClass("hideDrop"); 
+       $('.sb_head .list-travel').addClass("hideDrop"); 
     }
 
     goToInfinia(route){
