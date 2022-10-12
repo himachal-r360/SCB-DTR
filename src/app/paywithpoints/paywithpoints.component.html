@@ -47,7 +47,8 @@
                         <div class="col-md-12">
                             <div class="my-3">
                                 <!-- [(value)]="value" -->
-                                <ng5-slider [(ngModel)]="value" [options]="options" ></ng5-slider>
+                                <ngx-slider [(ngModel)]="value" [options]="options" ></ngx-slider>
+
                             </div>
                         </div>
                     </div>
@@ -167,7 +168,7 @@
                         </div>
 
                         <div class="voucher-code-entry date-section col-sm-4 col-12">
-                            <input auto-next formControlName="dob" [inputMask]="dateInputMask" [textMask]="mask"  autofocus="true" placeholder="dd/mm/yyyy" slotChar="dd/mm/yyyy">
+                            <input auto-next formControlName="dob" [inputMask]="dateInputMask"   autofocus="true" placeholder="dd/mm/yyyy" slotChar="dd/mm/yyyy">
                             <div *ngIf="submitted1 && voucherForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="voucherForm1.hasError('required','dob')">Please enter date of birth.</small>
                                 <small *ngIf="voucherForm1.hasError('pattern','dob') || voucherForm1.hasError('younger','dob') || voucherForm1.hasError('invalidDate','dob')">Please enter a valid date.</small>
@@ -248,7 +249,7 @@
 
                         <div class="voucher-code-entry date-section col-sm-4 col-12">
 
-                            <input  id="dob" [inputMask]="dateInputMask" [textMask]="mask" autocomplete="off" placeholder="dd/mm/yyyy" formControlName="dob" slotChar="dd/mm/yyyy">
+                            <input  id="dob" [inputMask]="dateInputMask"  autocomplete="off" placeholder="dd/mm/yyyy" formControlName="dob" slotChar="dd/mm/yyyy">
                             <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
                                 <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
                                 <small *ngIf=" cardaddForm1.hasError('younger','dob')  || cardaddForm1.hasError('invalidDate','dob') ">Please enter a valid date.</small>
@@ -450,7 +451,7 @@
 
                                     <div class="voucher-code-entry date-section col-sm-4 col-12">
 
-                                        <input id="dob" [inputMask]="dateInputMask" [textMask]="mask" autocomplete="off" placeholder="dd/mm/yyyy" formControlName="dob">
+                                        <input id="dob" [inputMask]="dateInputMask" autocomplete="off" placeholder="dd/mm/yyyy" formControlName="dob">
                                         <div *ngIf="submitted2 && cardaddForm1.controls['dob']['errors']" class="error">
                                             <small *ngIf="cardaddForm1.hasError('required','dob')">Please enter date of birth.</small>
                                             <small *ngIf="voucherForm1.hasError('pattern','dob') || voucherForm1.hasError('younger','dob')  || voucherForm1.hasError('invalidDate','dob')">Please enter a valid date.</small>
