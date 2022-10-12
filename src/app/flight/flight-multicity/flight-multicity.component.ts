@@ -2,7 +2,7 @@ import { ViewportScroller } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, HostListener,NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
-import { Options } from 'ng5-slider';
+import { ChangeContext, Options, PointerType  } from '@angular-slider/ngx-slider';
 import { repeat, Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
