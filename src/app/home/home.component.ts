@@ -209,7 +209,6 @@ export class HomeComponent implements OnInit {
       this.continueSearchVal = JSON.parse(continueSearchValLs);
       
       
-      console.log(this.continueSearchVal);
     }
     let continueSearchValBusParse: any = localStorage.getItem(environment.continueSearchBus);
     if (continueSearchValBusParse != null) {
