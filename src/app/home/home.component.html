@@ -1,5 +1,5 @@
-<main class="site-main "  [ngClass]="{ 'mt-140': payzrestriction,'mt-180': !payzrestriction }">
-    <section class="travel-area mt-80 mb-10"  >
+<main class="site-main " [ngClass]="{ 'mt-140': payzrestriction,'mt-180': !payzrestriction }">
+    <section class="travel-area mt-80 mb-10">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -9,22 +9,22 @@
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/flight.svg" alt=""> Flights
+                                            <img src="{{cdnUrl}}images/icons/flight-1.svg" alt=""> Flights
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('train')" [ngClass]="navItemActive == 'train'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/trains.svg" alt=""> Trains
+                                            <img src="{{cdnUrl}}images/icons/train-1.svg" alt=""> Trains
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/bus.svg" alt=""> Buses
+                                            <img src="{{cdnUrl}}images/icons/bus-1.svg" alt=""> Buses
                                         </a>
                                     </li>
                                     <li class="travel-list-li" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('hotel')" [ngClass]="navItemActive == 'hotel'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/stays.svg" alt=""> Stays
+                                            <img src="{{cdnUrl}}images/icons/stays-1.svg" alt=""> Stays
                                         </a>
                                     </li>
                                 </ul>
@@ -108,7 +108,7 @@
                 <div class="box-item" *ngIf="isMobile == true">
                     <owl-carousel-o [options]="customOptions">
                         <ng-container *ngFor="let continue of continueSearchVal; let i = index">
-                        
+
                             <ng-template carouselSlide [id]="continue.id" *ngIf="continue.fromCity && continue.toCity && continue.departure &&  i<4">
                                 <a href="javascript:void(0)" (click)="continueSearch(continue)">
                                     <div class="Continuesearch-items ">
@@ -131,14 +131,14 @@
                                     </div>
                                 </a>
                             </ng-template>
-                            
-                             <ng-template carouselSlide [id]="continue.id" *ngIf="continue['fromCity[0]'] && continue['toCity[0]'] && continue['departure[0]'] &&  i<4">
+
+                            <ng-template carouselSlide [id]="continue.id" *ngIf="continue['fromCity[0]'] && continue['toCity[0]'] && continue['departure[0]'] &&  i<4">
                                 <a href="javascript:void(0)" (click)="continueSearchMulti(continue)">
                                     <div class="Continuesearch-items ">
                                         <div class="Continuesearch-items-text">
                                             <div class="Continuesearch-name">
-                                               <h6>{{continue['fromCity[0]']}}</h6>
-                                            <p>{{continue['departure[0]']|date:"EEE ,dd MMM"}}</p>
+                                                <h6>{{continue['fromCity[0]']}}</h6>
+                                                <p>{{continue['departure[0]']|date:"EEE ,dd MMM"}}</p>
                                             </div>
                                             <div class="Continuesearch-image">
                                                 <img *ngIf="!continue.arrival" src="{{cdnUrl}}images/icons/next-active.svg" alt="">
@@ -154,7 +154,7 @@
                                     </div>
                                 </a>
                             </ng-template>
-                            
+
                         </ng-container>
                     </owl-carousel-o>
                 </div>
