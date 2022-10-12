@@ -1917,6 +1917,7 @@ checkNonSpcOfferforHDFCcards(){
 			"mobileNumber":this.REWARD_MOBILE
 		};
 		
+
 		var passData = {
 			postData: this.EncrDecr.set(JSON.stringify(request)),
 			postType: 1
@@ -2190,11 +2191,11 @@ checkNonSpcOfferforSaveCard(){
 			"cardNumber":btoa(card_bin),
 			"mobileNumber":this.REWARD_MOBILE   
 		};
+
 		var passData = {
 			postData: this.EncrDecr.set(JSON.stringify(request)),
 			postType: 1
 	    };
-	    
 	  
 		this.pay.checkNonSpcOffer(passData).subscribe(data => { 
 			//let response = JSON.parse(this.EncrDecr.get(data));
