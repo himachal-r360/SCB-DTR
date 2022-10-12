@@ -301,7 +301,7 @@ public modeselectTrending= 'All';
             this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
             this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
             if(this.customerInfo['ccustomer'].first4digit !=undefined)
-              this.card_no=this.customerInfo['ccustomer'].first4digit.substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
+              this.card_no=this.customerInfo['ccustomer'].first4digit.toString().substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
             else
               this.card_no=" ******** "+this.customerInfo['ccustomer'].last4digit;
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
