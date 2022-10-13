@@ -416,6 +416,9 @@ travel_benefitsLink(){
 benefitsLink(){
  this.router.navigate([this.sg['domainPath']+'know-your-card']);
 }
+goToItc(){
+  this.router.navigate([this.sg['domainPath']+'infinia-itc-hotel']);
+}
  createForm() {
   this.angForm = this.fb.group({
      mobile_no: ['', [Validators.required,Validators.minLength(10),Validators.maxLength(10),Validators.pattern(/^-?(0|[1-9]\d*)?$/)] ],
