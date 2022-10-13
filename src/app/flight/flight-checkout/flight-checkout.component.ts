@@ -3331,7 +3331,7 @@ saveTravellerArray=[];
             passport_data['passportNumber'] = this.passengerForm.controls['child_passport_num' + i]['value'];
             passport_data['passportIssueDate'] = moment(this.passengerForm.controls['child_passport_issue_date' + i]['value']).format('YYYY-MM-DD');
             passport_data['passportExpDate'] = moment(this.passengerForm.controls['child_passport_expiry_date' + i]['value']).format('YYYY-MM-DD');
-            passport_data['passportIssuingCountry'] = this.passengerForm.controls['child_passport_issue_date' + i]['value'];
+            passport_data['passportIssuingCountry'] = this.passengerForm.controls['child_passport_issuing_country' + i]['value'];
             child_data['passportDetail'] = passport_data;
           }
         }
@@ -3414,7 +3414,7 @@ saveTravellerArray=[];
             passport_data['passportNumber'] = this.passengerForm.controls['infant_passport_num' + i]['value'];
             passport_data['passportIssueDate'] = moment(this.passengerForm.controls['infant_passport_issue_date' + i]['value']).format('YYYY-MM-DD');
             passport_data['passportExpDate'] = moment(this.passengerForm.controls['infant_passport_expiry_date' + i]['value']).format('YYYY-MM-DD');
-            passport_data['passportIssuingCountry'] = this.passengerForm.controls['infant_passport_num' + i]['value'];
+            passport_data['passportIssuingCountry'] = this.passengerForm.controls['infant_passport_issuing_country' + i]['value'];
             infant_data['passportDetail'] = passport_data;
           }
         }

@@ -42,20 +42,14 @@ const routes: Routes = [
  { path: 'train/registration', component: IrctcregComponent },
 
    {
-    path:"regalia_gold/train/search" ,component:TrainsComponent,
+    path:":domain/train/search" ,component:TrainsComponent,
   },
   {
-    path:"regalia_gold/train/checkout" ,component:TrainsTravellerComponent,
+    path:":domain/train/checkout" ,component:TrainsTravellerComponent,
   },
- { path: 'regalia_gold/train/registration', component: IrctcregComponent },
+ { path: ':domain/train/registration', component: IrctcregComponent },
 
-  {
-    path:"infinia/train/search" ,component:TrainsComponent,
-  },
-  {
-    path:"infinia/train/checkout" ,component:TrainsTravellerComponent,
-  },
-  { path: 'infinia/train/registration', component: IrctcregComponent },
+  
 
 
 ];
