@@ -114,15 +114,12 @@ public modeselectTrending= 'All';
   IsPointsCardDetailsModel:boolean=false;
   IsCardError:boolean=true;
   CardErrorMsg:any;
-   t: Inputmask.Options;
 
   dateInputMask = createMask<Date>({
      alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
      inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
-      debugger;
-      console.log(value);
       const values = value.split('/');
       const year = +values[2];
       const month = +values[1] - 1;
@@ -415,7 +412,8 @@ public modeselectTrending= 'All';
                    url = '/bus'; 
                 } else {
 
-                   url = '/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+                     url = '/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&fromState=' + get_value.fromState + '&toState=' + get_value.toState + '&departure='+get_value.departure;
+                   
                 }
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;

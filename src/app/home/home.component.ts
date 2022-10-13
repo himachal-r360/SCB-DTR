@@ -66,17 +66,7 @@ export class HomeComponent implements OnInit {
     },
     nav: false
   }
-  // $this = $(this),
-  // $items = $this.data("items") ? $this.data("items") : 1,
-  // $loop = $this.attr("data-loop") ? $this.data("loop") : true,
-  // $navdots = $this.data("nav-dots") ? $this.data("nav-dots") : false,
-  // $navarrow = $this.data("nav-arrow") ? $this.data("nav-arrow") : true,
-  // $autoplay = $this.attr("data-autoplay") ? $this.data("autoplay") : false,
-  // $autospeed = $this.attr("data-autospeed") ? $this.data("autospeed") : 5000,
-  // $smartspeed = $this.attr("data-smartspeed") ? $this.data("smartspeed") : 1000,
-  // $autohgt = $this.data("autoheight") ? $this.data("autoheight") : false,
-  // $space = $this.attr("data-space") ? $this.data("space") : 30,
-  // $animateOut = $this.attr("data-animateOut") ? $this.data("animateOut") : false;
+
 
   DomasticFlightsOptions: OwlOptions = {
     loop: true,
@@ -133,27 +123,11 @@ export class HomeComponent implements OnInit {
   }
 
 
-  trendingRoutes = [
-    {id:1 , fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
-    {id:2, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
-    {id:3, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
-    {id:4, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:'assets/images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
-  ]
+  trendingRoutes = [  ];
 
-  popularDomasticRoutes = [
-    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/2.png'},
-    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/3.png'},
-    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/4.png'},
-    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:'assets/images/Popular/5.png'},
-  ]
+  popularDomasticRoutes = [  ];
 
-  exitingOffers = [
-    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
-    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/2.png'},
-    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
-    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/3.png'},
-    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:'assets/images/smartbuy/offers/1.png'},
-  ]
+  exitingOffers = [  ];
  navItemActive:string='flight';
 
   constructor(
@@ -163,6 +137,32 @@ export class HomeComponent implements OnInit {
 
     ) {
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    
+    
+    
+      this.trendingRoutes = [
+    {id:1 , fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:this.cdnUrl+'images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+    {id:2, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:this.cdnUrl+'images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+    {id:3, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:this.cdnUrl+'images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+    {id:4, fromCity: 'Mumbai',toCity:'Bangaluru',totalFare:'3,528' , active: false, fromImg:this.cdnUrl+'images/trending/1.png' , toImg:'assets/images/trending/2.png'  },
+  ]
+
+  this.popularDomasticRoutes = [
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:this.cdnUrl+'images/Popular/2.png'},
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:this.cdnUrl+'images/Popular/3.png'},
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:this.cdnUrl+'images/Popular/4.png'},
+    {fromCity:'Delhi',toCity:'Mumbai',date:'Thu, 6 Jan', totalFare:'3,668', image:this.cdnUrl+'images/Popular/5.png'},
+  ]
+
+  this.exitingOffers = [
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:this.cdnUrl+'images/smartbuy/offers/1.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:this.cdnUrl+'images/smartbuy/offers/2.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:this.cdnUrl+'images/smartbuy/offers/1.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:this.cdnUrl+'images/smartbuy/offers/3.png'},
+    {date:'31, Jan 2022' , title:'First Domestic Flight Booking' ,totalFare:'1500', image:this.cdnUrl+'images/smartbuy/offers/1.png'},
+  ]
+    
+    
     this.serviceSettings = this.appConfigService.getConfig();
      this.DOMAIN_SETTINGS = this.serviceSettings.DOMAIN_SETTINGS[this.sg['domainName']];
     if(router.url){
@@ -209,7 +209,6 @@ export class HomeComponent implements OnInit {
       this.continueSearchVal = JSON.parse(continueSearchValLs);
       
       
-      console.log(this.continueSearchVal);
     }
     let continueSearchValBusParse: any = localStorage.getItem(environment.continueSearchBus);
     if (continueSearchValBusParse != null) {

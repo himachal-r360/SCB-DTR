@@ -1740,7 +1740,6 @@ validateDebitEmiOTP_new(){
         "bankReferenceNo":this.dcemivaliduserresp.bankReferenceNo,
         "merchantReferenceNo":this.dcemivaliduserresp.merchantReferenceNo,
     };
-    console.log(validateParams);
     this.dcemi_token=this.dcemivaliduserresp.token; 
     this.dcemi_bankReferenceNo=this.dcemivaliduserresp.bankReferenceNo;
     this.dcemi_merchantReferenceNo=this.dcemivaliduserresp.merchantReferenceNo;
@@ -1893,6 +1892,13 @@ checkNonSpcOfferforHDFCcards(){
 		cardNumber = cardNumber.replace(/-/g, "");
 		var last4Digit = cardNumber.substring((cardNumber.length-4), cardNumber.length);
 		var splitCard = "";
+		
+		//let voucher_amount=0;
+               // this.passFareData=sessionStorage.getItem(this.passSessionKey+'-passFareData');
+               // let fareD= JSON.parse(atob(this.passFareData));
+               // voucher_amount=fareD.voucher_amount;
+		
+		
 		splitCard = cardNumber.substring(0, 6);
 		var request = {
 			"key":this.passSessionKey,
@@ -1911,11 +1917,15 @@ checkNonSpcOfferforHDFCcards(){
 			"mobileNumber":this.REWARD_MOBILE
 		};
 		
+
 		var passData = {
 			postData: this.EncrDecr.set(JSON.stringify(request)),
 			postType: 1
 		};
 		//var passData = btoa(JSON.stringify(request));
+		
+	
+		
 		this.pay.checkNonSpcOffer(passData).subscribe(data => {
 			let response = (data); 
 			if(response.okResponse==true){
@@ -2157,15 +2167,20 @@ checkNonSpcOfferforSaveCard(){
 	
 	this.paynowBtnDisabled_5=true;
 	if(this.enableNONSPC==1){
-		//var cardRow=this.saveCardForm.controls.cardRow.value;
-		//var card_id=this.cardData[cardRow]['card_id'];
-		//var card_bin=this.cardData[cardRow]['bin'];
+		
+		
+               // let voucher_amount=0;
+               // this.passFareData=sessionStorage.getItem(this.passSessionKey+'-passFareData');
+               // let fareD= JSON.parse(atob(this.passFareData));
+               // voucher_amount=fareD.voucher_amount;
+		
+		
 		var request = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
 			"servicesId":this.ServiceToken,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-			"orderAmount": this.payActualFare,
+			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
 			"binNumber":'',
 			"last4Digit":'',
@@ -2176,10 +2191,12 @@ checkNonSpcOfferforSaveCard(){
 			"cardNumber":btoa(card_bin),
 			"mobileNumber":this.REWARD_MOBILE   
 		};
+
 		var passData = {
 			postData: this.EncrDecr.set(JSON.stringify(request)),
 			postType: 1
 	    };
+	  
 		this.pay.checkNonSpcOffer(passData).subscribe(data => { 
 			//let response = JSON.parse(this.EncrDecr.get(data));
 			let response = (data);
