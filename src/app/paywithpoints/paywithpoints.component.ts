@@ -828,6 +828,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
     if (this.cardaddForm1.status !='VALID') {
       return;
     }else{
+      this.spinnerService.show();
          if(this.cardaddForm1.controls['savecard'].value==true){
            var savecard=1;
          }else{
@@ -849,11 +850,11 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
            "_token":this.customerInfo["XSRF-TOKEN"],
            "user_id":this.sg["customerInfo"]["id"],
         };
-        console.log(request);
         var passData = {
           postData: this.EncrDecr.set(JSON.stringify(request))
         };
         this.pay.availablePoints(passData).subscribe(response => {
+          this.spinnerService.hide();
           if(typeof response.error_code != undefined && response.error_code=="100"){
                this.submitted2=false;
                this.cardaddForm1.reset();
@@ -877,6 +878,10 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
                   this.cards = response.cards;
                   this.selectedCardDetails = this.cards[0];
                   //this.checkAvailablePointsforSavedCard();
+               }else{
+                let card=[]; 
+                card['card']= response.bin.toString();
+                this.selectedCardDetails = card;
                }
           }else{
                    alert(response.message)
@@ -885,6 +890,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
             var message = 'Something went wrong';
             alert(message);
         };
+        
        
     }
   }
