@@ -58,6 +58,16 @@ const routes: Routes = [
     {
     path:"infinia/compare-stay" , component:HomeComponent
   },
+
+    {
+    path:"infinia/bus" , component:HomeComponent
+  },
+    {
+    path:"infinia/train" , component:HomeComponent
+  },
+      {
+    path:"infinia/train/pnr" , component:HomeComponent
+  },
     
 
 
