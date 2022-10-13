@@ -114,15 +114,12 @@ public modeselectTrending= 'All';
   IsPointsCardDetailsModel:boolean=false;
   IsCardError:boolean=true;
   CardErrorMsg:any;
-   t: Inputmask.Options;
 
   dateInputMask = createMask<Date>({
      alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
      inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
-      debugger;
-      console.log(value);
       const values = value.split('/');
       const year = +values[2];
       const month = +values[1] - 1;
@@ -304,7 +301,7 @@ public modeselectTrending= 'All';
             this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
             this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
             if(this.customerInfo['ccustomer'].first4digit !=undefined)
-              this.card_no=this.customerInfo['ccustomer'].first4digit.substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
+              this.card_no=this.customerInfo['ccustomer'].first4digit.toString().substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
             else
               this.card_no=" ******** "+this.customerInfo['ccustomer'].last4digit;
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));

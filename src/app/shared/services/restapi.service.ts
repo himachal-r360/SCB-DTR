@@ -331,6 +331,10 @@ checksavedtravellers(param){
   getDCEMIDetails ():Observable<any> {
     return this.http.post(this.endpoint+'get-dcemi-details', config).pipe(map((response: any) => response));
   }
+  enrol_membership ():Observable<any> {
+    //return this.http.get('http://offers.smartbuylocal.reward360.us/infinia/api/club-marriott-membership', config).pipe(map((response: any) => response));
+    return this.http.post(this.endpoint+'club-marriott-membership', config).pipe(map((response: any) => response));
+  }
     validatePGData (param):Observable<any> {
      if(LOCALJSON=='true'){
            return this.http.get('assets/data/validatePGData.json');

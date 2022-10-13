@@ -4,10 +4,28 @@
 @import "./assets/sharedscss/fonts";
 @import './assets/sharedscss/spacing';
 @import './assets/sharedscss/landscape';
+
+
+html {
+    overflow: auto;
+}
+body {
+    height:auto;
+    overflow-x: hidden !important;
+    overflow-y: auto;
+    position: relative;
+    background-color: #f7faff;
+}
+
+/*
 body {
     background-color: #f7faff;
     position: relative;
     overflow-x: hidden !important;
+}*/
+
+.scrollable {
+    position:inherit;
 }
 
 h1,
@@ -1010,36 +1028,35 @@ a {
     }
 }
 
-.customised_class_select{
-    .mat-select-trigger{
+.customised_class_select {
+    .mat-select-trigger {
         .mat-select-arrow-wrapper {
             .mat-select-arrow {
-                color:#000000;
+                color: #000000;
             }
         }
-        .mat-select-value{
-            width:fit-content;
-            min-width:120px;
-            @media screen and (max-width:600px){
-                width:100%;
-                min-width:85%;
+        .mat-select-value {
+            width: fit-content;
+            min-width: 120px;
+            @media screen and (max-width: 600px) {
+                width: 100%;
+                min-width: 85%;
             }
-            .mat-select-value-text{
-                .mat-select-min-line{
-                font-size:14px;
-                color:#000000;
-                font-family:'opensans-medium' !important;
+            .mat-select-value-text {
+                .mat-select-min-line {
+                    font-size: 14px;
+                    color: #000000;
+                    font-family: 'opensans-medium' !important;
                 }
             }
         }
     }
-    .mat-form-field-appearance-legacy{
+    .mat-form-field-appearance-legacy {
         .mat-form-field-underline {
-            height:0px;
+            height: 0px;
         }
-    } 
+    }
 }
-
 
 .mlite_broading_pint_select {
     .mat-select-trigger {
@@ -1464,7 +1481,7 @@ a {
 
 .flight-search-filters-counts ul {
     margin-bottom: 0 !important;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .flight-search-filters-counts li {
@@ -1720,6 +1737,7 @@ a {
 
 .travel-list-ul li .travel-list-a img {
     margin-right: 8px;
+    height: 26px;
 }
 
 .travel-list-ul li .travel-list-a i {
@@ -9010,12 +9028,13 @@ img {
     cursor: not-allowed;
 }
 
-.s-bookedLadiesSleeper_x{
+.s-bookedLadiesSleeper_x {
     background: #fff url(../src/assets/images/icons/bus/web/w-bookedLadiesSleeper.svg) no-repeat right bottom;
     width: 60px;
     height: 30px;
     cursor: not-allowed;
 }
+
 .s-bookedSleeper {
     background: #fff url(../src/assets/images/icons/bus/web/w-bookedSleeper.svg) no-repeat right bottom;
     width: 60px;
@@ -10410,7 +10429,8 @@ img {
         border-radius: 0;
         width: 100%;
         z-index: 99;
-        padding-top: 56%;
+        /* padding-top: 56%;*/
+        padding-top: 66vh;
         background: #b3b3b3;
         box-shadow: none;
         border-bottom: none;
@@ -14267,7 +14287,6 @@ img {
     max-height: 235px;
 }
 
-
-.move-top{
-margin-top:-50px;
+.move-top {
+    margin-top: -50px;
 }
