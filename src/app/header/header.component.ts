@@ -834,6 +834,7 @@ closeCookieConsent(value){
     
     initializeVoiceRecognitionCallback(): void {
         annyang.addCallback('error', (err) => {
+                console.log(err);
         if(err.error === 'network'){
         this.voiceText = "Internet is require";
         annyang.abort();
@@ -855,6 +856,7 @@ closeCookieConsent(value){
         });
 
         annyang.addCallback('result', (userSaid) => {
+          console.log("end-result");
         this.ngZone.run(() => this.voiceActiveSectionError = false);
 
         let queryText: any = userSaid[0];
