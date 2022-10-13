@@ -47,37 +47,21 @@ const routes: Routes = [
     path:"flight-multicity" ,component:FlightMulticityComponent
   },
   {
-    path:"regalia_gold/flight-list" ,component:FlightListComponent,
+    path:":domain/flight-list" ,component:FlightListComponent,
   },
    {
-    path:"regalia_gold/flight-checkout" ,component:FlightCheckoutComponent,
+    path:":domain/flight-checkout" ,component:FlightCheckoutComponent,
   },
   {
-    path:"regalia_gold/flight-roundtrip" ,component:FlightRoundtripListComponent,
+    path:":domain/flight-roundtrip" ,component:FlightRoundtripListComponent,
   },
   {
-    path:"regalia_gold/flight-int" ,component:FlightIntListComponent
+    path:":domain/flight-int" ,component:FlightIntListComponent
   },
   {
-    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent
+    path:":domain/flight-multicity" ,component:FlightMulticityComponent
   },
 
-  
-  {
-    path:"infinia/flight-list" ,component:FlightListComponent,
-  },
-   {
-    path:"infinia/flight-checkout" ,component:FlightCheckoutComponent,
-  },
-  {
-    path:"infinia/flight-roundtrip" ,component:FlightRoundtripListComponent,
-  },
-  {
-    path:"infinia/flight-int" ,component:FlightIntListComponent
-  },
-  {
-    path:"infinia/flight-multicity" ,component:FlightMulticityComponent
-  },
   
     {
     path:"flight-booking/retry" ,component:FlightBookingRetryComponent,
