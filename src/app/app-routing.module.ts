@@ -30,43 +30,24 @@ const routes: Routes = [
     path:"train/pnr" , component:HomeComponent
   },
 
-    {
-    path:"regalia_gold/compare-fly" , component:HomeComponent
+{
+    path:":domain/bus" , component:HomeComponent
+  },
+   {
+    path:":domain/compare-fly" , component:HomeComponent
   },
     {
-    path:"regalia_gold/multicity" , component:HomeComponent
+    path:":domain/multicity" , component:HomeComponent
   },
     {
-    path:"regalia_gold/compare-stay" , component:HomeComponent
+    path:":domain/compare-stay" , component:HomeComponent
   },
+   
     {
-    path:"regalia_gold/bus" , component:HomeComponent
-  },
-    {
-    path:"regalia_gold/train" , component:HomeComponent
+    path:":domain/train" , component:HomeComponent
   },
       {
-    path:"regalia_gold/train/pnr" , component:HomeComponent
-  },
-
-  {
-    path:"infinia/compare-fly" , component:HomeComponent
-  },
-    {
-    path:"infinia/multicity" , component:HomeComponent
-  },
-    {
-    path:"infinia/compare-stay" , component:HomeComponent
-  },
-
-    {
-    path:"infinia/bus" , component:HomeComponent
-  },
-    {
-    path:"infinia/train" , component:HomeComponent
-  },
-      {
-    path:"infinia/train/pnr" , component:HomeComponent
+    path:":domain/train/pnr" , component:HomeComponent
   },
     
 
