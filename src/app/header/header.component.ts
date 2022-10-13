@@ -1291,11 +1291,14 @@ closeCookieConsent(value){
         this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+path;
        // console.log(environment.ANGULAR_SITE_URL+path+"  =======0000");
      }else{
-     if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')
-      this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
-     else
-     this.router.navigate([this.sg['domainPath']+path]);
-     }
+	
+    /* if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')alert('ddddd');
+      //this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
+     else alert('asd');
+     //this.router.navigate([this.sg['domainPath']+path]);
+     } Go to always belongs to path which is inside the same app folder. Please do not change it to redirection */
+	this.router.navigate([this.sg['domainPath']+path]);
+	}
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
        $('.sb_head .list-travel').addClass("hideDrop"); 
