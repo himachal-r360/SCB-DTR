@@ -1023,16 +1023,16 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
   }
 
   removeMobileAdult(val, checkboxIndex) {
-    this.removeAdult(val, checkboxIndex);
+    this.removeAdult(val, checkboxIndex,1);
     $('#addTraveller_mlite').modal('hide');
   }
   removeMobileChild(val, checkboxIndex) {
-    this.removeChild(val, checkboxIndex);
+    this.removeChild(val, checkboxIndex,1);
     $('#childTraveller_mlite').modal('hide');
   }
 
   removeMobileInfant(val, checkboxIndex) {
-    this.removeInfant(val, checkboxIndex);
+    this.removeInfant(val, checkboxIndex,1);
     $('#infantTraveller_mlite').modal('hide');
   }
 
@@ -1196,7 +1196,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
   }
 
-  removeAdult(val, checkboxIndex) {
+  removeAdult(val, checkboxIndex,m=0) {
 
     var passengerName = this.passengerForm.controls['adult_first_name' + val]['value'];
     const index = this.adultsArray.indexOf(val, 0);
@@ -1231,7 +1231,9 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         }
       }
     }
-  //  this.passengerAdultFormCount--;
+    
+    if(m==1)
+  this.passengerAdultFormCount--;
     
     this.passengerForm.removeControl('adult_id' + val);
     this.passengerForm.removeControl('adult_title' + val);
@@ -1394,7 +1396,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-  removeChild(val, checkboxIndex) {
+  removeChild(val, checkboxIndex,m=0) {
     var passengerName = this.passengerForm.controls['child_first_name' + val]['value'];
     const index = this.childArray.indexOf(val, 0);
     if (checkboxIndex != -1)
@@ -1445,7 +1447,9 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.child.splice(val, 1);
-   // this.passengerChildFormCount--;
+    
+    if(m==1)
+   this.passengerChildFormCount--;
 
   }
 
@@ -1583,7 +1587,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-  removeInfant(val, checkboxIndex) {
+  removeInfant(val, checkboxIndex,m=0) {
     var passengerName = this.passengerForm.controls['infant_first_name' + val]['value'];
     const index = this.infantArray.indexOf(val, 0);
     if (checkboxIndex != -1)
@@ -1635,7 +1639,8 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.infant.splice(val, 1);
-   // this.passengerInfantFormCount--;
+    if(m==1)
+    this.passengerInfantFormCount--;
 
   }
 

@@ -4,7 +4,7 @@ import { SimpleGlobal } from 'ng2-simple-global';
 import { AppConfigService } from 'src/app/app-config.service';
 import { environment } from 'src/environments/environment';
 import { DOCUMENT } from '@angular/common';
-
+import { RestapiService} from 'src/app/shared/services/restapi.service';
 
 
 @Component({
@@ -59,19 +59,21 @@ export class ClubMarriotMembershipComponent implements OnInit {
   cdnUrl: any;
   cdnDealUrl: any;
   siteUrl: any;
+  enrol_membership_disabled:boolean=false;
+  clubmarriott_redirection_url:string;
 
-  constructor(private sg: SimpleGlobal, private appConfigService: AppConfigService,@Inject(DOCUMENT) private document: any) { 
+  constructor(public restApi:RestapiService,private sg: SimpleGlobal, private appConfigService: AppConfigService,@Inject(DOCUMENT) private document: any) { 
     this.serviceSettings = this.appConfigService.getConfig();
+    console.log(this.serviceSettings);
     this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.cdnDealUrl = environment.cdnDealUrl;
     this.siteUrl = environment.MAIN_SITE_URL;
+    this.clubmarriott_redirection_url = this.serviceSettings.clubmarriott_redirection_url;
   }
 
   ngOnInit(): void {
 
      var customerInfo = this.sg['customerInfo'];
-     console.log(environment);
-     console.log(customerInfo);
       if (customerInfo["org_session"] == 1) {
       }else{
         if (environment.localInstance == 0) {
@@ -80,6 +82,18 @@ export class ClubMarriotMembershipComponent implements OnInit {
       }
   }
   enrol_membership(){
-     console.log('enrol_membership');
+     this.enrol_membership_disabled=true;
+     this.restApi.enrol_membership().subscribe(response => {
+        this.enrol_membership_disabled=false;
+        if(response.status !=undefined && response.status=="true"){
+         console.log(response);
+          window.open(
+            this.clubmarriott_redirection_url,
+            '_blank' 
+          );
+        }else{
+          alert(response.msg);
+        }
+     });
   }
 }

@@ -390,7 +390,9 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.searchParam.busApiProvider = 'RedBus';
    }
    this.busService.getBusSeats(JSON.stringify(this.searchParam)).subscribe(data => {
+     console.log(data);
      let dData = JSON.parse(this.EncrDecr.get(data.result));
+     console.log(dData);
      this.seatResponse = < BusResponse > dData;
      if (this.seatResponse.tripDetails != undefined) {
       var Decks = this.busHelper.getBusDecks(this.seatResponse.tripDetails.seats, mobile);
