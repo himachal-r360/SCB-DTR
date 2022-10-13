@@ -30,23 +30,15 @@ const routes: Routes = [
 
   },
   {
-    path:"regalia_gold/hotel-list" ,component:HotelListComponent,
+    path:":domain/hotel-list" ,component:HotelListComponent,
   },{
-    path:"regalia_gold/hotel-detail" ,component:HotelDetailComponent,
+    path:":domain/hotel-detail" ,component:HotelDetailComponent,
   },{
-    path:"regalia_gold/hotel-checkout" ,component:HotelCheckoutComponent,
+    path:":domain/hotel-checkout" ,component:HotelCheckoutComponent,
   },{
-    path:"regalia_gold/hotel-booking/retry" ,component:HotelBookingRetryComponent,
+    path:":domain/hotel-booking/retry" ,component:HotelBookingRetryComponent,
   },
-  {
-    path:"infinia/hotel-list" ,component:HotelListComponent,
-  },{
-    path:"infinia/hotel-detail" ,component:HotelDetailComponent,
-  },{
-    path:"infinia/hotel-checkout" ,component:HotelCheckoutComponent,
-  },{
-    path:"infinia/hotel-booking/retry" ,component:HotelBookingRetryComponent,
-  },
+  
 ]
 
 @NgModule({
