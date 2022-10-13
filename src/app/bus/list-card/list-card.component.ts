@@ -389,8 +389,9 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.searchParam.dpId = searchParam1.bpId;
     this.searchParam.busApiProvider = 'RedBus';
    }
+   console.log(this.searchParam);
    this.busService.getBusSeats(JSON.stringify(this.searchParam)).subscribe(data => {
-     console.log(data);
+     
      let dData = JSON.parse(this.EncrDecr.get(data.result));
      console.log(dData);
      this.seatResponse = < BusResponse > dData;

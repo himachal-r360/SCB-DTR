@@ -33,7 +33,6 @@ export interface DialogData {
 
 
 export class AppComponent implements OnInit {
-
         isOnline: boolean;
         public assetPath:string; 
         public domainName:string; 

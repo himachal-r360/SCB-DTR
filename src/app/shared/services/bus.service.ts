@@ -40,6 +40,9 @@ let urlToSplit =this.location.path();
 	case ('regalia'):
         this.domainName='REGALIA';
 	break;
+  case ('regalia_gold'):
+        this.domainName='REGALIA_GOLD';
+  break;
 	case ('corporate'):
         this.domainName='CORPORATE';
 	break;

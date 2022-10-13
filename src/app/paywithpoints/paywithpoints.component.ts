@@ -874,7 +874,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
                   $('#add-cards').modal('hide');
                 }
                this.setSlider();
-               if(savecard==1){
+               if(savecard==1 && response.cards){
                   this.cards = response.cards;
                   this.selectedCardDetails = this.cards[0];
                   //this.checkAvailablePointsforSavedCard();
