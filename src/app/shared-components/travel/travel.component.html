@@ -239,7 +239,7 @@
                                                     <mat-datepicker  #flightFromPicker panelClass="f_dep_m"></mat-datepicker> 
 
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{departure | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['departure']['errors']" class="error_msg">
@@ -273,7 +273,7 @@
                                                             <mat-datepicker #flightToPicker></mat-datepicker>  
         
                                                         <p class="truncate" title="">
-                                                            <span  title="" class=" airPortName ">Friday</span>
+                                                            <span  title="" class=" airPortName ">{{arrival | date:'EEEE' }}</span>
                                                         </p>
                                                     </label>
                                                     <div *ngIf="submittedFlight && searchFlightForm['controls']['arrival']['errors']" class="error_msg">
@@ -473,7 +473,7 @@
                                                     <mat-datepicker  #hotelFromPicker></mat-datepicker> 
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{hotelCheckin | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
@@ -510,7 +510,7 @@
                                                         <mat-datepicker #hotelToPicker></mat-datepicker>
         
                                                         <p class="truncate" title="">
-                                                            <span  title="" class=" airPortName ">Friday</span>
+                                                            <span  title="" class=" airPortName ">{{hotelCheckout | date:'EEEE' }}</span>
                                                         </p>
                                                     </label>
                                                     <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
@@ -848,7 +848,7 @@
                                                     <!-- <mat-datepicker touchUi #flightFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>  -->
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{departure | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['departure']['errors']" class="error_msg">
@@ -887,7 +887,7 @@
                                                             </ng-container>  
                                                         </span>
                                                         <p class="truncate" title="">
-                                                            <span  title="" class=" airPortName ">Friday</span>
+                                                            <span  title="" class=" airPortName ">{{arrival | date:'EEEE' }}</span>
                                                         </p>
                                                     </label>
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['arrival']['errors']" class="error_msg">
@@ -1131,7 +1131,7 @@
                                                     <!-- <mat-datepicker  touchUi #hotelFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>  -->
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{hotelCheckin | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
@@ -1175,15 +1175,13 @@
                                                    <!-- <mat-datepicker touchUi  #hotelToPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>  -->
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{hotelCheckout | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
                                                     <small *ngIf="searchHotelForm['controls']['hotelCheckout']['errors']['required']" class="validate-msg">Check out date required</small>
                                                 </div>
                                             </div>
-
-
 
                                         </div>
                                     </div>
