@@ -372,6 +372,7 @@ export class PaymentComponent implements OnInit {
 	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private cookieService: CookieService,private sg: SimpleGlobal,public commonHelper: CommonHelper,private location: Location,private spinnerService: NgxSpinnerService,public dialog: MatDialog, public overlay: Overlay,private pay: PayService,private appConfigService:AppConfigService,private communicate: CommunicationService, private commaSeparatorPipe: commaSeparatorPipe) { 
                 this.assetPath=this.sg['assetPath']; 
                 this.serviceSettings=this.appConfigService.getConfig();
+                console.log(this.serviceSettings);
                 this.domainPath=this.sg['domainPath'];
                 this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
                 this.enableNONSPC = this.serviceSettings.enableNONSPC;
