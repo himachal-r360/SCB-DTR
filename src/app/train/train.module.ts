@@ -40,6 +40,7 @@ const routes: Routes = [
     path:"train/checkout" ,component:TrainsTravellerComponent,
   },
  { path: 'train/registration', component: IrctcregComponent },
+
    {
     path:"regalia_gold/train/search" ,component:TrainsComponent,
   },
@@ -47,6 +48,14 @@ const routes: Routes = [
     path:"regalia_gold/train/checkout" ,component:TrainsTravellerComponent,
   },
  { path: 'regalia_gold/train/registration', component: IrctcregComponent },
+
+  {
+    path:"infinia/train/search" ,component:TrainsComponent,
+  },
+  {
+    path:"infinia/train/checkout" ,component:TrainsTravellerComponent,
+  },
+  { path: 'infinia/train/registration', component: IrctcregComponent },
 
 
 ];

@@ -36,6 +36,12 @@ const routes: Routes = [
     path:"regalia_gold/bus/checkout" ,component:BusCheckoutComponent,
   },
   {
+    path:"infinia/bus/search" ,component:BusNewlistComponent,
+  },
+  {
+    path:"infinia/bus/checkout" ,component:BusCheckoutComponent,
+  },
+  {
     path:"buses/search" ,component:BusNewlistComponent,
   }
 
