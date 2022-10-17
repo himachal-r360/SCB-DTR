@@ -40,7 +40,7 @@
         <div class="itc-offer-area pt-5 pb-5">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-7 col-md-7">
-                    <div class="itc-hotel-offer-text pr-135">
+                    <div class="itc-hotel-offer-text" [ngClass]="isMobile?'':'pr-135'">
                         <span class="itc-tags">WEEKDAY BUFFET LIMITED PERIOD OFFER</span>
                         <h6 class="mb-3">1+1 Complimentary Weekday Buffet Limited Period Offer</h6>
                         <p class="text-color fs-13 mb-2"><strong>AT PARTICIPATING ITC HOTELS</strong></p>
@@ -49,22 +49,25 @@
                 </div>
                 <div class="col-lg-5 col-md-5">
                     <div class="itc-hotel-offer-image">
-                        <img src="assets/images/infinia/itc/1.png" class="img-fluid" alt="" />
+                        <img src="assets/images/infinia/itc/1.png" class="img-fluid" alt="" *ngIf="!isMobile"/>
+                        <img src="assets/images/infinia/itc/1_m.png" class="img-fluid" alt="" *ngIf="isMobile"/>
+                        
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="itc-offer-area pt-3 pb-3">
-            <div class="row align-items-center justify-content-center">
+            <div class="row d-flex align-items-center justify-content-between" [ngClass]="isMobile?'flex-wrap-reverse':''">
                 <div class="col-lg-5 col-md-5">
                     <div class="itc-hotel-offer-image">
-                        <img src="assets/images/infinia/itc/2.png" class="img-fluid" alt="" />
+                        <img src="assets/images/infinia/itc/2.png" class="img-fluid" alt="" *ngIf="!isMobile"/>
+                        <img src="assets/images/infinia/itc/2_m.png" class="img-fluid" alt="" *ngIf="isMobile"/>
                     </div>
                 </div>
 
                 <div class="col-lg-7 col-md-7">
-                    <div class="itc-hotel-offer-text pl-40">
+                    <div class="itc-hotel-offer-text " [ngClass]="isMobile?'':'pl-40'">
                         <span class="itc-tags">Exclusive offers on your HDFC Bank INFINIA credit card</span>
                         <h6 class="mb-3">1+1 Complimentary Weekday Buffet Limited Period Offer @ ITC Hotels</h6>
                         <!-- <p class="text-color fs-13 mb-2"><strong>AT PARTICIPATING ITC HOTELS</strong></p> -->
@@ -155,9 +158,11 @@
                                     </p>
                                 </h2>
                                 <div id="collapsehotel-list-one" class="accordion-collapse collapse" aria-labelledby="headinghotel-list-one" data-bs-parent="#hitel-list-one">
+                                    
                                     <div class="hl-list-area">
                                         <div class="row g-0">
                                             <div class="col-md-4">
+                                                
                                                 <div class="inner-hl-list-area inner-hl-list-area-one">
                                                     <div class="inner-hl-list-item">
                                                         <div class="inner-hl-list-left">
@@ -363,7 +368,11 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    
+                                    
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -374,7 +383,7 @@
         <div class="itc-offer-area pt-4 pb-5">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-7 col-md-7">
-                    <div class="itc-hotel-offer-text pr-135">
+                    <div class="itc-hotel-offer-text "  [ngClass]="isMobile?'':'pr-135'">
                         <h6 class="mb-3">1+1 Complimentary <br> Weekend Buffet Offer</h6>
                         <p class="text-color fs-13 mb-2"><strong>AT PARTICIPATING ITC HOTELS</strong></p>
                         <p>Enjoy culinary excellence and authentic delicacies at ITC Hotels award winning restaurants with your HDFC Bank INFINIA credit card.</p>
@@ -382,22 +391,24 @@
                 </div>
                 <div class="col-lg-5 col-md-5">
                     <div class="itc-hotel-offer-image">
-                        <img src="assets/images/infinia/itc/3.png" class="img-fluid" alt="" />
+                        <img src="assets/images/infinia/itc/3.png" class="img-fluid" alt="" *ngIf="!isMobile"/>
+                        <img src="assets/images/infinia/itc/3_m.png" class="img-fluid" alt="" *ngIf="isMobile"/>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="itc-offer-area pt-3 pb-3">
-            <div class="row align-items-center justify-content-center">
+            <div class="row d-flex align-items-center justify-content-between" [ngClass]="isMobile?'flex-wrap-reverse':''">
                 <div class="col-lg-5 col-md-5">
                     <div class="itc-hotel-offer-image">
-                        <img src="assets/images/infinia/itc/4.png" class="img-fluid" alt="" />
+                        <img src="assets/images/infinia/itc/4.png" class="img-fluid" alt="" *ngIf="!isMobile"/>
+                        <img src="assets/images/infinia/itc/4_m.png" class="img-fluid" alt="" *ngIf="isMobile"/>
                     </div>
                 </div>
 
                 <div class="col-lg-7 col-md-7">
-                    <div class="itc-hotel-offer-text pl-40">
+                    <div class="itc-hotel-offer-text"  [ngClass]="isMobile?'':'pl-40'">
                         <span class="itc-tags">Exclusive offers on your HDFC Bank INFINIA credit card</span>
                         <h6 class="mb-3">1+1 Complimentary Weekend Buffet @ ITC Hotels</h6>
                         <p class="text-color fs-13 mb-2"><strong>PLACE YOUR BOOKING NOW</strong></p>
@@ -705,3 +716,4 @@
     </div>
 </section>
 </main >
+
