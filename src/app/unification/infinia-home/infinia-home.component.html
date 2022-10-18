@@ -78,55 +78,44 @@
                                             discounts for Dining and stay <br> across Asia – Pacific region. </p>
                                     </div>
                                     <div class="row justify-content-center benefits-box">
-                                        <div class="col-md-3">
+                                    <ng-container *ngIf="!isMobile"> 
+                                        <div class="col-md-3" *ngFor="let item of benefitList">
                                             <div class="benefits-list min-height-230">
                                                 <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Benefits/1.svg" alt="" />
+                                                    <img src="{{item.img}}" alt="" />
                                                 </div>
                                                 <div class="benefits-content">
-                                                    <h6><strong>Unique Dining experience</strong> </h6>
-                                                    <p>Up to a 20% off on the food and beverage bill at the restaurants
+                                                    <h6><strong>{{item.title}}</strong> </h6>
+                                                    <p>{{item.desc}}
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="benefits-list min-height-230">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Benefits/2.svg" alt="" />
+                                    </ng-container>
+
+                                    <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                        <ng-container *ngFor="let item of benefitList">
+                                            <ng-template carouselSlide>
+                                                <div class="col-md-3">
+                                                    <div class="benefits-list min-height-230">
+                                                        <div class="benefits-icon">
+                                                            <img src="{{item.img}}" alt="" />
+                                                        </div>
+                                                        <div class="benefits-content">
+                                                            <h6><strong>{{item.title}}</strong> </h6>
+                                                            <p>{{item.desc}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="benefits-content">
-                                                    <h6><strong>Endless Travel</strong> </h6>
-                                                    <p>Up to a 20% off on the Best Available Rates on rooms at
-                                                        participating Marriott hotels in India </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="benefits-list min-height-230">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Benefits/3.svg" alt="" />
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <h6><strong>Blissfull Relaxation</strong> </h6>
-                                                    <p>20% off on Spa services at participating Marriott spas in India
-                                                        between </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="benefits-list min-height-230">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Benefits/4.svg" alt="" />
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <h6><strong>Marriott certificates</strong> </h6>
-                                                    <p>One certificate each for upgrade to next category room and 30%
-                                                        off on Best available rate on base category of room </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </ng-template>
+                                        </ng-container>
+                                    </owl-carousel-o>
+                                   
+                                      
                                     </div>
+
+                            
 
                                     <div class="visit-text text-center">
                                         <p>Please visit <a target="_blank"
@@ -218,28 +207,34 @@
                             <div id="Unlimited" class="common-table-list common-table-list-active">
                                 <div class="common-table-list-box mt-4 pb-4">
                                     <div class="row justify-content-center benefits-box pt-4">
-                                        <div class="col-md-3">
+                                    <ng-container *ngIf="!isMobile">
+                                        <div class="col-md-3" *ngFor="let item of lifeStyleBenefit">
                                             <div class="benefits-list min-height-206">
                                                 <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/1.svg" alt="" />
+                                                    <img src="{{item.img}}" alt="" />
                                                 </div>
                                                 <div class="benefits-content">
-                                                    <p>Unlimited Complimentary golf games at leading courses across
-                                                        India and select courses across the world.</p>
+                                                    <p>{{item.title}}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="benefits-list min-height-206">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/2.svg" alt="" />
+                                    </ng-container>
+                                    <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                        <ng-container *ngFor="let item of lifeStyleBenefit">
+                                            <ng-template carouselSlide>
+                                                <div class="col-md-3" >
+                                                    <div class="benefits-list min-height-206">
+                                                        <div class="benefits-icon">
+                                                            <img src="{{item.img}}" alt="" />
+                                                        </div>
+                                                        <div class="benefits-content">
+                                                            <p>{{item.title}}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="benefits-content">
-                                                    <p>Unlimited complimentary Golf coaching at select golf courses
-                                                        across India. </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </ng-template>
+                                        </ng-container>
+                                    </owl-carousel-o>
                                     </div>
 
                                     <div class="row justify-content-center">
@@ -294,48 +289,35 @@
                                             Global Concierge Assistance <br> Here are some of the services provided by
                                             our concierge. </p>
                                     </div>
+                                    <ng-container *ngIf="!isMobile">
                                     <div class="benefits-box grid-5">
-                                        <div class="benefits-list">
+                                        <div class="benefits-list " *ngFor="let item of premiumSport">
                                             <div class="benefits-icon">
-                                                <img src="./assets/images/infinia/lifestyle/3.svg" alt="" />
+                                                <img src="{{item.img}}" alt="" />
                                             </div>
                                             <div class="benefits-content">
-                                                <p>Golf Booking </p>
-                                            </div>
-                                        </div>
-                                        <div class="benefits-list">
-                                            <div class="benefits-icon">
-                                                <img src="./assets/images/infinia/lifestyle/4.svg" alt="" />
-                                            </div>
-                                            <div class="benefits-content">
-                                                <p>Itinerary planning and reservation assistance </p>
-                                            </div>
-                                        </div>
-                                        <div class="benefits-list">
-                                            <div class="benefits-icon">
-                                                <img src="./assets/images/infinia/lifestyle/5.svg" alt="" />
-                                            </div>
-                                            <div class="benefits-content">
-                                                <p>Private dining assistance </p>
-                                            </div>
-                                        </div>
-                                        <div class="benefits-list">
-                                            <div class="benefits-icon">
-                                                <img src="./assets/images/infinia/lifestyle/6.svg" alt="" />
-                                            </div>
-                                            <div class="benefits-content">
-                                                <p>International gift delivery </p>
-                                            </div>
-                                        </div>
-                                        <div class="benefits-list">
-                                            <div class="benefits-icon">
-                                                <img src="./assets/images/infinia/lifestyle/7.svg" alt="" />
-                                            </div>
-                                            <div class="benefits-content">
-                                                <p>Event planning and referrals & much more</p>
+                                                <p>{{item.title}} </p>
                                             </div>
                                         </div>
                                     </div>
+                                </ng-container>
+
+                                <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                    <ng-container  *ngFor="let item of premiumSport">
+                                        <ng-template carouselSlide>
+                                            <div class="benefits-box">
+                                            <div class="benefits-list">
+                                                    <div class="benefits-icon">
+                                                        <img src="{{item.img}}" alt="" />
+                                                    </div>
+                                                    <div class="benefits-content">
+                                                        <p>{{item.title}} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </ng-template>
+                                        </ng-container>
+                                </owl-carousel-o>
 
                                     <div class="lifestyle-contact">
                                         <p class="text-color">Contact</p>

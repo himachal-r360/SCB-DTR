@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-infinia-home',
@@ -7,10 +8,82 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfiniaHomeComponent implements OnInit {
   showMembership = true;
+  isMobile:boolean = true;
   showPoint = false;
-  constructor() { }
+  customOptions: OwlOptions = {
+    loop: false,
+    autoplay:false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    margin: 10,
+    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+    nav: false
+  }
+
+  benefitList = [{
+    title: 'Unique Dining experience', desc: 'Up to a 20% off on the food and beverage bill at the restaurants',
+    img:'./assets/images/infinia/Benefits/1.svg'
+  },
+  {
+    title: 'Endless Travel', desc: 'Up to a 20% off on the Best Available Rates on rooms at participating Marriott hotels in India',
+    img:'./assets/images/infinia/Benefits/2.svg'
+  },
+  {
+    title: 'Blissfull Relaxation', desc: '20% off on Spa services at participating Marriott spas in India between',
+    img:'./assets/images/infinia/Benefits/3.svg'
+  },
+  {
+    title: 'Marriott certificates', desc: 'One certificate each for upgrade to next category room and 30% off on Best available rate on base category of room',
+    img:'./assets/images/infinia/Benefits/4.svg'
+  }
+]
+
+lifeStyleBenefit = [{
+  title:'Unlimited Complimentary golf games at leading courses across India and select courses across the world',
+  img:'./assets/images/infinia/lifestyle/1.svg'
+},
+{
+  title:'Unlimited complimentary Golf coaching at select golf courses across India.',
+  img:'./assets/images/infinia/lifestyle/2.svg'
+}
+]
+
+premiumSport = [
+  {title:'Golf Booking',img:'./assets/images/infinia/lifestyle/3.svg'},
+  {title:'Itinerary planning and reservation assistance',img:'./assets/images/infinia/lifestyle/4.svg'},
+  {title:'Private dining assistance',img:'./assets/images/infinia/lifestyle/5.svg'},
+  {title:'International gift delivery',img:'./assets/images/infinia/lifestyle/6.svg'},
+  {title:'Event planning and referrals & much more',img:'./assets/images/infinia/lifestyle/7.svg'},
+]
+
+  constructor(private ngZone:NgZone) {
+    window.onresize = (e) =>
+    {
+        this.ngZone.run(() => {
+          this.isMobile = window.innerWidth < 991 ? true : false;
+        });
+    };
+   }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 991 ? true : false;
   }
 
   showHideMember(){

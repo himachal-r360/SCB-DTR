@@ -37,6 +37,8 @@ export class InfiniaItcHotelComponent implements OnInit {
 
 
 
+
+
   constructor(private ngZone:NgZone) { 
     window.onresize = (e) =>
     {
@@ -48,6 +50,7 @@ export class InfiniaItcHotelComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ? true : false;
+    
   }
 
 }
