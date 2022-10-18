@@ -73,6 +73,36 @@ premiumSport = [
   {title:'Event planning and referrals & much more',img:'./assets/images/infinia/lifestyle/7.svg'},
 ]
 
+UnlimitedAccess = [
+  {title:'Priority Pass - In India & Abroad',desc:'Enjoy unlimited complimentary lounge access at airports withinand outside India at 1,000+ airport lounges using Priority Pass.Applicable for both primary and addon holder ',
+img:'./assets/images/infinia/lifestyle/1.svg'},
+  {title:'Domestic lounge program',desc:'Infinia Primary Cardholders can avail unlimited complimentary lounge access using Infinia credit card in India ',
+img:'./assets/images/infinia/lifestyle/2.svg'}
+]
+
+dineOutMembership = [
+  {title:'Assured flat 25% off at 2000+ premium restaurants',img:'./assets/images/infinia/lifestyle/3.svg'},
+  {title:'1+1 on buffet at 200+ restaurants',img:'./assets/images/infinia/lifestyle/4.svg'},
+  {title:'1+1 on Food / Drinks on select restaurants ',img:'./assets/images/infinia/lifestyle/5.svg'},
+  {title:'Zero convenience fee ',img:'./assets/images/infinia/lifestyle/6.svg'},
+  {title:'Early access to events and festivals such as GIRF  ',img:'./assets/images/infinia/lifestyle/7.svg'},
+
+]
+
+RewardAccrual = [
+  {title:'Earn 5 Reward Points on every Rs.150, on all retail* spends including Insurance, Utilities, Education and Rent Pay' , img:'./assets/images/infinia/Reward/1.svg'},
+  {title:'Earn up to 10 times Reward Points* on your travel and shopping spends on Smartbuy ' , img:'./assets/images/infinia/Reward/2.svg'}
+]
+
+RewardRedemption = [
+  {title:'Flight and Hotel Bookings via Smartbuy at a value of 1 RP = Rs 1',img:'./assets/images/infinia/Reward/3.svg'},
+  {title:'Apple products and Tanishq vouchers via Smartbuy at a value of 1RP = Rs. 1',img:'./assets/images/infinia/Reward/4.svg'},
+  {title:'Airmiles conversion through netbanking at a value of 1RP = 1 airmile',img:'./assets/images/infinia/Reward/5.svg'},
+  {title:'Products and Vouchers via Netbanking or SmartBuy at a value of 1 RP = upto Rs 0.50',img:'./assets/images/infinia/Reward/6.svg'},
+  {title:'Cashback at a value of 1 RP = Rs 0.30',img:'./assets/images/infinia/Reward/7.svg'},
+
+]
+
   constructor(private ngZone:NgZone) {
     window.onresize = (e) =>
     {
@@ -172,7 +202,7 @@ premiumSport = [
     }
   }
 
-  
+
   welcomeBenefit(title){
     if(title){
       $('#redeemWelcome'+title).toggleClass('d-none');
@@ -188,7 +218,7 @@ premiumSport = [
   }
 
 
-  
+
 
 
 

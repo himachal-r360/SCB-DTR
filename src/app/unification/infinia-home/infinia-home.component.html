@@ -78,7 +78,7 @@
                                             discounts for Dining and stay <br> across Asia – Pacific region. </p>
                                     </div>
                                     <div class="row justify-content-center benefits-box">
-                                    <ng-container *ngIf="!isMobile"> 
+                                    <ng-container *ngIf="!isMobile">
                                         <div class="col-md-3" *ngFor="let item of benefitList">
                                             <div class="benefits-list min-height-230">
                                                 <div class="benefits-icon">
@@ -111,11 +111,11 @@
                                             </ng-template>
                                         </ng-container>
                                     </owl-carousel-o>
-                                   
-                                      
+
+
                                     </div>
 
-                            
+
 
                                     <div class="visit-text text-center">
                                         <p>Please visit <a target="_blank"
@@ -409,31 +409,36 @@
                             <div id="UnlimitedAccess" class="common-table-list">
                                 <div class="common-table-list-box mt-4">
                                     <div class="row justify-content-center benefits-box pt-4">
-                                        <div class="col-md-3">
+                                      <ng-container *ngIf="!isMobile">
+                                        <div class="col-md-3" *ngFor="let item of UnlimitedAccess">
                                             <div class="benefits-list min-height-265">
                                                 <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/1.svg" alt="" />
+                                                    <img src="{{item.img}}" alt="" />
                                                 </div>
                                                 <div class="benefits-content">
-                                                    <h6><strong>Priority Pass - In India & Abroad</strong></h6>
-                                                    <p>Enjoy unlimited complimentary lounge access at airports within
-                                                        and outside India at 1,000+ airport lounges using Priority Pass.
-                                                        Applicable for both primary and addon holder </p>
+                                                    <h6><strong>{{item.title}}</strong></h6>
+                                                    <p>{{item.desc}} </p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="benefits-list min-height-265">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/2.svg" alt="" />
+                                      </ng-container>
+                                      <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                        <ng-container  *ngFor="let item of UnlimitedAccess">
+                                            <ng-template carouselSlide>
+                                              <div class="col-md-3">
+                                                <div class="benefits-list min-height-265">
+                                                    <div class="benefits-icon">
+                                                        <img src="{{item.img}}" alt="" />
+                                                    </div>
+                                                    <div class="benefits-content">
+                                                        <h6><strong>{{item.title}}</strong></h6>
+                                                        <p>{{item.desc}} </p>
+                                                    </div>
                                                 </div>
-                                                <div class="benefits-content">
-                                                    <h6><strong>Domestic lounge program</strong></h6>
-                                                    <p>Infinia Primary Cardholders can avail unlimited complimentary
-                                                        lounge access using Infinia credit card in India.</p>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                </ng-template>
+                                            </ng-container>
+                                    </owl-carousel-o>
                                     </div>
                                 </div>
                             </div>
@@ -606,48 +611,38 @@
                                         <div class="text-center pb-4">
                                             <p>Get complimentary Dineout passport membership for a year that offers </p>
                                         </div>
+                                        <ng-container *ngIf="!isMobile">
                                         <div class="benefits-box grid-5">
-                                            <div class="benefits-list">
+
+                                            <div class="benefits-list" *ngFor="let item of dineOutMembership">
                                                 <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/3.svg" alt="">
+                                                    <img src="{{item.img}}" alt="">
                                                 </div>
                                                 <div class="benefits-content">
-                                                    <p>Assured flat 25% off at 2000+ premium restaurants </p>
+                                                    <p>{{item.title}}</p>
                                                 </div>
                                             </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/4.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>1+1 on buffet at 200+ restaurants </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/5.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>1+1 on Food / Drinks on select restaurants </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/6.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Zero convenience fee </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/lifestyle/7.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Early access to events and festivals such as GIRF </p>
-                                                </div>
-                                            </div>
+
                                         </div>
+                                      </ng-container>
+
+                                      <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                        <ng-container  *ngFor="let item of dineOutMembership">
+                                            <ng-template carouselSlide>
+                                                <div class="benefits-box">
+                                                <div class="benefits-list">
+                                                        <div class="benefits-icon">
+                                                            <img src="{{item.img}}" alt="" />
+                                                        </div>
+                                                        <div class="benefits-content">
+                                                            <p>{{item.title}} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </ng-template>
+                                            </ng-container>
+                                    </owl-carousel-o>
+
 
                                         <div class="lifestyle-Click-a text-center mt-3">
                                             <p>Get additional 15% off on all your bill payments via Dineout Pay (10k +
@@ -698,28 +693,35 @@
                             <div id="RewardAccrual" class="common-table-list common-table-list-active">
                                 <div class="common-table-list-box mt-4">
                                     <div class="row justify-content-center benefits-box pt-4">
-                                        <div class="col-md-3">
+                                      <ng-container *ngIf="!isMobile" >
+                                        <div class="col-md-3" *ngFor="let item of RewardAccrual">
                                             <div class="benefits-list min-height-206">
                                                 <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/1.svg" alt="" />
+                                                    <img src="{{item.img}}" alt="" />
                                                 </div>
                                                 <div class="benefits-content">
-                                                    <p>Earn 5 Reward Points on every Rs.150, on all retail* spends
-                                                        including Insurance, Utilities, Education and Rent Pay</p>
+                                                    <p>{{item.title}}</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="benefits-list min-height-206">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/2.svg" alt="" />
+                                      </ng-container>
+                                      <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                        <ng-container  *ngFor="let item of RewardAccrual">
+                                            <ng-template carouselSlide>
+                                              <div class="col-md-3">
+                                                <div class="benefits-list min-height-206">
+                                                    <div class="benefits-icon">
+                                                        <img src="{{item.img}}" alt="" />
+                                                    </div>
+                                                    <div class="benefits-content">
+                                                        <p>{{item.title}}</p>
+                                                    </div>
                                                 </div>
-                                                <div class="benefits-content">
-                                                    <p>Earn up to 10 times Reward Points* on your travel and shopping
-                                                        spends on Smartbuy  </p>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                </ng-template>
+                                            </ng-container>
+                                    </owl-carousel-o>
+
                                     </div>
 
 
@@ -733,52 +735,37 @@
                                         <div class="text-center pb-4">
                                             <p>You can redeem your Reward Points on Smartbuy or Netbanking for </p>
                                         </div>
-                                        <div class="benefits-box grid-5">
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/3.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Flight and Hotel Bookings via Smartbuy at a value of 1 RP = Rs 1
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/4.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Apple products and Tanishq vouchers via Smartbuy at a value of
-                                                        1RP = Rs. 1 </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/5.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Airmiles conversion through netbanking at a value of 1RP = 1
-                                                        airmile </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/6.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Products and Vouchers via Netbanking or SmartBuy at a value of 1
-                                                        RP = upto Rs 0.50 </p>
-                                                </div>
-                                            </div>
-                                            <div class="benefits-list">
-                                                <div class="benefits-icon">
-                                                    <img src="./assets/images/infinia/Reward/7.svg" alt="">
-                                                </div>
-                                                <div class="benefits-content">
-                                                    <p>Cashback at a value of 1 RP = Rs 0.30 </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <ng-container *ngIf="!isMobile">
+                                          <div class="benefits-box grid-5">
+                                              <div class="benefits-list" *ngFor="let item of RewardRedemption">
+                                                  <div class="benefits-icon">
+                                                      <img src="{{item.img}}" alt="">
+                                                  </div>
+                                                  <div class="benefits-content">
+                                                      <p>{{item.title}}
+                                                      </p>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </ng-container>
+
+
+                                <owl-carousel-o [options]="customOptions" *ngIf="isMobile">
+                                  <ng-container  *ngFor="let item of RewardRedemption">
+                                      <ng-template carouselSlide>
+                                          <div class="benefits-box">
+                                          <div class="benefits-list">
+                                                  <div class="benefits-icon">
+                                                      <img src="{{item.img}}" alt="" />
+                                                  </div>
+                                                  <div class="benefits-content">
+                                                      <p>{{item.title}} </p>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          </ng-template>
+                                      </ng-container>
+                              </owl-carousel-o>
                                     </div>
                                 </div>
                             </div>
