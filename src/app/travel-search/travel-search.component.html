@@ -46,7 +46,7 @@
                                                             <div class="mob-title">
                                                                 <h3>Select City</h3>
                                                                 <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                                    <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                                    <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                                                 </a>
                                                             </div>
                                                             <div class="flight-from-data-search">
@@ -484,7 +484,7 @@
                                     <div class="mob-title">
                                         <h3>Select City</h3>
                                         <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                            <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                            <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                         </a>
                                     </div>
                                     <div class="flight-from-data-search">
@@ -528,9 +528,9 @@
                                                     <a href="javascript:void(0);">
                                                         <div class="row">
                                                             <p class="col-md-6"><span><b>Rooms</b></span></p>
-                                                            <p class="col-md-6 text-end"><span class="cursor-pointer" (click)="roomOperation('minus')">-</span>
-                                                                <input readonly class="count" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
-                                                                <span class="cursor-pointer" (click)="roomOperation('add')">+</span>
+                                                            <p class="col-md-6 text-end d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomOperation('minus')"><input type="button" value="-" class="qty-buttons minus"></span>
+                                                                <input readonly class="count count_input_value" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
+                                                                <span class="cursor-pointer" (click)="roomOperation('add')"><input type="button" value="+" class="qty-buttons plus"></span>
                                                             </p>
                                                         </div>
                                                     </a>
@@ -544,8 +544,8 @@
                                                             <a href="javascript:void(0);">
                                                                 <div class="row">
                                                                     <p class="col-md-6"><span><b>Adults</b></span><small>12 years &amp; above</small></p>
-                                                                    <p class="col-md-6 text-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')">-</span><input readonly class="count" name="hotel_adult" formControlName="hotel_adult"><span class="cursor-pointer hplus"
-                                                                            (click)="roomAdultOperation(i,'add')">+</span></p>
+                                                                    <p class="col-md-6 text-end d-flex align-items-center justify-content-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_adult" formControlName="hotel_adult"><span class="cursor-pointer hplus"
+                                                                            (click)="roomAdultOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -553,8 +553,8 @@
                                                             <a href="javascript:void(0);">
                                                                 <div class="row">
                                                                     <p class="col-md-6"><span><b>Children</b></span><small>2-11 years old</small></p>
-                                                                    <p class="col-md-6 text-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')">-</span><input readonly class="count" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer"
-                                                                            (click)="roomChildOperation(i,'add')">+</span></p>
+                                                                    <p class="col-md-6 text-end d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer"
+                                                                            (click)="roomChildOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -671,27 +671,31 @@
                                                 <li>
                                                     <a href="javascript:void(0);">
                                                         <div class="row adults">
-                                                            <p class="col-md-7"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
-                                                            <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('adults','minus')">-</span><input class="count" readonly value="{{adult_label}}" id="adult_label"><input type="hidden" value="{{adult_cnt}}"
-                                                                    id="adults" name="adults" formControlName="adults"><span class="cursor-pointer plus" (click)="flightPassengers('adults','plus')">+</span></p>
+                                                            <p class="col-md-6"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
+                                                            <p class="col-md-6 text-end d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('adults','minus')">
+                                                                <input type="button" value="-" class="qty-buttons minus">
+                                                            </span><input class="count count_input_value" readonly value="{{adult_label}}" id="adult_label"><input type="hidden" value="{{adult_cnt}}"
+                                                                    id="adults" name="adults" formControlName="adults"><span class="cursor-pointer plus" (click)="flightPassengers('adults','plus')">
+                                                                        <input type="button" value="+" class="qty-buttons plus">
+                                                                    </span></p>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:void(0);">
                                                         <div class="row children">
-                                                            <p class="col-md-7"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
-                                                            <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')">-</span><input readonly class="count" value="{{child_label}}" id="child_label"><input type="hidden" value="{{child_cnt}}"
-                                                                    id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')">+</span></p>
+                                                            <p class="col-md-6"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
+                                                            <p class="col-md-6 text-end d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{child_label}}" id="child_label"><input type="hidden" value="{{child_cnt}}"
+                                                                    id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:void(0);">
                                                         <div class="row infants">
-                                                            <p class="col-md-7"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
-                                                            <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('infants','minus')">-</span><input readonly class="count" value="{{infant_label}}" id="infant_label"><input type="hidden" value="{{infant_cnt}}"
-                                                                    id="infants" name="infants" formControlName="infants"><span class="cursor-pointer plus" (click)="flightPassengers('infants','plus')">+</span></p>
+                                                            <p class="col-md-6"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
+                                                            <p class="col-md-6 text-end d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('infants','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{infant_label}}" id="infant_label"><input type="hidden" value="{{infant_cnt}}"
+                                                                    id="infants" name="infants" formControlName="infants"><span class="cursor-pointer plus" (click)="flightPassengers('infants','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                         </div>
                                                     </a>
                                                 </li>
@@ -758,7 +762,7 @@
                                         <div class="mob-title">
                                             <h3>Select City</h3>
                                             <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                             </a>
                                         </div>
                                         <div class="flight-from-data-search">
@@ -811,7 +815,7 @@
                                         <div class="mob-title">
                                             <h3>Select City</h3>
                                             <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                             </a>
                                         </div>
                                         <div class="flight-from-data-search">
@@ -915,7 +919,7 @@
                                         <div class="mob-title">
                                             <h3>Select City</h3>
                                             <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                             </a>
                                         </div>
                                         <div class="flight-from-data-search">
@@ -974,7 +978,7 @@
                                         <div class="mob-title">
                                             <h3>Select City</h3>
                                             <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                             </a>
                                         </div>
                                         <div class="flight-from-data-search">
@@ -1062,7 +1066,7 @@
                                         <div class="mob-title">
                                             <h3>Select Station</h3>
                                             <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                             </a>
                                         </div>
                                         <div class="flight-from-data-search">
@@ -1119,7 +1123,7 @@
                                         <div class="mob-title">
                                             <h3>Select Station</h3>
                                             <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                             </a>
                                         </div>
                                         <div class="flight-from-data-search">

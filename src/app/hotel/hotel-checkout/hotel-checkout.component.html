@@ -6,11 +6,11 @@
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
                             <a href="javascript:;" *ngIf="steps==1" (click)="triggerBack()">
-                                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                                <img src="{{cdnUrl}}images/icons/left.png" alt="" />
                             </a>
                             
                         <a href="javascript:;"  *ngIf="steps==2"  (click)="moveTab(1)">
-                                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                                <img src="{{cdnUrl}}images/icons/left.png" alt="" />
                             </a>
                         </div>
                         <div class="mob-listing-header-center">
@@ -33,13 +33,13 @@
                         <ul class="m-0 details-steps-ul">
                             <li>
                                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }" (click)="moveTab(1)">
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/bus.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/bus.svg" alt="" /></span>
                                     <span class="steps-text">Hotel Details</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps== 2 , 'active':steps==2  }" (click)="moveTab(2)">
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/card.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/card.svg" alt="" /></span>
                                     <span class="steps-text">Payment</span>
                                 </a>
                             </li>
@@ -56,7 +56,7 @@
         <!-- Mlite Sesssion Timer Code -->
         <div class="d-block d-sm-none">
             <div class="sidebar-widget session-expires-widget text-center">
-                <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
+                <p><img src="{{cdnUrl}}images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
             <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)"></countdown>
             min
           </strong></p>
@@ -77,8 +77,8 @@
                                 <div>
                                     <div class="hotel_details">
                                         <div class="img_hr">
-                                            <img *ngIf="searchResult.hotel_detail.images.length && searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}">
-                                            <img *ngIf="searchResult.hotel_detail.images.length ==0" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                            <img *ngIf="searchResult.hotel_detail.images.length && searchResult.hotel_detail.images[0]['wideAngleImageUrl'] != null" src="{{searchResult.hotel_detail.images[0]['wideAngleImageUrl']}}" alt="{{searchResult.hotel_detail.hotelName}}" (error)="onImgError($event)">
+                                            <img *ngIf="searchResult.hotel_detail.images.length ==0" src="{{cdnUrl}}images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
 
                                         </div>
                                         <div class="name_hr">
@@ -158,8 +158,8 @@
                                     <div class="web_code d-none d-sm-block">
                                         <div class="hotel_details ">
                                             <div style="flex-basis: 20%;">
-                                                <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null" src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
-                                                <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                                <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null" src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img" (error)="onImgError($event)">
+                                                <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                                             </div>
                                             <div>
                                                 <div class="">
@@ -185,7 +185,7 @@
                                             <div class="hotel_details">
                                                 <div>
                                                     <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl != null" src="{{searchResult.selectedHotel.imageInfo.wideAngleImageurl}}" alt="img">
-                                                    <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}/images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
+                                                    <img *ngIf="searchResult.selectedHotel.imageInfo.wideAngleImageurl == null" src="{{cdnUrl}}images/hotel/noImage/makemytrip_hotel_noimage_1.jpg" alt="">
                                                 </div>
                                                 <div class="">
                                                     <p class="hotel_name">{{searchResult.selectedHotel.roomType.roomTitle}}</p>
@@ -345,7 +345,7 @@
                                     <div class="contact-whatsapp mt-20" *ngIf="whatsappFeature==1">
                                         <div class="contact-whatsapp-info me-2">
                                             <span>Send my booking information through</span>
-                                            <img src="{{ cdnUrl }}/images/icons/whatsapp.svg" class="ms-2" alt="">
+                                            <img src="{{cdnUrl}}images/icons/whatsapp.svg" class="ms-2" alt="">
                                             <span class="fw_7">WhatsApp</span>
                                         </div>
                                         <div class="form-check form-switch m-0" *ngIf="whatsappFeature==1">
@@ -604,7 +604,7 @@
                         <div class="booking-title-box">
                             <h4>Choose Payment Mode</h4>
                         </div>
-                        <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchHotelKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalFare" [passActualFare]="intialTotalFare"
+                        <app-payment (sendCouponEvent)="receiveCouponDetails($event)" [remove_Coupon]="remove_Coupon" [passSavedCardsData]="savedCards" [passSessionKey]="searchHotelKey" (sendflexiAmount)='reciveflexiAmount($event)' [passTotalFare]="totalFare" [passActualFare]="totalFare"
                             [passConvinenceFee]="convenience_fee" [passServiceId]="serviceId" [passXSRFTOKEN]="XSRFTOKEN" [passIsDcemiEligibleFlag]="IsDcemiEligibleFlag" [passREWARD_MOBILE]="REWARD_MOBILE" [passFlexipayEligibleFlag]="isFlexipayEligibleFlag"
                             (sendtotalfare)="recivetotalFare($event)" (sendPointsPlusEvent)="receivePointsPlus($event)" [passflexiFare]="sendflexiFare" [partnerToken]="partnerToken" [isMobile]="isMobile" [retryPay]="1">
                         </app-payment>
@@ -618,7 +618,7 @@
                         <div class="default-sidebar">
                             <div class="d-none d-sm-block">
                                 <div class="sidebar-widget session-expires-widget">
-                                    <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
+                                    <p><img src="{{cdnUrl}}images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
                       <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
                       </countdown> min
                     </strong></p>
@@ -686,9 +686,9 @@
                                                     <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                                         <div class="fare-list-font">
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                                         </div>
                                                     </div>
                                                     <div class="fare-list-right">
@@ -881,9 +881,9 @@
                                     <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                         <div class="fare-list-font">
-                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+                                            <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                            <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                         </div>
                                     </div>
                                     <div class="fare-list-right">

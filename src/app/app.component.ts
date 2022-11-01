@@ -33,7 +33,6 @@ export interface DialogData {
 
 
 export class AppComponent implements OnInit {
-
         isOnline: boolean;
         public assetPath:string; 
         public domainName:string; 
@@ -185,6 +184,8 @@ export class AppComponent implements OnInit {
             this.importantMessage='';
     }
     });
+    
+
     
         this.getVouchersList =this.serviceSettings.voucher_lists;
         if(this.DOMAIN_SETTINGS['OFFER']){

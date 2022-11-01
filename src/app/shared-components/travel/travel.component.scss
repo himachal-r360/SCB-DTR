@@ -8,7 +8,9 @@ $break-md-tab: 768px;
     font-size: 40px;
     margin: 20px 0;
 }
-
+.pos-relative{
+    position:relative;
+}
 .travel_section {
     position: relative;
     border-radius: 20px;
@@ -245,7 +247,8 @@ $break-md-tab: 768px;
         display: flex;
         /* flex-basis: 40%;
         margin-right: 3em; */
-        margin-bottom: 10px;
+        // margin-bottom: 10px;
+        margin-bottom:2px;
         position: relative;
     }
     .travelSelect {
@@ -262,9 +265,10 @@ $break-md-tab: 768px;
             color: #000000;
             font-family: 'opensans-medium';
             cursor:pointer;
+            min-width:90px;
         }
         .arrowDn_icon {
-            position: absolute;
+            // position: absolute;
             top: 1px;
             right: 0px;
             cursor:pointer;
@@ -307,6 +311,12 @@ $break-md-tab: 768px;
                             border: 0;
                             font-size: 13px;
                             text-align: center;
+                        }
+                        .count_input_value{
+                            background: none;
+                            margin:0px 5px;
+                            font-size:16px;
+                            padding:0px 0px;
                         }
                     }
                 }
@@ -636,14 +646,20 @@ li {
     border: 0;
     text-align: center
 }
+.travelllerList li a .count_input_value{
+    background: none;
+    margin:0px 5px;
+    font-size:16px;
+    padding:0px 0px;
+}
 
 .roomsection small {
     padding: 4px 20px;
 }
 
-.room_no {
-    background-color: #c3832c33;
-}
+// .room_no {
+//     background-color: #c3832c33;
+// }
 
 .cursor-pointer {
     cursor: pointer;
@@ -818,8 +834,8 @@ li {
             a.nav-link.active,
             .nav-pills .show>.nav-link {
                 background-color: transparent;
-                color: #C3832C !important;
-                border-bottom: 3px solid #C3832C;
+                // color: #C3832C !important;
+                // border-bottom: 3px solid #C3832C;
                 border-radius: 0;
             }
         }
@@ -894,9 +910,11 @@ li {
                     display: flex;
                     justify-content: space-evenly;
                     align-items: center;
-                    gap: 0px;
+                    gap: 10px;
                     margin-top: 0px;
                     height: 30px;
+                    margin-left:15px;
+                    margin-right:15px;
                 }
             }
             @media screen and(max-width:600px) {
