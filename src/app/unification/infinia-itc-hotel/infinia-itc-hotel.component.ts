@@ -1,5 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { SimpleGlobal } from 'ng2-simple-global';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AppConfigService } from 'src/app/app-config.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-infinia-itc-hotel',
@@ -8,6 +11,11 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class InfiniaItcHotelComponent implements OnInit {
   isMobile:boolean = true;
+
+  serviceSettings: any;
+  cdnUrl: any;
+  cdnDealUrl: any;
+  siteUrl: any;
   customOptions: OwlOptions = {
     loop: false,
     autoplay:false,
@@ -39,18 +47,26 @@ export class InfiniaItcHotelComponent implements OnInit {
 
 
 
-  constructor(private ngZone:NgZone) { 
+  constructor(private ngZone:NgZone ,private sg: SimpleGlobal, private appConfigService: AppConfigService) {
     window.onresize = (e) =>
     {
         this.ngZone.run(() => {
           this.isMobile = window.innerWidth < 991 ? true : false;
         });
+
     };
+    this.serviceSettings = this.appConfigService.getConfig();
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.cdnDealUrl = environment.cdnDealUrl;
+    this.siteUrl = environment.MAIN_SITE_URL;
+
+
   }
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ? true : false;
-    
+
   }
 
 }
+

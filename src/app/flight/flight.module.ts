@@ -27,7 +27,7 @@ import { SafeHtmlPipe } from 'src/app/shared/pipes/safeHtml.pipe';
 import { AirlinesPipe } from '../pipes/airlines.pipe';
 import { MultiAirlinesPipe } from '../pipes/multi_airlines.pipe';
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 const routes: Routes = [
   {
@@ -41,33 +41,28 @@ const routes: Routes = [
     path:"flight-roundtrip" ,component:FlightRoundtripListComponent,
   },
   {
-
     path:"flight-int" ,component:FlightIntListComponent
-
   },
   {
     path:"flight-multicity" ,component:FlightMulticityComponent
-
   },
   {
-    path:"regalia_gold/flight-list" ,component:FlightListComponent,
+    path:":domain/flight-list" ,component:FlightListComponent,
   },
-
    {
-    path:"regalia_gold/flight-checkout" ,component:FlightCheckoutComponent,
+    path:":domain/flight-checkout" ,component:FlightCheckoutComponent,
   },
   {
-    path:"regalia_gold/flight-roundtrip" ,component:FlightRoundtripListComponent,
+    path:":domain/flight-roundtrip" ,component:FlightRoundtripListComponent,
   },
   {
-
-    path:"regalia_gold/flight-int" ,component:FlightIntListComponent
-
+    path:":domain/flight-int" ,component:FlightIntListComponent
   },
   {
-    path:"regalia_gold/flight-multicity" ,component:FlightMulticityComponent
-
+    path:":domain/flight-multicity" ,component:FlightMulticityComponent
   },
+
+  
     {
     path:"flight-booking/retry" ,component:FlightBookingRetryComponent,
 
@@ -87,7 +82,7 @@ const routes: Routes = [
 
   ],
   imports: [
-        CommonModule,
+        CommonModule,NgxSpinnerModule,
         FormsModule,
         InputMaskModule,
         ReactiveFormsModule,

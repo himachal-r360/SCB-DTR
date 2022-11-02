@@ -6,7 +6,7 @@
                     <div class="mob-listing-header">
                         <div class="mob-listing-header-left">
                             <a href="javascript:;" (click)="triggerBack()">
-                                <img src="{{ cdnUrl }}/images/icons/left.png" alt="" />
+                                <img src="{{cdnUrl}}images/icons/left.png" alt="" />
                             </a>
                         </div>
 
@@ -46,31 +46,31 @@
                             <li>
                                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 1 , 'active':steps==1 }" (click)="moveTab(1)">
                                     <!-- steps-done - Class For done steps -->
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/flight.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/flight.svg" alt="" /></span>
                                     <span class="steps-text">Flight Details</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps >2  , 'active':steps==2 }" (click)="moveTab(2)">
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/user.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/user.svg" alt="" /></span>
                                     <span class="steps-text">Traveller Details</span>
                                 </a>
                             </li>
                             <li *ngIf="enableVAS==1">
                                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 3 , 'active':steps==3 }" (click)="moveTab(3)">
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/meal.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/meal.svg" alt="" /></span>
                                     <span class="steps-text">Seats & Meals</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" [ngClass]="{'active1': completedSteps > 4 , 'active':steps==4 }" (click)="moveTab(4)">
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/review.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/review.svg" alt="" /></span>
                                     <span class="steps-text">Review Booking</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="javascript:void(0)" [ngClass]="{ 'active':steps==5  }" (click)="moveTab(5)">
-                                    <span class="steps-icons"><img src="{{ cdnUrl }}/images/flights_details/card.svg" alt="" /></span>
+                                    <span class="steps-icons"><img src="{{cdnUrl}}images/flights_details/card.svg" alt="" /></span>
                                     <span class="steps-text">Payment</span>
                                 </a>
                             </li>
@@ -88,7 +88,7 @@
         <!-- Mlite Sesssion Timer Code -->
         <div class="d-block d-sm-none">
             <div class="sidebar-widget session-expires-widget text-center">
-                <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
+                <p><img src="{{cdnUrl}}images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
             <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)"></countdown>
             min
           </strong></p>
@@ -115,7 +115,7 @@
                                     <div class="booking-inner-title-left">
                                         <h6>
                                             {{ searchDatad.fromCity }}
-                                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="ms-2 me-2" alt=""> {{ searchDatad.toCity }}
+                                            <img src="{{cdnUrl}}images/icons/flight-right.svg" class="ms-2 me-2" alt=""> {{ searchDatad.toCity }}
                                         </h6>
                                         <p> {{ searchDatad.departure | date:"EEE,dd MMM" }} | {{ totalOnwardStops_data_multi[searchi] }} | {{ totalOnwardDurationMulti[searchi] + dateOnwardHourTotalMulti[searchi]| durationTime }}
                                         </p>
@@ -138,7 +138,7 @@
                                                 <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                             </div>
                                             <div class="Booking-Flight-name-right">
-                                                <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{ cdnUrl }}/images/icons/info.png" width="10px" alt=""></p>-->
+                                                <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}images/icons/info.png" width="10px" alt=""></p>-->
                                                 <p>{{ flightClasses[searchData.flightclass] }}</p>
                                             </div>
                                         </div>
@@ -176,8 +176,8 @@
                                                 </div>
                                                 <!--<div class="col-md-4">
                                             <h6>Flight Extras</h6>
-                                            <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/meals.png" alt="" /> Meals</p>
-                                            <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/sat.png" alt="" />  Seat Selections</p>
                                         </div>-->
                                             </div>
                                             <div class="row">
@@ -223,7 +223,7 @@
 
                                 <div class="luggage-box" *ngIf="enableVAS==1">
                                     <div class="luggage-text">
-                                        <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                        <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                         <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab rate!</p>
                                     </div>
                                     <div class="luggage-btn">
@@ -233,7 +233,7 @@
                                 <div class="collapse luggage-add-box" id="luggagecollapse">
                                     <div class="luggage-add-list">
                                         <div class="luggage-add-name">
-                                            <h6><img src="{{ cdnUrl }}/images/icons/bag.png" alt=""> 5 KG</h6>
+                                            <h6><img src="{{cdnUrl}}images/icons/bag.png" alt=""> 5 KG</h6>
                                         </div>
                                         <div class="luggage-add-items">
                                             <div class="">
@@ -250,7 +250,7 @@
                                     </div>
                                     <div class="luggage-add-list">
                                         <div class="luggage-add-name">
-                                            <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 10 KG</h6>
+                                            <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 10 KG</h6>
                                         </div>
                                         <div class="luggage-add-items">
                                             <div class="">
@@ -267,7 +267,7 @@
                                     </div>
                                     <div class="luggage-add-list">
                                         <div class="luggage-add-name">
-                                            <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 15 KG</h6>
+                                            <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 15 KG</h6>
                                         </div>
                                         <div class="luggage-add-items">
                                             <div class="">
@@ -284,7 +284,7 @@
                                     </div>
                                     <div class="luggage-add-list">
                                         <div class="luggage-add-name">
-                                            <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 20 KG</h6>
+                                            <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 20 KG</h6>
                                         </div>
                                         <div class="luggage-add-items">
                                             <div class="">
@@ -361,7 +361,7 @@
                                 <div class="booking-inner-title-left" *ngIf="searchData">
                                     <h6>
                                         {{ searchData.fromCity }}
-                                        <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="ms-2 me-2" alt=""> {{ searchData.toCity }}
+                                        <img src="{{cdnUrl}}images/icons/flight-right.svg" class="ms-2 me-2" alt=""> {{ searchData.toCity }}
                                     </h6>
                                     <p> {{ searchData.departure | date:"EEE,dd MMM" }} | {{ totalOnwardStops_data }} | {{ totalOnwardDuration | durationTime }}</p>
                                 </div>
@@ -381,7 +381,7 @@
                                             <span class="plane_number">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                         </div>
                                         <div class="Booking-Flight-name-right">
-                                            <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{ cdnUrl }}/images/icons/info.png" width="10px" alt=""></p>-->
+                                            <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}images/icons/info.png" width="10px" alt=""></p>-->
                                             <p>{{ flightClasses[searchData.flightclass] }}</p>
                                         </div>
                                     </div>
@@ -419,8 +419,8 @@
                                             </div>
                                             <!--<div class="col-md-4">
                                             <h6>Flight Extras</h6>
-                                            <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/meals.png" alt="" /> Meals</p>
-                                            <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/sat.png" alt="" />  Seat Selections</p>
                                         </div>-->
                                         </div>
                                         <div class="row">
@@ -459,7 +459,7 @@
 
                             <div class="luggage-box" *ngIf="enableVAS==1">
                                 <div class="luggage-text">
-                                    <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                    <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                     <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab rate!</p>
                                 </div>
                                 <div class="luggage-btn">
@@ -469,7 +469,7 @@
                             <div class="collapse luggage-add-box" id="luggagecollapse">
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag.png" alt=""> 5 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag.png" alt=""> 5 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -486,7 +486,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 10 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 10 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -503,7 +503,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 15 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 15 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -520,7 +520,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 20 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 20 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -553,7 +553,7 @@
                                 <div class="booking-inner-title-left" *ngIf="searchData">
                                     <h6>
                                         {{ searchData.toCity }}
-                                        <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="ms-2 me-2" alt=""> {{ searchData.fromCity }}
+                                        <img src="{{cdnUrl}}images/icons/flight-right.svg" class="ms-2 me-2" alt=""> {{ searchData.fromCity }}
                                     </h6>
                                     <p> {{ searchData.arrival | date:"EEE,dd MMM" }} | {{ totalReturnStops_data }} | {{ totalReturnDuration | durationTime }}</p>
                                 </div>
@@ -572,7 +572,7 @@
                                             <span class="plane_number ">{{ flights.airline }}-{{ flights.flightNumber }}</span>
                                         </div>
                                         <div class="Booking-Flight-name-right">
-                                            <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{ cdnUrl }}/images/icons/info.png" width="10px" alt=""></p>-->
+                                            <!--<p>Economy > <span class="text-black me-1">SAVER</span> <img src="{{cdnUrl}}images/icons/info.png" width="10px" alt=""></p>-->
                                             <p>{{ flightClasses[searchData.flightclass] }}</p>
                                         </div>
                                     </div>
@@ -611,8 +611,8 @@
                                             </div>
                                             <!--<div class="col-md-4">
                                             <h6>Flight Extras</h6>
-                                            <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/meals.png" alt="" /> Meals</p>
-                                            <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/meals.png" alt="" /> Meals</p>
+                                            <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/sat.png" alt="" />  Seat Selections</p>
                                         </div>-->
                                         </div>
                                         <div class="row">
@@ -650,7 +650,7 @@
 
                             <div class="luggage-box" *ngIf="enableVAS==1">
                                 <div class="luggage-text">
-                                    <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                    <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                     <p>Got excess luggage? Don't stress, buy extra check-in baggage allowance at fab rate!</p>
                                 </div>
                                 <div class="luggage-btn">
@@ -660,7 +660,7 @@
                             <div class="collapse luggage-add-box" id="luggagecollapse">
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag.png" alt=""> 5 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag.png" alt=""> 5 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -677,7 +677,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 10 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 10 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -694,7 +694,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 15 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 15 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -711,7 +711,7 @@
                                 </div>
                                 <div class="luggage-add-list">
                                     <div class="luggage-add-name">
-                                        <h6><img src="{{ cdnUrl }}/images/icons/bag-more.png" alt=""> 20 KG</h6>
+                                        <h6><img src="{{cdnUrl}}images/icons/bag-more.png" alt=""> 20 KG</h6>
                                     </div>
                                     <div class="luggage-add-items">
                                         <div class="">
@@ -3522,7 +3522,7 @@
                                 <div class="contact-whatsapp">
                                     <div class="contact-whatsapp-info me-2">
                                         <span>Send my booking information through</span>
-                                        <img src="{{ cdnUrl }}/images/icons/whatsapp.svg" class="ms-2" alt="">
+                                        <img src="{{cdnUrl}}images/icons/whatsapp.svg" class="ms-2" alt="">
                                         <span class="fw_7">WhatsApp</span>
                                     </div>
                                     <div class="form-check form-switch m-0 ">
@@ -3747,9 +3747,9 @@
                                 <div class="accordion-item">
                                     <h4 class="accordion-header" id="headingOne">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      <img src="{{ cdnUrl }}/images/icons/seats.png" class="me-2" alt=""> Select Seats
+                      <img src="{{cdnUrl}}images/icons/seats.png" class="me-2" alt=""> Select Seats
                       <span class="xlsheats">
-                        <img src="{{ cdnUrl }}/images/icons/xl-seats.png" alt=""> XL seats available
+                        <img src="{{cdnUrl}}images/icons/xl-seats.png" alt=""> XL seats available
                       </span>
                     </button>
                                     </h4>
@@ -3758,23 +3758,23 @@
                                             <div class="rules-flight">
                                                 <div class="rules-flight-items">
                                                     <div class="rules-flight-thumbe">
-                                                        <img src="{{ cdnUrl }}/images/flights/flight-1.png" alt="">
+                                                        <img src="{{cdnUrl}}images/flights/flight-1.png" alt="">
                                                     </div>
                                                     <div class="rules-flight-content">
                                                         <h6>
                                                             Mumbai
-                                                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" alt=""> Hyderabad
+                                                            <img src="{{cdnUrl}}images/icons/flight-right.svg" alt=""> Hyderabad
                                                         </h6>
                                                     </div>
                                                 </div>
                                                 <div class="rules-flight-items opacity_05">
                                                     <div class="rules-flight-thumbe">
-                                                        <img src="{{ cdnUrl }}/images/flights/flight-1.png" alt="">
+                                                        <img src="{{cdnUrl}}images/flights/flight-1.png" alt="">
                                                     </div>
                                                     <div class="rules-flight-content">
                                                         <h6>
                                                             Hyderabad
-                                                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" alt=""> Mumbai
+                                                            <img src="{{cdnUrl}}images/icons/flight-right.svg" alt=""> Mumbai
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -3785,7 +3785,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item active">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Amit Kumar</h6>
@@ -3796,7 +3796,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Sara Rege</h6>
@@ -3807,7 +3807,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Zara Smith</h6>
@@ -3818,7 +3818,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Zara Smith</h6>
@@ -3829,7 +3829,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Zara Smith</h6>
@@ -3869,14 +3869,14 @@
                                                     <div class="Travellers-dropdown">
                                                         <div class="Travellers-dropdown-title">
                                                             <h5>
-                                                                <img src="{{ cdnUrl }}/images/icons/seats_flight.png" alt=""> Single Seat
-                                                                <img class="ms-2" src="{{ cdnUrl }}/images/icons/down.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/seats_flight.png" alt=""> Single Seat
+                                                                <img class="ms-2" src="{{cdnUrl}}images/icons/down.png" alt="">
                                                             </h5>
                                                         </div>
                                                         <ul class="Travellers-dropdown-data Travellershide">
                                                             <li>
                                                                 <h5>
-                                                                    <img src="{{ cdnUrl }}/images/icons/seats_flight.png" alt=""> Single Seat
+                                                                    <img src="{{cdnUrl}}images/icons/seats_flight.png" alt=""> Single Seat
                                                                 </h5>
                                                             </li>
                                                         </ul>
@@ -3885,16 +3885,16 @@
                                                 <!-- flight img box -->
                                                 <div class="flight-img-box">
                                                     <div class="flight-top">
-                                                        <img src="{{ cdnUrl }}/images/flights/flight_top.png" alt="">
+                                                        <img src="{{cdnUrl}}images/flights/flight_top.png" alt="">
                                                     </div>
                                                     <div class="flight-sheat-box">
                                                         <!-- lavatory -->
                                                         <div class="flight-lavatory">
                                                             <div class="flight-Lavatory" data-bs-toggle="tooltip" title="Lavatory">
-                                                                <img src="{{ cdnUrl }}/images/icons/Lavatory.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/Lavatory.png" alt="">
                                                             </div>
                                                             <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
-                                                                <img src="{{ cdnUrl }}/images/icons/Galley.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/Galley.png" alt="">
                                                             </div>
                                                         </div>
                                                         <!-- exit -->
@@ -4317,16 +4317,16 @@
                                                         <!-- lavatory -->
                                                         <div class="flight-lavatory">
                                                             <div class="flight-Lavatory" data-bs-toggle="tooltip" title="Lavatory">
-                                                                <img src="{{ cdnUrl }}/images/icons/Lavatory.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/Lavatory.png" alt="">
                                                             </div>
                                                             <div class="flight-Galley" data-bs-toggle="tooltip" title="Galley">
-                                                                <img src="{{ cdnUrl }}/images/icons/Galley.png" alt="">
+                                                                <img src="{{cdnUrl}}images/icons/Galley.png" alt="">
 
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="flight-bottom">
-                                                        <img src="{{ cdnUrl }}/images/flights/flight_bottom.png" alt="">
+                                                        <img src="{{cdnUrl}}images/flights/flight_bottom.png" alt="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -4345,7 +4345,7 @@
                                 <div class="accordion-item">
                                     <h4 class="accordion-header" id="headingTwo">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      <img src="{{ cdnUrl }}/images/icons/Meals-1.png" class="me-2" alt=""> Buy in-flight meal
+                      <img src="{{cdnUrl}}images/icons/Meals-1.png" class="me-2" alt=""> Buy in-flight meal
 
                     </button>
                                     </h4>
@@ -4354,23 +4354,23 @@
                                             <div class="rules-flight">
                                                 <div class="rules-flight-items">
                                                     <div class="rules-flight-thumbe">
-                                                        <img src="{{ cdnUrl }}/images/flights/flight-1.png" alt="">
+                                                        <img src="{{cdnUrl}}images/flights/flight-1.png" alt="">
                                                     </div>
                                                     <div class="rules-flight-content">
                                                         <h6>
                                                             Mumbai
-                                                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" alt=""> Hyderabad
+                                                            <img src="{{cdnUrl}}images/icons/flight-right.svg" alt=""> Hyderabad
                                                         </h6>
                                                     </div>
                                                 </div>
                                                 <div class="rules-flight-items opacity_05">
                                                     <div class="rules-flight-thumbe">
-                                                        <img src="{{ cdnUrl }}/images/flights/flight-1.png" alt="">
+                                                        <img src="{{cdnUrl}}images/flights/flight-1.png" alt="">
                                                     </div>
                                                     <div class="rules-flight-content">
                                                         <h6>
                                                             Hyderabad
-                                                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" alt=""> Mumbai
+                                                            <img src="{{cdnUrl}}images/icons/flight-right.svg" alt=""> Mumbai
                                                         </h6>
                                                     </div>
                                                 </div>
@@ -4381,7 +4381,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item active">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Amit Kumar</h6>
@@ -4392,7 +4392,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Sara Rege</h6>
@@ -4403,7 +4403,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Zara Smith</h6>
@@ -4414,7 +4414,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Zara Smith</h6>
@@ -4425,7 +4425,7 @@
                                                 <li class="seatsname-li">
                                                     <div class="seatsname-item">
                                                         <div class="seatsname-thumb">
-                                                            <img src="{{ cdnUrl }}/images/icons/seats-user.png" alt="">
+                                                            <img src="{{cdnUrl}}images/icons/seats-user.png" alt="">
                                                         </div>
                                                         <div class="seatsname-content">
                                                             <h6>Zara Smith</h6>
@@ -4462,7 +4462,7 @@
                                             <div class="meal-data">
                                                 <div class="luggage-add-list">
                                                     <div class="luggage-add-name">
-                                                        <h6><img src="{{ cdnUrl }}/images/icons/bag.png" alt=""> Beverage</h6>
+                                                        <h6><img src="{{cdnUrl}}images/icons/bag.png" alt=""> Beverage</h6>
                                                     </div>
                                                     <div class="luggage-add-items">
                                                         <div class="">
@@ -4479,7 +4479,7 @@
                                                 </div>
                                                 <div class="luggage-add-list">
                                                     <div class="luggage-add-name">
-                                                        <h6><img src="{{ cdnUrl }}/images/icons/bag.png" alt=""> Cucumber tomato and cheese in multigrain bread</h6>
+                                                        <h6><img src="{{cdnUrl}}images/icons/bag.png" alt=""> Cucumber tomato and cheese in multigrain bread</h6>
                                                     </div>
                                                     <div class="luggage-add-items">
                                                         <div class="">
@@ -4496,7 +4496,7 @@
                                                 </div>
                                                 <div class="luggage-add-list">
                                                     <div class="luggage-add-name">
-                                                        <h6><img src="{{ cdnUrl }}/images/icons/bag.png" alt=""> Chicken Junglee in Marble Bread</h6>
+                                                        <h6><img src="{{cdnUrl}}images/icons/bag.png" alt=""> Chicken Junglee in Marble Bread</h6>
                                                     </div>
                                                     <div class="luggage-add-items">
                                                         <div class="">
@@ -4572,7 +4572,7 @@
                                                     </div>
                                                     <h6>
                                                         <span class="city_text">{{ searchDatad.fromCity }}</span>
-                                                        <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-2" alt="">
+                                                        <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-2" alt="">
                                                         <span class="city_text">{{ searchDatad.toCity }}</span>
                                                         <p class="flight_details mb-0 pt-1">
                                                             <ng-container *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index;let last = last">
@@ -4596,7 +4596,7 @@
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <img src="{{ cdnUrl }}/images/icons/flight-right.png" class="mx-3" alt="">
+                                                        <img src="{{cdnUrl}}images/icons/flight-right.png" class="mx-3" alt="">
                                                     </div>
                                                     <div>
                                                         <p class="time_text">
@@ -4713,9 +4713,9 @@
                                         <div class="edit_baggage" *ngIf="enableVAS==1">
                                             <div class="luggage-box-edit">
                                                 <div class="luggage-text">
-                                                    <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                                     <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
-                                  (click)="moveTab(3)"><img src="{{ cdnUrl }}/images/icons/edit.svg" alt=""></a></span>
+                                  (click)="moveTab(3)"><img src="{{cdnUrl}}images/icons/edit.svg" alt=""></a></span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -4744,7 +4744,7 @@
                                                 </div>
                                                 <h6>
                                                     <span class="city_text">{{ searchData.fromCity }}</span>
-                                                    <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-2" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-2" alt="">
                                                     <span class="city_text">{{ searchData.toCity }}</span>
                                                     <p class="flight_details mb-0 pt-1">
                                                         <ng-container *ngFor="let flights of flightOnwardDetails;let i = index;let last = last">
@@ -4768,7 +4768,7 @@
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-3" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-3" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="time_text">
@@ -4807,7 +4807,7 @@
                                                 </div>
                                                 <h6>
                                                     <span class="city_text">{{ searchData.fromCity }}</span>
-                                                    <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-2" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-2" alt="">
                                                     <span class="city_text">{{ searchData.toCity }}</span>
                                                     <p class="flight_details mb-0 pt-1">
                                                         <ng-container *ngFor="let flights of flightOnwardDetails;let i = index;let last = last">
@@ -4834,7 +4834,7 @@
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-3" alt="">
+                                                    <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-3" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="time_text">
@@ -4866,7 +4866,7 @@
                                                     </div>
                                                     <h6 class="w-100">
                                                         <span class="city_text">{{ searchDatad.fromCity }}</span>
-                                                        <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-2" alt="">
+                                                        <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-2" alt="">
                                                         <span class="city_text">{{ searchDatad.toCity }}</span>
                                                         <p class="flight_details mb-0 pt-1">
                                                             <ng-container *ngFor="let flights of flightOnwardDetails[searchi]['flights'];let i = index;let last = last">
@@ -4893,7 +4893,7 @@
                                                         </p>
                                                     </div>
                                                     <div>
-                                                        <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-3" alt="">
+                                                        <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-3" alt="">
                                                     </div>
                                                     <div>
                                                         <p class="time_text">
@@ -4959,8 +4959,8 @@
                                                                 </div>
                                                                 <!--<div class="col-md-4">
                                                 <h6>Flight Extras</h6>
-                                                <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/meals.png" alt="" /> Meals</p>
-                                                <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/meals.png" alt="" /> Meals</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/sat.png" alt="" />  Seat Selections</p>
                                             </div>-->
                                                             </div>
                                                             <div class="row">
@@ -5000,9 +5000,9 @@
                                             <div class="edit_baggage" *ngIf="enableVAS==1">
                                                 <div class="luggage-box-edit">
                                                     <div class="luggage-text">
-                                                        <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                                        <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                                         <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
-                            (click)="moveTab(3)"><img src="{{ cdnUrl }}/images/icons/edit.svg" alt=""></a></span></p>
+                            (click)="moveTab(3)"><img src="{{cdnUrl}}images/icons/edit.svg" alt=""></a></span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -5063,8 +5063,8 @@
                                                     </div>
                                                     <!--<div class="col-md-4">
                                                 <h6>Flight Extras</h6>
-                                                <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/meals.png" alt="" /> Meals</p>
-                                                <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/meals.png" alt="" /> Meals</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/sat.png" alt="" />  Seat Selections</p>
                                             </div>-->
                                                 </div>
                                                 <div class="row">
@@ -5106,9 +5106,9 @@
                                 <div class="edit_baggage" *ngIf="enableVAS==1">
                                     <div class="luggage-box-edit">
                                         <div class="luggage-text">
-                                            <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                            <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                             <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
-                            (click)="moveTab(3)"><img src="{{ cdnUrl }}/images/icons/edit.svg" alt=""></a></span></p>
+                            (click)="moveTab(3)"><img src="{{cdnUrl}}images/icons/edit.svg" alt=""></a></span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -5130,7 +5130,7 @@
                                             </div>
                                             <h6>
                                                 <span class="city_text">{{ searchData.toCity }}</span>
-                                                <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-2" alt="">
+                                                <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-2" alt="">
                                                 <span class="city_text">{{ searchData.fromCity }}</span>
                                                 <p class="flight_details mb-0 pt-1">
                                                     <ng-container *ngFor="let flights of flightReturnDetails;let i = index;let last = last">
@@ -5152,7 +5152,7 @@
                                                 </p>
                                             </div>
                                             <div>
-                                                <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-3" alt="">
+                                                <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-3" alt="">
                                             </div>
                                             <div>
                                                 <p class="time_text">
@@ -5188,7 +5188,7 @@
                                             </div>
                                             <h6>
                                                 <span class="city_text">{{ searchData.fromCity }}</span>
-                                                <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-2" alt="">
+                                                <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-2" alt="">
                                                 <span class="city_text">{{ searchData.toCity }}</span>
                                                 <p class="flight_details mb-0 pt-1">
                                                     <ng-container *ngFor="let flights of flightReturnDetails;let i = index;let last = last">
@@ -5215,7 +5215,7 @@
                                                 </p>
                                             </div>
                                             <div>
-                                                <img src="{{ cdnUrl }}/images/icons/flight-right.svg" class="mx-3" alt="">
+                                                <img src="{{cdnUrl}}images/icons/flight-right.svg" class="mx-3" alt="">
                                             </div>
                                             <div>
                                                 <p class="time_text">
@@ -5286,8 +5286,8 @@
                                                 </div>
                                                 <!--<div class="col-md-4">
                                                 <h6>Flight Extras</h6>
-                                                <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/meals.png" alt="" /> Meals</p>
-                                                <p class="text-green fw_6"><img src="{{ cdnUrl }}/images/icons/sat.png" alt="" />  Seat Selections</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/meals.png" alt="" /> Meals</p>
+                                                <p class="text-green fw_6"><img src="{{cdnUrl}}images/icons/sat.png" alt="" />  Seat Selections</p>
                                             </div>-->
                                             </div>
                                             <div class="row">
@@ -5326,9 +5326,9 @@
                             <div class="edit_baggage" *ngIf="enableVAS==1">
                                 <div class="luggage-box-edit">
                                     <div class="luggage-text">
-                                        <img src="{{ cdnUrl }}/images/icons/luggage.png" alt="">
+                                        <img src="{{cdnUrl}}images/icons/luggage.png" alt="">
                                         <p><b>Extra Baggage 5kg</b> <span class="ps-2"> <a href="javascript:void(0)"
-                          (click)="moveTab(3)"><img src="{{ cdnUrl }}/images/icons/edit.svg" alt=""></a></span></p>
+                          (click)="moveTab(3)"><img src="{{cdnUrl}}images/icons/edit.svg" alt=""></a></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -5342,7 +5342,7 @@
                         <div class="booking-title-box mb-0">
                             <h4 class="heading_text">Contact Details
                                 <p class="sub_head_text ps-3">(for all communication) <span class="ps-1"> <a href="javascript:void(0)"
-                      (click)="moveTab(2)"><img src="{{ cdnUrl }}/images/icons/edit.svg" alt=""></a></span></p>
+                      (click)="moveTab(2)"><img src="{{cdnUrl}}images/icons/edit.svg" alt=""></a></span></p>
                             </h4>
                         </div>
                         <div class="booking-inner-box from-to-box">
@@ -5361,7 +5361,7 @@
                                 <div class="contact-whatsapp">
                                     <div class="contact-whatsapp-info me-2">
                                         <span>Send my booking information through</span>
-                                        <img src="{{ cdnUrl }}/images/icons/whatsapp.svg" class="ms-2" alt="">
+                                        <img src="{{cdnUrl}}images/icons/whatsapp.svg" class="ms-2" alt="">
                                         <span class="fw_7">WhatsApp</span>
                                     </div>
                                     <div class="form-check form-switch m-0 ">
@@ -5380,7 +5380,7 @@
                             <h4 class="heading_text">Traveller Details
                                 <p class="sub_head_text ps-3"><span>{{ travelerDetails.adults }}
                     Adults</span><span *ngIf="travelerDetails.child > 0">, {{ travelerDetails.child }} Child,</span> <span *ngIf="travelerDetails.infants > 0">, {{ travelerDetails.infants }} infant</span> <span class="ps-1">
-                    <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{ cdnUrl }}/images/icons/edit.svg"
+                    <a href="javascript:void(0)" (click)="moveTab(2)"><img src="{{cdnUrl}}images/icons/edit.svg"
                         alt=""></a></span></p>
                             </h4>
                         </div>
@@ -5477,7 +5477,7 @@
                         <div class="booking-title-box mb-0">
                             <h4 class="heading_text">Seats and Meals
                                 <p class="ps-1"> <span class=""> <a href="javascript:void(0)" (click)="moveTab(2)"><img
-                        src="{{ cdnUrl }}/images/icons/edit.svg" alt=""></a></span></p>
+                        src="{{cdnUrl}}images/icons/edit.svg" alt=""></a></span></p>
                             </h4>
                         </div>
                         <div class="booking-inner-box from-to-box">
@@ -5487,12 +5487,12 @@
                                         <button class="nav-link active" id="flight_one" data-bs-toggle="pill" data-bs-target="#pills-flight-one" type="button" role="tab" aria-controls="pills-flight-one" aria-selected="true">
                       <div class="d-flex">
                         <div class="">
-                          <img src="{{ cdnUrl }}/images/airlines/SG.gif" alt="" class="me-2">
+                          <img src="{{cdnUrl}}images/airlines/SG.gif" alt="" class="me-2">
                         </div>
                         <div class="">
                           <h6 class="mb-0">
                             <span class="city_text">MOB</span>
-                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" alt="" class="mx-2">
+                            <img src="{{cdnUrl}}images/icons/flight-right.svg" alt="" class="mx-2">
                             <span class="city_text">XON</span>
                           </h6>
                         </div>
@@ -5503,12 +5503,12 @@
                                         <button class="nav-link" id="flight_two" data-bs-toggle="pill" data-bs-target="#pills-flight-two" type="button" role="tab" aria-controls="pills-flight-two" aria-selected="false">
                       <div class="d-flex">
                         <div class="">
-                          <img src="{{ cdnUrl }}/images/airlines/SG.gif" alt="" class="me-2">
+                          <img src="{{cdnUrl}}images/airlines/SG.gif" alt="" class="me-2">
                         </div>
                         <div class="">
                           <h6 class="mb-0">
                             <span class="city_text">HDY</span>
-                            <img src="{{ cdnUrl }}/images/icons/flight-right.svg" alt="" class="mx-3">
+                            <img src="{{cdnUrl}}images/icons/flight-right.svg" alt="" class="mx-3">
                             <span class="city_text">MNR</span>
                           </h6>
                         </div>
@@ -5689,7 +5689,7 @@
                     <div class="default-sidebar">
                         <div class="d-none d-sm-block">
                             <div class="sidebar-widget session-expires-widget">
-                                <p><img src="{{ cdnUrl }}/images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
+                                <p><img src="{{cdnUrl}}images/icons/sestion.svg" class="me-2" alt="">Booking Expires in <strong>
                     <countdown [config]="{ leftTime: 900, format: 'mm:ss'}" (event)="bookingSessionExpires($event)">
                     </countdown> min
                   </strong></p>
@@ -5707,9 +5707,9 @@
                                                     <div (click)="isCollapseShow('BaseFare')">
                                                         <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
 
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
 
-                                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare</div>
+                                                            <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare</div>
 
                                                     </div>
                                                 </div>
@@ -5820,9 +5820,9 @@
 
 
                                                     <div>
-                                                        <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseVas">
+                                                        <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseVas">
 
-                                                        <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseVas"> Baggage/Seat/Meals
+                                                        <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseVas"> Baggage/Seat/Meals
                                                     </div>
                                                 </div>
                                                 <div class="fare-list-right">
@@ -5902,9 +5902,9 @@
                                                 <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                                     <div>
-                                                        <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+                                                        <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                                        <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                                        <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                                     </div>
                                                 </div>
                                                 <div class="fare-list-right">
@@ -6179,9 +6179,9 @@
                                         <div (click)="isCollapseShow('BaseFare')">
                                             <div data-bs-toggle="collapse" class="collapse_text" href="#base-collpase" role="button" aria-expanded="false" aria-controls="base-collpase">
 
-                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
+                                                <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseBasefare">
 
-                                                <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare
+                                                <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseBasefare"> Base Fare
                                             </div>
 
                                         </div>
@@ -6302,7 +6302,7 @@
                                 <div class="fare-list-box">
                                     <div class="fare-list-left">
                                         <div>
-                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/add.png" alt=""> Baggage/Seat/Meals
+                                            <img class="me-2" src="{{cdnUrl}}images/icons/add.png" alt=""> Baggage/Seat/Meals
                                         </div>
                                     </div>
                                     <div class="fare-list-right">
@@ -6316,9 +6316,9 @@
                                     <div class="fare-list-left" data-bs-toggle="collapse" class="collapse_text" href="#coupon-collpase" role="button" aria-expanded="false" aria-controls="coupon-collpase" (click)="isCollapseShow('discount')">
 
                                         <div>
-                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
+                                            <img class="me-2" src="{{cdnUrl}}images/icons/expand.svg" alt="" *ngIf="!isCollapseDiscount">
 
-                                            <img class="me-2" src="{{ cdnUrl }}/images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
+                                            <img class="me-2" src="{{cdnUrl}}images/icons/remove.svg" alt="" *ngIf="isCollapseDiscount"> Discounts
                                         </div>
                                     </div>
                                     <div class="fare-list-right">

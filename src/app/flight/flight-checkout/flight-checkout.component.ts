@@ -1023,16 +1023,16 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
   }
 
   removeMobileAdult(val, checkboxIndex) {
-    this.removeAdult(val, checkboxIndex);
+    this.removeAdult(val, checkboxIndex,1);
     $('#addTraveller_mlite').modal('hide');
   }
   removeMobileChild(val, checkboxIndex) {
-    this.removeChild(val, checkboxIndex);
+    this.removeChild(val, checkboxIndex,1);
     $('#childTraveller_mlite').modal('hide');
   }
 
   removeMobileInfant(val, checkboxIndex) {
-    this.removeInfant(val, checkboxIndex);
+    this.removeInfant(val, checkboxIndex,1);
     $('#infantTraveller_mlite').modal('hide');
   }
 
@@ -1196,7 +1196,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
   }
 
-  removeAdult(val, checkboxIndex) {
+  removeAdult(val, checkboxIndex,m=0) {
 
     var passengerName = this.passengerForm.controls['adult_first_name' + val]['value'];
     const index = this.adultsArray.indexOf(val, 0);
@@ -1231,7 +1231,9 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
         }
       }
     }
-  //  this.passengerAdultFormCount--;
+    
+    if(m==1)
+  this.passengerAdultFormCount--;
     
     this.passengerForm.removeControl('adult_id' + val);
     this.passengerForm.removeControl('adult_title' + val);
@@ -1394,7 +1396,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-  removeChild(val, checkboxIndex) {
+  removeChild(val, checkboxIndex,m=0) {
     var passengerName = this.passengerForm.controls['child_first_name' + val]['value'];
     const index = this.childArray.indexOf(val, 0);
     if (checkboxIndex != -1)
@@ -1445,7 +1447,9 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.child.splice(val, 1);
-   // this.passengerChildFormCount--;
+    
+    if(m==1)
+   this.passengerChildFormCount--;
 
   }
 
@@ -1583,7 +1587,7 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
 
 
 
-  removeInfant(val, checkboxIndex) {
+  removeInfant(val, checkboxIndex,m=0) {
     var passengerName = this.passengerForm.controls['infant_first_name' + val]['value'];
     const index = this.infantArray.indexOf(val, 0);
     if (checkboxIndex != -1)
@@ -1635,7 +1639,8 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
     this.passengerForm.clearValidators();
     this.passengerForm.updateValueAndValidity();
     this.infant.splice(val, 1);
-   // this.passengerInfantFormCount--;
+    if(m==1)
+    this.passengerInfantFormCount--;
 
   }
 
@@ -2596,9 +2601,9 @@ saveTravellerFunc(saveTravellerArray){
         this.baggageInfo+= `<li role="presentation" >
         <a data-bs-target="#baggagetab" aria-controls="baggagetab" role="tab" data-bs-toggle="tab" aria-expanded="true" class="active" >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"> <i class="mr-10 free-flow air-logo intAirLogo size-28  x`+airlineCode+`"></i></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData['flightto']+`</h6>
+        <h6>`+this.searchData['flightfrom']+` <img src="`+this.cdnUrl+`images/icons/flight-right.svg" alt="">`+this.searchData['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -2608,9 +2613,9 @@ saveTravellerFunc(saveTravellerArray){
         this.baggageInfo+= `<li role="presentation" >
         <a data-bs-target="#baggagetabR" aria-controls="baggagetabR" role="tab" data-bs-toggle="tab" aria-expanded="true"  >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCodeR+`.gif"     alt="`+airlineCodeR+`" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><i class="mr-10 free-flow air-logo intAirLogo size-28  x`+airlineCodeR+`"></i></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData['flightfrom']+`</h6>
+        <h6>`+this.searchData['flightto']+` <img src="`+this.cdnUrl+`images/icons/flight-right.svg" alt="">`+this.searchData['flightfrom']+`</h6>
         </div>
         </div>
         </a>
@@ -2715,9 +2720,9 @@ saveTravellerFunc(saveTravellerArray){
         this.baggageInfo+= `<li role="presentation" >
         <a data-bs-target="#baggagetab`+i+`" aria-controls="baggagetab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><i class="mr-10 free-flow air-logo intAirLogo size-28  x`+airlineCode+`"></i></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -2793,9 +2798,9 @@ saveTravellerFunc(saveTravellerArray){
         this.cancellationPolicyOnward+= `<li role="presentation" >
         <a data-bs-target="#onwardtab`+i+`" aria-controls="onwardtab`+i+`" role="tab" data-bs-toggle="tab" aria-expanded="true" class="`+aclass+`" >
         <div class="rules-flight-items">
-        <div class="rules-flight-thumbe"><img src="`+this.cdnUrl+`/images/airlines/`+airlineCode+`.gif"     alt="`+airlineCode+`" class=" mr-10"></div>
+        <div class="rules-flight-thumbe"><i class="mr-10 free-flow air-logo intAirLogo size-28  x`+airlineCode+`"></i></div>
         <div class="rules-flight-content">
-        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`/images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
+        <h6>`+this.searchData[i]['flightfrom']+` <img src="`+this.cdnUrl+`images/icons/flight-right.svg" alt="">`+this.searchData[i]['flightto']+`</h6>
         </div>
         </div>
         </a>
@@ -3326,7 +3331,7 @@ saveTravellerArray=[];
             passport_data['passportNumber'] = this.passengerForm.controls['child_passport_num' + i]['value'];
             passport_data['passportIssueDate'] = moment(this.passengerForm.controls['child_passport_issue_date' + i]['value']).format('YYYY-MM-DD');
             passport_data['passportExpDate'] = moment(this.passengerForm.controls['child_passport_expiry_date' + i]['value']).format('YYYY-MM-DD');
-            passport_data['passportIssuingCountry'] = this.passengerForm.controls['child_passport_issue_date' + i]['value'];
+            passport_data['passportIssuingCountry'] = this.passengerForm.controls['child_passport_issuing_country' + i]['value'];
             child_data['passportDetail'] = passport_data;
           }
         }
@@ -3409,7 +3414,7 @@ saveTravellerArray=[];
             passport_data['passportNumber'] = this.passengerForm.controls['infant_passport_num' + i]['value'];
             passport_data['passportIssueDate'] = moment(this.passengerForm.controls['infant_passport_issue_date' + i]['value']).format('YYYY-MM-DD');
             passport_data['passportExpDate'] = moment(this.passengerForm.controls['infant_passport_expiry_date' + i]['value']).format('YYYY-MM-DD');
-            passport_data['passportIssuingCountry'] = this.passengerForm.controls['infant_passport_num' + i]['value'];
+            passport_data['passportIssuingCountry'] = this.passengerForm.controls['infant_passport_issuing_country' + i]['value'];
             infant_data['passportDetail'] = passport_data;
           }
         }

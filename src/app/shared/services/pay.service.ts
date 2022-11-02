@@ -57,6 +57,9 @@ export class PayService {
     case ('business'):
           this.domainName='BUSINESS';
     break;
+    case ('regalia_gold'):
+        this.domainName='REGALIA_GOLD';
+    break;
     default:
           this.domainName='SMARTBUY';
     break; }

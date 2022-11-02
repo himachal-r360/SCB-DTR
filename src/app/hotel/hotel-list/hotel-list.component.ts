@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { Subscription } from 'rxjs';
-import { ChangeContext, Options, PointerType } from 'ng5-slider';
+import { ChangeContext, Options, PointerType  } from '@angular-slider/ngx-slider';
 import { HotelService } from 'src/app/common/hotel.service';
 import { environment } from 'src/environments/environment';
 import { FlightService } from 'src/app/common/flight.service';
@@ -739,7 +739,10 @@ export class HotelListComponent implements OnInit, OnDestroy {
 
   }
 
-
+  onImgError(event){
+ event.target.src = this.cdnUrl+'images/hotel/noImage/makemytrip_hotel_noimage.jpg'
+//Do other stuff with the event.target
+}
   amenityCount(data) {
     let retVal = "";
     let obj: any = Object.values(data)

@@ -8,9 +8,8 @@ export const environment = {
   LOCALJSON:'false',
     LOCALLOGIN:'false',
   localInstance:0,
-  // url:"https://smartbuyadminuat.reward360.in/",
   url:"https://offers-smartbuyuat.reward360.in/",
-   cdnUrl: 'assets/',
+ cdnUrl: 'https://d15mwy6djpi3in.cloudfront.net/unfied-v.0.2/v1/1.1/assets/', 
      cdnnotifyUrl: 'https://d2hx8jjky1f7ly.cloudfront.net/unfied-v.0.2/notification/',
   cdnDealUrl: 'https://d157777v0iph40.cloudfront.net/smartbuy3.0/images/offers/',
 API_URL:{
@@ -41,6 +40,26 @@ API_URL:{
  'REGALIA_GOLD': '//offers-smartbuyuat.reward360.in/regalia_gold/api/',
  'CORPORATE': '//offers-smartbuyuat.reward360.in/corporate/api/',
  'BUSINESS': '//offers-smartbuyuat.reward360.in/business/api/',
+  },
+  
+  
+    DEFAULT_ENTRY:'home',
+  HOME_SITE_URL: {
+    'SMARTBUY': '//offers-smartbuyuat.reward360.in/v3/',
+    'DINERS': '',
+    'INFINIA': '',
+    'REGALIA': '',
+    'CORPORATE': '',
+    'BUSINESS': '',
+  },
+
+  FLIGHT_SITE_URL: {
+    'SMARTBUY': '//offers-smartbuyuat.reward360.in/v3/flights/',
+    'DINERS': '',
+    'INFINIA': '',
+    'REGALIA': '',
+    'CORPORATE': '',
+    'BUSINESS': '',
   },
   
   BUS_SITE_URL:{
@@ -131,15 +150,15 @@ API_URL:{
     "BUSINESS":"business/bus"  ,
     "REGALIA_GOLD":"regalia/bus",     
   },
-    "flightLastSearch":"flightLastSearchi",
-  "continueFlightSearch":"continueFlightSearchi",
+    "flightLastSearch":"flightLastSearchinn",
+  "continueFlightSearch":"continueFlightSearchinn",
   "continueSearchBus":"continueSearchBusesi",
   "busLastSearch":"busLastSearchesi",
   "continueSearchTrain":"continueSearchTrainsi",
   "trainLastSearch":"trainLastSearchesi",
   "continueSearchHotel":"continueHotelFi",
   "hotelLastSearch":"hotelLastSearchFi",
-
+"multicityLastSearch":"multicityLastSearch",
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
   
 };

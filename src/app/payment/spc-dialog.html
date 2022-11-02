@@ -11,15 +11,19 @@
         </div>
         <div class="col-6 col-md-6">
             <div class="w-price-strike">
-                <span class="w-price">Rs. {{newOrderAmtWithFee| number:'1.2-2'}}</span>
-                <span class="price-strike">Rs. {{oldOrderAmtWithFee| number:'1.2-2'}}</span>
+                <span class="w-price">₹{{newOrderAmtWithFee| number:'1.2-2'}}</span>
+                <span class="price-strike">₹{{oldOrderAmt| number:'1.2-2'}}</span>
+                
             </div>
+        </div>
+         <div class="">
+        <p class="nonspc-price-tag ml-110">(Excluding partner conveninece fee)</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col-12 text-center">
-            <div class="greenfont pt-3 pb-4">You will save <b>Rs. {{couponAmount| number:'1.2-2'}}</b> on this booking.</div>
+            <div class="greenfont pt-3 pb-4">You will save <b>₹{{couponAmount| number:'1.2-2'}}</b> on this booking.</div>
         </div>
     </div>
 
@@ -29,7 +33,7 @@
                 <a class="m-font ml-3" href="javascript:;" (click)="closeDialog()">No, Continue without offer</a>
             </div>
         </div>
-        <div class="col-12 col-md-5 mt-3 order-first">
+        <div class="col-12 col-md-5 mt-3 order-first text-center">
             <button type="submit" class="btn btn-primary m-font nxt-redeem-success" (click)="applyNonSpcOffer()">Continue</button>
         </div>
     </div>

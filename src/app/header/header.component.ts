@@ -444,7 +444,6 @@ export class HeaderComponent implements OnInit {
         queryText: this.queryTextSearch
         };
          this.es.esSearch(searchParam).subscribe(res => {
-         console.log('f');
          if( res.hits.hits.length == 0){ 
          this.topSearch=true;
          }
@@ -793,7 +792,7 @@ closeCookieConsent(value){
        this.router.events.subscribe((event: any) => {
 	if (event instanceof NavigationEnd) {
 	
-	 if (event.url.includes("train/checkout") || event.url.includes("hotel/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")  ) 
+	 if (event.url.includes("train/checkout") || event.url.includes("hotel/checkout") || event.url.includes("bus/checkout")  || event.url.includes("flight-checkout")||event.url.includes("club-marriott-membership")) 
 	this.loginUrl='check-login';
 	else
 	this.loginUrl='check-login?g=1';
@@ -835,6 +834,7 @@ closeCookieConsent(value){
     
     initializeVoiceRecognitionCallback(): void {
         annyang.addCallback('error', (err) => {
+                console.log(err);
         if(err.error === 'network'){
         this.voiceText = "Internet is require";
         annyang.abort();
@@ -856,12 +856,12 @@ closeCookieConsent(value){
         });
 
         annyang.addCallback('result', (userSaid) => {
+          console.log("end-result");
         this.ngZone.run(() => this.voiceActiveSectionError = false);
 
         let queryText: any = userSaid[0];
 
         annyang.abort();
-
         this.voiceText = queryText;
         this.receiveVoiceSearchResults(queryText);
         this.ngZone.run(() => this.voiceActiveSectionListening = false);
@@ -874,7 +874,6 @@ closeCookieConsent(value){
         this.voiceActiveSectionError = false;
         this.voiceActiveSectionSuccess = false;
         this.voiceText = undefined;
-
         if (annyang) {
       
         let commands = {
@@ -887,7 +886,7 @@ closeCookieConsent(value){
       
         annyang.start({ autoRestart: false });
         }else{
-             $('.mic-span').hide();
+           //  $('.mic-span').hide();
         }
         }
 
@@ -1292,14 +1291,17 @@ closeCookieConsent(value){
         this.redirectPopupUrl=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+path;
        // console.log(environment.ANGULAR_SITE_URL+path+"  =======0000");
      }else{
-     if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')
-      this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
-     else
-     this.router.navigate([this.sg['domainPath']+path]);
-     }
+	
+    /* if(path !='foryou' && path !='compare-fly'  && path !='compare-stay' && path !='bus' && path !='train'  && path !='train/pnr')alert('ddddd');
+      //this.document.location.href =this.DOMAIN_SETTINGS['sub_domain_redirection_new_url']+'/'+path;
+     else alert('asd');
+     //this.router.navigate([this.sg['domainPath']+path]);
+     } Go to always belongs to path which is inside the same app folder. Please do not change it to redirection */
+	this.router.navigate([this.sg['domainPath']+path]);
+	}
       this.navbarOpenMenu = false;
       this.navbarOpen =false;
-     /* $('.sb_head .list-travel').addClass("hideDrop"); */
+       $('.sb_head .list-travel').addClass("hideDrop"); 
     }
 
     goToInfinia(route){

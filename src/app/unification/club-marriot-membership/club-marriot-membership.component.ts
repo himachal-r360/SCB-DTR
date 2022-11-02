@@ -1,5 +1,11 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit ,Inject } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { SimpleGlobal } from 'ng2-simple-global';
+import { AppConfigService } from 'src/app/app-config.service';
+import { environment } from 'src/environments/environment';
+import { DOCUMENT } from '@angular/common';
+import { RestapiService} from 'src/app/shared/services/restapi.service';
+
 
 @Component({
   selector: 'app-club-marriot-membership',
@@ -80,17 +86,54 @@ export class ClubMarriotMembershipComponent implements OnInit {
 
 
 
-  constructor(private ngZone:NgZone) {
+  constructor(private ngZone:NgZone ,public restApi:RestapiService,private sg: SimpleGlobal, private appConfigService: AppConfigService,@Inject(DOCUMENT) private document: any) {
     window.onresize = (e) =>
     {
         this.ngZone.run(() => {
           this.isMobile = window.innerWidth < 991 ? true : false;
         });
     };
+    this.serviceSettings = this.appConfigService.getConfig();
+    console.log(this.serviceSettings);
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.cdnDealUrl = environment.cdnDealUrl;
+    this.siteUrl = environment.MAIN_SITE_URL;
+    this.clubmarriott_redirection_url = this.serviceSettings.clubmarriott_redirection_url;
    }
+
+
+
+  serviceSettings: any;
+  cdnUrl: any;
+  cdnDealUrl: any;
+  siteUrl: any;
+  enrol_membership_disabled:boolean=false;
+  clubmarriott_redirection_url:string;
+
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 991 ? true : false;
+     var customerInfo = this.sg['customerInfo'];
+      if (customerInfo["org_session"] == 1) {
+      }else{
+        if (environment.localInstance == 0) {
+          this.document.location.href = environment.MAIN_SITE_URL + this.sg['domainPath'] + 'check-login';
+        }
+      }
   }
-
+  enrol_membership(){
+     this.enrol_membership_disabled=true;
+     this.restApi.enrol_membership().subscribe(response => {
+        this.enrol_membership_disabled=false;
+        if(response.status !=undefined && response.status=="true"){
+         console.log(response);
+          window.open(
+            this.clubmarriott_redirection_url,
+            '_blank'
+          );
+        }else{
+          alert(response.msg);
+        }
+     });
+  }
 }

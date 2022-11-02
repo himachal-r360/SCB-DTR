@@ -30,11 +30,12 @@ const routes: Routes = [
     path:"bus/checkout" ,component:BusCheckoutComponent,
   },
   {
-    path:"regalia_gold/bus/search" ,component:BusNewlistComponent,
+    path:":domain/bus/search" ,component:BusNewlistComponent,
   },
   {
-    path:"regalia_gold/bus/checkout" ,component:BusCheckoutComponent,
+    path:":domain/bus/checkout" ,component:BusCheckoutComponent,
   },
+  
   {
     path:"buses/search" ,component:BusNewlistComponent,
   }

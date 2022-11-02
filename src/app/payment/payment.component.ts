@@ -85,7 +85,7 @@ export class PaymentComponent implements OnInit {
         domainRedirect: string;
         minamount= AppConfig.flexiMinMax.minimumAmount;
         maxamount = AppConfig.flexiMinMax.maximumAmount;
-        enable_dcemi2 = AppConfig.enable_dcemi2;
+        enable_dcemi2 :boolean=false;;
         @Input() set passSavedCardsData(p: any[]){
         if(p.length>0){
         this.cardData=p;
@@ -207,7 +207,6 @@ export class PaymentComponent implements OnInit {
         };
 
     emiArray:any[];
-        ServiceToken:any;  
         @Input() partnerToken;   
          @Input() retryPay; 
         MAIN_SITE_URL:string;
@@ -356,9 +355,12 @@ export class PaymentComponent implements OnInit {
         enableNONSPCForCoupon:any;
         ispgAllowed:boolean = false;
         allowPGOnRemoveCoupon:boolean = false;
-		
+		partnerId:number;
 		
 	ngOnChanges(){
+        let service_id = this.serviceId.toLowerCase();
+          let partnername = this.partnerToken.toLowerCase();        
+          this.partnerId = this.serviceSettings['partners'][service_id][partnername];
         this.remove_Coupon_id = this.remove_Coupon;
         if(this.remove_Coupon){
         this.coupon_name = "";
@@ -370,6 +372,7 @@ export class PaymentComponent implements OnInit {
 	constructor(public rest:RestapiService,private EncrDecr: EncrDecrService,public restApi:RestapiService,private http: HttpClient,private formBuilder: FormBuilder,private activatedRoute: ActivatedRoute,private cookieService: CookieService,private sg: SimpleGlobal,public commonHelper: CommonHelper,private location: Location,private spinnerService: NgxSpinnerService,public dialog: MatDialog, public overlay: Overlay,private pay: PayService,private appConfigService:AppConfigService,private communicate: CommunicationService, private commaSeparatorPipe: commaSeparatorPipe) { 
                 this.assetPath=this.sg['assetPath']; 
                 this.serviceSettings=this.appConfigService.getConfig();
+                console.log(this.serviceSettings);
                 this.domainPath=this.sg['domainPath'];
                 this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
                 this.enableNONSPC = this.serviceSettings.enableNONSPC;
@@ -377,8 +380,8 @@ export class PaymentComponent implements OnInit {
                 this.showNONSPCsuccessModal = this.serviceSettings.showNONSPCsuccessModal;
                 this.openNoneligiblecouponDialog = this.serviceSettings.openNoneligiblecouponDialog;
                 this.siteKey=this.serviceSettings.SITEKEY;
-                this.ServiceToken =this.serviceId;
                 this.ctype=sessionStorage.getItem(this.passSessionKey+'-ctype');
+				this.enable_dcemi2 = this.serviceSettings.enable_dcemi2;
 		
 		this.spinnerService.show();
 		      setTimeout(() => {
@@ -1532,7 +1535,10 @@ validateDebitEmi(){
 	if(this.serviceId=='RedBus'){
 		finalFare=tmppassData1['total_price'];
 	}else if(this.serviceId== 'Flight'){
-		finalFare = tmppassData1['flightDetails']['fare']['totalFare'];
+		finalFare = tmppassData1['flightDetails']['fare']['totalFare']-tmppassData1['flightDetails']['fare']['discount'];
+	}else if(this.serviceId== 'Hotel'){
+			finalFare = tmppassData1['fare']['totalFare']-tmppassData1['fare']['discount'];
+		
 	} else {
 		finalFare=tmppassData1['fareData']['totalFare'];
 	}
@@ -1654,9 +1660,14 @@ let otpnumber=this.DebitEMIOTPFrom.controls['otpnumber'].value;
 var tmppassData1=JSON.parse(this.EncrDecr.get(sessionStorage.getItem(this.passSessionKey+'-passData')));
 var finalFare;
 if(this.serviceId=='RedBus'){
-finalFare=tmppassData1['total_price'];
-}else{
-finalFare=tmppassData1['fareData']['totalFare'];
+	finalFare=tmppassData1['total_price'];
+}else if(this.serviceId== 'Flight'){
+	finalFare = tmppassData1['flightDetails']['fare']['totalFare']-tmppassData1['flightDetails']['fare']['discount'];
+}else if(this.serviceId== 'Hotel'){
+		finalFare = tmppassData1['fare']['totalFare']-tmppassData1['fare']['discount'];
+	
+} else {
+	finalFare=tmppassData1['fareData']['totalFare'];
 }
 // Validate OTP for DC EMI
 //console.log("applicationID"+this.DCEMIapplicationId);
@@ -1728,7 +1739,6 @@ validateDebitEmiOTP_new(){
         "bankReferenceNo":this.dcemivaliduserresp.bankReferenceNo,
         "merchantReferenceNo":this.dcemivaliduserresp.merchantReferenceNo,
     };
-    console.log(validateParams);
     this.dcemi_token=this.dcemivaliduserresp.token; 
     this.dcemi_bankReferenceNo=this.dcemivaliduserresp.bankReferenceNo;
     this.dcemi_merchantReferenceNo=this.dcemivaliduserresp.merchantReferenceNo;
@@ -1753,8 +1763,26 @@ validateDebitEmiOTP_new(){
              this.DCEMIError='';
              //this.dcemiOtpResponse = result.validateOTPData;
              //this.DebitEMIConfirmFrom.status="VALID";
+			
+			 this.DebitEMIConfirmFrom.setValue({
+				termscondition: true,
+				termscondition1: true
+			 });
+
              this.payNow(11);
-         }else{
+         }else if(result.status==false && result.availableOTPAttempt==0){
+
+			this.showDebitEMIOtp=true;
+			this.showDebitEMI=false;
+			this.DCEMIError='';
+			this.DebitEMIConfirmFrom.setValue({
+			   termscondition: true,
+			   termscondition1: true
+			});
+
+			this.payNow(11);
+		 }
+		 else{
              this.DCEMIConfirmResponse='';
              this.DCEMIError=result.message;
              this.showDebitEMIOtp=true;
@@ -1863,11 +1891,18 @@ checkNonSpcOfferforHDFCcards(){
 		cardNumber = cardNumber.replace(/-/g, "");
 		var last4Digit = cardNumber.substring((cardNumber.length-4), cardNumber.length);
 		var splitCard = "";
+		
+		//let voucher_amount=0;
+               // this.passFareData=sessionStorage.getItem(this.passSessionKey+'-passFareData');
+               // let fareD= JSON.parse(atob(this.passFareData));
+               // voucher_amount=fareD.voucher_amount;
+		
+		
 		splitCard = cardNumber.substring(0, 6);
 		var request = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
@@ -1881,11 +1916,15 @@ checkNonSpcOfferforHDFCcards(){
 			"mobileNumber":this.REWARD_MOBILE
 		};
 		
+
 		var passData = {
 			postData: this.EncrDecr.set(JSON.stringify(request)),
 			postType: 1
 		};
 		//var passData = btoa(JSON.stringify(request));
+		
+	
+		
 		this.pay.checkNonSpcOffer(passData).subscribe(data => {
 			let response = (data); 
 			if(response.okResponse==true){
@@ -1896,11 +1935,9 @@ checkNonSpcOfferforHDFCcards(){
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
 								message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 							}
 							//open spc modal
 							
@@ -1982,7 +2019,7 @@ var checkCyberValue = searchValue.indexOf(5);
 		var request1 = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": (this.payActualFare- this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
@@ -2007,16 +2044,12 @@ var checkCyberValue = searchValue.indexOf(5);
 				if(response.available==true){ 
 					var message = "";
 					var couponType = response.couponType;
-					//console.log(this.coupon_amount);
-					// response.couponAmount = 2000;
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
 								message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 							}
 							//open spc modal
 							const dialogSPC = this.dialog.open(spcDialog, {
@@ -2133,15 +2166,20 @@ checkNonSpcOfferforSaveCard(){
 	
 	this.paynowBtnDisabled_5=true;
 	if(this.enableNONSPC==1){
-		//var cardRow=this.saveCardForm.controls.cardRow.value;
-		//var card_id=this.cardData[cardRow]['card_id'];
-		//var card_bin=this.cardData[cardRow]['bin'];
+		
+		
+               // let voucher_amount=0;
+               // this.passFareData=sessionStorage.getItem(this.passSessionKey+'-passFareData');
+               // let fareD= JSON.parse(atob(this.passFareData));
+               // voucher_amount=fareD.voucher_amount;
+		
+		
 		var request = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
-			"orderAmount": this.payActualFare,
+			"orderAmount": (this.payActualFare-this.convinenceFee),
 			"convenienceFee": this.convinenceFee,
 			"binNumber":'',
 			"last4Digit":'',
@@ -2152,10 +2190,12 @@ checkNonSpcOfferforSaveCard(){
 			"cardNumber":btoa(card_bin),
 			"mobileNumber":this.REWARD_MOBILE   
 		};
+
 		var passData = {
 			postData: this.EncrDecr.set(JSON.stringify(request)),
 			postType: 1
 	    };
+	  
 		this.pay.checkNonSpcOffer(passData).subscribe(data => { 
 			//let response = JSON.parse(this.EncrDecr.get(data));
 			let response = (data);
@@ -2166,10 +2206,8 @@ checkNonSpcOfferforSaveCard(){
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 								message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
 							}
 							//open spc modal
@@ -2242,7 +2280,7 @@ checkNonSpcOfferforSaveCard(){
 		var request1 = {
 			"key":this.passSessionKey,
 			"partnerId":this.partnerToken,
-			"servicesId":this.ServiceToken,
+			"servicesId":this.serviceId,
 			"orderReferenceNumber": sessionStorage.getItem(this.passSessionKey+'-orderReferenceNumber'),
 			"orderAmount": this.payActualFare,
 			"convenienceFee": this.convinenceFee,
@@ -2271,11 +2309,9 @@ checkNonSpcOfferforSaveCard(){
 					if(Number(response.couponAmount) > Number(this.coupon_amount)){
 						if(Number(response.finalAmount) > 0){
 							if(response.couponType=="Flat"){
-								//message = couponType.toLowerCase();
 								message = "You are eligible for a special flat discount of Rs. "+response.couponAmount+" on this booking!";
 							}else{
 								 message = "You are eligible for a special discount of "+response.percentage+"% on this booking!";
-								//message = "You are eligible for a special discount of "+response.percentage+"% upto Rs. "+response.maxDiscount+" on this booking!";
 							}
 							//open spc modal
 							const dialogSPC = this.dialog.open(spcDialog, {

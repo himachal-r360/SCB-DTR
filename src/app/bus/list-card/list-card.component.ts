@@ -389,8 +389,11 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
     this.searchParam.dpId = searchParam1.bpId;
     this.searchParam.busApiProvider = 'RedBus';
    }
+   console.log(this.searchParam);
    this.busService.getBusSeats(JSON.stringify(this.searchParam)).subscribe(data => {
+     
      let dData = JSON.parse(this.EncrDecr.get(data.result));
+     console.log(dData);
      this.seatResponse = < BusResponse > dData;
      if (this.seatResponse.tripDetails != undefined) {
       var Decks = this.busHelper.getBusDecks(this.seatResponse.tripDetails.seats, mobile);
@@ -509,13 +512,11 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
    });
  }
 
+ showMAmenties:boolean=false;
  openAmentiesmlite()
  {
-   var filterDiv = document.getElementById('Mobileamenities');
-   if(filterDiv)
-   {
-     filterDiv.style.display = 'block';
-   }
+   this.showMAmenties=true;
+   setTimeout(function () { $('#Mobileamenities').show(); }.bind(this), 100);
 
  }
  rotate: boolean = false;
@@ -528,6 +529,7 @@ this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
  
  closeAmenitiesmlite()
  {
+   this.showMAmenties=false;
    var filterDiv = document.getElementById('Mobileamenities');
    if(filterDiv)
    {
