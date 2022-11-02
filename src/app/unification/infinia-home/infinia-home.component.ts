@@ -105,14 +105,27 @@ RewardRedemption = [
   {title:'Cashback at a value of 1 RP = Rs 0.30',img:'./assets/images/infinia/Reward/7.svg'},
 
 ]
+cdnDealUrl:any;
+serviceSettings: any;
+cdnUrl: any;
+siteUrl: any;
+enrol_membership_disabled:boolean=false;
+clubmarriott_redirection_url:string;
 
-  constructor(private ngZone:NgZone) {
+  constructor(private ngZone:NgZone ,private sg: SimpleGlobal,) {
     window.onresize = (e) =>
     {
         this.ngZone.run(() => {
           this.isMobile = window.innerWidth < 991 ? true : false;
         });
     };
+    this.cdnDealUrl = environment.cdnDealUrl;
+
+    console.log(this.serviceSettings);
+    this.cdnUrl = environment.cdnUrl+this.sg['assetPath'];
+    this.cdnDealUrl = environment.cdnDealUrl;
+    this.siteUrl = environment.MAIN_SITE_URL;
+    this.clubmarriott_redirection_url = this.serviceSettings.clubmarriott_redirection_url;
    }
 
   ngOnInit(): void {
