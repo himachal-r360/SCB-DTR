@@ -49,6 +49,7 @@ export class ForyouTabComponent implements OnInit, OnDestroy {
 public modeselectDealCat = 'All';
 public modeselectDealSubCat= 'All';
 public modeselectTrending= 'All';
+ payzrestriction:boolean=false;
   date: { year: number, month: number };
   serviceSettings: any;
   navigation = 'arrows';
@@ -113,15 +114,12 @@ public modeselectTrending= 'All';
   IsPointsCardDetailsModel:boolean=false;
   IsCardError:boolean=true;
   CardErrorMsg:any;
-   t: Inputmask.Options;
 
   dateInputMask = createMask<Date>({
      alias: 'datetime',
     // outputFormat: 'ddmmyyyy',
      inputFormat: 'dd/mm/yyyy',
     parser: (value: string) => {
-      debugger;
-      console.log(value);
       const values = value.split('/');
       const year = +values[2];
       const month = +values[1] - 1;
@@ -148,6 +146,14 @@ public modeselectTrending= 'All';
      if(this.serviceSettings['new_ui_ux']==0){   
       this.router.navigate([this.sg['domainPath'] + '**']);
      } 
+    
+        
+        const cookieExistsp: boolean = this.cookieService.check(this.serviceSettings.payzapp_cookiename);
+        if(cookieExistsp){  
+            this.payzrestriction=true;
+        }else{
+             this.payzrestriction=false;
+        } 
     
     // this._styleManager.setStyle('owl-default', `assets/library/owl.carousel/assets/owl.theme.default.min.css`);
      //this._styleManager.setScript('owl', `assets/library/owl.carousel/owl.carousel.min.js`);
@@ -295,7 +301,7 @@ public modeselectTrending= 'All';
             this.current_available_points=Number(this.customerInfo['ccustomer'].current_available_points);
             this.last_stmt_points=Number(this.customerInfo['ccustomer'].last_stmt_points);
             if(this.customerInfo['ccustomer'].first4digit !=undefined)
-              this.card_no=this.customerInfo['ccustomer'].first4digit.substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
+              this.card_no=this.customerInfo['ccustomer'].first4digit.toString().substr(0,4)+" ******** "+this.customerInfo['ccustomer'].last4digit;
             else
               this.card_no=" ******** "+this.customerInfo['ccustomer'].last4digit;
             this.customeravailablepoints = (Number(this.customerInfo['ccustomer'].points_available));
@@ -406,7 +412,8 @@ public modeselectTrending= 'All';
                    url = '/bus'; 
                 } else {
 
-                   url = '/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&departure=' + get_value.departure + '';
+                     url = '/bus/search?searchFrom=' + get_value.searchFrom + '&searchTo=' + get_value.searchTo + '&fromTravelCode=' + get_value.fromTravelCode + '&toTravelCode=' + get_value.toTravelCode + '&fromState=' + get_value.fromState + '&toState=' + get_value.toState + '&departure='+get_value.departure;
+                   
                 }
                 var searchFrom = get_value.searchFrom;
                 var searchTo = get_value.searchTo;

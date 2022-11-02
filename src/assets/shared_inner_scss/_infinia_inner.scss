@@ -178,11 +178,13 @@ a.list-travel-font {
             .circular_div {
                 background: $white-color;
                 .card_img {
-                    filter: invert(55%) sepia(22%) saturate(1391%) hue-rotate(355deg) brightness(95%) contrast(85%);
+                    filter: invert(35%) sepia(71%) saturate(683%) hue-rotate(169deg) brightness(90%) contrast(91%);
+                    transition-duration: 1ms;
+                    
                 }
             }
             .travel_highlight {
-                color: $primary-color !important;
+                color: #226BAC !important;
             }
             background: #FFFFFF15;
         }
@@ -281,11 +283,12 @@ a.list-travel-font {
             .circular_div {
                 background: #FFFFFF;
                 .card_img {
-                    filter: invert(55%) sepia(22%) saturate(1391%) hue-rotate(355deg) brightness(95%) contrast(85%);
+                    filter: invert(35%) sepia(71%) saturate(683%) hue-rotate(169deg) brightness(90%) contrast(91%); 
+                    transition-duration: 1ms;
                 }
             }
             .travel_highlight {
-                color: $primary-color !important;
+                color: #226BAC !important;
             }
             .travel_text {
                 opacity: 1 !important;
@@ -315,7 +318,7 @@ a.list-travel-font {
         .travel_fly_drpdwn_div {
             background: radial-gradient(95.5% 319.75% at 0% 7.32%, #000000 0%, #002E57 100%)
         }
-        .regalia_benefits_drpdwn_div {
+        .benefits_drpdwn_div {
             background: radial-gradient(79.8% 553.96% at 4.93% 22.49%, #000000 3.86%, #002E57 100%);
             box-shadow: 0px 4px 17px rgba(0, 0, 0, 0.5);
         }
@@ -344,6 +347,9 @@ a.list-travel-font {
     }
     .offers_link {
         color: #fff !important;
+        &:hover{
+            color:$primary-color !important;
+        }
     }
     .right_custName {
         color: #FFFFFF !important;
@@ -396,7 +402,7 @@ a.list-travel-font {
 
 /*  Infinia mlite header css */
 .m_hdr_search_bar {
-    background: #FFFFFF09;
+    background: #FFFFFF20;
     .search_icon {
         color: #fff;
         opacity: 0.35;
@@ -439,18 +445,27 @@ a.list-travel-font {
 .btn-card{
     color: $primary-color;
 }
+.banner_container {
+    background-image: url("../infinia/images/smartbuy/rg_benefits_banner.svg");
+}
+.btn_avail{
+    background: linear-gradient(102.53deg, #CC9412 9.09%, #FFE77E 56.91%, #CA8F12 100%);
+    color: #000000;
+}
 
 .card-bg-color {
     background-color: #0C1014;
     .card_details {
         background: radial-gradient(123.75% 139.77% at -1.95% 18.75%, #0056A6 0%, #081c3000 51.24%, rgba(8, 28, 47, 0) 100%);
         .goldCardDetails {
-            background: radial-gradient(332.14% 4382.53% at 41.84% -102.62%, #0056A6 -30%, #081c3000 12.51%);
+            /* background: radial-gradient(332.14% 4382.53% at 41.84% -102.62%, #CF8D56 -30%, #2C0E00 12.51%); */
+            background: url('../infinia/images/banners/card_bg.png') right no-repeat;
+            background-size: cover;
             .bg_place {
-                background-image: url('../infinia/images/banners/coin.svg');
+                /* background-image: url('../infinia/images/banners/coin.svg');
                 @media screen and (max-width: 600px) {
                     background-image: url('../infinia/images/banners/coin-mlite.svg');
-                }
+                } */
                 .card_name {
                     color: #ffffff;
                     a {
@@ -1317,9 +1332,32 @@ a.list-travel-font {
         }
     }
 }
-
+.room_no {
+    background-color: $primary-bg-color;
+}
+.select_options {
+    .travelSelect {
+        .travelInput {
+            &:focus {
+                box-shadow: 0 0 0 .25rem rgba(0, 56, 108, .25) !important;
+            }
+        }
+    }
+}
+@media only screen and (max-width:600px) {
+    .mlite-tab-travel {
+        .nav-pills-travel {
+            a.nav-link.active,
+            .nav-pills .show>.nav-link {
+                color: $primary-color !important;
+                border-bottom: 3px solid $primary-color;
+            }
+        }
+    }
+}
 
 /* override Angular css */
 ::ng-deep .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
-    background: rgba(206, 141, 91, 0.08) !important;
+    // background: rgba(206, 141, 91, 0.08) !important;
+    background:$primary-bg-color !important;
 }

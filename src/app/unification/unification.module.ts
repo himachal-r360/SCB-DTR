@@ -14,7 +14,13 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 
 const routes: Routes = [
   {
+    path: "regalia_gold", component: UnificationHomeComponent,
+  },
+  {
     path: "infinia", component: UnificationHomeComponent,
+  },
+  {
+    path: "diners", component: UnificationHomeComponent,
   },
   {
     path: "infinia/know-your-card", component: BenefitsComponent

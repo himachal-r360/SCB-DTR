@@ -49,7 +49,7 @@
 <!-- Card Details -->
 <div class="card-bg-color">
     <div class="card_details " *ngIf="isLogged">
-        <div class="container_hftab container_hftab-none">
+        <div class=" container_hftab-none">
             <div class="row">
                 <div class="col-sm-6 pr-0">
                     <!-- nocard Details -->
@@ -89,7 +89,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="goldCardDetails" [hidden]="IsgoldCardDetails">
                     <div class="bg_place">
                         <p class="card_name">Regalia Gold Card {{card_no}} </p>
@@ -111,9 +110,10 @@
                 </div>
 
             </div>
-            <div class="col-sm-6 pl-0">
+            <!--  Regalia-Gold Perk -->
+            <div class="col-sm-6 pl-0"  *ngIf="domainname=='REGALIA GOLD'"  >
                 <div class="card_benefit">
-                    <p class="perk_text">Perk</p>
+                    <p class="perk_text">{{domainname}} Benefits</p>
                     <div class="perk_flex">
                         <div class="perk_item" *ngIf="display_wb">
                             <div class="benefit_sec" (click)="welcome_benefitsLink()">
@@ -154,6 +154,53 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Infinia Perk -->
+            <div class="col-sm-6 pl-0"  *ngIf="domainname=='INFINIA'" >
+                <div class="card_benefit">
+                    <p class="perk_text">Perks</p>
+                    <div class="perk_flex">
+                        <div class="perk_item" *ngIf="display_wb">
+                            <div class="benefit_sec" (click)="welcome_benefitsLink()">
+                                <div class="benefit_text">
+                                    <p class="text">Welcome Benefit</p>
+                                    <p class="value" *ngIf="display_wb_spend">{{wb_spend}}</p>
+                                    <p class="value_transfer" *ngIf="display_wb_link">Avail Now</p>
+                                </div>
+                               <!--  <div class="mt-10" *ngIf="is_wb_progressbar">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{wb_perc}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                            {{wb_perc}}%</div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="perk_item" *ngIf="display_tb">
+                            <div class="benefit_sec">
+                                <div class="benefit_text">
+                                    <p class="text infinia_hotel_perk">1 + 1 Complimentary Weekend Buffet @ ITC Hotels</p>
+                                    <button class="btn btn_avail" (click)="goToItc()">Book Now</button>
+                                    <!-- <p class="value_transfer" (click)="travel_benefitsLink()">Book Now</p> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="perk_item">
+                            <div class="benefit_sec">
+                                <div class="benefit_text">
+                                    <p class="text infinia_hotel_perk">Complimentary Nightn @ ITC Hotels</p>
+                                    <button class="btn btn_avail" (click)="goToItc()">Book Now</button>
+                                </div>
+                                <!-- <div class="mt-10" *ngIf="is_mb_progressbar">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{mb_perc}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">{{mb_perc}}%</div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -253,7 +300,7 @@
                             </div>
                         </div>
                         <div class="mb-30 card-container-rel">
-                            <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [textMask]="mask">
+                            <input type="text" class="form-control input_control" id="dob" placeholder="Date of Birth" formControlName="dob" [inputMask]="dateInputMask">
                             <span href="" class="cal_icn"><img src="{{cdnUrl}}images/smartbuy/icons/icn-calendar.svg" alt=""></span>
                             <div *ngIf="angForm.controls['dob'].invalid && (angForm.controls['dob'].dirty || angForm.controls['dob'].touched)" class="cardError">
                                 <div *ngIf="angForm.controls['dob'].errors.required">

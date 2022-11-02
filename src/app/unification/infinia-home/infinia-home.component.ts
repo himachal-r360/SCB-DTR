@@ -1,5 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { SimpleGlobal } from 'ng2-simple-global';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AppConfigService } from 'src/app/app-config.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-infinia-home',

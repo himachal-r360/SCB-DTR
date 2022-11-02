@@ -4,7 +4,7 @@ export const AppConfig: any = {
   routes: {
     error404: '404'
   },
-enable_dcemi2:true,
+enable_dcemi2:false,
 
 IRCTC_Classes:{ 
  '1A': 'First AC',

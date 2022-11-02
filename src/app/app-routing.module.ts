@@ -30,29 +30,26 @@ const routes: Routes = [
     path:"train/pnr" , component:HomeComponent
   },
 
-
-
-    {
-    path:"regalia_gold/compare-fly" , component:HomeComponent
+{
+    path:":domain/bus" , component:HomeComponent
+  },
+   {
+    path:":domain/compare-fly" , component:HomeComponent
   },
     {
-    path:"regalia_gold/multicity" , component:HomeComponent
+    path:":domain/multicity" , component:HomeComponent
   },
     {
-    path:"regalia_gold/compare-stay" , component:HomeComponent
+    path:":domain/compare-stay" , component:HomeComponent
   },
-  {
-    path:"infinia/compare-stay" , component:HomeComponent
-  },
+   
     {
-    path:"regalia_gold/bus" , component:HomeComponent
-  },
-    {
-    path:"regalia_gold/train" , component:HomeComponent
+    path:":domain/train" , component:HomeComponent
   },
       {
-    path:"regalia_gold/train/pnr" , component:HomeComponent
+    path:":domain/train/pnr" , component:HomeComponent
   },
+    
 
 
     {
@@ -76,22 +73,28 @@ const routes: Routes = [
     loadChildren: () => import('./infinia/infinia.module').then(m => m.InfiniaModule)
   }, */
   {
-
     path: 'infinia',
     loadChildren: () => import('./unification/unification.module').then(m => m.UnificationModule)
   },
 
   {
+    path: 'diners',
+    loadChildren: () => import('./unification/unification.module').then(m => m.UnificationModule)
+  },
 
+  {
     path: 'foryou',
     loadChildren: () => import('./foryou-tab/foryou-tab.module').then(m => m.ForyouTabModule)
   },
-  {
+
+  /* {
     path: 'regalia_gold',
     loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
-
-
   },
+  {
+    path: 'infinia',
+    loadChildren: () => import('./regalia-gold/regalia-gold.module').then(m => m.RegaliaGoldModule),
+  }, */
 
   //{ path: '404', component: Error404PageComponent },
   // otherwise redirect to 404

@@ -2,7 +2,7 @@ import { ViewportScroller } from '@angular/common';
 import { AfterViewInit, Component, EventEmitter, HostListener,NgZone, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SimpleGlobal } from 'ng2-simple-global';
-import { Options } from 'ng5-slider';
+import { ChangeContext, Options, PointerType  } from '@angular-slider/ngx-slider';
 import { repeat, Subscription } from 'rxjs';
 import { FlightService } from 'src/app/common/flight.service';
 import { EncrDecrService } from 'src/app/shared/services/encr-decr.service';
@@ -93,16 +93,7 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
     { name: 'All_Flights', active: true, value: 'All Flights' },
     { name: 'no_stops', active: false, value: 'Non-Stop' },
   ]
-  priceSortingFilteritems = [
-    { name: 'P_L_H', active: true, value: 'Low to High' ,image: './assets/images/icons/price-l.svg',activeImage:'./assets/images/icons/active_lth.svg', sortValue:'Price'},
-    { name: 'P_H_L', active: false, value: 'High to Low' , image:'./assets/images/icons/price-h.svg',activeImage:'./assets/images/icons/active_htl.svg',sortValue:'Price' },
-    { name: 'D_Short', active: false, value: 'Shortest' ,image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
-    { name: 'D_Long', active: false, value: 'Longest',image:'./assets/images/icons/clock.svg',activeImage:'./assets/images/icons/active_duration.svg',sortValue:'Duration'},
-    { name: 'D_E', active: false, value: 'Earliest' , image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
-    { name: 'D_L', active: false, value: 'Latest' ,image:'./assets/images/icons/Departure.svg',activeImage:'./assets/images/icons/active_departure.svg',sortValue:'Departure'},
-    { name: 'A_E', active: false, value: 'Earliest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
-    { name: 'A_L', active: false, value: 'Latest',image:'./assets/images/icons/Arrival.svg',activeImage:'./assets/images/icons/active_arrival.svg', sortValue:'Arrival'},
-  ]
+  priceSortingFilteritems = [  ];
   RefundableFaresCount: number = 0;
   nonStopCount: number = 0;
   morningDearptureCount: number = 0;
@@ -113,8 +104,8 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
   @ViewChild('item', { read: TemplateRef }) template: TemplateRef<any>;
 
 
-  pageIndex: number = 2001;
-  ITEMS_RENDERED_AT_ONCE = 2000;
+  pageIndex: number = 11;
+  ITEMS_RENDERED_AT_ONCE = 10;
   nextIndex = 0;
 
   FilterSectorArray:any = [];
@@ -160,11 +151,24 @@ export class FlightMulticityComponent implements OnInit, AfterViewInit ,OnDestro
 
   constructor(private route: ActivatedRoute, private _flightService: FlightService, private EncrDecr: EncrDecrService, private sg: SimpleGlobal, private scroll: ViewportScroller, public rest: RestapiService, private router: Router,private ngZone:NgZone) {
     this.cdnUrl = environment.cdnUrl + this.sg['assetPath'];
-  /*  $(window).scroll(function (this) {
+    
+     this.priceSortingFilteritems = [
+    { name: 'P_L_H', active: true, value: 'Low to High' ,image: this.cdnUrl+'images/icons/price-l.svg',activeImage:this.cdnUrl+'images/icons/active_lth.svg', sortValue:'Price'},
+    { name: 'P_H_L', active: false, value: 'High to Low' , image:this.cdnUrl+'images/icons/price-h.svg',activeImage:this.cdnUrl+'images/icons/active_htl.svg',sortValue:'Price' },
+    { name: 'D_Short', active: false, value: 'Shortest' ,image:this.cdnUrl+'images/icons/clock.svg',activeImage:this.cdnUrl+'images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_Long', active: false, value: 'Longest',image:this.cdnUrl+'images/icons/clock.svg',activeImage:this.cdnUrl+'images/icons/active_duration.svg',sortValue:'Duration'},
+    { name: 'D_E', active: false, value: 'Earliest' , image:this.cdnUrl+'images/icons/Departure.svg',activeImage:this.cdnUrl+'images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'D_L', active: false, value: 'Latest' ,image:this.cdnUrl+'images/icons/Departure.svg',activeImage:this.cdnUrl+'images/icons/active_departure.svg',sortValue:'Departure'},
+    { name: 'A_E', active: false, value: 'Earliest',image:this.cdnUrl+'images/icons/Arrival.svg',activeImage:this.cdnUrl+'images/icons/active_arrival.svg', sortValue:'Arrival'},
+    { name: 'A_L', active: false, value: 'Latest',image:this.cdnUrl+'images/icons/Arrival.svg',activeImage:this.cdnUrl+'images/icons/active_arrival.svg', sortValue:'Arrival'},
+  ];
+    
+    
+ $(window).scroll(function (this) {
       if ($(window).scrollTop() + $(window).height() > $(document).height() - 300) {
         $('#endOfPage').trigger('click');
       }
-    });*/
+    });
   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
@@ -791,6 +795,8 @@ bookingSummary() {
     this.flightList = this.layoverFilterFlights(this.flightList);
 
     if (this.container) {
+         this.pageIndex = 10;
+  this.nextIndex = 0;
       this.container.clear();
       this.intialData();
     }

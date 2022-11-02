@@ -140,6 +140,7 @@ export const environment = {
   "trainLastSearch":"trainLastSearches",
   "continueSearchHotel":"continueHotelSearchs",
   "hotelLastSearch":"hotelLastSearchss",
+  "multicityLastSearch":"multicityLastSearch",
   GOOGLEMAP_API:"AIzaSyBpIwmxZPTAmA99xxn3U5izFbHPydYsOJ8"
 
 

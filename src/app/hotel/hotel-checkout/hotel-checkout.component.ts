@@ -380,6 +380,7 @@ export class HotelCheckoutComponent implements OnInit, OnDestroy {
                   this.getCustomerGstDetails();
                 }
                   this.passengerForm.patchValue({
+                    passengerTitle: customerInfo["title"],
                     passengerFirstName: customerInfo["firstname"],
                     passengerLastName: customerInfo["lastname"],
                   passengerMobile: customerInfo["mobile"],
@@ -523,7 +524,6 @@ this.syncData();
         if(bookingCode.slice(0,2) !=16 && this.totalFare >=1000 && this.enableGST == 1)
         this.showGstBox=true;
         
-         console.log(this.searchResult);
 
       if (this.searchResult != null) {
         this.domainRedirect = environment.MAIN_SITE_URL + this.sg['domainPath'] + this.domainPath;
@@ -992,7 +992,10 @@ if(Array.isArray(this.response.partnerResponse.cityList) && !(this.response.part
         }, 20);
         }
   }
-  
+    onImgError(event){
+ event.target.src = this.cdnUrl+'images/hotel/noImage/makemytrip_hotel_noimage.jpg'
+//Do other stuff with the event.target
+}
   
   itineraryProcess(){
        var gender; 

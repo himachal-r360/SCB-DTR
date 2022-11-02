@@ -22,7 +22,7 @@
             <div class=" text-center">
                 <div class="empty_list_hdr">Yikes! No buses found.</div>
                 <div>
-                    <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                    <img src="{{cdnUrl}}images/empty_list_img.svg" class="img-fluid">
                 </div>
             </div>
             <div class="col-md-12 my-5 text-center">
@@ -72,7 +72,7 @@
                                     <div class="widget-content mt-20">
                                         <div class="flighttiming-content flight-departing">
                                             <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
-                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                 <p [innerHTML]="timingsItems.value"></p>
                                             </div>
 
@@ -89,7 +89,7 @@
                                     <div class="widget-content">
                                         <div class="flighttiming-content flight-departing">
                                             <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
-                                                <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                 <p [innerHTML]="timingsItems.value"></p>
                                             </div>
 
@@ -340,7 +340,7 @@
                                     <div class="col-md-12 text-center">
                                         <div class="empty_list_hdr">Yikes! No buses found.</div>
                                         <div>
-                                            <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                                            <img src="{{cdnUrl}}images/empty_list_img.svg" class="img-fluid">
                                         </div>
                                     </div>
                                     <div class="col-md-12 my-5 text-center">
@@ -373,33 +373,33 @@
                 <div class="mob-listing-header">
                     <div class="mob-listing-header-left">
                         <a href="javascript:;" routerLink="/bus">
-                            <img src="{{cdnUrl}}/images/icons/left.png" alt="" />
+                            <img src="{{cdnUrl}}images/icons/left.png" alt="" />
                         </a>
                     </div>
                     <div class="mob-listing-header-center">
                         <h6>{{busfrom}} - {{busto}}</h6>
                         <div class="d-flex align-items-center justify-content-center">
-                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" /></div>
+                            <div class="date_sm_round" (click)="previousDay()" *ngIf="datePreviousStatus"><img src="{{cdnUrl}}images/icons/m_arw_icn.svg" alt="" /></div>
                             <p>{{departure | date:'EEE, dd MMM' }} </p>
-                            <div class="date_sm_round" (click)="nextDay()"><img src="{{cdnUrl}}/images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
+                            <div class="date_sm_round" (click)="nextDay()"><img src="{{cdnUrl}}images/icons/m_arw_icn.svg" alt="" class="invrt_img" /></div>
                         </div>
 
                     </div>
                     <div class="mob-listing-header-right">
                         <a href="javascript:;" routerLink="/bus">
-                            <img src="{{cdnUrl}}/images/icons/edit.svg" alt="" />
+                            <img src="{{cdnUrl}}images/icons/edit.svg" alt="" />
                         </a>
                     </div>
                 </div>
             </div>
             <!-- <div class="col-md-12 mt-70 flight_found_sec" *ngIf="!loader && serverIssue==0"> -->
-                <div class="col-md-12 mt-70 flight_found_sec">
+                <div class="col-md-12 mt-70 flight_found_sec" *ngIf="busList && !loader">
                 <div class="mob-listing-fiters">
                     <h6>
-                        <p *ngIf="busList">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p>
+                        <p *ngIf="busList && !loader">{{(busList | busfilter:minPrice:maxPrice:filterDeparture:filterArrival:filterboardingpoints:filterdroppingpoints:filterClasses:filterOperators:filteramenities:sortBy).length}} bus found</p>
                     </h6>
                     <a href="javascript:void(0)" (click)="openMobileFilterSection()" class="d-flex align-items-center justify-content-center">
-                        <img src="{{cdnUrl}}/images/icons/filter.svg" alt="">
+                        <img src="{{cdnUrl}}images/icons/filter.svg" alt="">
                         <span class="px-2">Sort/Filters</span>
                     </a>
                 </div>
@@ -428,7 +428,7 @@
                             <div class="col-md-12 text-center">
                                 <div class="empty_list_hdr">Yikes! No buses found.</div>
                                 <div>
-                                    <img src="{{cdnUrl}}/images/empty_list_img.svg" class="img-fluid">
+                                    <img src="{{cdnUrl}}images/empty_list_img.svg" class="img-fluid">
                                 </div>
                             </div>
                             <div class="col-md-12 my-5 text-center">
@@ -479,7 +479,7 @@
                     <div class="mob-title">
                         <h3>Sort & Filters</h3>
                         <a href="javascript:void(0)" (click)="CloseSortingSection()" class="mob-close mob-ff-from-close">
-                            <img src="{{cdnUrl}}/images/icons/close.png" alt="">
+                            <img src="{{cdnUrl}}images/icons/close.png" alt="">
                         </a>
                     </div>
                     <div class="mob-sf-tabs">
@@ -596,7 +596,7 @@
                                                             <div class="widget-content">
                                                                 <div class="flighttiming-content flight-departing">
                                                                     <div class="flighttiming-list" *ngFor="let timingsItems of bus_Timingsitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsDepartureFilterBusData(timingsItems)">
-                                                                        <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                                        <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                                         <p [innerHTML]="timingsItems.value"></p>
                                                                     </div>
                                                                 </div>
@@ -622,7 +622,7 @@
                                                                 <div class="widget-content">
                                                                     <div class="flighttiming-content flight-departing">
                                                                         <div class="flighttiming-list" *ngFor="let timingsItems of bus_TimingsArrivalitems" [ngClass]="{'active': timingsItems.active}" (click)="BusTimingsArrivalFilterBusData(timingsItems)">
-                                                                            <img src="{{cdnUrl}}/images/icons/timings/{{timingsItems.image}}" alt="">
+                                                                            <img src="{{cdnUrl}}images/icons/timings/{{timingsItems.image}}" alt="">
                                                                             <p [innerHTML]="timingsItems.value"></p>
                                                                         </div>
                                                                     </div>

@@ -40,34 +40,34 @@
                                             <div class="select_process select_options">
                                                 <div>
                                                     <div class="travelSelect opt_box">
-                                                        <div (click)="displayTravel(1)"><input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly > <span class="material-icons arrowDn_icon travelInputFlightPop" >arrow_drop_down</span></div>
+                                                        <div (click)="displayTravel(1)" class="d-flex"><input type="text" class="form-control travelInput travelInputFlightPop" id="" value="{{travelInputText}}" readonly > <span class="material-icons arrowDn_icon travelInputFlightPop" >arrow_drop_down</span></div>
                                                         <div class="travelList travelListFlightPop" *ngIf="showFlightPassenger">
                                                             <div class="">
                                                                 <ul>
                                                                     <li>
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row adult">
-                                                                                <p class="col-md-7"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
-                                                                                <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('adult','minus')">-</span><input class="count" readonly value="{{adult_label}}" id="adult_label"><input type="hidden"
-                                                                                        value="{{adult_cnt}}" id="adult" name="adult" formControlName="adult"><span class="cursor-pointer plus" (click)="flightPassengers('adult','plus')">+</span></p>
+                                                                                <p class="col-md-6"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('adult','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input class="count count_input_value" readonly value="{{adult_label}}" id="adult_label"><input type="hidden"
+                                                                                        value="{{adult_cnt}}" id="adult" name="adult" formControlName="adult"><span class="cursor-pointer plus" (click)="flightPassengers('adult','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                             </div>
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row children">
-                                                                                <p class="col-md-7"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
-                                                                                <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')">-</span><input readonly class="count" value="{{child_label}}" id="child_label"><input type="hidden"
-                                                                                        value="{{child_cnt}}" id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')">+</span></p>
+                                                                                <p class="col-md-6"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{child_label}}" id="child_label"><input type="hidden"
+                                                                                        value="{{child_cnt}}" id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                             </div>
                                                                         </a>
                                                                     </li>
                                                                     <li>
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row infants">
-                                                                                <p class="col-md-7"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
-                                                                                <p class="col-md-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('infant','minus')">-</span><input readonly class="count" value="{{infant_label}}" id="infant_label"><input type="hidden"
-                                                                                        value="{{infant_cnt}}" id="infant" name="infant" formControlName="infant"><span class="cursor-pointer plus" (click)="flightPassengers('infant','plus')">+</span></p>
+                                                                                <p class="col-md-6"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('infant','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{infant_label}}" id="infant_label"><input type="hidden"
+                                                                                        value="{{infant_cnt}}" id="infant" name="infant" formControlName="infant"><span class="cursor-pointer plus" (click)="flightPassengers('infant','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                             </div>
                                                                         </a>
                                                                     </li>
@@ -81,7 +81,7 @@
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div class="select_class_dropdown">
+                                                    <div class="select_class_dropdown customised_class_select">
                                                         <mat-form-field class="flgt-mat-slct">
                                                             <mat-select name="flightclass" class=" w-100" formControlName="flightclass" (ngModelChange)="selectClass($event)">
                                                                 <mat-option value="E" selected>Economy Class</mat-option>
@@ -130,7 +130,7 @@
                                                     <div class="mob-title">
                                                         <h3>Select City</h3>
                                                         <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                            <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                            <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="flight-from-data-search">
@@ -189,7 +189,7 @@
                                                     <div class="mob-title">
                                                         <h3>Select City</h3>
                                                         <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                            <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                            <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="flight-from-data-search">
@@ -239,7 +239,7 @@
                                                     <mat-datepicker  #flightFromPicker panelClass="f_dep_m"></mat-datepicker> 
 
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{departure | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['departure']['errors']" class="error_msg">
@@ -273,7 +273,7 @@
                                                             <mat-datepicker #flightToPicker></mat-datepicker>  
         
                                                         <p class="truncate" title="">
-                                                            <span  title="" class=" airPortName ">Friday</span>
+                                                            <span  title="" class=" airPortName ">{{arrival | date:'EEEE' }}</span>
                                                         </p>
                                                     </label>
                                                     <div *ngIf="submittedFlight && searchFlightForm['controls']['arrival']['errors']" class="error_msg">
@@ -311,7 +311,7 @@
                             <div class="class_sel">
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="select_options mt-30">
+                                        <div class="select_options mt-25">
                                             <div class="form-group">
                                                 <!--  <p class="label_head"><span>Rooms & Guests</span> </p> -->
                                                 <div class="travelSelect opt_box">
@@ -328,9 +328,9 @@
                                                                         <a href="javascript:void(0);">
                                                                             <div class="row">
                                                                                 <p class="col-md-6"><span><b>Rooms</b></span></p>
-                                                                                <p class="col-md-6 text-end"><span class="cursor-pointer" (click)="roomOperation('minus')">-</span>
-                                                                                    <input readonly class="count" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
-                                                                                    <span class="cursor-pointer" (click)="roomOperation('add')">+</span>
+                                                                                <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomOperation('minus')"><input type="button" value="-" class="qty-buttons minus"></span>
+                                                                                    <input readonly class="count count_input_value" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
+                                                                                    <span class="cursor-pointer" (click)="roomOperation('add')"><input type="button" value="+" class="qty-buttons plus"></span>
                                                                                 </p>
                                                                             </div>
                                                                         </a>
@@ -344,8 +344,8 @@
                                                                                 <a href="javascript:void(0);">
                                                                                     <div class="row">
                                                                                         <p class="col-md-6"><span><b>Adults</b></span><small>12 years &amp; above</small></p>
-                                                                                        <p class="col-md-6 text-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')">-</span><input readonly class="count" name="hotel_adult" formControlName="hotel_adult">
-                                                                                            <span class="cursor-pointer hplus" (click)="roomAdultOperation(i,'add')">+</span>
+                                                                                        <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_adult" formControlName="hotel_adult">
+                                                                                            <span class="cursor-pointer hplus" (click)="roomAdultOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span>
                                                                                         </p>
                                                                                     </div>
                                                                                 </a>
@@ -354,8 +354,8 @@
                                                                                 <a href="javascript:void(0);">
                                                                                     <div class="row">
                                                                                         <p class="col-md-6"><span><b>Children</b></span><small>2-11 years old</small></p>
-                                                                                        <p class="col-md-6 text-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')">-</span><input readonly class="count" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer"
-                                                                                                (click)="roomChildOperation(i,'add')">+</span></p>
+                                                                                        <p class="col-md-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer"
+                                                                                                (click)="roomChildOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                                                     </div>
                                                                                 </a>
                                                                             </li>
@@ -391,7 +391,7 @@
                                                                 </div>
 
                                                             </div>
-                                                            <div class="px-2">
+                                                            <div class="px-2 py-2 text-center">
                                                                 <button class="btn btn-primary" (click)="closeTavelPopup()">Apply</button>
                                                             </div>
                                                         </div>
@@ -426,7 +426,7 @@
                                                     <div class="mob-title">
                                                         <h3>Select City</h3>
                                                         <a href="javascript:void(0)" (click)="closeSearchBox()" class="mob-close mob-ff-from-close close-mobile">
-                                                            <img src="{{cdnUrl}}/images/icons/close.png" class="close-mobile" alt="" />
+                                                            <img src="{{cdnUrl}}images/icons/close.png" class="close-mobile" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="flight-from-data-search">
@@ -473,7 +473,7 @@
                                                     <mat-datepicker  #hotelFromPicker></mat-datepicker> 
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{hotelCheckin | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
@@ -510,7 +510,7 @@
                                                         <mat-datepicker #hotelToPicker></mat-datepicker>
         
                                                         <p class="truncate" title="">
-                                                            <span  title="" class=" airPortName ">Friday</span>
+                                                            <span  title="" class=" airPortName ">{{hotelCheckout | date:'EEEE' }}</span>
                                                         </p>
                                                     </label>
                                                     <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
@@ -557,7 +557,8 @@
                     <!--  Mlite Passengers select -->
                     <div class="city-popup from-city-pop" *ngIf="showFlightPassenger">
                         <i class="hide-w" (click)="closeSearchBoxHotel(1)"><img src="{{cdnUrl}}images/icons/arrow-back.svg"></i>
-                        <div class="form-search-list">
+                        <!-- <div class="form-search-list"> -->
+                            <div>
                             <label>
                                 <span>Select Travellers for Flight</span>
                             </label>
@@ -569,8 +570,8 @@
                                                 <a href="javascript:void(0);">
                                                     <div class="row adult">
                                                         <p class="col-7"><span class="lab_name"><b>Adult</b></span><span class="sub_name">12 years &amp; above</span></p>
-                                                        <p class="col-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('adult','minus')">-</span><input class="count" readonly value="{{adult_label}}" id="adult_label"><input type="hidden" value="{{adult_cnt}}"
-                                                                id="adult" name="adult" formControlName="adult"><span class="cursor-pointer plus" (click)="flightPassengers('adult','plus')">+</span></p>
+                                                        <p class="col-5 d-flex align-items-center justify-content-end"><span class="cursor-pointer minus" (click)="flightPassengers('adult','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input class="count count_input_value" readonly value="{{adult_label}}" id="adult_label"><input type="hidden" value="{{adult_cnt}}"
+                                                                id="adult" name="adult" formControlName="adult"><span class="cursor-pointer plus" (click)="flightPassengers('adult','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                     </div>
                                                 </a>
                                             </li>
@@ -578,8 +579,8 @@
                                                 <a href="javascript:void(0);">
                                                     <div class="row children">
                                                         <p class="col-7"><span class="lab_name"><b>Children</b></span><span class="sub_name">2 - 11 years</span></p>
-                                                        <p class="col-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')">-</span><input readonly class="count" value="{{child_label}}" id="child_label"><input type="hidden" value="{{child_cnt}}"
-                                                                id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')">+</span></p>
+                                                        <p class="col-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('child','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{child_label}}" id="child_label"><input type="hidden" value="{{child_cnt}}"
+                                                                id="child" name="child" formControlName="child"><span class="cursor-pointer plus" (click)="flightPassengers('child','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                     </div>
                                                 </a>
                                             </li>
@@ -587,15 +588,15 @@
                                                 <a href="javascript:void(0);">
                                                     <div class="row infants">
                                                         <p class="col-7"><span class="lab_name"><b>Infants</b></span><span class="sub_name">Under 2 years</span></p>
-                                                        <p class="col-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('infant','minus')">-</span><input readonly class="count" value="{{infant_label}}" id="infant_label"><input type="hidden" value="{{infant_cnt}}"
-                                                                id="infant" name="infant" formControlName="infant"><span class="cursor-pointer plus" (click)="flightPassengers('infant','plus')">+</span></p>
+                                                        <p class="col-5 text-end"><span class="cursor-pointer minus" (click)="flightPassengers('infant','minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" value="{{infant_label}}" id="infant_label"><input type="hidden" value="{{infant_cnt}}"
+                                                                id="infant" name="infant" formControlName="infant"><span class="cursor-pointer plus" (click)="flightPassengers('infant','plus')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                     </div>
                                                 </a>
                                             </li>
                                         </ul>
                                         <div class="error_msg mb-2">{{flightPassengerError}}</div>
-                                        <div>
-                                            <button class="btn btn-primary" (click)="closeSearchBoxHotel(1)">Apply</button>
+                                        <div class="py-2 px-2 pb-3">
+                                            <button class="btn btn-primary w-100" (click)="closeSearchBoxHotel(1)">Apply</button>
                                         </div>
                                     </div>
                                 </div>
@@ -704,7 +705,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="select_class_dropdown">
+                                                <div class="select_class_dropdown customised_class_select">
                                                     <mat-form-field class="flgt-mat-slct">
                                                         <mat-select name="flightclass" class=" w-100" formControlName="flightclass" (ngModelChange)="selectClass($event)">
                                                             <mat-option value="E" selected>Economy Class</mat-option>
@@ -847,7 +848,7 @@
                                                     <!-- <mat-datepicker touchUi #flightFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>  -->
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{departure | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['departure']['errors']" class="error_msg">
@@ -886,7 +887,7 @@
                                                             </ng-container>  
                                                         </span>
                                                         <p class="truncate" title="">
-                                                            <span  title="" class=" airPortName ">Friday</span>
+                                                            <span  title="" class=" airPortName ">{{arrival | date:'EEEE' }}</span>
                                                         </p>
                                                     </label>
                                                 <div *ngIf="submittedFlight && searchFlightForm['controls']['arrival']['errors']" class="error_msg">
@@ -917,7 +918,8 @@
                     <!-- Mlite Room Selection -->
                     <div class="city-popup from-city-pop" *ngIf="showHotelPassenger">
                         <i class="hide-w" (click)="closeSearchBoxHotel(2)"><img src="{{cdnUrl}}images/icons/arrow-back.svg"></i>
-                        <div class="form-search-list">
+                        <!-- <div class="form-search-list"> -->
+                            <div>
                             <label>
                              <span>Select Rooms and Persons for Hotel</span>
                             </label>
@@ -932,9 +934,9 @@
                                                 <a href="javascript:void(0);">
                                                     <div class="row">
                                                         <p class="col-6"><span><b>Rooms</b></span></p>
-                                                        <p class="col-6 text-end"><span class="cursor-pointer" (click)="roomOperation('minus')">-</span>
-                                                            <input readonly class="count" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
-                                                            <span class="cursor-pointer" (click)="roomOperation('add')">+</span>
+                                                        <p class="col-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomOperation('minus')"><input type="button" value="-" class="qty-buttons minus"></span>
+                                                            <input readonly class="count count_input_value" name="roomCount" id="roomCount" value="{{roomCount}}" formControlName="roomCount">
+                                                            <span class="cursor-pointer" (click)="roomOperation('add')"><input type="button" value="+" class="qty-buttons plus"></span>
                                                         </p>
                                                     </div>
                                                 </a>
@@ -948,8 +950,8 @@
                                                         <a href="javascript:void(0);">
                                                             <div class="row">
                                                                 <p class="col-6"><span><b>Adults</b></span><small>12 years &amp; above</small></p>
-                                                                <p class="col-6 text-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')">-</span><input readonly class="count" name="hotel_adult" formControlName="hotel_adult"><span class="cursor-pointer hplus"
-                                                                        (click)="roomAdultOperation(i,'add')">+</span></p>
+                                                                <p class="col-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer hminus" (click)="roomAdultOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_adult" formControlName="hotel_adult"><span class="cursor-pointer hplus"
+                                                                        (click)="roomAdultOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -957,7 +959,7 @@
                                                         <a href="javascript:void(0);">
                                                             <div class="row">
                                                                 <p class="col-6"><span><b>Children</b></span><small>2-11 years old</small></p>
-                                                                <p class="col-6 text-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')">-</span><input readonly class="count" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer" (click)="roomChildOperation(i,'add')">+</span></p>
+                                                                <p class="col-6 d-flex align-items-center justify-content-end"><span class="cursor-pointer" (click)="roomChildOperation(i,'minus')"><input type="button" value="-" class="qty-buttons minus"></span><input readonly class="count count_input_value" name="hotel_child" formControlName="hotel_child"><span class="cursor-pointer" (click)="roomChildOperation(i,'add')"><input type="button" value="+" class="qty-buttons plus"></span></p>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -993,7 +995,9 @@
                                             <div class="clearfix"></div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary" (click)="closeSearchBoxHotel(2)">Apply</button>
+                                    <div class="py-2 px-2">
+                                        <button class="btn btn-primary w-100" (click)="closeSearchBoxHotel(2)">Apply</button>
+                                    </div>
                                 </div>
 
                             </div>
@@ -1127,7 +1131,7 @@
                                                     <!-- <mat-datepicker  touchUi #hotelFromPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>  -->
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{hotelCheckin | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckin']['errors']" class="error_msg">
@@ -1171,15 +1175,13 @@
                                                    <!-- <mat-datepicker touchUi  #hotelToPicker panelClass="bottomDatePicker" (opened)="mliteDatepickerOpened()"  (closed)="mliteDatepickerClosed()"></mat-datepicker>  -->
     
                                                     <p class="truncate" title="">
-                                                        <span  title="" class=" airPortName ">Friday</span>
+                                                        <span  title="" class=" airPortName ">{{hotelCheckout | date:'EEEE' }}</span>
                                                     </p>
                                                 </label>
                                                 <div *ngIf="submittedHotel && searchHotelForm['controls']['hotelCheckout']['errors']" class="error_msg">
                                                     <small *ngIf="searchHotelForm['controls']['hotelCheckout']['errors']['required']" class="validate-msg">Check out date required</small>
                                                 </div>
                                             </div>
-
-
 
                                         </div>
                                     </div>

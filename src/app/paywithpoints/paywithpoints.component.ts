@@ -1,7 +1,7 @@
 import { Component, OnInit,OnChanges,SimpleChanges, Inject, Input, Output, forwardRef, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators,ValidatorFn, NG_VALUE_ACCESSOR, ControlValueAccessor  } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Options } from 'ng5-slider';
+import { Options } from '@angular-slider/ngx-slider';
 import { SimpleGlobal } from 'ng2-simple-global';
 import { HttpClient, HttpHeaders, HttpErrorResponse , HttpParams} from '@angular/common/http';
 import { RestapiService } from 'src/app/shared/services/restapi.service';
@@ -106,6 +106,7 @@ otperrormsg :any;
  resendOTPdiv:Boolean=true;
  domainRedirect:string;
  domainPath:string;
+ partnerId:number;
 dateInputMask = createMask<Date>({
     alias: 'datetime',
     inputFormat: 'dd/mm/yyyy',
@@ -137,18 +138,18 @@ dateInputMask = createMask<Date>({
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
           // dob:['', [Validators.required,youngerThanValidator(100), Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
-          // dob:['', [Validators.required,youngerThanValidator(100)]],
+          // dob:['', [Validators.required,this.dateValidator]],
          // dob:new FormControl('',[Validators.required,, Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]),
           applyvouchercode:['', [Validators.required,Validators.pattern("^[0-9]*$"),Validators.minLength(12),Validators.maxLength(12)]]
         });
      this.voucherForm1.addControl('dob' , new FormControl('',
-        [Validators.required,this.dateValidator, youngerThanValidator(100)]));
+        [Validators.required,youngerThanValidator(100)]));
      this.cardaddForm1 = this.formBuilder.group({
           last4digit:['', [Validators.required,Validators.pattern("^[0-9]*$")]],
           applymobile:['', [Validators.required,Validators.pattern("^[6-9][0-9]{9}$")]],
 
           // dob:['', Validators.required,Validators.pattern("^[0-9]*$")]
-          dob:['', [Validators.required,this.dateValidator,youngerThanValidator(100), Validators.pattern('^(?:(?:10|12|0?[13578])/(?:3[01]|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|(?:11|0?[469])/(?:30|[12][0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/(?:2[0-8]|1[0-9]|0?[1-9])/(?:1[8-9]\\d{2}|[2-9]\\d{3})|0?2/29/[2468][048]00|0?2/29/[3579][26]00|0?2/29/[1][89][0][48]|0?2/29/[2-9][0-9][0][48]|0?2/29/1[89][2468][048]|0?2/29/[2-9][0-9][2468][048]|0?2/29/1[89][13579][26]|0?2/29/[2-9][0-9][13579][26])$')]],
+          dob:['', [Validators.required,youngerThanValidator(100)]],
 
           savecard:[true],
         });
@@ -168,6 +169,9 @@ dateInputMask = createMask<Date>({
         }
         
         ngOnChanges(changes: SimpleChanges): void {
+          let service_id = this.serviceId.toLowerCase();
+          let partnername = this.Partnertoken.toLowerCase();        
+          this.partnerId = this.serviceSettings['partners'][service_id][partnername];
         this.orderamount= Number(this.payTotalFare);
         this.setSlider();
         }
@@ -189,12 +193,33 @@ dateInputMask = createMask<Date>({
 dateValidator(control: FormControl): { [s: string]: boolean } {
 
   if (control.value) {
-    const date = moment(control.value).format("DD/MM/YYYY");
+     const date = moment(control.value).format("DD/MM/YYYY");
 
-    const today = moment().format("DD/MM/YYYY");
-    if (moment(date).isAfter(today) ) {
+     const today = moment().format("DD/MM/YYYY");
+     if (moment(date).isAfter(today) ) {
+       return { 'invalidDate': true }
+     }
+
+    /*const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+   let dateStr = control.value;
+   
+    if (dateStr.match(regex) === null) {
       return { 'invalidDate': true }
     }
+
+    const [day, month, year] = dateStr.split('/');
+
+    //  format Date string as `yyyy-mm-dd`
+    const isoFormattedStr = `${year}-${month}-${day}`;
+
+    const date = new Date(isoFormattedStr);
+
+    const timestamp = date.getTime();
+
+    if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) {
+      
+      return { 'invalidDate': true }
+    }*/
   }
   return null;
 }
@@ -459,7 +484,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
                 "bin":this.cardaddForm1.controls['first4digit'].value,
                 "clientToken":this.sg['domainName'].toUpperCase(),
                 "services_id":this.serviceId,
-                "partner_id":42,
+                "partner_id":this.partnerId,
                 "modal":"DIGITAL",
                 "noopt": 1,
                 "savecard":1,
@@ -625,9 +650,9 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         var last4digit = this.voucherForm1.controls['last4digit'].value;
         var applymobile = this.voucherForm1.controls['applymobile'].value;
         var dob = this.voucherForm1.controls['dob'].value;
-        // var datePipe = new DatePipe('en-US'); 
-        // var dobStr = datePipe.transform(dob,'MM/dd/yyyy');
-        var dobStr = dob;
+        // var dobsplit =dob.split('/');
+        // var dobStr = dobsplit[1]+'/'+dobsplit[0]+'/'+dobsplit[2];
+        var dobStr= dob;
         this.applyvouchercode = this.voucherForm1.controls['applyvouchercode'].value;
         if(this.XSRFTOKEN==undefined){
           this.XSRFTOKEN = this.sg['customerInfo']['XSRF-TOKEN'];
@@ -637,9 +662,9 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         // "first4digit": first4digit,
         "last4digit": last4digit,
         "mobile": applymobile,
-        "DOB": dob,
+        "DOB": dobStr,
         // "bin": first9digit,
-        "partner_id": 42,
+        "partner_id": this.partnerId,
         "services_id": this.serviceId,
         "total_amount": this.payTotalFare,
         "applyvouchercode": this.applyvouchercode,
@@ -712,7 +737,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
            //"bin":this.cardaddForm1.controls['first4digit'].value,
            "clientToken":this.sg['domainName'].toUpperCase(),
            "services_id":this.serviceId,
-           "partner_id":42,
+           "partner_id":this.partnerId,
            "modal":"DIGITAL",
            "noopt": 1,
            "savecard":1,
@@ -753,7 +778,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
         "bin":first9digit,
         "clientToken":this.sg['domainName'].toUpperCase(),
         "services_id":this.serviceId,
-        "partner_id":42,
+        "partner_id":this.partnerId,
         "modal":"DIGITAL",
         "noopt": 1,
         "savecard":1,
@@ -803,6 +828,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
     if (this.cardaddForm1.status !='VALID') {
       return;
     }else{
+      this.spinnerService.show();
          if(this.cardaddForm1.controls['savecard'].value==true){
            var savecard=1;
          }else{
@@ -815,7 +841,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
            "type":"available_points",
            "clientToken":this.sg['domainName'].toUpperCase(),
            "services_id":this.serviceId,
-           "partner_id":42,
+           "partner_id":this.partnerId,
            "modal":"DIGITAL",
            "noopt": 1,
            "savecard":savecard,
@@ -824,11 +850,11 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
            "_token":this.customerInfo["XSRF-TOKEN"],
            "user_id":this.sg["customerInfo"]["id"],
         };
-        console.log(request);
         var passData = {
           postData: this.EncrDecr.set(JSON.stringify(request))
         };
         this.pay.availablePoints(passData).subscribe(response => {
+          this.spinnerService.hide();
           if(typeof response.error_code != undefined && response.error_code=="100"){
                this.submitted2=false;
                this.cardaddForm1.reset();
@@ -848,10 +874,14 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
                   $('#add-cards').modal('hide');
                 }
                this.setSlider();
-               if(savecard==1){
+               if(savecard==1 && response.cards){
                   this.cards = response.cards;
                   this.selectedCardDetails = this.cards[0];
                   //this.checkAvailablePointsforSavedCard();
+               }else{
+                let card=[]; 
+                card['card']= response.bin.toString();
+                this.selectedCardDetails = card;
                }
           }else{
                    alert(response.message)
@@ -860,6 +890,7 @@ dateValidator(control: FormControl): { [s: string]: boolean } {
             var message = 'Something went wrong';
             alert(message);
         };
+        
        
     }
   }
