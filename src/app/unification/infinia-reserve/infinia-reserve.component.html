@@ -1,3 +1,4 @@
+<!-- hero start -->
 <section class="hero">
   <div class="container">
     <div class="row text-center">
@@ -8,16 +9,18 @@
     </div>
   </div>
 </section>
+<!-- hero end -->
 
+<!-- slider tab start -->
 <section class="slider-tab-section">
   <div class="container">
     <div class="row">
       <div class="col-12">
         <ul class="list-unstyled custom-nav-tab list-inline mb-0">
-          <!-- <li class="list-item " *ngFor="let tabs of tabList">
-            <a class="nav-link" href="javascript:void;" (click)="onActive()">{{tabs}}</a>
-          </li> -->
-          <li class="list-item">
+          <li class="list-item " *ngFor="let tabs of tabList">
+            <a class="nav-link" [ngClass]="tabs.status == true ? 'active' : ''" href="javascript:void" (click)="scrollToElement(tabs)">{{tabs.title}}</a>
+          </li>
+          <!-- <li class="list-item">
             <a class="nav-link active" href="javascript:void">Infinia Reserve <span class="bottom-border"></span></a>
           </li>
           <li class="list-item">
@@ -43,12 +46,13 @@
           </li>
           <li class="list-item">
               <a class="nav-link disabled">Infinia Reserve Smartbuy Portal</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
   </div>
 </section>
+<!-- slider tab end -->
 
 <!-- Most Secured Card Ever & Limitless Card -->
 <section class="secured-section">
@@ -61,39 +65,43 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-      <!-- <div class="col" *ngFor="let secureData of securedCardImg">
+      <div class="col" *ngFor="let secureData of securedCardImg">
         <div class="card text-center h-100">
           <img src="{{secureData.img}}" class="d-block mx-auto" alt="..." height="72.99" width="62" />
           <div class="card-body p-0">
             <p class="secured-card-text mb-0">{{secureData.title}}</p>
           </div>
         </div>
-      </div> -->
+      </div>
 
+      <!-- <div class="col">
+        <div class="card text-center h-100">
+          <img src="/assets/infinia/images/know-your-card/secured_1.png" class="d-block mx-auto" alt="..."
+            height="72.99" width="62" />
+          <div class="card-body p-0">
+            <p class="secured-card-text mb-0">100% limit coverage in case of fraudulent transactions.</p>
+          </div>
+        </div>
+      </div>
       <div class="col">
-              <div class="card text-center h-100">
-                  <img src="/assets/infinia/images/know-your-card/secured_1.png" class="d-block mx-auto" alt="..." height="72.99" width="62" />
-                  <div class="card-body p-0">
-                      <p class="secured-card-text mb-0">100% limit coverage in case of fraudulent transactions.</p>
-                  </div>
-              </div>
+        <div class="card text-center h-100">
+          <img src="/assets/infinia/images/know-your-card/secured_2.png" class="d-block mx-auto" alt="..."
+            height="72.99" width="62" />
+          <div class="card-body p-0">
+            <p class="secured-card-text mb-0">Dedicated Risk management desk which supports with transaction declines/
+              authorisation issues.</p>
           </div>
-          <div class="col">
-              <div class="card text-center h-100">
-                  <img src="/assets/infinia/images/know-your-card/secured_2.png" class="d-block mx-auto" alt="..." height="72.99" width="62" />
-                  <div class="card-body p-0">
-                      <p class="secured-card-text mb-0">Dedicated Risk management desk which supports with transaction declines/ authorisation issues.</p>
-                  </div>
-              </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-center h-100">
+          <img src="/assets/infinia/images/know-your-card/secured_3.png" class="d-block mx-auto" alt="..."
+            height="72.99" width="62" />
+          <div class="card-body p-0">
+            <p class="secured-card-text mb-0">Easy limit enhancements for large transactions.</p>
           </div>
-          <div class="col">
-              <div class="card text-center h-100">
-                  <img src="/assets/infinia/images/know-your-card/secured_3.png" class="d-block mx-auto" alt="..." height="72.99" width="62" />
-                  <div class="card-body p-0">
-                      <p class="secured-card-text mb-0">Easy limit enhancements for large transactions.</p>
-                  </div>
-              </div>
-          </div>
+        </div>
+      </div> -->
     </div>
 
     <div class="row justify-content-center">
@@ -118,7 +126,7 @@
 </section>
 
 <!-- Lifestyle Benefits -->
-<section class="lifestyle-section bg-warning-section">
+<section class="lifestyle-section bg-warning-section" id="lifestyle-benefits">
   <div class="container">
       <div class="row">
           <div class="col-12 text-center">
@@ -127,31 +135,31 @@
       </div>
 
       <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <div class="lifestyle-nav-tab-custom">
-              <ul class="nav nav-pills lifestyle-nav-tab justify-content-center mb-0" id="pills-tab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="pills-personal-concierge-tab" data-bs-toggle="pill" data-bs-target="#pills-personal-concierge" type="button" role="tab" aria-controls="pills-personal-concierge" aria-selected="true">
-                          Personal Concierge Relationship Manager
-                      </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="pills-redemption-tab" data-bs-toggle="pill" data-bs-target="#pills-redemption" type="button" role="tab" aria-controls="pills-redemption" aria-selected="false">
-                          Redemption on Marquee Events
-                      </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="pills-unlimite-golf-tab" data-bs-toggle="pill" data-bs-target="#pills-unlimite-golf" type="button" role="tab" aria-controls="pills-unlimite-golf" aria-selected="false">
-                          Unlimited Golf Access across the world
-                      </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="pills-membership-tab" data-bs-toggle="pill" data-bs-target="#pills-membership" type="button" role="tab" aria-controls="pills-membership" aria-selected="false">
-                          Taj Epicure Membership
-                      </button>
-                  </li>
-              </ul>
-          </div>
+          <div class="col-xl-10">
+              <div class="lifestyle-nav-tab-custom">
+                  <ul class="nav nav-pills lifestyle-nav-tab justify-content-center mb-0" id="pills-tab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="pills-personal-concierge-tab" data-bs-toggle="pill" data-bs-target="#pills-personal-concierge" type="button" role="tab" aria-controls="pills-personal-concierge" aria-selected="true">
+                              Personal Concierge Relationship Manager
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-redemption-tab" data-bs-toggle="pill" data-bs-target="#pills-redemption" type="button" role="tab" aria-controls="pills-redemption" aria-selected="false">
+                              Redemption on Marquee Events
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-unlimite-golf-tab" data-bs-toggle="pill" data-bs-target="#pills-unlimite-golf" type="button" role="tab" aria-controls="pills-unlimite-golf" aria-selected="false">
+                              Unlimited Golf Access across the world
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-membership-tab" data-bs-toggle="pill" data-bs-target="#pills-membership" type="button" role="tab" aria-controls="pills-membership" aria-selected="false">
+                              Taj Epicure Membership
+                          </button>
+                      </li>
+                  </ul>
+              </div>
 
               <div class="tab-content lifestyle-tab-content" id="pills-tabContent">
                   <div class="tab-pane fade show active" id="pills-personal-concierge" role="tabpanel" aria-labelledby="pills-personal-concierge-tab" tabindex="0">
@@ -199,7 +207,7 @@
                       <div class="accordion custom-accordion-tab" id="accordionExample2">
                           <div class="accordion-item">
                               <h2 class="accordion-header" id="headingTwo">
-                                  <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                  <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                       Process
                                   </button>
                               </h2>
@@ -228,7 +236,7 @@
                       <div class="accordion custom-accordion-tab" id="accordionExample3">
                           <div class="accordion-item">
                               <h2 class="accordion-header" id="headingThree">
-                                  <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                  <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                                       Process
                                   </button>
                               </h2>
@@ -310,7 +318,7 @@
                       <div class="accordion custom-accordion-tab" id="accordionExample4">
                           <div class="accordion-item">
                               <h2 class="accordion-header" id="headingFour">
-                                  <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                  <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                                       Process
                                   </button>
                               </h2>
@@ -328,10 +336,462 @@
                           </div>
                       </div>
 
-                      <p class="personal-conditions-card-subtitle text-center mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions </p>
-
+                      <p class="section-bottom-subtitle text-center mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions </p>
                   </div>
               </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Travel Benefits -->
+<section class="travel-section" id="travel-benefits">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">Travel Benefits</h1>
+          </div>
+      </div>
+
+      <div class="row justify-content-center">
+          <div class="col-xl-10">
+              <div class="travel-nav-tab-custom">
+                  <ul class="nav nav-pills travel-nav-tab justify-content-center mb-0" id="pills-tab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="pills-transfer-program-tab" data-bs-toggle="pill" data-bs-target="#pills-transfer-program" type="button" role="tab" aria-controls="pills-transfer-program" aria-selected="true">Largest Miles transfer program</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-marriott-membership-tab" data-bs-toggle="pill" data-bs-target="#pills-marriott-membership" type="button" role="tab" aria-controls="pills-marriott-membership" aria-selected="false">Club Marriott membership</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-lounge-access-tab" data-bs-toggle="pill" data-bs-target="#pills-lounge-access" type="button" role="tab" aria-controls="pills-lounge-access" aria-selected="false">Unlimited Lounge access</button>
+                      </li>
+                  </ul>
+              </div>
+
+              <div class="tab-content travel-tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-transfer-program" role="tabpanel" aria-labelledby="pills-transfer-program-tab" tabindex="0">
+                      <div class="card mb-10">
+                          <ul class="travel-tab-list">
+                              <li>Customers can convert their reward points to airmiles of partner global/international airlines hotels.</li>
+                              <li>This is the biggest miles transfer program which offers real time transfer of points - convenience which no other bank is offering right now.</li>
+                              <li>Infinia reserve cardholders can transfer points in the ratio of 1:1.</li>
+                          </ul>
+                          <p class="travel-tab-list-text text-center mt-3 mb-4">Below airlines/ hotels are part of the program.</p>
+
+                          <div class="travel-brand-logo">
+                              <div class="row g-3 justify-content-center">
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_1.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_2.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_3.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_4.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_5.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_6.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_7.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_8.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_9.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_10.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_11.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_12.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_13.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_14.png" alt="">
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                      <div class="travel-brand-logo-item">
+                                          <img src="/assets/infinia/images/know-your-card/logos/logo_15.png" alt="">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="accordion custom-accordion-tab" id="accordionExample1">
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="travelOne">
+                                  <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#travelCollapseOne" aria-expanded="false" aria-controls="travelCollapseOne">
+                                      Process
+                                  </button>
+                              </h2>
+                              <div id="travelCollapseOne" class="accordion-collapse collapse" aria-labelledby="travelOne" data-bs-parent="#accordionExample1">
+                                  <div class="accordion-body p-0">
+                                      <ul class="travel-accordion-list">
+                                          <li>Post card issuance, the concierge RM will be assigned and introduced to the customer.</li>
+                                          <li>Customer will be able to reach out to their concierge RM as below:</li>
+                                          <li>Toll Free No.: 1800 118 887 Landline No.: 022 42320226</li>
+                                          <li>Email ID: Infiniareserve.support@smartbuyoffers.co</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="travel-conditions-card mt-4">
+                          <h5 class="travel-conditions-card-title mb-3">Terms & Conditions</h5>
+                          <ul>
+                              <li class="travel-conditions-card-subtitle">Points once transferred cannot be refunded back. Points must be transferred in multiples of 100.</li>
+                              <li class="travel-conditions-card-subtitle"><a href="#" class="text-warning">Click here for detailed T&C</a></li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-marriott-membership" role="tabpanel" aria-labelledby="pills-marriott-membership-tab" tabindex="0">
+                      <div class="card mb-10">
+                          <p class="travel-tab-list-text">Customers will get complimentary Club marriott membership for one year with card issuance. The membership will be renewed for subsequent year if customer spends greater than 30 lacs in pervious cycle.</p>
+                          <p class="travel-tab-list-text text-center mb-0 mt-2 pt-1">Club Marriott membership benefits are: </p>
+
+                          <div class="row">
+                              <div class="col-lg-11">
+                                  <div class="row">
+                                      <div class="col-md-6 mt-4">
+                                          <div class="card-box h-100">
+                                              <div class="d-flex align-items-center">
+                                                  <div class="flex-shrink-0">
+                                                    <img src="/assets/infinia/images/know-your-card/food.png" alt="..." height="34" width="34">
+                                                  </div>
+                                                  <div class="flex-grow-1 ms-4">
+                                                    <p class="travel-tab-list-card-text">20% discount on food & beverages</p>
+                                                  </div>
+                                                </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 mt-4">
+                                          <div class="card-box h-100">
+                                              <div class="d-flex align-items-center">
+                                                  <div class="flex-shrink-0">
+                                                    <img src="/assets/infinia/images/know-your-card/hotel.png" alt="..." height="35" width="35">
+                                                  </div>
+                                                  <div class="flex-grow-1 ms-4">
+                                                    <p class="travel-tab-list-card-text">20% discount on best available rates on rooms at participating hotels</p>
+                                                  </div>
+                                                </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 mt-4">
+                                          <div class="card-box h-100">
+                                              <div class="d-flex align-items-center">
+                                                  <div class="flex-shrink-0">
+                                                    <img src="/assets/infinia/images/know-your-card/spa.png" alt="..." height="34" width="34">
+                                                  </div>
+                                                  <div class="flex-grow-1 ms-4">
+                                                    <p class="travel-tab-list-card-text">20% off on select spas on participating spas in India</p>
+                                                  </div>
+                                                </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 mt-4">
+                                          <div class="card-box h-100">
+                                              <div class="d-flex align-items-center">
+                                                  <div class="flex-shrink-0">
+                                                    <img src="/assets/infinia/images/know-your-card/gift.png" alt="..." height="34" width="34">
+                                                  </div>
+                                                  <div class="flex-grow-1 ms-4">
+                                                    <p class="travel-tab-list-card-text">Upgrade vouchers</p>
+                                                  </div>
+                                                </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="accordion custom-accordion-tab" id="accordionExample2">
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="travelTwo">
+                                  <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#travelCollapseTwo" aria-expanded="true" aria-controls="travelCollapseTwo">
+                                      Process
+                                  </button>
+                              </h2>
+                              <div id="travelCollapseTwo" class="accordion-collapse collapse show" aria-labelledby="travelTwo" data-bs-parent="#accordionExample2">
+                                  <div class="accordion-body p-0">
+                                      <ul class="lifestyle-accordion-list">
+                                          <li>Customer can enroll for membership by logging in to www.offers.smartbuy.hdfcbank.com/Infiniareserve</li>
+                                          <li>Or customer can call their concierge relationship manager for enrolment as per below:</li>
+                                          <li>Toll Free No.: 1800 118 887 Landline No.: 022 42320226</li>
+                                          <li>Email ID: Infiniareserve.support@smartbuyoffers.co</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <p class="section-bottom-subtitle text-center mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions </p>
+                  </div>
+
+                  <div class="tab-pane fade" id="pills-lounge-access" role="tabpanel" aria-labelledby="pills-lounge-access-tab" tabindex="0">
+                      <div class="card mb-10">
+                          <ul class="travel-tab-list">
+                              <li>Complimentary Priority pass membership with Infinia reserve card for primary and addon cardholder.</li>
+                              <li>Unlimited lounge access in India and abroad on eligible priority pass lounges.</li>
+                          </ul>
+                      </div>
+                      <div class="accordion custom-accordion-tab" id="accordionExample2">
+                          <div class="accordion-item">
+                              <h2 class="accordion-header" id="travelThree">
+                                  <button class="accordion-button p-0" type="button" data-bs-toggle="collapse" data-bs-target="#travelCollapseThree" aria-expanded="true" aria-controls="travelCollapseThree">
+                                      Process
+                                  </button>
+                              </h2>
+                              <div id="travelCollapseThree" class="accordion-collapse collapse show" aria-labelledby="travelThree" data-bs-parent="#accordionExample2">
+                                  <div class="accordion-body p-0">
+                                      <ul class="lifestyle-accordion-list">
+                                          <li>Customers will get Priority pass plastic along with their credit card.</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <p class="section-bottom-subtitle text-center mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Emergency Support & Insurance  -->
+<section class="insurance-section bg-warning-section" id="emergency-support">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">Emergency Support & Insurance</h1>
+          </div>
+      </div>
+
+      <div class="row justify-content-center">
+          <div class="col-xl-10">
+              <div class="insurance-nav-tab-custom">
+                  <ul class="nav nav-pills insurance-nav-tab justify-content-center mb-0" id="pills-tab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="pills-medical-assistance-tab" data-bs-toggle="pill" data-bs-target="#pills-medical-assistance" type="button" role="tab" aria-controls="pills-medical-assistance" aria-selected="true">Global Travel & Medical Assistance</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="pills-insurance-benefits-tab" data-bs-toggle="pill" data-bs-target="#pills-insurance-benefits" type="button" role="tab" aria-controls="pills-insurance-benefits" aria-selected="false">Insurance benefits</button>
+                      </li>
+                  </ul>
+              </div>
+              <div class="tab-content insurance-tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-medical-assistance" role="tabpanel" aria-labelledby="pills-medical-assistance-tab" tabindex="0">
+                      <div class="card mb-10">
+                          <ul class="insurance-tab-list">
+                              <li>Get support when travelling abroad in case of a medical or travel emergencies.</li>
+                              <li>Get support like tele medicine advice, medical referral, arrangements of hospital admission, emergency medical evacuation, etc in case of unfortunate medical emergencies.</li>
+                              <li>Get support with inoculation guidance, visa support, emergency translation, etc in case of travel emergencies when travelling abroad.</li>
+                          </ul>
+                      </div>
+                      <p class="section-bottom-subtitle text-center mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions </p>
+                  </div>
+                  <div class="tab-pane fade" id="pills-insurance-benefits" role="tabpanel" aria-labelledby="pills-insurance-benefits-tab" tabindex="0">
+                      <div class="card mb-10">
+                          <ul class="insurance-tab-list">
+                              <li>Accidental Air Death cover worth Rs. 3 Crore </li>
+                              <li>Emergency overseas hospitalization up to Rs. 50 lakhs in case of emergency</li>
+                              <li>Credit Shield Cover for upto 9 lakhs</li>
+                          </ul>
+                      </div>
+                      <p class="section-bottom-subtitle text-center mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> to update your nominee details <span class="mx-2">|</span> <a href="#" class="text-warning">Click here</a> for details     </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- No Charges -->
+<section class="charges-section" id="charges">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">No Charges</h1>
+          </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+          <div class="col mt-4">
+              <div class="card text-center h-100">
+                  <img src="/assets/infinia/images/know-your-card/charges-icon-1.png" class="d-block mx-auto" alt="..." height="66.37" width="78" />
+                  <div class="card-body p-0">
+                      <p class="charges-card-text mb-0">0 Late Payment Charges (LPC)</p>
+                  </div>
+              </div>
+          </div>
+          <div class="col mt-4">
+              <div class="card text-center h-100">
+                  <img src="/assets/infinia/images/know-your-card/charges-icon-2.png" class="d-block mx-auto" alt="..." height="73.11" width="72" />
+                  <div class="card-body p-0">
+                      <p class="charges-card-text mb-0">0 Overdraft Limit (OVL)</p>
+                  </div>
+              </div>
+          </div>
+          <div class="col mt-4">
+              <div class="card text-center h-100">
+                  <img src="/assets/infinia/images/know-your-card/charges-icon-3.png" class="d-block mx-auto" alt="..." height="71.13" width="76.11" />
+                  <div class="card-body p-0">
+                      <p class="charges-card-text mb-0">0 Cash Charges</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-12 text-center">
+              <p class="section-bottom-subtitle mt-2 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions <span class="mx-2">|</span> <a href="#" class="text-warning">Click here</a> for MITC <span class="mx-2">|</span> <a href="#" class="text-warning">Click here</a> for card member agreement </p>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Network Offers  -->
+<section class="network-section bg-warning-section" id="network-offers">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">Network Offers</h1>
+          </div>
+      </div>
+
+      <div class="row justify-content-center mt-4">
+          <div class="col-xl-10">
+              <div class="card network-card"></div>
+          </div>
+      </div>
+  </div>
+</section>
+
+ <!-- Rewards -->
+ <section class="rewards-section" id="Rewards">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">Rewards</h1>
+          </div>
+      </div>
+
+      <div class="row justify-content-center">
+          <div class="col-xl-10">
+              <div class="row">
+                  <div class="col-md-6 mt-4">
+                      <div class="card h-100">
+                          <img src="/assets/infinia/images/know-your-card/rewards-icon-1.png" class="d-block mx-auto" alt="..." height="94" width="72.25" />
+                          <div class="card-body p-0">
+                              <h5 class="charges-card-title text-center mt-4">Earn</h5>
+                              <ul class="custom-card-list mb-0 mt-2">
+                                  <li>Earn 5 Reward Points on every Rs.150, on all retail* spends including Insurance, Utilities, Education and Rent Pay</li>
+                                  <li>Earn up to 10 times Reward Points* on your travel and shopping spends on <span class="text-warning">Smartbuy</span></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6 mt-4">
+                      <div class="card h-100">
+                          <img src="/assets/infinia/images/know-your-card/rewards-icon-2.png" class="d-block mx-auto" alt="..." height="95" width="93.6" />
+                          <div class="card-body p-0">
+                              <h5 class="charges-card-title text-center mt-4">Redeem</h5>
+                              <ul class="custom-card-list mb-0 mt-2">
+                                  <li>Redeem reward points against flights & hotel booking via smartbuy</li>
+                                  <li>Redeem reward points against airmile via smartbuy</li>
+                                  <li>Products and Vouchers via Netbanking or SmartBuy at a value of 1 RP = upto Rs 0.50</li>
+                                  <li>Cashback at a value of 1 RP = Rs 0.30</li>
+                                  <li> <a href="#" class="text-warning">Click here</a> for details Terms & conditions</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+ <!-- Welcome & Renewal Benefits -->
+ <section class="renewal-section bg-warning-section" id="renewal-benefits">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">Welcome & Renewal Benefits</h1>
+          </div>
+      </div>
+      <div class="row justify-content-center">
+          <div class="col-xl-10">
+              <div class="card mt-4">
+                  <ul class="custom-card-list mb-0 mt-2">
+                      <li>Get 25K reward points and ITC hotel voucher worth INR 25K on first year fee realisation.</li>
+                      <li>Get 25K reward points on renewal fee realisation from second year onwards.</li>
+                  </ul>
+              </div>
+              <p class="section-bottom-subtitle text-center mt-4 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions</p>
+          </div>
+      </div>
+  </div>
+</section>
+
+<!-- Infinia Reserve Smartbuy Portal -->
+<section class="smartbuy-portal-section" id="smartbuy-portal">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 text-center">
+              <h1 class="section-title mb-0">Infinia Reserve Smartbuy Portal</h1>
+          </div>
+      </div>
+      <div class="row justify-content-center">
+          <div class="col-xl-10">
+              <div class="card mt-4">
+                  <ul class="custom-card-list mb-0 mt-2">
+                      <li>Visit offers.smartbuy.hdfcbank.com/InfiniaReserve to make travel bookings, redeem points, shop, book events, etc.</li>
+                  </ul>
+              </div>
+              <p class="section-bottom-subtitle text-center mt-4 mb-0 pt-1"><a href="#" class="text-warning">Click here</a> for details Terms & conditions</p>
           </div>
       </div>
   </div>

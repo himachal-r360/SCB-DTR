@@ -1,142 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
 
-body {
-  font-family: "Open Sans", sans-serif;
-}
-
-.text-warning {
-  color: #DEA018 !important;
-}
-
-.bg-warning-section {
-  background: #FCF6E8;
-}
-
-.card {
-  background: #fff;
-  border: none;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 28px;
-}
-
-.section-title {
-  font-weight: 300;
-  font-size: 44px;
-  line-height: 50px;
-  margin-bottom: 17px;
-  color: #000;
-}
-
-.hero {
-  background-image: url("/assets/infinia/images/know-your-card/hero-bg.jpg");
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 316px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.hero .hero-title {
-  font-size: 45px;
-  line-height: 66px;
-}
-.hero .hero-subtitle {
-  font-weight: 600;
-  opacity: 0.7;
-}
-
-.slider-tab-section {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-.slider-tab-section .custom-nav-tab {
-  display: -webkit-inline-box;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-.slider-tab-section .custom-nav-tab .list-item {
-  margin-right: 28px;
-}
-.slider-tab-section .custom-nav-tab .list-item:last-child {
-  margin-right: 0;
-}
-.slider-tab-section .custom-nav-tab .list-item .nav-link {
-  line-height: 61px;
-  font-weight: 600;
-  font-size: 13px;
-  color: #000;
-  opacity: 0.5;
-  position: relative;
-}
-.slider-tab-section .custom-nav-tab .list-item .nav-link.active {
-  opacity: 1;
-}
-.slider-tab-section .custom-nav-tab .list-item .nav-link.active::after {
-  content: "";
-  background: linear-gradient(90.08deg, #DEA018 0.1%, #FFF386 55.93%, #FFD34A 99.96%);
-  width: 90px;
-  height: 4px;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-}
-.slider-tab-section .custom-nav-tab::-webkit-scrollbar {
-  display: none;
-  height: 0;
-}
-
-.secured-section {
-  padding: 36px 0 44px;
-}
-.secured-section .secured-section-subtitle {
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 30px;
-}
-.secured-section .secured-card-text {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  margin-top: 22px;
-}
-.secured-section .secured-process-text {
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 22px;
-}
-.secured-section .secured-process-subtext {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 25px;
-}
-.secured-section .secured-conditions-card {
-  background: rgba(239, 239, 239, 0.4);
-  border-radius: 8px;
-  padding: 24px 44px;
-}
-.secured-section .secured-conditions-card .secured-conditions-card-title {
-  font-weight: 600;
-  font-size: 15px;
-  color: #000;
-}
-.secured-section .secured-conditions-card .secured-conditions-card-subtitle {
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 30px;
-  color: #000;
-}
-
-.lifestyle-section {
-  padding: 50px 0;
-}/*# sourceMappingURL=style.css.map */
-
-// Variables
-
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
-
 // scss-docs-start gray-color-variables
 $white:    #fff;
 $gray-100: #f8f9fa;
@@ -218,6 +81,9 @@ body {
   line-height: 50px;
   margin-bottom: 17px;
   color: $black;
+}
+.nav {
+  display: flex !important;
 }
 
 // home-page
@@ -327,7 +193,7 @@ body {
   }
 }
 
-// Lifestyle Benefits
+/* Lifestyle Benefits */
 .lifestyle-section {
   padding: 50px 0;
 }
@@ -338,6 +204,9 @@ body {
   display: table;
   margin: 35px auto 30px;
 }
+// .lifestyle-nav-tab-custom .lifestyle-nav-tab {
+//   display: flex;
+// }
 .lifestyle-nav-tab-custom .lifestyle-nav-tab .nav-item .nav-link {
   font-weight: 600;
   font-size: 14px;
@@ -347,56 +216,73 @@ body {
   width: 220px;
   border-radius: 50px;
 }
-.lifestyle-nav-tab-custom .lifestyle-nav-tab {
-  display: flex;
-}
 .lifestyle-nav-tab-custom .lifestyle-nav-tab.nav-pills .nav-link.active,
 .lifestyle-nav-tab-custom .lifestyle-nav-tab.nav-pills .show>.nav-link {
   background: #DEA018;
   color: #ffffff;
 }
 .lifestyle-tab-content .lifestyle-tab-list,
-.lifestyle-tab-content .lifestyle-tab-list li {
+.lifestyle-tab-content .lifestyle-tab-list li,
+.travel-tab-content .travel-tab-list,
+.travel-tab-content .travel-tab-list li,
+.secured-conditions-card li,
+.travel-conditions-card li,
+.insurance-tab-content li {
   list-style: disc;
 }
-.lifestyle-tab-content .lifestyle-tab-list {
+.lifestyle-tab-content .lifestyle-tab-list,
+.travel-tab-content .travel-tab-list,
+.secured-conditions-card li,
+.travel-conditions-card li,
+.insurance-tab-content li {
   margin-left: 20px;
 }
 .lifestyle-tab-content .lifestyle-tab-list li,
-.lifestyle-tab-content .lifestyle-tab-list-text {
+.lifestyle-tab-content .lifestyle-tab-list-text,
+.travel-tab-content .travel-tab-list li,
+.travel-tab-content .travel-tab-list-text,
+.insurance-tab-content .insurance-tab-list li {
   font-weight: 400;
   font-size: 14px;
   line-height: 28px;
 }
-.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item {
+.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item,
+.travel-tab-content .accordion.custom-accordion-tab .accordion-item {
   background: #ffffff;
   border: none;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 12px 33px;
 }
-.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button:focus {
+.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button:focus,
+.travel-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button:focus {
   box-shadow: none;
 }
-.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button {
+.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button,
+.travel-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button {
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
   color: #DEA018 !important;
 }
-.lifestyle-accordion-list {
+.lifestyle-accordion-list,
+.travel-accordion-list {
   padding: 13px 0;
 }
-.lifestyle-accordion-list li {
+.lifestyle-accordion-list li,
+.travel-accordion-list li {
   font-weight: 400;
   font-size: 14px;
   line-height: 28px;
   color: #000000;
 }
-.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button::after {
+.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button::after,
+.travel-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button::after {
   background-image: url("/assets/infinia/images/know-your-card/plus-icon.png");
+  filter: none;
 }
-.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button:not(.collapsed)::after {
+.lifestyle-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button[aria-expanded="true"]:not(.collapsed)::after,
+.travel-tab-content .accordion.custom-accordion-tab .accordion-item .accordion-button[aria-expanded="true"]:not(.collapsed)::after {
   filter: none;
   background-image: url("/assets/infinia/images/know-your-card/minus-icon.png");
 }
@@ -423,8 +309,102 @@ body {
   padding: 24px 32px;
   /* margin-bottom: 20px; */
 }
-.lifestyle-tab-list-card-text {
+.lifestyle-tab-list-card-text,
+.travel-tab-list-card-text {
   font-weight: 400;
   font-size: 14px;
   line-height: 20px;
 }
+
+/* Travel Benefits */
+.travel-section {
+  padding: 50px 0;
+}
+.travel-section .travel-nav-tab-custom,
+.insurance-section .insurance-nav-tab-custom {
+  background: rgba(195, 131, 44, 0.1);
+  border-radius: 50px;
+  padding: 3px 4px;
+  display: table;
+  margin: 35px auto 30px;
+}
+.travel-nav-tab-custom .travel-nav-tab .nav-item .nav-link,
+.insurance-nav-tab-custom .insurance-nav-tab .nav-item .nav-link {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(0, 0, 0, .50);
+  padding: 11px 22px;
+  border-radius: 50px;
+}
+.travel-nav-tab-custom .travel-nav-tab.nav-pills .nav-link.active,
+.travel-nav-tab-custom .travel-nav-tab.nav-pills .show>.nav-link,
+.insurance-nav-tab-custom .insurance-nav-tab.nav-pills .nav-link.active,
+.insurance-nav-tab-custom .insurance-nav-tab.nav-pills .show>.nav-link {
+  background: #DEA018;
+  color: #ffffff;
+}
+.travel-brand-logo-item {
+  background: #FFFFFF;
+  border: 1.48787px solid rgba(217, 217, 217, .50);
+  border-radius: 7.43937px;
+  height: 79px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Emergency Support & Insurance */
+.insurance-section {
+  padding: 50px 0;
+}
+
+/* No Charges */
+.charges-section {
+  padding: 50px 0;
+}
+.section-bottom-subtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+/* Network Offers */
+.network-section {
+  padding: 50px 0;
+}
+.network-section .network-card {
+  min-height: 221px;
+}
+
+/* Rewards */
+.rewards-section {
+  padding: 50px 0;
+}
+.rewards-section .charges-card-title {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+  color: #000000;
+}
+.custom-card-list {
+  margin-left: 20px;
+}
+.custom-card-list li {
+  list-style: disc;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 28px;
+  color: #000000;
+}
+
+/* Welcome & Renewal Benefits */
+.renewal-section {
+  padding: 50px 0;
+}
+
+/* Infinia Reserve Smartbuy Portal */
+.smartbuy-portal-section {
+  padding: 50px 0;
+}
+

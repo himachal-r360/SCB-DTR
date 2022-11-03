@@ -6,17 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./infinia-reserve.component.scss']
 })
 export class InfiniaReserveComponent implements OnInit {
-  tabList = [{title:'Infinia Reserve',status: true},
-  {title:'Lifestyle Benefits',status: true},
-  {title:'Travel Benefits',status: true},
-  {title:'Emergency Support & Insurance',status: true},
-  {title:'No Charges',status: true},
-  {title:'Network Offers',status: true},
-  {title:'Infinia Reserve',status: true},
-  {title:'Infinia Reserve',status: true},
-  {title:'Infinia Reserve',status: true},
-  {title:'Infinia Reserve',status: true},
-   'Lifestyle Benefits', 'Travel Benefits', 'Emergency Support & Insurance', 'No Charges', 'Network Offers', 'Rewards', 'Welcome & Renewal Benefits', 'Infinia Reserve Smartbuy Portal'];
+  tabList = [{ title: 'Infinia Reserve', status: true },
+  { title: 'Lifestyle Benefits', status: false },
+  { title: 'Travel Benefits', status: false },
+  { title: 'Emergency Support & Insurance', status: false },
+  { title: 'No Charges', status: false },
+  { title: 'Network Offers', status: false },
+  { title: 'Rewards', status: false },
+  { title: 'Welcome & Renewal Benefits', status: false },
+  { title: 'Infinia Reserve Smartbuy Portal', status: false },
+  ];
   securedCardImg = [
     {
       title: '100% limit coverage in case of fraudulent transactions.',
@@ -36,7 +35,15 @@ export class InfiniaReserveComponent implements OnInit {
   ngOnInit() {
   }
 
-  onActive(){
-
+  scrollToElement(navData) {
+    this.tabList.filter(data => {
+      if(data.title == navData.title){
+        data.status = true;
+      }
+      else {
+        data.status = false;
+      }
+    })
+    // navData.title.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 }
