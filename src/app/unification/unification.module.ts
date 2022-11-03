@@ -39,9 +39,8 @@ const routes: Routes = [
     BenefitsComponent,
     ClubMarriotMembershipComponent,
     InfiniaHomeComponent,
-    InfiniaItcHotelComponent
-
-
+    InfiniaItcHotelComponent,
+    InfiniaReserveComponent
   ],
   imports: [
     CommonModule,
