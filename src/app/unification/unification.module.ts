@@ -10,6 +10,7 @@ import { ClubMarriotMembershipComponent } from './club-marriot-membership/club-m
 import { InfiniaHomeComponent } from './infinia-home/infinia-home.component';
 import { InfiniaItcHotelComponent } from './infinia-itc-hotel/infinia-itc-hotel.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { InfiniaReserveComponent } from './infinia-reserve/infinia-reserve.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: "infinia/infinia-itc-hotel", component: InfiniaItcHotelComponent },
   { path: "infinia/club-marriott-membership", component: ClubMarriotMembershipComponent },
   { path: "infinia/infinia-gateway", component: InfiniaHomeComponent },
+  { path: "infinia_reserve/know-your-card", component: InfiniaReserveComponent },
 
 ];
 
@@ -38,8 +40,8 @@ const routes: Routes = [
     ClubMarriotMembershipComponent,
     InfiniaHomeComponent,
     InfiniaItcHotelComponent
-    
-    
+
+
   ],
   imports: [
     CommonModule,
