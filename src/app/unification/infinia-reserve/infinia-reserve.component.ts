@@ -6,7 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./infinia-reserve.component.scss']
 })
 export class InfiniaReserveComponent implements OnInit {
-  tabList = ['Infinia Reserve', 'Lifestyle Benefits', 'Travel Benefits', 'Emergency Support & Insurance', 'No Charges', 'Network Offers', 'Rewards', 'Welcome & Renewal Benefits', 'Infinia Reserve Smartbuy Portal'];
+  tabList = [{title:'Infinia Reserve',status: true},
+  {title:'Lifestyle Benefits',status: true},
+  {title:'Travel Benefits',status: true},
+  {title:'Emergency Support & Insurance',status: true},
+  {title:'No Charges',status: true},
+  {title:'Network Offers',status: true},
+  {title:'Infinia Reserve',status: true},
+  {title:'Infinia Reserve',status: true},
+  {title:'Infinia Reserve',status: true},
+  {title:'Infinia Reserve',status: true},
+   'Lifestyle Benefits', 'Travel Benefits', 'Emergency Support & Insurance', 'No Charges', 'Network Offers', 'Rewards', 'Welcome & Renewal Benefits', 'Infinia Reserve Smartbuy Portal'];
   securedCardImg = [
     {
       title: '100% limit coverage in case of fraudulent transactions.',
@@ -26,4 +36,7 @@ export class InfiniaReserveComponent implements OnInit {
   ngOnInit() {
   }
 
+  onActive(){
+
+  }
 }
