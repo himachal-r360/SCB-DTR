@@ -1,5 +1,11 @@
-<main class="site-main " [ngClass]="{ 'mt-140': payzrestriction,'mt-180': !payzrestriction }">
+<main class="site-main " autoscroll="true" [ngClass]="{ 'mt-140': payzrestriction,'mt-180': !payzrestriction }">
+   
     <section class="travel-area mt-80 mb-10">
+        <img src="../../assets/images/Mask group.png" class="banner-img">
+       <div class="banner-content">
+            <h1><img src="../../assets/images/flights_details/Vector (8).png">Let's Explore the World together <img src="../../assets/images/flights_details/Vector (9).png"></h1>
+            <span class="book-flight-text">Use you Airmiles to book flights</span>
+          </div>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -8,29 +14,30 @@
                             <div class="travel-select-box">
                                 <ul class="travel-list-ul">
                                     <li class="travel-list-li">
-                                        <a href="javascript:;" class="travel-list-a" (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/flight-1.svg" alt=""> Flights
+                                        <a href="javascript:;" class="travel-list-a flight-active" (click)="navBarLink('flight')" [ngClass]="navItemActive == 'flight'? 'active':'' ">
+                                            <img src="../../assets/images/Travel.png" alt=""> Flights
                                         </a>
                                     </li>
-                                    <li class="travel-list-li">
+                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('train')" [ngClass]="navItemActive == 'train'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/train-1.svg" alt=""> Trains
+                                            <img src="../../assets/images/Property.png" alt=""> Stays
                                         </a>
                                     </li>
                                     <li class="travel-list-li">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('bus')" [ngClass]="navItemActive == 'bus'? 'active':'' ">
-                                            <img src="{{cdnUrl}}images/icons/bus-1.svg" alt=""> Buses
+                                            <img src="../../assets/images/International Transfer.png" alt=""> experience
                                         </a>
                                     </li>
-                                    <li class="travel-list-li" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
+                                    <!--<li class="travel-list-li" *ngIf="DOMAIN_SETTINGS.HOTEL==1">
                                         <a href="javascript:;" class="travel-list-a" (click)="navBarLink('hotel')" [ngClass]="navItemActive == 'hotel'? 'active':'' ">
                                             <img src="{{cdnUrl}}images/icons/stays-1.svg" alt=""> Stays
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
-                        <app-flight-search isViewPartner="true" *ngIf="navItemActive=='flight'"></app-flight-search>
+                    
+                        <app-flight-search isViewPartner="true" showHorizontalSearch="false" *ngIf="navItemActive=='flight'"></app-flight-search>
                         <app-hotel-search isViewPartner="true" *ngIf="navItemActive=='hotel'"></app-hotel-search>
                         <app-bus-search isViewPartner="true" *ngIf="navItemActive=='bus'"></app-bus-search>
                         <app-train-search isViewPartner="true" *ngIf="navItemActive=='train' || navItemActive=='pnr' "></app-train-search>
@@ -360,8 +367,8 @@
             </div>
         </div>
     </section>
-    <!-- Trending Routes -->
-    <!--<section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
+   
+    <section class="TrendingRoutes-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -370,7 +377,78 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="card-row">
+                <div class="columns">
+                  <div class="trending-card">
+                    <div style="position: absolute;">
+                      <div><span><img  src="{{cdnUrl}}images/flights_details/Subtract_l1.png">
+                        <div class="half-circle-top"></div>
+                        <img class="transit" src="{{cdnUrl}}images/flights_details/transit.png">
+                        <div class="half-circle-bottom"></div>
+                        <img  src="{{cdnUrl}}images/flights_details/Subtract_r1.png"></span>
+                        <span class="price">$4,263</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="trending-card">
+                    <div style="position: absolute;">
+                      <div><span><img  src="{{cdnUrl}}images/flights_details/Subtract_l2.png">
+                        <div class="half-circle-top"></div>
+                        <img class="transit" src="{{cdnUrl}}images/flights_details/transit.png">
+                        <div class="half-circle-bottom"></div>
+                        <img  src="{{cdnUrl}}images/flights_details/Subtract_r2.png"></span>
+                        <span class="price">$4,263</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="trending-card">
+                    <div style="position: absolute;">
+                      <div><span><img  src="{{cdnUrl}}images/flights_details/Subtract_l3.png">
+                        <div class="half-circle-top"></div>
+                        <img class="transit" src="{{cdnUrl}}images/flights_details/transit.png">
+                        <div class="half-circle-bottom"></div>
+                        <img  src="{{cdnUrl}}images/flights_details/Subtract_r3.png"></span>
+                        <span class="price">$4,263</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="columns">
+                  <div class="trending-card">
+                    <div style="position: absolute;">
+                      <div><span><img  src="{{cdnUrl}}images/flights_details/Subtract_l1.png">
+                        <div class="half-circle-top"></div>
+                        <img class="transit" src="{{cdnUrl}}images/flights_details/transit.png">
+                        <div class="half-circle-bottom"></div>
+                        <img  src="{{cdnUrl}}images/flights_details/Subtract_r1.png"></span>
+                        <span class="price">$4,263</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+                <div class="columns">
+                  <div class="trending-card">
+                    <div style="position: absolute;">
+                      <div><span><img  src="{{cdnUrl}}images/flights_details/Subtract_l2.png">
+                        <div class="half-circle-top"></div>
+                        <img class="transit" src="{{cdnUrl}}images/flights_details/transit.png">
+                        <div class="half-circle-bottom"></div>
+                        <img  src="{{cdnUrl}}images/flights_details/Subtract_r2.png"></span>
+                        <span class="price">$4,263</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- <div class="row">
                 <div class="col-md-12">
                     <div class="owl-slider grid-4 tranding-routes-slider" *ngIf="isMobile == false">
                         <ng-container *ngFor="let trendingItem of trendingRoutes">
@@ -427,13 +505,13 @@
                         </ng-container>
                     </owl-carousel-o>
                 </div>
-            </div>
+            </div> -->
         </div>
-    </section>-->
+    </section>
 
 
-    <!-- Popular Domestic Flight Routes -->
-    <!-- <section class="popular-Domestic-area mb-50" *ngIf="navItemActive=='flight'">
+    <!-- Popular Domestic Flight Routes  -->
+    <section class="popular-Domestic-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -506,10 +584,10 @@
                 </div>
             </div>
         </div>
-    </section>-->
+    </section>
 
-    <!-- Popular International  Flight Routes -->
-    <!-- <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
+    <!-- Popular International  Flight Routes  -->
+     <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -582,7 +660,7 @@
                 </div>
             </div>
         </div>
-    </section>-->
+    </section>
 
 
 
@@ -668,7 +746,7 @@
 
 
     <!-- Popular International  Flight Routes -->
-    <!-- <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
+    <section class="popular-International-area mb-50" *ngIf="navItemActive=='flight' || navItemActive=='bus'">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -709,6 +787,6 @@
                 </div>
             </div>
         </div>
-    </section>-->
+    </section>
 
 </main>

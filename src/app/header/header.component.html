@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade pop_code" id="disclamierPopup" tabindex="-1" role="dialog" aria-labelledby="disclamierPopupTitle" aria-hidden="true" data-backdrop="static">
+<!-- <div class="modal fade pop_code" id="disclamierPopup" tabindex="-1" role="dialog" aria-labelledby="disclamierPopupTitle" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header pb-2 pr-0">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="header-sticky fixed-top bg-header" *ngIf="showHeader">
     <div class="row marquee-row-new" *ngIf="importantMessage">
@@ -45,18 +45,27 @@
         <div class="d-none d-sm-none d-lg-block">
             <nav class=" sb_head">
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="d-flex">
-                            <a class="navbar-brand" href="https://www.hdfcbank.com/" *ngIf="is_main==1" target="_blank">
+                    <div class="col-md-7">
+                        <h4>Holiday Planner
+                            <!-- <button class="border" (click)="toggleDarkTheme()">Change Theme</button> -->
+                        </h4>
+
+                        <!--<div class="d-flex">
+                             <a class="navbar-brand" href="https://www.hdfcbank.com/" *ngIf="is_main==1" target="_blank">
                                 <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC BaWhatsnk">
                             </a>
                             <a class="navbar-brand" href="{{sub_domain_redirection_url}}">
                                 <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" class="smartbuy_logo">
                             </a>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="col-md-6">
-                        <div class="search_input">
+
+                    <div class="col-md-1 "><a class="tab-active active" href="">Flights</a>
+                        <buttor (click)="button()">button</buttor>
+
+                        <buttor (click)="logIn()">Login</buttor>
+
+                        <!-- <div class="search_input">
                             <input class="form-control mr-sm-2 sb_search" type="text" placeholder="Search for exciting deals & offers" aria-label="Search" (keyup)="searchBar($event)" autocomplete="off" (keydown.enter)="onKeyDownEvent($event)" [(ngModel)]="searchBarValue">
 
                             <div class="city-popup cus scroll_head-yy sb_header-pop sb_scroll_head-yy topsearch-auto" *ngIf="showSearchBox">
@@ -127,9 +136,12 @@
 
 
                             </span>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-1">Stays</div>
+                    <div class="col-md-1">Experiences </div>
+                    <div class="col-md-1"><div class="total-points">5,000 Pts</div></div>
+                    <div class="col-md-1">
 
                         <div class="after_log">
                             <div class="inner_child" *ngIf=" serviceSettings.notifications==1" (mouseleave)="disablePushBtn()">
@@ -288,7 +300,8 @@
                                 <div class="dropdown myaccount-drop">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdown-user" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="" *ngIf="customerLogin==false">Hi, Guest</span>
-                                        <span class="custName" *ngIf="customerLogin==true">Hi {{ (customer_full_name.length>20)? (customer_full_name | slice:0:20)+'..':(customer_full_name) }} </span>
+                                        <span class="custName" *ngIf="customerLogin==true">Hi guest </span>
+
                                         <i class="fa fa-angle-down pl-10" aria-hidden="true"></i>
                                     </a>
                                     <div class="dropdown-menu user-menu myaccount-drop" aria-labelledby="dropdown-user">
@@ -310,21 +323,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <a class="dropdown-item" href="javascript:;" (click)="clickUrl('manage_account')">
+                                        <!-- <a class="dropdown-item" href="javascript:;" (click)="clickUrl('manage_account')">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-gear.svg" alt="account" class="">
                                                 <span>Manage account</span>
                                             </div>
-                                        </a>
+                                        </a> -->
 
                                         <a class="dropdown-item" href="javascript:;" (click)="clickUrl('manage_orders')">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-orders.svg" alt="account" class="">
-                                                <span>My Orders / Bookings</span>
+                                                <span>My Bookings</span>
                                             </div>
                                         </a>
 
-                                        <a class="dropdown-item" href="javascript:;" (click)="clickUrl('customer_support')">
+                                        <!-- <a class="dropdown-item" href="javascript:;" (click)="clickUrl('customer_support')">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-help.svg" alt="account" class="">
                                                 <span>Customer Support</span>
@@ -335,14 +348,23 @@
                                                 <img src="{{cdnUrl}}images/smartbuy/account/faq_black_icn.svg" alt="account" class="">
                                                 <span>FAQ'S</span>
                                             </div>
-                                        </a>
-                                        <a class="dropdown-item" href="{{sub_domain_redirection_url}}logout">
+                                        </a> -->
+                                        <a class="dropdown-item" href="">
                                             <div class="item">
                                                 <img src="{{cdnUrl}}images/smartbuy/icons/icn-out.svg" alt="account" class="">
                                                 <span>Logout</span>
                                             </div>
-                                        </a>
+                                        </a>                   
+                                        <div class="dark-light-theme d-flex">
+                                         Light &nbsp;&nbsp;<div class="form-check form-switch m-0 d-flex ">
+                                            <input class="form-check-input" *ngIf="themeDark=='true'" type="checkbox" role="switch" checked  (change)="darkTheme($event)"/>
+                                            <input class="form-check-input" *ngIf="themeDark=='false'" type="checkbox" role="switch"  (change)="darkTheme($event)"/>
+                                        </div>Dark
+                                      </div>
                                     </div>
+                                    <!-- <button class="border" *ngIf="themeDark=='true'" (click)="toggleDarkTheme()">Light</button>
+                                    <button class="border" *ngIf="themeDark=='false'" (click)="toggleDarkTheme()">Dark</button> -->
+
                                 </div>
 
                             </div>
@@ -353,15 +375,15 @@
         <div class="">
             <nav class="nav menu_list">
                 <ul>
-                    <li>
+                    <!-- <li>
                         <a class="nav_link_item" [ngClass]="menuActiveClass=='foryou'  ? 'active' : ''" href="javascript:;" (click)="goTo('foryou')">For you </a>
                     </li>
                     <li class="dropdown">
 
                         <a class="nav_link_item" href="javascript:;" (mouseenter)="enableDrop()" [ngClass]="menuActiveClass=='bus' || menuActiveClass=='train'  || menuActiveClass=='flight'|| menuActiveClass=='hotel' ? 'active' : ''">Travel & Stays </a>
                         <div class="dropdown-content-list list-travel">
-                            <div class="row">
-                                <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
+                            <div class="row"> -->
+                                <!-- <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.FLIGHT==1">
                                     <div>
                                         <div>
                                             <p><a href="javascript:;" (click)="goTo('compare-fly')" class="list-travel-font">
@@ -376,14 +398,13 @@
                                             <img *ngIf="flt.flag==1" src="{{cdnUrl}}images/smartbuy/partner/48/svg/{{flt.menu}}" alt="{{flt.name}}" />
                                         </ng-container>
                                     </div>
-                                </div>
-
+                                </div> -->
+<!-- 
                                 <div class="col-sm-3" *ngIf="DOMAIN_SETTINGS.TRAIN==1">
                                     <div>
                                         <div>
                                             <p><a href="javascript:;" (click)="goTo('train')" class="list-travel-font">Trains</a></p>
                                             <p class="points">{{serviceSettings.offer_construct.train.reward}}X Reward Points | {{serviceSettings.offer_construct.train.cashback}}% Cashback</p>
-                                            <!--<p class="mb-2 mt-3"><a href="javascript:;" (click)="goTo('train/pnr')">Check PNR Status</a></p>-->
                                         </div>
                                     </div>
                                     <div class="list-travel-img mt-3">
@@ -419,17 +440,16 @@
                                         <img src="{{cdnUrl}}images/smartbuy/partner/48/svg/trav-7.svg" alt="cleartrip" />
                                     </div>
                                 </div>
-
                             </div>
 
 
                         </div>
-                    </li>
+                    </li> -->
 
-                    <li class="dropdown">
+
+                    <!-- <li class="dropdown">
                         <a class="nav_link_item" href="javascript:;">Shop</a>
                         <div class="dropdown-content-list list-shop">
-                            <!-- //<h5>E-Commerce</h5> -->
                             <div class="row g-4">
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.AMAZON==1">
                                     <div class="content_show">
@@ -459,8 +479,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <!-- //</div>
-                                        //<div class="row"> -->
+                                
                                 <div class="col-sm-4" *ngIf="DOMAIN_SETTINGS.IGP==1">
                                     <div class="content_show">
                                         <a href="javascript:;" (click)="redirectUrlpopup('igp',0,'igp')">
@@ -605,7 +624,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </nav>
         </div>
@@ -1512,7 +1531,7 @@
                                     </div>
                                 </div>
                             </li> -->
-                <li class="dropdown hdr_menu_li" *ngIf="DOMAIN_SETTINGS.PRIVILEGES==1">
+                <!-- <li class="dropdown hdr_menu_li" *ngIf="DOMAIN_SETTINGS.PRIVILEGES==1">
                     <a class="nav_link_item hdr_menu" href="javascript:;">Privileges</a>
                     <div class="dropdown-content-list privi-list privilege_drpdwn">
                         <ul class="privilege_list">
@@ -1691,7 +1710,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </nav>
     </div>
@@ -3920,7 +3939,7 @@
                         <img src="{{cdnUrl}}images/sb_img/hdfc-logo-m.svg" alt="HDFC Bank">
                         </a>&nbsp;
                         </span>
-    <a href="{{DOMAIN_SETTINGS.main_domain_url}}"><img src="{{cdnUrl}}images/sb_img/smartbuy_new.svg" alt="Smartbuy" class="" width="120px"> </a>
+    <!-- <a href="{{DOMAIN_SETTINGS.main_domain_url}}"><img src="{{cdnUrl}}images/sb_img/smartbuy_new.svg" alt="Smartbuy" class="" width="120px"> </a> -->
 
 </div>
 </div>
@@ -4151,7 +4170,7 @@
                     <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC Bank">
                 </a>
                 <a class="navbar-brand" href="{{domainRedirect}}{{domainPath}}">
-                    <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%">
+                    <!-- <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%"> -->
                 </a>
             </div>
             <div class="footer_links_m">
@@ -4846,7 +4865,7 @@
                     <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC Bank">
                 </a>
                 <a class="navbar-brand" href="{{domainRedirect}}{{domainPath}}">
-                    <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%">
+                    <!-- <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%"> -->
                 </a>
             </div>
             <div class="footer_links_m regalia_gold_m_footer_links">
@@ -5672,7 +5691,7 @@
                     <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC Bank">
                 </a>
                 <a class="navbar-brand" href="{{domainRedirect}}{{domainPath}}">
-                    <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%">
+                    <!-- <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%"> -->
                 </a>
             </div>
             <div class="footer_links_m regalia_gold_m_footer_links">
@@ -6517,7 +6536,7 @@
                     <img src="{{cdnUrl}}images/hdfc-logo-m.svg" alt="HDFC Bank">
                 </a>
                 <a class="navbar-brand" href="{{domainRedirect}}{{domainPath}}">
-                    <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%">
+                    <!-- <img src="{{cdnUrl}}images/smartbuy_new.svg" alt="HDFC Bank" width="60%"> -->
                 </a>
             </div>
             <div class="footer_links_m regalia_gold_m_footer_links">

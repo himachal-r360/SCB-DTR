@@ -1,16 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 const LOCALJSON = environment.LOCALJSON;
 @Injectable({
   providedIn: 'root'
 })
 export class FlightService {
-  flight = environment.url + "api/flightSearch";
+  flight = environment.url + "api/list";
   city = environment.url + "elastic/esearch?searchDisplayForm=flights";
-  flightInfo = environment.url + "api/flightInfo";
-    flightInfoMulticity = environment.url + "api/flightInfoMulticity";
+  flightInfo = environment.url + "api/info";
+  flightInfoMulticity = environment.url + "api/flightInfoMulticity";
   multicityFlight = environment.url + "api/flightSearchMulticity";
   flightListData: any;
   flightListDate: any;
@@ -31,7 +31,9 @@ export class FlightService {
 
 
 
-  header = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+  header = new HttpHeaders({
+  'Content-Type': 'application/json',
+    })
   constructor(private http: HttpClient) {
   }
 
@@ -58,8 +60,10 @@ export class FlightService {
         }
       }
     } else {
-
-      return this.http.post(this.flight, body, { headers: this.header })
+      let headerValue = new HttpHeaders({
+        'Content-Type': 'application/json',
+         })
+      return this.http.post(this.flight, body, { headers: headerValue }).pipe(map((response: any) => response));
     }
   }
 

@@ -16,7 +16,7 @@ import {CartService} from 'src/app/shared/services/cart.service';
 import { CommunicationService } from 'src/app/shared/services/communication.service';
 import { AppConfigService } from '../app-config.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { AnyForUntypedForms, FormsModule } from '@angular/forms';
 import { CommonHelper } from 'src/app/shared/utils/common-helper';
 import { DomSanitizer } from '@angular/platform-browser';
 import {trigger, state, style, animate, transition} from '@angular/animations';
@@ -26,6 +26,7 @@ import { ElasticsearchService } from 'src/app/shared/services/elasticsearch.serv
 import { FlightService } from '../common/flight.service';
 import { ConditionalExpr } from '@angular/compiler';
 import { Console } from 'console';
+import { CssLoaderComponent } from '../css-loader.component';
 
 declare var $: any;
 declare var jQuery: any;
@@ -171,11 +172,14 @@ export class HeaderComponent implements OnInit {
         cardList:any=[];
         showcards:boolean=false;
         mainRedirect:any;
+        themeDark ;
+        checkinput:boolean=false;
+
 	notificationball:boolean=true;
   @Input() d_none :boolean = false;
 
  @ViewChild("content") modalContent: TemplateRef<any>;
-  constructor(private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
+  constructor( private css:CssLoaderComponent, private _flightService:FlightService,private ngZone: NgZone,private modalService: NgbModal,
   private cookieService: CookieService, private router: Router,private sg: SimpleGlobal, public rest:RestapiService,private EncrDecr: EncrDecrService,@Inject(DOCUMENT) private document: any,private _elRef: ElementRef, public deviceService: DeviceDetectorService, private cartService: CartService,private dialog: MatDialog,private communicate: CommunicationService,private appConfigService:AppConfigService, public commonHelper: CommonHelper,protected htmlSanitizer: DomSanitizer,private es: ElasticsearchService, private activatedRoute: ActivatedRoute, private _DisclaimerSheetComponent:MatBottomSheet) {
         this.isMobile = window.innerWidth < 991 ?  true : false;
   
@@ -346,7 +350,45 @@ export class HeaderComponent implements OnInit {
     Window["myComponent"] = this;
  
   }
+  darkTheme(event:any){
+    this.themeDark = localStorage.getItem('theme-dark');
+    if(this.themeDark=='true'){
+      localStorage.setItem('theme-dark','false');
+      this.css.getCss();
+       location.reload();
+       console.log( localStorage.getItem('theme-dark'));
 
+    }
+    else{
+      localStorage.setItem('theme-dark','true');
+      this.css.getCss();
+      location.reload();
+      console.log( localStorage.getItem('theme-dark'));
+
+    }
+
+  }
+  toggleDarkTheme(): void {
+    this.themeDark = localStorage.getItem('theme-dark');
+    if(this.themeDark==='true'){
+      localStorage.setItem('theme-dark','false');
+          this.css.getCss();
+           location.reload();
+    }
+    else{
+      localStorage.setItem('theme-dark','true');
+           this.css.getCss();
+           location.reload();
+    }
+
+    //  localStorage.setItem('theme-dark',this.themeDark.toString());
+    // this.css.getCss();
+    //      location.reload();
+   // window.location.reload();
+    
+
+   // document.body.classList.toggle('dark-theme');
+  }
   
   toast(val,index){
 
@@ -402,6 +444,19 @@ export class HeaderComponent implements OnInit {
             }
             return html;
 
+  }
+
+  checkoutData={"itineraryid":"Reward360_deeplinkbooking_ATI_1677737176217-0.6190767863905513@@saas_template12","clientToken":"HDFC243","programName":"SMARTBUY","serviceToken":"Flight","contactDetails":{"firstName":"archana","lastName":"sai","email":"tamilselvanmsc@gmail.com","mobile":"9788732219","whatsappFlag":"1","forex_check":0},"flightDetails":{"onwards":[{"arr_tym":"2023-03-03T17:36","sourcity":"Kolkata","car_id":"6E","rowfirst_onward":"","airportname_countrysour":"India","img":"6E.gif","operating_airline":"","airportname_citydesti":"Chennai","fnum":"892",
+  "airportname_countrydesti":"India","refund":"Non Refundable","friend_ddate":"","flight_id":"","show_price":"","dst_tym":"2023-03-03T15:11","desti":"MAA","friend_dst":"15:11","friend_arr":"17:36","sour":"CCU","airportname_sour":"Netaji Subhas Chandra Bose Airport","desticity":"Chennai","flyend":"","friend_adate":"","car_name":"IndiGo","airportname_citysour":"Kolkata","operated_by":"","duration":"0 h 02 min","frcnt":"","flystart":"","airportname_desti":"Chennai Airport","flight_type":"Non-Stop","departureTerminal":"-","arrivalTerminal":"1"}],"onward_duration":"0 h 02 min",
+  "onward_stops":"Non-Stop","returns":[],"return_refund":"","return_duration":"","return_stops":"-1 Stop","baggage_information":{"onward":"","return":""},"baggage":"[]","passengerDetails":[{"title":"Mr","firstName":"archana","lastName":"sai","type":"ADT","dob":"1987-02-13","dateOfBirth":"1987-02-13","frequentFlyerNumbers":[]}],"fare":{"totalFare":4620,"convenience_fee":0,"partnerConvFee":0,"child":"0","adults":"1","infants":"0","total":4620,"others":1424,"totalbf":3196,"coupon_code":"","pass_break":{"ADT":4520,"CHD":0,"INF":0},"total_passengers":1,"markup_fee":0,"partner_amount":4620,"discount":0,"voucher_amount":0,"voucher_code":"","ticket_class":"Economy"},"onwardFareKey":"CACHESTORE_Reward360_deeplink_ATI_saas_template12_CCUMAA2023-03-03domesticOneWay_1677734123461_126@@saas_template12","returnFareKey":"","inputs":{"Default":"O","adults":"1","child":"0","class":"E","fcode":"CCU","flightdeparture":"2023-03-03","flightfrom":"Kolkata","flightfromCity":"Kolkata","flightfromCountry":"India","flightfromCountryCode":"IN","flightreturn":"","flightto":"Chennai","flighttoCity":"Chennai","flighttoCountry":"India","flighttoCountryCode":"IN","infants":"0","t":"ZWFybg==","tcode":"MAA","post_default":"O","travel":"DOM"}},"cancellationPolicy":"","checkin":"","checkin_box":null,"order_ref_num":"00716777371755005764","amd_url":"","redirect_url":"","retry_url":"","sessionKey":"UTBOVmZFMUJRWHd5TURJekxUQXpMVEF6Zkh3eGZEQjhNSHhGZkVSUFRYeFBmSGRsWWc9PUNDVU1BQTZFODkyMjAyMy0wMy0wM3VuZGVmaW5lZA==","docKey":"Q0NVfE1BQXwyMDIzLTAzLTAzfHwxfDB8MHxFfERPTXxPfHdlYg==","flightSessionData":{"travel":"DOM","travel_type":"O","docKey":"Q0NVfE1BQXwyMDIzLTAzLTAzfHwxfDB8MHxFfERPTXxPfHdlYg==","onwardFlightKey":"CCUMAA6E8922023-03-03","returnFlightKey":"","onwardFlights":[{"departureAirport":"CCU","departureTerminal":"-","arrivalAirport":"MAA","arrivalTerminal":"1","departureDateTime":"2023-03-03T15:11","arrivalDateTime":"2023-03-03T17:36","airline":"6E","flightNumber":"892","operatingAirline":"","stops":0,"equipment":"Indigo","duration":145,"airlineName":"Indigo"}],"returnFlights":"","onwardPriceSummary":[{"flightKey":"CCUMAA6E8922023-03-03","flights":[{"departureAirport":"CCU","departureTerminal":"-","arrivalAirport":"MAA","arrivalTerminal":"1","departureDateTime":"2023-03-03T15:11","arrivalDateTime":"2023-03-03T17:36","airline":"6E","flightNumber":"892","operatingAirline":"","stops":0,"equipment":"Indigo","duration":145,"airlineName":"Indigo"}],"priceSummary":[{"partnerName":"TripGain","splrtFareFlight":false,"baseFare":3196,"totalFare":4520,"refundStatus":1,"foodAllowance":"","baggageAllowance":"","ctFareObject":"{\"nextracustomstr\":\"CACHESTORE_Reward360_deeplink_ATI_saas_template12_CCUMAA2023-03-03domesticOneWay_1677734123461_126@@saas_template12\",\"totaljourneyduration\":0,\"flightdeeplinkurl\":\"http://www.farechannel.com/domoneway.jsp?triptype=OneWay&displaystart=Kolkata(CCU)&displayend=Chennai(MAA)&start=CCU&end=MAA&fromdate=20230303&todate=&nadults=1&nchild=0&ninfants=0&pclass=Y&pairline=&nextrakey=CACHESTORE_Reward360_deeplink_ATI_saas_template12_CCUMAA2023-03-03domesticOneWay_1677734123461_126@@saas_template12\",\"autoissuance\":\"\",\"supplier\":\"\",\"flightfare\":{\"adultbasefare\":3196,\"adultinvoice\":0,\"amenities\":[],\"tds\":0,\"totalfq\":4520,\"servicefee\":0,\"cancelable\":\"\",\"chdreissuecharge\":0,\"discount\":0,\"infantinvoice\":0,\"refundableinfo\":\"Y\",\"totalnet\":4520,\"childyq\":0,\"totalyq\":0,\"transactionfee\":0,\"infantbasefare\":0,\"changable\":\"\",\"adultyq\":0,\"ticketbydate\":\"\",\"currency\":\"INR\",\"childbasefare\":0,\"infanttax\":0,\"infantyq\":0,\"adulttax\":1324,\"adtreissuecharge\":0,\"servicetax\":0,\"markup\":0,\"childtax\":0,\"totalbasefare\":3196,\"plb\":0,\"faretype\":\"normal\",\"originaltotalfq\":0,\"othertaxesbreakup\":[],\"totaltax\":1324,\"childinvoice\":0,\"inftreissuecharge\":0,\"originalbasefare\":0,\"paxothertaxesbreakup\":[],\"cabinbaggage\":\"\",\"originaltotalnet\":0,\"handlingcharges\":0},\"ssravailable\":\"\",\"flightlegs\":[{\"earlierbookingcount\":\"0\",\"carriername\":\"Indigo\",\"origin\":\"CCU\",\"bagunit\":\"ADT@KG-CHD@KG-\",\"destination\":\"MAA\",\"journeyduration\":145,\"validatingcarriername\":\"Indigo\",\"destination_name\":\"Chennai\",\"operatedby\":\"\",\"farebasiscode\":\"\",\"stopoverinfo\":\"N\",\"stopover\":\"\",\"policyid\":\"-\",\"numseatsavailable\":11,\"depdate\":\"2023-03-03\",\"depterminal\":\"-\",\"origin_name\":\"Kolkata\",\"mileage\":\"\",\"validatingcarrier\":\"6E\",\"inpolicy\":\"false\",\"weather_destination\":\"false@@@false@@@-\",\"totalduration\":0,\"issbt\":\"false\",\"flightnumber\":\"892\",\"equipment\":\"32S-320\",\"ontimeinfo\":\"\",\"specialinfo\":\"\",\"arrtime\":\"1736\",\"arrterminal\":\"1\",\"bookingclass\":\"J\",\"carrier\":\"6EE\",\"deptime\":\"1511\",\"arrdate\":\"2023-03-03\",\"bagweight\":\"ADT@15-CHD@15-\",\"weather_origin\":\"\",\"cabinclass\":\"economy\"}],\"stopoverinfo\":\"\",\"nextraflightkey\":\"CACHESTORE_Reward360_deeplink_ATI_saas_template12_CCUMAA2023-03-03domesticOneWay_1677734123461_126@@saas_template12\",\"islcc\":\"false\"}"}]}],"returnPriceSummary":"","splrtFlight":false,"queryFlightData":{"flightfrom":"CCU","flightto":"MAA","fromCity":"Kolkata","toCity":"Chennai","fromContry":"IN","fromCountryFullName":"India","toCountryFullName":"India","toContry":"IN","fromAirportName":"Netaji Subhas Chandra Bose Airport","toAirportName":"Chennai Airport","flightclass":"E","flightdefault":"O","departure":"2023-03-03","arrival":"","adults":"1","child":"0","infants":"0","mobFromAddress":"","mobToAddress":"","travel":"DOM"}}}
+  button(){
+    this.rest.saveCheckout(JSON.stringify(this.checkoutData)).subscribe(rdata => {
+      if (rdata.okResponse) {}});
+
+
+  }
+  logIn(){
+    this.router.navigateByUrl('/login');
   }
   converttime(date_str){
     if (!date_str) {return;}
@@ -778,9 +833,10 @@ closeCookieConsent(value){
       $('#myModal').modal('show');
 	}
   }
-  
-  ngOnInit() {
 
+  ngOnInit() {
+    console.log('oninig',localStorage.getItem('theme-dark'))
+    this.themeDark = localStorage.getItem('theme-dark');
     this.mainRedirect=this.DOMAIN_SETTINGS['main_domain_url']+'/';
     this.domainRedirect=this.DOMAIN_SETTINGS['sub_domain_redirection_url']+'/'+this.domainPath;
 
@@ -1425,4 +1481,5 @@ export class DisclaimerBottomSheetComponent implements OnInit {
         });
     
   }
+
 }

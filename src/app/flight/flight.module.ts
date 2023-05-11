@@ -28,6 +28,8 @@ import { AirlinesPipe } from '../pipes/airlines.pipe';
 import { MultiAirlinesPipe } from '../pipes/multi_airlines.pipe';
 import { FlightMulticityComponent } from './flight-multicity/flight-multicity.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { SignUpComponent } from './Auth/sign-up/sign-up.component';
+import { LogInComponent } from './Auth/log-in/log-in.component';
 
 const routes: Routes = [
   {
@@ -61,10 +63,14 @@ const routes: Routes = [
   {
     path:":domain/flight-multicity" ,component:FlightMulticityComponent
   },
-
-  
-    {
+  {
     path:"flight-booking/retry" ,component:FlightBookingRetryComponent,
+
+  },{
+    path:"login" ,component:LogInComponent,
+
+  },{
+    path:"sign-up" ,component:SignUpComponent,
 
   }
 
@@ -78,7 +84,7 @@ const routes: Routes = [
     DurationTimePipe,
     FlightCheckoutComponent,FlightBookingRetryComponent,
     MinuteSecondPipe,
-    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe,TotalDurationTimePipe,SafeHtmlPipe,AirlinesPipe,MultiAirlinesPipe
+    FlightRoundtripListComponent,FlightIntListComponent,AgePipe,FilterPipe, FlightMulticityComponent,couponDiplayPipe,TotalDurationTimePipe,SafeHtmlPipe,AirlinesPipe,MultiAirlinesPipe,  SignUpComponent, LogInComponent
 
   ],
   imports: [

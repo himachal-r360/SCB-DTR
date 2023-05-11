@@ -1,0 +1,21 @@
+<div class="loginform">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Username</label>
+      <input type="text" id="username" formControlName="username">
+      <div *ngIf="username.invalid && (username.dirty || username.touched)">
+        <div *ngIf="username.errors.required">Username is required.</div>
+        <div *ngIf="username.errors.pattern">Username should only contain letters and numbers.</div>
+      </div>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password">
+      <div *ngIf="password.invalid && (password.dirty || password.touched)">
+        <div *ngIf="password.errors.required">Password is required.</div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <button type="button" (click)="registration()" >Registration</button>
+  </form>
+  </div>

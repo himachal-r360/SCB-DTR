@@ -2,17 +2,22 @@
     <div class="travel-select-data-area">
         <div class="travel-select-trip">
             <ul class="travel-select-trip-ul">
-                <li>
+                <ul class="list-group list-group-horizontal-sm">
+                    <li class="list-group-item"  (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null   ? 'active':'' " >One Way</li>
+                    <li class="list-group-item"  (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round Trip</li>
+                    <!-- <li class="list-group-item" >Multicity</li> -->
+                </ul>
+                <!-- <li>
                     <span class="selectway " (click)="navBarLink('One Way')" [ngClass]="navItemActive == 'One Way'? 'active':'' || navItemActive == null   ? 'active':'' ">One
                         Way</span>
                 </li>
                 <li>
                     <span class="selectway " (click)="navBarLink('Round Trip')" [ngClass]="navItemActive == 'Round Trip'? 'active':'' ">Round
                         Trip</span>
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                     <span class="selectway" (click)="navBarLink('Multicity')" [ngClass]="navItemActive == 'Multicity' ? 'active':'' ">Multicity</span>
-                </li>
+                </li> -->
                 <li>
                     <div class="Travellers-dropdown ms-3" appDropdown>
                         <div class="Travellers-dropdown-title">
@@ -84,15 +89,14 @@
             </ul>
         </div>
         <div class="travel-data" [ngClass]="navItemActive == 'Multicity'?'d-none':''">
-            <div class="row g-2">
+            <div class="g-2 "    [ngClass]="showHorizontalSearch == 'true' ? 'row':''" >
                 <div class="col-lg-6">
-                    <div class="select-root-area" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
+                  
+                    <div class="select-root-area bg-img border-0" [ngClass]="isMobile && fromCityName == '' ? 'p-3': ''">
                         <div class="select-root-left" appDropdown (click)='focusInput(-1,"from")'>
                             <span class="select-roottitle">FROM</span>
-                            <!-- <h5 class="fw_6 ">{{fromCityName}}<span *ngIf="!isMobile">, {{fromCountryName}}</span></h5> -->
                             <h5 class="fw_6 text-dotted" *ngIf="!isMobile">{{(fromCityName | slice:0:10) + ","}} {{( fromCountryName.length > 8)? (fromCountryName | slice:0:10)+'..':(fromCountryName)}}</h5>
                             <h5 class="fw_6 text-dotted" *ngIf="isMobile">{{(fromCityName | slice:0:10) }}</h5>
-                            <!-- <span class="select-roottitle">{{flightData.value.flightfrom}}, {{ fromAirpotName}}</span> -->
                             <span class="select-roottitle text-dotted" *ngIf="!isMobile">{{flightData.value.flightfrom}}, {{( fromAirpotName.length > 20)? (fromAirpotName | slice:0:25)+'..':(fromAirpotName)}}</span>
                             <span class="select-roottitle text-dotted" *ngIf="isMobile">{{flightData.value.flightfrom}}</span>
                             <div class="error_msg w-50" *ngIf="!isMobile && submitted && Error('flightfrom', 'required')">
@@ -186,7 +190,7 @@
                         </div>
 
                         <div class="select-root-icons" (click)="swap()">
-                            <img src="{{cdnUrl}}images/icons/twoway.png" alt="">
+                            <img src="../../../assets/images/ArrowsLeftRight (1).png" alt="">
                         </div>
                         <div class="select-root-right" appDropdown #toCityDiv id="toCityDiv" (click)='focusInput(-1,"to")'>
                             <span class="select-roottitle" [ngClass]="isMobile && fromCityName == '' ? 'ps-2': ''">TO</span>
@@ -266,7 +270,7 @@
                     </div>
 
                 </div>
-
+                <br>
                 <div class="col-lg-6">
                     <div class="root-date">
                         <!--Web Date Picker-->
@@ -293,11 +297,11 @@
                                             <input matInput [min]="minDate" [matDatepicker]="picker" formControlName="departure" [(ngModel)]="departureDate" (dateChange)="currentPeriodClickedN($event)">
                                             <mat-datepicker-toggle matSuffix [for]="picker">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #picker></mat-datepicker>
+                                            <mat-datepicker #picker class="from-cal"></mat-datepicker>
                                         </mat-form-field>
 
                                     </div>
-                                </div>
+                                </div><span class="date-devider expand-image-white"><img src="../../../assets/images/flights_details/Line 3.png"></span>
                                 <div class="area-root-reutrn" (click)="picker2.open()" id="datePickerArrival" [ngClass]="navItemActive == 'Round Trip' ? '':'disableDiv'">
                                     <div class="select-root-reutrn departure-date">
                                         <span class="select-roottitle">RETURN</span>
@@ -321,7 +325,7 @@
                                             <mat-datepicker #picker2></mat-datepicker>
                                         </mat-form-field>
                                     </div>
-                                </div>
+                                </div><span class="date-devider expand-image-white"><img src="../../../assets/images/flights_details/CalendarBlank.png"></span>
                             </div>
                         </div>
                         <!--Web Date Picker-->
@@ -609,6 +613,8 @@
                     </div>
                 </div>
             </div>
+        
+           
         </div>
 
         <!-- Preferred-OTA-Partner -->
@@ -728,10 +734,9 @@
       </div>-->
     </div>
 </form>
-
 <!-- Multicity Block Start-->
 <div class="travel-data" [ngClass]="navItemActive == 'Multicity'?'':'d-none'">
-    <div class="row g-2" *ngIf="isDisplayModifiedMulticity && modifySearch" (click)="isDisplayModifiedMulticity = false">
+    <div class="g-2" [ngClass]="{'row':bannerImg == true}" *ngIf="isDisplayModifiedMulticity && modifySearch" (click)="isDisplayModifiedMulticity = false">
         <div class="col-lg-6">
             <div class="select-root-area">
                 <div class="select-root-left">
@@ -787,7 +792,7 @@
     <form [formGroup]="multicityForm" *ngIf="navItemActive == 'Multicity'" [hidden]="isDisplayModifiedMulticity">
         <!--Web starts-->
         <div class="travel-data" *ngIf="!isMobile" [ngClass]="navItemActive == 'Multicity'?'':'d-none'">
-            <div class="row g-2">
+            <div class="g-2"  [ngClass]="{'row':bannerImg==true}">
                 <ng-container formArrayName="multicityFormArr" *ngFor="let item of multicityForm.get('multicityFormArr')['controls']; index as i;">
                     <ng-container [formGroupName]="i">
                         <div class="col-lg-6">

@@ -164,7 +164,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    this.title.setTitle('Smartbuy');
+    this.title.setTitle('SCB');
    this.onEvents();
 
 

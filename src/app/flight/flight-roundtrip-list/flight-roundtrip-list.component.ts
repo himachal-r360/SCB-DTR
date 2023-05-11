@@ -87,6 +87,7 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
   EMI_interest: number = 16;
   EMIAvailableLimit: number = 3000;
   navItemActive:any;
+  searchData1:any;
   dummyForLoader = Array(10).fill(0).map((x,i)=>i);
   options: Options = {
     floor: 0,
@@ -334,6 +335,22 @@ export class FlightRoundtripListComponent implements OnInit ,AfterViewInit ,OnDe
         const params = this.route.snapshot.queryParams;
           this.queryFlightData = params;
             this.searchData = params;
+            this.searchData1 = {
+              "PartnerName":"TripGain",
+              "active":true,
+              "adults":this.queryFlightData.adults,
+              "arrive":this.queryFlightData.arrival,
+              "channel":"web",
+              "child":this.queryFlightData.child,
+              "classType":this.queryFlightData.flightclass,
+              "defaultType":"R",
+              "depart":this.queryFlightData.departure,
+              "disableCache":true,
+              "goingTo":this.queryFlightData.flightto,
+              "infants":"0",
+              "isActive":true,
+              "leavingFrom":this.queryFlightData.flightfrom,
+              "travel":"DOM"}
           this.fromContryName = this.queryFlightData.fromContry;
           this.toContryName = this.queryFlightData.toContry;
 
@@ -397,7 +414,7 @@ this.rest.getCouponsByService(couponParam).subscribe(results => {
     let searchObj = (this.searchData);
 
 
-    this.sub = this._flightService.flightList(searchObj).subscribe((res: any) => {
+    this.sub = this._flightService.flightList(this.searchData1).subscribe((res: any) => {
      if(res && res.response && res.response.docKey){
       this.DocKey = res.response.docKey;
       this.flightList = this.ascPriceSummaryFlighs(res.response.onwardFlights);

@@ -144,7 +144,7 @@
 
                             <li class="nav-item" *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
                                 <a id="tab-ccdcCards" href="#pane-ccdcCards" class="nav-link" [ngClass]="{'active': (pgSettingsCYBER ||pgSettingsHDFCPG ) && isLoggedIn && cardData.length ==0 && payzrestriction==false }" data-bs-toggle="tab" role="tab">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2">Debit / Credit Card</span>
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/card.svg" alt="icon"> <span class="ps-2 text-dark">Debit / Credit Card</span>
                                 </a>
                             </li>
               
@@ -152,29 +152,29 @@
                             
                             <li class="nav-item" *ngIf="pgSettingsNETBANKING">
                                 <a id="tab-netBanking" href="#pane-netBanking" class="nav-link" data-bs-toggle="tab" role="tab">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2">HDFC Net Banking</span>
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/netbank.svg" alt="icon"> <span class="ps-2 text-dark">HDFC Net Banking</span>
                                 </a>
                             </li>
                             <li class="nav-item" *ngIf="(pgSettingsEMI && emiArray.length >0) || (IsDcemiEligibleFlag && pgSettingsDEBITEMI && emiDebitArray.length >0)">
                                 <a id="tab-emi" href="#pane-emi" class="nav-link" data-bs-toggle="tab" role="tab" (click)="pgSelectGuest();">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2">EMI</span>
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/emi.svg" alt="icon"> <span class="ps-2 text-dark">EMI</span>
                                 </a>
                             </li>
                             <li class="nav-item" *ngIf="pgSettingsPAYZAPP && payzrestriction==false">
                                 <a id="tab-payzapp" href="#pane-payzapp" class="nav-link" data-bs-toggle="tab" role="tab">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2">Payzapp</span>
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/payzap.svg" alt="icon"> <span class="ps-2 text-dark">Payzapp</span>
                                 </a>
                             </li>
 
                             <li class="nav-item" *ngIf="Isflexipayeligible && pgSettingFlexipayEMI && flexipayArrDefault.length >0">
                                 <a id="tab-flexipay" href="#pane-flexipay" class="nav-link" data-bs-toggle="tab" role="tab">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Flexipay</span>
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2 text-dark">Flexipay</span>
                                 </a>
                             </li>
 
                             <li class="nav-item" *ngIf="pgSettingsTESTPG">
                                 <a id="tab-testPg" href="#pane-testPg" class="nav-link" data-bs-toggle="tab" role="tab">
-                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2">Test Pg</span>
+                                    <img src="{{cdnUrl}}images/smartbuy/icons/payment/reward.svg" alt="icon"> <span class="ps-2 text-dark">Test Pg</span>
                                 </a>
                             </li>
 
@@ -188,7 +188,7 @@
 
 
                         <!-- payzapp Section Starts -->
-                        <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade active show" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP && payzrestriction==true">
+                        <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane active-pay-card fade active show" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP && payzrestriction==true">
                             <div class="panel-heading" *ngIf="pgSettingsPAYZAPP">
                                 <div class="">
                                     <a id="tab-payzapp" class="accordion-button" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-payzapp" aria-expanded="true" aria-controls="collapse-payzapp">
@@ -384,7 +384,7 @@
 
 
                         <!-- Credt/Debit Card Section Starts -->
-                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{'active show': ( pgSettingsCYBER || pgSettingsHDFCPG) && isLoggedIn && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
+                        <div id="pane-ccdcCards" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" [ngClass]="{' active active-pay-card show': ( pgSettingsCYBER || pgSettingsHDFCPG) && isLoggedIn && cardData.length ==0 && payzrestriction==false  }" role="tabpanel" aria-labelledby="tab-ccdcCards"
                             *ngIf="pgSettingsCYBER || pgSettingsHDFCPG ">
 
                             <div class="panel-heading">
@@ -425,11 +425,11 @@
                                                     </li>
                                                 </ul> -->
                                                 <mat-radio-group aria-label="" class="nav nav-justified nav-pills" id="pills-tab-card" role="tablist">
-                                                    <mat-radio-button class="addCardTab" checked [ngClass]="{'active': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true" value="addCard" *ngIf="pgSettingsCYBER">Visa / MasterCard / Diners</mat-radio-button>
-                                                    <mat-radio-button class="addRupayTab" [ngClass]="{'active': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false" value="rupayCard" *ngIf="pgSettingsHDFCPG">Rupay</mat-radio-button>
+                                                    <mat-radio-button class="addCardTab" checked [ngClass]="{'active active-pay-card': pgSettingsCYBER }" id="addCard" data-bs-toggle="pill" href="#pills-addCard" role="tab" aria-controls="pills-addCard" aria-selected="true" value="addCard" *ngIf="pgSettingsCYBER">Visa / MasterCard / Diners</mat-radio-button>
+                                                    <mat-radio-button class="addRupayTab" [ngClass]="{'active active-pay-card': !pgSettingsCYBER && pgSettingsHDFCPG }"  id="rupayCard" data-bs-toggle="pill" href="#pills-rupayCard" role="tab" aria-controls="pills-rupayCard" aria-selected="false" value="rupayCard" *ngIf="pgSettingsHDFCPG">Rupay</mat-radio-button>
                                                 </mat-radio-group> 
                                                 <div class="tab-content pt-0" id="pills-tabContent">
-                                                    <div class="tab-pane fade  " [ngClass]="{'active show': pgSettingsCYBER   }" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
+                                                    <div class="tab-pane fade  " [ngClass]="{'active active-pay-card show': pgSettingsCYBER   }" id="pills-addCard" role="tabpanel" aria-labelledby="addCard">
                                                         <div>
                                                             <div class="common_title d-none">
                                                                 <span class="">Add Visa / MasterCard / Diners</span>
@@ -1268,7 +1268,7 @@
 
 
                         <!-- payzapp Section Starts -->
-                        <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP && payzrestriction==false">
+                        <div id="pane-payzapp" (click)="hidecheckoutPay(0)" class="mlite-card-accordation active-pay-card card tab-pane fade" role="tabpanel" aria-labelledby="tab-payzapp" *ngIf="pgSettingsPAYZAPP && payzrestriction==false">
                             <div class="panel-heading" *ngIf="pgSettingsPAYZAPP">
                                 <div class="">
                                     <a id="tab-payzapp" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-payzapp" aria-expanded="false" aria-controls="collapse-payzapp">
@@ -1724,7 +1724,7 @@
                         <!-- Flexipay Section Ends -->
 
                         <!-- Test Pg Section Starts -->
-                        <div id="pane-testPg" (click)="hidecheckoutPay(0)" class="mlite-card-accordation card tab-pane fade border-0" role="tabpanel" aria-labelledby="tab-testPg">
+                        <div id="pane-testPg" (click)="hidecheckoutPay(0)" class="mlite-card-accordation active-pay-card card tab-pane fade border-0" role="tabpanel" aria-labelledby="tab-testPg">
                             <div class="panel-heading">
                                 <div class="" *ngIf="pgSettingsTESTPG">
                                     <a id="tab-testPg" class="accordion-button collapsed" role="button" data-bs-toggle="collapse" data-bs-parent=".tab-pane" data-bs-target="#collapse-testPg" aria-expanded="false" aria-controls="collapse-testPg">

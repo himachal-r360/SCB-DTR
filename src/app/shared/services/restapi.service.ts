@@ -12,9 +12,23 @@ import { SimpleGlobal } from 'ng2-simple-global';
 
 const config = {
 headers : {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    //'Content-Type': 'application/x-www-form-urlencoded'
+    // 'Content-Type': 'application/json'
+     //"accept": "application/json" ,
+    'Content-Type': 'application/json',
+     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' 
 }
 }
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     'Content-Type': 'application/json',
+//     'Access-Control-Allow-Origin': '*',
+//     'Access-Control-Allow-Credentials': 'true',
+//     'Access-Control-Allow-Methods' : 'GET, POST, OPTIONS',
+//     'Access-Control-Allow-Headers' : 'Origin, Content-Type, Accept, X-Custom-Header, Upgrade-Insecure-Requests',  }) 
+// };
+
 
 
 @Injectable({
@@ -24,7 +38,11 @@ export class RestapiService {
   get() {
     throw new Error('Method not implemented.');
   }
-  endpoint:any;domainName:any;domainPath:any;
+  header = new HttpHeaders({
+    'Content-Type': 'application/json',
+      })
+  
+  endpoint:any;domainName:any;domainPath:any;endpoint1:any;
   constructor(private http: HttpClient,private location:Location,private sg: SimpleGlobal) { 
   	let urlToSplit =this.location.path();
 	let unification =urlToSplit.split("/");
@@ -60,8 +78,12 @@ export class RestapiService {
 	break;
 	}
   
-  this.endpoint = environment.API_URL[this.domainName];
-  
+  // this.endpoint = environment.API_URL[this.domainName];
+  // this.endpoint='http://flights-uat.reward360.in:8077/R360FlightService/api/'
+  // this.endpoint1='http://flights-uat.reward360.in:8087/orders/api/'
+
+  this.endpoint='http://20.193.135.32:8087/R360FlightService/api/'
+  this.endpoint1='http://20.193.135.32:8088/orders/'
   
   }
   
@@ -280,7 +302,7 @@ checksavedtravellers(param){
         return this.http.get('assets/data/ItineraryResponse.json');
         }
         else{
-        return this.http.post( this.endpoint+'createItinerary',param, config).pipe(map((response: any) => response));
+        return this.http.post( this.endpoint+'itinerary',param, config).pipe(map((response: any) => response));
         }
 } 
   IsDcemiEligible (param):Observable<any> {
@@ -368,7 +390,18 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
     if(LOCALJSON=='true'){
     return this.http.get('assets/data/saveCheckout.json');
     }else{
-    return this.http.post(this.endpoint+'saveCheckoutFlight', param, config).pipe(map((response: any) => response));
+   // return this.http.post( 'common/saveBookingDetails',param, config).pipe(map((response: any) => response));
+
+       return this.http.post(this.endpoint1 +'saveBookingDetails', param, config);
+    }
+  }
+  
+  saveOrderRef (param): Observable<any> {
+    if(LOCALJSON=='true'){
+    return this.http.get('assets/data/saveCheckout.json');
+    }else{
+
+     return this.http.post(this.endpoint1+'getOrderDetails', param, config).pipe(map((response: any) => response));
     }
   }
   
@@ -403,7 +436,7 @@ return this.http.post( this.endpoint+'validate_otp_flexiPay',param, config).pipe
     return this.http.get('assets/data/getCancellationPolicy.json');
   }
   else{
-  return this.http.post( this.endpoint+'farerules',param, config).pipe(map((response: any) => response));
+  return this.http.post( this.endpoint+'getPolicy',param, config).pipe(map((response: any) => response));
   }
   } 
    getBaggageInfo(param){

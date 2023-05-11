@@ -62,11 +62,11 @@ export function appInitializerFn(appConfig: AppConfigService) {
     RegaliaGoldModule,UnificationModule,
     ToastrModule.forRoot()
   ],
-  exports:[],
+  exports:[CssLoaderComponent],
    providers: [
    { provide: LOCALE_ID, useValue: 'en-IN' },
    StyleManagerService,
-   AppConfigService,
+   AppConfigService,CssLoaderComponent,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializerFn,

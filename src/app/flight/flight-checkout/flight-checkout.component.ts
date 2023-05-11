@@ -399,7 +399,8 @@ orderRetry:boolean=false;
       setTimeout(() => {
         //Check Laravel Seesion
         if (this.sg['customerInfo']) {
-          this.customerInfo = this.sg['customerInfo'];
+          this.customerInfo = this.sg['customerInfo']; 
+          console.log('customerinfo',this.customerInfo)
           if (sessionStorage.getItem("channel") == "payzapp") {
             var customerInfo = this.sg['customerInfo'];
             this.XSRFTOKEN = customerInfo["XSRF-TOKEN"];
@@ -760,7 +761,8 @@ orderRetry:boolean=false;
       var body = {
         "docKey": param.docKey,
         "flightKeys": this.flightKeys,
-        "partnerName": this.selectedOnwardVendor.partnerName,
+        //"partnerName": this.selectedOnwardVendor.partnerName,
+        "partnerName": "TripGain",
         "onwardFlightFareKey": onwardFlightFareKey,
         "returnFlightFareKey": returnFlightFareKey,
         "splrtFlight": param.splrtFlight
@@ -822,7 +824,7 @@ orderRetry:boolean=false;
         
       //  console.log(this.flightInfo);
 
-        this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
+        // this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
           if (res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.length > 0) {
           
@@ -1788,26 +1790,26 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(requestParams))
       };
-      this.rest.getCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
-        // let respData = JSON.parse(this.EncrDecr.get(response.result ));
-        if (response['errorcode'] == 0) {
+      // this.rest.getCustomerGstDetails(requestParamsEncrpt).subscribe(response => {
+      //   // let respData = JSON.parse(this.EncrDecr.get(response.result ));
+      //   if (response['errorcode'] == 0) {
 
-          if (response['value'].length > 0) {
-            response['value'] = response['value'].sort(function (a, b) {
-              var x = a['id']; var y = b['id'];
-              return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-            });
-          }
+      //     if (response['value'].length > 0) {
+      //       response['value'] = response['value'].sort(function (a, b) {
+      //         var x = a['id']; var y = b['id'];
+      //         return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+      //       });
+      //     }
 
-          this.GSTList = response['value'];
-          this.GSTListLength = this.GSTList.length;
-          if (this.GSTListLength > 0) {
-            this.getGSTShow = true;
-          } else {
-            this.getGSTShow = false;
-          }
-        }
-      });
+      //     this.GSTList = response['value'];
+      //     this.GSTListLength = this.GSTList.length;
+      //     if (this.GSTListLength > 0) {
+      //       this.getGSTShow = true;
+      //     } else {
+      //       this.getGSTShow = false;
+      //     }
+      //   }
+      // });
     } else {
       this.getGSTShow = false;
     }
@@ -1892,9 +1894,10 @@ switch ($(".accordion-button:not(.collapsed)").attr("id")) {
   }
 saveTravellerFunc(saveTravellerArray){
   var requestParamsEncrpt = {
-   postData:this.EncrDecr.set(JSON.stringify(saveTravellerArray)) 
+    postData:this.EncrDecr.set(JSON.stringify(saveTravellerArray)) 
   };
-  this.rest.saveCustomertravellerInfo(requestParamsEncrpt).subscribe(response => {  })
+  
+  this.rest.saveCustomertravellerInfo(saveTravellerArray).subscribe(response => {  })
 }
 
 
@@ -2260,8 +2263,12 @@ saveTravellerFunc(saveTravellerArray){
 
     this._flightService.getFlightInfo(param, searchData).subscribe((res: any) => {
     
-        if(res.status=="success"){
-        res= JSON.parse(this.EncrDecr.get(res.result));
+       //  if(res.status=="success"){
+         if(res){
+
+        //res= JSON.parse(this.EncrDecr.get(res));
+        //res= JSON.parse(this.EncrDecr.get(res.result));
+
         }else{
         clearInterval(myInterval3);
         setTimeout(() => {
@@ -2288,7 +2295,7 @@ saveTravellerFunc(saveTravellerArray){
       .set('metadata', JSON.stringify(res));
 
     const track_body: string = trackUrlParams.toString();
-    this.rest.trackEvents(track_body).subscribe(result => { });
+    // this.rest.trackEvents(track_body).subscribe(result => { });
 
       if (res.statusCode == 200) {
         this.flightInfo = res.response;
@@ -2306,7 +2313,7 @@ saveTravellerFunc(saveTravellerArray){
         this.InfantQuantity = this.maxInfants;
 
 
-        this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
+        // this.rest.suggestHotels(JSON.stringify(suggestHotels)).subscribe(result => { });
 
         if (this.searchData.travel == 'DOM') {
           if (res.response && res.response.onwardFlightDetails && res.response.onwardFlightDetails.fareKey) {
@@ -2940,13 +2947,13 @@ saveTravellerFunc(saveTravellerArray){
         flightto:this.searchData.flightto,
         classType:this.searchData['flightclass'],
         };
-         this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(response => {
-         if(response.status=="success"){
-         if(type=='onward')
-            this.cancellationPolicyOnward =response.data;
+        //  this.rest.getCancellationPolicy(JSON.stringify(getCancellationPolicy)).subscribe(response => {
+        //  if(response.status=="success"){
+        //  if(type=='onward')
+        //     this.cancellationPolicyOnward =response.data;
          
-         }
-         });
+        //  }
+        //  });
         
 
   }
@@ -2982,7 +2989,7 @@ saveTravellerFunc(saveTravellerArray){
       url = "flight-int?" + decodeURIComponent(this.ConvertObjToQueryString((this.searchData)));
     }
     }
-    this.router.navigateByUrl(url);
+    this.router.navigateByUrl('');
 
   }
 
@@ -3761,9 +3768,55 @@ saveTravellerArray=[];
       var requestParamsEncrpt = {
         postData: this.EncrDecr.set(JSON.stringify(this.itineraryRequest))
       };
-      this.rest.createItinerary(requestParamsEncrpt,type).subscribe(response => {
+      console.log('itinarypayload',this.itineraryRequest);
+      var payload={
+        // "itineraryId":"Reward360_deeplinkbooking_ATI_1675863224328-0.2273169118102334@@saas_template12",
+        "convFee": 0,
+        "serviceName": "Flight",
+        "partnerName": "TripGain",
+        "itineraryType": itineraryType,
+        "price": this.totalCollectibleAmountFromPartnerResponse+ Number(this.partnerConvFee),
+        "scid": "",
+        "comboFare": false,
+        "origin":  this.flightSessionData['travel_type']=='M' ? this.flightSessionData.queryFlightData[0]['flightfrom'] : this.searchData.flightfrom,
+        "destination": this.flightSessionData['travel_type']=='M' ? this.flightSessionData.queryFlightData[this.flightSessionData.queryFlightData.length-1]['flightto'] :  this.searchData.flightto,
+        "onwardCheckInDate":moment(this.searchData.departure).format('YYYY-MM-DD'),
+        // "orderId": "00716758632225159662",
+        "adults": this.searchData.adults,
+        "child": this.searchData.child,
+        "infants": this.searchData.infants,
+        "tripType": "DOM",
+        "gstDetails": {
+          "gstNumber": "",
+          "name": "",
+          "address": "",
+          "city": "",
+          "pincode": 0,
+          "state": ""
+        },
+        "threadName": "",
+        "itinerary": {
+          "cabinType":this.searchData.flightclass,
+           "fareDetails":fareDetails,
+          "flights": segement_values,
+          "paxInfoList":this.paxInfo,
+          "contactDetail": this.contactDatails,
+          "paymentDetail": {
+            "paymentType": "",
+            "depositAccountId": 0
+          }
+        },
+        "customerId": this.customerInfo["id"],
+        "couponCode": "",
+        "discountAmount": 0,
+        "operator": "",
+        "osVersion": "web"
+      }
+      this.rest.createItinerary(payload,type).subscribe(response => {
      //this.itineratyButton=false;
-        this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
+        this.itinararyResponse = response;
+       // this.itinararyResponse = JSON.parse(this.EncrDecr.get(response.result));
+
         let itinararyResponse;
        if( this.flightSessionData['travel_type']=='M') {
        
@@ -4213,9 +4266,15 @@ orderReferenceNumber:any;
     this.whatsAppCheck =  checkoutData.contactDetails.whatsappFlag;
 
     var saveCheckoutData = {
-      orderReferenceNumber: order_ref_num,
-      flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
+     // orderReferenceNumber: order_ref_num,
+      // flightData: this.EncrDecr.set(JSON.stringify(checkoutData))
+        flightData: checkoutData
+
     };
+    var orderRefNumber = {
+      orderRefNum: order_ref_num,
+   
+     };
 
 
     let trackUrlParams = new HttpParams()
@@ -4225,10 +4284,11 @@ orderReferenceNumber:any;
       .set('metadata', '{"save_checkout":"' + this.EncrDecr.set(JSON.stringify(JSON.stringify(saveCheckoutData))) + '"}');
 
     const track_body: string = trackUrlParams.toString();
-    this.rest.trackEvents(track_body).subscribe(result => { });
+    // this.rest.trackEvents(track_body).subscribe(result => { });
 
-    this.rest.saveCheckout(JSON.stringify(saveCheckoutData)).subscribe(rdata => {
-      if (rdata == 1) {
+    
+    this.rest.saveCheckout(JSON.stringify(checkoutData)).subscribe(rdata => {
+      if (rdata.okResponse) {
 
 
         sessionStorage.setItem(this.randomFlightDetailKey + '-clientTransactionId', itineraryId);
@@ -4238,7 +4298,9 @@ orderReferenceNumber:any;
         sessionStorage.setItem(this.randomFlightDetailKey + '-passData', this.EncrDecr.set(JSON.stringify(checkoutData)));
         sessionStorage.setItem(this.randomFlightDetailKey + '-passFareData', btoa(JSON.stringify(this.fareData)));
         clearInterval(myInterval1);
+        this.rest.saveOrderRef(orderRefNumber).subscribe(res => {
 
+        });
         this.gotoTop();
         if (this.enableVAS == 1) {
           this.steps = 3;

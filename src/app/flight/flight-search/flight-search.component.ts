@@ -54,6 +54,9 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   @ViewChild('picker') datePicker: MatDatepicker<Date>;
   @Input() modifySearch;
   @Input() isViewPartner: string;
+  @Input() showHorizontalSearch;
+
+
   displayPartners: boolean = false;
   cdnUrl: any;
   sub?: Subscription;
@@ -111,6 +114,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   startAt:any=[];
   mliteChecoutMulti:any=[];
   private lastKeypress = 0;
+  public bannerImg:boolean=false;
   private queryText = '';
   flightFromOptions: any[];
   flightToOptions: any[];

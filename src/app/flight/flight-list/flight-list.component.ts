@@ -62,6 +62,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   fromAirpotName: any = 'from airport';
   toAirpotName: any = 'to airport';
   searchData: any;
+  searchData1: any;
   EMIAvailableLimit: number = 3000;
   EMI_interest: number = 16;
   departureDate: any;
@@ -84,6 +85,7 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   showScroll?: boolean;
   topPosToStartShowing = 100;
   flightListMod: any;
+  selectedFlights  = 0;
   RefundableFaresCount: number = 0;
   nonStopCount: number = 0;
   morningDearptureCount: number = 0;
@@ -101,6 +103,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   refundFilterStatus: boolean = false;
   flightListWithOutFilter: any = [];
   flightListFullData: any = [];
+
+  flightsJson={};
 
   minPrice: number = 0;
   maxPrice: number = 10000;
@@ -234,6 +238,10 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
+  selectFlags(list,i){
+    console.log(this);
+    this.flightsJson[list.flightKey] = list.flightKey + i;
+  }
 
 
   ngOnInit(): void {
@@ -276,6 +284,40 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
     const params = this.route.snapshot.queryParams;
     this.queryFlightData = params;
     this.searchData = params;
+    this.searchData1 = {
+    "PartnerName":"TripGain",
+    "active":true,
+    "adults":this.queryFlightData.adults,
+    "arrive":"",
+    "channel":"web",
+    "child":this.queryFlightData.child,
+    "classType":this.queryFlightData.flightclass,
+    "defaultType":"O",
+    "depart":this.queryFlightData.departure,
+    "disableCache":true,
+    "goingTo":this.queryFlightData.flightto,
+    "infants":"0",
+    "isActive":true,
+    "leavingFrom":this.queryFlightData.flightfrom,
+    "travel":"DOM"
+  //   "PartnerName": "TripGain",
+  //   "active": true,
+  //   "adults": "1",
+  //   "arrive": "",
+  //   "channel": "web",
+  //   "child": "0",
+  //   "classType": "E",
+  //   "defaultType": "O",
+  //   "depart": "2023-12-30",
+  //   "disableCache": true,
+  //   "goingTo": "HYD",
+  //   "infants": "0",
+  //   "isActive": true,
+  //   "leavingFrom": "DEL",
+  // "travel":"DOM"
+  
+  }
+
     this.fromContryName = this.queryFlightData.fromContry;
     this.toContryName = this.queryFlightData.toContry;
     this.fromCityName = this.queryFlightData.fromCity;
@@ -1103,7 +1145,8 @@ export class FlightListComponent implements OnInit, AfterViewInit, OnDestroy {
   flightSearch() {
     this.loader = true;
     let searchObj = (this.searchData);
-    this._flightService.flightList(searchObj).subscribe((res: any) => {
+    console.log(searchObj)
+    this._flightService.flightList(this.searchData1).subscribe((res: any) => {
       if (res && res.response && res.response.docKey) {
         this.loader = false;
         this.DocKey = res.response.docKey;
